@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  back-end:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    container_name: backend
+    volumes:
+      - ./Server:/home/node/app
+    expose:
+      - "4000"
+    ports:
+      - "4000:4000"
+    restart: on-failure
+    networks:
+      - databoomNetwork
+    command: npm run dev
+
+  front-end:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile
+    container_name: frontend
+    volumes:
+      - ./Client:/home/node/app
+    expose: 
+      - "4500"
+    ports:
+      - "4500:4500"
+    stdin_open: true
+    networks:
+      - databoomNetwork
+    links:
+      - back-end
+    tty: true
+    command: npm run start
+
+
+networks:
+  databoomNetwork:
+    driver: bridge
+  
