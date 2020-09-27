@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 app.get('/note', function(req,res) {
   console.log(res);
   let x = {test: "random"};
-  res.status(200).json("L, did you know Shinigami love apples? Dickhead");
+  res.status(200).json("L, did you know Shinigami love apples?");
 });
 
 app.listen(4000, function () {
