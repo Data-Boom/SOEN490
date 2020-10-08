@@ -26,6 +26,8 @@ services:
       - ./Client:/home/node/app
     expose: 
       - "4500"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     ports:
       - "4500:4500"
     stdin_open: true
