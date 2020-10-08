@@ -26,7 +26,7 @@ Ground Rules for Development
 
     git commit -m 'Message associated to your commit' 
 
-    When making commits you should include the issue number in the commit, this allows the commits to be linked the git issue. For example if I was working under my branch 'Backend-SignUp-63' and a validator was implemented as part of the feature. The commit would look like '[#63] Add Validator for Input Fields'. 
+    When making commits you should include the issue number in the commit, this allows the commits to be linked the git issue. For example if I was working under my branch '63-Backend-SignUp' and a validator was implemented as part of the feature. The commit would look like '[#63] Add Validator for Input Fields'. 
 
 - Pull requests by developers must be approved by at least 2 other developers. In order words, each pull request is required to have 2 reviewers at the minimum. In addition, all submitted pull requests must include Unit Tests as part of the feature implementation.
 
