@@ -20,7 +20,7 @@ Ground Rules for Development
 
     git checkout -b myfeature_branch develop
 
-- Feature branches should be appended with github issue associated to it. For example, lets say you  are working on a github issue referenced as '[Backend] Add Logic for Sign up #63'. To you should name your branch as 'Backend-SignUp-63'.
+- Feature branches should be appended with github issue associated to it. For example, lets say you  are working on a github issue referenced as '[Backend] Add Logic for Sign up #63'. To you should name your branch as '63-Backend-SignUp'.
 
 - Git committing style. The command used to commit changes is:
 
