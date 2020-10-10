@@ -1,6 +1,28 @@
 version: "3"
 
 services:
+  db:
+    build:
+      context: ./Database
+      dockerfile: Dockerfile
+    container_name: db
+    volumes:
+      - ./Database:/home
+    environment:
+      MYSQL_DATABASE: 'databoom_DB'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    restart: unless-stopped
+    links:
+      - back-end
+    ports:
+      - '3300:3306'
+    expose:
+      - '3306'
+    networks:
+      - databoomNetwork
+
   back-end:
     build:
       context: ./Server
@@ -37,7 +59,7 @@ services:
       - back-end
     tty: true
     command: npm run start
-
+  
 
 networks:
   databoomNetwork:
