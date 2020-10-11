@@ -1,0 +1,8 @@
+.Title{
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    margin-bottom: 1em;
+    background-color: rgb(46, 59, 82);
+}
