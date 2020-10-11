@@ -2,7 +2,7 @@
 FROM mysql:5.7
 
 # Set working Dir
-WORKDIR /home
+WORKDIR /
 
 # Open Port
 EXPOSE 3300
@@ -12,4 +12,4 @@ ENV MYSQL_USER: 'user'
 ENV MYSQL_PASSWORD: 'password'
 ENV MYSQL_ROOT_PASSWORD: 'password'
 
-COPY init.sql /docker-entrypoint-initdb.d/
+COPY . /docker-entrypoint-initdb.d/
