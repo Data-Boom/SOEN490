@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: db
     volumes:
-      - ./Database:/home
+      - ./Database/my-db:/var/lib/mysql
     environment:
       MYSQL_DATABASE: 'databoom_DB'
       MYSQL_USER: 'user'
@@ -60,6 +60,9 @@ services:
     tty: true
     command: npm run start
   
+volumes:
+  my-db:
+    driver: local
 
 networks:
   databoomNetwork:
