@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import Title from "./Components/Title.js";
 function App() {
   const[apiResponse, setApiResponse] = useState("");
 
@@ -19,9 +19,9 @@ useEffect(() => {
   
   return (
     <div className="App">
-    <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="App-title">Welcome to React</h1>
+    
+    <header className="Title">
+      Detonation Database
     </header>
     <p className="App-intro">{apiResponse}</p>
 </div>
