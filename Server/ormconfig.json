@@ -1,0 +1,11 @@
+{
+    "type": "mysql",
+    "host": "db",
+    "port": 3306,
+    "username": "user",
+    "password": "password",
+    "database": "databoom_DB",
+    "synchronize": true,
+    "logging": true,
+    "entities": ["src/entities/**/*.ts", "dist/entities/**/*.js"]
+  }

@@ -14,8 +14,6 @@ services:
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     restart: unless-stopped
-    links:
-      - back-end
     ports:
       - '3300:3306'
     expose:
@@ -35,9 +33,13 @@ services:
     ports:
       - "4000:4000"
     restart: on-failure
+    links:
+      - db
+    depends_on:
+      - db
     networks:
       - databoomNetwork
-    command: npm run dev
+    command: bash -c "/home/node/app/wait-for-it.sh --timeout=25 db:3306 && npm run dev"
 
   front-end:
     build:
