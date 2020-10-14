@@ -7,5 +7,5 @@
     "database": "databoom_DB",
     "synchronize": true,
     "logging": true,
-    "entities": ["src/entities/**/*.ts", "dist/entities/**/*.js"]
+    "entities": ["src/models/entities/**/*.ts", "dist/entities/**/*.js"]
   }
