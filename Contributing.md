@@ -28,6 +28,10 @@ Ground Rules for Development
 
     When making commits you should include the issue number in the commit, this allows the commits to be linked the git issue. For example if I was working under my branch '63-Backend-SignUp' and a validator was implemented as part of the feature. The commit would look like '[#63] Add Validator for Input Fields'. 
 
+- For backend, before creating your pull request, please run the following command - it will create the javascript files from the typescript.
+
+    npm run tsc
+
 - Pull requests by developers must be approved by at least 2 other developers. In order words, each pull request is required to have 2 reviewers at the minimum. In addition, all submitted pull requests must include Unit Tests as part of the feature implementation.
 
 - Prettier should also be installed as a VCS extension. It beautifies the written code to follow common coding convensions
