@@ -17,7 +17,7 @@ function Blurb(){
                 <p>Get ready to have your own account, upload your own data set, save your preferences and collaborate with others on theirs.</p>
 
             </div>
-            <div className = "FourthBlurb">
+            <div className = "FourthBlurb"> 
                 <h1>Search and Discover</h1>
                 <p>Need to find a dataset? Search with filters, by gas, DOI, author, category, fuel, oxidizer, dilutent, temperature, and more!</p>
 

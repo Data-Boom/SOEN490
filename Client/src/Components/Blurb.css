@@ -2,28 +2,51 @@
     width: 100%;
     overflow: hidden;
     margin-top: 20px;
-    border: 1px black;
+    border: 20px black;
+    font-family: Georgia;
 }
 .Blurb h1{
-    font-size: 32px;
+    font-size: 36px;
+    font-family: Georgia;
+    font-weight: bold;
 }
 .FirstBlurb{
     width: 20%;
     float: left;
+    font-family: Georgia;
+    font-style: italic;
+    border: 20px white;
+    line-height: 1.6;
 }
 .SecondBlurb{
     width: 20%;
     float: left;
+    font-family: Georgia;
+    font-style: italic;
+    border: 20px white;
+    line-height: 1.6;
 }
 .ThirdBlurb{
     width: 20%;
     float: left;
+    font-family: Georgia;
+    font-style: italic;
+    border: 20px white;
+    line-height: 1.6;
 }
 .FourthBlurb{
     width: 20%;
     float: left;
+    font-family: Georgia;
+    font-style: italic;
+    border: 20px white;
+    line-height: 1.6;
 }
 .FifthBlurb{
     width: 20%;
     float: left;
+    font-family: Georgia;
+    font-style: italic;
+    border: 20px white;
+    line-height: 1.6;
 }
