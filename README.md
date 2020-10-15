@@ -21,5 +21,5 @@
 #### docker-compose down -> This will shut down your containers
 #### docker-compose down -v -> If you need to wipe the saved data (frontend/backend) and shut down
 #### docker-compose logs -> Allows you to check logs
-#### docker logs --follow (name of service) -> Tells you tail a specific service
+#### docker logs --follow (name of service) -> Lets you tail a specific service
 
