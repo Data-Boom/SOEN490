@@ -12,7 +12,7 @@
 #### Step 7: Navigate to localhost:4000 to find backend & localhost:4500 for frontend. You can test with the endpoint localhost:4500/note to see the connection to backend
 
 ### Other Docker Notes for DB
-#### docker-compose command will also bring up a MySQL Database. To connect you can either use typeORM, mySQL command line or db connector such as mySQLWorkBench. Mac users need to make sure to save PW to keychain for access. If connected by CLI or Tool, tables can be modified directly using MYSQL language.
+#### docker-compose command will also bring up a MySQL Database. To connect you can either use typeORM, mySQL command line or db connector such as mySQLWorkBench. Mac users need to make sure to save PW to keychain for access. If connected by CLI or Tool, tables can be modified directly using MYSQL language, also a connection needs to be setup with the configurations in ormconfig except with a port change to 3300.
 #### If DB needs to be completely wiped and re-seeded (with new init.sql), you need to delete the my-sql directory under /Database
 
 
