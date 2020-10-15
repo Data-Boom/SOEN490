@@ -1,8 +1,10 @@
 .Title{
-    padding: 30px;
+    padding: 3px;
     width: 100%;
     box-sizing: border-box;
     justify-content: center;
-    margin-bottom: 1em;
+    margin-bottom: 0em;
     background-color: rgb(46, 59, 82);
+    color: white;
+    font-size:  30px;
 }

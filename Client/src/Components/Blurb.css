@@ -1,0 +1,29 @@
+.Blurb{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+    border: 1px black;
+}
+.Blurb h1{
+    font-size: 32px;
+}
+.FirstBlurb{
+    width: 20%;
+    float: left;
+}
+.SecondBlurb{
+    width: 20%;
+    float: left;
+}
+.ThirdBlurb{
+    width: 20%;
+    float: left;
+}
+.FourthBlurb{
+    width: 20%;
+    float: left;
+}
+.FifthBlurb{
+    width: 20%;
+    float: left;
+}
