@@ -5,8 +5,10 @@ function Title() {
     return (
         <div className="Title">
             <header>
-                <h1>Detonation Database</h1>
+                <h1>DetonationDatabase</h1>
             </header>
         </div>
     )
 }
+
+export default Title;
