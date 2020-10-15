@@ -1,29 +1,6 @@
 .Splash {
     position: relative;
     text-align: center;
-    white-space: nowrap
+    white-space: nowrap;
+    color: white;
   }
-
-.Splash h1 {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 124px;
-}
-
-.Splash h2 {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 124px;
-}
-
-.Splash h3 {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 124px;
-}
