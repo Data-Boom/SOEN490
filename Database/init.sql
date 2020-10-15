@@ -34,7 +34,7 @@ CREATE TABLE databoom_DB.Publication(
     FOREIGN KEY (publication_type_id) REFERENCES PublicationType(publication_type_id)
 );
 
-CREATE TABLE databoom_DB.PulicationAuthors(
+CREATE TABLE databoom_DB.PublicationAuthors(
     publication_id INT NOT NULL,
     author_id INT NOT NULL,
     FOREIGN KEY (publication_id) REFERENCES Publication(publication_id),
@@ -107,8 +107,9 @@ INSERT INTO databoom_DB.Publication (title, publication_type_id, publisher_id, v
 INSERT INTO databoom_DB.MaterialComposition (composition) VALUES ('C');
 INSERT INTO databoom_DB.Material (material_name, composition_id, details) VALUES ('Carbon','1','Graphite, Pressed Graphite');
 INSERT INTO databoom_DB.DatasetDataType (data_type_name) VALUES ('Hugoniot');
-INSERT INTO databoom_DB.Dataset (set_name, publication_id, material_id, data_type_id, comments) VALUES ('CARBON , graphite , pressed,
+INSERT INTO databoom_DB.Dataset (set_name, publication_id, material_id, data_type_id, comments) VALUES ('CARBON, graphite, pressed,
 Initial density = 2.13 g/cc','1','1','1','References 5,6,14\nAverage density = 2.134 g/cc');
+INSERT INTO databoom_DB.PublicationAuthors (publication_id, author_id) VALUES ('1','1');
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.113','273.15','0.0','5.235','1.026','11.349','0.3805','2.628','0.804','im1'); 
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.123','273.15','0.0','6.013','1.380','17.617','0.3629','2.755','0.770','im1'); 
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.123','273.15','0.0','6.320','1.972','26.459','0.3241','3.086','0.688','im1'); 
@@ -118,6 +119,5 @@ INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperat
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.142','273.15','0.0','8.762','3.748','70.343','0.2672','3.743','0.572','im1'); 
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.134','273.15','0.0','8.836','3.801','71.672','0.2670','3.745','0.570','im1'); 
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.135','273.15','0.0','9.208','3.948','77.614','0.2676','3.737','0.571','im1'); 
-INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.136','273.15','0.0','9.627','4.138','85.091','0.2669','3.746','0.570','im1'); 
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.136','273.15','0.0','9.627','4.138','85.091','0.2669','3.746','0.570','im1'); 
 INSERT INTO databoom_DB.DataPoint (dataset_id, initial_density, initial_temperature, initial_pressure, shock_velocity, particle_velocity, pressure, specific_volume, density, compression_ratio, comments) VALUES ('1', '2.136','273.15','0.0','9.566','4.290','87.657','0.2582','3.873','0.552','im1');
