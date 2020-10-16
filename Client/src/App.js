@@ -4,6 +4,7 @@ import './App.css';
 import Title from "./Components/Title.js";
 import Splash from "./Components/Splash.js"
 import Blurb from "./Components/Blurb.js"
+import DataCell from "./Components/DataCell.js"
 function App() {
   const[apiResponse, setApiResponse] = useState("");
 
@@ -24,6 +25,7 @@ useEffect(() => {
       <Title />
       <Splash />
       <Blurb />
+      <DataCell />
       <p className="App-intro">{apiResponse}</p>
     </div>
   );
