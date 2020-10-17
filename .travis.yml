@@ -1,0 +1,23 @@
+sudo: required
+
+language: node_js
+
+node_js:
+  - "14"
+  
+services:
+   - docker
+
+branches:
+  only:
+    - develop
+
+env:
+    - SERV_DIR=Server
+    
+before-install:
+    - cd $SERV_DIR && npm install && npm test
+    - docker-compose up -d --build
+
+after_script:
+  - docker-compose down
