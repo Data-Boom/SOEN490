@@ -33,6 +33,10 @@ app.get('/note', function(req,res) {
   res.status(200).json("L, did you know Shinigami love apples?");
 });
 
+app.get('dataupload', function(req,res){
+  
+});
+
 app.listen(4000, function () {
   console.log('Example app listening on port 4000!');
 });
