@@ -1,5 +1,7 @@
-import express = require('express');
-import cors = require('cors');
+import express from 'express';
+import 'dotenv/config';
+import cors from 'cors';
+import { connectDB } from './database'
 
 
 // Create a new express application instance
@@ -37,6 +39,14 @@ app.get('dataupload', function(req,res){
   
 });
 
-app.listen(4000, function () {
-  console.log('Example app listening on port 4000!');
-});
+const port: Number = Number(process.env.PORT) || 4000;
+const startServer = async () => {
+  await app.listen(port, () => {
+    console.log(`This Server is running on http://localhost:4000
+`);
+  });
+};
+(async () => {
+  await connectDB();
+  await startServer();
+})();
