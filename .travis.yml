@@ -1,10 +1,14 @@
 language: node_js
 
 node_js:
-  - "14.11.1"
+  - "14"
   
 services:
    - docker
 
 before_install:
    - docker -compose up -d --build
+   
+branches:
+  only:
+    - develop
