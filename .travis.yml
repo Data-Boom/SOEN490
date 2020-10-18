@@ -22,11 +22,8 @@ before-install:
     - cd $SERV_DIR && npm install && npm test
 
 script:
-    - cd .. 
-    - ls
-    - cd $FRONT_DIR && npm install
-    - cd .. 
-    - cd $SERV_DIR
+    - cd ../Client && npm install
+    - cd ../Server
     - docker-compose up -d --build
 
 after_script:
