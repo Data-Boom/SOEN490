@@ -1,7 +1,4 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/react,node,vscode
-# Edit at https://www.toptal.com/developers/gitignore?templates=react,node,vscode
-
 ### Node ###
 # Logs
 logs
@@ -117,8 +114,6 @@ dist
 .DS_*
 **/*.backup.*
 **/*.back.*
-
-node_modules
 
 *.sublime*
 
