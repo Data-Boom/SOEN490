@@ -35,6 +35,10 @@ app.get('/note', function(req,res) {
   res.status(200).json("L, did you know Shinigami love apples?");
 });
 
+app.get('dataupload', function(req,res){
+  
+});
+
 const port: Number = Number(process.env.PORT) || 4000;
 const startServer = async () => {
   await app.listen(port, () => {
