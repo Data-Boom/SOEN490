@@ -14,10 +14,17 @@ branches:
 
 env:
     - SERV_DIR=Server
+    - FRONT_DIR=Client
+    - DB_DIR=Database
     
 before-install:
     - cd $SERV_DIR && npm install && npm test
     - docker-compose up -d --build
 
+script:
+    - docker-compose down
+    - cd .. && cd $FRONT_DIR && npm install && npm test
+    - docker-compose up -d --build
+    
 after_script:
-  - docker-compose down
+- docker-compose down
