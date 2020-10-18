@@ -20,11 +20,10 @@ env:
 
 before-install:
     - cd $SERV_DIR && npm install && npm test
-    - docker-compose up -d --build
 
 script:
-    - docker-compose down
     - cd .. && cd $FRONT_DIR && npm install
+    - cd .. && cd $SERV_DIR
     - docker-compose up -d --build
 
 after_script:
