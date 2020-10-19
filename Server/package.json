@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
@@ -24,7 +27,11 @@
   "dependencies": {
     "@types/cors": "^2.8.5",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "ts-node-dev": "^1.0.0-pre.62"
+    "mysql": "^2.18.1",
+    "pg": "^8.4.1",
+    "ts-node-dev": "^1.0.0-pre.62",
+    "typeorm": "^0.2.28"
   }
 }

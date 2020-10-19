@@ -1,0 +1,19 @@
+.Paragraph{
+    font-family: Georgia;
+    font-style: italic;
+    float: center;
+    line-height: 1.6;
+}
+
+.Header{
+    font-size: 36px;
+    font-family: Georgia;
+    font-weight: bold;
+    padding-bottom: 42px;
+}
+
+.Header2{
+    font-size: 36px;
+    font-family: Georgia;
+    font-weight: bold;
+}
