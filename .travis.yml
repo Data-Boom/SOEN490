@@ -12,11 +12,11 @@ branches:
   only:
     - develop
     - ci-integration-44
+    - master
 
 script:
     - cd Server && npm install && npm test
     - cd ../Client && npm install
-    - cd ../Server
     - docker-compose up -d --build
 
 after_script:
