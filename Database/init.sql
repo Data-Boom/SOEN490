@@ -63,6 +63,18 @@ CREATE TABLE databoom_DB.Gas(
     PRIMARY KEY (gas_id)
 );
 
+CREATE TABLE databoom_DB.Category(
+	category_id INT NOT NULL AUTO_INCREMENT,
+	category_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (category_id)
+);
+
+CREATE TABLE databoom_DB.Subcategory(
+	subcategory_id INT NOT NULL AUTO_INCREMENT,
+	subcategory_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (subcategory_id)
+);
+
 CREATE TABLE databoom_DB.DatasetDataType(
 	data_type_id INT NOT NULL AUTO_INCREMENT,
 	data_type_name VARCHAR(255) NOT NULL,
@@ -73,12 +85,22 @@ CREATE TABLE databoom_DB.Dataset(
 	dataset_id INT NOT NULL AUTO_INCREMENT,
 	set_name VARCHAR(255) NOT NULL,
 	publication_id INT NOT NULL,
-	material_id INT NOT NULL,
+	category_id INT,
+	subcategory_id INT,
+	material_id INT,
+	fuel_id INT,
+	oxidizer_id INT,
+	diluent_id INT,
     data_type_id INT NOT NULL,
 	comments VARCHAR(255),
     PRIMARY KEY (dataset_id),
     FOREIGN KEY (publication_id) REFERENCES Publication(publication_id),
+    FOREIGN KEY (subcategory_id) REFERENCES Subcategory(subcategory_id),
+    FOREIGN KEY (category_id) REFERENCES Category(category_id),
     FOREIGN KEY (material_id) REFERENCES Material(material_id),
+    FOREIGN KEY (fuel_id) REFERENCES Gas(gas_id),
+    FOREIGN KEY (oxidizer_id) REFERENCES Gas(gas_id),
+    FOREIGN KEY (diluent_id) REFERENCES Gas(gas_id),
     FOREIGN KEY (data_type_id) REFERENCES DatasetDataType(data_type_id)
 );
 

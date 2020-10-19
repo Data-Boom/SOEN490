@@ -8,7 +8,6 @@ const DataCell = ({children}) => (
         <p>Choose a File or Drag/Drop here</p>
         <Button onClick = {DataCell.callAPI} variant="contained" t = {0.5}>Browse</Button>
     </Box>
-    
 )
 
 function callAPI(){
