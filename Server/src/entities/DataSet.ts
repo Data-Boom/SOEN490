@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, getRepository, FindManyOptions} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, getRepository } from "typeorm";
 
 @Entity()
 export default class DataSet {
