@@ -12,7 +12,7 @@
     "dev": "nodemon --legacy-watch --watch './src/*.' --exec \"ts-node-dev --poll --respawn --transpile-only\" ./src/app.ts",
     "prod": "tsc && node ./build/app.js",
     "start": "nodemon .",
-	"test": "jest --config ./jest.config.json",
+    "test": "jest --config ./jest.config.json",
     "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
