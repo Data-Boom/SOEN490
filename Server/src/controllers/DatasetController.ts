@@ -9,6 +9,8 @@ router.get(`dataset`, function (req: Request, res: Response) {
 
 const getDataset = async (request: Request, response: Response) => {
 	const query = request.params.query;
+	// for now:
+	response.send("routing successfull");
 	const userQuery = DataSet.getDatasetByCategoryId(1);
 	//foreach dataset get datapoints. for later on
 
