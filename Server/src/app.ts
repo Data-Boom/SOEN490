@@ -2,7 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from './database'
-
+const datasetController = require('./controllers/DatasetController')
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -24,20 +24,7 @@ const options: cors.CorsOptions = {
 
 //use cors middleware
 app.use(cors(options));
-
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
-
-app.get('/note', function(req,res) {
-  console.log(res);
-  let x = {test: "random"};
-  res.status(200).json("L, did you know Shinigami love apples?");
-});
-
-app.get('dataupload', function(req,res){
-  
-});
+app.use('/', datasetController)
 
 const port: Number = Number(process.env.PORT) || 4000;
 const startServer = async () => {
@@ -46,6 +33,7 @@ const startServer = async () => {
 `);
   });
 };
+
 (async () => {
   await connectDB();
   await startServer();
