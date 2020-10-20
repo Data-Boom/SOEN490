@@ -8,6 +8,7 @@ dataset.get(`/dataset`, function (req: Request, res: Response) {
 	});
 
 dataset.post(`/dataset`, function (req: Request, res: Response) {
+		console.log(req.body)
 		createDataset(req, res);
 	});
 
