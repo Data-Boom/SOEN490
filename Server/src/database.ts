@@ -3,7 +3,8 @@ import {AnimeRank} from './entities/AnimeRank';
 
 export const connectDB = async () => {
   console.log("connecting to db")
-  return await createConnection()
+  const connection = await createConnection()
+  return connection
 }//.then( async connection => {
 
   // //Methods for Entity Manager: https://github.com/typeorm/typeorm/blob/master/docs/entity-manager-api.md
