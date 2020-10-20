@@ -26,12 +26,16 @@ export default class DataSet {
 	oxidizer_id: number
     @Column()
     diluent_id: number
+}
 
-    public static getDatasetByCategoryId = (category_id: number): Promise<DataSet[]> => {
-        return getRepository(DataSet).find({category_id: category_id});
-    }
 
-    public static createDataset = (dataset: DataSet): DataSet => {
-        return getRepository(DataSet).create(dataset);
-    }
+export const getDatasets = () => {
+    return getRepository(DataSet).find();
+}
+
+export const postDataset = async (req) => {
+    console.log(req.body)
+    const dataset = await getRepository(DataSet).create(req.body);
+    const results = await getRepository(DataSet).save(dataset);
+    return results;
 }

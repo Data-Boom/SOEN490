@@ -1,23 +1,30 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import DataSet from '../entities/DataSet';
+import DataSet, { getDatasets, postDataset } from '../models/entities/DataSet';
 
-var express = require('express')
-var router = express.Router()
-router.get(`dataset`, function (req: Request, res: Response) {
+const dataset = require('express').Router();
+
+dataset.get(`/dataset`, function (req: Request, res: Response) {
 		getDataset(req, res);
 	});
 
-const getDataset = async (request: Request, response: Response) => {
-	const query = request.params.query;
-	// for now:
-	response.send("routing successfull");
-	const userQuery = DataSet.getDatasetByCategoryId(1);
-	//foreach dataset get datapoints. for later on
+dataset.post(`/dataset`, function (req: Request, res: Response) {
+		createDataset(req, res);
+	});
 
-	const user = await userQuery;
-	if (user) {
-		response.send(user);
+const getDataset = async (request: Request, response: Response) => {
+	const datasets = await getDatasets();
+	//todo foreach dataset get datapoints. for later on
+	if (datasets) {
+		response.send(datasets);
 	}
 }
 
-module.exports = router
+const createDataset = async (request: Request, response: Response) => {
+	console.log(request.body)
+	const result = await postDataset(request);
+	if (result) {
+		response.send(result);
+	}
+}
+
+module.exports = dataset
