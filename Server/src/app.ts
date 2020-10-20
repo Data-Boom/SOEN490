@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from './database'
 const datasetController = require('./controllers/DatasetController')
+const bodyParser = require('body-parser');
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -24,9 +25,12 @@ const options: cors.CorsOptions = {
   origin: "http://localhost:4500",
   preflightContinue: false,
 };
-
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 //use cors middleware
-app.use(cors(options));
+// app.use(cors(options));
 app.use('/', datasetController)
 
 app.get('/note', function(req,res) {
