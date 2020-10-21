@@ -1,6 +1,6 @@
 import IDataPointModel from "./DataPointModel";
 
-export default interface IDataSetModel {
+export default interface IDatasetModel {
     data_set_id: number
     set_name: string
     publication: string
