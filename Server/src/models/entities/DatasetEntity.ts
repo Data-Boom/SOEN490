@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, getRepository } from "typeorm";
 
 @Entity()
-export default class DataSet {
+export default class DatasetEntity {
 
     @PrimaryGeneratedColumn()
     dataset_id: number
@@ -30,12 +30,12 @@ export default class DataSet {
 
 
 export const getDatasets = () => {
-    return getRepository(DataSet).find();
+    return getRepository(DatasetEntity).find();
 }
 
 export const postDataset = async (req) => {
     console.log(req.body)
-    const dataset = await getRepository(DataSet).create(req.body);
-    const results = await getRepository(DataSet).save(dataset);
+    const dataset = await getRepository(DatasetEntity).create(req.body);
+    const results = await getRepository(DatasetEntity).save(dataset);
     return results;
 }

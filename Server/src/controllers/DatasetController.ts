@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import DataSet, { getDatasets, postDataset } from '../models/entities/DataSet';
+import DatasetEntity, { getDatasets, postDataset } from '../models/entities/DatasetEntity';
 
 const dataset = require('express').Router();
 
