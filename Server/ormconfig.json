@@ -5,7 +5,7 @@
     "username": "user",
     "password": "password",
     "database": "databoom_DB",
-    "synchronize": true,
+    "synchronize": false,
     "logging": true,
     "entities": ["src/models/entities/**/*.ts", "dist/entities/**/*.js"]
   }
