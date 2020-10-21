@@ -2,7 +2,8 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from './database'
-
+const datasetController = require('./controllers/DatasetController')
+const bodyParser = require('body-parser');
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -24,13 +25,13 @@ const options: cors.CorsOptions = {
   origin: "http://localhost:4500",
   preflightContinue: false,
 };
-
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 //use cors middleware
-app.use(cors(options));
-
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+// app.use(cors(options));
+app.use('/', datasetController)
 
 app.get('/note', function(req,res) {
   console.log(res);
@@ -93,7 +94,7 @@ function parseFile(req, res, next){
 //First:  Multer middleware to download file. At some point,
 //this middleware calls next() so process continues on to next middleware
 //Second: use the file as you need
-app.post('/upload', [Multer({dest:'./uploads'}), parseFile]);
+// app.post('/upload', [Multer({dest:'./uploads'}), parseFile]);
 
 
 
@@ -104,6 +105,7 @@ const startServer = async () => {
 `);
   });
 };
+
 (async () => {
   await connectDB();
   await startServer();
