@@ -1,11 +1,9 @@
 var express = require('express');
-var router = express.Router();
-
+const router = express.Router();
+const fileUploadController = require('../controllers/fileUploadController');
 
 //File Upload Post Router
-router.post('/dataupload', function(request, response)  {
-        // Call the controller for post
-});
+router.post('/dataupload', fileUploadController.createRequest);
 
 //File Upload Get Router
 router.get('/dataupload', function(request, response)  {

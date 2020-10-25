@@ -3,7 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from './database'
 const datasetController = require('./controllers/DatasetController')
-const fileManagerRouter = require('./routes/fileManagementRouter');
+const fileUploadRouter = require('./routes/FileUploadRouter');
 const bodyParser = require('body-parser');
 
 // Create a new express application instance
@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 //use cors middleware
  app.use(cors(options));
 app.use('/', datasetController)
-app.use('/', fileManagerRouter)
+app.use('/', fileUploadRouter)
 
 app.get('/note', function(req,res) {
   console.log(res);

@@ -6,7 +6,16 @@ const fileSystem = require('fs');
 //var Upload = require('../models/FileUploadModel');
 // Setup model for this controller to fetch data - will be updated when working on this story
 
-function parseCSVFile(sourceFilePath, columns, onNewRecord, handleError, done){
+
+
+const processUpload = async (dataToProcess) => {
+    console.log(dataToProcess);
+    this.dataToProcess = dataToProcess;
+    //this.parseCSVFile(dataToProcess);
+}
+
+
+const parseCSVFile = async (sourceFilePath, columns, onNewRecord, handleError, done) => {
     var source = fileSystem.createReadStream(sourceFilePath);
   
     var linesRead = 0;
@@ -38,7 +47,7 @@ function parseCSVFile(sourceFilePath, columns, onNewRecord, handleError, done){
   //We will call this once Multer's middleware processed the request
   //and stored file in req.files.fileFormFieldName
   
-  function parseFile(req, res, next){
+  const parseFile = async (req, res, next) => {
     var filePath = req.files.file.path;
     console.log(filePath);
     function onNewRecord(record){
@@ -62,3 +71,7 @@ function parseCSVFile(sourceFilePath, columns, onNewRecord, handleError, done){
   //this middleware calls next() so process continues on to next middleware
   //Second: use the file as you need
   // app.post('/upload', [Multer({dest:'./uploads'}), parseFile]);
+
+module.exports = {
+    parseFile, parseCSVFile, processUpload
+}

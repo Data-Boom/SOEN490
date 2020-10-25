@@ -1,7 +1,8 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import DataSet, { getDatasets, postDataset } from '../models/entities/DataSet';
+import DataSet, { getDatasets, postDataset } from '../models/entities/DatasetEntity';
 
 const dataset = require('express').Router();
+
 
 dataset.get(`/dataset`, function (req: Request, res: Response) {
 		getDataset(req, res);
@@ -12,6 +13,7 @@ dataset.post(`/dataset`, function (req: Request, res: Response) {
 		createDataset(req, res);
 	});
 
+	
 const getDataset = async (request: Request, response: Response) => {
 	const datasets = await getDatasets();
 	//todo foreach dataset get datapoints. for later on
