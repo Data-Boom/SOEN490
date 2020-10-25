@@ -1,5 +1,5 @@
 import {createConnection} from 'typeorm';
-import {AnimeRank} from './entities/AnimeRank';
+//import {AnimeRank} from './entities/AnimeRank';
 
 export const connectDB = async () => {
   console.log("connecting to db")
