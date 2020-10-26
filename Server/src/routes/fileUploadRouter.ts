@@ -11,4 +11,8 @@ router.get('/dataupload', function(request, response)  {
     response.status(200).json("upload endpoint is reached!");
 });
 
+router.get('/note', function(req,res) {
+    res.status(200).json("L, did you know Shinigami love apples?");
+  });
+
 module.exports = router;
