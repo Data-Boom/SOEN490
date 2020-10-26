@@ -1,7 +1,7 @@
 import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
-import { connectDB } from '../database'
+import { connectDB } from '../models/database'
 const datasetController = require('../controllers/DatasetController')
 const fileUploadRouter = require('../routes/FileUploadRouter');
 
