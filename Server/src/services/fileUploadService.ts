@@ -8,6 +8,11 @@ const fileSystem = require('fs');
 
 
 
+/**
+ * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
+ * then stored into its appropriate table in the database. 
+ */
+
 const processUpload = async (dataToProcess) => {
     console.log(dataToProcess);
     this.dataToProcess = dataToProcess;

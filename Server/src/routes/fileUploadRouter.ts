@@ -2,7 +2,11 @@ var express = require('express');
 const router = express.Router();
 const fileUploadController = require('../controllers/fileUploadController');
 
-//File Upload Post Router
+/**
+ * This file contains the routes for a call to dataupload. Only a post method will remain, get is left for
+ * testing purposes. If an API call is made to /dataupload then the request is routed to the fileUploadController
+ * to continue processing of the request.
+ */
 router.post('/dataupload', fileUploadController.createRequest);
 
 //File Upload Get Router

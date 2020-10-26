@@ -1,6 +1,12 @@
 import {createConnection} from 'typeorm';
 //import {AnimeRank} from './entities/AnimeRank';
 
+
+
+/**
+ * This method opens a connection to the database using the configurations in ormconfig.json This method only needs  
+ * to be called once. Subsequent calls to the existing connection be made by getConnection method provided by typeORM.
+ */
 export const connectDB = async () => {
   console.log("connecting to db")
   const connection = await createConnection()
