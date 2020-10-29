@@ -31,6 +31,8 @@ When making commits you should include the issue number in the commit, this allo
 
 - Pull requests by developers must be approved by at least 2 other developers. In order words, each pull request is required to have 2 reviewers at the minimum. In addition, all submitted pull requests must include Unit Tests as part of the feature implementation.
 
+- All your code should be commented. This helps other developers follow your code & is a good practice to follow
+
 - Prettier should also be installed as a VCS extension. It beautifies the written code to follow common coding convensions
 
 
