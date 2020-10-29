@@ -94,7 +94,7 @@ function parseFile(req, res, next){
 //First:  Multer middleware to download file. At some point,
 //this middleware calls next() so process continues on to next middleware
 //Second: use the file as you need
-// app.post('/upload', [Multer({dest:'./uploads'}), parseFile]);
+app.post('/upload', [Multer({dest:'./uploads'}), parseFile]);
 
 
 
