@@ -1,12 +1,14 @@
-import React from 'react';
-import './Splash.css';
+import './Splash.css'
 
-function Splash(){
-    return(
-        <div className = "Splash">
-            <img src={require('./splashimage.png')} width = "100%" />
-        </div>
-    )
+import React from 'react'
+import splashimage from './splashimage.png'
+
+function Splash() {
+  return (
+    <div className="Splash">
+      <img src={splashimage} width="100%" />
+    </div>
+  )
 }
 
-export default Splash;
+export default Splash
