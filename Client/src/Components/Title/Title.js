@@ -2,7 +2,7 @@ import './Title.css'
 
 import React from 'react'
 
-function Title() {
+export default function Title() {
   return (
     <div className="Title">
       <header>
@@ -11,5 +11,3 @@ function Title() {
     </div>
   )
 }
-
-export default Title
