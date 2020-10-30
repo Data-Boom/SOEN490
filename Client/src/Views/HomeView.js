@@ -1,9 +1,8 @@
-import './App.css'
+import './../App.css'
 
 import React, { useEffect, useState } from "react"
 
 import Blurb from '../Components/Blurb/Blurb'
-import { Button } from '@material-ui/core'
 import DataCell from '../Components/DataCell/DataCell'
 import Splash from '../Components/Splash/Splash'
 import Title from '../Components/Title/Title'
@@ -25,7 +24,6 @@ export default function HomeView() {
 
   return (
     <div className="App">
-      <Button></Button>
       <Title></Title>
       <Splash />
       <Blurb />
