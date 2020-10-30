@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "semi": [
+      2,
+      "never"
+    ],
+    "indent": [
+      "error",
+      2
+    ],
+    "no-unused-vars": "warn",
+    "sort-imports": "warn"
+  }
+}
