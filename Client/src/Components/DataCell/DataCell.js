@@ -11,8 +11,4 @@ const DataCell = () => (
   </Box>
 )
 
-function callAPI() {
-  fetch("http://localhost:4000/dataupload")
-}
-
 export default DataCell
