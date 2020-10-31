@@ -1,53 +1,10 @@
-import express from 'express';
 import 'dotenv/config';
-import cors from 'cors';
-import { connectDB } from './database'
-const datasetController = require('./controllers/DatasetController')
-const fileUploadRouter = require('./routes/FileUploadRouter');
-const bodyParser = require('body-parser');
-
-// Create a new express application instance
-const app: express.Application = express();
-
-// Options for cors midddleware
-const options: cors.CorsOptions = {
-  allowedHeaders: [
-    'Origin',
-    'X-Requested-With',
-    'Content-Type',
-    'Accept',
-    'X-Access-Token',
-  ],
-  credentials: true,
-  methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-  origin: "http://localhost:4500",
-  preflightContinue: false,
-};
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-app.use(bodyParser.json());
-//use cors middleware
- app.use(cors(options));
-app.use('/', datasetController)
-app.use('/', fileUploadRouter)
-
-app.get('/note', function(req,res) {
-  console.log(res);
-  let x = {test: "random"};
-  res.status(200).json("L, did you know Shinigami love apples?");
-});
+const loadStartupProcess =  require('./loaders/loadStartupProcess');
 
 
-const port: Number = Number(process.env.PORT) || 4000;
-const startServer = async () => {
-  await app.listen(port, () => {
-    console.log(`This Server is running on http://localhost:4000
-`);
-  });
-};
+/**
+ * App.ts should be kept to a minimal, only items required by the whole application should reside here. Startup
+ * processes were  moved as they only require a one-time call
+ */
+const expressLoader = new loadStartupProcess();
 
-(async () => {
-  await connectDB();
-  await startServer();
-})();
