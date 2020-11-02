@@ -7,6 +7,7 @@ import DataCell from '../Components/DataCell/DataCell'
 import Splash from '../Components/Splash/Splash'
 import Title from '../Components/Title/Title'
 import fetch from "node-fetch"
+import Graph from '../Components/Graph/Graph'
 
 export default function HomeView() {
 
@@ -25,6 +26,7 @@ export default function HomeView() {
   return (
     <div className="App">
       <Title></Title>
+      <Graph />
       <Splash />
       <Blurb />
       <DataCell />
