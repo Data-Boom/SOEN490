@@ -1,4 +1,7 @@
 const fileUploadService = require('../services/fileUploadService');
+var fs = require('fs');
+var csv = require('fast-csv');
+
 
 
 /**
@@ -7,24 +10,28 @@ const fileUploadService = require('../services/fileUploadService');
  * controller is resposible for providing a response back to the Client on success.
  */
 
-const createRequest = (req, res) => {
-  if (!req.body.title) {
+const createRequest = async (req, res) => {
+  if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty. Add content!"
+      message: "Nothing to process"
     });
   }
-  //callFileUploadService(req, res);
+  else
+  {
+    try {
+      const response = await callFileUploadService(req.file.path);
+      res.status(200).send(response);
+    }catch(error) {
+      res.status(500).send(error);
+    }
+  }
 }
 
-const callFileUploadService = async (req, res) => {
-    try {
-      const fileServiceResponse = await fileUploadService.processUpload( req.body );
-      return res.send( fileServiceResponse );
-    } catch ( err ) {
-      res.status( 500 ).send( err );
-    }
+const callFileUploadService = async (filePathOfCSV) => {
+      const fileServiceResponse = await fileUploadService.processUpload(filePathOfCSV);
+      return fileServiceResponse;
 }
-//
+
 module.exports = {
   callFileUploadService, createRequest
 }
