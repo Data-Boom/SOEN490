@@ -3,7 +3,6 @@ import './../App.css'
 import React, { useEffect, useState } from "react"
 
 import Blurb from '../Components/Blurb/Blurb'
-import { Button } from '@material-ui/core'
 import DataCell from '../Components/DataCell/DataCell'
 import Splash from '../Components/Splash/Splash'
 import fetch from "node-fetch"
@@ -17,9 +16,7 @@ export default function HomeView() {
       .then(res => res.json())
       .then(data => setApiResponse(data))
   }
-  const handleRequest = () => {
-    alert('clicked')
-  }
+  
   useEffect(() => {
     callAPI()
   }, [])
