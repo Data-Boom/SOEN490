@@ -1,10 +1,14 @@
-import HomeView from './Views/HomeView'
+import NavigationMenu from './Components/NavigationMenu'
 import React from 'react'
+import Title from './Components/Title/Title'
 
 function App() {
 
   return (
-    <HomeView></HomeView>
+    <div className="App">
+      <Title />
+      <NavigationMenu />
+    </div>
   )
 }
 
