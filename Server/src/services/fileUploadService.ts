@@ -22,8 +22,8 @@ const processUpload = async (filePathOfCSV) => {
       .on("end", function () {
         console.log(fileRows)
         fileSystem.unlinkSync(filePathOfCSV); 
-        return "Parsing was a success";
-      }) 
+      })
+      return fileRows; 
 }
 
 module.exports = {

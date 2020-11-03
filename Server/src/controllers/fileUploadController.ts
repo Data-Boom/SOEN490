@@ -1,13 +1,10 @@
 const fileUploadService = require('../services/fileUploadService');
-var fs = require('fs');
-var csv = require('fast-csv');
-
-
 
 /**
  * The fileUploadController is resposible for providing instructions to the application if a request comes in
  * to the /dataupload api. This controller will call the Service for appropriate processing of the input. The
- * controller is resposible for providing a response back to the Client on success.
+ * controller is resposible for providing a response back to the Client on success. The fileUploadController 
+ * creates a request for the fileUploadService to process, only passing the path of the CSV.
  */
 
 const createRequest = async (req, res) => {
@@ -19,17 +16,16 @@ const createRequest = async (req, res) => {
   else
   {
     try {
-      const response = await callFileUploadService(req.file.path);
-      res.status(200).send(response);
+      callFileUploadService(req.file.path, res);
     }catch(error) {
       res.status(500).send(error);
     }
   }
 }
 
-const callFileUploadService = async (filePathOfCSV) => {
+const callFileUploadService = async (filePathOfCSV, res) => {
       const fileServiceResponse = await fileUploadService.processUpload(filePathOfCSV);
-      return fileServiceResponse;
+      res.status(201).send(fileServiceResponse);
 }
 
 module.exports = {
