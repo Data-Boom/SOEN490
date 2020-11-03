@@ -25,8 +25,11 @@ const handleSubmit = async (e) => {
         method: 'POST',
         body: formData,
     };
-    const response = await fetch('http://localhost:4000/dataupload', options)
-    
+    await fetch('http://localhost:4000/dataupload', options)
+    .then(resp => resp.json())
+    .then(result => {
+        alert(result.message)
+    })
 }
 
     return (
