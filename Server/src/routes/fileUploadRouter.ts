@@ -10,7 +10,7 @@ const fileUploadController = require('../controllers/fileUploadController');
  * and the file is stored in a temporary directory called tmp/csv. This route is referred for processing by 
  * the service.
  */
-router.post('/dataupload', upload.single('file'), fileUploadController.createRequest);
+router.post('/dataupload', upload.single('csvFile'), fileUploadController.createRequest);
 
 /**
  * This file contains the routes for a call to dataupload. Only a post method will remain, get is left for
