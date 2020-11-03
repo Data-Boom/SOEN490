@@ -26,7 +26,6 @@ export default function HomeView() {
   return (
     <div className="App">
       <Title></Title>
-      <Graph />
       <Splash />
       <Blurb />
       <DataCell />
