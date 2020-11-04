@@ -5,10 +5,13 @@ export default function GraphView() {
 
   // const [count, setCount] = useState(0)
   const handleRequest = () => {
-    // alert('clicked')
+    alert('clicked')
   }
 
   return (
-    <Button onClick={() => handleRequest}>test</Button>
+    <>
+      <h2>GraphView</h2>
+      <Button onClick={handleRequest}>Issa graph page</Button>
+    </>
   )
 }
