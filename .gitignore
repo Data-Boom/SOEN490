@@ -131,3 +131,4 @@ sketch
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/react,node,vscode
+**/.DS_Store
