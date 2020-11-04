@@ -3,7 +3,7 @@ import * as d3 from "d3"
 
 //Global variables for graph creation
 
-var margin = {
+const margin = {
     top: 50,
     right: 210,
     bottom: 50,
@@ -17,7 +17,7 @@ var margin = {
 var xScale, yScale, xAxis, yAxis;
 
 //This function creates the basis for the linear x and y axis
-function startLinear() {
+const startLinear = () => {
     xScale = d3.scaleLinear()
         .range([0, width]).nice();
 
