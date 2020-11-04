@@ -1,5 +1,6 @@
 import { Button } from "@material-ui/core"
 import React from "react"
+import Graph from '../Components/Graph/Graph'
 
 export default function GraphView() {
 
@@ -11,7 +12,8 @@ export default function GraphView() {
   return (
     <>
       <h2>GraphView</h2>
-      <Button onClick={handleRequest}>Issa graph page</Button>
+      <Button onClick={handleRequest}>Why am I here?</Button>
+      <Graph />
     </>
   )
 }

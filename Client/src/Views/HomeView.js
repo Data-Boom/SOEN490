@@ -16,7 +16,7 @@ export default function HomeView() {
       .then(res => res.json())
       .then(data => setApiResponse(data))
   }
-  
+
   useEffect(() => {
     callAPI()
   }, [])
