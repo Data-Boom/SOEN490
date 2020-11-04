@@ -6,7 +6,6 @@ import Blurb from '../Components/Blurb/Blurb'
 import DataCell from '../Components/DataCell/DataCell'
 import Splash from '../Components/Splash/Splash'
 import fetch from "node-fetch"
-import Graph from '../Components/Graph/Graph'
 
 export default function HomeView() {
 
@@ -17,7 +16,7 @@ export default function HomeView() {
       .then(res => res.json())
       .then(data => setApiResponse(data))
   }
-  
+
   useEffect(() => {
     callAPI()
   }, [])
