@@ -7,9 +7,11 @@ import {
   Route
 } from "react-router-dom"
 import { List, ListItem, ListItemIcon } from "@material-ui/core"
-import { graphRoute, homeRoute } from '../Consts/Routes'
+import { graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
+import SearchIcon from '@material-ui/icons/Search';
+import SearchView from "../Views/SearchView"
 import GraphView from "../Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from '../Views/HomeView'
@@ -37,10 +39,20 @@ export default function NavigationMenu() {
               Graph
             </NavLink>
           </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <SearchIcon />
+            </ListItemIcon>
+            <NavLink exact to={searchRoute}>
+              Search
+            </NavLink>
+          </ListItem>
         </List>
         <div>
           <Route exact path={homeRoute} component={HomeView} />
           <Route path={graphRoute} component={GraphView} />
+          <Route path={searchRoute} component={SearchView} />
         </div>
       </div>
     </HashRouter>
