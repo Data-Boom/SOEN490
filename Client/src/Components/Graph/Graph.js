@@ -38,7 +38,6 @@ class Graph extends Component {
     }
     graphCreation(datalist) {
         //Calls the function to create the axis
-        //startLinear();
         //This part creates the canvas for our graph
         var svg = d3.select(this.refs.canvas) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
             .append("svg")
@@ -108,8 +107,6 @@ class Graph extends Component {
             .attr("cy", function (d) {
                 return yScale(d["y"]);
             })
-            .attr("clip-path", "")
-
         //This allows the user to zoom in/out onto the graph.
         var zoom = d3.zoom()
             .scaleExtent([1, 20])
@@ -136,7 +133,7 @@ class Graph extends Component {
             scatter
                 .selectAll("circle")
                 .attr('cx', function (d) { return newX(d["x"]) })
-                .attr('cy', function (d) { return newY(d.["y"]) });
+                .attr('cy', function (d) { return newY(d["y"]) });
         }
     }
     render() {
