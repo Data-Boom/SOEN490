@@ -1,17 +1,15 @@
-import React, { Component } from 'react'
-import Button from '@material-ui/core/Button'
+import React, { useEffect } from 'react'
 import * as d3 from "d3"
 import { SvgIcon } from '@material-ui/core';
 
 //Global variables for graph creation
-
 const margin = {
     top: 50,
     right: 210,
     bottom: 50,
     left: 70
 },
-    outerWidth = 1050,
+    outerWidth = 1000,
     outerHeight = 500,
     width = outerWidth - margin.left - margin.right,
     height = outerHeight - margin.top - margin.bottom;
@@ -31,18 +29,16 @@ datalist.push(dataset2)
 datalist.push(dataset3)
 datalist.push(dataset4)
 
-class Graph extends Component {
+const Graph = () => {
+    const ref = React.useRef(null)
 
-    componentDidMount() {
-        this.graphCreation(datalist)
-    }
-    graphCreation(datalist) {
+    useEffect(() => {
         //Calls the function to create the axis
         //This part creates the canvas for our graph
-        var svg = d3.select(this.refs.canvas) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
+        var svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
             .append("svg")
-            .attr("width", 1050)
-            .attr("height", 500)
+            .attr("width", 1000)
+            .attr("height", 750)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -135,10 +131,18 @@ class Graph extends Component {
                 .attr('cx', function (d) { return newX(d["x"]) })
                 .attr('cy', function (d) { return newY(d["y"]) });
         }
-    }
-    render() {
-        return <div ref="canvas">
-        </div>
-    }
+    
+    
+
+    }, [])
+
+    return (
+        <svg
+            ref={ref}
+            viewBox="0 0 1000 4000"
+        />
+    )
+
 }
+
 export default Graph
