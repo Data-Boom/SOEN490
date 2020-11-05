@@ -75,7 +75,58 @@ import {Form,  Button,Col, Container, Table} from 'react-bootstrap/'
 
         </Form>
 
-        
+        <h1>RESULTS</h1>
+
+        <Table striped bordered hover>
+                <thead>
+                    <tr>
+                    <th>Title</th>
+                    <th>Oxidizer </th>
+                    <th>Subcategory</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                    <th>Fuel</th>
+                    <th>Diluent</th>
+                    <th>Output Format</th>
+                    <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                </tbody>
+        </Table>
     </Container>
     );
 }
