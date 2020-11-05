@@ -18,27 +18,6 @@ const margin = {
 
 var xScale, yScale, xAxis, yAxis;
 
-//This function creates the basis for the linear x and y axis
-var startLinear = () => {
-    xScale = d3.scaleLinear()
-        .range([0, width]).nice();
-
-    xScale.domain([0, 10]);
-
-    xAxis = d3.axisBottom()
-        .scale(xScale)
-        .tickSize(-height);
-
-    yScale = d3.scaleLinear()
-        .range([height, 0]).nice();
-
-    yScale.domain([0, 10]);
-
-    yAxis = d3.axisLeft()
-        .scale(yScale)
-        .tickSize(-width);
-}
-
 //sample datasets to try, just needs to gather from the backend instead.
 var dataset1 = [{ x: 5.1, y: 3.5 }, { x: 4.9, y: 3 }, { x: 4.7, y: 3.2 }, { x: 4.6, y: 3.1 }, { x: 5, y: 3.6 }, { x: 5.4, y: 3.9 }]
 var dataset2 = [{ x: 3, y: 8 }, { x: 9, y: 7 }, { x: 1, y: 3 }, { x: 2, y: 4 }, { x: 8, y: 1 }]
@@ -68,6 +47,8 @@ class Graph extends Component {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
+        //This part creates the axis/scales used for the data.
         xScale = d3.scaleLinear()
             .domain([0, 10])
             .range([0, width]).nice();
@@ -80,8 +61,8 @@ class Graph extends Component {
             .range([height, 0]).nice();
         yAxis = svg.append("g")
             .call(d3.axisLeft(yScale));
-        //This part creates the rectangle for the inner graph
 
+        //This part creates an area where points will not be drawn if they are not within this area.
         var clip = svg.append("defs").append("SVG:clipPath")
             .attr("id", "clip")
             .append("SVG:rect")
@@ -91,7 +72,8 @@ class Graph extends Component {
             .attr("y", 0);
 
         //This is the part that creates the points
-        var scatter = svg.append("g");
+        var scatter = svg.append("g")
+            .attr("clip-path", "url(#clip)");
 
         scatter
             //the myDots is a unique name, this is to refer to these dots.
@@ -126,10 +108,15 @@ class Graph extends Component {
             .attr("cy", function (d) {
                 return yScale(d["y"]);
             })
+            .attr("clip-path", "")
+
+        //This allows the user to zoom in/out onto the graph.
         var zoom = d3.zoom()
-            .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
+            .scaleExtent([1, 20])
             .extent([[0, 0], [width, height]])
-            .on("zoom", updateChart);
+            .on("zoom", updateGraph);
+
+        //This rectangle is the area in which the user can zoom into.
         svg.append("rect")
             .attr("fill", "none")
             .attr("width", width)
@@ -138,25 +125,20 @@ class Graph extends Component {
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
             .call(zoom);
 
-
-        function updateChart() {
-
-            // recover the new scale
+        //This function modifies the graph upon zooming in/out by updating the axes and points.
+        function updateGraph() {
             var newX = d3.event.transform.rescaleX(xScale);
             var newY = d3.event.transform.rescaleY(yScale);
 
-            // update axes with these new boundaries
             xAxis.call(d3.axisBottom(newX))
             yAxis.call(d3.axisLeft(newY))
 
-            // update circle position
             scatter
                 .selectAll("circle")
                 .attr('cx', function (d) { return newX(d["x"]) })
                 .attr('cy', function (d) { return newY(d.["y"]) });
         }
     }
-
     render() {
         return <div ref="canvas">
         </div>
