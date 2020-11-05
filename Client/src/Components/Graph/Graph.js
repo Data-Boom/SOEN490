@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import * as d3 from "d3"
+import { SvgIcon } from '@material-ui/core';
 
 //Global variables for graph creation
 const margin = {
@@ -14,27 +15,6 @@ const margin = {
     height = outerHeight - margin.top - margin.bottom;
 
 var xScale, yScale, xAxis, yAxis;
-
-//This function creates the basis for the linear x and y axis
-const startLinear = () => {
-    xScale = d3.scaleLinear()
-        .range([0, width]).nice();
-
-    yScale = d3.scaleLinear()
-        .range([height, 0]).nice();
-
-    xScale.domain([0, 10]);
-    yScale.domain([0, 10]);
-
-    xAxis = d3.axisBottom()
-        .scale(xScale)
-        .tickSize(-height);
-
-    yAxis = d3.axisLeft()
-        .scale(yScale)
-        .tickSize(-width);
-
-}
 
 //sample datasets to try, just needs to gather from the backend instead.
 var dataset1 = [{ x: 5.1, y: 3.5 }, { x: 4.9, y: 3 }, { x: 4.7, y: 3.2 }, { x: 4.6, y: 3.1 }, { x: 5, y: 3.6 }, { x: 5.4, y: 3.9 }]
@@ -54,7 +34,6 @@ const Graph = () => {
 
     useEffect(() => {
         //Calls the function to create the axis
-        startLinear();
         //This part creates the canvas for our graph
         var svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
             .append("svg")
@@ -62,38 +41,36 @@ const Graph = () => {
             .attr("height", 750)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        //This part creates the rectangle for the inner graph
-        svg.append("rect")
-            .attr("fill", "none")
-            .attr("width", width)
-            .attr("height", height);
-        //This creates the top line by making a basic line and moving it to the top (translating), and then calls the already created
-        //xAxis which is all the ticks and the texts, then puts it on the bottom of the rectangle   
-        svg.append("g")
-            .attr("class", "x axis")
+
+
+        //This part creates the axis/scales used for the data.
+        xScale = d3.scaleLinear()
+            .domain([0, 10])
+            .range([0, width]).nice();
+        xAxis = svg.append("g")
             .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .classed("label", true)
-            .attr("x", width)
-            .attr("y", margin.bottom - 10)
-            .attr("fill", "black")
-            .style("text-anchor", "end")
-            .text("x axis");
-        //Same as the x axis but instead for the y axis
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .classed("label", true)
-            .attr("transform", "rotate(-90)")
-            .attr("y", -margin.left)
-            .attr("dy", "1.5em")
-            .attr("fill", "black")
-            .style("text-anchor", "end")
-            .text("y axis");
+            .call(d3.axisBottom(xScale));
+
+        yScale = d3.scaleLinear()
+            .domain([0, 10])
+            .range([height, 0]).nice();
+        yAxis = svg.append("g")
+            .call(d3.axisLeft(yScale));
+
+        //This part creates an area where points will not be drawn if they are not within this area.
+        var clip = svg.append("defs").append("SVG:clipPath")
+            .attr("id", "clip")
+            .append("SVG:rect")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("x", 0)
+            .attr("y", 0);
+
         //This is the part that creates the points
-        svg.append("g")
+        var scatter = svg.append("g")
+            .attr("clip-path", "url(#clip)");
+
+        scatter
             //the myDots is a unique name, this is to refer to these dots.
             .selectAll("myDots")
             //Datalist is the list of list of points, the enter creates a loop through each one.
@@ -126,6 +103,37 @@ const Graph = () => {
             .attr("cy", function (d) {
                 return yScale(d["y"]);
             })
+        //This allows the user to zoom in/out onto the graph.
+        var zoom = d3.zoom()
+            .scaleExtent([1, 20])
+            .extent([[0, 0], [width, height]])
+            .on("zoom", updateGraph);
+
+        //This rectangle is the area in which the user can zoom into.
+        svg.append("rect")
+            .attr("fill", "none")
+            .attr("width", width)
+            .attr("height", height)
+            .style("pointer-events", "all")
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+            .call(zoom);
+
+        //This function modifies the graph upon zooming in/out by updating the axes and points.
+        function updateGraph() {
+            var newX = d3.event.transform.rescaleX(xScale);
+            var newY = d3.event.transform.rescaleY(yScale);
+
+            xAxis.call(d3.axisBottom(newX))
+            yAxis.call(d3.axisLeft(newY))
+
+            scatter
+                .selectAll("circle")
+                .attr('cx', function (d) { return newX(d["x"]) })
+                .attr('cy', function (d) { return newY(d["y"]) });
+        }
+    
+    
+
     }, [])
 
     return (
@@ -134,6 +142,7 @@ const Graph = () => {
             viewBox="0 0 1000 4000"
         />
     )
+
 }
 
 export default Graph
