@@ -6,7 +6,7 @@ export default function Title() {
   return (
     <div className="Title">
       <header>
-        <h1>DetonationDatabase</h1>
+        <h1>Detonation Database</h1>
       </header>
     </div>
   )
