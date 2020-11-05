@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import * as d3 from "d3"
+import { SvgIcon } from '@material-ui/core';
 
 //Global variables for graph creation
 
@@ -58,49 +59,41 @@ class Graph extends Component {
     }
     graphCreation(datalist) {
         //Calls the function to create the axis
-        startLinear();
+        //startLinear();
         //This part creates the canvas for our graph
         var svg = d3.select(this.refs.canvas) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
             .append("svg")
             .attr("width", 1050)
             .attr("height", 500)
-            .call(d3.zoom().on("zoom", function () {
-                svg.attr("transform", d3.event.transform)
-            }))
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        //This part creates the rectangle for the inner graph
-        svg.append("rect")
-            .attr("fill", "none")
-            .attr("width", width)
-            .attr("height", height);
-        //This creates the top line by making a basic line and moving it to the top (translating), and then calls the already created
-        //xAxis which is all the ticks and the texts, then puts it on the bottom of the rectangle   
-        svg.append("g")
-            .attr("class", "x axis")
+
+        xScale = d3.scaleLinear()
+            .domain([0, 10])
+            .range([0, width]).nice();
+        xAxis = svg.append("g")
             .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .append("text")
-            .classed("label", true)
-            .attr("x", width)
-            .attr("y", margin.bottom - 10)
-            .attr("fill", "black")
-            .style("text-anchor", "end")
-            .text("x axis");
-        //Same as the x axis but instead for the y axis
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .classed("label", true)
-            .attr("transform", "rotate(-90)")
-            .attr("y", -margin.left)
-            .attr("dy", "1.5em")
-            .attr("fill", "black")
-            .style("text-anchor", "end")
-            .text("y axis");
+            .call(d3.axisBottom(xScale));
+
+        yScale = d3.scaleLinear()
+            .domain([0, 10])
+            .range([height, 0]).nice();
+        yAxis = svg.append("g")
+            .call(d3.axisLeft(yScale));
+        //This part creates the rectangle for the inner graph
+
+        var clip = svg.append("defs").append("SVG:clipPath")
+            .attr("id", "clip")
+            .append("SVG:rect")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("x", 0)
+            .attr("y", 0);
+
         //This is the part that creates the points
-        svg.append("g")
+        var scatter = svg.append("g");
+
+        scatter
             //the myDots is a unique name, this is to refer to these dots.
             .selectAll("myDots")
             //Datalist is the list of list of points, the enter creates a loop through each one.
@@ -133,6 +126,35 @@ class Graph extends Component {
             .attr("cy", function (d) {
                 return yScale(d["y"]);
             })
+        var zoom = d3.zoom()
+            .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
+            .extent([[0, 0], [width, height]])
+            .on("zoom", updateChart);
+        svg.append("rect")
+            .attr("fill", "none")
+            .attr("width", width)
+            .attr("height", height)
+            .style("pointer-events", "all")
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+            .call(zoom);
+
+
+        function updateChart() {
+
+            // recover the new scale
+            var newX = d3.event.transform.rescaleX(xScale);
+            var newY = d3.event.transform.rescaleY(yScale);
+
+            // update axes with these new boundaries
+            xAxis.call(d3.axisBottom(newX))
+            yAxis.call(d3.axisLeft(newY))
+
+            // update circle position
+            scatter
+                .selectAll("circle")
+                .attr('cx', function (d) { return newX(d["x"]) })
+                .attr('cy', function (d) { return newY(d.["y"]) });
+        }
     }
 
     render() {
