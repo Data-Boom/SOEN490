@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Button from '@material-ui/core/Button'
 import * as d3 from "d3"
 
 //Global variables for graph creation
@@ -17,24 +18,24 @@ const margin = {
 var xScale, yScale, xAxis, yAxis;
 
 //This function creates the basis for the linear x and y axis
-const startLinear = () => {
+var startLinear = () => {
     xScale = d3.scaleLinear()
         .range([0, width]).nice();
 
-    yScale = d3.scaleLinear()
-        .range([height, 0]).nice();
-
     xScale.domain([0, 10]);
-    yScale.domain([0, 10]);
 
     xAxis = d3.axisBottom()
         .scale(xScale)
         .tickSize(-height);
 
+    yScale = d3.scaleLinear()
+        .range([height, 0]).nice();
+
+    yScale.domain([0, 10]);
+
     yAxis = d3.axisLeft()
         .scale(yScale)
         .tickSize(-width);
-
 }
 
 //sample datasets to try, just needs to gather from the backend instead.
@@ -51,6 +52,7 @@ datalist.push(dataset3)
 datalist.push(dataset4)
 
 class Graph extends Component {
+
     componentDidMount() {
         this.graphCreation(datalist)
     }
@@ -62,6 +64,9 @@ class Graph extends Component {
             .append("svg")
             .attr("width", 1050)
             .attr("height", 500)
+            .call(d3.zoom().on("zoom", function () {
+                svg.attr("transform", d3.event.transform)
+            }))
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         //This part creates the rectangle for the inner graph
@@ -129,6 +134,10 @@ class Graph extends Component {
                 return yScale(d["y"]);
             })
     }
-    render() { return <div ref="canvas"></div> }
+
+    render() {
+        return <div ref="canvas">
+        </div>
+    }
 }
 export default Graph

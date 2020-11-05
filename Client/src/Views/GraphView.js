@@ -3,8 +3,6 @@ import React from "react"
 import Graph from '../Components/Graph/Graph'
 
 export default function GraphView() {
-
-  // const [count, setCount] = useState(0)
   const handleRequest = () => {
     alert('clicked')
   }
