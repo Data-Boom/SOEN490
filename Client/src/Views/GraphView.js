@@ -54,3 +54,4 @@ export default function GraphView() {
     </>
   )
 }
+//  <Button onClick={toggleDataPoints(0)}> test</Button>
