@@ -32,23 +32,25 @@ export default function GraphView() {
     <>
       <h2>GraphView</h2>
       <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
-      <Grid container spacing={3}>
-        <Grid item container sm={6} >
-          <Box>
-            <Graph
-              outerHeight={600}
-              outerWidth={900}
-              datalist={datalist}
-              colourslist={colourslist}
-            />
-          </Box>
+      <Box ml={8}>
+        <Grid container spacing={3}>
+          <Grid item container sm={6} >
+            <Paper elevation={3}>
+              <Graph
+                outerHeight={500}
+                outerWidth={768}
+                datalist={datalist}
+                colourslist={colourslist}
+              />
+            </Paper>
+          </Grid>
+          <Grid item sm={6}>
+            <TextField id="standard-basic" label="Standard" />
+            <TextField id="filled-basic" label="Filled" variant="filled" />
+            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+          </Grid>
         </Grid>
-        <Grid item sm={6}>
-          <TextField id="standard-basic" label="Standard" />
-          <TextField id="filled-basic" label="Filled" variant="filled" />
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-        </Grid>
-      </Grid>
+      </Box>
     </>
   )
 }
