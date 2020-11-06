@@ -1,7 +1,7 @@
-import {Authors} from './Authors';
-import {Publicationtype} from './Publicationtype';
-import {Publisher} from './Publisher';
-import {Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn} from "typeorm";
+import { Authors } from './Authors';
+import { Publicationtype } from './Publicationtype';
+import { Publisher } from './Publisher';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
 
 
 /**
@@ -18,42 +18,60 @@ export class Publications {
     @Column()
     name: String
 
+    @Column({ nullable: true })
+    doi: String
+
     @Column({ nullable: true, type: "int" })
     pages: number
 
     @Column({ nullable: true, type: "int" })
     volume: number
 
-    @Column({default: 1})
+    @Column({ default: 1 })
     publicationtypeId: number
 
+    /*
+    * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
+    * is storing a Foreign Key reference to an entry in the Publicationtype table
+    */
     @ManyToOne(type => Publicationtype)
     @JoinColumn()
     publicationtype?: Publicationtype
 
-    @Column({default: 1})
+    @Column({ default: 1 })
     publisherId: number
 
+    /*
+    * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
+    * is storing a Foreign Key reference to an entry in the Publisher table
+    */
     @ManyToOne(type => Publisher)
     @JoinColumn()
     publisher?: Publisher
 
-    @Column({type: "int", width: 4})
+    @Column({ type: "int", width: 4 })
     year: number
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     datePublished: Date
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     dateAccessed: Date
 
-    @CreateDateColumn()  
+    @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()
     updated: Date
 
+    /*
+    * This ManyToMany and JoinTable snippet is used to link the Publications table and the
+    * Authors table together. This will generate a new third table that contains
+    * Foreign Keys of linked Publications and Authors IDs.
+    * The 'author => author.publications' line is added for use in query building
+    * for it defines the direction of the "link" with the Authors table
+    */
     @ManyToMany(type => Authors, author => author.publications)
-    @JoinTable() 
+    @JoinTable()
     authors: Authors[];
 }
