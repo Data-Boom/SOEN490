@@ -20,6 +20,7 @@ import clsx from "clsx"
 
 const drawerWidth = 240
 
+//todo i dont like this useStyles() will refactor later, this is not a resuable component so whatever
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
