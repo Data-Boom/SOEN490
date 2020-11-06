@@ -1,5 +1,5 @@
-import {Publications} from './Publications';
-import {Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn} from "typeorm";
+import { Publications } from './Publications';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
@@ -25,6 +25,10 @@ export class Dataset {
     @Column({ nullable: true })
     datatypeId: number
 
+    /*
+    * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
+    * is storing a Foreign Key reference to an entry in the Datasetdatatype table
+    */
     @ManyToOne(type => Datasetdatatype)
     @JoinColumn()
     datatype?: Datasetdatatype
@@ -32,6 +36,10 @@ export class Dataset {
     @Column()
     publicationId: number
 
+    /*
+    * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
+    * is storing a Foreign Key reference to an entry in the Publications table
+    */
     @ManyToOne(type => Publications)
     @JoinColumn()
     publication?: Publications
@@ -50,35 +58,21 @@ export class Dataset {
     @JoinColumn()
     subcategory?: Subcategory
 
-    @Column({ nullable: true })
-    materialId: number
-
-    @ManyToOne(type => Material)
-    @JoinColumn()
-    material?: Material
-
-    @Column({ nullable: true })
-    fuelId: number
-
-    @ManyToOne(type => Composition)
-    @JoinColumn()
-    fuel?: Composition
+    /*
+    * This ManyToMany and JoinTable snippet is used to link the Dataset table and the
+    * Material table together. This will generate a new third table that contains
+    * Foreign Keys of linked Dataset and Material IDs.
+    * The 'material => material.datasets' line is added for use in query building
+    * for it defines the direction of the "link" with the Material table
+    */
+    @ManyToMany(type => Material, material => material.datasets)
+    @JoinTable()
+    materials: Material[];
 
     @Column({ nullable: true })
-    oxidizerId: number
+    comments: String
 
-    @ManyToOne(type => Composition)
-    @JoinColumn()
-    oxidizer?: Composition
-
-    @Column({ nullable: true })
-    diluentId: number
-
-    @ManyToOne(type => Composition)
-    @JoinColumn()
-    diluent?: Composition
-
-    @CreateDateColumn()  
+    @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()
