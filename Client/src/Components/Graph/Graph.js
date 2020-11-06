@@ -2,42 +2,43 @@ import * as d3 from "d3"
 
 import React, { useEffect } from 'react'
 
-//Global variables for graph creation
-const margin = {
-  top: 50,
-  right: 210,
-  bottom: 50,
-  left: 70
-},
-  outerWidth = 1000,
-  outerHeight = 500,
-  width = outerWidth - margin.left - margin.right,
-  height = outerHeight - margin.top - margin.bottom
-
-var xScale, yScale, xAxis, yAxis
-
-//This function creates the basis for the linear x and y axis
-const startLinear = () => {
-  xScale = d3.scaleLinear()
-    .range([0, width]).nice()
-
-  yScale = d3.scaleLinear()
-    .range([height, 0]).nice()
-
-  xScale.domain([0, 10])
-  yScale.domain([0, 10])
-
-  xAxis = d3.axisBottom()
-    .scale(xScale)
-    .tickSize(-height)
-
-  yAxis = d3.axisLeft()
-    .scale(yScale)
-    .tickSize(-width)
-}
-
 export default function Graph(props) {
 
+  
+  
+  //Global variables for graph creation
+  const margin = {
+    top: 50,
+    right: 210,
+    bottom: 50,
+    left: 70
+  },
+    outerWidth = props && props.outerWidth || 1000,
+    outerHeight = props && props.outerHeight || 500,
+    width = outerWidth - margin.left - margin.right,
+    height = outerHeight - margin.top - margin.bottom
+
+  var xScale, yScale, xAxis, yAxis
+
+  //This function creates the basis for the linear x and y axis
+  const startLinear = () => {
+    xScale = d3.scaleLinear()
+      .range([0, width]).nice()
+
+    yScale = d3.scaleLinear()
+      .range([height, 0]).nice()
+
+    xScale.domain([0, 10])
+    yScale.domain([0, 10])
+
+    xAxis = d3.axisBottom()
+      .scale(xScale)
+      .tickSize(-height)
+
+    yAxis = d3.axisLeft()
+      .scale(yScale)
+      .tickSize(-width)
+  }
   const ref = React.useRef(null)
 
   useEffect(() => {
@@ -119,7 +120,9 @@ export default function Graph(props) {
   return (
     <svg
       ref={ref}
-      viewBox="0 0 1000 4000"
-    />
+      width="900" height="600"
+      viewBox="0 0 900 600"
+      preserveAspectRatio="xMidYMid meet">
+    </svg>
   )
 }

@@ -1,4 +1,4 @@
-import { Box, Button } from "@material-ui/core"
+import { Box, Button, Container, Grid, Paper, TextField, makeStyles } from "@material-ui/core"
 
 import Graph from '../Components/Graph/Graph'
 import React from "react"
@@ -31,13 +31,24 @@ export default function GraphView() {
   return (
     <>
       <h2>GraphView</h2>
-      <Button onClick={handleRequest}>Load random dataset button</Button>
-      <Box>
-        <Graph
-          datalist={datalist}
-          colourslist={colourslist}
-        />
-      </Box>
+      <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
+      <Grid container spacing={3}>
+        <Grid item container sm={6} >
+          <Box>
+            <Graph
+              outerHeight={600}
+              outerWidth={900}
+              datalist={datalist}
+              colourslist={colourslist}
+            />
+          </Box>
+        </Grid>
+        <Grid item sm={6}>
+          <TextField id="standard-basic" label="Standard" />
+          <TextField id="filled-basic" label="Filled" variant="filled" />
+          <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+        </Grid>
+      </Grid>
     </>
   )
 }
