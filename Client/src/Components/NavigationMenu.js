@@ -132,14 +132,14 @@ export default function NavigationMenu() {
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                {/* <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton, open && classes.hide)}> */}
+                  {/* <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton, open && classes.hide)}> */}
                   <MenuIcon />
                 </IconButton>
               </Grid>
               <Grid item>
                 <Typography variant="h6" color="inherit">
                   Detonation Database
-              </Typography>
+                </Typography>
               </Grid>
             </Grid>
           </Toolbar>
