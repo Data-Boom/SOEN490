@@ -16,8 +16,8 @@ export default function Graph(props) {
     outerHeight = props && props.outerHeight || 500,
     width = outerWidth - margin.left - margin.right,
     height = outerHeight - margin.top - margin.bottom
-  let xScale, yScale, xAxis, yAxis
-
+  let xScale, yScale, xAxis, yAxis, xLog, yLog
+  var xToggle = false, yToggle = false;
   const ref = React.useRef(null)
 
   useEffect(() => {
@@ -35,12 +35,15 @@ export default function Graph(props) {
     xScale = d3.scaleLinear()
       .domain([0, 10])
       .range([0, width]).nice();
+    xLog = d3.scaleLog()
+      .range([0, width]).nice();
     xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(xScale));
-
     yScale = d3.scaleLinear()
       .domain([0, 10])
+      .range([height, 0]).nice();
+    yLog = d3.scaleLog()
       .range([height, 0]).nice();
     yAxis = svg.append("g")
       .call(d3.axisLeft(yScale));
@@ -143,10 +146,69 @@ export default function Graph(props) {
       .style("pointer-events", "all")
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
       .call(zoom);
-
+    var xButton = svg.append("circle").attr("r", 10).attr("fill", "#f20b34").attr("cx", width).attr("cy", height).on("click", function (d) {
+      xToggle = !xToggle;
+      if (xToggle == true) {
+        xAxis.call(d3.axisBottom(xLog))
+        scatter
+          .selectAll("circle")
+          .attr('cx', function (d) { return xLog(d["x"]) })
+      }
+      else {
+        xAxis.call(d3.axisBottom(xScale))
+        scatter
+          .selectAll("circle")
+          .attr('cx', function (d) { return xScale(d["x"]) })
+      }
+    });
+    var yButton = svg.append("circle").attr("r", 10).attr("fill", "#f20b34").on("click", function (d) {
+      yToggle = !yToggle;
+      if (yToggle == true) {
+        yAxis.call(d3.axisLeft(yLog))
+        scatter
+          .selectAll("circle")
+          .attr('cy', function (d) { return yLog(d["y"]) })
+      }
+      else {
+        yAxis.call(d3.axisLeft(yScale))
+        scatter
+          .selectAll("circle")
+          .attr('cy', function (d) { return yScale(d["y"]) })
+      }
+    });
     //This function modifies the graph upon zooming in/out by updating the axes and points.
     function updateGraph() {
-      var newX = d3.event.transform.rescaleX(xScale);
+      if (xToggle == true) {
+        var newX = d3.event.transform.rescaleX(xLog);
+        xAxis.call(d3.axisBottom(newX))
+        scatter
+          .selectAll("circle")
+          .attr('cx', function (d) { return newX(d["x"]) })
+      }
+      else {
+        var newX = d3.event.transform.rescaleX(xScale);
+        xAxis.call(d3.axisBottom(newX))
+        scatter
+          .selectAll("circle")
+          .attr('cx', function (d) { return newX(d["x"]) })
+      }
+      if (yToggle == true) {
+        var newY = d3.event.transform.rescaleY(yLog);
+        yAxis.call(d3.axisLeft(newY))
+
+        scatter
+          .selectAll("circle")
+          .attr('cy', function (d) { return newY(d["y"]) });
+      }
+      else {
+        var newY = d3.event.transform.rescaleY(yScale);
+        yAxis.call(d3.axisLeft(newY))
+
+        scatter
+          .selectAll("circle")
+          .attr('cy', function (d) { return newY(d["y"]) });
+      }
+      /*var newX = d3.event.transform.rescaleX(xScale);
       var newY = d3.event.transform.rescaleY(yScale);
 
       xAxis.call(d3.axisBottom(newX))
@@ -155,7 +217,7 @@ export default function Graph(props) {
       scatter
         .selectAll("circle")
         .attr('cx', function (d) { return newX(d["x"]) })
-        .attr('cy', function (d) { return newY(d["y"]) });
+        .attr('cy', function (d) { return newY(d["y"]) });*/
     }
   }, [props])
 
