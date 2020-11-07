@@ -182,6 +182,8 @@ export default function Graph(props) {
       }
     }
 
+    // These two functions allow the X and Y scales to be changed between a linear scale and a logarithmic scale.
+
     function toggleXScale() {
       xToggle = !xToggle;
       if (xToggle == true) {
