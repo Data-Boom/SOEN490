@@ -92,6 +92,36 @@ export default function Graph(props) {
       .attr("cy", function (d) {
         return yScale(d["y"]);
       })
+
+    //Legend on the graph
+    svg.selectAll("mylegendDots")
+      .data(props && props.datalist)
+      .enter()
+      .append("circle")
+      .attr("cx", 615)
+      .attr("cy", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("r", 7)
+      .attr("fill", function (d) {
+        var x = props.datalist.indexOf(d);
+        return props.colourslist[x];
+      })
+
+    svg.selectAll("mylabels")
+      .data(props && props.datalist)
+      .enter()
+      .append("text")
+      .attr("x", 625)
+      .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("fill", function (d) {
+        var x = props.datalist.indexOf(d);
+        return props.colourslist[x];
+      })
+      //.text(function (d) { return d })
+      .text("Dataset")
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle")
+
+
     //This allows the user to zoom in/out onto the graph.
     var zoom = d3.zoom()
       .scaleExtent([1, 20])
