@@ -7,18 +7,17 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { List, ListItem, ListItemIcon } from "@material-ui/core"
 import { graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
-import SearchIcon from '@material-ui/icons/Search';
-import SearchView from "../Views/SearchView"
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import GraphView from "../Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from '../Views/HomeView'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
+import SearchIcon from '@material-ui/icons/Search';
+import SearchView from "../Views/SearchView"
 import clsx from "clsx"
 
 const drawerWidth = 240
@@ -161,10 +160,8 @@ export default function NavigationMenu() {
           <Route exact path={homeRoute} component={HomeView} />
           <Route path={graphRoute} component={GraphView} />
         </Box>
-          <Route path={searchRoute} component={SearchView} />
-        </div>
-      </div>
-    </HashRouter>
+        <Route path={searchRoute} component={SearchView} />
+      </HashRouter >
     </>
   )
 }
