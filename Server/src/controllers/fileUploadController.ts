@@ -13,19 +13,20 @@ const createRequest = async (req, res) => {
       message: "Nothing to process"
     });
   }
-  else
-  {
+  else {
     try {
-      callFileUploadService(req.file.path, res);
-    }catch(error) {
-      res.status(500).send(error);
+      console.log(req.body);
+      console.log(req.file);
+      res.status(200).send("Sucess");
+    } catch (error) {
+      res.status(502).send(error);
     }
   }
 }
 
 const callFileUploadService = async (filePathOfCSV, res) => {
-      const fileServiceResponse = await fileUploadService.processUpload(filePathOfCSV);
-      res.status(201).send(fileServiceResponse);
+  const fileServiceResponse = await fileUploadService.processUpload(filePathOfCSV);
+  res.status(201).send(fileServiceResponse);
 }
 
 module.exports = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components';
@@ -9,6 +9,9 @@ import styled from 'styled-components';
  */
 const DataCell = () => {
 
+    const ref = useRef();
+    const [file, setFile] = useState('');
+
     /**
      * Upon submission, the CSV file is extracted from the event and must be appended to formData
      * to be sent with API request. 
@@ -16,10 +19,14 @@ const DataCell = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const file = e.target.File.files[0];
+        const json = ref.file.value;
+        console.log(json);
+        setFile(json);
+        console.log(file);
+
 
         const formData = new FormData();
-        formData.append('File', file);
+        formData.append('file', file);
 
         const options = {
             method: 'POST',
@@ -37,7 +44,7 @@ const DataCell = () => {
             <FormContainer onSubmit={handleSubmit}>
                 <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                 <div>
-                    <input type="file" id="csvFile" />
+                    <input type="file" ref={ref} id="jsonFile" accept=".json" />
                 </div>
                 <Button type="submit" variant="contained" t={0.5}> Upload this file! </Button>
             </FormContainer>
