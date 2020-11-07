@@ -16,16 +16,17 @@ export class Datapoints {
     @Column()
     datasetId: number
 
-    @Column()
-    name: String
-
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Dataset table
+    * is storing a Foreign Key reference to an entry in the Dataset table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Dataset)
     @JoinColumn()
     dataset?: Dataset
+
+    @Column()
+    name: String
 
     @Column({ type: "json" })
     values: number[]
@@ -35,13 +36,14 @@ export class Datapoints {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Units table
+    * is storing a Foreign Key reference to an entry in the Units table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Units)
     @JoinColumn()
     units?: Units
 
-    @Column({ nullable: true })
+    @Column({ default: 1 })
     representationsId: number
 
     /*

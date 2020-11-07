@@ -27,7 +27,8 @@ export class Dataset {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Datasetdatatype table
+    * is storing a Foreign Key reference to an entry in the Datasetdatatype table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Datasetdatatype)
     @JoinColumn()
@@ -38,7 +39,8 @@ export class Dataset {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Publications table
+    * is storing a Foreign Key reference to an entry in the Publications table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Publications)
     @JoinColumn()

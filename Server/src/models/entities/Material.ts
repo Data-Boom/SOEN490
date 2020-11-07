@@ -18,7 +18,8 @@ export class Material {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Composition table
+    * is storing a Foreign Key reference to an entry in the Composition table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Composition)
     @JoinColumn()

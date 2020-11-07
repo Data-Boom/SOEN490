@@ -32,7 +32,8 @@ export class Publications {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Publicationtype table
+    * is storing a Foreign Key reference to an entry in the Publicationtype table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Publicationtype)
     @JoinColumn()
@@ -43,7 +44,8 @@ export class Publications {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Publisher table
+    * is storing a Foreign Key reference to an entry in the Publisher table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Publisher)
     @JoinColumn()
