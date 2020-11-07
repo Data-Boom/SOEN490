@@ -1,13 +1,14 @@
 import NavigationMenu from './Components/NavigationMenu'
 import React from 'react'
-import Title from './Components/Title/Title'
+import { ThemeProvider } from '@material-ui/core'
+import { theme } from './appTheme'
 
 function App() {
-
   return (
     <div className="App">
-      <Title />
-      <NavigationMenu />
+      <ThemeProvider theme={theme}>
+        <NavigationMenu />
+      </ThemeProvider>
     </div>
   )
 }
