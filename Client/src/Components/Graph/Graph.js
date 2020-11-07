@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 
 import { SvgIcon } from '@material-ui/core';
 
+//import SVGImage from './Components/Graph/eye-9.svg';
+
 export default function Graph(props) {
 
   const margin = {
@@ -18,7 +20,8 @@ export default function Graph(props) {
     height = outerHeight - margin.top - margin.bottom
   let xScale, yScale, xAxis, yAxis
 
-  let active1 = null, active2 = null, active3 = null, active4 = null
+    let active1 = null, active2 = null, active3 = null, active4 = null
+    let active = [null, null, null, null]
 
   const ref = React.useRef(null)
 
@@ -34,7 +37,7 @@ export default function Graph(props) {
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-        var button = svg.append("circle").attr("r", 20).attr("fill", "#f20b34");
+       // var button = svg.append("image").attr("xlink:href", "..omponents/Graph/eye-9.svg").attr("r", 20).attr("fill", "#f20b34");
        
 
     //This part creates the axis/scales used for the data.
@@ -106,111 +109,8 @@ export default function Graph(props) {
       .attr("cy", function (d) {
         return yScale(d["y"]);
       })
-        
-
-    //Legend on the graph
-
-    svg.selectAll("mylegendDots")
-        .data(props && props.datalist)
-      .enter()
-      .append("circle")
-      .attr("cx", 615)
-      .attr("cy", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
-        .attr("r", 7)
-      .attr("fill", function (d) {
-        var x = props.datalist.indexOf(d);
-        return props.colourslist[x];
-      })
-
-        //I have been trying to click anything with no luck, on online examples it's working
-        //but here it is not, I am not sure if it is because we show these legends after
-        //pressing a button or why.
-
-        /*
-        .on('click', function (d, i) {
-            console.log("clicking on");
-            d3.select(this)
-            .attr('r', 40);
-        })
-        */
-            /*
-            var active = null
-            var x = props.datalist.indexOf(d);
-            var y = "id" + props.IDList[x];
-            scatter
-                .selectAll("#" + y)
-                .style("opacity", function () {
-
-                    if (active == null) {
-                        active = !d3.select(this).style('opacity') ? 1 : 0;
-                    }
-                    else {
-                        active = !active ? 1 : 0;
-                    }
-                    return active;
-                })
-            console.log(active)
-            d.active = active
-            console.log(active)
-            */
-        
-        
-
-    svg.selectAll("mylabels")
-      .data(props && props.datalist)
-      .enter()
-      .append("text")
-      .attr("x", 625)
-      .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
-      .attr("fill", function (d) {
-        var x = props.datalist.indexOf(d);
-        return props.colourslist[x];
-      })
-        /*
-        .attr("id", function (d) {
-            var x = props.datalist.indexOf(d)
-                ;
-            return "id" + props.IDList[x];
-        })
-        */
-      //.text(function (d) { return d })
-      .text("Dataset")
-      .attr("text-anchor", "left")
-        .style("alignment-baseline", "middle")
-        /*
-        .on('click', function (d) {
-            console.log("nananan");
-            d3.select(this)
-                .attr('x', 650);
-        })
-        */
-        
-/*
-        .on("click", function (d) {
-            alert("hello how are you");
-            
-            var active = null
-            var x = props.datalist.indexOf(d);
-            var y = "id" + props.IDList[x];
-            scatter
-                .selectAll("#" + y)
-                .style("opacity", function () {
-
-                    if (active == null) {
-                        active = !d3.select(this).style('opacity') ? 1 : 0;
-                    }
-                    else {
-                        active = !active ? 1 : 0;
-                    }
-                    return active;
-                })
-            console.log(active)
-            d.active = active
-            console.log(active)
-            
-        })
-
-*/
+     
+       
     //This allows the user to zoom in/out onto the graph.
 
     var zoom = d3.zoom()
@@ -225,21 +125,55 @@ export default function Graph(props) {
       .attr("height", height)
       .style("pointer-events", "all")
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .call(zoom);
+        .call(zoom);
 
-        button.on("click", function (d) {
-            scatter
-                .selectAll("#id1")
-                .style("opacity", function () {
-                    if (active1 == null) {
-                        active1 = !d3.select(this).style('opacity') ? 1 : 0;
-                    }
-                    else {
-                        active1 = !active1 ? 1 : 0;
-                    }
-                    return active1;
-                })
-        })
+         //Legend on the graph
+        svg.selectAll("mylegendDots")
+            .data(props && props.datalist)
+            .enter()
+            .append("circle") 
+            .attr("cx", 615)
+            .attr("cy", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+            .attr("r", 7)
+           
+
+            .attr("fill", function (d) {
+                var x = props.datalist.indexOf(d);
+                return props.colourslist[x];
+            })
+
+            //An option to make the legend hide and show datasets when clicked on.
+            .on("click", function (d) {
+                var x = props.datalist.indexOf(d);
+
+                scatter
+                    .selectAll("#id" + props.IDList[x])
+                    .style("opacity", function () {
+                        if (active[x] == null) {
+                            active[x] = !d3.select(this).style('opacity') ? 1 : 0;
+                        }
+                        else {
+                            active[x] = !active[x] ? 1 : 0;
+                        }
+                        return active[x];
+                    })
+            })
+
+        //The name labels for the datasets mentioned in the legend
+        svg.selectAll("mylabels")
+            .data(props && props.datalist)
+            .enter()
+            .append("text")
+            .attr("x", 625)
+            .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+            .attr("fill", function (d) {
+                var x = props.datalist.indexOf(d);
+                return props.colourslist[x];
+            })
+            .text("Dataset")
+            .attr("text-anchor", "left")
+            .style("alignment-baseline", "middle")
+
 
     //This function modifies the graph upon zooming in/out by updating the axes and points.
     function updateGraph() {
