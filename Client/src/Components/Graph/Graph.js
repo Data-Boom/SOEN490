@@ -42,21 +42,21 @@ export default function Graph(props) {
   }
   
   useEffect(() => {
-    //Calls the function to create the axis
-    //This part creates the canvas for our graph
-    
+    //cleans up all the points from the graph
     d3.select(ref.current).selectAll("*").remove()
+    //This part creates the canvas for our graph
     var svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
       .append("svg")
       .attr("width", outerWidth)
       .attr("height", outerHeight)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+      
     //This part creates the axis/scales used for the data.
     const xScale = getScale(isXLog, width, 0)
     const yScale = getScale(isYLog, 0, height)
-
+      
+    //Calls the function to create the axis
     const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(xScale));
@@ -140,7 +140,6 @@ export default function Graph(props) {
       .scaleExtent([1, 20])
       .extent([[0, 0], [width, height]])
       .on("zoom", updateGraph);
-    setYToggle(false)
     //This rectangle is the area in which the user can zoom into.
     svg.append("rect")
       .attr("fill", "none")
