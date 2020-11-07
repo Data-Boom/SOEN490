@@ -28,8 +28,12 @@ export default function GraphView() {
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
   }
 
+  const deleteDataset = () => {
+    //alert("dataset deleted");
+  }
   return (
     <>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <h2>GraphView</h2>
       <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
       <Box ml={8}>
@@ -50,7 +54,40 @@ export default function GraphView() {
             <TextField id="outlined-basic" label="Outlined" variant="outlined" />
           </Grid>
         </Grid>
+
+        <form>
+          <br></br>
+          <select id="mySelect" size="4">
+            <option>Red</option>
+            <option>Black</option>
+            <option>Blue</option>
+            <option>Green</option>
+          </select>
+          <br></br>
+          <button onclick="deleteChoice()">Delete dataset</button>
+        </form>
+
+
+        <script>
+
+
+
+          function deleteChoice()
+           {
+            // var choice = document.getElementById("mySelect")
+            // x.remove(x.selectedIndex)
+          };
+
+
+
+
+        </script>
+
       </Box>
+
+
+
+
     </>
   )
 }
