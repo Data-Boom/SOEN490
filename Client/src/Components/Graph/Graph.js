@@ -199,6 +199,17 @@ export default function Graph(props) {
       .attr("text-anchor", "left")
       .style("alignment-baseline", "middle")
 
+    //delete icon to delete the data
+    svg.selectAll("deleteIcon")
+      .data(props && props.datalist)
+      .enter()
+      .append("text")
+      .attr("x", 560)
+      .attr("y", function (d, i) { return 305 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("fill", '#69a3b2')
+      .text("delete")
+
+
 
     //This function modifies the graph upon zooming in/out by updating the axes and points.
     function updateGraph() {
@@ -215,6 +226,10 @@ export default function Graph(props) {
         .attr('cy', function (d) { return (newYScale(d["y"])) })
     }
   }, [props, isXLog, isYLog])
+
+  function removeDatasets() {
+
+  }
 
   return (
     <>
