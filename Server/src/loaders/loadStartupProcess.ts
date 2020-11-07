@@ -1,9 +1,9 @@
 import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
-import { connectDB } from '../models/database'
+import { connectDB } from '../database'
 const datasetController = require('../controllers/DatasetController')
-const fileUploadRouter = require('../routes/FileUploadRouter');
+const fileUploadRouter = require('../routes/fileUploadRouter');
 
 const bodyParser = require('body-parser');
 

@@ -1,7 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, getRepository, FindManyOptions} from "typeorm";
 
 @Entity()
-export default class DataPoint {
+export default class DataPointEntity {
     @PrimaryGeneratedColumn()
     datapoint_id: number
     @Column()
@@ -29,11 +29,11 @@ export default class DataPoint {
     @Column()
 	comments: string
 
-    public static getDataPoints = (id: number): Promise<DataPoint[]> => {
-        return getRepository(DataPoint).find({ dataset_id: id });
+    public static getDataPoints = (id: number): Promise<DataPointEntity[]> => {
+        return getRepository(DataPointEntity).find({ dataset_id: id });
     }
 
-    public static createDataPoints = (dataPoints: DataPoint[]): DataPoint[] => {
-        return getRepository(DataPoint).create(dataPoints);
+    public static createDataPoints = (dataPoints: DataPointEntity[]): DataPointEntity[] => {
+        return getRepository(DataPointEntity).create(dataPoints);
     }
 }
