@@ -18,6 +18,8 @@ export default function Graph(props) {
   let xScale, yScale, xAxis, yAxis, xLog, yLog
   var xToggle = false, yToggle = false;
   const ref = React.useRef(null)
+  const changeX = React.useRef(null)
+  const changeY = React.useRef(null)
 
   useEffect(() => {
     //Calls the function to create the axis
@@ -146,37 +148,6 @@ export default function Graph(props) {
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
       .call(zoom);
 
-    // These buttons allow the graph to switch between logarithmic scales and linear scales for each axis.
-    var xButton = svg.append("circle").attr("r", 10).attr("fill", "#f20b34").attr("cx", width).attr("cy", height).on("click", function (d) {
-      xToggle = !xToggle;
-      if (xToggle == true) {
-        xAxis.call(d3.axisBottom(xLog))
-        scatter
-          .selectAll("circle")
-          .attr('cx', function (d) { return xLog(d["x"]) })
-      }
-      else {
-        xAxis.call(d3.axisBottom(xScale))
-        scatter
-          .selectAll("circle")
-          .attr('cx', function (d) { return xScale(d["x"]) })
-      }
-    });
-    var yButton = svg.append("circle").attr("r", 10).attr("fill", "#f20b34").on("click", function (d) {
-      yToggle = !yToggle;
-      if (yToggle == true) {
-        yAxis.call(d3.axisLeft(yLog))
-        scatter
-          .selectAll("circle")
-          .attr('cy', function (d) { return yLog(d["y"]) })
-      }
-      else {
-        yAxis.call(d3.axisLeft(yScale))
-        scatter
-          .selectAll("circle")
-          .attr('cy', function (d) { return yScale(d["y"]) })
-      }
-    });
     //This function modifies the graph upon zooming in/out by updating the axes and points.
     function updateGraph() {
       if (xToggle == true) {
@@ -210,6 +181,40 @@ export default function Graph(props) {
           .attr('cy', function (d) { return newY(d["y"]) });
       }
     }
+
+    function toggleXScale() {
+      xToggle = !xToggle;
+      if (xToggle == true) {
+        xAxis.call(d3.axisBottom(xLog))
+        scatter
+          .selectAll("circle")
+          .attr('cx', function (d) { return xLog(d["x"]) })
+      }
+      else {
+        xAxis.call(d3.axisBottom(xScale))
+        scatter
+          .selectAll("circle")
+          .attr('cx', function (d) { return xScale(d["x"]) })
+      }
+    }
+    function toggleYScale() {
+      yToggle = !yToggle;
+      if (yToggle == true) {
+        yAxis.call(d3.axisLeft(yLog))
+        scatter
+          .selectAll("circle")
+          .attr('cy', function (d) { return yLog(d["y"]) })
+      }
+      else {
+        yAxis.call(d3.axisLeft(yScale))
+        scatter
+          .selectAll("circle")
+          .attr('cy', function (d) { return yScale(d["y"]) })
+      }
+    }
+    changeX.current = toggleXScale;
+    changeY.current = toggleYScale;
+
   }, [props])
 
   function removeDatasets() {
@@ -217,12 +222,18 @@ export default function Graph(props) {
   }
 
   return (
-    <svg
-      ref={ref}
-      width={outerWidth}
-      height={outerHeight}
-      viewBox={`0 0 ${outerWidth} ${outerHeight}`}
-      preserveAspectRatio="xMidYMid meet">
-    </svg>
+    <>
+      <svg
+        ref={ref}
+        width={outerWidth}
+        height={outerHeight}
+        viewBox={`0 0 ${outerWidth} ${outerHeight}`}
+        preserveAspectRatio="xMidYMid meet">
+      </svg>
+      <div>
+        <Button onClick={() => changeX.current()} color="primary">Change X Scale</Button>
+        <Button onClick={() => changeY.current()} color="primary">Change Y Scale</Button>
+      </div>
+    </>
   )
 }
