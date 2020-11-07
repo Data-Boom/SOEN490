@@ -7,7 +7,7 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { graphRoute, homeRoute } from '../Consts/Routes'
+import { graphRoute, homeRoute, fileUploadRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -17,6 +17,7 @@ import HomeView from '../Views/HomeView'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import clsx from "clsx"
+import FileUploadView from "../Views/FileUploadView"
 
 const drawerWidth = 240
 
@@ -119,6 +120,14 @@ export default function NavigationMenu() {
               Graph
             </NavLink>
           </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <NavLink exact to={fileUploadRoute}>
+              Upload a File
+            </NavLink>
+          </ListItem>
         </List>
       </ Drawer>
     )
@@ -148,6 +157,7 @@ export default function NavigationMenu() {
         <Box mt={16}>
           <Route exact path={homeRoute} component={HomeView} />
           <Route path={graphRoute} component={GraphView} />
+          <Route path={fileUploadRoute} component={FileUploadView} />
         </Box>
       </HashRouter>
     </>

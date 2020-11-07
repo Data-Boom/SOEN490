@@ -16,10 +16,10 @@ const DataCell = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const csv = e.target.csvFile.files[0];
+        const file = e.target.File.files[0];
 
         const formData = new FormData();
-        formData.append('csvFile', csv);
+        formData.append('File', file);
 
         const options = {
             method: 'POST',
@@ -33,7 +33,7 @@ const DataCell = () => {
     }
 
     return (
-        <Box display="flex" marginLeft={"25%"} flexDirection="column" justify="center" alignItems="center" border={30} borderColor={"#2e3b52"} width={720} height={300} padding={10}>
+        <Box display="flex" flexDirection="column" justify="center" alignItems="center" border={30} borderColor={"#2e3b52"} padding={10}>
             <FormContainer onSubmit={handleSubmit}>
                 <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                 <div>
@@ -41,7 +41,7 @@ const DataCell = () => {
                 </div>
                 <Button type="submit" variant="contained" t={0.5}> Upload this file! </Button>
             </FormContainer>
-        </Box>
+        </Box >
     )
 }
 
@@ -52,4 +52,7 @@ display: flex;
 flex-direction: column;
 & > div {
     padding: 20px;
+    margin: 80;
+    width: 300px;
+
 }`
