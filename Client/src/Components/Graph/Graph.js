@@ -18,7 +18,7 @@ export default function Graph(props) {
     height = outerHeight - margin.top - margin.bottom
   let xScale, yScale, xAxis, yAxis
 
-  let active = null
+  let active1 = null, active2 = null, active3 = null, active4 = null
 
   const ref = React.useRef(null)
 
@@ -106,19 +106,55 @@ export default function Graph(props) {
       .attr("cy", function (d) {
         return yScale(d["y"]);
       })
+        
 
     //Legend on the graph
+
     svg.selectAll("mylegendDots")
-      .data(props && props.datalist)
+        .data(props && props.datalist)
       .enter()
       .append("circle")
       .attr("cx", 615)
       .attr("cy", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
-      .attr("r", 7)
+        .attr("r", 7)
       .attr("fill", function (d) {
         var x = props.datalist.indexOf(d);
         return props.colourslist[x];
       })
+
+        //I have been trying to click anything with no luck, on online examples it's working
+        //but here it is not, I am not sure if it is because we show these legends after
+        //pressing a button or why.
+
+        /*
+        .on('click', function (d, i) {
+            console.log("clicking on");
+            d3.select(this)
+            .attr('r', 40);
+        })
+        */
+            /*
+            var active = null
+            var x = props.datalist.indexOf(d);
+            var y = "id" + props.IDList[x];
+            scatter
+                .selectAll("#" + y)
+                .style("opacity", function () {
+
+                    if (active == null) {
+                        active = !d3.select(this).style('opacity') ? 1 : 0;
+                    }
+                    else {
+                        active = !active ? 1 : 0;
+                    }
+                    return active;
+                })
+            console.log(active)
+            d.active = active
+            console.log(active)
+            */
+        
+        
 
     svg.selectAll("mylabels")
       .data(props && props.datalist)
@@ -130,12 +166,51 @@ export default function Graph(props) {
         var x = props.datalist.indexOf(d);
         return props.colourslist[x];
       })
+        /*
+        .attr("id", function (d) {
+            var x = props.datalist.indexOf(d)
+                ;
+            return "id" + props.IDList[x];
+        })
+        */
       //.text(function (d) { return d })
       .text("Dataset")
       .attr("text-anchor", "left")
-      .style("alignment-baseline", "middle")
+        .style("alignment-baseline", "middle")
+        /*
+        .on('click', function (d) {
+            console.log("nananan");
+            d3.select(this)
+                .attr('x', 650);
+        })
+        */
+        
+/*
+        .on("click", function (d) {
+            alert("hello how are you");
+            
+            var active = null
+            var x = props.datalist.indexOf(d);
+            var y = "id" + props.IDList[x];
+            scatter
+                .selectAll("#" + y)
+                .style("opacity", function () {
 
+                    if (active == null) {
+                        active = !d3.select(this).style('opacity') ? 1 : 0;
+                    }
+                    else {
+                        active = !active ? 1 : 0;
+                    }
+                    return active;
+                })
+            console.log(active)
+            d.active = active
+            console.log(active)
+            
+        })
 
+*/
     //This allows the user to zoom in/out onto the graph.
 
     var zoom = d3.zoom()
@@ -156,13 +231,13 @@ export default function Graph(props) {
             scatter
                 .selectAll("#id1")
                 .style("opacity", function () {
-                    if (active == null) {
-                        active = !d3.select(this).style('opacity') ? 1 : 0;
+                    if (active1 == null) {
+                        active1 = !d3.select(this).style('opacity') ? 1 : 0;
                     }
                     else {
-                        active = !active ? 1 : 0;
+                        active1 = !active1 ? 1 : 0;
                     }
-                    return active;
+                    return active1;
                 })
         })
 
