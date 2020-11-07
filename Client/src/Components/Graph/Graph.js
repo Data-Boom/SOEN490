@@ -1,8 +1,7 @@
 import * as d3 from "d3"
 
 import React, { useEffect } from 'react'
-
-import { SvgIcon } from '@material-ui/core';
+import { Button } from "@material-ui/core"
 
 export default function Graph(props) {
 
@@ -105,6 +104,8 @@ export default function Graph(props) {
       .style("pointer-events", "all")
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
       .call(zoom);
+
+    // These buttons allow the graph to switch between logarithmic scales and linear scales for each axis.
     var xButton = svg.append("circle").attr("r", 10).attr("fill", "#f20b34").attr("cx", width).attr("cy", height).on("click", function (d) {
       xToggle = !xToggle;
       if (xToggle == true) {
@@ -167,16 +168,6 @@ export default function Graph(props) {
           .selectAll("circle")
           .attr('cy', function (d) { return newY(d["y"]) });
       }
-      /*var newX = d3.event.transform.rescaleX(xScale);
-      var newY = d3.event.transform.rescaleY(yScale);
-
-      xAxis.call(d3.axisBottom(newX))
-      yAxis.call(d3.axisLeft(newY))
-
-      scatter
-        .selectAll("circle")
-        .attr('cx', function (d) { return newX(d["x"]) })
-        .attr('cy', function (d) { return newY(d["y"]) });*/
     }
   }, [props])
 
