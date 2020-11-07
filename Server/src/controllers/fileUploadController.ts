@@ -1,5 +1,5 @@
 const fileUploadService = require('../services/fileUploadService');
-
+const fs = require('fs');
 /**
  * The fileUploadController is resposible for providing instructions to the application if a request comes in
  * to the /dataupload api. This controller will call the Service for appropriate processing of the input. The
@@ -15,17 +15,15 @@ const createRequest = async (req, res) => {
   }
   else {
     try {
-      console.log(req.body);
-      console.log(req.file);
-      res.status(200).send("Sucess");
+      callFileUploadService(req.file.path, res);
     } catch (error) {
-      res.status(502).send(error);
+      console.error(error)
     }
   }
 }
 
-const callFileUploadService = async (filePathOfCSV, res) => {
-  const fileServiceResponse = await fileUploadService.processUpload(filePathOfCSV);
+const callFileUploadService = async (filePathOfJson, res) => {
+  const fileServiceResponse = await fileUploadService.processUpload(filePathOfJson);
   res.status(201).send(fileServiceResponse);
 }
 
