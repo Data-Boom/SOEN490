@@ -66,12 +66,9 @@ export default function Graph(props) {
       .enter()
       .append('g')
       //This gives each list of points a different colour, verifies if its in the list and changes it if it is
-      .attr("fill", function () {
-        var c = "hsl(" + Math.random() * 360 + ",100%,50%)";
-        while (props && props.colourslist.includes(c)) {
-          c = "hsl(" + Math.random() * 360 + ",100%,50%)";
-        };
-        return c;
+      .attr("fill", function (d) {
+        var x = props.datalist.indexOf(d);
+        return props.colourslist[x];
       })
       .attr("stroke", "black")
       .attr("stroke-width", 2)
@@ -124,7 +121,7 @@ export default function Graph(props) {
   return (
     <svg
       ref={ref}
-      width={outerWidth} 
+      width={outerWidth}
       height={outerHeight}
       viewBox={`0 0 ${outerWidth} ${outerHeight}`}
       preserveAspectRatio="xMidYMid meet">
