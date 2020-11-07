@@ -25,7 +25,7 @@ export default function GraphView() {
     datalistDemo.push(dataset4)
     console.log(datalistDemo)
     setDatalist(datalistDemo)
-    setColourslist([])
+    setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
   }
 
   return (
