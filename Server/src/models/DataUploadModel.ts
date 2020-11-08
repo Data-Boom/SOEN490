@@ -19,6 +19,7 @@ import { Representations } from './entities/Representations';
 const insertReferenceType = async (preferenceType) => {
 
     const connection = getConnection();
+
     let book = new Publicationtype();
     book.id;
     book.name = preferenceType;
@@ -29,6 +30,7 @@ const insertReferenceType = async (preferenceType) => {
 const insertPublisher = async (publisher) => {
 
     const connection = getConnection();
+
     let publisherName = new Publisher();
     publisherName.id;
     publisherName.name = publisher;
