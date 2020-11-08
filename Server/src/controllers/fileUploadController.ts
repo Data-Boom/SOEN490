@@ -24,7 +24,7 @@ const createRequest = async (req, res) => {
 
 const callFileUploadService = async (filePathOfJson, res) => {
   const fileServiceResponse = await fileUploadService.processUpload(filePathOfJson);
-  res.status(201).send(fileServiceResponse);
+  res.status(200).send(fileServiceResponse);
 }
 
 module.exports = {
