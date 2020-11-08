@@ -3,15 +3,16 @@ import { Box, Button, Container, Grid, Paper, TextField, makeStyles } from "@mat
 import Graph from '../Components/Graph/Graph'
 import React from "react"
 import { useState } from "react"
-
+import hideDatasets from '../Components/Graph/Graph'
 export default function GraphView() {
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
 
-  //<Button onClick={handleRequest}>Why am I here?</Button>
+
   const [datalist, setDatalist] = useState([])
   const [colourslist, setColourslist] = useState([])
+  const [IDList, setIDList] = useState([])
 
   const handleRequest = () => {
     var dataset1 = [{ x: 5.1, y: 3.5 }, { x: 4.9, y: 3 }, { x: 4.7, y: 3.2 }, { x: 4.6, y: 3.1 }, { x: 5, y: 3.6 }, { x: 5.4, y: 3.9 }]
@@ -25,6 +26,7 @@ export default function GraphView() {
     datalistDemo.push(dataset4)
     console.log(datalistDemo)
     setDatalist(datalistDemo)
+    setIDList(["1", "2", "3", "4"])
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
     loadOptionsList(datalistDemo)
   }
@@ -72,6 +74,7 @@ export default function GraphView() {
                 outerWidth={768}
                 datalist={datalist}
                 colourslist={colourslist}
+                IDList={IDList}
               />
             </Paper>
           </Grid>
@@ -90,5 +93,6 @@ export default function GraphView() {
 
       </Box>
     </>
-  )
+  );
+
 }
