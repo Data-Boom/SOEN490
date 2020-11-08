@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core"
 import React from "react"
-import Search from '../Components/Search/Search'
+import Search2 from '../Components/Search/Search2'
 
 export default function SearchView() {
 
@@ -12,7 +12,7 @@ export default function SearchView() {
   return (
     <>
       {/* <Button onClick={handleRequest}></Button> */}
-      <Search />
+      <Search2 />
     </>
   )
 }
