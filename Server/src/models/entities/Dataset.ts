@@ -22,7 +22,7 @@ export class Dataset {
     @Column()
     name: String
 
-    @Column({ nullable: true })
+    @Column({ default: 1 })
     datatypeId: number
 
     /*
@@ -44,14 +44,14 @@ export class Dataset {
     @JoinColumn()
     publication?: Publications
 
-    @Column({ nullable: true })
+    @Column({ default: 1 })
     categoryId: number
 
     @ManyToOne(type => Category)
     @JoinColumn()
     category?: Category
 
-    @Column({ nullable: true })
+    @Column({ default: 1 })
     subcategoryId: number
 
     @ManyToOne(type => Subcategory)
