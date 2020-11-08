@@ -33,15 +33,15 @@ const DataCell = () => {
     }
 
     return (
-        <Box display="flex" flexDirection="column" justify="center" alignItems="center" border={30} borderColor={"#2e3b52"} padding={10}>
+        <MaterialUiBox border={30}>
             <FormContainer onSubmit={handleSubmit}>
                 <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                 <div>
                     <input type="file" id="jsonFile" accept=".json" />
+                    <MaterialUiButton type="submit" variant="contained" t={0.5}> Upload this file! </MaterialUiButton>
                 </div>
-                <Button type="submit" variant="contained" t={0.5}> Upload this file! </Button>
             </FormContainer>
-        </Box >
+        </MaterialUiBox >
     )
 }
 
@@ -50,9 +50,30 @@ export default DataCell;
 const FormContainer = styled.form`
 display: flex;
 flex-direction: column;
-& > div {
-    padding: 20px;
-    margin: 80;
-    width: 300px;
+height: 400px;
+width: 60%;
 
-}`
+
+img {
+    margin-top: 25px;
+}
+div {
+    margin-top: 80px;
+}
+
+`
+
+const MaterialUiBox = styled(Box)`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border-color: #2e3b52;
+padding: 10;
+width: 50%;
+margin: 0 auto;
+`
+const MaterialUiButton = styled(Button)`
+width: 100%;
+margin-top: 15px;
+`
