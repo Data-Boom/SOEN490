@@ -1,9 +1,6 @@
 const fileSystem = require('fs');
-
-
-//TODO: Run this code else research 3rd party lib
 const uploadModel = require('../models/DataUploadModel');
-// Setup model for this controller to fetch data - will be updated when working on this story
+
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -18,9 +15,14 @@ const processUpload = async (filePathOfJson) => {
 
 const jsonUpload = async (filePathOfJson) => {
 
+  let category = '';
+  let subcategory = '';
   let dataSetName = '';
-  let material = [];
   let dataType = '';
+  let dataSetComments = '';
+  let dataPointVariable = '';
+  let dataSetValues = [];
+  let material = [];
   let referenceType = '';
   let referencePublisher = '';
   let referenceTitle = '';
@@ -28,13 +30,13 @@ const jsonUpload = async (filePathOfJson) => {
   let referenceYear;
   let referencePages;
   let referenceVolume;
-  let dataSetComments = '';
-  let data = [];
+  let units = [];
 
   let jsonObj = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
 
-  referenceType = checkPreferenceType(jsonObj.reference.type);
-  let preferenceTypeID = await uploadModel.insertPreferenceType(referenceType);
+
+  referenceType = checkReferenceType(jsonObj.reference.type);
+  let referenceTypeID = await uploadModel.insertReferenceType(referenceType);
 
   referencePublisher = jsonObj.reference.publisher;
   let publisherNameId = await uploadModel.insertPublisher(referencePublisher);
@@ -46,49 +48,48 @@ const jsonUpload = async (filePathOfJson) => {
   referencePages = jsonObj.reference.pages;
   referenceYear = jsonObj.reference.year;
   referenceVolume = jsonObj.reference.volume;
-  let publicationID = await uploadModel.insertPublication(referenceTitle, referencePages, preferenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
+  let publicationID = await uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
 
   material = jsonObj.material;
   await uploadModel.insertMaterial(material);
+
+  // category = jsonObj.category;
+  // subcategory = jsonObj.subcategory;
+  // let categoryIDs = await uploadModel.insertCategories(category, subcategory);
 
   dataType = jsonObj["data type"];
   let dataSetDataTypeID = await uploadModel.insertDataSetDataType(dataType)
 
   dataSetName = jsonObj["dataset name"];
   dataSetComments = jsonObj.data.comments;
+  let datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID,/** categoryIDs, */ material, dataSetComments)
 
-  await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, material, dataSetComments)
+  for (var i = 0; i < jsonObj.data.variables.length; i++) {
 
+    let dataPointValues = getDataPointsForVariable(jsonObj.data.contents, i);
+    let dataVariableName = jsonObj.data.variables[i].name;
+    let units = jsonObj.data.variables[i].units;
+    let repr = jsonObj.data.variables[i].repr;
 
-
-
-  // materialName = jsonObj.material.names;
-  // console.log(`Name of Material-name: ${materialName}`);
-
-
-  // dataType = jsonObj["data type"];
-
-
-
-  // materialComposition = jsonObj.material.composition.C;
-  // console.log(`Name of Material-composition: ${materialComposition}`);
-  // dataType = jsonObj["data type"];
-  // console.log(`Name of dataType: ${dataType}`);
-  // referenceType = checkReferenceType(jsonObj.reference.type);
-  // console.log(`Name of referenceType: ${referenceType}`);
-  // referenceTitle = jsonObj.reference.title;
-  // console.log(`Name of referenceTitle: ${referenceTitle}`);
-  // referenceAuthors = jsonObj.reference.authors.firstname;
-  // console.log(`Name of referenceAuthors: ${referenceAuthors}`);
-  // console.log(`Name of referenceAuthors: ${referenceAuthors}`);
-  // console.log(`Name of referenceAuthors: ${referenceAuthors}`);
-  // let dataStringed = jsonObj.data.variables;
-  // console.log(`Name of data: ${dataStringed}`);
+    let unitsID = await uploadModel.insertUnits(units);
+    let reprID = await uploadModel.insertRepresentation(repr);
+    await uploadModel.insertDataPointsOfSet(datasetID, dataVariableName, dataPointValues, unitsID, reprID)
+  }
 
   return "Was a success";
 }
 
-const checkPreferenceType = (someRefType) => {
+const getDataPointsForVariable = (dataPointsArray, index) => {
+
+  let dataPointsForVariables = [];
+  let dataPointsComments = '';
+  for (var i = 0; i < dataPointsArray.length; i++) {
+    dataPointsForVariables.push(dataPointsArray[i].point[index])
+  }
+  return dataPointsForVariables;
+}
+
+const checkReferenceType = (someRefType) => {
   let refType = '';
   if (someRefType == "book") {
     refType = "book";
@@ -102,6 +103,10 @@ const checkPreferenceType = (someRefType) => {
     refType = "report";
     return refType;
   }
+}
+
+const isEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
 }
 
 module.exports = {

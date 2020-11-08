@@ -16,7 +16,7 @@ import { Datapointcomments } from './entities/Datapointcomments';
 import { Representations } from './entities/Representations';
 
 
-const insertPreferenceType = async (preferenceType) => {
+const insertReferenceType = async (preferenceType) => {
 
     const connection = getConnection();
     let book = new Publicationtype();
@@ -40,9 +40,10 @@ const insertAuthors = async (storeAuthors) => {
 
     const connection = getConnection();
 
-    for (var i = 0; i < storeAuthors; i++) {
+    for (var i = 0; i < storeAuthors.length; i++) {
+        console.log(storeAuthors[i].firstname);
         let author = new Authors();
-        author.id = 0;
+        author.id;
         author.firstName = storeAuthors[i].firstname;
         author.lastName = storeAuthors[i].lastname;
         author.middleName = storeAuthors[i].middlename;
@@ -76,13 +77,35 @@ const insertMaterial = async (material) => {
     const connection = getConnection();
 
     for (var i = 0; i < material.length; i++) {
-        let compositionCO2 = new Composition();
-        compositionCO2.id = i;
-        compositionCO2.composition = material[i].composition;
-        compositionCO2.name = material[i].details;
-        await connection.manager.save(compositionCO2);
+        let composition = new Composition();
+        composition.id;
+        composition.composition = material[i].composition;
+        await connection.manager.save(composition);
+
+        let someMaterial = new Material();
+        someMaterial.id;
+        someMaterial.compositionId = composition.id;
+        someMaterial.details = material[i].details;
+        await connection.manager.save(someMaterial);
     }
-    console.log("material saved.");
+}
+
+const insertCategories = async (_category, sub_category) => {
+
+    const connection = getConnection();
+    let categoryIDs = [];
+
+    let category = new Category();
+    category.id;
+    category.name = _category;
+    await connection.manager.save(category);
+
+    let subcategory = new Subcategory();
+    subcategory.id;
+    subcategory.name = sub_category;
+    await connection.manager.save(subcategory);
+    categoryIDs.push(category.id, subcategory.id);
+    return categoryIDs;
 }
 
 const insertDataSetDataType = async (datasetdatatypeValue) => {
@@ -97,7 +120,7 @@ const insertDataSetDataType = async (datasetdatatypeValue) => {
     return datasetdatatype.id;
 }
 
-const insertFullDataSet = async (dataSetName, dataSetDataTypeID, publicationID, material, dataSetComments) => {
+const insertFullDataSet = async (dataSetName, dataSetDataTypeID, publicationID, /* categoryIDs ,*/ material, dataSetComments) => {
 
     const connection = getConnection();
 
@@ -106,33 +129,74 @@ const insertFullDataSet = async (dataSetName, dataSetDataTypeID, publicationID, 
     dataset.name = dataSetName;
     dataset.datatypeId = dataSetDataTypeID;
     dataset.publicationId = publicationID;
-    dataset.categoryId;
-    dataset.subcategoryId;
+    dataset.categoryId; //= categoryIDs[0];
+    dataset.subcategoryId; //= categoryIDs[1];
     dataset.materials = material;
     dataset.comments = dataSetComments;
     await connection.manager.save(dataset);
     console.log("First dataset saved.");
+    return dataset.id;
 }
 
-//Here
-const insertUnits = async () => {
+const insertUnits = async (someUnit) => {
 
     const connection = getConnection();
 
-    let unitsGCC = new Units();
-    unitsGCC.id;
-    unitsGCC.name = "g/cc";
-    unitsGCC.units = "g/cc";
-    await connection.manager.save(unitsGCC);
+    let units = new Units();
+    units.id;
+    units.name = someUnit;
+    units.units = someUnit;
+    await connection.manager.save(units);
+    return units.id;
+}
+
+const insertRepresentation = async (representationUnit) => {
+
+    const connection = getConnection();
+
+    let repr = new Representations();
+    repr.id;
+    repr.repr = representationUnit;
+    await connection.manager.save(repr);
+    return repr.id;
+}
+
+const insertDataPointsOfSet = async (dataSetID, dataVariableName, dataPointValues, unitsID, reprID) => {
+
+    const connection = getConnection();
+
+    let datapoint = new Datapoints();
+    datapoint.id;
+    datapoint.datasetId = dataSetID;
+    datapoint.name = dataVariableName;
+    datapoint.values = dataPointValues;
+    datapoint.unitsId = unitsID;
+    datapoint.representationsId = reprID;
+    await connection.manager.save(datapoint);
+}
+
+const insertDataPointsOfSetComments = async () => {
+
+    const connection = getConnection();
+
+    let datapointcomments = new Datapointcomments();
+    datapointcomments.id;
+    datapointcomments.datasetId = dataset.id;
+    datapointcomments.comments = ["im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1"];
+    await connection.manager.save(datapointcomments);
 }
 
 module.exports = {
-    insertPublisher,
-    insertPreferenceType,
     insertAuthors,
-    insertPublication,
-    insertMaterial,
+    insertCategories,
     insertDataSetDataType,
+    insertDataPointsOfSet,
+    insertDataPointsOfSetComments,
     insertFullDataSet,
+    insertMaterial,
+    insertPublication,
+    insertPublisher,
+    insertReferenceType,
+    insertRepresentation,
     insertUnits
 };
