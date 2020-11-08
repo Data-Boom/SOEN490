@@ -175,14 +175,14 @@ const insertDataPointsOfSet = async (dataSetID, dataVariableName, dataPointValue
     await connection.manager.save(datapoint);
 }
 
-const insertDataPointsOfSetComments = async () => {
+const insertDataPointsOfSetComments = async (dataSetID, comments) => {
 
     const connection = getConnection();
 
     let datapointcomments = new Datapointcomments();
     datapointcomments.id;
-    datapointcomments.datasetId = dataset.id;
-    datapointcomments.comments = ["im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1", "im1"];
+    datapointcomments.datasetId = dataSetID;
+    datapointcomments.comments = comments;
     await connection.manager.save(datapointcomments);
 }
 

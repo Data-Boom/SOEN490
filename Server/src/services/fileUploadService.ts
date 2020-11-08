@@ -20,8 +20,7 @@ const jsonUpload = async (filePathOfJson) => {
   let dataSetName = '';
   let dataType = '';
   let dataSetComments = '';
-  let dataPointVariable = '';
-  let dataSetValues = [];
+  let individualDataSetComments = [];
   let material = [];
   let referenceType = '';
   let referencePublisher = '';
@@ -30,7 +29,6 @@ const jsonUpload = async (filePathOfJson) => {
   let referenceYear;
   let referencePages;
   let referenceVolume;
-  let units = [];
 
   let jsonObj = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
 
@@ -66,27 +64,33 @@ const jsonUpload = async (filePathOfJson) => {
 
   for (var i = 0; i < jsonObj.data.variables.length; i++) {
 
-    let dataPointValues = getDataPointsForVariable(jsonObj.data.contents, i);
+    let dataPointValues = getDataInformationFromContentsArray(jsonObj.data.contents, i);
     let dataVariableName = jsonObj.data.variables[i].name;
     let units = jsonObj.data.variables[i].units;
     let repr = jsonObj.data.variables[i].repr;
 
     let unitsID = await uploadModel.insertUnits(units);
     let reprID = await uploadModel.insertRepresentation(repr);
-    await uploadModel.insertDataPointsOfSet(datasetID, dataVariableName, dataPointValues, unitsID, reprID)
+    await uploadModel.insertDataPointsOfSet(datasetID, dataVariableName, dataPointValues[0], unitsID, reprID)
+    individualDataSetComments = dataPointValues[1];
   }
 
-  return "Was a success";
+  await uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
+
+  return "Upload was successful!";
 }
 
-const getDataPointsForVariable = (dataPointsArray, index) => {
+const getDataInformationFromContentsArray = (dataContentArray, index) => {
 
-  let dataPointsForVariables = [];
-  let dataPointsComments = '';
-  for (var i = 0; i < dataPointsArray.length; i++) {
-    dataPointsForVariables.push(dataPointsArray[i].point[index])
+  let dataPointsForVariable = [];
+  let dataSetComments = [];
+
+  for (var i = 0; i < dataContentArray.length; i++) {
+    dataPointsForVariable.push(dataContentArray[i].point[index]);
+    dataSetComments.push(dataContentArray[i].comments);
   }
-  return dataPointsForVariables;
+  let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
+  return contentsArrayInfo;
 }
 
 const checkReferenceType = (someRefType) => {
