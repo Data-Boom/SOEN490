@@ -14,9 +14,6 @@ export class Composition {
     @Column({ length: 50 })
     composition: String
 
-    @Column({ nullable: true })
-    name: String
-
     @CreateDateColumn()
     created: Date
 
