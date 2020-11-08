@@ -26,9 +26,9 @@ export default function GraphView() {
     datalistDemo.push(dataset4)
     console.log(datalistDemo)
     setDatalist(datalistDemo)
-    setIDList(["1", "2", "3", "4"])
+    setIDList(["0", "1", "2", "3"])
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
-    loadOptionsList(datalistDemo)
+    loadOptionsList(datalistDemo, ["0", "1", "2", "3"])
   }
 
   const deleteDataset = () => {
@@ -37,24 +37,27 @@ export default function GraphView() {
       var x = document.getElementById("datasets").value;
       const datalistDemo = []
       const colourlistDemo = []
+      const IDlistDemo = []
       for (var i = 0; i < datalist.length; i++) {
         if (i != x) {
           datalistDemo.push(datalist[i])
           colourlistDemo.push(colourslist[i])
+          IDlistDemo.push(IDList[i])
         }
       }
       colourlistDemo.push(colourslist[x])
+      setIDList(IDlistDemo)
       setColourslist(colourlistDemo)
       setDatalist(datalistDemo)
-      loadOptionsList(datalistDemo)
+      loadOptionsList(datalistDemo, IDlistDemo)
     }
 
   }
 
-  const loadOptionsList = (d) => {
+  const loadOptionsList = (d, id) => {
     var text = "<label for=\"cars\">Choose a Dataset to Delete:</label><br><select name=\"dataset\" id=\"datasets\">"
     for (var i = 0; i < d.length; i++) {
-      text += "<option value=" + i + ">Dataset" + i + "</option><br>";
+      text += "<option value=" + i + ">Dataset" + id[i] + "</option><br>";
     }
     text += "</select><br>";
     document.getElementById("options").innerHTML = text;
