@@ -26,12 +26,46 @@ export default function GraphView() {
     datalistDemo.push(dataset4)
     console.log(datalistDemo)
     setDatalist(datalistDemo)
-    setIDList(["1", "2", "3", "4"])
+    setIDList(["0", "1", "2", "3"])
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
+    loadOptionsList(datalistDemo, ["0", "1", "2", "3"])
+  }
+
+  const deleteDataset = () => {
+
+    if (datalist.length != 0) {
+      var x = document.getElementById("datasets").value;
+      const datalistDemo = []
+      const colourlistDemo = []
+      const IDlistDemo = []
+      for (var i = 0; i < datalist.length; i++) {
+        if (i != x) {
+          datalistDemo.push(datalist[i])
+          colourlistDemo.push(colourslist[i])
+          IDlistDemo.push(IDList[i])
+        }
+      }
+      colourlistDemo.push(colourslist[x])
+      setIDList(IDlistDemo)
+      setColourslist(colourlistDemo)
+      setDatalist(datalistDemo)
+      loadOptionsList(datalistDemo, IDlistDemo)
+    }
+
+  }
+
+  const loadOptionsList = (d, id) => {
+    var text = "<label for=\"cars\">Choose a Dataset to Delete:</label><br><select name=\"dataset\" id=\"datasets\">"
+    for (var i = 0; i < d.length; i++) {
+      text += "<option value=" + i + ">Dataset" + id[i] + "</option><br>";
+    }
+    text += "</select><br>";
+    document.getElementById("options").innerHTML = text;
   }
 
   return (
     <>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <h2>GraphView</h2>
       <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
       <Box ml={8}>
@@ -53,6 +87,13 @@ export default function GraphView() {
             <TextField id="outlined-basic" label="Outlined" variant="outlined" />
           </Grid>
         </Grid>
+        <form>
+          <br></br>
+          <div id="options">
+          </div>
+        </form>
+        <Button onClick={deleteDataset}>Delete dataset</Button>
+
       </Box>
     </>
   );
