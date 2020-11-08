@@ -1,8 +1,8 @@
 import * as d3 from "d3"
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { SvgIcon } from '@material-ui/core';
+import { Button } from "@material-ui/core"
 
 export default function Graph(props) {
 
@@ -16,36 +16,54 @@ export default function Graph(props) {
     outerHeight = props && props.outerHeight || 500,
     width = outerWidth - margin.left - margin.right,
     height = outerHeight - margin.top - margin.bottom
-  let xScale, yScale, xAxis, yAxis
+
+  const [isXLog, setXToggle] = useState(false)
+  const [isYLog, setYToggle] = useState(false)
+
+  const handleXScaleClick = () => {
+    setXToggle(!isXLog)
+  }
+
+  const handleYScaleClick = () => {
+    setYToggle(!isYLog)
+  }
 
     let active1 = null, active2 = null, active3 = null, active4 = null
     let active = [null, null, null, null]
 
   const ref = React.useRef(null)
 
-    useEffect(() => {
-        //Calls the function to create the axis
-        //This part creates the canvas for our graph
-        d3.select(ref.current).selectAll("*").remove()
-        var svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
-            .append("svg")
-            .attr("width", outerWidth)
-            .attr("height", outerHeight)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+  const getScale = (isLog, rangeFrom, rangeTo) => {
+    let scale
+    if(isLog) {
+      scale = d3.scaleLog().domain([1, 10])
+    }
+    else {
+      scale = d3.scaleLinear().domain([0, 10])
+    }
+    return scale.range([rangeTo, rangeFrom]).nice()
+  }
+  
+  useEffect(() => {
+    //cleans up all the points from the graph
+    d3.select(ref.current).selectAll("*").remove()
+    //This part creates the canvas for our graph
+    var svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
+      .append("svg")
+      .attr("width", outerWidth)
+      .attr("height", outerHeight)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      
     //This part creates the axis/scales used for the data.
-    xScale = d3.scaleLinear()
-      .domain([0, 10])
-      .range([0, width]).nice();
-    xAxis = svg.append("g")
+    const xScale = getScale(isXLog, width, 0)
+    const yScale = getScale(isYLog, 0, height)
+      
+    //Calls the function to create the axis
+    const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(xScale));
-
-    yScale = d3.scaleLinear()
-      .domain([0, 10])
-      .range([height, 0]).nice();
-    yAxis = svg.append("g")
+    const yAxis = svg.append("g")
       .call(d3.axisLeft(yScale));
 
     //This part creates an area where points will not be drawn if they are not within this area.
@@ -97,13 +115,40 @@ export default function Graph(props) {
       .attr("cy", function (d) {
         return yScale(d["y"]);
       })
-       
+
+    //Legend on the graph
+    svg.selectAll("mylegendDots")
+      .data(props && props.datalist)
+      .enter()
+      .append("circle")
+      .attr("cx", 615)
+      .attr("cy", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("r", 7)
+      .attr("fill", function (d) {
+        var x = props.datalist.indexOf(d);
+        return props.colourslist[x];
+      })
+
+    svg.selectAll("mylabels")
+      .data(props && props.datalist)
+      .enter()
+      .append("text")
+      .attr("x", 625)
+      .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("fill", function (d) {
+        var x = props.datalist.indexOf(d);
+        return props.colourslist[x];
+      })
+      //.text(function (d) { return d })
+      .text("Dataset")
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle")
+
     //This allows the user to zoom in/out onto the graph.
     var zoom = d3.zoom()
       .scaleExtent([1, 20])
       .extent([[0, 0], [width, height]])
       .on("zoom", updateGraph);
-
     //This rectangle is the area in which the user can zoom into.
     svg.append("rect")
       .attr("fill", "none")
@@ -111,7 +156,7 @@ export default function Graph(props) {
       .attr("height", height)
       .style("pointer-events", "all")
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-        .call(zoom);
+      .call(zoom)
 
      //Legend on the graph
      svg.selectAll("mylegendDots")
@@ -174,27 +219,33 @@ export default function Graph(props) {
 
     //This function modifies the graph upon zooming in/out by updating the axes and points.
     function updateGraph() {
-      var newX = d3.event.transform.rescaleX(xScale);
-      var newY = d3.event.transform.rescaleY(yScale);
-
-      xAxis.call(d3.axisBottom(newX))
-      yAxis.call(d3.axisLeft(newY))
-
+      const newXScale = d3.event.transform.rescaleX(xScale)
+      xAxis.call(d3.axisBottom(newXScale))
       scatter
         .selectAll("circle")
-        .attr('cx', function (d) { return newX(d["x"]) })
-        .attr('cy', function (d) { return newY(d["y"]) });
-    } 
+        .attr('cx', function (d) { return (newXScale(d["x"]))})
 
-  }, [props])
+      const newYScale = d3.event.transform.rescaleY(yScale)
+      yAxis.call(d3.axisLeft(newYScale))
+      scatter
+        .selectAll("circle")
+        .attr('cy', function (d) { return (newYScale(d["y"]))})
+    }
+  }, [props, isXLog, isYLog])
 
   return (
-    <svg
-      ref={ref}
-      width={outerWidth}
-      height={outerHeight}
-      viewBox={`0 0 ${outerWidth} ${outerHeight}`}
-      preserveAspectRatio="xMidYMid meet">
-    </svg>
+    <>
+      <svg
+        ref={ref}
+        width={outerWidth}
+        height={outerHeight}
+        viewBox={`0 0 ${outerWidth} ${outerHeight}`}
+        preserveAspectRatio="xMidYMid meet">
+      </svg>
+      <div>
+        <Button onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+        <Button onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+      </div>
+    </>
   )
 }
