@@ -30,7 +30,7 @@ export class Datapoints {
     @Column({ type: "json" })
     values: number[]
 
-    @Column()
+    @Column({ default: 1 })
     unitsId: number
 
     /*
@@ -41,7 +41,7 @@ export class Datapoints {
     @JoinColumn()
     units?: Units
 
-    @Column({ nullable: true })
+    @Column({ default: 1 })
     representationsId: number
 
     /*
