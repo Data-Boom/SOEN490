@@ -8,8 +8,8 @@ export default function GraphView() {
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
-   
-    
+
+
   const [datalist, setDatalist] = useState([])
   const [colourslist, setColourslist] = useState([])
   const [IDList, setIDList] = useState([])
@@ -26,24 +26,24 @@ export default function GraphView() {
     datalistDemo.push(dataset4)
     console.log(datalistDemo)
     setDatalist(datalistDemo)
-    setIDList(["1" , "2" , "3" , "4"])
+    setIDList(["1", "2", "3", "4"])
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
   }
-    
+
   return (
     <>
       <h2>GraphView</h2>
-          <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
+      <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={6} >
             <Paper elevation={3}>
               <Graph
-                              outerHeight={500}
-                              outerWidth={768}
-                              datalist={datalist}
-                              colourslist={colourslist}
-             IDList={IDList}
+                outerHeight={500}
+                outerWidth={768}
+                datalist={datalist}
+                colourslist={colourslist}
+                IDList={IDList}
               />
             </Paper>
           </Grid>
@@ -56,6 +56,5 @@ export default function GraphView() {
       </Box>
     </>
   );
-    
+
 }
-//  <Button onClick={toggleDataPoints(0)}> test</Button>
