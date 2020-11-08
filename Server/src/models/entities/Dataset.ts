@@ -22,7 +22,7 @@ export class Dataset {
     @Column()
     name: String
 
-    @Column({ nullable: true })
+    @Column({ default: 1 })
     datatypeId: number
 
     /*
