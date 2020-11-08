@@ -28,6 +28,9 @@ export default function Graph(props) {
     setYToggle(!isYLog)
   }
 
+    let active1 = null, active2 = null, active3 = null, active4 = null
+    let active = [null, null, null, null]
+
   const ref = React.useRef(null)
 
   const getScale = (isLog, rangeFrom, rangeTo) => {
@@ -88,8 +91,13 @@ export default function Graph(props) {
         var x = props.datalist.indexOf(d);
         return props.colourslist[x];
       })
+        .attr("id", function (d) {
+            var x = props.datalist.indexOf(d);
+            return "id" + props.IDList[x];
+        })
       .attr("stroke", "black")
       .attr("stroke-width", 2)
+
       //This is for the inner list (dataset1, etc). again, the myPoints is a unique name
       .selectAll("myPoints")
       .data(function (d) {
@@ -97,6 +105,7 @@ export default function Graph(props) {
       })
       .enter()
       .append("circle")
+      .style("opacity", 1)
       .attr("r", 10)
       //This gives the value of the x position
       .attr("cx", function (d) {
@@ -106,34 +115,6 @@ export default function Graph(props) {
       .attr("cy", function (d) {
         return yScale(d["y"]);
       })
-
-    //Legend on the graph
-    svg.selectAll("mylegendDots")
-      .data(props && props.datalist)
-      .enter()
-      .append("circle")
-      .attr("cx", 615)
-      .attr("cy", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
-      .attr("r", 7)
-      .attr("fill", function (d) {
-        var x = props.datalist.indexOf(d);
-        return props.colourslist[x];
-      })
-
-    svg.selectAll("mylabels")
-      .data(props && props.datalist)
-      .enter()
-      .append("text")
-      .attr("x", 625)
-      .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
-      .attr("fill", function (d) {
-        var x = props.datalist.indexOf(d);
-        return props.colourslist[x];
-      })
-      //.text(function (d) { return d })
-      .text("Dataset")
-      .attr("text-anchor", "left")
-      .style("alignment-baseline", "middle")
 
     //This allows the user to zoom in/out onto the graph.
     var zoom = d3.zoom()
@@ -148,6 +129,65 @@ export default function Graph(props) {
       .style("pointer-events", "all")
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
       .call(zoom)
+
+     //Legend on the graph
+     svg.selectAll("mylegendDots")
+       .data(props && props.datalist)
+       .enter()
+       //linking an image to be part of the legend instead of a circle
+       .append('image')
+       .attr('xlink:href', "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png")
+       .attr('width', 20)
+       .attr('height', 20)
+       .attr("x", 600)
+       .attr("y", function (d, i) { return 290 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+       .attr("r", 7)
+       .attr("id", function (d) {
+             var x = props.datalist.indexOf(d);
+             return "legenddotid" + props.IDList[x];
+         })
+            //An option to make the legend hide and show datasets when clicked on.
+            .on("click", function (d) {
+                var x = props.datalist.indexOf(d);
+                scatter
+                    .selectAll("#id" + props.IDList[x])
+                    .style("opacity", function () {
+                        if (active[x] == null) {
+                            active[x] = !d3.select(this).style('opacity') ? 1 : 0;  
+                        }
+                        else {
+                            active[x] = !active[x] ? 1 : 0;
+                        }
+                        return active[x];
+                    })
+                //This will change the icon when the datasets are hidden or visible
+                svg
+                    .selectAll("#legenddotid" + props.IDList[x])
+                    .attr("xlink:href", function () {
+                        if (active[x] == 0) {
+                            return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU";
+                        }
+                        else {
+                            return "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png";
+                        }
+                    })
+            })
+
+        //The name labels for the datasets mentioned in the legend
+        svg.selectAll("mylabels")
+            .data(props && props.datalist)
+            .enter()
+            .append("text")
+            .attr("x", 625)
+            .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+            .attr("fill", function (d) {
+                var x = props.datalist.indexOf(d);
+                return props.colourslist[x];
+            })
+            .text("Dataset")
+            .attr("text-anchor", "left")
+            .style("alignment-baseline", "middle")
+
 
     //This function modifies the graph upon zooming in/out by updating the axes and points.
     function updateGraph() {
