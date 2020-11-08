@@ -26,11 +26,38 @@ export default function GraphView() {
     console.log(datalistDemo)
     setDatalist(datalistDemo)
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
+    loadOptionsList(datalistDemo)
   }
 
   const deleteDataset = () => {
-    //alert("dataset deleted");
+
+    if (datalist.length != 0) {
+      var x = document.getElementById("datasets").value;
+      const datalistDemo = []
+      const colourlistDemo = []
+      for (var i = 0; i < datalist.length; i++) {
+        if (i != x) {
+          datalistDemo.push(datalist[i])
+          colourlistDemo.push(colourslist[i])
+        }
+      }
+      colourlistDemo.push(colourslist[x])
+      setColourslist(colourlistDemo)
+      setDatalist(datalistDemo)
+      loadOptionsList(datalistDemo)
+    }
+
   }
+
+  const loadOptionsList = (d) => {
+    var text = "<label for=\"cars\">Choose a Dataset to Delete:</label><br><select name=\"dataset\" id=\"datasets\">"
+    for (var i = 0; i < d.length; i++) {
+      text += "<option value=" + i + ">Dataset" + i + "</option><br>";
+    }
+    text += "</select><br>";
+    document.getElementById("options").innerHTML = text;
+  }
+
   return (
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
@@ -54,40 +81,14 @@ export default function GraphView() {
             <TextField id="outlined-basic" label="Outlined" variant="outlined" />
           </Grid>
         </Grid>
-
         <form>
           <br></br>
-          <select id="mySelect" size="4">
-            <option>Red</option>
-            <option>Black</option>
-            <option>Blue</option>
-            <option>Green</option>
-          </select>
-          <br></br>
-          <button onclick="deleteChoice()">Delete dataset</button>
+          <div id="options">
+          </div>
         </form>
-
-
-        <script>
-
-
-
-          function deleteChoice()
-           {
-            // var choice = document.getElementById("mySelect")
-            // x.remove(x.selectedIndex)
-          };
-
-
-
-
-        </script>
+        <Button onClick={deleteDataset}>Delete dataset</Button>
 
       </Box>
-
-
-
-
     </>
   )
 }
