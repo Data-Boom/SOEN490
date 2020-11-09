@@ -116,7 +116,7 @@ export default function NavigationMenu() {
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
-            <NavLink exact to={graphRoute}>
+            <NavLink id='graph-id' exact to={graphRoute}>
               Graph
             </NavLink>
           </ListItem>
