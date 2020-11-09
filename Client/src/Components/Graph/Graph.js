@@ -1,6 +1,7 @@
 import * as d3 from "d3"
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+
 import { Button } from "@material-ui/core"
 
 export default function Graph(props) {
@@ -15,16 +16,40 @@ export default function Graph(props) {
     outerHeight = props && props.outerHeight || 500,
     width = outerWidth - margin.left - margin.right,
     height = outerHeight - margin.top - margin.bottom
-  let xScale, yScale, xAxis, yAxis, xLog, yLog
-  var xToggle = false, yToggle = false;
+
+  const [isXLog, setXToggle] = useState(false)
+  const [isYLog, setYToggle] = useState(false)
+
+  const handleXScaleClick = () => {
+    setXToggle(!isXLog)
+  }
+
+  const handleYScaleClick = () => {
+    setYToggle(!isYLog)
+  }
+
+  let active1 = null, active2 = null, active3 = null, active4 = null
+  let active = [null, null, null, null]
+
   const ref = React.useRef(null)
   const changeX = React.useRef(null)
   const changeY = React.useRef(null)
 
+  const getScale = (isLog, rangeFrom, rangeTo) => {
+    let scale
+    if (isLog) {
+      scale = d3.scaleLog().domain([1, 10])
+    }
+    else {
+      scale = d3.scaleLinear().domain([0, 10])
+    }
+    return scale.range([rangeTo, rangeFrom]).nice()
+  }
+
   useEffect(() => {
-    //Calls the function to create the axis
-    //This part creates the canvas for our graph
+    //cleans up all the points from the graph
     d3.select(ref.current).selectAll("*").remove()
+    //This part creates the canvas for our graph
     var svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
       .append("svg")
       .attr("width", outerWidth)
@@ -33,20 +58,14 @@ export default function Graph(props) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     //This part creates the axis/scales used for the data.
-    xScale = d3.scaleLinear()
-      .domain([0, 10])
-      .range([0, width]).nice();
-    xLog = d3.scaleLog()
-      .range([0, width]).nice();
-    xAxis = svg.append("g")
+    const xScale = getScale(isXLog, width, 0)
+    const yScale = getScale(isYLog, 0, height)
+
+    //Calls the function to create the axis
+    const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(xScale));
-    yScale = d3.scaleLinear()
-      .domain([0, 10])
-      .range([height, 0]).nice();
-    yLog = d3.scaleLog()
-      .range([height, 0]).nice();
-    yAxis = svg.append("g")
+    const yAxis = svg.append("g")
       .call(d3.axisLeft(yScale));
 
     //This part creates an area where points will not be drawn if they are not within this area.
@@ -74,8 +93,13 @@ export default function Graph(props) {
         var x = props.datalist.indexOf(d);
         return props.colourslist[x];
       })
+      .attr("id", function (d) {
+        var x = props.datalist.indexOf(d);
+        return "id" + props.IDList[x];
+      })
       .attr("stroke", "black")
       .attr("stroke-width", 2)
+
       //This is for the inner list (dataset1, etc). again, the myPoints is a unique name
       .selectAll("myPoints")
       .data(function (d) {
@@ -83,6 +107,7 @@ export default function Graph(props) {
       })
       .enter()
       .append("circle")
+      .style("opacity", 1)
       .attr("r", 10)
       //This gives the value of the x position
       .attr("cx", function (d) {
@@ -93,19 +118,64 @@ export default function Graph(props) {
         return yScale(d["y"]);
       })
 
+    //This allows the user to zoom in/out onto the graph.
+    var zoom = d3.zoom()
+      .scaleExtent([1, 20])
+      .extent([[0, 0], [width, height]])
+      .on("zoom", updateGraph);
+    //This rectangle is the area in which the user can zoom into.
+    svg.append("rect")
+      .attr("fill", "none")
+      .attr("width", width)
+      .attr("height", height)
+      .style("pointer-events", "all")
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+      .call(zoom)
+
     //Legend on the graph
     svg.selectAll("mylegendDots")
       .data(props && props.datalist)
       .enter()
-      .append("circle")
-      .attr("cx", 615)
-      .attr("cy", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      //linking an image to be part of the legend instead of a circle
+      .append('image')
+      .attr('xlink:href', "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png")
+      .attr('width', 20)
+      .attr('height', 20)
+      .attr("x", 600)
+      .attr("y", function (d, i) { return 290 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("r", 7)
-      .attr("fill", function (d) {
+      .attr("id", function (d) {
         var x = props.datalist.indexOf(d);
-        return props.colourslist[x];
+        return "legenddotid" + props.IDList[x];
+      })
+      //An option to make the legend hide and show datasets when clicked on.
+      .on("click", function (d) {
+        var x = props.datalist.indexOf(d);
+        scatter
+          .selectAll("#id" + props.IDList[x])
+          .style("opacity", function () {
+            if (active[x] == null) {
+              active[x] = !d3.select(this).style('opacity') ? 1 : 0;
+            }
+            else {
+              active[x] = !active[x] ? 1 : 0;
+            }
+            return active[x];
+          })
+        //This will change the icon when the datasets are hidden or visible
+        svg
+          .selectAll("#legenddotid" + props.IDList[x])
+          .attr("xlink:href", function () {
+            if (active[x] == 0) {
+              return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU";
+            }
+            else {
+              return "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png";
+            }
+          })
       })
 
+    //The name labels for the datasets mentioned in the legend
     svg.selectAll("mylabels")
       .data(props && props.datalist)
       .enter()
@@ -116,8 +186,10 @@ export default function Graph(props) {
         var x = props.datalist.indexOf(d);
         return props.colourslist[x];
       })
-      //.text(function (d) { return d })
-      .text("Dataset")
+      .text(function (d) {
+        var x = props.datalist.indexOf(d);
+        return "dataset" + props.IDList[x];
+      })
       .attr("text-anchor", "left")
       .style("alignment-baseline", "middle")
 
@@ -133,91 +205,25 @@ export default function Graph(props) {
 
 
 
-    //This allows the user to zoom in/out onto the graph.
-    var zoom = d3.zoom()
-      .scaleExtent([1, 20])
-      .extent([[0, 0], [width, height]])
-      .on("zoom", updateGraph);
-
-    //This rectangle is the area in which the user can zoom into.
-    svg.append("rect")
-      .attr("fill", "none")
-      .attr("width", width)
-      .attr("height", height)
-      .style("pointer-events", "all")
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .call(zoom);
-
     //This function modifies the graph upon zooming in/out by updating the axes and points.
     function updateGraph() {
-      if (xToggle == true) {
-        var newX = d3.event.transform.rescaleX(xLog);
-        xAxis.call(d3.axisBottom(newX))
-        scatter
-          .selectAll("circle")
-          .attr('cx', function (d) { return newX(d["x"]) })
-      }
-      else {
-        var newX = d3.event.transform.rescaleX(xScale);
-        xAxis.call(d3.axisBottom(newX))
-        scatter
-          .selectAll("circle")
-          .attr('cx', function (d) { return newX(d["x"]) })
-      }
-      if (yToggle == true) {
-        var newY = d3.event.transform.rescaleY(yLog);
-        yAxis.call(d3.axisLeft(newY))
+      const newXScale = d3.event.transform.rescaleX(xScale)
+      xAxis.call(d3.axisBottom(newXScale))
+      scatter
+        .selectAll("circle")
+        .attr('cx', function (d) { return (newXScale(d["x"])) })
 
-        scatter
-          .selectAll("circle")
-          .attr('cy', function (d) { return newY(d["y"]) });
-      }
-      else {
-        var newY = d3.event.transform.rescaleY(yScale);
-        yAxis.call(d3.axisLeft(newY))
-
-        scatter
-          .selectAll("circle")
-          .attr('cy', function (d) { return newY(d["y"]) });
-      }
+      const newYScale = d3.event.transform.rescaleY(yScale)
+      yAxis.call(d3.axisLeft(newYScale))
+      scatter
+        .selectAll("circle")
+        .attr('cy', function (d) { return (newYScale(d["y"])) })
     }
+  }, [props, isXLog, isYLog])
 
-    // These two functions allow the X and Y scales to be changed between a linear scale and a logarithmic scale.
+  function removeDatasets() {
 
-    function toggleXScale() {
-      xToggle = !xToggle;
-      if (xToggle == true) {
-        xAxis.call(d3.axisBottom(xLog))
-        scatter
-          .selectAll("circle")
-          .attr('cx', function (d) { return xLog(d["x"]) })
-      }
-      else {
-        xAxis.call(d3.axisBottom(xScale))
-        scatter
-          .selectAll("circle")
-          .attr('cx', function (d) { return xScale(d["x"]) })
-      }
-    }
-    function toggleYScale() {
-      yToggle = !yToggle;
-      if (yToggle == true) {
-        yAxis.call(d3.axisLeft(yLog))
-        scatter
-          .selectAll("circle")
-          .attr('cy', function (d) { return yLog(d["y"]) })
-      }
-      else {
-        yAxis.call(d3.axisLeft(yScale))
-        scatter
-          .selectAll("circle")
-          .attr('cy', function (d) { return yScale(d["y"]) })
-      }
-    }
-    changeX.current = toggleXScale;
-    changeY.current = toggleYScale;
-
-  }, [props])
+  }
 
   function removeDatasets() {
 
@@ -233,8 +239,8 @@ export default function Graph(props) {
         preserveAspectRatio="xMidYMid meet">
       </svg>
       <div>
-        <Button onClick={() => changeX.current()} color="primary">Change X Scale</Button>
-        <Button onClick={() => changeY.current()} color="primary">Change Y Scale</Button>
+        <Button onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+        <Button onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
       </div>
     </>
   )
