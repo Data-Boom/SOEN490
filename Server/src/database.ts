@@ -507,7 +507,25 @@ export const connectDB = async () => {
 
     console.log(testing);
 
-    console.log("Getting publication data");
+    console.log("Getting publication data #1");
+    let publicationData1 = await connection.manager
+      .createQueryBuilder(Publications, 'publication')
+      .select('publication.name', 'publication_name')
+      .addSelect('publication.doi', 'publication_doi')
+      .addSelect('publication.pages', 'publication_pages')
+      .addSelect('publication.volume', 'publication_volume')
+      .addSelect('publication.year', 'publication_year')
+      .addSelect('publication.datePublished', 'publication_datePublished')
+      .addSelect('publication.dateAccessed', 'publication_dateAccessed')
+      .addSelect('publisher.name', 'publisher_name')
+      .addSelect('publicationtype.name', 'publicationtype_name')
+      .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
+      .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
+      .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
+      .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+      .getRawMany();
+
+    console.log("Getting publication data #2");
     let publicationData = await connection.manager
       .createQueryBuilder(Publications, 'publication')
       .select('publication.name', 'publication_name')
@@ -526,7 +544,18 @@ export const connectDB = async () => {
       .getRawMany();
     console.log(JSON.stringify(publicationData));
 
-    console.log("Getting author data");
+    console.log("Getting author data #1");
+    let authorData1 = await connection.manager
+      .createQueryBuilder(Publications, 'publication')
+      .select('author.firstName', 'author_firstName')
+      .addSelect('author.lastName', 'author_lastName')
+      .addSelect('author.middleName', 'author_middleName')
+      .innerJoin('publication.authors', 'author')
+      .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
+      .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+      .getRawMany();
+
+    console.log("Getting author data #2");
     let authorData = await connection.manager
       .createQueryBuilder(Publications, 'publication')
       .select('author.firstName', 'author_firstName')
@@ -552,7 +581,6 @@ export const connectDB = async () => {
       .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
       .where('dataset.id = 1')
       .getRawMany();
-    console.log(datasetData1[0].datasetdatatype_name);
 
     console.log("Getting second data set data");
     let datasetData2 = await connection.manager
@@ -569,6 +597,16 @@ export const connectDB = async () => {
       .getRawMany();
     console.log(datasetData2[0].subcategory_name);
 
+    console.log("Getting data set materials #1");
+    let materialData1 = await connection.manager
+      .createQueryBuilder(Material, 'material')
+      .select('composition.composition', 'composition_composition')
+      .addSelect('material.details', 'material_details')
+      .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+      .innerJoin('material.datasets', 'dataset')
+      .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+      .getRawMany();
+
     console.log("Getting data set materials");
     let materialData = await connection.manager
       .createQueryBuilder(Material, 'material')
@@ -582,7 +620,7 @@ export const connectDB = async () => {
     console.log(materialData[1].composition_composition);
     console.log(materialData[2].composition_composition);
 
-    console.log("Getting data point data");
+    console.log("Getting data point data #1");
     let datapointData = await connection.manager
       .createQueryBuilder(Datapoints, 'datapoints')
       .select('datapoints.name', 'datapoints_name')
