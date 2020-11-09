@@ -38,6 +38,7 @@ bower_components
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
+build
 
 # Dependency directories
 node_modules/
@@ -114,7 +115,7 @@ dist
 .DS_*
 **/*.backup.*
 **/*.back.*
-
+**/my-db
 *.sublime*
 
 psd
@@ -130,3 +131,4 @@ sketch
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/react,node,vscode
+**/.DS_Store

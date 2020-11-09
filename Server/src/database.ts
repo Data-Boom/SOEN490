@@ -1,41 +1,35 @@
-import {createConnection} from 'typeorm';
-import {AnimeRank} from './models/entities/AnimeRank';
+import { createConnection, getManager } from 'typeorm';
+import { getRepository } from "typeorm";
+import { Authors } from './models/entities/Authors';
+import { Publications } from './models/entities/Publications';
+import { Publisher } from './models/entities/Publisher';
+import { Publicationtype } from './models/entities/Publicationtype';
+import { Composition } from './models/entities/Composition';
+import { Datasetdatatype } from './models/entities/Datasetdatatype';
+import { Dataset } from './models/entities/Dataset';
+import { Category } from './models/entities/Category';
+import { Subcategory } from './models/entities/Subcategory';
+import { Datapoints } from './models/entities/Datapoints';
+import { Units } from './models/entities/Units';
+import { Material } from './models/entities/Material';
+import { Datapointcomments } from './models/entities/Datapointcomments';
+import { Representations } from './models/entities/Representations';
 
 export const connectDB = async () => {
-  await createConnection().then( async connection => {
+  await createConnection().then(async connection => {
     console.log("Connection was made.")
 
-  //Methods for Entity Manager: https://github.com/typeorm/typeorm/blob/master/docs/entity-manager-api.md
-  // This is using connection.manager.{methodName}
+    //Methods for Entity Manager: https://github.com/typeorm/typeorm/blob/master/docs/entity-manager-api.md
+    // This is using connection.manager.{methodName}
 
-  /**
-   * Testing creating an Animerank elements
-   */
-  let animeranker = new AnimeRank();
-  animeranker.id = 1;
-  animeranker.title = "Attack on Titan";
-  animeranker.rank = 1314;
-  await connection.manager.save(animeranker);
-  console.log("First animerank saved.")
+    /** 
+     * Order of element creation matters immensely. If it is done out of order, elements will not be
+     * properly created, given how various foreign keys are set up. 
+     * Authors, Publicationtype, and Publisher must be created before Publications
+     * Composition must be created before the linked Material 
+     * Datasetdatatype, Publications, Category, Subcategory, and Composition must be created before Dataset
+     * Dataset, Representations, and Units must be created before Datapoints
+     */
 
-  let animeranker2 = new AnimeRank();
-  animeranker2.id = 2;
-  animeranker2.title = "One Punch Man"
-  animeranker2.rank = 22214;
-  await connection.manager.save(animeranker2);
-  console.log("Second animerank saved.")
-
-  let animeranker3 = new AnimeRank();
-  animeranker3.id = 3;
-  animeranker3.title = "Promised Neverland"
-  animeranker3.rank = 2143;
-  await connection.manager.save(animeranker3);
-  console.log(" animerank saved.");
-
-  /**
-   * Testing finding an element
-   */
-   let savedAnime = await connection.manager.find(AnimeRank, { title: "Promised Neverland"});
-   console.log(savedAnime);
-
-  })};
+  })
+};
