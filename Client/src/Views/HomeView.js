@@ -24,10 +24,9 @@ export default function HomeView() {
 
   return (
     <>
-        <Splash />
-        <Blurb />
-        <DataCell />
-        <p>{apiResponse}</p>
+      <Splash />
+      <Blurb />
+      <p>{apiResponse}</p>
     </>
   )
 }
