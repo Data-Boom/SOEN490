@@ -9,5 +9,8 @@ const getDataController = require('../controllers/getDataController');
  */
 getDataRouter.get('/getData', getDataController.createRequestForData);
 
+getDataRouter.get('/getData', function (req, res) {
+    res.status(200).json("getData reached");
+});
 
-module.exports = getDataRouter;
+module.exports = getDataRouter
