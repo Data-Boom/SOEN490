@@ -36,9 +36,10 @@ export const connectDB = async () => {
       .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
       .where('dataset.id = :datasetId', { datasetId: datasetReceived })
       .getRawMany();
+    console.log(publicationData1);
 
     console.log("Getting publication data #2");
-    let publicationData = await connection.manager
+    let publicationData2 = await connection.manager
       .createQueryBuilder(Publications, 'publication')
       .select('publication.name', 'publication_name')
       .addSelect('publication.doi', 'publication_doi')
@@ -52,9 +53,9 @@ export const connectDB = async () => {
       .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
       .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
       .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
-      .where('dataset.id = 2')
+      .where('dataset.id = :datasetId', { datasetId: dataset2 })
       .getRawMany();
-    console.log(JSON.stringify(publicationData));
+    console.log(publicationData2);
 
     console.log("Getting author data #1");
     let authorData1 = await connection.manager
@@ -66,19 +67,19 @@ export const connectDB = async () => {
       .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
       .where('dataset.id = :datasetId', { datasetId: datasetReceived })
       .getRawMany();
+    console.log(authorData1);
 
     console.log("Getting author data #2");
-    let authorData = await connection.manager
+    let authorData2 = await connection.manager
       .createQueryBuilder(Publications, 'publication')
       .select('author.firstName', 'author_firstName')
       .addSelect('author.lastName', 'author_lastName')
       .addSelect('author.middleName', 'author_middleName')
       .innerJoin('publication.authors', 'author')
       .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
-      .where('dataset.id = 2')
+      .where('dataset.id = :datasetId', { datasetId: dataset2 })
       .getRawMany();
-    console.log(authorData[0].author_firstName, authorData[0].author_middleName, authorData[0].author_lastName);
-    console.log(authorData[3].author_firstName, authorData[3].author_middleName, authorData[3].author_lastName);
+    console.log(authorData2);
 
     console.log("Getting first data set data");
     let datasetData1 = await connection.manager
@@ -91,8 +92,9 @@ export const connectDB = async () => {
       .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
       .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
       .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-      .where('dataset.id = 1')
+      .where('dataset.id = :datasetId', { datasetId: datasetReceived })
       .getRawMany();
+    console.log(datasetData1);
 
     console.log("Getting second data set data");
     let datasetData2 = await connection.manager
@@ -105,9 +107,9 @@ export const connectDB = async () => {
       .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
       .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
       .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-      .where('dataset.id = 2')
+      .where('dataset.id = :datasetId', { datasetId: dataset2 })
       .getRawMany();
-    console.log(datasetData2[0].subcategory_name);
+    console.log(datasetData2);
 
     console.log("Getting data set materials #1");
     let materialData1 = await connection.manager
@@ -118,22 +120,21 @@ export const connectDB = async () => {
       .innerJoin('material.datasets', 'dataset')
       .where('dataset.id = :datasetId', { datasetId: datasetReceived })
       .getRawMany();
+    console.log(materialData1);
 
-    console.log("Getting data set materials");
-    let materialData = await connection.manager
+    console.log("Getting data set materials #2");
+    let materialData2 = await connection.manager
       .createQueryBuilder(Material, 'material')
       .select('composition.composition', 'composition_composition')
       .addSelect('material.details', 'material_details')
       .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
       .innerJoin('material.datasets', 'dataset')
-      .where('dataset.id = 2')
+      .where('dataset.id = :datasetId', { datasetId: dataset2 })
       .getRawMany();
-    console.log(materialData[0].composition_composition);
-    console.log(materialData[1].composition_composition);
-    console.log(materialData[2].composition_composition);
+    console.log(materialData2);
 
     console.log("Getting data point data #1");
-    let datapointData = await connection.manager
+    let datapointData1 = await connection.manager
       .createQueryBuilder(Datapoints, 'datapoints')
       .select('datapoints.name', 'datapoints_name')
       .addSelect('datapoints.values', 'datapoints_values')
@@ -142,16 +143,9 @@ export const connectDB = async () => {
       .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
       .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')
       .innerJoin(Dataset, 'dataset', 'datapoints.datasetId = dataset.id')
-      .where('dataset.id = 1')
+      .where('dataset.id = :datasetId', { datasetId: datasetReceived })
       .getRawMany();
-    console.log(datapointData[0].datapoints_name);
-    console.log(datapointData[0].datapoints_values);
-    console.log(datapointData[0].units_units);
-    console.log(datapointData[0].representations_repr);
-    console.log(datapointData[1].datapoints_name);
-    console.log(datapointData[1].datapoints_values);
-    console.log(datapointData[1].units_units);
-    console.log(datapointData[1].representations_repr);
+    console.log(datapointData1);
 
     console.log("Getting data point data #2");
     let datapointData2 = await connection.manager
@@ -163,26 +157,26 @@ export const connectDB = async () => {
       .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
       .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')
       .innerJoin(Dataset, 'dataset', 'datapoints.datasetId = dataset.id')
-      .where('dataset.id = 2')
+      .where('dataset.id = :datasetId', { datasetId: dataset2 })
       .getRawMany();
     console.log(datapointData2);
 
 
     console.log("Getting data point comments for first data set");
-    let datapointComments = await connection.manager
+    let datapointComments1 = await connection.manager
       .createQueryBuilder(Datapointcomments, 'datapointcomments')
       .select('datapointcomments.comments', 'datapointcomments_comments')
       .innerJoin(Dataset, 'dataset', 'datapointcomments.datasetId = dataset.id')
-      .where('dataset.id = 1')
+      .where('dataset.id = :datasetId', { datasetId: datasetReceived })
       .getRawMany();
-    console.log(datapointComments);
+    console.log(datapointComments1);
 
     console.log("Getting data point comments for second data set");
     let datapointComments2 = await connection.manager
       .createQueryBuilder(Datapointcomments, 'datapointcomments')
       .select('datapointcomments.comments', 'datapointcomments_comments')
       .innerJoin(Dataset, 'dataset', 'datapointcomments.datasetId = dataset.id')
-      .where('dataset.id = 2')
+      .where('dataset.id = :datasetId', { datasetId: dataset2 })
       .getRawMany();
     console.log(datapointComments2);
   })
