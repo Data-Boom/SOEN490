@@ -7,6 +7,7 @@ const fs = require('fs');
  * creates a request for the fileUploadService to process, only passing the path of the JSON.
  */
 
+
 const createRequest = async (req, res) => {
   if (!req.body) {
     res.status(400).send({
@@ -24,7 +25,12 @@ const createRequest = async (req, res) => {
 
 const callFileUploadService = async (filePathOfJson, res) => {
   const fileServiceResponse = await fileUploadService.processUpload(filePathOfJson);
-  res.status(200).send(fileServiceResponse);
+  if (fileServiceResponse.status == 400) {
+    res.status(400).send(fileServiceResponse);
+  }
+  else {
+    res.status(200).send(fileServiceResponse);
+  }
 }
 
 module.exports = {

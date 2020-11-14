@@ -1,32 +1,44 @@
-var express = require('express');
-const router = express.Router();
+import { Request, Response, Router, NextFunction } from 'express';
 const multer = require('multer');
-const upload = multer({ dest: 'tmp/json/' });
+//import multer from 'multer';
+//import * as fileUploadController from '../controllers/fileUploadController';
+
+interface MulterRequest extends Request {
+  file: any;
+}
+
 const fileUploadController = require('../controllers/fileUploadController');
 
-/**
- * This file contains the routes for a call to dataupload. Only a post method will remain, get is left for
- * testing purposes. If an API call is made to /dataupload then the request is routed to the fileUploadController
- * to continue processing of the request.
- */
+let upload = multer({ dest: 'tmp/json/', limits: { fileSize: 8000000 } });
 
+let router = Router();
 
 /**
- * This route will accept a JSON file and forward to the router. It is first processed by multer middleware,
+ * This route will accept a file and forward to the router. It is first processed by multer middleware,
  * and the file is stored in a temporary directory called tmp/json. This route is referred for processing by 
  * the service.
  */
+// router.post('/dataupload', upload.single('jsonFile'), (request: MulterRequest, response: Response, next: NextFunction) => {
+
+//   // console.log(request.file.path);
+//   //console.log(request);
+//   console.log(request.file);
+//   //console.log(request.file.path);
+//   //fileUploadController.createRequest(request, response);
+//   response.status(200).send("Upload info");
+// });
 router.post('/dataupload', upload.single('jsonFile'), fileUploadController.createRequest);
 
 
 //File Upload Get Router
-router.get('/dataupload', function (request, response) {
+router.get('/dataupload', (request: Request, response, Response) => {
   // Call the controller for get
   response.status(200).json("upload endpoint is reached!");
 });
 
-router.get('/note', function (req, res) {
-  res.status(200).json("L, did you know Shinigami love apples?");
+router.get('/note', (request: Request, response: Response) => {
+
+  response.status(200).json("L, did you know Shinigami love apples?");
 });
 
-module.exports = router;
+export { router as fileRouter };
