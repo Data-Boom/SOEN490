@@ -49,7 +49,6 @@ export default function GraphView() {
             </Paper>
           </Grid>
           <Grid item sm={7}>
-            <Search />
           </Grid>
         </Grid>
       </Box>
