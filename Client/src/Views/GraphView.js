@@ -2,7 +2,7 @@ import { Box, Button, Container, Grid, Paper, TextField, makeStyles } from "@mat
 
 import Graph from '../Components/Graph/Graph'
 import React from "react"
-import Search2 from "../Components/Search/Search2"
+import Search from "../Components/Search/Search"
 import hideDatasets from '../Components/Graph/Graph'
 import { useState } from "react"
 
@@ -10,7 +10,6 @@ export default function GraphView() {
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
-
 
   const [datalist, setDatalist] = useState([])
   const [colourslist, setColourslist] = useState([])
@@ -50,7 +49,7 @@ export default function GraphView() {
             </Paper>
           </Grid>
           <Grid item sm={7}>
-            <Search2 />
+            <Search />
           </Grid>
         </Grid>
       </Box>

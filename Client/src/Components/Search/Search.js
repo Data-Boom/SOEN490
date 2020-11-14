@@ -1,133 +1,188 @@
-import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-//import { Container,Form, FormControl, FormGroup, Table } from '@material-ui/core';
-import { Form, Button, Col, Container, Table } from 'react-bootstrap/'
+import { Box, Container, Divider, FormControl, FormControlLabel, Grid, InputLabel, Radio, RadioGroup, Select, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@material-ui/core';
+import React, { useState } from 'react';
 
-function Search() {
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+export default function Search() {
+    
+  const rows = [
+    { title: "test" },
+    { title: "test3" },
+    { title: "test4" },
+    { title: "test2" }
+  ]
+
+  const [formValues, setFormValues] = useState({
+    oxidizer: '',
+    year: '',
+    outputFormat: '',
+    categories: '',
+    subcategories: '',
+    fuel: '',
+    author: '',
+    dilutent: '',
+  })
+
+  const [isCaseSensitive, setIsCaseSensitive] = useState(false)
+
+  const toggleIsCaseSensitive = () => {
+    setIsCaseSensitive(!isCaseSensitive)
+  }
+
+  const handleInputChange = e => {
+    const { name, value } = e.target
+    setFormValues({ ...formValues, [name]: value })
+  }
+
+  const handleSubmit = () => {
+    alert(JSON.stringify(formValues, null, 2) + `\n  ${isCaseSensitive}`)
+  }
+
+  const renderSearch = () => {
+    console.log("rendered search")
     return (
-        <Container>
-            <div>
-                <h1> SEARCH </h1>
-            </div>
+      <>
+        <Typography variant='h4' align="left">Search</Typography>
+        <Grid container spacing={4}>
+          <Grid item sm={3}>
+            <TextField fullWidth label="Oxidizer" variant="outlined" name="oxidizer" value={formValues.oxidizer} onChange={handleInputChange} />
+          </Grid>
 
-            <Form>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridOxidizer">
-                        <Form.Control defaultValue="Oxidizer" />
-                    </Form.Group>
+          <Grid item sm={3}>
+            <TextField fullWidth label="Year" variant="outlined" name="year" value={formValues.year} onChange={handleInputChange} />
+          </Grid>
 
-                    <Form.Group as={Col} controlId="formGridYear">
-                        <Form.Control defaultValue="YEAR" />
-                    </Form.Group>
+          <Grid item sm={2}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel htmlFor="outlined-outFormat-native-simple" >Output format</InputLabel>
+              <Select
+                native
+                label="categories"
+                name="outputFormat" value={formValues.outputFormat} onChange={handleInputChange}
+              >
+                <option aria-label="None" value="" />
+                {[{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }].map(option => <option value={option.value}>{option.text}</option>)}
+              </Select>
+            </FormControl>
+          </Grid>
 
-                    <Form.Group as={Col} controlId="formGridOutputFormat">
-                        {/* <Form.Label>State</Form.Label> */}
-                        <Form.Control as="select" defaultValue="NONE">
-                            <option>Output Formats</option>
-                            <option>Type</option>
-                        </Form.Control>
-                    </Form.Group>
+          <Grid item sm={2}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel htmlFor="outlined-outFormat-native-simple" >Categories</InputLabel>
+              <Select
+                native
+                label="categories"
+                name="categories" value={formValues.categories} onChange={handleInputChange}
+              >
+                <option aria-label="None" value="" />
+                {[{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }].map(option => <option value={option.value}>{option.text}</option>)}
+              </Select>
+            </FormControl>
+          </Grid>
 
-                    <Form.Group as={Col} controlId="formGridCategories">
-                        {/* <Form.Label>State</Form.Label> */}
-                        <Form.Control as="select" defaultValue="NONE">
-                            <option>Categories</option>
-                            <option>Type</option>
-                        </Form.Control>
-                    </Form.Group>
+          <Grid item sm={2}>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>Search Database</Button>
+          </Grid>
+        </Grid>
 
-                    <Button variant="primary" type="search" size="sm">
-                        Search Database
-                </Button>
+        <Grid container spacing={4}>
+          <Grid item sm={3}>
+            <TextField label="Subcategories" variant="outlined" fullWidth name="subcategories" value={formValues.subcategories} onChange={handleInputChange} />
+          </Grid>
 
-                </Form.Row>
+          <Grid item sm={3}>
+            <TextField label="Fuel" variant="outlined" fullWidth name="fuel" value={formValues.fuel} onChange={handleInputChange} />
+          </Grid>
+        </Grid>
 
-                <Form.Row>
+        <Grid container spacing={4}>
+          <Grid item sm={3}>
+            <TextField label="Author" variant="outlined" fullWidth name="author" value={formValues.author} onChange={handleInputChange} />
+          </Grid>
 
-                    <Form.Group as={Col} controlId="formGridSub">
-                        <Form.Control defaultValue="Subcategories" />
-                    </Form.Group>
+          <Grid item sm={3}>
+            <TextField label="Diluent" variant="outlined" fullWidth name="dilutent" value={formValues.dilutent} onChange={handleInputChange} />
+          </Grid>
+        </Grid>
 
-                    <Form.Group as={Col} controlId="formGridFuel">
-                        <Form.Control defaultValue="Fuel" />
-                    </Form.Group>
+        <Grid container spacing={4}>
+          <Grid item>
+            <FormControl>
+              <FormControlLabel
+                label="Case Sensitive"
+                labelPlacement="start"
+                control={
+                  <Switch
+                    name="isCaseSensitive"
+                    checked={isCaseSensitive}
+                    onChange={toggleIsCaseSensitive}
+                  />}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
+      </>
+    )
+  }
 
-                </Form.Row>
+  const renderResults = () => {
+    return (
+      <>
+        <Typography variant='h4' align="left">Results</Typography>
+        <TableContainer>
+          <Table size={"small"}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Title</TableCell>
+                <TableCell align="right">Oxidizer</TableCell>
+                <TableCell align="right">Category</TableCell>
+                <TableCell align="right">Subcategory</TableCell>
+                <TableCell align="right">Fuel</TableCell>
+                <TableCell align="right">Diluent</TableCell>
+                <TableCell align="right">Author</TableCell>
+                <TableCell align="right">Year</TableCell>
+                <TableCell align="right">Output Format</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {renderRows(rows)}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    )
+  }
 
-                <Form.Row>
+  const renderRows = (rows) => {
+    return rows.map((row) => (
+      <TableRow key={row.name}>
+        <TableCell component="th" scope="row">
+          {row.name}
+        </TableCell>
+        <TableCell align="right">{row.title}</TableCell>
+        <TableCell align="right">{row.oxidizer}</TableCell>
+        <TableCell align="right">{row.category}</TableCell>
+        <TableCell align="right">{row.subcategory}</TableCell>
+        <TableCell align="right">{row.fuel}</TableCell>
+        <TableCell align="right">{row.diluent}</TableCell>
+        <TableCell align="right">{row.author}</TableCell>
+        <TableCell align="right">{row.year}</TableCell>
+        <TableCell align="right">{row.outputFormat}</TableCell>
+      </TableRow>
+    ))
+  }
 
-                    <Form.Group as={Col} controlId="formGridAuthor">
-                        <Form.Control defaultValue="Author" />
-                    </Form.Group>
+  console.log("rendered form")
 
-                    <Form.Group as={Col} controlId="formGridDiluent">
-                        <Form.Control defaultValue="Diluent" />
-                    </Form.Group>
-                </Form.Row>
-
-                <p>Case Sensitive?</p>
-                {['radio'].map((type) => (
-                    <div key={`inline-${type}`} className="mb-3">
-                        <Form.Check inline label="YES" type={type} id={`inline-${type}-1`} />
-                        <Form.Check inline label="NO" type={type} id={`inline-${type}-2`} />
-                    </div>
-                ))}
-
-            </Form>
-
-            <h1>RESULTS</h1>
-
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Oxidizer </th>
-                        <th>Subcategory</th>
-                        <th>Author</th>
-                        <th>Year</th>
-                        <th>Fuel</th>
-                        <th>Diluent</th>
-                        <th>Output Format</th>
-                        <th>Category</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </Table>
-        </Container>
-    );
+  return (
+    <Container>
+      <Box pt={4}>
+        {renderSearch()}
+      </Box>
+      <Box pt={4}>
+        {renderResults()}
+      </Box>
+    </Container>
+  );
 }
-export default Search;
