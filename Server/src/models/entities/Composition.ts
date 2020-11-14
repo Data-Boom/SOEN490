@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 
 /**
@@ -11,13 +11,10 @@ export class Composition {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({length: 50})
+    @Column({ length: 50 })
     composition: String
 
-    @Column({nullable: true})
-    name: String
-
-    @CreateDateColumn()  
+    @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()

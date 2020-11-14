@@ -7,7 +7,7 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
+import { graphRoute, homeRoute, fileUploadRoute, searchRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -19,6 +19,7 @@ import React from 'react'
 import SearchIcon from '@material-ui/icons/Search';
 import SearchView from "../Views/SearchView"
 import clsx from "clsx"
+import FileUploadView from "../Views/FileUploadView"
 
 const drawerWidth = 240
 
@@ -117,17 +118,24 @@ export default function NavigationMenu() {
             <ListItemIcon>
               <BarChartIcon />
             </ListItemIcon>
-            <NavLink exact to={graphRoute}>
+            <NavLink id='graph-id' exact to={graphRoute}>
               Graph
             </NavLink>
           </ListItem>
-
           <ListItem button>
             <ListItemIcon>
               <SearchIcon />
             </ListItemIcon>
             <NavLink exact to={searchRoute}>
               Search
+            </NavLink>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <NavLink exact to={fileUploadRoute}>
+              Upload a File
             </NavLink>
           </ListItem>
         </List>
@@ -159,6 +167,7 @@ export default function NavigationMenu() {
         <Box mt={16}>
           <Route exact path={homeRoute} component={HomeView} />
           <Route path={graphRoute} component={GraphView} />
+          <Route path={fileUploadRoute} component={FileUploadView} />
         </Box>
         <Route path={searchRoute} component={SearchView} />
       </HashRouter >
