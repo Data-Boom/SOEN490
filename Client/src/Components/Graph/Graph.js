@@ -75,6 +75,20 @@ export default function Graph(props) {
       .attr("x", 0)
       .attr("y", 0);
 
+    //This allows the user to zoom in/out onto the graph.
+    var zoom = d3.zoom()
+      .scaleExtent([1, 20])
+      .extent([[0, 0], [width, height]])
+      .on("zoom", updateGraph);
+    //This rectangle is the area in which the user can zoom into.
+    svg.append("rect")
+      .attr("fill", "none")
+      .attr("width", width)
+      .attr("height", height)
+      .style("pointer-events", "all")
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+      .call(zoom)
+
     //This is the part that creates the points
     var scatter = svg.append("g")
       .attr("clip-path", "url(#clip)");
@@ -115,20 +129,17 @@ export default function Graph(props) {
       .attr("cy", function (d) {
         return yScale(d["y"]);
       })
-
-    //This allows the user to zoom in/out onto the graph.
-    var zoom = d3.zoom()
-      .scaleExtent([1, 20])
-      .extent([[0, 0], [width, height]])
-      .on("zoom", updateGraph);
-    //This rectangle is the area in which the user can zoom into.
-    svg.append("rect")
-      .attr("fill", "none")
-      .attr("width", width)
-      .attr("height", height)
-      .style("pointer-events", "all")
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .call(zoom)
+      // This allows us to change the opacity of a dot on click.
+      .on("click", function (d) {
+        var x = props.datalist.indexOf(d);
+        var opacity = d3.select(this).style('opacity');
+        if (opacity == 0.5) {
+          d3.select(this).style('opacity', 1)
+        }
+        else {
+          d3.select(this).style('opacity', 0.5)
+        }
+      })
 
     //Legend on the graph
     svg.selectAll("mylegendDots")
