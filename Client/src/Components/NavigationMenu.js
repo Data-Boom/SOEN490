@@ -7,10 +7,12 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { graphRoute, homeRoute, fileUploadRoute, searchRoute } from '../Consts/Routes'
+import { fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import FileUploadView from "../Views/FileUploadView"
 import GraphView from "../Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from '../Views/HomeView'
@@ -19,7 +21,6 @@ import React from 'react'
 import SearchIcon from '@material-ui/icons/Search';
 import SearchView from "../Views/SearchView"
 import clsx from "clsx"
-import FileUploadView from "../Views/FileUploadView"
 
 const drawerWidth = 240
 
@@ -94,6 +95,19 @@ export default function NavigationMenu() {
     setOpen(false);
   };
 
+  const renderNavLink = (route, title, icon) => {
+    return (
+      <ListItem button>
+        <ListItemIcon>
+          {icon}
+        </ListItemIcon>
+        <NavLink exact to={route}>
+          {title}
+        </NavLink>
+      </ListItem>
+    )
+  }
+
   const drawer = () => {
     return (
       <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
@@ -105,39 +119,11 @@ export default function NavigationMenu() {
           </IconButton>
         </div>
         <Divider />
-        <List >
-          <ListItem button>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <NavLink exact to={homeRoute}>
-              Home
-            </NavLink>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <BarChartIcon />
-            </ListItemIcon>
-            <NavLink id='graph-id' exact to={graphRoute}>
-              Graph
-            </NavLink>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <SearchIcon />
-            </ListItemIcon>
-            <NavLink exact to={searchRoute}>
-              Search
-            </NavLink>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <NavLink exact to={fileUploadRoute}>
-              Upload a File
-            </NavLink>
-          </ListItem>
+        <List>
+          {renderNavLink(homeRoute, "Home", <HomeIcon />)}
+          {renderNavLink(graphRoute, "Graph", <BarChartIcon />)}
+          {renderNavLink(searchRoute, "Search", <SearchIcon />)}
+          {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
         </List>
       </ Drawer>
     )
