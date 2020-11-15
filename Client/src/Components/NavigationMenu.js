@@ -24,6 +24,81 @@ import clsx from "clsx"
 
 const drawerWidth = 240
 
+export default function NavigationMenu() {
+
+  const [open, setOpen] = React.useState(false)
+  const classes = useStyles()
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const renderNavLink = (route, title, icon) => {
+    return (
+      <ListItem button>
+        <ListItemIcon>
+          {icon}
+        </ListItemIcon>
+        <NavLink exact to={route}>
+          {title}
+        </NavLink>
+      </ListItem>
+    )
+  }
+
+  const drawer = () => {
+    return (
+      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
+        paper: classes.drawerPaper,
+      }}>
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {renderNavLink(homeRoute, "Home", <HomeIcon />)}
+          {renderNavLink(graphRoute, "Graph", <BarChartIcon />)}
+          {renderNavLink(searchRoute, "Search", <SearchIcon />)}
+          {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
+        </List>
+      </ Drawer>
+    )
+  }
+
+  return (
+    <>
+      <HashRouter>
+        <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
+          <Toolbar>
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item>
+                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" color="inherit">
+                  Detonation Database
+                </Typography>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        {drawer()}
+        <Route exact path={homeRoute} component={HomeView} />
+        <Route path={graphRoute} component={GraphView} />
+        <Route path={fileUploadRoute} component={FileUploadView} />
+        <Route path={searchRoute} component={SearchView} />
+      </HashRouter >
+    </>
+  )
+}
+
 //todo i dont like this useStyles() will refactor later, this is not a resuable component so whatever
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,82 +156,3 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
 }));
-
-
-export default function NavigationMenu() {
-
-  const [open, setOpen] = React.useState(false)
-  const classes = useStyles()
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const renderNavLink = (route, title, icon) => {
-    return (
-      <ListItem button>
-        <ListItemIcon>
-          {icon}
-        </ListItemIcon>
-        <NavLink exact to={route}>
-          {title}
-        </NavLink>
-      </ListItem>
-    )
-  }
-
-  const drawer = () => {
-    return (
-      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
-        paper: classes.drawerPaper,
-      }}>
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {renderNavLink(homeRoute, "Home", <HomeIcon />)}
-          {renderNavLink(graphRoute, "Graph", <BarChartIcon />)}
-          {renderNavLink(searchRoute, "Search", <SearchIcon />)}
-          {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
-        </List>
-      </ Drawer>
-    )
-  }
-
-  return (
-    <>
-      <HashRouter>
-        <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
-          <Toolbar>
-            <Grid container justify="space-between" alignItems="center">
-              <Grid item>
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                  {/* <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton, open && classes.hide)}> */}
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="h6" color="inherit">
-                  Detonation Database
-                </Typography>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-        {drawer()}
-        <Box mt={16}>
-          <Route exact path={homeRoute} component={HomeView} />
-          <Route path={graphRoute} component={GraphView} />
-          <Route path={fileUploadRoute} component={FileUploadView} />
-        </Box>
-        <Route path={searchRoute} component={SearchView} />
-      </HashRouter >
-    </>
-  )
-}
