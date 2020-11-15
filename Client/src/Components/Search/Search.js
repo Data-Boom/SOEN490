@@ -18,7 +18,7 @@ export default function Search() {
   })
 
   const [isCaseSensitive, setIsCaseSensitive] = useState(false)
-  const [categories, setCategories] = useState([{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }, { value: 4, text: "new value"}])
+  const [categories, setCategories] = useState([{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }, { value: 4, text: "new value" }])
   const [rows, setRows] = useState([
     { title: "test" },
     { title: "test3" },
@@ -33,10 +33,18 @@ export default function Search() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
-    setFormValues({ ...formValues, [name]: value})
+    setFormValues({ ...formValues, [name]: value })
   }
 
   const handleSubmit = () => {
+    //call backend to get rows with this query (formValues)
+    setRows([
+      { title: "test" },
+      { title: "test3" },
+      { title: "test4" },
+      { title: "test5" },
+      { title: "test2" }
+    ])
     alert(JSON.stringify(formValues, null, 2) + `\n  ${isCaseSensitive}`)
   }
 
