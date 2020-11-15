@@ -21,7 +21,7 @@ const DataCell = () => {
         const formData = new FormData();
         formData.append('jsonFile', json);
 
-            const options = {
+        const options = {
             method: 'POST',
             body: formData,
         };
