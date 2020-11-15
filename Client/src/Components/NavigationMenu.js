@@ -90,10 +90,12 @@ export default function NavigationMenu() {
           </Toolbar>
         </AppBar>
         {drawer()}
-        <Route exact path={homeRoute} component={HomeView} />
-        <Route path={graphRoute} component={GraphView} />
-        <Route path={fileUploadRoute} component={FileUploadView} />
-        <Route path={searchRoute} component={SearchView} />
+        <Box pt={16}>
+          <Route exact path={homeRoute} component={HomeView} />
+          <Route path={graphRoute} component={GraphView} />
+          <Route path={fileUploadRoute} component={FileUploadView} />
+          <Route path={searchRoute} component={SearchView} />
+        </Box>
       </HashRouter >
     </>
   )
