@@ -1,6 +1,5 @@
-import { Button } from "@material-ui/core"
 import React from "react"
-import Search2 from '../Components/Search/Search2'
+import Search from '../Components/Search/Search'
 
 export default function SearchView() {
 

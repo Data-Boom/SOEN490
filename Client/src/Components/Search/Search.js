@@ -5,13 +5,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 export default function Search() {
-    
-  const rows = [
-    { title: "test" },
-    { title: "test3" },
-    { title: "test4" },
-    { title: "test2" }
-  ]
 
   const [formValues, setFormValues] = useState({
     oxidizer: '',
@@ -25,14 +18,22 @@ export default function Search() {
   })
 
   const [isCaseSensitive, setIsCaseSensitive] = useState(false)
+  const [categories, setCategories] = useState([{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }, { value: 4, text: "new value"}])
+  const [rows, setRows] = useState([
+    { title: "test" },
+    { title: "test3" },
+    { title: "test4" },
+    { title: "test5" },
+    { title: "test2" }
+  ])
 
   const toggleIsCaseSensitive = () => {
     setIsCaseSensitive(!isCaseSensitive)
   }
 
-  const handleInputChange = e => {
-    const { name, value } = e.target
-    setFormValues({ ...formValues, [name]: value })
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setFormValues({ ...formValues, [name]: value})
   }
 
   const handleSubmit = () => {
@@ -40,7 +41,7 @@ export default function Search() {
   }
 
   const renderSearch = () => {
-    console.log("rendered search")
+    console.log(JSON.stringify(formValues, null, 2))
     return (
       <>
         <Typography variant='h4' align="left">Search</Typography>
@@ -62,7 +63,7 @@ export default function Search() {
                 name="outputFormat" value={formValues.outputFormat} onChange={handleInputChange}
               >
                 <option aria-label="None" value="" />
-                {[{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }].map(option => <option value={option.value}>{option.text}</option>)}
+                {categories.map(option => <option value={option.value}>{option.text}</option>)}
               </Select>
             </FormControl>
           </Grid>
@@ -76,7 +77,7 @@ export default function Search() {
                 name="categories" value={formValues.categories} onChange={handleInputChange}
               >
                 <option aria-label="None" value="" />
-                {[{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }].map(option => <option value={option.value}>{option.text}</option>)}
+                {categories.map(option => <option value={option.value}>{option.text}</option>)}
               </Select>
             </FormControl>
           </Grid>
@@ -184,5 +185,5 @@ export default function Search() {
         {renderResults()}
       </Box>
     </Container>
-  );
+  )
 }
