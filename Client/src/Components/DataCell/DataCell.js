@@ -1,8 +1,7 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button'
 import React from 'react';
-
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 /**
  * This component handles receiving the json locally then sending the file for processing
@@ -22,7 +21,7 @@ const DataCell = () => {
         const formData = new FormData();
         formData.append('jsonFile', json);
 
-        const options = {
+            const options = {
             method: 'POST',
             body: formData,
         };
@@ -34,47 +33,47 @@ const DataCell = () => {
     }
 
     return (
-        <Box border={30}>
-            <form onSubmit={handleSubmit}>
+        <MaterialUiBox border={30}>
+            <FormContainer onSubmit={handleSubmit}>
                 <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                 <div>
                     <input type="file" id="jsonFile" accept=".json" />
-                    <Button type="submit" variant="contained" t={0.5}> Upload this file! </Button>
+                    <MaterialUiButton type="submit" variant="contained"> Upload this file! </MaterialUiButton>
                 </div>
-            </form>
-        </Box >
+            </FormContainer>
+        </MaterialUiBox >
     )
 }
 
 export default DataCell;
 
-// const FormContainer = styled.form`
-// display: flex;
-// flex-direction: column;
-// height: 400px;
-// width: 60%;
+const FormContainer = styled.form`
+display: flex;
+flex-direction: column;
+height: 400px;
+width: 60%;
 
 
-// img {
-//     margin-top: 25px;
-// }
-// div {
-//     margin-top: 80px;
-// }
+img {
+    margin-top: 25px;
+}
+div {
+    margin-top: 80px;
+}
 
-// `
+`
 
-// const MaterialUiBox = styled(Box)`
-// display: flex;
-// flex-direction: column;
-// justify-content: center;
-// align-items: center;
-// border-color: #2e3b52;
-// padding: 10;
-// width: 50%;
-// margin: 0 auto;
-// `
-// const MaterialUiButton = styled(Button)`
-// width: 100%;
-// margin-top: 15px;
-// `
+const MaterialUiBox = styled(Box)`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border-color: #2e3b52;
+padding: 10;
+width: 50%;
+margin: 0 auto;
+`
+const MaterialUiButton = styled(Button)`
+width: 100%;
+margin-top: 15px;
+`
