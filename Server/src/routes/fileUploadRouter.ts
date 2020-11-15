@@ -1,16 +1,12 @@
 import { Request, Response, Router, NextFunction } from 'express';
-const multer = require('multer');
-//import multer from 'multer';
-//import * as fileUploadController from '../controllers/fileUploadController';
+import multer from 'multer';
+import { fileUploadController } from '../controllers/fileUploadController';
 
 interface MulterRequest extends Request {
   file: any;
 }
 
-const fileUploadController = require('../controllers/fileUploadController');
-
-let upload = multer({ dest: 'tmp/json/', limits: { fileSize: 8000000 } });
-
+let upload = multer({ dest: 'tmp/', limits: { fileSize: 8000000 } });
 let router = Router();
 
 /**
@@ -18,16 +14,14 @@ let router = Router();
  * and the file is stored in a temporary directory called tmp/json. This route is referred for processing by 
  * the service.
  */
-// router.post('/dataupload', upload.single('jsonFile'), (request: MulterRequest, response: Response, next: NextFunction) => {
-
-//   // console.log(request.file.path);
-//   //console.log(request);
-//   console.log(request.file);
-//   //console.log(request.file.path);
-//   //fileUploadController.createRequest(request, response);
-//   response.status(200).send("Upload info");
-// });
-router.post('/dataupload', upload.single('jsonFile'), fileUploadController.createRequest);
+router.post('/dataupload', upload.single('file'), (request: MulterRequest, response: Response, next: NextFunction) => {
+  try {
+    let fileUpload = new fileUploadController(request.file.path);
+    fileUpload.createRequest(request, response);
+  } catch (e) {
+    response.status(400).send(e.message);
+  }
+});
 
 
 //File Upload Get Router
@@ -41,4 +35,4 @@ router.get('/note', (request: Request, response: Response) => {
   response.status(200).json("L, did you know Shinigami love apples?");
 });
 
-export { router as fileRouter };
+export { router as fileUploadRouter };
