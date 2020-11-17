@@ -6,7 +6,7 @@ interface MulterRequest extends Request {
   file: any;
 }
 
-let upload = multer({ dest: 'tmp/', limits: { fileSize: 8000000 } });
+let upload = multer({ dest: 'tmp/upload/', limits: { fileSize: 8000000 } });
 let router = Router();
 
 /**

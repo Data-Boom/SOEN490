@@ -17,7 +17,7 @@ export class fileUploadController {
     this.filePathOfUpload = filePath;
   }
 
-  createRequest = async (request: Request, response: Response /**nextFunction: NextFunction */) => {
+  async createRequest(request: Request, response: Response /**nextFunction: NextFunction */) {
     //TODO: Custom validations here 
     if (!request.body && (this.filePathOfUpload !== request.file.path)) {
       response.status(400).send({
@@ -31,9 +31,9 @@ export class fileUploadController {
         console.error(error)
       }
     }
-  }
+  };
 
-  private callFileUploadService = async (filePath: string, response: Response) => {
+  private async callFileUploadService(filePath: string, response: Response) {
     const fileServiceResponse = await fileUploadService.processUpload(filePath);
     if (fileServiceResponse.status == 400) {
       response.status(400).send(fileServiceResponse);
@@ -41,5 +41,5 @@ export class fileUploadController {
     else {
       response.status(500).send(fileServiceResponse);
     }
-  }
+  };
 }
