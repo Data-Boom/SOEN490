@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-const fileUploadService = require('../services/fileUploadService');
-//import * as fileUploadService from '../services/fileUploadService';
+import { fileUploadService } from '../services/fileUploadService';
 
 
 /**
@@ -34,12 +33,8 @@ export class fileUploadController {
   };
 
   private async callFileUploadService(filePath: string, response: Response) {
-    const fileServiceResponse = await fileUploadService.processUpload(filePath);
-    if (fileServiceResponse.status == 400) {
-      response.status(400).send(fileServiceResponse);
-    }
-    else {
-      response.status(500).send(fileServiceResponse);
-    }
+    let fileService = new fileUploadService(filePath);
+    let fileServiceResponse = await fileService.processUpload();
+    response.status(200).json(fileServiceResponse);
   };
 }

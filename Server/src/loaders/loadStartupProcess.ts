@@ -2,15 +2,15 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from '../database'
-const datasetController = require('../controllers/DatasetController')
 import { fileUploadRouter } from '../routes/fileUploadRouter'
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser'
+
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
  * to initialize the application. The initial connection to the database is also created here.
  */
-class loadStartupProcess {
+export class loadStartupProcess {
   constructor() {
 
     // Create a new express application instance
@@ -33,6 +33,8 @@ class loadStartupProcess {
       origin: "http://localhost:4500",
       preflightContinue: false,
     };
+
+
     app.use(bodyParser.urlencoded({
       extended: false
     }));
@@ -43,7 +45,6 @@ class loadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    app.use('/', datasetController)
     app.use('/', fileUploadRouter)
 
 
@@ -67,5 +68,3 @@ class loadStartupProcess {
 
   }
 }
-
-module.exports = loadStartupProcess;
