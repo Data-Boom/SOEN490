@@ -22,23 +22,22 @@ export class fileUploadService {
 
   private async jsonUpload(filePathOfJson: string) {
 
-    let category = '';
-    let subcategory = '';
-    let dataSetName = '';
-    let dataType = '';
-    let dataSetComments = '';
-    let individualDataSetComments = [];
-    let material = [];
-    let referenceType = '';
-    let referencePublisher = '';
-    let referenceTitle = '';
-    let referenceAuthors = [];
-    let referenceYear;
-    let referencePages;
-    let referenceVolume;
+    let category: string = '';
+    let subcategory: string = '';
+    let dataSetName: string = '';
+    let dataType: string = '';
+    let dataSetComments: string = '';
+    let individualDataSetComments: string[] = [];
+    let material: any[] = [];
+    let referenceType: string = '';
+    let referencePublisher: string = '';
+    let referenceTitle: string = '';
+    let referenceAuthors: string[] = [];
+    let referenceYear: number;
+    let referencePages: number;
+    let referenceVolume: number;
 
     let jsonObj = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
-
 
     referenceType = this.checkReferenceType(jsonObj.reference.type);
     let referenceTypeID = await uploadModel.insertReferenceType(referenceType);
