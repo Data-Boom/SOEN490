@@ -2,7 +2,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { Container } from '@material-ui/core'
 import React from 'react'
-import styled from 'styled-components'
+
 
 /**
  * This component handles receiving the json locally then sending the file for processing
@@ -11,7 +11,7 @@ import styled from 'styled-components'
 export default function DataCell() {
     /**
      * Upon submission, the JSON file is extracted from the event and must be appended to formData
-     * to be sent with API request. 
+     * to be sent with API request.
      */
     const handleSubmit = async (e) => {
         e.preventDefault();
