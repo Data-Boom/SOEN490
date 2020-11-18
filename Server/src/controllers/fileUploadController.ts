@@ -18,7 +18,7 @@ export class fileUploadController {
 
   async createRequest(request: Request, response: Response /**nextFunction: NextFunction */) {
     //TODO: Custom validations here 
-    if (!request.body && (this.filePathOfUpload !== request.file.path)) {
+    if (!request.body) {
       response.status(400).send({
         message: "Nothing to process"
       });
