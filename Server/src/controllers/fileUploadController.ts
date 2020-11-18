@@ -16,7 +16,7 @@ export class fileUploadController {
     this.filePathOfUpload = filePath;
   }
 
-  async createRequest(request: Request, response: Response /**nextFunction: NextFunction */) {
+  createRequest(request: Request, response: Response /**nextFunction: NextFunction */) {
     //TODO: Custom validations here 
     if (!request.body) {
       response.status(400).send({
