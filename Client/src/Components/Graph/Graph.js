@@ -86,8 +86,7 @@ export default function Graph(props) {
       .attr("width", width)
       .attr("height", height)
       .style("pointer-events", "all")
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .call(zoom)
+      .call(zoom);
 
     //This is the part that creates the points
     let scatter = svg.append("g")
