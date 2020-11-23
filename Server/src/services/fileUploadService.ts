@@ -31,21 +31,22 @@ const jsonUpload = async (filePathOfJson) => {
   let referenceVolume;
 
   let jsonObj = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
-  referenceType = checkReferenceType(jsonObj.reference.type);
 
+  referenceType = checkReferenceType(jsonObj.reference.type);
   //check and validates if reference type is a string
   validation(referenceType, 'string');
 
   let referenceTypeID = await uploadModel.insertReferenceType(referenceType);
 
   referencePublisher = jsonObj.reference.publisher;
-
   //check and validates if reference publisher is a string
   validation(referencePublisher, 'string');
 
   let publisherNameId = await uploadModel.insertPublisher(referencePublisher);
 
   referenceAuthors = jsonObj.reference.authors;
+  //check and validates if ref authors are strings
+  arrTypeValidationCheck(referenceAuthors, 'string');
 
   await uploadModel.insertAuthors(referenceAuthors);
 
@@ -68,6 +69,8 @@ const jsonUpload = async (filePathOfJson) => {
   let publicationID = await uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
 
   material = jsonObj.material;
+  //check and validates if material array index contents are of string
+  arrTypeValidationCheck(material, 'string');
   await uploadModel.insertMaterial(material);
 
   // category = jsonObj.category;
@@ -91,8 +94,10 @@ const jsonUpload = async (filePathOfJson) => {
     let unitsID = await uploadModel.insertUnits(units);
     let reprID = await uploadModel.insertRepresentation(repr);
     await uploadModel.insertDataPointsOfSet(datasetID, dataVariableName, dataPointValues[0], unitsID, reprID)
-    individualDataSetComments = dataPointValues[1];
+    individualDataSetComments = dataPointValues[1]; 
   }
+  //check and validate the individual data set comments array content are strings
+  arrTypeValidationCheck(individualDataSetComments,'string');
 
   await uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
 
@@ -150,11 +155,9 @@ const validation =(reference, type) =>{
   }else
     alert('wrong input, try again');
 }
-
-// const validation2 =(reference, type) =>{
-//  //if we have empty inputs/values
-//  if(typeof reference == type ){
-//    console.log('proper input: ' + reference);  
-//  }else
-//    reference= null;
-// }
+const arrTypeValidationCheck(reference, type) => {
+  if( reference.every(i => (typeof i === type))){
+    console.log('array type check successful');
+  }else
+    alert('wrong input, try again');
+}
