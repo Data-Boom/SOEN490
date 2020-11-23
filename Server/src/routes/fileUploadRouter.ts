@@ -1,7 +1,12 @@
 var express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({ dest: 'tmp/json/' });
+const upload = multer({
+  limits: {
+    fileSize: 6000000 // Limit .json files to 8mb to avoid potential DoS attacks -> this limits stress testing
+  },
+  dest: 'tmp/json/'
+});
 const fileUploadController = require('../controllers/fileUploadController');
 
 /**
