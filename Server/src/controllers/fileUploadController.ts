@@ -15,7 +15,7 @@ const createRequest = async (req, res) => {
   }
   else {
     try {
-      callFileUploadService(req.file.path, res);
+      await callFileUploadService(req.file.path, res);
     } catch (error) {
       console.error(error)
     }
