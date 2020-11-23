@@ -31,21 +31,40 @@ const jsonUpload = async (filePathOfJson) => {
   let referenceVolume;
 
   let jsonObj = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
-
-
   referenceType = checkReferenceType(jsonObj.reference.type);
+
+  //check and validates if reference type is a string
+  validation(referenceType, 'string');
+
   let referenceTypeID = await uploadModel.insertReferenceType(referenceType);
 
   referencePublisher = jsonObj.reference.publisher;
+
+  //check and validates if reference publisher is a string
+  validation(referencePublisher, 'string');
+
   let publisherNameId = await uploadModel.insertPublisher(referencePublisher);
 
   referenceAuthors = jsonObj.reference.authors;
+
   await uploadModel.insertAuthors(referenceAuthors);
 
   referenceTitle = jsonObj.reference.title;
+   //check and validates if reference title is a string
+   validation(referenceTitle, 'string');
+
   referencePages = jsonObj.reference.pages;
+   //check and validates if reference pages is a number
+   validation(referencePages, 'number');
+
   referenceYear = jsonObj.reference.year;
+  //check and validates if reference year is a number
+  validation(referenceYear, 'number');
+
   referenceVolume = jsonObj.reference.volume;
+  //check and validates if reference volume is a number
+  validation(referenceVolume, 'number');
+
   let publicationID = await uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
 
   material = jsonObj.material;
@@ -79,7 +98,7 @@ const jsonUpload = async (filePathOfJson) => {
 
   return "Upload was successful!";
 }
-
+//-----------------------------------------helper functions-----------------------------
 const getDataInformationFromContentsArray = (dataContentArray, index) => {
 
   let dataPointsForVariable = [];
@@ -116,3 +135,26 @@ const isEmpty = (obj) => {
 module.exports = {
   processUpload
 }
+const validation =(reference, type) =>{
+   /**
+   * if(refType is a string ){
+   *    return;
+   * }else
+   *  alert('wrong input, try again') or return  reftype = null
+   */
+
+  //basic if-else validation for checking referenceType input
+  
+  if(typeof reference == type ){
+    console.log('proper input: ' + reference);  
+  }else
+    alert('wrong input, try again');
+}
+
+// const validation2 =(reference, type) =>{
+//  //if we have empty inputs/values
+//  if(typeof reference == type ){
+//    console.log('proper input: ' + reference);  
+//  }else
+//    reference= null;
+// }
