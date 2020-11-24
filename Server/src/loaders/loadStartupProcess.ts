@@ -54,7 +54,7 @@ class loadStartupProcess {
      */
     const port: number = Number(process.env.PORT) || 4000;
     const startServer = async () => {
-      await app.listen(port, () => {
+      app.listen(port, () => {
         console.log(`This Server is running on http://localhost:4000`);
       });
     };

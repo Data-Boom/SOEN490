@@ -28,7 +28,6 @@ export default function Graph(props) {
     setYToggle(!isYLog)
   }
 
-  let active1 = null, active2 = null, active3 = null, active4 = null
   let active = [null, null, null, null]
 
   const ref = React.useRef(null)
