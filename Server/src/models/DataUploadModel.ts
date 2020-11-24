@@ -1,4 +1,4 @@
-import { getRepository, getConnection } from "typeorm";
+import { getConnection } from "typeorm";
 
 import { Authors } from './entities/Authors';
 import { Publications } from './entities/Publications';
