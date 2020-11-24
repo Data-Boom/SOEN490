@@ -13,13 +13,13 @@ export class Authors {
     id: number
 
     @Column()
-    firstName: String
+    firstName: string
 
     @Column()
-    lastName: String
+    lastName: string
 
     @Column({ nullable: true })
-    middleName: String
+    middleName: string
 
     @CreateDateColumn()
     created: Date

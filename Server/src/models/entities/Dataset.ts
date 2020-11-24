@@ -18,7 +18,7 @@ export class Dataset {
     id: number
 
     @Column()
-    name: String
+    name: string
 
     @Column({ default: 1 })
     datatypeId: number
@@ -68,7 +68,7 @@ export class Dataset {
     materials: Material[];
 
     @Column({ nullable: true })
-    comments: String
+    comments: string
 
     @CreateDateColumn()
     created: Date

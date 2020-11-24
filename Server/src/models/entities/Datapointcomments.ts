@@ -23,7 +23,7 @@ export class Datapointcomments {
     dataset?: Dataset
 
     @Column({ type: "json" })
-    comments: String[]
+    comments: string[]
 
     @CreateDateColumn()
     created: Date
