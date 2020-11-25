@@ -217,10 +217,6 @@ export default function Graph(props) {
     }
   }, [props, isXLog, isYLog])
 
-  function removeDatasets() {
-
-  }
-
   return (
     <>
       <svg
