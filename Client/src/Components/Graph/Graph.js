@@ -61,24 +61,24 @@ export default function Graph(props) {
     //Calls the function to create the axis
     const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(xScale));
+      .call(d3.axisBottom(xScale))
     const yAxis = svg.append("g")
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yScale))
 
     //This part creates an area where points will not be drawn if they are not within this area.
-    const clip = svg.append("defs").append("SVG:clipPath")
+    svg.append("defs").append("SVG:clipPath")
       .attr("id", "clip")
       .append("SVG:rect")
       .attr("width", width)
       .attr("height", height)
       .attr("x", 0)
-      .attr("y", 0);
+      .attr("y", 0)
 
     //This allows the user to zoom in/out onto the graph.
     const zoom = d3.zoom()
       .scaleExtent([1, 20])
       .extent([[0, 0], [width, height]])
-      .on("zoom", updateGraph);
+      .on("zoom", updateGraph)
     //This rectangle is the area in which the user can zoom into.
     svg.append("rect")
       .attr("fill", "none")
