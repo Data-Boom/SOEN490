@@ -22,10 +22,12 @@ export default function Graph(props) {
 
   const handleXScaleClick = () => {
     setXToggle(!isXLog)
+    console.log('Changed X')
   }
 
   const handleYScaleClick = () => {
     setYToggle(!isYLog)
+    console.log('Changed Y')
   }
 
   let active1 = null, active2 = null, active3 = null, active4 = null
@@ -232,8 +234,8 @@ export default function Graph(props) {
         preserveAspectRatio="xMidYMid meet">
       </svg>
       <div>
-        <Button onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-        <Button onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+        <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+        <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
       </div>
     </>
   )

@@ -68,7 +68,7 @@ export default function GraphView() {
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <h2>GraphView</h2>
-      <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
+      <Button id='handleRequest' onClick={handleRequest.bind()} color="primary">Load random dataset button</Button>
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={5} >
@@ -90,7 +90,7 @@ export default function GraphView() {
           <div id="options">
           </div>
         </form>
-        <Button onClick={deleteDataset}>Delete dataset</Button>
+        <Button id='deleteDataset' onClick={deleteDataset}>Delete dataset</Button>
 
       </Box>
     </>

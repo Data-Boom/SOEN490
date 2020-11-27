@@ -1,7 +1,10 @@
 import React from 'react';
 import renderer from "react-test-renderer";
-import { shallow } from 'enzyme';
+import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import Graph from '../Components/Graph/Graph'
+
+configure({ adapter: new Adapter() });
 
 describe('Graph Component', () => {
     it("should match snapshot", () => {
@@ -9,11 +12,23 @@ describe('Graph Component', () => {
         expect(tree).toMatchSnapshot();
     });
 
-    /*it("should change the xscale upon toggle", () => {
+    it("should change the xscale upon toggle", () => {
+        const spy = jest.spyOn(console, 'log');
+        const wrapper = shallow(<Graph />);
 
+        const button = wrapper.find('#btn1');
+        expect(button.exists()).toEqual(true);
+        button.simulate('click');
+        expect(spy).toBeCalledWith('Changed X');
     });
 
     it("should change the xscale upon toggle", () => {
+        const spy = jest.spyOn(console, 'log');
+        const wrapper = shallow(<Graph />);
 
-    });*/
+        const button = wrapper.find('#btn2');
+        expect(button.exists()).toEqual(true);
+        button.simulate('click');
+        expect(spy).toBeCalledWith('Changed Y');
+    });
 });
