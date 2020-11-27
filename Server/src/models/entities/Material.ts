@@ -25,7 +25,7 @@ export class Material {
     composition?: Composition
 
     @Column({ nullable: true })
-    details: String
+    details: string
 
     /*
     * This ManyToMany snippet is used to complete the link between the 

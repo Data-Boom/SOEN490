@@ -28,7 +28,6 @@ export default function Graph(props) {
     setYToggle(!isYLog)
   }
 
-  let active1 = null, active2 = null, active3 = null, active4 = null
   let active = [null, null, null, null]
 
   const ref = React.useRef(null)
@@ -53,7 +52,7 @@ export default function Graph(props) {
       .attr("width", outerWidth)
       .attr("height", outerHeight)
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     //This part creates the axis/scales used for the data.
     const xScale = getScale(isXLog, width, 0)
@@ -62,24 +61,24 @@ export default function Graph(props) {
     //Calls the function to create the axis
     const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(xScale));
+      .call(d3.axisBottom(xScale))
     const yAxis = svg.append("g")
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yScale))
 
     //This part creates an area where points will not be drawn if they are not within this area.
-    const clip = svg.append("defs").append("SVG:clipPath")
+    svg.append("defs").append("SVG:clipPath")
       .attr("id", "clip")
       .append("SVG:rect")
       .attr("width", width)
       .attr("height", height)
       .attr("x", 0)
-      .attr("y", 0);
+      .attr("y", 0)
 
     //This allows the user to zoom in/out onto the graph.
     const zoom = d3.zoom()
       .scaleExtent([1, 20])
       .extent([[0, 0], [width, height]])
-      .on("zoom", updateGraph);
+      .on("zoom", updateGraph)
     //This rectangle is the area in which the user can zoom into.
     svg.append("rect")
       .attr("fill", "none")
@@ -90,7 +89,7 @@ export default function Graph(props) {
 
     //This is the part that creates the points
     let scatter = svg.append("g")
-      .attr("clip-path", "url(#clip)");
+      .attr("clip-path", "url(#clip)")
 
     scatter
       //the myDots is a unique name, this is to refer to these dots.
@@ -101,12 +100,12 @@ export default function Graph(props) {
       .append('g')
       //This gives each list of points a different colour, verifies if its in the list and changes it if it is
       .attr("fill", function (d) {
-        const x = props.datalist.indexOf(d);
-        return props.colourslist[x];
+        const x = props.datalist.indexOf(d)
+        return props.colourslist[x]
       })
       .attr("id", function (d) {
-        const x = props.datalist.indexOf(d);
-        return "id" + props.IDList[x];
+        const x = props.datalist.indexOf(d)
+        return "id" + props.IDList[x]
       })
       .attr("stroke", "black")
       .attr("stroke-width", 2)
@@ -114,7 +113,7 @@ export default function Graph(props) {
       //This is for the inner list (dataset1, etc). again, the myPoints is a unique name
       .selectAll("myPoints")
       .data(function (d) {
-        return d;
+        return d
       })
       .enter()
       .append("circle")
@@ -122,15 +121,15 @@ export default function Graph(props) {
       .attr("r", 10)
       //This gives the value of the x position
       .attr("cx", function (d) {
-        return xScale(d["x"]);
+        return xScale(d["x"])
       })
       //this gives the value of the y position
       .attr("cy", function (d) {
-        return yScale(d["y"]);
+        return yScale(d["y"])
       })
       // This allows us to change the opacity of a dot on click.
       .on("click", function (d) {
-        const opacity = d3.select(this).style('opacity');
+        const opacity = d3.select(this).style('opacity')
         if (opacity == 0.5) {
           d3.select(this).style('opacity', 1)
         }
@@ -152,32 +151,32 @@ export default function Graph(props) {
       .attr("y", function (d, i) { return 290 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("r", 7)
       .attr("id", function (d) {
-        const x = props.datalist.indexOf(d);
-        return "legenddotid" + props.IDList[x];
+        const x = props.datalist.indexOf(d)
+        return "legenddotid" + props.IDList[x]
       })
       //An option to make the legend hide and show datasets when clicked on.
       .on("click", function (d) {
-        const x = props.datalist.indexOf(d);
+        const x = props.datalist.indexOf(d)
         scatter
           .selectAll("#id" + props.IDList[x])
           .style("opacity", function () {
             if (active[x] == null) {
-              active[x] = !d3.select(this).style('opacity') ? 1 : 0;
+              active[x] = !d3.select(this).style('opacity') ? 1 : 0
             }
             else {
-              active[x] = !active[x] ? 1 : 0;
+              active[x] = !active[x] ? 1 : 0
             }
-            return active[x];
+            return active[x]
           })
         //This will change the icon when the datasets are hidden or visible
         svg
           .selectAll("#legenddotid" + props.IDList[x])
           .attr("xlink:href", function () {
             if (active[x] == 0) {
-              return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU";
+              return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU"
             }
             else {
-              return "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png";
+              return "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png"
             }
           })
       })
@@ -190,12 +189,12 @@ export default function Graph(props) {
       .attr("x", 625)
       .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("fill", function (d) {
-        const x = props.datalist.indexOf(d);
-        return props.colourslist[x];
+        const x = props.datalist.indexOf(d)
+        return props.colourslist[x]
       })
       .text(function (d) {
-        const x = props.datalist.indexOf(d);
-        return "dataset" + props.IDList[x];
+        const x = props.datalist.indexOf(d)
+        return "dataset" + props.IDList[x]
       })
       .attr("text-anchor", "left")
       .style("alignment-baseline", "middle")
@@ -216,10 +215,6 @@ export default function Graph(props) {
         .attr('cy', function (d) { return (newYScale(d["y"])) })
     }
   }, [props, isXLog, isYLog])
-
-  function removeDatasets() {
-
-  }
 
   return (
     <>

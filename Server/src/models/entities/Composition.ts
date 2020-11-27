@@ -12,7 +12,7 @@ export class Composition {
     id: number
 
     @Column({ length: 50 })
-    composition: String
+    composition: string
 
     @CreateDateColumn()
     created: Date
