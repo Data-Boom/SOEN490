@@ -46,7 +46,7 @@ const jsonUpload = async (filePathOfJson) => {
 
   referenceAuthors = jsonObj.reference.authors;
   //check and validates if ref authors are strings
-  arrTypeValidationCheck(referenceAuthors, 'string');
+ // arrTypeValidationCheck(referenceAuthors, 'string');
 
   await uploadModel.insertAuthors(referenceAuthors);
 
@@ -70,7 +70,7 @@ const jsonUpload = async (filePathOfJson) => {
 
   material = jsonObj.material;
   //check and validates if material array index contents are of string
-  arrTypeValidationCheck(material, 'string');
+ // arrTypeValidationCheck(material, 'string');
   await uploadModel.insertMaterial(material);
 
   // category = jsonObj.category;
@@ -97,7 +97,7 @@ const jsonUpload = async (filePathOfJson) => {
     individualDataSetComments = dataPointValues[1]; 
   }
   //check and validate the individual data set comments array content are strings
-  arrTypeValidationCheck(individualDataSetComments,'string');
+ // arrTypeValidationCheck(individualDataSetComments,'string');
 
   await uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
 
@@ -155,9 +155,9 @@ const validation =(reference, type) =>{
   }else
     alert('wrong input, try again');
 }
-const arrTypeValidationCheck(reference, type) => {
-  if( reference.every(i => (typeof i === type))){
-    console.log('array type check successful');
-  }else
-    alert('wrong input, try again');
-}
+//const arrTypeValidationCheck(reference, type) => {
+ // if( reference.every(i => (typeof i === type))){
+ //   console.log('array type check successful');
+ // }else
+ //   alert('wrong input, try again');
+//}
