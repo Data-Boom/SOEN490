@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 
 /**
@@ -11,13 +11,13 @@ export class Units {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({length: 50})
-    name: String
+    @Column({ length: 50 })
+    name: string
 
-    @Column({length: 10})
-    units: String
+    @Column({ length: 10 })
+    units: string
 
-    @CreateDateColumn() 
+    @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()
