@@ -17,15 +17,15 @@ describe('GraphView Component', () => {
         expect(wrapper.find('button').exists()).toBeTruthy();
     });
 
-    /*it('calls the handleRequest function on button click.', () => {
-        // Currently returns false. Button is not found.
+    it('calls the handleRequest and loadOptionsList function on button click.', () => {
         const spy = jest.spyOn(console, 'log');
-        const wrapper = shallow(<GraphView />);
+        const wrapper = mount(<GraphView />, { attachTo: document.body });
 
-        const button = wrapper.find('#btn1');
+        const button = wrapper.find('button#handleRequest');
         expect(button.exists()).toEqual(true);
         button.simulate('click');
         expect(spy).toBeCalledWith('handleRequest Test');
-    });*/
+        expect(spy).toBeCalledWith('loadOptionsList Test');
+    });
 
 });

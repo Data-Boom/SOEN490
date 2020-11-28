@@ -29,6 +29,7 @@ export default function GraphView() {
     setDatalist(datalistDemo)
     setIDList(["0", "1", "2", "3"])
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
+    console.log('handleRequest Test')
     loadOptionsList(datalistDemo, ["0", "1", "2", "3"])
   }
 
@@ -62,6 +63,7 @@ export default function GraphView() {
     }
     text += "</select><br>";
     document.getElementById("options").innerHTML = text;
+    console.log('loadOptionsList Test')
   }
 
   return (

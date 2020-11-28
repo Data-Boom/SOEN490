@@ -8,6 +8,7 @@ exports[`DataCell Component should match snapshot 1`] = `
     className="MuiBox-root MuiBox-root-1"
   >
     <form
+      id="formSubmit"
       onSubmit={[Function]}
     >
       <img

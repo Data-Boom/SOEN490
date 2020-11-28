@@ -17,5 +17,17 @@ describe('DataCell Component', () => {
         const wrapper = mount(<DataCell />)
         expect(wrapper.find('input').exists()).toBeTruthy();
     });
+
+    /*it('calls the handleSubmit function on button click.', () => {
+        // Currently fails, most likely because handleSubmit is an async function.
+        const spy = jest.spyOn(console, 'log');
+        const wrapper = mount(<DataCell />);
+
+        const form = wrapper.find('#formSubmit');
+        expect(form.exists()).toEqual(true);
+        form.simulate('click');
+        expect(spy).toBeCalledWith('handleSubmit Test');
+
+    });*/
 });
 

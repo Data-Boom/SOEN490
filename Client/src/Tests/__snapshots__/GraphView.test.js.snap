@@ -12,6 +12,7 @@ Array [
   <button
     className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
     disabled={false}
+    id="handleRequest"
     onBlur={[Function]}
     onClick={[Function]}
     onDragLeave={[Function]}
@@ -55,6 +56,7 @@ Array [
             <button
               className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
               disabled={false}
+              id="btn1"
               onBlur={[Function]}
               onClick={[Function]}
               onDragLeave={[Function]}
@@ -79,6 +81,7 @@ Array [
             <button
               className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
               disabled={false}
+              id="btn2"
               onBlur={[Function]}
               onClick={[Function]}
               onDragLeave={[Function]}
@@ -116,6 +119,7 @@ Array [
     <button
       className="MuiButtonBase-root MuiButton-root MuiButton-text"
       disabled={false}
+      id="deleteDataset"
       onBlur={[Function]}
       onClick={[Function]}
       onDragLeave={[Function]}

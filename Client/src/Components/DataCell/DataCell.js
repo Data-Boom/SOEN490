@@ -30,12 +30,13 @@ export default function DataCell() {
             .then(result => {
                 console.log(result[0])
             })
+        console.log('handleSubmit Test')
     }
 
     return (
         <Container>
             <Box border={30} p={4} borderColor="primary">
-                <form onSubmit={handleSubmit}>
+                <form id="formSubmit" onSubmit={handleSubmit}>
                     <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                     <div>
                         <input type="file" id="jsonFile" accept=".json" />

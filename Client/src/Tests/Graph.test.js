@@ -32,3 +32,33 @@ describe('Graph Component', () => {
         expect(spy).toBeCalledWith('Changed Y');
     });
 });
+
+/*describe('useEffect Test', () => {
+    //Currently does not work.
+    let props;
+    let wrapper;
+    let useEffect;
+
+    let mockUseEffect = () => {
+        useEffect.mockImplementationOnce(f => f());
+    }
+
+    beforeEach(() => {
+        useEffect = jest.spyOn(React, "useEffect");
+    });
+
+    props = {
+        getScale: jest.fn().mockResolvedValue(false)
+
+    };
+
+    mockUseEffect();
+    mockUseEffect();
+    wrapper = shallow(<Graph {...props} />)
+
+    describe("on start", () => {
+        it("calls the getScale function", () => {
+            expect(props.getScale).toHaveBeenCalled();
+        })
+    })
+});*/

@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Button } from "@material-ui/core"
 
@@ -46,7 +46,7 @@ export default function Graph(props) {
     return scale.range([rangeTo, rangeFrom]).nice()
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     //cleans up all the points from the graph
     d3.select(ref.current).selectAll("*").remove()
     //This part creates the canvas for our graph

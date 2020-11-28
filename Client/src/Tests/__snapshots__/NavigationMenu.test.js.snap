@@ -18,6 +18,7 @@ Array [
             aria-label="menu"
             className="MuiButtonBase-root MuiIconButton-root makeStyles-menuButton-4 MuiIconButton-colorInherit MuiIconButton-edgeStart"
             disabled={false}
+            id="Open"
             onBlur={[Function]}
             onClick={[Function]}
             onDragLeave={[Function]}
@@ -78,6 +79,7 @@ Array [
         <button
           className="MuiButtonBase-root MuiIconButton-root"
           disabled={false}
+          id="Close"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}

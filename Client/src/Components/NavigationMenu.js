@@ -30,10 +30,12 @@ export default function NavigationMenu() {
   const classes = useStyles()
   const handleDrawerOpen = () => {
     setOpen(true);
+    console.log("openDrawer Test")
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    console.log("closeDrawer Test")
   };
 
   const renderNavLink = (route, title, icon) => {
@@ -55,7 +57,7 @@ export default function NavigationMenu() {
         paper: classes.drawerPaper,
       }}>
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton id='Close' onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -77,7 +79,7 @@ export default function NavigationMenu() {
           <Toolbar>
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
                   <MenuIcon />
                 </IconButton>
               </Grid>
