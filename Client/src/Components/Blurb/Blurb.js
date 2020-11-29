@@ -2,7 +2,6 @@ import './Blurb.css'
 
 import Box from '@material-ui/core/Box'
 import React from 'react'
-import { createMuiTheme } from '@material-ui/core'
 
 export default function Blurb() {
   return (

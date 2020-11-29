@@ -3,9 +3,7 @@ import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedCol
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
-import { Composition } from './Composition';
 import { Datasetdatatype } from './Datasetdatatype';
-
 
 /**
  * The entity annotation indicates that a table is being created
@@ -20,7 +18,7 @@ export class Dataset {
     id: number
 
     @Column()
-    name: String
+    name: string
 
     @Column({ default: 1 })
     datatypeId: number
@@ -70,7 +68,7 @@ export class Dataset {
     materials: Material[];
 
     @Column({ nullable: true })
-    comments: String
+    comments: string
 
     @CreateDateColumn()
     created: Date
