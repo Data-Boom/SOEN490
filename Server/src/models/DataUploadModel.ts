@@ -23,7 +23,7 @@ const insertReferenceType = async (preferenceType) => {
     let book = new Publicationtype();
     book.id;
     book.name = preferenceType;
-    await connection.manager.save(book);
+    await connection.manager.save(book); //saving inside the database
     return book.id;
 }
 
