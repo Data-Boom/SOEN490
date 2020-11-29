@@ -13,7 +13,7 @@ export class Representations {
     id: number
 
     @Column({ length: 20 })
-    repr: String
+    repr: string
 
     @CreateDateColumn()
     created: Date

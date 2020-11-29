@@ -19,11 +19,11 @@ export default class DatasetEntity {
     @Column()
     category_id: number
     @Column()
-	subcategory_id: number
+    subcategory_id: number
     @Column()
-	fuel_id: number
+    fuel_id: number
     @Column()
-	oxidizer_id: number
+    oxidizer_id: number
     @Column()
     diluent_id: number
 }
@@ -34,7 +34,7 @@ export const getDatasets = () => {
 
 export const postDataset = async (req) => {
     console.log(req.body)
-    const dataset = await getRepository(DatasetEntity).create(req.body);
+    const dataset = getRepository(DatasetEntity).create(req.body);
     const results = await getRepository(DatasetEntity).save(dataset);
     return results;
 }

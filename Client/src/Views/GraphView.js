@@ -1,9 +1,7 @@
-import { Box, Button, Container, Grid, Paper, TextField, makeStyles } from "@material-ui/core"
+import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
 
 import Graph from '../Components/Graph/Graph'
 import React from "react"
-import Search from "../Components/Search/Search"
-import hideDatasets from '../Components/Graph/Graph'
 import { useState } from "react"
 
 export default function GraphView() {
@@ -97,5 +95,4 @@ export default function GraphView() {
       </Box>
     </>
   );
-
 }
