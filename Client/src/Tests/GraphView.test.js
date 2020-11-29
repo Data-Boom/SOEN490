@@ -12,11 +12,6 @@ describe('GraphView Component', () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it('should render a button.', () => {
-        const wrapper = mount(<GraphView />);
-        expect(wrapper.find('button').exists()).toBeTruthy();
-    });
-
     it('calls the handleRequest and loadOptionsList function on button click.', () => {
         const spy = jest.spyOn(console, 'log');
         const wrapper = mount(<GraphView />, { attachTo: document.body });

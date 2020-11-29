@@ -14,7 +14,7 @@ describe('NaigationMenu Component', () => {
 
     it('should render an HashRouter.', () => {
         const wrapper = mount(<NavigationMenu />);
-        expect(wrapper.find('HashRouter').exists()).toBeTruthy();
+        expect(wrapper.find('HashRouter').exists()).toEqual(true);
     });
 
     it("should open and close the drawer.", () => {
