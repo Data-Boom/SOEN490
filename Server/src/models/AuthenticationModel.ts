@@ -25,15 +25,28 @@ export class AuthenticationModel {
         await connection.manager.save(signUpInformation);
     }
 
-    async verifyCredentials(email: string, password: string) {
+    async verifyEmail(email: string): Promise<any> {
 
         let connection = getConnection();
-        let userCredentials = await connection.manager
+        let userEmail = await connection.manager
             .createQueryBuilder(Accounts, 'account')
+            .where('entity.email= :email', { email: email })
+            .getOne();
+        return userEmail !== undefined;
+    }
+
+
+    async verifyPassword(email: string): Promise<any> {
+
+        let connection = getConnection();
+        let userPassword = await connection.manager
+            .createQueryBuilder(Accounts, 'account')
+            .select('account.email', 'account_email')
             .select('account.password', 'account_password')
             .where('account.email = :email', { email: email })
             .getRawMany();
-        console.log(userCredentials);
+        console.log(userPassword);
+        return userPassword;
     }
 
     async resetPassword(email: string) {
