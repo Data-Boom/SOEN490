@@ -1,3 +1,4 @@
+
 import { Request, Response, Router, NextFunction } from 'express';
 import multer from 'multer';
 import { fileUploadController } from '../controllers/fileUploadController';
@@ -22,7 +23,6 @@ router.post('/dataupload', upload.single('file'), (request: MulterRequest, respo
     response.status(400).send(e.message);
   }
 });
-
 
 //File Upload Get Router
 router.get('/dataupload', (request: Request, response, Response) => {

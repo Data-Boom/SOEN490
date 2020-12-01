@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 
 /**
@@ -11,10 +11,10 @@ export class Category {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({unique: true})
-    name: String
+    @Column({ unique: true })
+    name: string
 
-    @CreateDateColumn()  
+    @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()

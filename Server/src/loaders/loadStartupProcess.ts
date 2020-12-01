@@ -16,6 +16,8 @@ export class loadStartupProcess {
     // Create a new express application instance
     const app: express.Application = express();
 
+    app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
+
     /**
      *  Options for cors midddleware. These HTTP headers can be configured what the application requires. Will be modified in 
      * the future.
@@ -33,7 +35,6 @@ export class loadStartupProcess {
       origin: "http://localhost:4500",
       preflightContinue: false,
     };
-
 
     app.use(bodyParser.urlencoded({
       extended: false

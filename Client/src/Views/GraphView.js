@@ -1,14 +1,13 @@
-import { Box, Button, Container, Grid, Paper, TextField, makeStyles } from "@material-ui/core"
+import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
 
 import Graph from '../Components/Graph/Graph'
 import React from "react"
 import { useState } from "react"
-import hideDatasets from '../Components/Graph/Graph'
+
 export default function GraphView() {
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
-
 
   const [datalist, setDatalist] = useState([])
   const [colourslist, setColourslist] = useState([])
@@ -70,7 +69,7 @@ export default function GraphView() {
       <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
       <Box ml={8}>
         <Grid container spacing={3}>
-          <Grid item container sm={6} >
+          <Grid item container sm={5} >
             <Paper elevation={3}>
               <Graph
                 outerHeight={500}
@@ -81,10 +80,7 @@ export default function GraphView() {
               />
             </Paper>
           </Grid>
-          <Grid item sm={6}>
-            <TextField id="standard-basic" label="Standard" />
-            <TextField id="filled-basic" label="Filled" variant="filled" />
-            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+          <Grid item sm={7}>
           </Grid>
         </Grid>
         <form>
@@ -97,5 +93,4 @@ export default function GraphView() {
       </Box>
     </>
   );
-
 }

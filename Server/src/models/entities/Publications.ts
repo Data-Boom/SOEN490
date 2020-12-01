@@ -16,10 +16,10 @@ export class Publications {
     id: number
 
     @Column()
-    name: String
+    name: string
 
     @Column({ nullable: true })
-    doi: String
+    doi: string
 
     @Column({ nullable: true, type: "int" })
     pages: number
