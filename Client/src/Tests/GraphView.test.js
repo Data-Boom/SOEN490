@@ -14,6 +14,7 @@ describe('GraphView Component', () => {
 
     it('calls the handleRequest and loadOptionsList function on button click.', () => {
         const spy = jest.spyOn(console, 'log');
+        //Since the loadOptionsList affects the html of the page, it is necessary to attach to the document body,
         const wrapper = mount(<GraphView />, { attachTo: document.body });
 
         const button = wrapper.find('button#handleRequest');
@@ -21,6 +22,12 @@ describe('GraphView Component', () => {
         button.simulate('click');
         expect(spy).toBeCalledWith('handleRequest Test');
         expect(spy).toBeCalledWith('loadOptionsList Test');
+
+        // This second part of the test verifies the functionality of the deleteDataset function.
+        const button2 = wrapper.find('button#deleteDataset');
+        expect(button2.exists()).toEqual(true);
+        button2.simulate('click');
+        expect(spy).toBeCalledWith('deleteDataset Test');
     });
 
 });

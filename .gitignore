@@ -134,3 +134,4 @@ sketch
 **/.DS_Store
 
 Client/.vscode/settings.json
+*.snap

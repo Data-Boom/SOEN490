@@ -50,8 +50,8 @@ export default function GraphView() {
       setColourslist(colourlistDemo)
       setDatalist(datalistDemo)
       loadOptionsList(datalistDemo, IDlistDemo)
+      console.log('deleteDataset Test')
     }
-
   }
 
   const loadOptionsList = (d, id) => {
@@ -90,7 +90,7 @@ export default function GraphView() {
           <div id="options">
           </div>
         </form>
-        <Button id='deleteDataset' onClick={deleteDataset}>Delete dataset</Button>
+        <Button id='deleteDataset' onClick={deleteDataset.bind()}>Delete dataset</Button>
 
       </Box>
     </>

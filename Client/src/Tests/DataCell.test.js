@@ -19,15 +19,10 @@ describe('DataCell Component', () => {
     });
 
     it('should render a way to submit the form.', () => {
-        //const spy = jest.spyOn(console, 'log');
-        // Previous test attempted to verify if the handleSubmit function worked but it failed.
         const wrapper = mount(<DataCell />);
 
         const form = wrapper.find('#formSubmit');
         expect(form.exists()).toEqual(true);
-        /*form.simulate('click');
-        expect(spy).toBeCalledWith('handleSubmit Test');*/
-
     });
 });
 
