@@ -23,17 +23,20 @@ export class Accounts {
     dateOfBirth: Date
 
     @Column()
-    organizationName: String
+    organizationName: string
 
     @Column()
-    securityQuestion: String
+    securityQuestion: string
 
     @Column()
-    securityAnswer: String
+    securityAnswer: string
 
-    @CreateDateColumn({ type: 'timestamp' })
+    @CreateDateColumn()
     createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp' })
+    @UpdateDateColumn()
     updatedAt: Date;
+
+    @Column()
+    admin: boolean
 }
