@@ -14,6 +14,39 @@ import { Datapointcomments } from './entities/Datapointcomments';
 import { Representations } from './entities/Representations';
 
 
+interface IPublicationData {
+
+}
+
+interface IAuthorData {
+
+}
+
+interface IDatasetData {
+
+}
+
+interface IMaterialData {
+
+}
+
+interface IDataPointData {
+
+}
+
+interface IDataPointComments {
+
+}
+
+interface IDatasetResponseModel {
+    publications: IPublicationData[]
+    authors: IAuthorData[]
+    dataset: IDatasetData[]
+    materials: IMaterialData[]
+    dataPoints: IDataPointData[]
+    dataPointComments: IDataPointComments[]
+}
+
 const getDataFromDataset = async (datasetReceived) => {
 
     const connection = getConnection();
@@ -107,9 +140,10 @@ const getDataFromDataset = async (datasetReceived) => {
 
     let allData = [publicationData, authorData, datasetData, materialData, datapointData, datapointCommentsAll];
     return allData;
+
 }
 
-const getDataFromMaterial = async (materialReceived) => {
+const getDataFromMaterial = async (materialReceived): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based on materials");
@@ -122,7 +156,7 @@ const getDataFromMaterial = async (materialReceived) => {
     };
 
     console.log("Getting publications");
-    let materialPublicationData = await connection.manager
+    let materialPublicationData: IPublicationData[] = await connection.manager
         .createQueryBuilder(Publications, 'publication')
         .select('publication.name', 'publication_name')
         .addSelect('dataset.id', 'dataset_id')
@@ -144,7 +178,7 @@ const getDataFromMaterial = async (materialReceived) => {
     console.log(materialPublicationData);
 
     console.log("Getting authors");
-    let materialAuthorData = await connection.manager
+    let materialAuthorData: IAuthorData[] = await connection.manager
         .createQueryBuilder(Publications, 'publication')
         .select('author.firstName', 'author_firstName')
         .addSelect('dataset.id', 'dataset_id')
@@ -159,7 +193,7 @@ const getDataFromMaterial = async (materialReceived) => {
     console.log(materialAuthorData);
 
     console.log("Getting data sets");
-    let materialDatasetData = await connection.manager
+    let materialDatasetData: IDatasetData[] = await connection.manager
         .createQueryBuilder(Dataset, 'dataset')
         .select('dataset.name', 'dataset_name')
         .addSelect('dataset.id', 'dataset_id')
@@ -177,7 +211,7 @@ const getDataFromMaterial = async (materialReceived) => {
     console.log(materialDatasetData);
 
     console.log("Getting data set materials");
-    let materialMaterialData = await connection.manager
+    let materialMaterialData: IMaterialData[] = await connection.manager
         .createQueryBuilder(Material, 'material')
         .select('composition.composition', 'composition_name')
         .addSelect('material.details', 'material_details')
@@ -190,7 +224,7 @@ const getDataFromMaterial = async (materialReceived) => {
     console.log(materialMaterialData);
 
     console.log("Getting data point data");
-    let materialDatapointData = await connection.manager
+    let materialDatapointData: IDataPointData[] = await connection.manager
         .createQueryBuilder(Datapoints, 'datapoints')
         .select('datapoints.name', 'datapoints_name')
         .addSelect('dataset.id', 'dataset_id')
@@ -207,7 +241,7 @@ const getDataFromMaterial = async (materialReceived) => {
     console.log(materialDatapointData);
 
     console.log("Getting data point comments");
-    let materialDatapointComments = await connection.manager
+    let materialDatapointComments: IDataPointComments[] = await connection.manager
         .createQueryBuilder(Datapointcomments, 'datapointcomments')
         .select('datapointcomments.comments', 'datapointcomments_comments')
         .addSelect('dataset.id', 'dataset_id')
@@ -218,11 +252,19 @@ const getDataFromMaterial = async (materialReceived) => {
         .getRawMany();
     console.log(materialDatapointComments);
 
-    let allData = [materialPublicationData, materialAuthorData, materialDatasetData, materialMaterialData, materialDatapointData, materialDatapointComments];
+    let allData: IDatasetResponseModel
+    allData.dataset = materialDatapointData
+    allData.materials = materialMaterialData
+    allData.publications = materialPublicationData
+    allData.authors = materialAuthorData
+    allData.dataPoints = materialDatapointData
+    allData.dataPointComments = materialDatapointComments
+    console.log(allData.dataset);
+
     return allData;
 }
 
-const getDataFromAuthor = async (firstNameReceived, lastNameReceived) => {
+export const getDataFromAuthor = async (firstNameReceived, lastNameReceived) => {
 
     const connection = getConnection();
     console.log("Getting data set info based on one author");
@@ -448,6 +490,7 @@ const getDataFromCategory = async (categoryReceived) => {
         .where('category.id = :categoryId', { categoryId: categoryReceived })
         .getRawMany();
     console.log(categoryDatapointData);
+
 
     console.log("Getting data point comments");
     let categoryDatapointComments = await connection.manager
