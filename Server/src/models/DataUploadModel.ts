@@ -24,7 +24,7 @@ export class DataUploadModel {
     constructor() {
     }
 
-    async insertReferenceType(preferenceType: string) {
+    async insertReferenceType(preferenceType: string): Promise<number> {
 
         const connection = getConnection();
 
@@ -35,7 +35,7 @@ export class DataUploadModel {
         return book.id;
     }
 
-    async insertPublisher(publisher: string) {
+    async insertPublisher(publisher: string): Promise<number> {
 
         const connection = getConnection();
 
@@ -61,7 +61,7 @@ export class DataUploadModel {
         }
     }
 
-    async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: any[]) {
+    async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: any[]): Promise<number> {
 
         const connection = getConnection();
 
@@ -100,7 +100,7 @@ export class DataUploadModel {
         }
     }
 
-    async insertCategories(_category: string, _subCategory: string) {
+    async insertCategories(_category: string, _subCategory: string): Promise<number[]> {
 
         const connection = getConnection();
         let categoryIDs = [];
@@ -118,7 +118,7 @@ export class DataUploadModel {
         return categoryIDs;
     }
 
-    async insertDataSetDataType(datasetdatatypeValue: string) {
+    async insertDataSetDataType(datasetdatatypeValue: string): Promise<number> {
 
         const connection = getConnection();
 
@@ -130,7 +130,7 @@ export class DataUploadModel {
         return datasetdatatype.id;
     }
 
-    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, /* categoryIDs ,*/ material: any[], dataSetComments: string) {
+    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, /* categoryIDs ,*/ material: any[], dataSetComments: string): Promise<number> {
 
         const connection = getConnection();
 
@@ -148,7 +148,7 @@ export class DataUploadModel {
         return dataset.id;
     }
 
-    async insertUnits(someUnit: string) {
+    async insertUnits(someUnit: string): Promise<number> {
 
         const connection = getConnection();
 
@@ -160,7 +160,7 @@ export class DataUploadModel {
         return units.id;
     }
 
-    async insertRepresentation(representationUnit: string) {
+    async insertRepresentation(representationUnit: string): Promise<number> {
 
         const connection = getConnection();
 

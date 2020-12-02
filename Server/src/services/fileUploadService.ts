@@ -15,13 +15,13 @@ export class fileUploadService {
     this.inputFile = inputFile;
   }
 
-  async processUpload() {
+  async processUpload(): Promise<string> {
 
     let response = await this.jsonUpload(this.inputFile);
     return response;
   }
 
-  private async jsonUpload(filePathOfJson: string) {
+  private async jsonUpload(filePathOfJson: string): Promise<string> {
 
     // Category & sub-category still need to be handled - After there is a solution for duplicate DB key
     // The values need to be added in the JSON file, parsed then inserted
@@ -64,6 +64,9 @@ export class fileUploadService {
     material = jsonObj.material;
     await this.uploadModel.insertMaterial(material);
 
+    // TODO: DB crashes with duplicate key error on every entry with category & subcategory added in the file upload.
+    // Once there is an implemented solution of upsert in the project this should be uncommented and tested.
+
     // category = jsonObj.category;
     // subcategory = jsonObj.subcategory;
     // let categoryIDs = await uploadModel.insertCategories(category, subcategory);
@@ -93,7 +96,7 @@ export class fileUploadService {
     return "Upload was successful!";
   }
 
-  private getDataInformationFromContentsArray(dataContentArray: any[], index: number) {
+  private getDataInformationFromContentsArray(dataContentArray: any[], index: number): any[] {
 
     let dataPointsForVariable: any = [];
     let dataSetComments: string[] = [];
@@ -102,11 +105,11 @@ export class fileUploadService {
       dataPointsForVariable.push(dataContentArray[i].point[index]);
       dataSetComments.push(dataContentArray[i].comments);
     }
-    let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
+    let contentsArrayInfo: any[] = [dataPointsForVariable, dataSetComments];
     return contentsArrayInfo;
   }
 
-  private checkReferenceType(someRefType: string) {
+  private checkReferenceType(someRefType: string): string {
     let refType = '';
     if (someRefType == "book") {
       refType = "book";
@@ -120,10 +123,6 @@ export class fileUploadService {
       refType = "report";
       return refType;
     }
-  }
-
-  private isEmpty(obj: object) {
-    return Object.keys(obj).length === 0;
   }
 
 }
