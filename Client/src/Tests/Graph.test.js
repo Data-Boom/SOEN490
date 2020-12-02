@@ -19,7 +19,7 @@ describe('Graph Component', () => {
         const button = wrapper.find('#btn1');
         expect(button.exists()).toEqual(true);
         button.simulate('click');
-        expect(spy).toBeCalledWith('Changed X');
+        expect(spy).toBeCalledWith('Changed X: false');
     });
 
     it("should change the xscale upon toggle", () => {
@@ -29,7 +29,7 @@ describe('Graph Component', () => {
         const button = wrapper.find('#btn2');
         expect(button.exists()).toEqual(true);
         button.simulate('click');
-        expect(spy).toBeCalledWith('Changed Y');
+        expect(spy).toBeCalledWith('Changed Y: false');
     });
 });
 

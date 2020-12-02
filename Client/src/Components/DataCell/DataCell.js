@@ -17,20 +17,18 @@ export default function DataCell() {
         e.preventDefault();
 
         const json = e.target.jsonFile.files[0];
-
         const formData = new FormData();
         formData.append('jsonFile', json);
-
         const options = {
             method: 'POST',
             body: formData,
         };
+
         await fetch('http://localhost:4000/dataupload', options)
             .then(resp => resp.json())
             .then(result => {
                 console.log(result[0])
             })
-        console.log('handleSubmit Test')
     }
 
     return (

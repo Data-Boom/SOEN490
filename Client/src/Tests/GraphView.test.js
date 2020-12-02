@@ -17,9 +17,9 @@ describe('GraphView Component', () => {
         //Since the loadOptionsList affects the html of the page, it is necessary to attach to the document body,
         const wrapper = mount(<GraphView />, { attachTo: document.body });
 
-        const button = wrapper.find('button#handleRequest');
-        expect(button.exists()).toEqual(true);
-        button.simulate('click');
+        const button1 = wrapper.find('button#handleRequest');
+        expect(button1.exists()).toEqual(true);
+        button1.simulate('click');
         expect(spy).toBeCalledWith('handleRequest Test');
         expect(spy).toBeCalledWith('loadOptionsList Test');
 
@@ -29,5 +29,7 @@ describe('GraphView Component', () => {
         button2.simulate('click');
         expect(spy).toBeCalledWith('deleteDataset Test');
     });
+
+
 
 });
