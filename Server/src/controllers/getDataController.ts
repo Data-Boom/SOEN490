@@ -10,6 +10,7 @@ const createRequestForData = async (req, res) => {
     }
 }
 
+
 module.exports = {
     createRequestForData
 }
