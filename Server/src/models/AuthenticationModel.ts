@@ -7,21 +7,20 @@ export class AuthenticationModel {
     constructor() {
     }
 
-    async insertSignUpInformation(email: string, password: string, firstName: string, lastName: string, dateOfBirth: Date, organizationName: string, securityQuestion: string, securityAnswer: string, isAdmin: boolean) {
-
+    async insertSignUpInformation(userSignUpInfo: any) {
         let connection = getConnection();
 
         let signUpInformation = new Accounts();
         signUpInformation.id;
-        signUpInformation.email = email;
-        signUpInformation.password = password;
-        signUpInformation.firstName = firstName;
-        signUpInformation.lastName = lastName;
-        signUpInformation.dateOfBirth = dateOfBirth;
-        signUpInformation.organizationName = organizationName;
-        signUpInformation.securityQuestion = securityQuestion;
-        signUpInformation.securityAnswer = securityAnswer;
-        signUpInformation.admin = isAdmin;
+        signUpInformation.email = userSignUpInfo.email;
+        signUpInformation.password = userSignUpInfo.password;
+        signUpInformation.firstName = userSignUpInfo.firstName;
+        signUpInformation.lastName = userSignUpInfo.lastName;
+        signUpInformation.dateOfBirth = userSignUpInfo.dateOfBirth;
+        signUpInformation.organizationName = userSignUpInfo.organizationName;
+        signUpInformation.securityQuestion = userSignUpInfo.securityQuestion;
+        signUpInformation.securityAnswer = userSignUpInfo.securityAnswer;
+        signUpInformation.admin = userSignUpInfo.isAdmin;
         await connection.manager.save(signUpInformation);
     }
 
