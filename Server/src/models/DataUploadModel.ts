@@ -18,9 +18,9 @@ import { Representations } from './entities/Representations';
 // Left logs in the class for debugging after DB migration.
 
 interface IAuthors {
-    firstName: string,
-    middleName?: string,
-    lastName: string
+    firstname: string,
+    middlename?: string,
+    lastname: string
 }
 
 interface IMaterials {
@@ -61,18 +61,20 @@ export class DataUploadModel {
 
         const connection = getConnection();
 
+        console.log(storeAuthors);
+
         for (let i = 0; i < storeAuthors.length; i++) {
-            console.log(storeAuthors[i].firstName);
+            console.log(storeAuthors[i].firstname);
             let author = new Authors();
             author.id;
-            author.firstName = storeAuthors[i].firstName;
-            author.lastName = storeAuthors[i].lastName;
-            author.middleName = storeAuthors[i].middleName;
+            author.firstName = storeAuthors[i].firstname;
+            author.lastName = storeAuthors[i].lastname;
+            author.middleName = storeAuthors[i].middlename;
             await connection.manager.save(author);
         }
     }
 
-    async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: Authors[]): Promise<number> {
+    async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: any[]): Promise<number> {
 
         const connection = getConnection();
 
@@ -141,7 +143,7 @@ export class DataUploadModel {
         return datasetdatatype.id;
     }
 
-    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, /* categoryIDs ,*/ material: any[], dataSetComments: string): Promise<number> {
+    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, /* categoryIDs ,*/ material: IMaterials[], dataSetComments: string): Promise<number> {
 
         const connection = getConnection();
 
@@ -150,8 +152,8 @@ export class DataUploadModel {
         dataset.name = dataSetName;
         dataset.datatypeId = dataSetDataTypeID;
         dataset.publicationId = publicationID;
-        dataset.categoryId; //= categoryIDs[0];
-        dataset.subcategoryId; //= categoryIDs[1];
+        // dataset.categoryId; //= categoryIDs[0];
+        // dataset.subcategoryId; //= categoryIDs[1];
         dataset.materials = material;
         dataset.comments = dataSetComments;
         await connection.manager.save(dataset);
