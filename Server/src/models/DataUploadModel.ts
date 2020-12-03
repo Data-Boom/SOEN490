@@ -17,6 +17,17 @@ import { Representations } from './entities/Representations';
 
 // Left logs in the class for debugging after DB migration.
 
+interface IAuthors {
+    firstName: string,
+    middleName?: string,
+    lastName: string
+}
+
+interface IMaterials {
+    composition: string,
+    details: string
+}
+
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
  */
@@ -46,22 +57,22 @@ export class DataUploadModel {
         return publisherName.id;
     }
 
-    async insertAuthors(storeAuthors: any[]) {
+    async insertAuthors(storeAuthors: IAuthors[]) {
 
         const connection = getConnection();
 
         for (let i = 0; i < storeAuthors.length; i++) {
-            console.log(storeAuthors[i].firstname);
+            console.log(storeAuthors[i].firstName);
             let author = new Authors();
             author.id;
-            author.firstName = storeAuthors[i].firstname;
-            author.lastName = storeAuthors[i].lastname;
-            author.middleName = storeAuthors[i].middlename;
+            author.firstName = storeAuthors[i].firstName;
+            author.lastName = storeAuthors[i].lastName;
+            author.middleName = storeAuthors[i].middleName;
             await connection.manager.save(author);
         }
     }
 
-    async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: any[]): Promise<number> {
+    async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: Authors[]): Promise<number> {
 
         const connection = getConnection();
 
@@ -82,7 +93,7 @@ export class DataUploadModel {
         return publication.id;
     }
 
-    async insertMaterial(material: any[]) {
+    async insertMaterial(material: IMaterials[]) {
 
         const connection = getConnection();
 
@@ -100,21 +111,21 @@ export class DataUploadModel {
         }
     }
 
-    async insertCategories(_category: string, _subCategory: string): Promise<number[]> {
+    async insertCategories(category: string, subCategory: string): Promise<number[]> {
 
         const connection = getConnection();
         let categoryIDs = [];
 
-        let category = new Category();
-        category.id;
-        category.name = _category;
-        await connection.manager.save(category);
+        let someCategory = new Category();
+        someCategory.id;
+        someCategory.name = category;
+        await connection.manager.save(someCategory);
 
-        let subcategory = new Subcategory();
-        subcategory.id;
-        subcategory.name = _subCategory;
-        await connection.manager.save(subcategory);
-        categoryIDs.push(category.id, subcategory.id);
+        let someSubCategory = new Subcategory();
+        someSubCategory.id;
+        someSubCategory.name = subCategory;
+        await connection.manager.save(someSubCategory);
+        categoryIDs.push(someCategory.id, someSubCategory.id);
         return categoryIDs;
     }
 
