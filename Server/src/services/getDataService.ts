@@ -23,8 +23,8 @@ const retrieveData = async (req) => {
     let setOfData = [];
 
     //setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
-    setOfData = await obtainDataModel.getDataFromMaterial(materialReceived);
-    //setOfData = await obtainDataModel.getDataFromAuthor(firstNameReceived, lastNameReceived);
+    //setOfData = await obtainDataModel.getDataFromMaterial(materialReceived);
+    setOfData = await obtainDataModel.getDataFromAuthor(firstNameReceived, lastNameReceived);
     //setOfData = await obtainDataModel.getDataFromCategory(categoryReceived);
     //setOfData = await obtainDataModel.getDataFromSubcategory(categoryReceived, subcategoryReceived);
     //setOfData = await obtainDataModel.getDataFromYear(yearReceived);
