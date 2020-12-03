@@ -7,10 +7,11 @@ const getDataController = require('../controllers/getDataController');
  * If an API call is made to /getData then the request is routed to the getDataController
  * to continue processing of the request.
  */
-getDataRouter.get('/getData', getDataController.createRequestForData);
 
-getDataRouter.get('/getData', function (req, res) {
-    res.status(200).json("getData reached");
+getDataRouter.get('/dataset*', getDataController.createRequestForData);
+
+getDataRouter.get('/dataset*', function (req, res) {
+    res.status(200).json("dataset reached");
 });
 
 module.exports = getDataRouter
