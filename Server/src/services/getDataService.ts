@@ -10,7 +10,7 @@ interface IDataRequestModel {
     subcategoryId: number
 }
 
-const retrieveData = async (req) => {
+export const retrieveData = async (req) => {
 
     const request: IDataRequestModel = req.query
     let datasetReceived = request.datasetId;
@@ -36,5 +36,3 @@ const retrieveData = async (req) => {
     // setOfData[3][1].composition_name
     return setOfData;
 }
-
-module.exports = { retrieveData };

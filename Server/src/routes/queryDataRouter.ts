@@ -10,8 +10,4 @@ const getDataController = require('../controllers/getDataController');
 
 getDataRouter.get('/dataset*', getDataController.createRequestForData);
 
-getDataRouter.get('/dataset*', function (req, res) {
-    res.status(200).json("dataset reached");
-});
-
 module.exports = getDataRouter

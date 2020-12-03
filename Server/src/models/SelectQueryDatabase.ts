@@ -1,4 +1,4 @@
-import { Connection, EntityManager, getConnection } from "typeorm";
+import { EntityManager, getConnection } from "typeorm";
 import { Publications } from './entities/Publications';
 import { Publisher } from './entities/Publisher';
 import { Publicationtype } from './entities/Publicationtype';
@@ -132,7 +132,7 @@ const selectDataPointCommentsQuery = (manager: EntityManager) =>
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Dataset, 'dataset', 'datapointcomments.datasetId = dataset.id')
 
-const getDataFromDataset = async (datasetReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromDataset = async (datasetReceived: number): Promise<IDatasetResponseModel> => {
     const connection = getConnection();
 
     console.log("Getting data set info based on a given data set ID");
@@ -185,7 +185,7 @@ const getDataFromDataset = async (datasetReceived: number): Promise<IDatasetResp
 
 }
 
-const getDataFromMaterial = async (materialReceived: string): Promise<IDatasetResponseModel> => {
+export const getDataFromMaterial = async (materialReceived: string): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based on materials");
@@ -379,7 +379,7 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
     return allData;
 }
 
-const getDataFromCategory = async (categoryReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromCategory = async (categoryReceived: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based on category");
@@ -437,7 +437,7 @@ const getDataFromCategory = async (categoryReceived: number): Promise<IDatasetRe
     return allData;
 }
 
-const getDataFromSubcategory = async (categoryReceived: number, subcategoryReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromSubcategory = async (categoryReceived: number, subcategoryReceived: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based on category and subcategory");
@@ -505,7 +505,7 @@ const getDataFromSubcategory = async (categoryReceived: number, subcategoryRecei
     return allData;
 }
 
-const getDataFromYear = async (yearReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromYear = async (yearReceived: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based year");
@@ -560,5 +560,3 @@ const getDataFromYear = async (yearReceived: number): Promise<IDatasetResponseMo
     }
     return allData;
 }
-
-module.exports = { getDataFromDataset, getDataFromMaterial, getDataFromAuthor, getDataFromCategory, getDataFromSubcategory, getDataFromYear };
