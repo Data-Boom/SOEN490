@@ -1,6 +1,8 @@
 const fileSystem = require('fs');
 import { DataUploadModel } from '../models/DataUploadModel'
 
+import { IMaterials } from '../models/interfaces/MaterialsInterface';
+import { IAuthors } from '../models/interfaces/AuthorsInterface';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -31,11 +33,11 @@ export class fileUploadService {
     let dataType: string = '';
     let dataSetComments: string = '';
     let individualDataSetComments: string[] = [];
-    let material: any[] = [];
+    let material: IMaterials[] = [];
     let referenceType: string = '';
     let referencePublisher: string = '';
     let referenceTitle: string = '';
-    let referenceAuthors: any[] = [];
+    let referenceAuthors: IAuthors[] = [];
     let referenceYear: number;
     let referencePages: number;
     let referenceVolume: number;
@@ -53,6 +55,8 @@ export class fileUploadService {
     let publisherNameId: number = await this.uploadModel.insertPublisher(referencePublisher);
 
     referenceAuthors = jsonObj.reference.authors;
+
+
     await this.uploadModel.insertAuthors(referenceAuthors);
 
     referenceTitle = jsonObj.reference.title;

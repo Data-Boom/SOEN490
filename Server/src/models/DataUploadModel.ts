@@ -15,18 +15,10 @@ import { Material } from './entities/Material';
 import { Datapointcomments } from './entities/Datapointcomments';
 import { Representations } from './entities/Representations';
 
+import { IMaterials } from './interfaces/MaterialsInterface';
+import { IAuthors } from './interfaces/AuthorsInterface';
+
 // Left logs in the class for debugging after DB migration.
-
-interface IAuthors {
-    firstname: string,
-    middlename?: string,
-    lastname: string
-}
-
-interface IMaterials {
-    composition: string,
-    details: string
-}
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
