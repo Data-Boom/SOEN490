@@ -1,21 +1,30 @@
 const obtainDataModel = require('../models/SelectQueryDatabase');
 
+interface IDataRequestModel {
+    datasetId: number
+    material: string
+    firstName: string
+    lastName: string
+    year: number
+    categoryId: number
+    subcategoryId: number
+}
 
-const retrieveData = async () => {
+const retrieveData = async (req) => {
 
-    let datasetReceived = 1;
-    //let materialReceived = "Carbon, Graphite, Pressed Graphite";
-    let materialReceived = "C";
-    let firstNameReceived = "R.";
-    let lastNameReceived = "Ackbar";
-    let yearReceived = 1997;
-    let categoryReceived = 2;
-    let subcategoryReceived = 2;
+    const request: IDataRequestModel = req.query
+    let datasetReceived = request.datasetId;
+    let materialReceived = request.material;
+    let firstNameReceived = request.firstName;
+    let lastNameReceived = request.lastName;
+    let yearReceived = request.year;
+    let categoryReceived = request.categoryId;
+    let subcategoryReceived = request.subcategoryId;
     let setOfData = [];
 
     //setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
-    //setOfData = await obtainDataModel.getDataFromMaterial(materialReceived);
-    setOfData = await obtainDataModel.getDataFromAuthor(firstNameReceived, lastNameReceived);
+    setOfData = await obtainDataModel.getDataFromMaterial(materialReceived);
+    //setOfData = await obtainDataModel.getDataFromAuthor(firstNameReceived, lastNameReceived);
     //setOfData = await obtainDataModel.getDataFromCategory(categoryReceived);
     //setOfData = await obtainDataModel.getDataFromSubcategory(categoryReceived, subcategoryReceived);
     //setOfData = await obtainDataModel.getDataFromYear(yearReceived);
