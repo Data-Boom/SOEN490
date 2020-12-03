@@ -16,10 +16,10 @@ export default function DataCell() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const json = e.target.jsonFile.files[0];
+        const json = e.target.file.files[0];
 
         const formData = new FormData();
-        formData.append('jsonFile', json);
+        formData.append('file', json);
 
         const options = {
             method: 'POST',
@@ -38,7 +38,7 @@ export default function DataCell() {
                 <form onSubmit={handleSubmit}>
                     <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                     <div>
-                        <input type="file" id="jsonFile" accept=".json" />
+                        <input type="file" id="file" accept=".json" />
                         <Button type="submit" variant="contained"> Upload this file! </Button>
                     </div>
                 </form>
