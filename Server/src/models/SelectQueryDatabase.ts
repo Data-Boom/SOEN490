@@ -303,9 +303,13 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
     let publicationData: IPublicationModel[] = await selectPublicationsQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .innerJoin('publication.authors', 'author')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
         .andWhere("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
         .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .andWhere('publication.year = :yearRef', { yearRef: year })
         .setParameters({ compositionRef: compositionId, materialDetails: material, firstNameRef: firstName, lastNameRef: lastName })
         .getRawMany();
@@ -340,9 +344,13 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .innerJoin('dataset.materials', 'material')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .whereInIds(authorIds)
         .andWhere("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
         .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .setParameters({ compositionRef: compositionId, materialDetails: material })
         .getRawMany();
     console.log(authorData);
@@ -356,6 +364,8 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
         .andWhere("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
         .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
         .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .setParameters({ compositionRef: compositionId, materialDetails: material, firstNameRef: firstName, lastNameRef: lastName })
         .getRawMany();
     console.log(datasetData);
@@ -388,10 +398,14 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
         .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .whereInIds(materialIds)
         .andWhere("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
         .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
         .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .setParameters({ firstNameRef: firstName, lastNameRef: lastName })
         .getRawMany();
     console.log(materialData);
@@ -401,10 +415,14 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('dataset.materials', 'material')
         .innerJoin('publication.authors', 'author')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
         .andWhere("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
         .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
         .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .setParameters({ compositionRef: compositionId, materialDetails: material, firstNameRef: firstName, lastNameRef: lastName })
         .getRawMany();
     console.log(datapointData);
@@ -414,10 +432,14 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('dataset.materials', 'material')
         .innerJoin('publication.authors', 'author')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
         .andWhere("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
         .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
         .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .setParameters({ compositionRef: compositionId, materialDetails: material, firstNameRef: firstName, lastNameRef: lastName })
         .getRawMany();
     console.log(datapointComments);

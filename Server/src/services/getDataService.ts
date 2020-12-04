@@ -117,6 +117,5 @@ export const retrieveData = async (req) => {
         setOfData = await obtainDataModel.getDataFromCategory(categoryReceived);
     }
 
-    //setOfData = await obtainDataModel.getDataFromMaterialYearAuthorSubcategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
     return setOfData;
 }
