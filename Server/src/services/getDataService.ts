@@ -64,7 +64,7 @@ export const retrieveData = async (req) => {
             setOfData = await obtainDataModel.getDataFromMaterialAuthorSubcategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (authorEntered && categoryReceived != undefined) {
-
+            setOfData = await obtainDataModel.getDataFromMaterialAuthorCategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived);
         }
         else if (authorEntered) {
             setOfData = await obtainDataModel.getDataFromMaterialAuthor(materialReceived, firstNameReceived, lastNameReceived);
