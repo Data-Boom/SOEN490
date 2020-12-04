@@ -70,6 +70,16 @@ interface IDatasetResponseModel {
     dataPoints: IDataPointModel[]
     dataPointComments: IDataPointCommentModel[]
 }
+
+// TO-DO Dmitry was mentioning how more of the query building could be 
+// factored out into something more generic via chain of responsibility
+// to be investigated later
+// export class DatasetQueryBuilder<Entity> extends SelectQueryBuilder<Entity>{
+//     whereDatasetId2(id:number){
+//         return this.andWhere('dataset.id = :datasetId', { datasetId: id })
+//     }
+// }
+
 const selectPublicationsQuery = (manager: EntityManager) =>
     manager.createQueryBuilder(Publications, 'publication')
         .select('publication.name', 'publication_name')
@@ -132,44 +142,44 @@ const selectDataPointCommentsQuery = (manager: EntityManager) =>
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Dataset, 'dataset', 'datapointcomments.datasetId = dataset.id')
 
-export const getDataFromDataset = async (datasetReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromDataset = async (dataset: number): Promise<IDatasetResponseModel> => {
     const connection = getConnection();
 
     console.log("Getting data set info based on a given data set ID");
 
     console.log("Getting publication data");
     let datasetPublicationData = await selectPublicationsQuery(connection.manager)
-        .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
     console.log(datasetPublicationData);
 
     console.log("Getting author data");
     let datasetAuthorData = await selectAuthorsQuery(connection.manager)
-        .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
     console.log(datasetAuthorData);
 
     console.log("Getting data set data");
     let datasetDatasetData = await selectDatasetsQuery(connection.manager)
-        .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
     console.log(datasetDatasetData);
 
     console.log("Getting data set materials");
     let datasetMaterialData = await selectMaterialQuery(connection.manager)
-        .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
     console.log(datasetMaterialData);
 
     console.log("Getting data point data");
     let datasetDatapointData = await selectDataPointsQuery(connection.manager)
-        .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
     console.log(datasetDatapointData);
 
     console.log("Getting data point comments");
     let datasetDatapointComments = await selectDataPointCommentsQuery(connection.manager)
-        .where('dataset.id = :datasetId', { datasetId: datasetReceived })
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
     console.log(datasetDatapointComments);
 
@@ -185,13 +195,13 @@ export const getDataFromDataset = async (datasetReceived: number): Promise<IData
 
 }
 
-export const getDataFromMaterial = async (materialReceived: string): Promise<IDatasetResponseModel> => {
+export const getDataFromMaterial = async (material: string): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based on materials");
 
     // Get composition ID if a compostion was entered instead of material details
-    let compositionIdRaw = await connection.manager.find(Composition, { composition: materialReceived });
+    let compositionIdRaw = await connection.manager.find(Composition, { composition: material });
     let compositionId = -1; // fallback value if material details were entered
     if (compositionIdRaw[0] != null) {
         compositionId = compositionIdRaw[0].id;
@@ -201,7 +211,7 @@ export const getDataFromMaterial = async (materialReceived: string): Promise<IDa
     let materialPublicationData: IPublicationModel[] = await selectPublicationsQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .where('material.compositionId = :compositionRef', { compositionRef: compositionId })
-        .orWhere('material.details = :materialDetails', { materialDetails: materialReceived })
+        .orWhere('material.details = :materialDetails', { materialDetails: material })
         .getRawMany();
     console.log(materialPublicationData);
 
@@ -209,7 +219,7 @@ export const getDataFromMaterial = async (materialReceived: string): Promise<IDa
     let materialAuthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .where('material.compositionId = :compositionRef', { compositionRef: compositionId })
-        .orWhere('material.details = :materialDetails', { materialDetails: materialReceived })
+        .orWhere('material.details = :materialDetails', { materialDetails: material })
         .getRawMany();
     console.log(materialAuthorData);
 
@@ -217,7 +227,7 @@ export const getDataFromMaterial = async (materialReceived: string): Promise<IDa
     let materialDatasetData: IDatasetModel[] = await selectDatasetsQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .where('material.compositionId = :compositionRef', { compositionRef: compositionId })
-        .orWhere('material.details = :materialDetails', { materialDetails: materialReceived })
+        .orWhere('material.details = :materialDetails', { materialDetails: material })
         .getRawMany();
     console.log(materialDatasetData);
 
@@ -228,7 +238,7 @@ export const getDataFromMaterial = async (materialReceived: string): Promise<IDa
     //First get raw data of all data sets that material X is part of
     let materialRawData = await selectMaterialQuery(connection.manager)
         .where('material.compositionId = :compositionRef', { compositionRef: compositionId })
-        .orWhere('material.details = :materialDetails', { materialDetails: materialReceived })
+        .orWhere('material.details = :materialDetails', { materialDetails: material })
         .getRawMany();
 
     //Process the prior data to get an array of all data sets IDs
@@ -253,7 +263,7 @@ export const getDataFromMaterial = async (materialReceived: string): Promise<IDa
     let materialDatapointData: IDataPointModel[] = await selectDataPointsQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .where('material.compositionId = :compositionRef', { compositionRef: compositionId })
-        .orWhere('material.details = :materialDetails', { materialDetails: materialReceived })
+        .orWhere('material.details = :materialDetails', { materialDetails: material })
         .getRawMany();
     console.log(materialDatapointData);
 
@@ -261,7 +271,7 @@ export const getDataFromMaterial = async (materialReceived: string): Promise<IDa
     let materialDatapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .where('material.compositionId = :compositionRef', { compositionRef: compositionId })
-        .orWhere('material.details = :materialDetails', { materialDetails: materialReceived })
+        .orWhere('material.details = :materialDetails', { materialDetails: material })
         .getRawMany();
     console.log(materialDatapointComments);
 
@@ -277,7 +287,7 @@ export const getDataFromMaterial = async (materialReceived: string): Promise<IDa
     return allData;
 }
 
-export const getDataFromAuthor = async (firstNameReceived: string, lastNameReceived: string): Promise<IDatasetResponseModel> => {
+export const getDataFromAuthor = async (firstName: string, lastName: string): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based on one author");
@@ -285,10 +295,10 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
     console.log("Getting publications");
     let authorPublicationData = await selectPublicationsQuery(connection.manager)
         .innerJoin('publication.authors', 'author')
-        .where('author.lastName = :lastNameRef', { lastNameRef: lastNameReceived })
-        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastNameReceived })
+        .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstName })
+        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstName })
+        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastName })
         .getRawMany();
     console.log(authorPublicationData);
 
@@ -299,10 +309,10 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
 
     //First get raw data of all data sets that single author is on
     let authorRawData = await selectAuthorsQuery(connection.manager)
-        .where('author.lastName = :lastNameRef', { lastNameRef: lastNameReceived })
-        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastNameReceived })
+        .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstName })
+        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstName })
+        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastName })
         .getRawMany();
 
     //Process the prior data to get an array of all data sets IDs
@@ -328,10 +338,10 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
     let authorDatasetData = await selectDatasetsQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
         .innerJoin('publication.authors', 'author')
-        .where('author.lastName = :lastNameRef', { lastNameRef: lastNameReceived })
-        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastNameReceived })
+        .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstName })
+        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstName })
+        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastName })
         .getRawMany();
     console.log(authorDatasetData);
 
@@ -339,10 +349,10 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
     let authorDatapointData = await selectDataPointsQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
         .innerJoin('publication.authors', 'author')
-        .where('author.lastName = :lastNameRef', { lastNameRef: lastNameReceived })
-        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastNameReceived })
+        .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstName })
+        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstName })
+        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastName })
         .getRawMany();
     console.log(authorDatapointData);
 
@@ -350,10 +360,10 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
     let authorMaterialData = await selectMaterialQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
         .innerJoin('publication.authors', 'author')
-        .where('author.lastName = :lastNameRef', { lastNameRef: lastNameReceived })
-        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastNameReceived })
+        .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstName })
+        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstName })
+        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastName })
         .getRawMany();
     console.log(authorMaterialData);
 
@@ -361,10 +371,10 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
     let authorDatapointComments = await selectDataPointCommentsQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
         .innerJoin('publication.authors', 'author')
-        .where('author.lastName = :lastNameRef', { lastNameRef: lastNameReceived })
-        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstNameReceived })
-        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastNameReceived })
+        .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+        .andWhere('author.firstName = :firstNameRef', { firstNameRef: firstName })
+        .orWhere('author.lastName = :firstNameRef', { firstNameRef: firstName })
+        .andWhere('author.firstName = :lastNameRef', { lastNameRef: lastName })
         .getRawMany();
     console.log(authorDatapointComments);
 
@@ -379,42 +389,42 @@ export const getDataFromAuthor = async (firstNameReceived: string, lastNameRecei
     return allData;
 }
 
-export const getDataFromCategory = async (categoryReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromCategory = async (category: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
-    console.log("Getting data set info based on category");
+    console.log("Getting data set info based on category " + category);
 
     console.log("Getting publications");
     let categoryPublicationData = await selectPublicationsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
     console.log(categoryPublicationData);
 
     console.log("Getting authors");
     let categoryAuthorData = await selectAuthorsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
     console.log(categoryAuthorData);
 
     console.log("Getting data sets");
     let categoryDatasetData = await selectDatasetsQuery(connection.manager)
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
     console.log(categoryDatasetData);
 
     console.log("Getting data set materials");
     let categoryMaterialData = await selectMaterialQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
     console.log(categoryMaterialData);
 
     console.log("Getting data point data");
     let categoryDatapointData = await selectDataPointsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
     console.log(categoryDatapointData);
 
@@ -422,7 +432,7 @@ export const getDataFromCategory = async (categoryReceived: number): Promise<IDa
     console.log("Getting data point comments");
     let categoryDatapointComments = await selectDataPointCommentsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
     console.log(categoryDatapointComments);
 
@@ -437,7 +447,7 @@ export const getDataFromCategory = async (categoryReceived: number): Promise<IDa
     return allData;
 }
 
-export const getDataFromSubcategory = async (categoryReceived: number, subcategoryReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromSubcategory = async (category: number, subcategory: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based on category and subcategory");
@@ -446,8 +456,8 @@ export const getDataFromSubcategory = async (categoryReceived: number, subcatego
     let subcategoryPublicationData = await selectPublicationsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
-        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .getRawMany();
     console.log(subcategoryPublicationData);
 
@@ -455,15 +465,15 @@ export const getDataFromSubcategory = async (categoryReceived: number, subcatego
     let subcategoryAuthorData = await selectAuthorsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
-        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .getRawMany();
     console.log(subcategoryAuthorData);
 
     console.log("Getting data sets");
     let subcategoryDatasetData = await selectDatasetsQuery(connection.manager)
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
-        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .getRawMany();
     console.log(subcategoryDatasetData);
 
@@ -471,8 +481,8 @@ export const getDataFromSubcategory = async (categoryReceived: number, subcatego
     let subcategoryMaterialData = await selectMaterialQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
-        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .getRawMany();
     console.log(subcategoryMaterialData);
 
@@ -480,8 +490,8 @@ export const getDataFromSubcategory = async (categoryReceived: number, subcatego
     let subcategoryDatapointData = await selectDataPointsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
-        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .getRawMany();
     console.log(subcategoryDatapointData);
 
@@ -489,8 +499,8 @@ export const getDataFromSubcategory = async (categoryReceived: number, subcatego
     let subcategoryDatapointComments = await selectDataPointCommentsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-        .where('category.id = :categoryId', { categoryId: categoryReceived })
-        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategoryReceived })
+        .where('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .getRawMany();
     console.log(subcategoryDatapointComments);
 
@@ -505,48 +515,48 @@ export const getDataFromSubcategory = async (categoryReceived: number, subcatego
     return allData;
 }
 
-export const getDataFromYear = async (yearReceived: number): Promise<IDatasetResponseModel> => {
+export const getDataFromYear = async (year: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
     console.log("Getting data set info based year");
 
     console.log("Getting publications");
     let yearPublicationData = await selectPublicationsQuery(connection.manager)
-        .where('publication.year = :yearRef', { yearRef: yearReceived })
+        .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
     console.log(yearPublicationData);
 
     console.log("Getting authors");
     let yearAuthorData = await selectAuthorsQuery(connection.manager)
-        .where('publication.year = :yearRef', { yearRef: yearReceived })
+        .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
     console.log(yearAuthorData);
 
     console.log("Getting data sets");
     let yearDatasetData = await selectDatasetsQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: yearReceived })
+        .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
     console.log(yearDatasetData);
 
     console.log("Getting data set materials");
     let yearMaterialData = await selectMaterialQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: yearReceived })
+        .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
     console.log(yearMaterialData);
 
     console.log("Getting data point data");
     let yearDatapointData = await selectDataPointsQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: yearReceived })
+        .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
     console.log(yearDatapointData);
 
     console.log("Getting data point comments");
     let yearDatapointComments = await selectDataPointCommentsQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: yearReceived })
+        .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
     console.log(yearDatapointComments);
 
