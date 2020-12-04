@@ -43,37 +43,37 @@ export const retrieveData = async (req) => {
     }
     else if (materialReceived != undefined) {
         if (yearReceived != undefined && authorEntered && subcategoryEntered) {
-
+            setOfData = await obtainDataModel.getDataFromMaterialYearAuthorSubcategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (yearReceived != undefined && authorEntered && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (yearReceived != undefined && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (yearReceived != undefined && authorEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (yearReceived != undefined && subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (yearReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (authorEntered && subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (authorEntered && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (authorEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+            setOfData = await obtainDataModel.getDataFromMaterialAuthor(materialReceived, firstNameReceived, lastNameReceived);
         }
         else if (subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else {
             setOfData = await obtainDataModel.getDataFromMaterial(materialReceived);
@@ -81,19 +81,19 @@ export const retrieveData = async (req) => {
     }
     else if (yearReceived != undefined) {
         if (authorEntered && subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (authorEntered && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (authorEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else {
             setOfData = await obtainDataModel.getDataFromYear(yearReceived);
@@ -101,10 +101,10 @@ export const retrieveData = async (req) => {
     }
     else if (authorEntered) {
         if (subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else if (categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+
         }
         else {
             setOfData = await obtainDataModel.getDataFromAuthor(firstNameReceived, lastNameReceived);
