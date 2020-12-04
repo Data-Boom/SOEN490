@@ -37,6 +37,8 @@ export const retrieveData = async (req) => {
     if (categoryReceived != undefined && subcategoryReceived != undefined) {
         subcategoryEntered = true
     }
+    //Subcategory queries must always be listed above category queries, 
+    //as a subcategory query contains both a category and subcategory entry
 
     if (datasetReceived != undefined) {
         setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
@@ -48,13 +50,13 @@ export const retrieveData = async (req) => {
         else if (yearReceived != undefined && authorEntered && categoryReceived != undefined) {
             setOfData = await obtainDataModel.getDataFromMaterialYearAuthorCategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
         }
-        else if (yearReceived != undefined && categoryReceived != undefined) {
-
-        }
         else if (yearReceived != undefined && authorEntered) {
             setOfData = await obtainDataModel.getDataFromMaterialYearAuthor(materialReceived, yearReceived, firstNameReceived, lastNameReceived);
         }
         else if (yearReceived != undefined && subcategoryEntered) {
+            setOfData = await obtainDataModel.getDataFromMaterialYearSubcategory(materialReceived, yearReceived, categoryReceived, subcategoryReceived);
+        }
+        else if (yearReceived != undefined && categoryReceived != undefined) {
 
         }
         else if (yearReceived != undefined) {
