@@ -1,4 +1,6 @@
 import * as jwt from 'jsonwebtoken';
+import * as argon2 from 'argon2';
+
 import { AuthenticationModel } from '../models/AuthenticationModel'
 
 export class authentcationService {
@@ -10,11 +12,10 @@ export class authentcationService {
         this.authenticationCommand = command;
     }
 
-    hashPassword(password: string): string {
+    async hashPassword(password: string): Promise<string> {
 
         let hashedPassword: string;
-
-
+        hashedPassword = await argon2.hash(password);
         return hashedPassword;
     }
 
