@@ -92,10 +92,10 @@ export const retrieveData = async (req) => {
 
         }
         else if (subcategoryEntered) {
-
+            setOfData = await obtainDataModel.getDataFromYearSubcategory(yearReceived, categoryReceived, subcategoryReceived);
         }
         else if (categoryReceived != undefined) {
-
+            setOfData = await obtainDataModel.getDataFromYearCategory(yearReceived, categoryReceived);
         }
         else {
             setOfData = await obtainDataModel.getDataFromYear(yearReceived);

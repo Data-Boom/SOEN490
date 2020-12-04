@@ -1574,7 +1574,7 @@ export const getDataFromMaterialAuthor = async (material: string, firstName: str
 export const getDataFromMaterialSubcategory = async (material: string, category: number, subcategory: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
-    console.log("Getting data set info based on material/year/author/subcategory");
+    console.log("Getting data set info based on material/subcategory");
 
     // Get composition ID if a compostion was entered instead of material details
     let compositionIdRaw = await connection.manager.find(Composition, { composition: material });
@@ -1693,7 +1693,7 @@ export const getDataFromMaterialSubcategory = async (material: string, category:
 export const getDataFromMaterialCategory = async (material: string, category: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
-    console.log("Getting data set info based on material/year/author/subcategory");
+    console.log("Getting data set info based on material/category");
 
     // Get composition ID if a compostion was entered instead of material details
     let compositionIdRaw = await connection.manager.find(Composition, { composition: material });
@@ -1797,6 +1797,217 @@ export const getDataFromMaterialCategory = async (material: string, category: nu
         dataPointComments: datapointComments
     }
 
+    return allData;
+}
+
+export const getDataFromYearSubcategory = async (year: number, category: number, subcategory: number): Promise<IDatasetResponseModel> => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based on year/author/subcategory");
+
+    console.log("Getting publications");
+    let publicationData: IPublicationModel[] = await selectPublicationsQuery(connection.manager)
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(publicationData);
+
+    console.log("Getting authors");
+
+    console.log("Got data set IDs for author");
+    //Use data set IDs to get all authors of those data sets
+    let authorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+        .getRawMany();
+    console.log(authorData);
+
+    console.log("Getting data sets");
+    let datasetData: IDatasetModel[] = await selectDatasetsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+        .getRawMany();
+    console.log(datasetData);
+
+    console.log("Getting materials");
+    let materialData = await selectMaterialQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .where('publication.year = :yearRef', { yearRef: year })
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+        .getRawMany();
+    console.log(materialData);
+
+    console.log("Getting data point data");
+    let datapointData: IDataPointModel[] = await selectDataPointsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+        .getRawMany();
+    console.log(datapointData);
+
+    console.log("Getting data point comments");
+    let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+        .getRawMany();
+    console.log(datapointComments);
+
+    const allData: IDatasetResponseModel = {
+        authors: authorData,
+        publications: publicationData,
+        dataPoints: datapointData,
+        dataset: datasetData,
+        materials: materialData,
+        dataPointComments: datapointComments
+    }
+
+    return allData;
+}
+
+export const getDataFromYearCategory = async (year: number, category: number): Promise<IDatasetResponseModel> => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based on year/author/subcategory");
+
+    console.log("Getting publications");
+    let publicationData: IPublicationModel[] = await selectPublicationsQuery(connection.manager)
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(publicationData);
+
+    console.log("Getting authors");
+
+    console.log("Got data set IDs for author");
+    //Use data set IDs to get all authors of those data sets
+    let authorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .getRawMany();
+    console.log(authorData);
+
+    console.log("Getting data sets");
+    let datasetData: IDatasetModel[] = await selectDatasetsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .getRawMany();
+    console.log(datasetData);
+
+    console.log("Getting materials");
+    let materialData = await selectMaterialQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .where('publication.year = :yearRef', { yearRef: year })
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .getRawMany();
+    console.log(materialData);
+
+    console.log("Getting data point data");
+    let datapointData: IDataPointModel[] = await selectDataPointsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .getRawMany();
+    console.log(datapointData);
+
+    console.log("Getting data point comments");
+    let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .getRawMany();
+    console.log(datapointComments);
+
+    const allData: IDatasetResponseModel = {
+        authors: authorData,
+        publications: publicationData,
+        dataPoints: datapointData,
+        dataset: datasetData,
+        materials: materialData,
+        dataPointComments: datapointComments
+    }
+
+    return allData;
+}
+
+export const getDataFromYear = async (year: number): Promise<IDatasetResponseModel> => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based year");
+
+    console.log("Getting publications");
+    let yearPublicationData = await selectPublicationsQuery(connection.manager)
+        .where('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(yearPublicationData);
+
+    console.log("Getting authors");
+    let yearAuthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+        .where('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(yearAuthorData);
+
+    console.log("Getting data sets");
+    let yearDatasetData = await selectDatasetsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .where('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(yearDatasetData);
+
+    console.log("Getting data set materials");
+    let yearMaterialData = await selectMaterialQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .where('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(yearMaterialData);
+
+    console.log("Getting data point data");
+    let yearDatapointData = await selectDataPointsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .where('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(yearDatapointData);
+
+    console.log("Getting data point comments");
+    let yearDatapointComments = await selectDataPointCommentsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .where('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(yearDatapointComments);
+
+    const allData: IDatasetResponseModel = {
+        authors: yearAuthorData,
+        publications: yearPublicationData,
+        dataPoints: yearDatapointData,
+        dataset: yearDatasetData,
+        materials: yearMaterialData,
+        dataPointComments: yearDatapointComments
+    }
     return allData;
 }
 
@@ -2018,62 +2229,6 @@ export const getDataFromSubcategory = async (category: number, subcategory: numb
         dataset: subcategoryDatasetData,
         materials: subcategoryMaterialData,
         dataPointComments: subcategoryDatapointComments
-    }
-    return allData;
-}
-
-export const getDataFromYear = async (year: number): Promise<IDatasetResponseModel> => {
-
-    const connection = getConnection();
-    console.log("Getting data set info based year");
-
-    console.log("Getting publications");
-    let yearPublicationData = await selectPublicationsQuery(connection.manager)
-        .where('publication.year = :yearRef', { yearRef: year })
-        .getRawMany();
-    console.log(yearPublicationData);
-
-    console.log("Getting authors");
-    let yearAuthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
-        .where('publication.year = :yearRef', { yearRef: year })
-        .getRawMany();
-    console.log(yearAuthorData);
-
-    console.log("Getting data sets");
-    let yearDatasetData = await selectDatasetsQuery(connection.manager)
-        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: year })
-        .getRawMany();
-    console.log(yearDatasetData);
-
-    console.log("Getting data set materials");
-    let yearMaterialData = await selectMaterialQuery(connection.manager)
-        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: year })
-        .getRawMany();
-    console.log(yearMaterialData);
-
-    console.log("Getting data point data");
-    let yearDatapointData = await selectDataPointsQuery(connection.manager)
-        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: year })
-        .getRawMany();
-    console.log(yearDatapointData);
-
-    console.log("Getting data point comments");
-    let yearDatapointComments = await selectDataPointCommentsQuery(connection.manager)
-        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
-        .where('publication.year = :yearRef', { yearRef: year })
-        .getRawMany();
-    console.log(yearDatapointComments);
-
-    const allData: IDatasetResponseModel = {
-        authors: yearAuthorData,
-        publications: yearPublicationData,
-        dataPoints: yearDatapointData,
-        dataset: yearDatasetData,
-        materials: yearMaterialData,
-        dataPointComments: yearDatapointComments
     }
     return allData;
 }
