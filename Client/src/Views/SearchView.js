@@ -2,137 +2,12 @@ import { Box, Container, Divider, FormControl, FormControlLabel, Grid, InputLabe
 import React, { useState } from 'react'
 
 import Button from '@material-ui/core/Button'
+import { SearchForm } from '../Components/Search/SearchForm'
 import Typography from '@material-ui/core/Typography'
 
 export default function SearchView() {
-  const [formValues, setFormValues] = useState({
-    oxidizer: '',
-    year: '',
-    outputFormat: '',
-    categories: '',
-    subcategories: '',
-    fuel: '',
-    author: '',
-    dilutent: '',
-  })
 
-  const [isCaseSensitive, setIsCaseSensitive] = useState(false)
-  const [categories, setCategories] = useState([{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }, { value: 4, text: "new value" }])
-  const [rows, setRows] = useState([
-    { title: "test" },
-    { title: "test3" },
-    { title: "test4" },
-    { title: "test5" },
-    { title: "test2" }
-  ])
-
-  const toggleIsCaseSensitive = () => {
-    setIsCaseSensitive(!isCaseSensitive)
-  }
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target
-    setFormValues({ ...formValues, [name]: value })
-  }
-
-  const handleSubmit = () => {
-    //call backend to get rows with this query (formValues)
-    setRows([
-      { title: "test" },
-      { title: "test3" },
-      { title: "test4" },
-      { title: "test5" },
-      { title: "test2" }
-    ])
-    alert(JSON.stringify(formValues, null, 2) + `\n  ${isCaseSensitive}`)
-  }
-
-  const renderSearch = () => {
-    console.log(JSON.stringify(formValues, null, 2))
-    return (
-      <>
-        <Typography variant='h4' align="left">Search</Typography>
-        <Grid container spacing={4}>
-          <Grid item sm={3}>
-            <TextField fullWidth label="Oxidizer" variant="outlined" name="oxidizer" value={formValues.oxidizer} onChange={handleInputChange} />
-          </Grid>
-
-          <Grid item sm={3}>
-            <TextField fullWidth label="Year" variant="outlined" name="year" value={formValues.year} onChange={handleInputChange} />
-          </Grid>
-
-          <Grid item sm={2}>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="outlined-outFormat-native-simple" >Output format</InputLabel>
-              <Select
-                native
-                label="categories"
-                name="outputFormat" value={formValues.outputFormat} onChange={handleInputChange}
-              >
-                <option aria-label="None" value="" />
-                {categories.map(option => <option key={option.value} value={option.value}>{option.text}</option>)}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item sm={2}>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="outlined-outFormat-native-simple" >Categories</InputLabel>
-              <Select
-                native
-                label="categories"
-                name="categories" value={formValues.categories} onChange={handleInputChange}
-              >
-                <option aria-label="None" value="" />
-                {categories.map(option => <option key={option.value} value={option.value}>{option.text}</option>)}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item sm={2}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>Search Database</Button>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4}>
-          <Grid item sm={3}>
-            <TextField label="Subcategories" variant="outlined" fullWidth name="subcategories" value={formValues.subcategories} onChange={handleInputChange} />
-          </Grid>
-
-          <Grid item sm={3}>
-            <TextField label="Fuel" variant="outlined" fullWidth name="fuel" value={formValues.fuel} onChange={handleInputChange} />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4}>
-          <Grid item sm={3}>
-            <TextField label="Author" variant="outlined" fullWidth name="author" value={formValues.author} onChange={handleInputChange} />
-          </Grid>
-
-          <Grid item sm={3}>
-            <TextField label="Diluent" variant="outlined" fullWidth name="dilutent" value={formValues.dilutent} onChange={handleInputChange} />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={4}>
-          <Grid item>
-            <FormControl>
-              <FormControlLabel
-                label="Case Sensitive"
-                labelPlacement="start"
-                control={
-                  <Switch
-                    name="isCaseSensitive"
-                    checked={isCaseSensitive}
-                    onChange={toggleIsCaseSensitive}
-                  />}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </>
-    )
-  }
+  const [rows, setRows] = useState([])
 
   const renderResults = () => {
     return (
@@ -181,12 +56,22 @@ export default function SearchView() {
     ))
   }
 
-  console.log("rendered form")
+  const handleSubmit = (formValues) => {
+    setRows([
+      { title: "test" },
+      { title: "test3" },
+      { title: "test4" },
+      { title: "test5" },
+      { title: "test2" }
+    ])
+  }
 
   return (
     <Container>
       <Box pt={4}>
-        {renderSearch()}
+        <SearchForm
+          handleSubmit={handleSubmit}
+        />
       </Box>
       <Box pt={4}>
         {renderResults()}

@@ -5,7 +5,6 @@ import React from "react"
 import { useState } from "react"
 
 export default function GraphView() {
-
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
 
@@ -31,7 +30,6 @@ export default function GraphView() {
   }
 
   const deleteDataset = () => {
-
     if (datalist.length != 0) {
       var x = document.getElementById("datasets").value
       const datalistDemo = []
@@ -66,7 +64,6 @@ export default function GraphView() {
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <h2>GraphView</h2>
-      <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={5} >
@@ -81,6 +78,7 @@ export default function GraphView() {
             </Paper>
           </Grid>
           <Grid item sm={7}>
+            <Button onClick={handleRequest} color="primary" variant="contained">Add dataset To Graph</Button>
           </Grid>
         </Grid>
         <form>
