@@ -154,7 +154,7 @@ export const getDataFromDataset = async (dataset: number): Promise<IDatasetRespo
     console.log(datasetPublicationData);
 
     console.log("Getting author data");
-    let datasetauthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+    let datasetAuthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
         .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
     console.log(datasetAuthorData);
@@ -1497,7 +1497,7 @@ export const getDataFromAuthor = async (firstName: string, lastName: string): Pr
     }
 
     //Use data set IDs to get all authors of those data sets
-    let authorauthorData: IAuthorModel[] = await connection.manager
+    let authorAuthorData: IAuthorModel[] = await connection.manager
         .createQueryBuilder(Dataset, 'dataset')
         .select('author.firstName', 'author_firstName')
         .addSelect('author.lastName', 'author_lastName')
@@ -1573,7 +1573,7 @@ export const getDataFromCategory = async (category: number): Promise<IDatasetRes
     console.log(categoryPublicationData);
 
     console.log("Getting authors");
-    let categoryauthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+    let categoryAuthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
@@ -1633,7 +1633,7 @@ export const getDataFromSubcategory = async (category: number, subcategory: numb
     console.log(subcategoryPublicationData);
 
     console.log("Getting authors");
-    let subcategoryauthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+    let subcategoryAuthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .where('category.id = :categoryId', { categoryId: category })
@@ -1698,7 +1698,7 @@ export const getDataFromYear = async (year: number): Promise<IDatasetResponseMod
     console.log(yearPublicationData);
 
     console.log("Getting authors");
-    let yearauthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+    let yearAuthorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
         .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
     console.log(yearAuthorData);
