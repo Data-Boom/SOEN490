@@ -890,6 +890,124 @@ export const getDataFromMaterialYearSubcategory = async (material: string, year:
     return allData;
 }
 
+export const getDataFromMaterialYearCategory = async (material: string, year: number, category: number): Promise<IDatasetResponseModel> => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based on material/year/author/subcategory");
+
+    // Get composition ID if a compostion was entered instead of material details
+    let compositionIdRaw = await connection.manager.find(Composition, { composition: material });
+    let compositionId = -1; // fallback value if material details were entered
+    if (compositionIdRaw[0] != null) {
+        compositionId = compositionIdRaw[0].id;
+    };
+
+    console.log("Getting publications");
+    let publicationData: IPublicationModel[] = await selectPublicationsQuery(connection.manager)
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .setParameters({ compositionRef: compositionId, materialDetails: material, })
+        .getRawMany();
+    console.log(publicationData);
+
+    console.log("Getting authors");
+
+    console.log("Got data set IDs for author");
+    //Use data set IDs to get all authors of those data sets
+    let authorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager)
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .andWhere("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .setParameters({ compositionRef: compositionId, materialDetails: material })
+        .getRawMany();
+    console.log(authorData);
+
+    console.log("Getting data sets");
+    let datasetData: IDatasetModel[] = await selectDatasetsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('dataset.materials', 'material')
+        .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .setParameters({ compositionRef: compositionId, materialDetails: material })
+        .getRawMany();
+    console.log(datasetData);
+
+    console.log("Getting materials");
+    //To get all the materials of all the data sets that material X is part of,
+    //one needs to first get the list of all data sets that contain material X 
+    //and then query those data sets for all materials in each data set.
+
+    //First get raw data of all data sets that material X is part of
+    let materialRawData = await selectMaterialQuery(connection.manager)
+        .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
+        .setParameters({ compositionRef: compositionId, materialDetails: material })
+        .getRawMany();
+
+    //Process the prior data to get an array of all data sets IDs
+    let materialIds = [];
+    for (let index = 0; index < materialRawData.length; index++) {
+        materialIds[index] = materialRawData[index].dataset_id;
+    }
+
+    console.log("Got data set IDs for material");
+    //Use data set IDs to get all materials of those data sets
+    let materialData: IMaterialModel[] = await connection.manager
+        .createQueryBuilder(Dataset, 'dataset')
+        .select('composition.composition', 'composition_name')
+        .addSelect('material.details', 'material_details')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .whereInIds(materialIds)
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .getRawMany();
+    console.log(materialData);
+
+    console.log("Getting data point data");
+    let datapointData: IDataPointModel[] = await selectDataPointsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .setParameters({ compositionRef: compositionId, materialDetails: material })
+        .getRawMany();
+    console.log(datapointData);
+
+    console.log("Getting data point comments");
+    let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
+        .andWhere('publication.year = :yearRef', { yearRef: year })
+        .andWhere('category.id = :categoryId', { categoryId: category })
+        .setParameters({ compositionRef: compositionId, materialDetails: material })
+        .getRawMany();
+    console.log(datapointComments);
+
+    const allData: IDatasetResponseModel = {
+        authors: authorData,
+        publications: publicationData,
+        dataPoints: datapointData,
+        dataset: datasetData,
+        materials: materialData,
+        dataPointComments: datapointComments
+    }
+
+    return allData;
+}
+
 export const getDataFromMaterialAuthorCategory = async (material: string, firstName: string, lastName: string, category: number): Promise<IDatasetResponseModel> => {
 
     const connection = getConnection();
