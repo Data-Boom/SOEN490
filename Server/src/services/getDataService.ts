@@ -60,7 +60,7 @@ export const retrieveData = async (req) => {
             setOfData = await obtainDataModel.getDataFromMaterialYearCategory(materialReceived, yearReceived, categoryReceived);
         }
         else if (yearReceived != undefined) {
-
+            setOfData = await obtainDataModel.getDataFromMaterialYear(materialReceived, yearReceived);
         }
         else if (authorEntered && subcategoryEntered) {
             setOfData = await obtainDataModel.getDataFromMaterialAuthorSubcategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
