@@ -39,7 +39,7 @@ export const retrieveData = async (req) => {
     }
     //Subcategory queries must always be listed above category queries, 
     //as a subcategory query contains both a category and subcategory entry
-
+    setOfData = await obtainDataModel.getDataFromAuthorSubcategory(firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
     if (datasetReceived != undefined) {
         setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
     }
@@ -83,13 +83,13 @@ export const retrieveData = async (req) => {
     }
     else if (yearReceived != undefined) {
         if (authorEntered && subcategoryEntered) {
-
+            setOfData = await obtainDataModel.getDataFromYearAuthorSubcategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (authorEntered && categoryReceived != undefined) {
-
+            setOfData = await obtainDataModel.getDataFromYearAuthorCategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
         }
         else if (authorEntered) {
-
+            setOfData = await obtainDataModel.getDataFromYearAuthor(yearReceived, firstNameReceived, lastNameReceived);
         }
         else if (subcategoryEntered) {
             setOfData = await obtainDataModel.getDataFromYearSubcategory(yearReceived, categoryReceived, subcategoryReceived);
@@ -103,10 +103,10 @@ export const retrieveData = async (req) => {
     }
     else if (authorEntered) {
         if (subcategoryEntered) {
-
+            setOfData = await obtainDataModel.getDataFromAuthorSubcategory(firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (categoryReceived != undefined) {
-
+            setOfData = await obtainDataModel.getDataFromAuthorCategory(firstNameReceived, lastNameReceived, categoryReceived);
         }
         else {
             setOfData = await obtainDataModel.getDataFromAuthor(firstNameReceived, lastNameReceived);
