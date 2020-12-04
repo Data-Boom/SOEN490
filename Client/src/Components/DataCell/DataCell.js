@@ -21,16 +21,23 @@ export default function DataCell() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const json = e.target.jsonFile.files[0];
+      //  console.log(json);
+     //   console.log(json.name);
+     //   console.log(getExtension(json.name));
         try {
             //so if this here is not proper json it will catch
-            JSON.parse(json);
+            var ext =  getExtension(json.name);
+            if(ext != '.json'){
+                throw "File extension is not supported";
+            }
         } catch (e) {
             console.log("was not able to validate json of uploaded file")
             setOpen(true)
             return;
         }
 
-        const json = e.target.jsonFile.files[0];
+        
         
         const formData = new FormData();
         formData.append('jsonFile', json);
@@ -45,11 +52,10 @@ export default function DataCell() {
             .then(result => {
                 console.log(result[0])
             })
-        }catch(err){
-            console.log('wrong file bro')
+            }catch(err){
+            console.log('wrong file submitted, only json file accepted')
         }
-       
-    }
+}
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
         return;
@@ -58,7 +64,10 @@ export default function DataCell() {
         setOpen(false);
     };
 
-
+    function getExtension(filename) {
+    var i = filename.lastIndexOf('.');
+    return (i < 0) ? '' : filename.substr(i);
+            }
     return (
         <>
         <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
@@ -71,7 +80,7 @@ export default function DataCell() {
                 <form onSubmit={handleSubmit}>
                     <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                     <div>
-                        <input type="file" id="jsonFile" accept="application/JSON" />
+                        <input type="file" id="jsonFile" accept="application/json" />
                         <Button type="submit" variant="contained"> Upload this file! </Button>
                     </div>
                 </form>
