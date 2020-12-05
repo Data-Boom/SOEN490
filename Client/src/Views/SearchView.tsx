@@ -1,4 +1,4 @@
-import { Box, Container } from '@material-ui/core'
+import { Box, Button, Container } from '@material-ui/core'
 import { IDatasetModel, exampleDatasets } from '../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
@@ -13,6 +13,8 @@ export default function SearchView() {
     setRows(exampleDatasets)
   }
 
+  const addToGraphButton = <Button variant='contained' color='primary'>Add to graph</Button>
+
   return (
     <Container>
       <Box pt={4}>
@@ -23,6 +25,7 @@ export default function SearchView() {
       <Box pt={4}>
         <SearchResults
           datasetResults={rows}
+          button={addToGraphButton}
         />
       </Box>
     </Container>

@@ -1,37 +1,43 @@
 import { ColDef, DataGrid } from '@material-ui/data-grid'
+
+import { Grid } from '@material-ui/core'
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
 interface IProps {
-  datasetResults: IDatasetModel[]
+  datasetResults: IDatasetModel[],
+  button?: any
 }
 
-const columns: ColDef[] = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params: ValueGetterParams) =>
-      `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
-  },
-];
+export const SearchResults = (props: IProps) => {
 
-return (
-  <div style={{ height: 400, width: '100%' }}>
-    <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
-  </div>
-)
+  const columns: ColDef[] = [
+    { field: 'name', headerName: 'Name' },
+    { field: 'title', headerName: 'Title' },
+    { field: 'oxidizer', headerName: 'Oxidizer' },
+    { field: 'category', headerName: 'Category' },
+    { field: 'subcategory', headerName: 'SubCategory' },
+    { field: 'fuel', headerName: 'Fuel' },
+    { field: 'diluent', headerName: 'Dilutent' },
+    { field: 'author', headerName: 'Author' },
+    { field: 'year', headerName: 'Year' },
+    { field: 'outputFormat', headerName: 'Output format' },
+  ]
+
+  return (
+    <Grid container spacing={3}>
+      <Grid item container>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection />
+        </div>
+      </Grid>
+      <Grid item container justify='flex-end'>
+        <Grid item>
+          {props && props.button ? (props.button) : null}
+        </Grid>
+      </Grid>
+    </Grid>
+  )
 
   // return (
   //   <>
@@ -40,7 +46,6 @@ return (
   //       <Table>
   //         <TableHead>
   //           <TableRow>
-
   //             <TableCell>Title</TableCell>
   //             <TableCell>Oxidizer</TableCell>
   //             <TableCell>Category</TableCell>
