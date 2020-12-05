@@ -1,12 +1,10 @@
-interface IDataPoint {
-  x: number
+export interface IDataPoint {
+  x: number,
   y: number
 }
 
-interface IDatasetModel {
-  points: IDataPoint[]
-  id: number
+export interface IDatasetModel {
+  points: IDataPoint[],
+  id: number,
   color: string
 }
-
-export { }
