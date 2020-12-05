@@ -42,19 +42,19 @@ export class Dataset {
     @JoinColumn()
     publication?: Publications
 
-    @Column({ default: 1 })
-    categoryId: number
+    // @Column({ default: 1 })
+    // categoryId: number
 
-    @ManyToOne(type => Category)
-    @JoinColumn()
-    category?: Category
+    // @ManyToOne(type => Category)
+    // @JoinColumn()
+    // category?: Category
 
-    @Column({ default: 1 })
-    subcategoryId: number
+    // @Column({ default: 1 })
+    // subcategoryId: number
 
-    @ManyToOne(type => Subcategory)
-    @JoinColumn()
-    subcategory?: Subcategory
+    // @ManyToOne(type => Subcategory)
+    // @JoinColumn()
+    // subcategory?: Subcategory
 
     /*
     * This ManyToMany and JoinTable snippet is used to link the Dataset table and the

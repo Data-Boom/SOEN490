@@ -4,6 +4,7 @@ import cors from 'cors';
 import { connectDB } from '../database'
 const datasetController = require('../controllers/DatasetController')
 const fileUploadRouter = require('../routes/fileUploadRouter');
+import { authenticationRouter } from '../routes/authenticationRouter';
 
 const bodyParser = require('body-parser');
 
@@ -45,25 +46,44 @@ class loadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    app.use('/', datasetController)
+    //app.use('/', datasetController)
     app.use('/', fileUploadRouter)
+    app.use('/', authenticationRouter);
 
+
+    const config: any = {
+
+      "type": process.env.DB_TYPE,
+      "host": process.env.HOST,
+      "port": process.env.DB_PORT,
+      "username": process.env.USERNAME,
+      "password": process.env.PASSWORD,
+      "database": process.env.DB_NAME,
+      "synchronize": true,
+      "logging": true,
+      "entities": [
+        "src/models/entities/**/*.ts",
+        "dist/entities/**/*.js"
+      ]
+    }
 
     /**
      * The following starts the server on port 4000 
      */
-    const port: number = Number(process.env.PORT) || 4000;
+    const port: number = Number(process.env.PORT)
     const startServer = async () => {
       app.listen(port, () => {
-        console.log(`This Server is running on http://localhost:4000`);
+        console.log(`This Server is running on http://localhost:${process.env.PORT}`);
       });
     };
 
     /**
      * Call the connect method from /Database to connect to the database and starts the nodejs Server
      */
+
+
     (async () => {
-      await connectDB();
+      await connectDB(config);
       await startServer();
     })();
 
