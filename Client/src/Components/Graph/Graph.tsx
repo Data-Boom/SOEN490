@@ -231,8 +231,9 @@ export default function Graph(props: IProps) {
         width={outerWidth}
         height={outerHeight}
         viewBox={`0 0 ${outerWidth} ${outerHeight}`}
-        preserveAspectRatio="xMidYMid meet">
-      </svg>
+        preserveAspectRatio="xMidYMid meet"
+        id='graph'
+      />
       <div>
         <Button onClick={handleXScaleClick} color="primary">Change X Scale</Button>
         <Button onClick={handleYScaleClick} color="primary">Change Y Scale</Button>

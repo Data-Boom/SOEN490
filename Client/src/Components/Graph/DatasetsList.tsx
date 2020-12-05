@@ -1,5 +1,6 @@
+import { Box, Grid } from "@material-ui/core"
+
 import { DatasetRow } from "./DatasetRow"
-import { Grid } from "@material-ui/core"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
@@ -19,7 +20,9 @@ export const DatasetsList = (props: IProps) => {
   return (
     <>
       <Grid item container direction='column' spacing={3}>
-        {renderDatasetRows()}
+        <Box >
+          {renderDatasetRows()}
+        </Box>
       </Grid>
     </>
   )

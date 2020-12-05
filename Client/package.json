@@ -17,6 +17,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "save-svg-as-png": "^1.4.17",
     "selenium-webdriver": "^4.0.0-alpha.7"
   },
   "scripts": {
@@ -44,6 +45,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.6.0",
     "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-unused-imports": "^1.0.1",
     "typescript": "^4.1.2"
   },
   "description": "Selenium webdriver",

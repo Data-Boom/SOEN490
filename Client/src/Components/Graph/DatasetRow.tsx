@@ -19,14 +19,12 @@ export const DatasetRow = (props: IProps) => {
       color: theme.palette.primary.contrastText,
       borderRadius: 3,
       border: 0,
-      padding: '0 30px',
-      margin: '15px',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      padding: '0 30px'
     },
   })()
   return (
     <Grid item>
-      <Paper elevation={3} className={classes.paperColor}>
+      <Box className={classes.paperColor} mt={5}>
         <Grid item container alignItems='center' justify='space-between'>
           <Typography>
             id: {props && props.dataset && props.dataset.id}, color: {props && props.dataset && props.dataset.color}
@@ -35,7 +33,7 @@ export const DatasetRow = (props: IProps) => {
             <RemoveCircleIcon color='secondary' />
           </IconButton>
         </Grid>
-      </Paper>
+      </Box>
     </Grid>
   )
 }

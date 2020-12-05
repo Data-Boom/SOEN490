@@ -1,13 +1,14 @@
-import { Box, Button, Container, Grid, Modal, Paper, TextField, makeStyles } from "@material-ui/core"
+import * as svg from 'save-svg-as-png'
+
+import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
+import React, { useState } from "react"
 
 import { DatasetsList } from "../Components/Graph/DatasetsList"
 import Graph from '../Components/Graph/Graph'
 import { IDatasetModel } from "../Models/Datasets/IDatasetModel"
 import { ISearchDatasetsFormModel } from "../Models/Forms/ISearchDatasetsFormModel"
-import React from "react"
 import { SearchDatasetsForm } from "../Components/Search/SearchDatasetsForm"
 import { exampleDatasets } from "../Models/Datasets/IDatasetModel"
-import { useState } from "react"
 
 export default function GraphView() {
   //sample datasets to try, just needs to gather from the backend instead.
@@ -27,8 +28,28 @@ export default function GraphView() {
     setDatasets(exampleDatasets)
   }
 
+  const handleExportJson = () => {
+    download("datasets.json", JSON.stringify(datasets, null, 4))
+  }
+  const handleSaveGraphImage = () => {
+    svg.saveSvgAsPng(document.getElementById("graph"), "Databoom Graph.png", { backgroundColor: "#FFFFFF" })
+  }
+
+  //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+  function download(filename: string, text: string) {
+    let element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+    element.setAttribute('download', filename)
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+
+    element.click()
+
+    document.body.removeChild(element)
+  }
+
   const onRemoveDataset = (datasetId: number) => {
-    //getting copy of datasets to modify them and then set Datasets state
     setDatasets(datasets.filter(dataset => dataset.id !== datasetId))
   }
   const useStyles = makeStyles(() => ({
@@ -70,14 +91,24 @@ export default function GraphView() {
             </Paper>
           </Grid>
           <Grid item sm={7}>
-            <Grid container direction='column'>
-              <Grid item>
-                <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+            <Box ml={5} mr={5} mt={5}>
+              <Grid container direction='column'>
+                <Grid item container spacing={3}>
+                  <Grid item>
+                    <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+                  </Grid>
+                  <Grid item>
+                    <Button onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
+                  </Grid>
+                  <Grid item>
+                    <Button onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <DatasetsList datasets={datasets} onRemoveDatasetClick={onRemoveDataset} />
+                </Grid>
               </Grid>
-              <Grid item>
-                <DatasetsList datasets={datasets} onRemoveDatasetClick={onRemoveDataset} />
-              </Grid>
-            </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Box>
