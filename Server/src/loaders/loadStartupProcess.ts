@@ -2,7 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from '../database'
-const datasetController = require('../controllers/DatasetController')
+//const datasetController = require('../controllers/DatasetController')
 const fileUploadRouter = require('../routes/fileUploadRouter');
 
 const bodyParser = require('body-parser');
@@ -45,7 +45,7 @@ class loadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    app.use('/', datasetController)
+   // app.use('/', datasetController)
     app.use('/', fileUploadRouter)
 
 
