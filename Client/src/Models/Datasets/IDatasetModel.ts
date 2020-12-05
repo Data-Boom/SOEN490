@@ -12,7 +12,7 @@ export interface IDatasetModel {
 export const exampleDatasets: IDatasetModel[] = [{
   color: "#3632ff",
   id: 0,
-  points: [{ x: 5.1, y: 3.5 }, { x: 4.9, y: 3 }, { x: 4.7, y: 3.2 }, { x: 4.6, y: 3.1 }, { x: 5, y: 3.6 }, { x: 5.4, y: 3.9 }]
+  points: [{ x: 5.1, y: 3.5 }, { x: 4.9, y: 3 }, { x: 4.7, y: 3.2 }, { x: 4.6, y: 3.1 }, { x: 5, y: 3.6 }, { x: 5.4, y: 3.9 }],
 }, {
   color: "#f20b34",
   id: 1,

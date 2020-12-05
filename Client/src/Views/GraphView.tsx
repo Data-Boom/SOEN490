@@ -25,17 +25,11 @@ export default function GraphView() {
 
   const handleRequest = (formValues: ISearchDatasetsFormModel) => {
     setDatasets(exampleDatasets)
-
-    // loadOptionsList(exampleDatasets, exampleDatasets.map(dataset => dataset.id))
   }
 
   const onRemoveDataset = (datasetId: number) => {
     //getting copy of datasets to modify them and then set Datasets state
-    let datasetCopy: IDatasetModel[] = JSON.parse(JSON.stringify(datasets))
-    datasetCopy.splice(datasetId, 1)
-
-    setDatasets(datasetCopy)
-    // loadOptionsList(datasetCopy.map((dataset) => dataset.points), datasetCopy.map((dataset) => dataset.id))
+    setDatasets(datasets.filter(dataset => dataset.id !== datasetId))
   }
   const useStyles = makeStyles(() => ({
     modal: {
@@ -76,7 +70,7 @@ export default function GraphView() {
             </Paper>
           </Grid>
           <Grid item sm={7}>
-            <Grid container>
+            <Grid container direction='column'>
               <Grid item>
                 <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
               </Grid>

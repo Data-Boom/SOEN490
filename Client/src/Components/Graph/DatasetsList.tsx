@@ -18,7 +18,7 @@ export const DatasetsList = (props: IProps) => {
 
   return (
     <>
-      <Grid item container direction='column'>
+      <Grid item container direction='column' spacing={3}>
         {renderDatasetRows()}
       </Grid>
     </>
