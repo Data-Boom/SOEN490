@@ -21,12 +21,13 @@ export const DatasetRow = (props: IProps) => {
       padding: '0 30px'
     },
   })()
+
   return (
     <Grid item>
       <Box className={classes.paperColor} mt={5}>
         <Grid item container alignItems='center' justify='space-between'>
           <Typography>
-            name: {props.dataset.name}
+            {props.dataset.name}
           </Typography>
           <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>
             <RemoveCircleIcon color='secondary' />
