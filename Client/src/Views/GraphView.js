@@ -2,7 +2,7 @@ import { Box, Button, Container, Grid, Modal, Paper, TextField } from "@material
 
 import Graph from '../Components/Graph/Graph'
 import React from "react"
-import { SearchForm } from "../Components/Search/SearchDatasetsForm"
+import { SearchDatasetsForm } from "../Components/Search/SearchDatasetsForm"
 import { useState } from "react"
 
 export default function GraphView() {
@@ -95,7 +95,8 @@ export default function GraphView() {
             >
               <Container>
                 <Paper elevation={3}>
-                  <SearchForm
+                  <SearchDatasetsForm
+
                   />
 
                 </Paper>
