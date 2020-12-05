@@ -1,3 +1,5 @@
+import { json } from "express";
+
 const fileSystem = require('fs');
 const uploadModel = require('../models/DataUploadModel');
 
@@ -68,6 +70,9 @@ try{
 
   //checks and validates if ref authors are strings and handles error--
   referenceAuthors = jsonObj.reference.authors;
+
+  jsonContentCheck(referenceAuthors);
+  
   arrTypeValidationCheck(referenceAuthors, 'string');
 try{
   await uploadModel.insertAuthors(referenceAuthors);
@@ -110,6 +115,7 @@ try{
 
   //check and validates if material array index contents are of string
   material = jsonObj.material;
+  jsonContentCheck(material);
   arrTypeValidationCheck(material, 'string');
   try{
    await uploadModel.insertMaterial(material);
@@ -131,6 +137,7 @@ try{
    }
 
   dataSetName = jsonObj["dataset name"];
+  jsonContentCheck(dataSetName);
   dataSetComments = jsonObj.data.comments;
   try{ 
     datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID,/** categoryIDs, */ material, dataSetComments)
@@ -142,9 +149,14 @@ try{
   for (var i = 0; i < jsonObj.data.variables.length; i++) {
 
     let dataPointValues = getDataInformationFromContentsArray(jsonObj.data.contents, i);
+
     let dataVariableName = jsonObj.data.variables[i].name;
+    jsonContentCheck(dataVariableName);
+
     let units = jsonObj.data.variables[i].units;
+    jsonContentCheck(units);
     let repr = jsonObj.data.variables[i].repr;
+    jsonContentCheck(repr);
 
     try{
     unitsID = await uploadModel.insertUnits(units);
@@ -174,6 +186,15 @@ const getDataInformationFromContentsArray = (dataContentArray, index) => {
     dataPointsForVariable.push(dataContentArray[i].point[index]);
     dataSetComments.push(dataContentArray[i].comments);
   }
+  //to check if the two helper arrays are empty or not
+   for(var j=0; j<dataPointsForVariable.length; j++){
+    if( (dataPointsForVariable== null || dataPointsForVariable[j]=='') || 
+        (dataSetComments== null|| dataSetComments[j]=='')){
+      console.log('dataset points are empty');
+     }else{
+       continue;
+     }
+   } 
   let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
   return contentsArrayInfo;
 }
@@ -229,4 +250,13 @@ const arrTypeValidationCheck=(x, type) => {
     return true;
   }else
     return false;
+}
+//function for checking json file content
+const jsonContentCheck =(obj)=>{
+  if (obj != null || obj != ''){
+    return obj;
+  }else{
+    console.log('invalid object: '+ obj);
+    return ;
+  }
 }
