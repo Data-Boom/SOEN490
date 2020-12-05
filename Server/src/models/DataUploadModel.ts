@@ -131,8 +131,8 @@ const insertFullDataSet = async (dataSetName, dataSetDataTypeID, publicationID, 
     dataset.name = dataSetName;
     dataset.datatypeId = dataSetDataTypeID;
     dataset.publicationId = publicationID;
-    dataset.categoryId; //= categoryIDs[0];
-    dataset.subcategoryId; //= categoryIDs[1];
+    // dataset.categoryId; //= categoryIDs[0];
+    // dataset.subcategoryId; //= categoryIDs[1];
     dataset.materials = material;
     dataset.comments = dataSetComments;
     await connection.manager.save(dataset);
