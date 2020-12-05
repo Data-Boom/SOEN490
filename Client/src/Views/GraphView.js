@@ -1,7 +1,8 @@
-import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
+import { Box, Button, Container, Grid, Modal, Paper, TextField } from "@material-ui/core"
 
 import Graph from '../Components/Graph/Graph'
 import React from "react"
+import { SearchForm } from "../Components/Search/SearchDatasetsForm"
 import { useState } from "react"
 
 export default function GraphView() {
@@ -11,6 +12,15 @@ export default function GraphView() {
   const [datalist, setDatalist] = useState([])
   const [colourslist, setColourslist] = useState([])
   const [IDList, setIDList] = useState([])
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleOpen = () => {
+    setOpenModal(true)
+  }
+
+  const handleClose = () => {
+    setOpenModal(false)
+  }
 
   const handleRequest = () => {
     var dataset1 = [{ x: 5.1, y: 3.5 }, { x: 4.9, y: 3 }, { x: 4.7, y: 3.2 }, { x: 4.6, y: 3.1 }, { x: 5, y: 3.6 }, { x: 5.4, y: 3.9 }]
@@ -78,7 +88,19 @@ export default function GraphView() {
             </Paper>
           </Grid>
           <Grid item sm={7}>
-            <Button onClick={handleRequest} color="primary" variant="contained">Add dataset To Graph</Button>
+            <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+            <Modal
+              open={openModal}
+              onClose={handleClose}
+            >
+              <Container>
+                <Paper elevation={3}>
+                  <SearchForm
+                  />
+
+                </Paper>
+              </Container>
+            </Modal>
           </Grid>
         </Grid>
         <form>

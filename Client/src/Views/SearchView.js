@@ -2,7 +2,7 @@ import { Box, Container, Divider, FormControl, FormControlLabel, Grid, InputLabe
 import React, { useState } from 'react'
 
 import Button from '@material-ui/core/Button'
-import { SearchForm } from '../Components/Search/SearchForm'
+import { SearchForm } from '../Components/Search/SearchDatasetsForm'
 import Typography from '@material-ui/core/Typography'
 
 export default function SearchView() {
