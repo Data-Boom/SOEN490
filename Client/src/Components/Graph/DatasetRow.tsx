@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton, Paper, Typography, makeStyles, useTheme } from "@material-ui/core"
+import { Box, Grid, IconButton, Typography, makeStyles, useTheme } from "@material-ui/core"
 
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
@@ -10,7 +10,6 @@ interface IProps {
 }
 
 export const DatasetRow = (props: IProps) => {
-  console.log("got to row, rendering")
   const theme = useTheme()
 
   const classes = makeStyles({
@@ -27,7 +26,7 @@ export const DatasetRow = (props: IProps) => {
       <Box className={classes.paperColor} mt={5}>
         <Grid item container alignItems='center' justify='space-between'>
           <Typography>
-            id: {props && props.dataset && props.dataset.id}, color: {props && props.dataset && props.dataset.color}
+            name: {props.dataset.name}
           </Typography>
           <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>
             <RemoveCircleIcon color='secondary' />

@@ -6,7 +6,8 @@ import React from 'react'
 
 interface IProps {
   datasetResults: IDatasetModel[],
-  button?: any
+  handleSelectionChanged: (event: any) => void,
+  button?: any,
 }
 
 export const SearchResults = (props: IProps) => {
@@ -28,14 +29,14 @@ export const SearchResults = (props: IProps) => {
     <Grid container spacing={3}>
       <Grid item container>
         <div style={{ height: 400, width: '100%' }}>
-          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection />
+          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
         </div>
       </Grid>
-      <Grid item container justify='flex-end'>
+      {props && props.button ? <Grid item container justify='flex-end'>
         <Grid item>
-          {props && props.button ? (props.button) : null}
+          {props.button}
         </Grid>
-      </Grid>
+      </Grid> : null}
     </Grid>
   )
 
