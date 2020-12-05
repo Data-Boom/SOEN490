@@ -1,5 +1,5 @@
 import 'dotenv/config';
-const loadStartupProcess =  require('./loaders/loadStartupProcess');
+import { loadStartupProcess } from './loaders/loadStartupProcess'
 
 
 /**
