@@ -1,5 +1,4 @@
-import { Table, TableBody, TableRow } from "material-ui"
-import { TableCell, TableContainer, TableHead, Typography } from "@material-ui/core"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core"
 
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
@@ -8,7 +7,7 @@ interface IProps {
   datasetResults: IDatasetModel[]
 }
 
-const SearchResults = (props: IProps) => {
+export const SearchResults = (props: IProps) => {
   const renderRows = (rows: IDatasetModel[]) => {
     return rows.map((row) => (
       <TableRow key={row.name}>

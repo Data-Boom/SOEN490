@@ -1,4 +1,5 @@
 import { Box, Container } from '@material-ui/core'
+import { IDatasetModel, exampleDatasets } from '../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
 import { SearchDatasetsForm } from '../Components/Search/SearchDatasetsForm'
@@ -6,16 +7,10 @@ import { SearchResults } from '../Components/Search/SearchResults'
 
 export default function SearchView() {
 
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState<IDatasetModel[]>([])
 
   const handleSubmit = (formValues) => {
-    setRows([
-      { title: "test" },
-      { title: "test3" },
-      { title: "test4" },
-      { title: "test5" },
-      { title: "test2" }
-    ])
+    setRows(exampleDatasets)
   }
 
   return (
@@ -26,7 +21,9 @@ export default function SearchView() {
         />
       </Box>
       <Box pt={4}>
-        <SearchResults></SearchResults>
+        <SearchResults
+          datasetResults={rows}
+        />
       </Box>
     </Container>
   )
