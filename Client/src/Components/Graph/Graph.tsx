@@ -4,18 +4,26 @@ import React, { useEffect, useState } from 'react'
 
 import { Button } from "@material-ui/core"
 
-export default function Graph(props) {
+interface IProps {
+  outerHeight: number,
+  outerWidth: number,
+  datalist: any[],
+  colourslist: any[],
+  IDList: any[],
+}
+
+export default function Graph(props: IProps) {
 
   const margin = {
     top: 50,
     right: 70,
     bottom: 50,
     left: 70
-  },
-    outerWidth = props && props.outerWidth || 768,
-    outerHeight = props && props.outerHeight || 500,
-    width = outerWidth - margin.left - margin.right,
-    height = outerHeight - margin.top - margin.bottom
+  }
+  const outerWidth = props && props.outerWidth || 768
+  const outerHeight = props && props.outerHeight || 500
+  const width = outerWidth - margin.left - margin.right
+  const height = outerHeight - margin.top - margin.bottom
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
@@ -85,7 +93,7 @@ export default function Graph(props) {
       .attr("width", width)
       .attr("height", height)
       .style("pointer-events", "all")
-      .call(zoom);
+      .call(zoom)
 
     //This is the part that creates the points
     let scatter = svg.append("g")
@@ -111,8 +119,8 @@ export default function Graph(props) {
       .attr("stroke-width", 2)
 
       //This is for the inner list (dataset1, etc). again, the myPoints is a unique name
-      .selectAll("myPoints")
-      .data(function (d) {
+      .selectAll("myDots")
+      .data(function (d): any {
         return d
       })
       .enter()
@@ -128,9 +136,9 @@ export default function Graph(props) {
         return yScale(d["y"])
       })
       // This allows us to change the opacity of a dot on click.
-      .on("click", function (d) {
+      .on("click", function () {
         const opacity = d3.select(this).style('opacity')
-        if (opacity == 0.5) {
+        if (opacity == '0.5') {
           d3.select(this).style('opacity', 1)
         }
         else {
@@ -139,7 +147,7 @@ export default function Graph(props) {
       })
 
     //Legend on the graph
-    svg.selectAll("mylegendDots")
+    svg.selectAll()
       .data(props && props.datalist)
       .enter()
       //linking an image to be part of the legend instead of a circle
@@ -182,7 +190,7 @@ export default function Graph(props) {
       })
 
     //The name labels for the datasets mentioned in the legend
-    svg.selectAll("mylabels")
+    svg.selectAll()
       .data(props && props.datalist)
       .enter()
       .append("text")

@@ -1,13 +1,12 @@
 import { Button, FormControl, FormControlLabel, Grid, InputLabel, Select, Switch, TextField, Typography } from '@material-ui/core'
+import { ISearchDatasetsFormModel, defaultSearchDatasetsModel } from './ISearchDatasetsFormModel'
 import React, { useEffect, useState } from 'react'
 
-import { defaultSearchDatasetsModel } from './ISearchDatasetsFormModel'
-
 interface IProps {
-  handleSubmit(): void
+  handleSubmit(formValues: ISearchDatasetsFormModel): void
 }
 
-export const SearchDatasetsForm = (props: IProps) => {
+export const SearchDatasetsForm = (props: IProps): any => {
   const [formValues, setFormValues] = useState(defaultSearchDatasetsModel)
 
   const [isCaseSensitive, setIsCaseSensitive] = useState(false)
@@ -69,7 +68,7 @@ export const SearchDatasetsForm = (props: IProps) => {
         </Grid>
 
         <Grid item sm={2}>
-          <Button variant="contained" color="primary" onClick={props.handleSubmit}> Search Database </Button>
+          <Button variant="contained" color="primary" onClick={() => props.handleSubmit(formValues)}> Search Database </Button>
         </Grid>
       </Grid>
 
