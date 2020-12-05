@@ -1,25 +1,12 @@
 import * as jwt from 'jsonwebtoken';
 import * as argon2 from 'argon2';
+import 'dotenv/config';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
 
 export class authenticationService {
 
     constructor() {
-    }
-
-    async hashPassword(password: string): Promise<string> {
-
-        let hashedPassword: string;
-        hashedPassword = await argon2.hash(password);
-        return hashedPassword;
-    }
-
-    async generateJwtToken(jwtParams: JSON): Promise<JSON> {
-
-        let accessToken: JSON;
-
-        return accessToken;
     }
 
     async processSignUp(SignUpInformation: any) {
@@ -30,6 +17,26 @@ export class authenticationService {
         return "is gucci";
     }
 
+    async hashPassword(password: string): Promise<string> {
+
+        let hashedPassword: string;
+        hashedPassword = await argon2.hash(password);
+        return hashedPassword;
+    }
+
+    async generateJwtToken(jwtParams: any): Promise<string> {
+
+        let accessToken: string;
+        const jwtKey = process.env.SECRET_KEY;
+        console.log(jwtKey);
+        const jwtExpirySeconds = 300
+        accessToken = jwt.sign({ accountId: jwtParams.account_id, email: jwtParams.account_email }, jwtKey, {
+            expiresIn: jwtExpirySeconds
+        })
+
+        return accessToken;
+    }
+
     async refreshToken(): Promise<string> {
 
         let newToken: string;
@@ -37,11 +44,12 @@ export class authenticationService {
         return newToken;
     }
 
-    async checkLoginCredentials(userInformation: any): Promise<JSON> {
+    async checkLoginCredentials(userInformation: any): Promise<any> {
 
         let verifiedEmail: string;
         let savedPasswordHash: string;
-        let accessToken: JSON;
+        let accessToken: string;
+        let refreshToken: string;
 
         verifiedEmail = await AuthenticationModel.verifyEmail(userInformation.email);
 
@@ -56,10 +64,15 @@ export class authenticationService {
         else {
             let jwtParams: JSON;
             jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
-            console.log(accessToken);
             accessToken = await this.generateJwtToken(jwtParams);
         }
-        return accessToken;
+
+
+        return {
+            status: "Success",
+            statusCode: 200,
+            token: accessToken
+        };
     }
 
 

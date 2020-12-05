@@ -67,7 +67,6 @@ export class AuthenticationModel {
             .createQueryBuilder(Accounts, 'account')
             .select('account.id', 'account_id')
             .addSelect('account.email', 'account_email')
-            .addSelect('account_lastName', 'account_lastName')
             .addSelect('account.admin', 'account_admin')
             .where('account.email = :email', { email: email })
             .getRawMany();

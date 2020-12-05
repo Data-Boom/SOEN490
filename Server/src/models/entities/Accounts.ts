@@ -19,17 +19,11 @@ export class Accounts {
     @Column()
     lastName: string
 
-    @CreateDateColumn()
+    @Column()
     dateOfBirth: Date
 
     @Column()
     organizationName: string
-
-    @Column()
-    securityQuestion: string
-
-    @Column()
-    securityAnswer: string
 
     @CreateDateColumn()
     createdAt: Date;
@@ -38,5 +32,5 @@ export class Accounts {
     updatedAt: Date;
 
     @Column()
-    admin: boolean
+    admin: string
 }
