@@ -1,5 +1,5 @@
 import { Button, FormControl, FormControlLabel, Grid, InputLabel, Select, Switch, TextField, Typography } from '@material-ui/core'
-import { ISearchDatasetsFormModel, defaultSearchDatasetsModel } from './ISearchDatasetsFormModel'
+import { ISearchDatasetsFormModel, defaultSearchDatasetsModel } from '../../Models/Forms/ISearchDatasetsFormModel'
 import React, { useEffect, useState } from 'react'
 
 interface IProps {
