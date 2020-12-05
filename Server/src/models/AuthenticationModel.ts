@@ -7,7 +7,7 @@ export class AuthenticationModel {
     constructor() {
     }
 
-    async insertSignUpInformation(email: string, password: string, firstName: string, lastName: string, dateOfBirth: Date, organizationName: string, securityQuestion: string, securityAnswer: string, isAdmin: boolean) {
+    static async insertSignUpInformation(email: string, password: string, firstName: string, lastName: string, dateOfBirth: Date, organizationName: string, isAdmin: string) {
 
         let connection = getConnection();
 
@@ -19,42 +19,67 @@ export class AuthenticationModel {
         signUpInformation.lastName = lastName;
         signUpInformation.dateOfBirth = dateOfBirth;
         signUpInformation.organizationName = organizationName;
-        signUpInformation.securityQuestion = securityQuestion;
-        signUpInformation.securityAnswer = securityAnswer;
         signUpInformation.admin = isAdmin;
         await connection.manager.save(signUpInformation);
     }
 
-    async verifyEmail(email: string): Promise<any> {
+    static async verifyEmail(email: string): Promise<any> {
 
         let connection = getConnection();
-        let userEmail = await connection.manager
+        let userInfo = await connection.manager
             .createQueryBuilder(Accounts, 'account')
-            .where('entity.email= :email', { email: email })
+            .select('account.email', 'account_email')
+            .where('account.email= :email', { email: email })
             .getOne();
-        return userEmail !== undefined;
+        return userInfo.email;
     }
 
 
-    async verifyPassword(email: string): Promise<any> {
+    static async verifyPassword(email: string): Promise<any> {
 
         let connection = getConnection();
-        let userPassword = await connection.manager
+        let userInfo = await connection.manager
             .createQueryBuilder(Accounts, 'account')
             .select('account.email', 'account_email')
             .select('account.password', 'account_password')
             .where('account.email = :email', { email: email })
             .getRawMany();
-        console.log(userPassword);
-        return userPassword;
+        return userInfo[0].account_password;
     }
 
-    async resetPassword(email: string) {
+    static async verifyAdminStatus(email: string): Promise<any> {
+
+        let adminStatus: any;
+        let connection = getConnection();
+        adminStatus = await connection.manager
+            .createQueryBuilder(Accounts, 'account')
+            .select('account.admin', 'account_admin')
+            .where('account.email = :email', { email: email })
+            .getRawOne();
+        return adminStatus.account_admin;
+    }
+
+    static async obtainJWTParams(email: string): Promise<any> {
+
+        let connection = getConnection();
+        let jwtParams: JSON[];
+        jwtParams = await connection.manager
+            .createQueryBuilder(Accounts, 'account')
+            .select('account.id', 'account_id')
+            .addSelect('account.email', 'account_email')
+            .addSelect('account_lastName', 'account_lastName')
+            .addSelect('account.admin', 'account_admin')
+            .where('account.email = :email', { email: email })
+            .getRawMany();
+        return jwtParams[0];
+    }
+
+    static async resetPassword(email: string) {
 
         let connection = getConnection();
     }
 
-    async deleteAccounts(email: string) {
+    static async deleteAccounts(email: string) {
 
         let connection = getConnection();
     }

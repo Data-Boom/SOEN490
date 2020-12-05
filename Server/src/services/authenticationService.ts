@@ -3,13 +3,9 @@ import * as argon2 from 'argon2';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
 
-export class authentcationService {
-    private authenticationModel: AuthenticationModel;
-    private authenticationCommand: string;
+export class authenticationService {
 
-    constructor(command: string) {
-        this.authenticationModel = new AuthenticationModel();
-        this.authenticationCommand = command;
+    constructor() {
     }
 
     async hashPassword(password: string): Promise<string> {
@@ -19,21 +15,53 @@ export class authentcationService {
         return hashedPassword;
     }
 
-    async generateJwtToken(): Promise<JSON> {
+    async generateJwtToken(jwtParams: JSON): Promise<JSON> {
 
         let accessToken: JSON;
-
 
         return accessToken;
     }
 
     async processSignUp(SignUpInformation: any) {
 
-        SignUpInformation.password = this.hashPassword(SignUpInformation.password)
-        this.authenticationModel.insertSignUpInformation(SignUpInformation.email, SignUpInformation.password, SignUpInformation.firstName, SignUpInformation.lastName, SignUpInformation.dateOfBirth, SignUpInformation.organizationName, SignUpInformation.securityQuestion, SignUpInformation.securityAnswer, SignUpInformation.isAdmin);
+        await console.log(SignUpInformation);
+        let password = await this.hashPassword(SignUpInformation.password)
+        await AuthenticationModel.insertSignUpInformation(SignUpInformation.email, password, SignUpInformation.firstName, SignUpInformation.lastName, SignUpInformation.dateOfBirth, SignUpInformation.organizationName, SignUpInformation.isAdmin);
+        return "is gucci";
+    }
+
+    async refreshToken(): Promise<string> {
+
+        let newToken: string;
+
+        return newToken;
+    }
+
+    async checkLoginCredentials(userInformation: any): Promise<JSON> {
+
+        let verifiedEmail: string;
+        let savedPasswordHash: string;
+        let accessToken: JSON;
+
+        verifiedEmail = await AuthenticationModel.verifyEmail(userInformation.email);
+
+        if (!verifiedEmail) {
+            throw new Error("Email is not in the System or its mispelled. Check again");
+        }
+        savedPasswordHash = await AuthenticationModel.verifyPassword(userInformation.email);
+
+        if (!argon2.verify(savedPasswordHash, userInformation.password)) {
+            throw new Error('Incorrect password');
+        }
+        else {
+            let jwtParams: JSON;
+            jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
+            console.log(accessToken);
+            accessToken = await this.generateJwtToken(jwtParams);
+        }
+        return accessToken;
     }
 
 
-
-
 }
+
