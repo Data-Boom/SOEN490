@@ -1,5 +1,5 @@
 import DataCell from '../Components/DataCell/DataCell'
-import React from 'react';
+import React from 'react'
 
 const FileUploadView = () => {
 
@@ -10,4 +10,4 @@ const FileUploadView = () => {
   )
 }
 
-export default FileUploadView;
+export default FileUploadView
