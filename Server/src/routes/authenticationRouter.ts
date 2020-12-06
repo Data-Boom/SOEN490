@@ -1,6 +1,7 @@
 import { sign } from 'crypto';
 import { Request, Response, Router } from 'express';
-import { authenticationService } from '../services/authenticationService';
+import { AuthenticationService } from '../services/authenticationService';
+import { AuthenticationController } from '../controllers/authenticationController'
 
 let router = Router();
 
@@ -9,21 +10,33 @@ let router = Router();
  */
 
 router.post('/signup', async (request: Request, response: Response) => {
-    let signUp = new authenticationService();
-    await signUp.processSignUp(request.query);
-    response.status(200).send('success');
+
+    let command: string = "signup";
+    let authenticationController = new AuthenticationController;
+    authenticationController.createRequest(request, response, command);
+
+
+    // let signUp = new AuthenticationService();
+    // await signUp.processSignUp(request.query);
+    // response.status(200).send('success');
 });
 
 router.post('/login', async (request: Request, response: Response) => {
-    let login = new authenticationService();
-    let token = await login.checkLoginCredentials(request.query);
-    if (token.statusCode == 200) {
-        response.send(token);
-    }
-    else
-        response.status(400).json({
-            success: false
-        })
+
+    let command: string = "login";
+    let authenticationController = new AuthenticationController;
+    authenticationController.createRequest(request, response, command);
+
+    // let login = new AuthenticationService();
+    // let serviceResponse: any = await login.checkLoginCredentials(request.query);
+    // if (serviceResponse.statusCode == 200) {
+    //     response.send(serviceResponse);
+    // }
+    // else
+    //     response.status(401).json({
+    //         status: "Failure",
+    //         errorMessage: serviceResponse
+    //     })
 
 });
 

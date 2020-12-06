@@ -3,45 +3,18 @@ import * as argon2 from 'argon2';
 import 'dotenv/config';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
+import { exception } from 'console';
 
-export class authenticationService {
+export class AuthenticationService {
 
     constructor() {
     }
 
     async processSignUp(SignUpInformation: any) {
 
-        await console.log(SignUpInformation);
         let password = await this.hashPassword(SignUpInformation.password)
         await AuthenticationModel.insertSignUpInformation(SignUpInformation.email, password, SignUpInformation.firstName, SignUpInformation.lastName, SignUpInformation.dateOfBirth, SignUpInformation.organizationName, SignUpInformation.isAdmin);
         return "is gucci";
-    }
-
-    async hashPassword(password: string): Promise<string> {
-
-        let hashedPassword: string;
-        hashedPassword = await argon2.hash(password);
-        return hashedPassword;
-    }
-
-    async generateJwtToken(jwtParams: any): Promise<string> {
-
-        let accessToken: string;
-        const jwtKey = process.env.SECRET_KEY;
-        console.log(jwtKey);
-        const jwtExpirySeconds = 300
-        accessToken = jwt.sign({ accountId: jwtParams.account_id, email: jwtParams.account_email }, jwtKey, {
-            expiresIn: jwtExpirySeconds
-        })
-
-        return accessToken;
-    }
-
-    async refreshToken(): Promise<string> {
-
-        let newToken: string;
-
-        return newToken;
     }
 
     async checkLoginCredentials(userInformation: any): Promise<any> {
@@ -51,10 +24,13 @@ export class authenticationService {
         let accessToken: string;
         let refreshToken: string;
 
-        verifiedEmail = await AuthenticationModel.verifyEmail(userInformation.email);
-
-        if (!verifiedEmail) {
-            throw new Error("Email is not in the System or its mispelled. Check again");
+        try {
+            verifiedEmail = await AuthenticationModel.verifyEmail(userInformation.email);
+            if (verifiedEmail === undefined || verifiedEmail === null)
+                throw new Error("Incorrect Email");
+        }
+        catch (error) {
+            return "Email is not in the System or its mispelled. Check Again";
         }
         savedPasswordHash = await AuthenticationModel.verifyPassword(userInformation.email);
 
@@ -63,10 +39,13 @@ export class authenticationService {
         }
         else {
             let jwtParams: JSON;
-            jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
+            try {
+                jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
+            } catch (error) {
+                return "Issue with system. Please try again";
+            }
             accessToken = await this.generateJwtToken(jwtParams);
         }
-
 
         return {
             status: "Success",
@@ -75,6 +54,34 @@ export class authenticationService {
         };
     }
 
+    private async hashPassword(password: string): Promise<string> {
 
+        let hashedPassword: string;
+        hashedPassword = await argon2.hash(password);
+        return hashedPassword;
+    }
+
+    private async generateJwtToken(jwtParams: any): Promise<string> {
+
+        let accessToken: string;
+        const jwtKey = process.env.SECRET_KEY;
+        const jwtExpirySeconds = 300
+        accessToken = jwt.sign({ accountId: jwtParams.account_id, email: jwtParams.account_email }, jwtKey, {
+            expiresIn: jwtExpirySeconds
+        })
+
+        return accessToken;
+    }
+
+    async validateJwtToken(accessToken: any) {
+
+    }
+
+    async refreshToken(): Promise<string> {
+
+        let newToken: string;
+
+        return newToken;
+    }
 }
 

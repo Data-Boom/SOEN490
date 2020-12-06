@@ -1,7 +1,8 @@
-import { createConnection, getManager } from 'typeorm';
+import { createConnection } from 'typeorm';
+import 'dotenv/config';
 
-export const connectDB = async () => {
-  await createConnection().then(async connection => {
+export const connectDB = async (config: any) => {
+  await createConnection(config).then(async connection => {
     console.log("Connection was made.")
 
     //Methods for Entity Manager: https://github.com/typeorm/typeorm/blob/master/docs/entity-manager-api.md

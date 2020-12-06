@@ -1,9 +1,10 @@
 import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
-import { connectDB } from '../database'
-import { fileUploadRouter } from '../routes/fileUploadRouter'
-import bodyParser from 'body-parser'
+import { connectDB } from '../database';
+import { fileUploadRouter } from '../routes/fileUploadRouter';
+import { authenticationRouter } from '../routes/authenticationRouter';
+import bodyParser from 'body-parser';
 
 
 /**
@@ -47,23 +48,44 @@ export class loadStartupProcess {
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
     app.use('/', fileUploadRouter)
+    app.use('/', authenticationRouter)
 
+
+
+    const config: any = {
+
+      "type": process.env.DB_TYPE,
+      "host": process.env.HOST,
+      "port": process.env.DB_PORT,
+      "username": process.env.USERNAME,
+      "password": process.env.PASSWORD,
+      "database": process.env.DB_NAME,
+      "synchronize": true,
+      "logging": true,
+      "entities": [
+        "src/models/entities/**/*.ts",
+        "dist/entities/**/*.js"
+      ]
+    }
 
     /**
      * The following starts the server on port 4000 
      */
-    const port: Number = Number(process.env.PORT) || 4000;
+    const port: number = Number(process.env.PORT)
     const startServer = async () => {
-      await app.listen(port, () => {
-        console.log(`This Server is running on http://localhost:4000`);
+      app.listen(port, () => {
+        console.log(`This Server is running on http://localhost:${process.env.PORT}`);
+
       });
     };
 
     /**
      * Call the connect method from /Database to connect to the database and starts the nodejs Server
      */
+
+
     (async () => {
-      await connectDB();
+      await connectDB(config);
       await startServer();
     })();
 
