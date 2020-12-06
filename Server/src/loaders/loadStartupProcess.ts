@@ -2,20 +2,20 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from '../database'
-const datasetController = require('../controllers/DatasetController')
-const fileUploadRouter = require('../routes/fileUploadRouter');
+import { fileUploadRouter } from '../routes/fileUploadRouter'
+import bodyParser from 'body-parser'
 
-const bodyParser = require('body-parser');
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
  * to initialize the application. The initial connection to the database is also created here.
  */
-class loadStartupProcess {
+export class loadStartupProcess {
   constructor() {
 
     // Create a new express application instance
     const app: express.Application = express();
+
     app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
 
     /**
@@ -35,8 +35,9 @@ class loadStartupProcess {
       origin: "http://localhost:4500",
       preflightContinue: false,
     };
+
     app.use(bodyParser.urlencoded({
-      extended: true
+      extended: false
     }));
     app.use(cors(options));
     app.use(bodyParser.json());
@@ -45,16 +46,15 @@ class loadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    app.use('/', datasetController)
     app.use('/', fileUploadRouter)
 
 
     /**
      * The following starts the server on port 4000 
      */
-    const port: number = Number(process.env.PORT) || 4000;
+    const port: Number = Number(process.env.PORT) || 4000;
     const startServer = async () => {
-      app.listen(port, () => {
+      await app.listen(port, () => {
         console.log(`This Server is running on http://localhost:4000`);
       });
     };
@@ -69,5 +69,3 @@ class loadStartupProcess {
 
   }
 }
-
-module.exports = loadStartupProcess;
