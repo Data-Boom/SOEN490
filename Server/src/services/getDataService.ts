@@ -1,6 +1,13 @@
-import { EntityManager } from "typeorm";
-
-const obtainDataModel = require('../models/SelectQueryDatabase');
+import {
+    getDataFromDataset, getDataFromMaterial, getDataFromMaterialYearAuthorSubcategory,
+    getDataFromMaterialYearAuthorCategory, getDataFromMaterialYearAuthor, getDataFromMaterialYearSubcategory,
+    getDataFromMaterialAuthorSubcategory, getDataFromMaterialYear, getDataFromMaterialSubcategory,
+    getDataFromMaterialAuthor, getDataFromMaterialYearCategory, getDataFromMaterialAuthorCategory,
+    getDataFromMaterialCategory, getDataFromYearCategory, getDataFromYearSubcategory, getDataFromYearAuthor,
+    getDataFromYearAuthorCategory, getDataFromYearAuthorSubcategory, getDataFromYear,
+    getDataFromAuthorSubcategory, getDataFromAuthorCategory, getDataFromAuthor,
+    getDataFromSubcategory, getDataFromCategory
+} from '../models/SelectQueryDatabase';
 
 interface IDataRequestModel {
     datasetId: number
@@ -22,7 +29,7 @@ export const retrieveData = async (req) => {
     let yearReceived = request.year;
     let categoryReceived = request.categoryId;
     let subcategoryReceived = request.subcategoryId;
-    let setOfData = [];
+    let setOfData;
 
 
     // To avoid checks for both first and last name, make a bool for author being entered
@@ -39,84 +46,83 @@ export const retrieveData = async (req) => {
     }
     //Subcategory queries must always be listed above category queries, 
     //as a subcategory query contains both a category and subcategory entry
-    setOfData = await obtainDataModel.getDataFromAuthorSubcategory(firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
     if (datasetReceived != undefined) {
-        setOfData = await obtainDataModel.getDataFromDataset(datasetReceived);
+        setOfData = await getDataFromDataset(datasetReceived);
     }
     else if (materialReceived != undefined) {
         if (yearReceived != undefined && authorEntered && subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromMaterialYearAuthorSubcategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
+            setOfData = await getDataFromMaterialYearAuthorSubcategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (yearReceived != undefined && authorEntered && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromMaterialYearAuthorCategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
+            setOfData = await getDataFromMaterialYearAuthorCategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
         }
         else if (yearReceived != undefined && authorEntered) {
-            setOfData = await obtainDataModel.getDataFromMaterialYearAuthor(materialReceived, yearReceived, firstNameReceived, lastNameReceived);
+            setOfData = await getDataFromMaterialYearAuthor(materialReceived, yearReceived, firstNameReceived, lastNameReceived);
         }
         else if (yearReceived != undefined && subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromMaterialYearSubcategory(materialReceived, yearReceived, categoryReceived, subcategoryReceived);
+            setOfData = await getDataFromMaterialYearSubcategory(materialReceived, yearReceived, categoryReceived, subcategoryReceived);
         }
         else if (yearReceived != undefined && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromMaterialYearCategory(materialReceived, yearReceived, categoryReceived);
+            setOfData = await getDataFromMaterialYearCategory(materialReceived, yearReceived, categoryReceived);
         }
         else if (yearReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromMaterialYear(materialReceived, yearReceived);
+            setOfData = await getDataFromMaterialYear(materialReceived, yearReceived);
         }
         else if (authorEntered && subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromMaterialAuthorSubcategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
+            setOfData = await getDataFromMaterialAuthorSubcategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (authorEntered && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromMaterialAuthorCategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived);
+            setOfData = await getDataFromMaterialAuthorCategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived);
         }
         else if (authorEntered) {
-            setOfData = await obtainDataModel.getDataFromMaterialAuthor(materialReceived, firstNameReceived, lastNameReceived);
+            setOfData = await getDataFromMaterialAuthor(materialReceived, firstNameReceived, lastNameReceived);
         }
         else if (subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromMaterialSubcategory(materialReceived, categoryReceived, subcategoryReceived);
+            setOfData = await getDataFromMaterialSubcategory(materialReceived, categoryReceived, subcategoryReceived);
         }
         else if (categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromMaterialCategory(materialReceived, categoryReceived);
+            setOfData = await getDataFromMaterialCategory(materialReceived, categoryReceived);
         }
         else {
-            setOfData = await obtainDataModel.getDataFromMaterial(materialReceived);
+            setOfData = await getDataFromMaterial(materialReceived);
         }
     }
     else if (yearReceived != undefined) {
         if (authorEntered && subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromYearAuthorSubcategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
+            setOfData = await getDataFromYearAuthorSubcategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (authorEntered && categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromYearAuthorCategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
+            setOfData = await getDataFromYearAuthorCategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
         }
         else if (authorEntered) {
-            setOfData = await obtainDataModel.getDataFromYearAuthor(yearReceived, firstNameReceived, lastNameReceived);
+            setOfData = await getDataFromYearAuthor(yearReceived, firstNameReceived, lastNameReceived);
         }
         else if (subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromYearSubcategory(yearReceived, categoryReceived, subcategoryReceived);
+            setOfData = await getDataFromYearSubcategory(yearReceived, categoryReceived, subcategoryReceived);
         }
         else if (categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromYearCategory(yearReceived, categoryReceived);
+            setOfData = await getDataFromYearCategory(yearReceived, categoryReceived);
         }
         else {
-            setOfData = await obtainDataModel.getDataFromYear(yearReceived);
+            setOfData = await getDataFromYear(yearReceived);
         }
     }
     else if (authorEntered) {
         if (subcategoryEntered) {
-            setOfData = await obtainDataModel.getDataFromAuthorSubcategory(firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
+            setOfData = await getDataFromAuthorSubcategory(firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
         }
         else if (categoryReceived != undefined) {
-            setOfData = await obtainDataModel.getDataFromAuthorCategory(firstNameReceived, lastNameReceived, categoryReceived);
+            setOfData = await getDataFromAuthorCategory(firstNameReceived, lastNameReceived, categoryReceived);
         }
         else {
-            setOfData = await obtainDataModel.getDataFromAuthor(firstNameReceived, lastNameReceived);
+            setOfData = await getDataFromAuthor(firstNameReceived, lastNameReceived);
         }
     }
     else if (subcategoryEntered) {
-        setOfData = await obtainDataModel.getDataFromSubcategory(categoryReceived, subcategoryReceived);
+        setOfData = await getDataFromSubcategory(categoryReceived, subcategoryReceived);
     }
     else if (categoryReceived != undefined) {
-        setOfData = await obtainDataModel.getDataFromCategory(categoryReceived);
+        setOfData = await getDataFromCategory(categoryReceived);
     }
     return setOfData;
 }

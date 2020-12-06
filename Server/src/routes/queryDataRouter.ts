@@ -1,6 +1,5 @@
-var express = require('express');
-const getDataRouter = require('express').Router();
-const getDataController = require('../controllers/getDataController');
+import { Router } from 'express';
+import { createRequestForData } from '../controllers/getDataController';
 
 /**
  * This file contains the routes for a call to query or obtain a dataset. 
@@ -8,6 +7,8 @@ const getDataController = require('../controllers/getDataController');
  * to continue processing of the request.
  */
 
-getDataRouter.get('/dataset*', getDataController.createRequestForData);
+let getDataRouter = Router();
 
-module.exports = getDataRouter
+getDataRouter.get('/dataset*', createRequestForData);
+
+export { getDataRouter as getDataRouter };

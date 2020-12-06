@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import { connectDB } from '../database'
 import { fileUploadRouter } from '../routes/fileUploadRouter'
+import { getDataRouter } from '../routes/queryDataRouter'
 import bodyParser from 'body-parser'
 
 
@@ -47,6 +48,7 @@ export class loadStartupProcess {
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
     app.use('/', fileUploadRouter)
+    app.use('/', getDataRouter)
 
 
     /**
