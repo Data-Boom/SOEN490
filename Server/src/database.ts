@@ -1,7 +1,7 @@
-import { createConnection, getManager } from 'typeorm';
+import { createConnection } from 'typeorm';
 import 'dotenv/config';
 
-export const connectDB = async (config) => {
+export const connectDB = async (config: any) => {
   await createConnection(config).then(async connection => {
     console.log("Connection was made.")
 

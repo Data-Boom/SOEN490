@@ -136,7 +136,7 @@ export class DataUploadModel {
     }
 
 
-    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, /* categoryIDs ,*/ material: IMaterials[], dataSetComments: string): Promise<number> {
+    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, /* categoryIDs ,*/ material: any[], dataSetComments: string): Promise<number> {
 
         const connection = getConnection();
 
