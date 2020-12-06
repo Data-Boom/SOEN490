@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { fileUploadService } from '../services/fileUploadService';
+import { fileUploadService } from '../services/fileUploadService'
 
 
 /**
