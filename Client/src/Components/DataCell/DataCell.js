@@ -1,8 +1,9 @@
+//Verify that material-ui lab and material-ui core are installed before running this file!
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { Container } from '@material-ui/core'
 import { Snackbar } from '@material-ui/core'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Alert } from '@material-ui/lab'
 
 
@@ -22,13 +23,10 @@ export default function DataCell() {
         e.preventDefault();
 
         const json = e.target.jsonFile.files[0];
-      //  console.log(json);
-     //   console.log(json.name);
-     //   console.log(getExtension(json.name));
         try {
-            //so if this here is not proper json it will catch
-            var ext =  getExtension(json.name);
-            if(ext != '.json'){
+            //so if this here is not proper json extension it will catch
+            var ext = getExtension(json.name);
+            if (ext != '.json') {
                 throw "File extension is not supported";
             }
         } catch (e) {
@@ -37,8 +35,6 @@ export default function DataCell() {
             return;
         }
 
-        
-        
         const formData = new FormData();
         formData.append('jsonFile', json);
 
@@ -46,46 +42,47 @@ export default function DataCell() {
             method: 'POST',
             body: formData,
         };
-        try{
-             await fetch('http://localhost:4000/dataupload', options)
-            .then(resp => resp.json())
-            .then(result => {
-                console.log(result[0])
-            })
-            }catch(err){
+
+        try {
+            await fetch('http://localhost:4000/dataupload', options)
+                .then(resp => resp.json())
+                .then(result => {
+                    console.log(result[0])
+                })
+        } catch (err) {
             console.log('wrong file submitted, only json file accepted')
         }
-}
+    }
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-        return;
+            return;
         }
-
         setOpen(false);
     };
-
+    //Function to get the extension of a file
     function getExtension(filename) {
-    var i = filename.lastIndexOf('.');
-    return (i < 0) ? '' : filename.substr(i);
-            }
+        var i = filename.lastIndexOf('.');
+        return (i < 0) ? '' : filename.substr(i);
+    }
+    //Snackbar is used to show an error on the screen when a wrong file type is selected for uploading
     return (
         <>
-        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error">
                     Failed to parse json
                 </Alert>
-        </Snackbar>
-        <Container>
-            <Box border={30} p={4} borderColor="primary">
-                <form onSubmit={handleSubmit}>
-                    <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
-                    <div>
-                        <input type="file" id="jsonFile" accept="application/json" />
-                        <Button type="submit" variant="contained"> Upload this file! </Button>
-                    </div>
-                </form>
-            </Box>
-        </Container>
+            </Snackbar>
+            <Container>
+                <Box border={30} p={4} borderColor="primary">
+                    <form onSubmit={handleSubmit}>
+                        <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
+                        <div>
+                            <input type="file" id="jsonFile" accept="application/json" />
+                            <Button type="submit" variant="contained"> Upload this file! </Button>
+                        </div>
+                    </form>
+                </Box>
+            </Container>
         </>
     )
 }
