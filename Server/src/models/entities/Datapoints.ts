@@ -26,7 +26,7 @@ export class Datapoints {
     dataset?: Dataset
 
     @Column()
-    name: String
+    name: string
 
     @Column({ type: "json" })
     values: number[]
