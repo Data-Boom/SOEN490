@@ -14,10 +14,10 @@ export const DatasetRow = (props: IProps) => {
 
   const classes = makeStyles({
     paperColor: {
-      background: theme.palette.primary.light,
-      color: theme.palette.primary.contrastText,
+      borderColor: theme.palette.primary.light,
       borderRadius: 3,
-      border: 0,
+      borderWidth: '2px',
+      border: 'solid',
       padding: '0 30px'
     },
   })()
