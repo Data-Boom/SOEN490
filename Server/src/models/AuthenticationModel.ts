@@ -16,7 +16,7 @@ export class AuthenticationModel {
     constructor() {
     }
 
-    static async insertSignUpInformation(email: string, password: string, firstName: string, lastName: string, dateOfBirth: Date, organizationName: string, isAdmin: string) {
+    static async insertSignUpInformation(email: string, password: string, firstName: string, lastName: string, dateOfBirth: Date, organizationName: string, isAdmin: boolean) {
 
         let connection = getConnection();
 
@@ -39,7 +39,6 @@ export class AuthenticationModel {
             .createQueryBuilder('accounts')
             .where('accounts.email = :email', { email: email })
             .getOne()
-        console.log(userEmail)
 
         return userEmail !== undefined;
     }
@@ -57,7 +56,7 @@ export class AuthenticationModel {
         return userInfo[0].account_password;
     }
 
-    static async verifyAdminStatus(email: string): Promise<any> {
+    static async verifyAdminStatus(email: string): Promise<boolean> {
 
         let adminStatus: any;
         let connection = getConnection();
@@ -76,7 +75,7 @@ export class AuthenticationModel {
         jwtParams = await connection.manager
             .createQueryBuilder(Accounts, 'account')
             .select('account.id', 'account_id')
-            .addSelect('account.email', 'account_email')
+            .addSelect('account.firstName', 'account_firstName')
             .addSelect('account.admin', 'account_admin')
             .where('account.email = :email', { email: email })
             .getRawMany();

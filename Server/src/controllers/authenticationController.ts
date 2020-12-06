@@ -8,22 +8,32 @@ interface ISignUpInformation {
     lastName: string,
     dateOfBirth: Date,
     organizationName: string,
-    isAdmin: string
+    isAdmin: boolean
 }
 
 
+interface ILoginInformation {
+    email: string,
+    password: string
+}
+
+interface IResponse {
+    status: string
+    statusCode: number
+    response?: string
+}
+
 export class AuthenticationController {
     private authenticationService: AuthenticationService;
-    private invalidResponse: any;
+    private invalidResponse: boolean;
 
     constructor() {
     }
 
     createSignUpRequest(request: Request, response: Response) {
-        console.log(request.query)
-        this.invalidResponse = this.validateSignInRequest(request);
+        this.invalidResponse = this.validateSignUpRequest(request);
         if (this.invalidResponse) {
-            response.status(400).send("Request is invalid.")
+            response.status(400).send("Request is invalid. Missing attributes")
         }
         else {
             let signUpInfo: ISignUpInformation;
@@ -34,7 +44,12 @@ export class AuthenticationController {
             signUpInfo.lastName = request.query.lastName as string;
             signUpInfo.dateOfBirth = request.query.dateOfBirth as any;
             signUpInfo.organizationName = request.query.organizationName as string;
-            signUpInfo.isAdmin = request.query.isAdmin as string;
+            if (!request.query.hasOwnProperty("isAdmin")) {
+                signUpInfo.isAdmin = false;
+            }
+            else {
+                signUpInfo.isAdmin = request.query.isAdmin as any;
+            }
 
             this.callServiceForSignUp(signUpInfo, response);
         }
@@ -42,21 +57,49 @@ export class AuthenticationController {
 
     createLoginRequest(request: Request, response: Response) {
         this.invalidResponse = this.validateLoginRequest(request);
-    }
+        if (this.invalidResponse) {
+            response.status(400).send("Request is invalid. Email or Password is attributes missing")
+        }
+        else {
+            let loginInfo: ILoginInformation;
+            loginInfo = {} as any;
+            loginInfo.email = request.query.email as string;
+            loginInfo.password = request.query.password as string;
 
-    private validateSignInRequest(request: Request) {
-        let invalidAttributes: JSON;
-        if (!request.params || request.params.hasOwnProperty('email')) {
-
+            this.callServiceForLogin(loginInfo, response);
         }
     }
 
-    private validateLoginRequest(request: Request) {
+    private validateSignUpRequest(request: Request): boolean {
+
+        if (request.query || (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password') && request.query.hasOwnProperty('firstName')
+            && request.query.hasOwnProperty('lastName') && request.query.hasOwnProperty('organizationName'))) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
-    private async callServiceForSignUp(signUpObject: ISignUpInformation, response: Response) {
+    private validateLoginRequest(request: Request): boolean {
+        console.log(request.query);
+        if (request.query || request.query.hasOwnProperty('email') || request.query.hasOwnProperty('password')) {
+            return true
+        }
+        else {
+            return false;
+        }
+    }
+
+    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response) {
         this.authenticationService = new AuthenticationService();
-        let serviceResponse: any = await this.authenticationService.processSignUp(signUpObject);
+        let serviceResponse: IResponse = await this.authenticationService.processSignUp(signUpInfo);
+        response.status(serviceResponse.statusCode).json(serviceResponse);
+    }
+
+    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response) {
+        this.authenticationService = new AuthenticationService();
+        let serviceResponse: IResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
         response.status(serviceResponse.statusCode).json(serviceResponse);
     }
 }

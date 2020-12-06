@@ -10,6 +10,12 @@ interface IResponse {
     response?: string
 }
 
+interface SuccessIReponse extends IResponse {
+    status: "Success",
+    statusCode: 400,
+    adminRights: string;
+}
+
 interface ISignUpInformation {
     email: string,
     password: string,
@@ -28,10 +34,10 @@ export class AuthenticationService {
 
     async processSignUp(SignUpInformation: ISignUpInformation): Promise<IResponse> {
 
+        console.log(SignUpInformation);
         let email: any;
         try {
             email = await AuthenticationModel.verifyIfEmailExists(SignUpInformation.email);
-            console.log(email)
             if (!email) {
                 let password = await this.hashPassword(SignUpInformation.password)
                 await AuthenticationModel.insertSignUpInformation(SignUpInformation.email, password, SignUpInformation.firstName, SignUpInformation.lastName, SignUpInformation.dateOfBirth, SignUpInformation.organizationName, SignUpInformation.isAdmin);
@@ -60,8 +66,8 @@ export class AuthenticationService {
 
         try {
             verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userInformation.email);
-            if (verifiedEmail === undefined || verifiedEmail === null)
-                throw new Error("Incorrect Email");
+            if (!verifiedEmail)
+                throw new Error();
         }
         catch (error) {
             this.requestResponse.status = "Failure";
@@ -70,10 +76,15 @@ export class AuthenticationService {
 
             return this.requestResponse
         }
+
         savedPasswordHash = await AuthenticationModel.verifyPassword(userInformation.email);
 
-        if (!argon2.verify(savedPasswordHash, userInformation.password)) {
-            throw new Error('Incorrect password');
+        if (!(await argon2.verify(savedPasswordHash, userInformation.password))) {
+            this.requestResponse.status = "Failure";
+            this.requestResponse.statusCode = 400;
+            this.requestResponse.response = "Password does not match";
+
+            return this.requestResponse
         }
         else {
             let jwtParams: JSON;
@@ -107,7 +118,7 @@ export class AuthenticationService {
         let accessToken: string;
         const jwtKey = process.env.SECRET_KEY;
         const jwtExpirySeconds = 300
-        accessToken = jwt.sign({ accountId: jwtParams.account_id, email: jwtParams.account_email }, jwtKey, {
+        accessToken = jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtKey, {
             expiresIn: jwtExpirySeconds
         })
 

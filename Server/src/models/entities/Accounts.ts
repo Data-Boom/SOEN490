@@ -32,5 +32,5 @@ export class Accounts {
     updatedAt: Date;
 
     @Column()
-    admin: string
+    admin: boolean
 }
