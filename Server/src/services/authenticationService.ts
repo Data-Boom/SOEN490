@@ -3,21 +3,55 @@ import * as argon2 from 'argon2';
 import 'dotenv/config';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
-import { exception } from 'console';
+
+interface IResponse {
+    status: string
+    statusCode: number
+    response?: string
+}
+
+interface ISignUpInformation {
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: Date,
+    organizationName: string,
+    isAdmin: string
+}
 
 export class AuthenticationService {
+    private requestResponse: IResponse = {} as any;
 
     constructor() {
     }
 
-    async processSignUp(SignUpInformation: any) {
+    async processSignUp(SignUpInformation: ISignUpInformation): Promise<IResponse> {
 
-        let password = await this.hashPassword(SignUpInformation.password)
-        await AuthenticationModel.insertSignUpInformation(SignUpInformation.email, password, SignUpInformation.firstName, SignUpInformation.lastName, SignUpInformation.dateOfBirth, SignUpInformation.organizationName, SignUpInformation.isAdmin);
-        return "is gucci";
+        let email: any;
+        try {
+            email = await AuthenticationModel.verifyIfEmailExists(SignUpInformation.email);
+            console.log(email)
+            if (!email) {
+                let password = await this.hashPassword(SignUpInformation.password)
+                await AuthenticationModel.insertSignUpInformation(SignUpInformation.email, password, SignUpInformation.firstName, SignUpInformation.lastName, SignUpInformation.dateOfBirth, SignUpInformation.organizationName, SignUpInformation.isAdmin);
+            }
+            else throw new Error();
+
+        } catch (error) {
+            this.requestResponse.status = "Failure";
+            this.requestResponse.statusCode = 400;
+            this.requestResponse.response = "Email is already in the System. Please check again";
+
+            return this.requestResponse
+        }
+        this.requestResponse.status = "Success";
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse
+
     }
 
-    async checkLoginCredentials(userInformation: any): Promise<any> {
+    async checkLoginCredentials(userInformation: any): Promise<IResponse> {
 
         let verifiedEmail: string;
         let savedPasswordHash: string;
@@ -25,12 +59,16 @@ export class AuthenticationService {
         let refreshToken: string;
 
         try {
-            verifiedEmail = await AuthenticationModel.verifyEmail(userInformation.email);
+            verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userInformation.email);
             if (verifiedEmail === undefined || verifiedEmail === null)
                 throw new Error("Incorrect Email");
         }
         catch (error) {
-            return "Email is not in the System or its mispelled. Check Again";
+            this.requestResponse.status = "Failure";
+            this.requestResponse.statusCode = 400;
+            this.requestResponse.response = "Email is not in the System or its mispelled. Check Again";
+
+            return this.requestResponse
         }
         savedPasswordHash = await AuthenticationModel.verifyPassword(userInformation.email);
 
@@ -42,16 +80,19 @@ export class AuthenticationService {
             try {
                 jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
             } catch (error) {
-                return "Issue with system. Please try again";
+                this.requestResponse.status = "Failure";
+                this.requestResponse.statusCode = 500;
+                this.requestResponse.response = "Internal Server Issue. Please try again later";
+
+                return this.requestResponse
             }
             accessToken = await this.generateJwtToken(jwtParams);
+            this.requestResponse.status = "Success";
+            this.requestResponse.statusCode = 200;
+            this.requestResponse.response = accessToken;
         }
 
-        return {
-            status: "Success",
-            statusCode: 200,
-            token: accessToken
-        };
+        return this.requestResponse;
     }
 
     private async hashPassword(password: string): Promise<string> {

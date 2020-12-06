@@ -5,15 +5,15 @@ import { AuthenticationController } from '../controllers/authenticationControlle
 
 let router = Router();
 
+let authenticationController = new AuthenticationController;
+
 /**
  * This route is used when an authentication API is called.
  */
 
 router.post('/signup', async (request: Request, response: Response) => {
 
-    let command: string = "signup";
-    let authenticationController = new AuthenticationController;
-    authenticationController.createRequest(request, response, command);
+    authenticationController.createSignUpRequest(request, response);
 
 
     // let signUp = new AuthenticationService();
@@ -23,9 +23,7 @@ router.post('/signup', async (request: Request, response: Response) => {
 
 router.post('/login', async (request: Request, response: Response) => {
 
-    let command: string = "login";
-    let authenticationController = new AuthenticationController;
-    authenticationController.createRequest(request, response, command);
+    authenticationController.createLoginRequest(request, response);
 
     // let login = new AuthenticationService();
     // let serviceResponse: any = await login.checkLoginCredentials(request.query);

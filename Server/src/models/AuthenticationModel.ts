@@ -2,6 +2,15 @@ import { Connection, getConnection } from 'typeorm';
 
 import { Accounts } from './entities/Accounts'
 
+interface ISignUpInformation {
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: Date,
+    organizationName: string,
+    admin: string
+}
 
 export class AuthenticationModel {
     constructor() {
@@ -23,15 +32,16 @@ export class AuthenticationModel {
         await connection.manager.save(signUpInformation);
     }
 
-    static async verifyEmail(email: string): Promise<any> {
+    static async verifyIfEmailExists(email: string): Promise<any> {
 
         let connection = getConnection();
-        let userInfo = await connection.manager
-            .createQueryBuilder(Accounts, 'account')
-            .select('account.email', 'account_email')
-            .where('account.email= :email', { email: email })
-            .getOne();
-        return userInfo.email;
+        let userEmail = await connection.getRepository(Accounts)
+            .createQueryBuilder('accounts')
+            .where('accounts.email = :email', { email: email })
+            .getOne()
+        console.log(userEmail)
+
+        return userEmail !== undefined;
     }
 
 
