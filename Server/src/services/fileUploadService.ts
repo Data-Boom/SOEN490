@@ -1,8 +1,120 @@
 import { json } from "express";
 
+
 const fileSystem = require('fs');
 const uploadModel = require('../models/DataUploadModel');
 
+//const jsValidator= require('../services/validationSchema');
+
+var Validator = require('jsonschema').Validator;
+var v = new Validator();
+
+var schema = {
+  "id": "/baseSchema",
+  "type": "object",
+  "properties":{
+      "reference": {
+        "$ref":"/referenceSchema"            
+      },
+        "datasetName": {"type": "string"},
+        "material":{
+              "$ref": "/materialSchema"
+        },
+        "category":{"type": "string"},
+        "subcategory":{"type": "string"},
+        "data":{
+            "$ref": "/dataSchema"
+        }
+
+  },
+  "required": ["reference", "datasetName", "material", "data"]
+  
+};
+var referenceSchema= {
+  "id": "/referenceSchema",
+  "type": "object",
+  "properties":{
+      "type":{"type": "string"},
+      "publisher": {"type": "string"},
+      "authors": {
+          "$ref": "/authorsSchema"
+      },
+      "title": {"type": "string"},
+      "volume": {"type": "integer"},
+      "pages":{"type": "integer"},
+      "year":{"type": "integer"}
+  },
+  "required": ["authors"]
+};
+
+var materialSchema={
+  "id": "/materialSchema",
+  "type": "array",
+  "items":{
+      "$ref": "/m2Schema"
+  }
+};
+
+var m2schema ={
+  "id" : "/m2Schema",
+  "type": "object",
+  "properties":{
+      "composition": {"type":"string"},
+      "details": {"type":"string"}
+  },
+  "required":["composition", "details"]
+};
+
+var dataSchema ={
+  "id" : "/dataSchema",
+  "type": "object",
+  "properties":{
+      "variables": {
+          "$ref": "/variableSchema"
+      },
+      "contents": {
+          "$ref": "/contentsSchema"
+      },
+      "comments": {"type": "string"}
+  }
+};
+var counter= 0;
+var variableSchema= {
+  "id": "/variableSchema",
+  "type": "array",
+  "properties":{
+      "$ref": "/v2Schema"
+  }
+};
+var v2Schema ={
+  "id" : "/v2Schema",
+  "type": "object",
+  "properties": {
+      "name": {"type": "string"},
+      "repr": {"type": "string"},
+      "units": {"type": "string"}
+  },
+  "required":["name", "repr", "units"]
+};
+var contentsSchema ={
+  "id": "/contentsSchema",
+  "type": "array",
+  "properties": {
+      "$ref": "/c2Schema"
+  }
+};
+var c2Schema ={
+  "id": "/c2Schema",
+  "type": "object",
+  "properties": {
+      "points" : {
+          "type": "array",
+          "items" : {"type": "number"},
+      },
+      "comments": {"type": "string"}
+  },
+  "required":["points"]
+};
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -39,6 +151,18 @@ const jsonUpload = async (filePathOfJson) => {
   let unitsID = '';
   let reprID = '';
 
+  //to run validation of the json file outline
+  v.addSchema(referenceSchema, '/referenceSchema');
+  v.addSchema(materialSchema, '/materialSchema');
+  v.addSchema(m2schema, '/m2schema');
+  v.addSchema(dataSchema, '/dataSchema');
+  v.addSchema(variableSchema, '/variableSchema');
+  v.addSchema(v2Schema, '/v2Schema');
+  v.addSchema(contentsSchema, '/contentsSchema');
+  v.addSchema(c2Schema, '/c2Schema');
+
+  console.log(v.validate((fileSystem.readFileSync(filePathOfJson)),schema));
+
   let jsonObj = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
   
   //checks and validates if reference type is a string and handles error--
@@ -71,7 +195,7 @@ try{
   //checks and validates if ref authors are strings and handles error--
   referenceAuthors = jsonObj.reference.authors;
 
-  jsonContentCheck(referenceAuthors);
+  //jsonContentCheck(referenceAuthors);
   
   arrTypeValidationCheck(referenceAuthors, 'string');
 try{
@@ -115,7 +239,7 @@ try{
 
   //check and validates if material array index contents are of string
   material = jsonObj.material;
-  jsonContentCheck(material);
+  //jsonContentCheck(material);
   arrTypeValidationCheck(material, 'string');
   try{
    await uploadModel.insertMaterial(material);
@@ -137,7 +261,7 @@ try{
    }
 
   dataSetName = jsonObj["dataset name"];
-  jsonContentCheck(dataSetName);
+  //jsonContentCheck(dataSetName);
   dataSetComments = jsonObj.data.comments;
   try{ 
     datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID,/** categoryIDs, */ material, dataSetComments)
@@ -146,17 +270,25 @@ try{
      console.log('error receiving datasetID....request rejected');
    }
   
+   //run check on variable vs contents length to see if they're equal
+  if(jsonObj.data.variables.length == jsonObj.data.contents.length ){
+    console.log("variable and content lengths are equal....proceed")
+  }else{
+     console.error('variable and content lengths dont match');
+  }
+
   for (var i = 0; i < jsonObj.data.variables.length; i++) {
 
     let dataPointValues = getDataInformationFromContentsArray(jsonObj.data.contents, i);
 
     let dataVariableName = jsonObj.data.variables[i].name;
-    jsonContentCheck(dataVariableName);
+
+    //jsonContentCheck(dataVariableName);
 
     let units = jsonObj.data.variables[i].units;
-    jsonContentCheck(units);
+    //jsonContentCheck(units);
     let repr = jsonObj.data.variables[i].repr;
-    jsonContentCheck(repr);
+    //jsonContentCheck(repr);
 
     try{
     unitsID = await uploadModel.insertUnits(units);
@@ -252,11 +384,11 @@ const arrTypeValidationCheck=(x, type) => {
     return false;
 }
 //function for checking json file content
-const jsonContentCheck =(obj)=>{
-  if (obj != null || obj != ''){
-    return obj;
-  }else{
-    console.log('invalid object: '+ obj);
-    return ;
-  }
-}
+// const jsonContentCheck =(obj)=>{
+//   if (obj != null || obj != ''){
+//     return obj;
+//   }else{
+//     console.log('invalid object: '+ obj);
+//     return ;
+//   }
+// }
