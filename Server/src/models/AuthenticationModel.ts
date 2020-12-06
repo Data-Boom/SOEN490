@@ -5,8 +5,6 @@ import { ISignUpInformation } from '../genericInterfaces/SignUpInterface'
 
 
 export class AuthenticationModel {
-    constructor() {
-    }
 
     static async insertSignUpInformation(signUpInfo: ISignUpInformation) {
 
