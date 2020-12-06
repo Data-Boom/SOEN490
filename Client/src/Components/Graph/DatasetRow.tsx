@@ -1,8 +1,8 @@
 import { Box, Grid, IconButton, Typography, makeStyles, useTheme } from "@material-ui/core"
 
+import DeleteIcon from '@material-ui/icons/Delete'
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 
 interface IProps {
   dataset: IDatasetModel,
@@ -30,7 +30,7 @@ export const DatasetRow = (props: IProps) => {
             {props.dataset.name}
           </Typography>
           <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>
-            <RemoveCircleIcon color='secondary' />
+            <DeleteIcon color='primary' />
           </IconButton>
         </Grid>
       </Box>
