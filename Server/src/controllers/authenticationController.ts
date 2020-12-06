@@ -1,27 +1,9 @@
 import { Request, Response } from 'express';
 import { AuthenticationService } from '../services/authenticationService';
 
-interface ISignUpInformation {
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    dateOfBirth: Date,
-    organizationName: string,
-    isAdmin: boolean
-}
-
-
-interface ILoginInformation {
-    email: string,
-    password: string
-}
-
-interface IResponse {
-    status: string
-    statusCode: number
-    response?: string
-}
+import { IResponse } from '../genericInterfaces/ResponsesInterface'
+import { ISignUpInformation } from '../genericInterfaces/SignUpInterface';
+import { ILoginInformation } from '../genericInterfaces/LoginInterface';
 
 export class AuthenticationController {
     private authenticationService: AuthenticationService;
@@ -33,7 +15,7 @@ export class AuthenticationController {
     createSignUpRequest(request: Request, response: Response) {
         this.invalidResponse = this.validateSignUpRequest(request);
         if (this.invalidResponse) {
-            response.status(400).send("Request is invalid. Missing attributes")
+            response.status(400).json("Request is invalid. Missing attributes")
         }
         else {
             let signUpInfo: ISignUpInformation;
@@ -58,7 +40,7 @@ export class AuthenticationController {
     createLoginRequest(request: Request, response: Response) {
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
-            response.status(400).send("Request is invalid. Email or Password is attributes missing")
+            response.status(400).json("Request is invalid. Email or Password is attributes missing")
         }
         else {
             let loginInfo: ILoginInformation;
@@ -72,8 +54,8 @@ export class AuthenticationController {
 
     private validateSignUpRequest(request: Request): boolean {
 
-        if (request.query || (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password') && request.query.hasOwnProperty('firstName')
-            && request.query.hasOwnProperty('lastName') && request.query.hasOwnProperty('organizationName'))) {
+        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password') && request.query.hasOwnProperty('firstName')
+            && request.query.hasOwnProperty('lastName') && request.query.hasOwnProperty('organizationName')) {
             return false;
         }
         else {
@@ -82,8 +64,7 @@ export class AuthenticationController {
     }
 
     private validateLoginRequest(request: Request): boolean {
-        console.log(request.query);
-        if (request.query || request.query.hasOwnProperty('email') || request.query.hasOwnProperty('password')) {
+        if (request.query.hasOwnProperty('email') || request.query.hasOwnProperty('password')) {
             return true
         }
         else {

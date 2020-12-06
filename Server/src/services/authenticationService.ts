@@ -3,28 +3,11 @@ import * as argon2 from 'argon2';
 import 'dotenv/config';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
+import { ISignUpInformation } from '../genericInterfaces/SignUpInterface';
 
-interface IResponse {
-    status: string
-    statusCode: number
-    response?: string
-}
+import { IResponse } from '../genericInterfaces/ResponsesInterface'
 
-interface SuccessIReponse extends IResponse {
-    status: "Success",
-    statusCode: 400,
-    adminRights: string;
-}
 
-interface ISignUpInformation {
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    dateOfBirth: Date,
-    organizationName: string,
-    isAdmin: string
-}
 
 export class AuthenticationService {
     private requestResponse: IResponse = {} as any;
@@ -34,7 +17,6 @@ export class AuthenticationService {
 
     async processSignUp(SignUpInformation: ISignUpInformation): Promise<IResponse> {
 
-        console.log(SignUpInformation);
         let email: any;
         try {
             email = await AuthenticationModel.verifyIfEmailExists(SignUpInformation.email);
