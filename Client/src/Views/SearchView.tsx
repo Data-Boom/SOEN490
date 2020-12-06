@@ -1,5 +1,5 @@
 import { Box, Button, Container } from '@material-ui/core'
-import { IDatasetModel, exampleDatasets } from '../Models/Datasets/IDatasetModel'
+import { ICompleteDatasetEntity, exampleDatasets } from '../Models/Datasets/ICompleteDatasetEntity'
 import React, { useState } from 'react'
 
 import { SearchDatasetsForm } from '../Components/Search/SearchDatasetsForm'
@@ -7,12 +7,12 @@ import { SearchResults } from '../Components/Search/SearchResults'
 import { SelectionChangeParams } from '@material-ui/data-grid'
 
 interface IProps {
-  handleDatasetsSelected: (datasets: IDatasetModel[]) => void
+  handleDatasetsSelected: (datasets: ICompleteDatasetEntity[]) => void
 }
 
 export default function SearchView(props: IProps) {
 
-  const [foundDatasets, setFoundDatasets] = useState<IDatasetModel[]>([])
+  const [foundDatasets, setFoundDatasets] = useState<ICompleteDatasetEntity[]>([])
 
   // array of selected ids
   const [selection, setSelection] = useState<SelectionChangeParams>(null)
@@ -27,7 +27,7 @@ export default function SearchView(props: IProps) {
   }
 
   const handleSubmitSelection = () => {
-    let selectedDatasets: IDatasetModel[] = []
+    let selectedDatasets: ICompleteDatasetEntity[] = []
 
     //add all datasets from found datasets by index to selected datasets
     for (let i = 0; i < selection.rowIds.length; i++) {

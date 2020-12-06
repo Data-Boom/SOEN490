@@ -1,12 +1,12 @@
-import { ColDef, DataGrid } from '@material-ui/data-grid'
+import { ColDef, DataGrid, SelectionChangeParams } from '@material-ui/data-grid'
 
 import { Grid } from '@material-ui/core'
-import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
+import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React from 'react'
 
 interface IProps {
-  datasetResults: IDatasetModel[],
-  handleSelectionChanged: (event: any) => void,
+  datasetResults: ICompleteDatasetEntity[],
+  handleSelectionChanged: (selection: SelectionChangeParams) => void,
   button?: any,
 }
 
@@ -39,30 +39,4 @@ export const SearchResults = (props: IProps) => {
       </Grid> : null}
     </Grid>
   )
-
-  // return (
-  //   <>
-  //     <Typography variant='h4' align="left">Results</Typography>
-  //     <TableContainer>
-  //       <Table>
-  //         <TableHead>
-  //           <TableRow>
-  //             <TableCell>Title</TableCell>
-  //             <TableCell>Oxidizer</TableCell>
-  //             <TableCell>Category</TableCell>
-  //             <TableCell>Subcategory</TableCell>
-  //             <TableCell>Fuel</TableCell>
-  //             <TableCell>Diluent</TableCell>
-  //             <TableCell>Author</TableCell>
-  //             <TableCell>Year</TableCell>
-  //             <TableCell>Output Format</TableCell>
-  //           </TableRow>
-  //         </TableHead>
-  //         <TableBody>
-  //           {renderRows(props && props.datasetResults)}
-  //         </TableBody>
-  //       </Table>
-  //     </TableContainer>
-  //   </>
-  // )
 }

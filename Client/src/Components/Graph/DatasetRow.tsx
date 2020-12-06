@@ -1,11 +1,11 @@
 import { Box, Grid, IconButton, Typography, makeStyles, useTheme } from "@material-ui/core"
 
 import DeleteIcon from '@material-ui/icons/Delete'
-import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
+import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React from 'react'
 
 interface IProps {
-  dataset: IDatasetModel,
+  dataset: ICompleteDatasetEntity,
   onRemoveDatasetClick: (datasetId: number) => void
 }
 

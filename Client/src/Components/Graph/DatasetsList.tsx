@@ -1,11 +1,11 @@
 import { Box, Grid } from "@material-ui/core"
 
 import { DatasetRow } from "./DatasetRow"
-import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
+import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React from 'react'
 
 interface IProps {
-  datasets: IDatasetModel[],
+  datasets: ICompleteDatasetEntity[],
   onRemoveDatasetClick: (datasetId: number) => void
 }
 

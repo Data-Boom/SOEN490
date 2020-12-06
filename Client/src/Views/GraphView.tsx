@@ -8,8 +8,13 @@ import React, { useState } from "react"
 
 import { DatasetsList } from "../Components/Graph/DatasetsList"
 import Graph from '../Components/Graph/Graph'
-import { IDatasetModel } from "../Models/Datasets/IDatasetModel"
+import { ICompleteDatasetEntity } from "../Models/Datasets/ICompleteDatasetEntity"
+import { IGraphDatasetModel } from '../Models/Datasets/IGraphDatasetModel'
 import SearchView from './SearchView'
+import { exampleExportDatasetModel } from '../Models/Datasets/IExportDatasetModel'
+
+//todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
+const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
 
 export default function GraphView() {
   const useStyles = makeStyles(() => ({
@@ -24,7 +29,7 @@ export default function GraphView() {
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
-  const [datasets, setDatasets] = useState<IDatasetModel[]>([])
+  const [completeDatasets, setCompleteDatasets] = useState<ICompleteDatasetEntity[]>([])
   const [openModal, setOpenModal] = useState(false)
 
   const handleOpen = () => {
@@ -40,7 +45,18 @@ export default function GraphView() {
   }
 
   const handleExportJson = () => {
-    download("datasets.json", JSON.stringify(datasets, null, 4))
+    download("datasets.json", JSON.stringify(exampleExportDatasetModel, null, 4))
+  }
+
+  const toGraphDataset = (completeDataset: ICompleteDatasetEntity, color: string): IGraphDatasetModel => {
+    const graphDataset: IGraphDatasetModel = {
+      color: color,
+      id: completeDataset.id,
+      name: completeDataset.name,
+      points: completeDataset.points
+    }
+
+    return graphDataset
   }
 
   //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
@@ -59,25 +75,25 @@ export default function GraphView() {
 
   const onRemoveDataset = (datasetId: number) => {
     console.log("removed dataset")
-    setDatasets(datasets.filter(dataset => dataset.id !== datasetId))
+    setCompleteDatasets(completeDatasets.filter(dataset => dataset.id !== datasetId))
   }
 
-  const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
+  const handleDatasetsSelected = (selectedDatasets: ICompleteDatasetEntity[]) => {
     console.log("just set datasets from handleDatasetsSelected")
 
     // selectedDatasets.filter will return those datasets that meet
-    let notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
+    let notYetSelectedDatasets: ICompleteDatasetEntity[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
-    let mergedDatasets: IDatasetModel[] = JSON.parse(JSON.stringify(datasets))
+    let mergedDatasets: ICompleteDatasetEntity[] = JSON.parse(JSON.stringify(completeDatasets))
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
 
-    setDatasets(mergedDatasets)
+    setCompleteDatasets(mergedDatasets)
   }
 
-  const isInStateAlready = (dataset: IDatasetModel) => {
-    return datasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
+  const isInStateAlready = (dataset: ICompleteDatasetEntity) => {
+    return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
   return (
@@ -104,9 +120,7 @@ export default function GraphView() {
               <Graph
                 outerHeight={500}
                 outerWidth={768}
-                datalist={datasets.map((dataset) => dataset.points)}
-                colourslist={datasets.map((dataset) => dataset.color)}
-                IDList={datasets.map((dataset) => dataset.id)}
+                datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
               />
             </Paper>
           </Grid>
@@ -125,7 +139,7 @@ export default function GraphView() {
                   </Grid>
                 </Grid>
                 <Grid item>
-                  <DatasetsList datasets={datasets} onRemoveDatasetClick={onRemoveDataset} />
+                  <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
                 </Grid>
               </Grid>
             </Box>

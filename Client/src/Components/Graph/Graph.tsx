@@ -3,16 +3,23 @@ import * as d3 from "d3"
 import React, { useEffect, useState } from 'react'
 
 import { Button } from "@material-ui/core"
+import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
 
 interface IProps {
   outerHeight: number,
   outerWidth: number,
-  datalist: any[],
-  colourslist: any[],
-  IDList: any[],
+  datasets: IGraphDatasetModel[]
 }
 
 export default function Graph(props: IProps) {
+
+  //todo this somehow can be done with reduce method of an array
+  const datalist: any[] = []
+  props.datasets.forEach(dataset => datalist.push(dataset.points))
+  const colourslist: string[] = []
+  props.datasets.forEach(dataset => colourslist.push(dataset.color))
+  const IDList: number[] = []
+  props.datasets.forEach(dataset => IDList.push(dataset.id))
 
   const margin = {
     top: 50,
@@ -103,17 +110,17 @@ export default function Graph(props: IProps) {
       //the myDots is a unique name, this is to refer to these dots.
       .selectAll("myDots")
       //Datalist is the list of list of points, the enter creates a loop through each one.
-      .data(props && props.datalist)
+      .data(datalist)
       .enter()
       .append('g')
       //This gives each list of points a different colour, verifies if its in the list and changes it if it is
       .attr("fill", function (d) {
-        const x = props.datalist.indexOf(d)
-        return props.colourslist[x]
+        const x = datalist.indexOf(d)
+        return colourslist[x]
       })
       .attr("id", function (d) {
-        const x = props.datalist.indexOf(d)
-        return "id" + props.IDList[x]
+        const x = datalist.indexOf(d)
+        return "id" + IDList[x]
       })
       .attr("stroke", "black")
       .attr("stroke-width", 2)
@@ -148,7 +155,7 @@ export default function Graph(props: IProps) {
 
     //Legend on the graph
     svg.selectAll()
-      .data(props && props.datalist)
+      .data(datalist)
       .enter()
       //linking an image to be part of the legend instead of a circle
       .append('image')
@@ -159,14 +166,14 @@ export default function Graph(props: IProps) {
       .attr("y", function (d, i) { return 290 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("r", 7)
       .attr("id", function (d) {
-        const x = props.datalist.indexOf(d)
-        return "legenddotid" + props.IDList[x]
+        const x = datalist.indexOf(d)
+        return "legenddotid" + IDList[x]
       })
       //An option to make the legend hide and show datasets when clicked on.
       .on("click", function (d) {
-        const x = props.datalist.indexOf(d)
+        const x = datalist.indexOf(d)
         scatter
-          .selectAll("#id" + props.IDList[x])
+          .selectAll("#id" + IDList[x])
           .style("opacity", function () {
             if (active[x] == null) {
               active[x] = !d3.select(this).style('opacity') ? 1 : 0
@@ -178,7 +185,7 @@ export default function Graph(props: IProps) {
           })
         //This will change the icon when the datasets are hidden or visible
         svg
-          .selectAll("#legenddotid" + props.IDList[x])
+          .selectAll("#legenddotid" + IDList[x])
           .attr("xlink:href", function () {
             if (active[x] == 0) {
               return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU"
@@ -191,18 +198,18 @@ export default function Graph(props: IProps) {
 
     //The name labels for the datasets mentioned in the legend
     svg.selectAll()
-      .data(props && props.datalist)
+      .data(datalist)
       .enter()
       .append("text")
       .attr("x", 625)
       .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("fill", function (d) {
-        const x = props.datalist.indexOf(d)
-        return props.colourslist[x]
+        const x = datalist.indexOf(d)
+        return colourslist[x]
       })
       .text(function (d) {
-        const x = props.datalist.indexOf(d)
-        return "dataset" + props.IDList[x]
+        const x = datalist.indexOf(d)
+        return "dataset" + IDList[x]
       })
       .attr("text-anchor", "left")
       .style("alignment-baseline", "middle")
