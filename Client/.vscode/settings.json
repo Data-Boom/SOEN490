@@ -7,7 +7,7 @@
     },
     "autoimport.autoComplete": true,
     "autoimport.spaceBetweenBraces": true,
-    "autoimport.filesToScan": "/*.{ts,tsx,js,jsx}",
+    "autoimport.filesToScan": "**/*.{ts,tsx,js,jsx}",
     "editor.formatOnSave": true,
     "problems.autoReveal": true,
     "problems.decorations.enabled": true,
