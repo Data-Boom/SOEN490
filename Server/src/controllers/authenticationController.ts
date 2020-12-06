@@ -32,7 +32,6 @@ export class AuthenticationController {
             else {
                 signUpInfo.isAdmin = request.query.isAdmin as any;
             }
-
             this.callServiceForSignUp(signUpInfo, response);
         }
     }

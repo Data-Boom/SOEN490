@@ -1,34 +1,26 @@
-import { Connection, getConnection } from 'typeorm';
+import { getConnection } from 'typeorm';
 
 import { Accounts } from './entities/Accounts'
+import { ISignUpInformation } from '../genericInterfaces/SignUpInterface'
 
-interface ISignUpInformation {
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    dateOfBirth: Date,
-    organizationName: string,
-    admin: string
-}
 
 export class AuthenticationModel {
     constructor() {
     }
 
-    static async insertSignUpInformation(email: string, password: string, firstName: string, lastName: string, dateOfBirth: Date, organizationName: string, isAdmin: boolean) {
+    static async insertSignUpInformation(signUpInfo: ISignUpInformation) {
 
         let connection = getConnection();
 
         let signUpInformation = new Accounts();
         signUpInformation.id;
-        signUpInformation.email = email;
-        signUpInformation.password = password;
-        signUpInformation.firstName = firstName;
-        signUpInformation.lastName = lastName;
-        signUpInformation.dateOfBirth = dateOfBirth;
-        signUpInformation.organizationName = organizationName;
-        signUpInformation.admin = isAdmin;
+        signUpInformation.email = signUpInfo.email;
+        signUpInformation.password = signUpInfo.password;
+        signUpInformation.firstName = signUpInfo.firstName;
+        signUpInformation.lastName = signUpInfo.lastName;
+        signUpInformation.dateOfBirth = signUpInfo.dateOfBirth;
+        signUpInformation.organizationName = signUpInfo.organizationName;
+        signUpInformation.admin = signUpInfo.isAdmin;
         await connection.manager.save(signUpInformation);
     }
 

@@ -17,12 +17,12 @@ export class AuthenticationService {
 
     async processSignUp(SignUpInformation: ISignUpInformation): Promise<IResponse> {
 
-        let email: any;
+        let email: boolean;
         try {
             email = await AuthenticationModel.verifyIfEmailExists(SignUpInformation.email);
             if (!email) {
-                let password = await this.hashPassword(SignUpInformation.password)
-                await AuthenticationModel.insertSignUpInformation(SignUpInformation.email, password, SignUpInformation.firstName, SignUpInformation.lastName, SignUpInformation.dateOfBirth, SignUpInformation.organizationName, SignUpInformation.isAdmin);
+                SignUpInformation.password = await this.hashPassword(SignUpInformation.password)
+                await AuthenticationModel.insertSignUpInformation(SignUpInformation);
             }
             else throw new Error();
 
