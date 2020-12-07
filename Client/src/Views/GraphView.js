@@ -33,7 +33,7 @@ export default function GraphView() {
   const deleteDataset = () => {
 
     if (datalist.length != 0) {
-      var x = document.getElementById("datasets").value;
+      var x = document.getElementById("datasets").value
       const datalistDemo = []
       const colourlistDemo = []
       const IDlistDemo = []
@@ -56,10 +56,10 @@ export default function GraphView() {
   const loadOptionsList = (d, id) => {
     var text = "<label for=\"cars\">Choose a Dataset to Delete:</label><br><select name=\"dataset\" id=\"datasets\">"
     for (var i = 0; i < d.length; i++) {
-      text += "<option value=" + i + ">Dataset" + id[i] + "</option><br>";
+      text += "<option value=" + i + ">Dataset" + id[i] + "</option><br>"
     }
-    text += "</select><br>";
-    document.getElementById("options").innerHTML = text;
+    text += "</select><br>"
+    document.getElementById("options").innerHTML = text
   }
 
   return (
@@ -92,5 +92,5 @@ export default function GraphView() {
 
       </Box>
     </>
-  );
+  )
 }
