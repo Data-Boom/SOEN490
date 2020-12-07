@@ -25,6 +25,7 @@ export default function DataCell() {
             method: 'POST',
             body: formData,
         };
+
         await fetch('http://localhost:4000/dataupload', options)
             .then(resp => resp.json())
             .then(result => {
@@ -35,7 +36,7 @@ export default function DataCell() {
     return (
         <Container>
             <Box border={30} p={4} borderColor="primary">
-                <form onSubmit={handleSubmit}>
+                <form id="formSubmit" onSubmit={handleSubmit}>
                     <img src={require('./uploadimage.png')} alt="Visual of clouds"></img>
                     <div>
                         <input type="file" id="file" accept=".json" />

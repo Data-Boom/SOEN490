@@ -27,6 +27,7 @@ export default function GraphView() {
     setDatalist(datalistDemo)
     setIDList(["0", "1", "2", "3"])
     setColourslist(["#3632ff", "#f20b34", "#7af684", "#000000"])
+    console.log('handleRequest Test')
     loadOptionsList(datalistDemo, ["0", "1", "2", "3"])
   }
 
@@ -49,8 +50,8 @@ export default function GraphView() {
       setColourslist(colourlistDemo)
       setDatalist(datalistDemo)
       loadOptionsList(datalistDemo, IDlistDemo)
+      console.log('deleteDataset Test')
     }
-
   }
 
   const loadOptionsList = (d, id) => {
@@ -58,15 +59,16 @@ export default function GraphView() {
     for (var i = 0; i < d.length; i++) {
       text += "<option value=" + i + ">Dataset" + id[i] + "</option><br>"
     }
-    text += "</select><br>"
-    document.getElementById("options").innerHTML = text
+    text += "</select><br>";
+    document.getElementById("options").innerHTML = text;
+    console.log('loadOptionsList Test')
   }
 
   return (
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <h2>GraphView</h2>
-      <Button onClick={handleRequest} color="primary">Load random dataset button</Button>
+      <Button id='handleRequest' onClick={handleRequest.bind()} color="primary">Load random dataset button</Button>
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={5} >
@@ -89,7 +91,6 @@ export default function GraphView() {
           </div>
         </form>
         <Button id='delete-dataset-btn' onClick={deleteDataset}>Delete dataset</Button>
-
       </Box>
     </>
   )
