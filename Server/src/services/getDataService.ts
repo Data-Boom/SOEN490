@@ -1,13 +1,18 @@
 import {
-    getDataFromDataset, getDataFromMaterial, getDataFromMaterialYearAuthorSubcategory,
-    getDataFromMaterialYearAuthorCategory, getDataFromMaterialYearAuthor, getDataFromMaterialYearSubcategory,
-    getDataFromMaterialAuthorSubcategory, getDataFromMaterialYear, getDataFromMaterialSubcategory,
-    getDataFromMaterialAuthor, getDataFromMaterialYearCategory, getDataFromMaterialAuthorCategory,
-    getDataFromMaterialCategory, getDataFromYearCategory, getDataFromYearSubcategory, getDataFromYearAuthor,
-    getDataFromYearAuthorCategory, getDataFromYearAuthorSubcategory, getDataFromYear,
-    getDataFromAuthorSubcategory, getDataFromAuthorCategory, getDataFromAuthor,
+    getDataFromMaterialYearAuthorSubcategory, getDataFromMaterialYearAuthorCategory,
+    getDataFromMaterialYearAuthor, getDataFromMaterialYearSubcategory, getDataFromMaterialYearCategory,
+    getDataFromMaterialAuthorSubcategory, getDataFromMaterialAuthorCategory,
+    getDataFromYearAuthorSubcategory, getDataFromYearAuthorCategory
+} from "../models/SelectQueryMultipleTerm";
+import {
+    getDataFromDataset, getDataFromMaterial, getDataFromYear, getDataFromAuthor,
     getDataFromSubcategory, getDataFromCategory
-} from '../models/SelectQueryDatabase';
+} from "../models/SelectQuerySingleTerm";
+import {
+    getDataFromMaterialYear, getDataFromMaterialAuthor, getDataFromMaterialSubcategory,
+    getDataFromMaterialCategory, getDataFromYearAuthor, getDataFromYearSubcategory,
+    getDataFromYearCategory, getDataFromAuthorSubcategory, getDataFromAuthorCategory
+} from "../models/SelectQueryTwoTerm";
 
 interface IDataRequestModel {
     datasetId: number
