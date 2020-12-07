@@ -30,19 +30,21 @@ export default function NavigationMenu() {
   const classes = useStyles()
   const handleDrawerOpen = () => {
     setOpen(true);
+    console.log("openDrawer Test")
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    console.log("closeDrawer Test")
   };
 
-  const renderNavLink = (route, title, icon) => {
+  const renderNavLink = (route, title, icon, navID = null) => {
     return (
       <ListItem button>
         <ListItemIcon>
           {icon}
         </ListItemIcon>
-        <NavLink exact to={route}>
+        <NavLink exact to={route} id={navID} >
           {title}
         </NavLink>
       </ListItem>
@@ -55,14 +57,14 @@ export default function NavigationMenu() {
         paper: classes.drawerPaper,
       }}>
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton id='Close' onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
         <List>
           {renderNavLink(homeRoute, "Home", <HomeIcon />)}
-          {renderNavLink(graphRoute, "Graph", <BarChartIcon />)}
+          {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
           {renderNavLink(searchRoute, "Search", <SearchIcon />)}
           {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
         </List>
@@ -77,7 +79,7 @@ export default function NavigationMenu() {
           <Toolbar>
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
                   <MenuIcon />
                 </IconButton>
               </Grid>

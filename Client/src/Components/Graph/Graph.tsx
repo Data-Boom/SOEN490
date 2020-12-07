@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Button } from "@material-ui/core"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
@@ -37,10 +37,12 @@ export default function Graph(props: IProps) {
 
   const handleXScaleClick = () => {
     setXToggle(!isXLog)
+    console.log('Changed X: ' + isXLog)
   }
 
   const handleYScaleClick = () => {
     setYToggle(!isYLog)
+    console.log('Changed Y: ' + isYLog)
   }
 
   let active = [null, null, null, null]
@@ -58,7 +60,7 @@ export default function Graph(props: IProps) {
     return scale.range([rangeTo, rangeFrom]).nice()
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     //cleans up all the points from the graph
     d3.select(ref.current).selectAll("*").remove()
     //This part creates the canvas for our graph
@@ -242,8 +244,8 @@ export default function Graph(props: IProps) {
         id='graph'
       />
       <div>
-        <Button onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-        <Button onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+        <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+        <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
       </div>
     </>
   )
