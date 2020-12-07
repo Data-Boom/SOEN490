@@ -1,18 +1,13 @@
-import { EntityManager, getConnection } from "typeorm";
-import { Publications } from './entities/Publications';
-import { Publisher } from './entities/Publisher';
-import { Publicationtype } from './entities/Publicationtype';
+import { getConnection } from "typeorm";
+import { Publications, selectPublicationsQuery } from './entities/Publications';
 import { Composition } from './entities/Composition';
-import { Datasetdatatype } from './entities/Datasetdatatype';
-import { Dataset } from './entities/Dataset';
+import { Dataset, selectDatasetsQuery } from './entities/Dataset';
 import { Category } from './entities/Category';
 import { Subcategory } from './entities/Subcategory';
-import { Datapoints } from './entities/Datapoints';
-import { Units } from './entities/Units';
-import { Material } from './entities/Material';
-import { Datapointcomments } from './entities/Datapointcomments';
-import { Representations } from './entities/Representations';
-
+import { selectDataPointsQuery } from './entities/Datapoints';
+import { selectMaterialQuery, selectMaterialBasedOnSingleMateriarlQuery } from './entities/Material';
+import { selectDataPointCommentsQuery } from './entities/Datapointcomments';
+import { selectAuthorsQuery, selectAuthorBasedOnSingleAuthorQuery } from "./entities/Authors";
 
 interface IPublicationModel {
     publication_name: string
@@ -79,68 +74,6 @@ interface IDatasetResponseModel {
 //         return this.andWhere('dataset.id = :datasetId', { datasetId: id })
 //     }
 // }
-
-const selectPublicationsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Publications, 'publication')
-        .select('publication.name', 'publication_name')
-        .addSelect('dataset.id', 'dataset_id')
-        .addSelect('publication.doi', 'publication_doi')
-        .addSelect('publication.pages', 'publication_pages')
-        .addSelect('publication.volume', 'publication_volume')
-        .addSelect('publication.year', 'publication_year')
-        .addSelect('publication.datePublished', 'publication_datePublished')
-        .addSelect('publication.dateAccessed', 'publication_dateAccessed')
-        .addSelect('publisher.name', 'publisher_name')
-        .addSelect('publicationtype.name', 'publicationtype_name')
-        .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
-        .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
-        .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
-
-const selectAuthorsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Publications, 'publication')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('publication.authors', 'author')
-        .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
-
-const selectDatasetsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
-        .select('dataset.name', 'dataset_name')
-        .addSelect('dataset.id', 'dataset_id')
-        .addSelect('datasetdatatype.name', 'datasetdatatype_name')
-        .addSelect('category.name', 'category_name')
-        .addSelect('subcategory.name', 'subcategory_name')
-        .addSelect('dataset.comments', 'dataset_comments')
-        .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
-        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
-        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-
-const selectMaterialQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Material, 'material')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
-        .innerJoin('material.datasets', 'dataset')
-
-const selectDataPointsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Datapoints, 'datapoints')
-        .select('datapoints.name', 'datapoints_name')
-        .addSelect('datapoints.values', 'datapoints_values')
-        .addSelect('units.units', 'units_units')
-        .addSelect('representations.repr', 'representations_repr')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
-        .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')
-        .innerJoin(Dataset, 'dataset', 'datapoints.datasetId = dataset.id')
-
-const selectDataPointCommentsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Datapointcomments, 'datapointcomments')
-        .select('datapointcomments.comments', 'datapointcomments_comments')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Dataset, 'dataset', 'datapointcomments.datasetId = dataset.id')
 
 export const getDataFromDataset = async (dataset: number): Promise<IDatasetResponseModel> => {
     const connection = getConnection();
@@ -248,13 +181,7 @@ export const getDataFromMaterial = async (material: string): Promise<IDatasetRes
     }
 
     //Use data set IDs to get all materials of those data sets
-    let materialMaterialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialMaterialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .whereInIds(materialIds)
         .getRawMany();
     console.log(materialMaterialData);
@@ -335,14 +262,7 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
@@ -389,13 +309,7 @@ export const getDataFromMaterialYearAuthorSubcategory = async (material: string,
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
@@ -502,14 +416,7 @@ export const getDataFromMaterialYearAuthorCategory = async (material: string, ye
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .whereInIds(authorIds)
@@ -553,13 +460,7 @@ export const getDataFromMaterialYearAuthorCategory = async (material: string, ye
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
@@ -658,14 +559,7 @@ export const getDataFromMaterialYearAuthor = async (material: string, year: numb
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .whereInIds(authorIds)
         .andWhere("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
@@ -706,13 +600,7 @@ export const getDataFromMaterialYearAuthor = async (material: string, year: numb
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .whereInIds(materialIds)
@@ -833,13 +721,7 @@ export const getDataFromMaterialYearSubcategory = async (material: string, year:
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
@@ -957,13 +839,7 @@ export const getDataFromMaterialYearCategory = async (material: string, year: nu
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .whereInIds(materialIds)
@@ -1070,13 +946,7 @@ export const getDataFromMaterialYear = async (material: string, year: number): P
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .whereInIds(materialIds)
         .andWhere('publication.year = :yearRef', { yearRef: year })
@@ -1160,14 +1030,7 @@ export const getDataFromMaterialAuthorCategory = async (material: string, firstN
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .whereInIds(authorIds)
@@ -1209,13 +1072,7 @@ export const getDataFromMaterialAuthorCategory = async (material: string, firstN
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
@@ -1314,14 +1171,7 @@ export const getDataFromMaterialAuthorSubcategory = async (material: string, fir
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
@@ -1366,13 +1216,7 @@ export const getDataFromMaterialAuthorSubcategory = async (material: string, fir
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
@@ -1473,14 +1317,7 @@ export const getDataFromMaterialAuthor = async (material: string, firstName: str
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin('dataset.materials', 'material')
         .whereInIds(authorIds)
         .andWhere("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
@@ -1519,13 +1356,7 @@ export const getDataFromMaterialAuthor = async (material: string, firstName: str
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .whereInIds(materialIds)
@@ -1639,13 +1470,7 @@ export const getDataFromMaterialSubcategory = async (material: string, category:
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .whereInIds(materialIds)
@@ -1753,13 +1578,7 @@ export const getDataFromMaterialCategory = async (material: string, category: nu
 
     console.log("Got data set IDs for material");
     //Use data set IDs to get all materials of those data sets
-    let materialData: IMaterialModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin('dataset.materials', 'material')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+    let materialData: IMaterialModel[] = await selectMaterialBasedOnSingleMateriarlQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .whereInIds(materialIds)
         .andWhere('category.id = :categoryId', { categoryId: category })
@@ -1839,14 +1658,7 @@ export const getDataFromYearAuthorSubcategory = async (year: number, firstName: 
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .whereInIds(authorIds)
@@ -1963,14 +1775,7 @@ export const getDataFromYearAuthorCategory = async (year: number, firstName: str
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .whereInIds(authorIds)
         .andWhere('publication.year = :yearRef', { yearRef: year })
@@ -2076,14 +1881,7 @@ export const getDataFromYearAuthor = async (year: number, firstName: string, las
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .whereInIds(authorIds)
         .andWhere('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
@@ -2392,14 +2190,7 @@ export const getDataFromAuthorSubcategory = async (firstName: string, lastName: 
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .whereInIds(authorIds)
@@ -2510,14 +2301,7 @@ export const getDataFromAuthorCategory = async (firstName: string, lastName: str
 
     console.log("Got data set IDs for author");
     //Use data set IDs to get all authors of those data sets
-    let authorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .whereInIds(authorIds)
         .andWhere('category.id = :categoryId', { categoryId: category })
@@ -2616,14 +2400,7 @@ export const getDataFromAuthor = async (firstName: string, lastName: string): Pr
     }
 
     //Use data set IDs to get all authors of those data sets
-    let authorAuthorData: IAuthorModel[] = await connection.manager
-        .createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin('publication.authors', 'author')
+    let authorAuthorData: IAuthorModel[] = await selectAuthorBasedOnSingleAuthorQuery(connection.manager)
         .whereInIds(authorIds)
         .getRawMany();
     console.log(authorAuthorData);

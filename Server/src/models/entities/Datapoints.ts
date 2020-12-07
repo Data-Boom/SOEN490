@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, EntityManager } from "typeorm";
 import { Dataset } from "./Dataset";
 import { Representations } from "./Representations";
 import { Units } from "./Units";
@@ -60,3 +60,14 @@ export class Datapoints {
     @UpdateDateColumn()
     updated: Date
 }
+
+export const selectDataPointsQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Datapoints, 'datapoints')
+        .select('datapoints.name', 'datapoints_name')
+        .addSelect('datapoints.values', 'datapoints_values')
+        .addSelect('units.units', 'units_units')
+        .addSelect('representations.repr', 'representations_repr')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
+        .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')
+        .innerJoin(Dataset, 'dataset', 'datapoints.datasetId = dataset.id')

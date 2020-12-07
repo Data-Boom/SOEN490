@@ -1,7 +1,8 @@
 import { Authors } from './Authors';
 import { Publicationtype } from './Publicationtype';
 import { Publisher } from './Publisher';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
+import { Dataset } from './Dataset';
 
 
 /**
@@ -77,3 +78,19 @@ export class Publications {
     @JoinTable()
     authors: Authors[];
 }
+
+export const selectPublicationsQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Publications, 'publication')
+        .select('publication.name', 'publication_name')
+        .addSelect('dataset.id', 'dataset_id')
+        .addSelect('publication.doi', 'publication_doi')
+        .addSelect('publication.pages', 'publication_pages')
+        .addSelect('publication.volume', 'publication_volume')
+        .addSelect('publication.year', 'publication_year')
+        .addSelect('publication.datePublished', 'publication_datePublished')
+        .addSelect('publication.dateAccessed', 'publication_dateAccessed')
+        .addSelect('publisher.name', 'publisher_name')
+        .addSelect('publicationtype.name', 'publicationtype_name')
+        .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
+        .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
+        .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')

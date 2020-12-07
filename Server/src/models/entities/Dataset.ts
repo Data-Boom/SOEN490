@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
@@ -78,3 +78,15 @@ export class Dataset {
     @UpdateDateColumn()
     updated: Date
 }
+
+export const selectDatasetsQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.name', 'dataset_name')
+        .addSelect('dataset.id', 'dataset_id')
+        .addSelect('datasetdatatype.name', 'datasetdatatype_name')
+        .addSelect('category.name', 'category_name')
+        .addSelect('subcategory.name', 'subcategory_name')
+        .addSelect('dataset.comments', 'dataset_comments')
+        .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')

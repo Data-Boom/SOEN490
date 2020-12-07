@@ -1,5 +1,6 @@
 import { Publications } from './Publications';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, EntityManager } from "typeorm";
+import { Dataset } from './Dataset';
 
 
 /**
@@ -37,3 +38,21 @@ export class Authors {
     @ManyToMany(type => Publications, publication => publication.authors)
     publications: Publications[];
 }
+
+export const selectAuthorsQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Publications, 'publication')
+        .select('author.firstName', 'author_firstName')
+        .addSelect('author.lastName', 'author_lastName')
+        .addSelect('author.middleName', 'author_middleName')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin('publication.authors', 'author')
+        .innerJoin(Dataset, 'dataset', 'publication.id = dataset.publicationId')
+
+export const selectAuthorBasedOnSingleAuthorQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('author.firstName', 'author_firstName')
+        .addSelect('author.lastName', 'author_lastName')
+        .addSelect('author.middleName', 'author_middleName')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('publication.authors', 'author')
