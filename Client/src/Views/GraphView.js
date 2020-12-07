@@ -90,8 +90,7 @@ export default function GraphView() {
           <div id="options">
           </div>
         </form>
-        <Button id='deleteDataset' onClick={deleteDataset.bind()}>Delete dataset</Button>
-
+        <Button id='delete-dataset-btn' onClick={deleteDataset}>Delete dataset</Button>
       </Box>
     </>
   )
