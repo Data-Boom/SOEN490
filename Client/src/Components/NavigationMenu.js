@@ -38,13 +38,13 @@ export default function NavigationMenu() {
     console.log("closeDrawer Test")
   };
 
-  const renderNavLink = (route, title, icon) => {
+  const renderNavLink = (route, title, icon, navID = null) => {
     return (
       <ListItem button>
         <ListItemIcon>
           {icon}
         </ListItemIcon>
-        <NavLink exact to={route}>
+        <NavLink exact to={route} id={navID} >
           {title}
         </NavLink>
       </ListItem>
@@ -64,7 +64,7 @@ export default function NavigationMenu() {
         <Divider />
         <List>
           {renderNavLink(homeRoute, "Home", <HomeIcon />)}
-          {renderNavLink(graphRoute, "Graph", <BarChartIcon />)}
+          {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
           {renderNavLink(searchRoute, "Search", <SearchIcon />)}
           {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
         </List>
