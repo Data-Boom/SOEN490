@@ -1,380 +1,132 @@
-
-//Running and installing [npm i jsonschema] is required for this page to work
-//More details and examples about json schema validator can be found at:
-// https://github.com/tdegrunt/jsonschema#readme
-
-import { json } from "express";
 const fileSystem = require('fs');
-const uploadModel = require('../models/DataUploadModel');
-//const jsValidator= require('../services/validationSchema');
+import { DataUploadModel } from '../models/DataUploadModel'
 
-var Validator = require('jsonschema').Validator;
-var v = new Validator();
-
-var schema = {
-  "id": "/baseSchema",
-  "type": "object",
-  "properties": {
-    "reference": {
-      "$ref": "/referenceSchema"
-    },
-    "datasetName": { "type": "string" },
-    "material": {
-      "$ref": "/materialSchema"
-    },
-    "category": { "type": "string" },
-    "subcategory": { "type": "string" },
-    "data": {
-      "$ref": "/dataSchema"
-    }
-
-  },
-  "required": ["reference", "datasetName", "material", "data"]
-
-};
-
-var referenceSchema = {
-  "id": "/referenceSchema",
-  "type": "object",
-  "properties": {
-    "type": { "type": "string" },
-    "publisher": { "type": "string" },
-    "authors": {
-      "$ref": "/authorsSchema"
-    },
-    "title": { "type": "string" },
-    "volume": { "type": "integer" },
-    "pages": { "type": "integer" },
-    "year": { "type": "integer" }
-  },
-  "required": ["authors"]
-};
-
-var materialSchema = {
-  "id": "/materialSchema",
-  "type": "array",
-  "items": {
-    "$ref": "/m2Schema"
-  }
-};
-
-var m2schema = {
-  "id": "/m2Schema",
-  "type": "object",
-  "properties": {
-    "composition": { "type": "string" },
-    "details": { "type": "string" }
-  },
-  "required": ["composition", "details"]
-};
-
-var dataSchema = {
-  "id": "/dataSchema",
-  "type": "object",
-  "properties": {
-    "variables": {
-      "$ref": "/variableSchema"
-    },
-    "contents": {
-      "$ref": "/contentsSchema"
-    },
-    "comments": { "type": "string" }
-  }
-};
-
-var variableSchema = {
-  "id": "/variableSchema",
-  "type": "array",
-  "properties": {
-    "$ref": "/v2Schema"
-  }
-};
-
-var v2Schema = {
-  "id": "/v2Schema",
-  "type": "object",
-  "properties": {
-    "name": { "type": "string" },
-    "repr": { "type": "string" },
-    "units": { "type": "string" }
-  },
-  "required": ["name", "repr", "units"]
-};
-
-var contentsSchema = {
-  "id": "/contentsSchema",
-  "type": "array",
-  "properties": {
-    "$ref": "/c2Schema"
-  }
-};
-
-var c2Schema = {
-  "id": "/c2Schema",
-  "type": "object",
-  "properties": {
-    "points": {
-      "type": "array",
-      "items": { "type": "number" },
-    },
-    "comments": { "type": "string" }
-  },
-  "required": ["points"]
-};
+import { IMaterials } from '../models/interfaces/MaterialsInterface';
+import { IAuthors } from '../models/interfaces/AuthorsInterface';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
  * then stored into its appropriate table in the database. 
  */
 
-const processUpload = async (filePathOfJson) => {
-  let response = jsonUpload(filePathOfJson);
-  return response;
-}
+export class fileUploadService {
+  protected inputFile: string;
+  private uploadModel: DataUploadModel
 
-const jsonUpload = async (filePathOfJson) => {
-
-  let category = '';
-  let subcategory = '';
-  let dataSetName = '';
-  let dataType = '';
-  let dataSetComments = '';
-  let individualDataSetComments = [];
-  let material = [];
-  let referenceType = '';
-  let referencePublisher: string = '';
-  let referenceTitle = 'hello';
-  let referenceAuthors = [];
-  let referenceYear;
-  let referencePages;
-  let referenceVolume;
-  let referenceTypeID = '';
-  let publisherNameId = '';
-  let publicationID = '';
-  let dataSetDataTypeID = '';
-  let datasetID = '';
-  let unitsID = '';
-  let reprID = '';
-
-  //to run validation of the json file outline
-  v.addSchema(referenceSchema, '/referenceSchema');
-  v.addSchema(materialSchema, '/materialSchema');
-  v.addSchema(m2schema, '/m2schema');
-  v.addSchema(dataSchema, '/dataSchema');
-  v.addSchema(variableSchema, '/variableSchema');
-  v.addSchema(v2Schema, '/v2Schema');
-  v.addSchema(contentsSchema, '/contentsSchema');
-  v.addSchema(c2Schema, '/c2Schema');
-
-  console.log(v.validate((fileSystem.readFileSync(filePathOfJson)), schema));
-
-  let jsonObj = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
-
-  //checks and validates if reference type is a string and handles error--
-  referenceType = checkReferenceType(jsonObj.reference.type);
-
-  let referenceTypeValidation = stringValidation(referenceType);
-  if (referenceTypeValidation === false)
-    return referenceTypeValidation + " reference type should be a string";
-
-  try {
-    referenceTypeID = await uploadModel.insertReferenceType(referenceType);
-    console.log('Received reference ID' + referenceTypeID);
-  } catch (err) {
-    console.log('rejected request for referenceTypeID');
+  constructor(inputFile: string) {
+    this.inputFile = inputFile;
   }
 
-  //checks and validates if reference publisher is a string and handles error--
-  referencePublisher = jsonObj.reference.publisher;
+  async processUpload(): Promise<string> {
 
-  let referencePublisherValidation = stringValidation(referencePublisher);
-  if (referencePublisherValidation === false)
-    return referencePublisherValidation + " reference publisher should be a string";
-  try {
-    publisherNameId = await uploadModel.insertPublisher(referencePublisher);
-    console.log('Received publisher name ID' + publisherNameId);
-  } catch (err) {
-    console.log('rejected request for inserting publisherNameId')
+    let response = await this.jsonUpload(this.inputFile);
+    return response;
   }
 
-  //checks and validates if ref authors are strings and handles error--
-  referenceAuthors = jsonObj.reference.authors;
+  private async jsonUpload(filePathOfJson: string): Promise<string> {
 
-  arrTypeValidationCheck(referenceAuthors, 'string');
-  try {
-    await uploadModel.insertAuthors(referenceAuthors);
-    console.log('reference authors: ' + referenceAuthors);
-  } catch (err) {
-    console.log('reference authors not found....request rejected');
-  }
+    // Category & sub-category still need to be handled - After there is a solution for duplicate DB key
+    // The values need to be added in the JSON file, parsed then inserted
+    let category: string = '';
+    let subcategory: string = '';
+    let dataSetName: string = '';
+    let dataType: string = '';
+    let dataSetComments: string = '';
+    let individualDataSetComments: string[] = [];
+    let material: IMaterials[] = [];
+    let referenceType: string = '';
+    let referencePublisher: string = '';
+    let referenceTitle: string = '';
+    let referenceAuthors: IAuthors[] = [];
+    let referenceYear: number;
+    let referencePages: number;
+    let referenceVolume: number;
 
-  referenceTitle = jsonObj.reference.title;
-  //check and validates if reference title is a string
-  let referenceTitleValidation = stringValidation(referenceTitle);
-  if (referenceTitleValidation === false)
-    return referenceTitleValidation + " reference title should be a string";
+    let jsonObj: any = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
 
-  referencePages = jsonObj.reference.pages;
-  //check and validates if reference pages is a number 
-  let referencePagesValidation = numberValidation(referencePages);
-  if (referencePagesValidation === false) {
-    return referencePagesValidation + " reference pages should be a number";
-  }
-  referenceYear = jsonObj.reference.year;
-  //check and validates if reference year is a number 
-  let referenceYearVlidation = numberValidation(referenceYear);
-  if (referenceYearVlidation === false)
-    return referenceYearVlidation + " reference year should be a number";
+    // Create this object after the parsing passes
+    this.uploadModel = new DataUploadModel();
 
-  referenceVolume = jsonObj.reference.volume;
-  //check and validates if reference volume is a number 
-  let referenceVolumeVlidation = numberValidation(referenceVolume);
-  if (referenceVolumeVlidation === false)
-    return referenceVolumeVlidation + " reference volume should be a number";
+    // Add Checks for these values
+    referenceType = this.checkReferenceType(jsonObj.reference.type);
+    let referenceTypeID: number = await this.uploadModel.insertReferenceType(referenceType);
 
-  try {
-    publicationID = await uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
-    console.log('received publicationID ' + publicationID);
-  }
-  catch (err) {
-    console.log('publicationID was not received......rejecting request');
-  }
+    referencePublisher = jsonObj.reference.publisher;
+    let publisherNameId: number = await this.uploadModel.insertPublisher(referencePublisher);
 
-  //check and validates if material array index contents are of string
-  material = jsonObj.material;
-  arrTypeValidationCheck(material, 'string');
-  try {
-    await uploadModel.insertMaterial(material);
-    console.log('received material' + material);
-  } catch (err) {
-    console.log('material not found');
-  }
+    referenceAuthors = jsonObj.reference.authors;
 
-  // category = jsonObj.category;
-  // subcategory = jsonObj.subcategory;
-  // let categoryIDs = await uploadModel.insertCategories(category, subcategory);
 
-  dataType = jsonObj["data type"];
-  try {
-    dataSetDataTypeID = await uploadModel.insertDataSetDataType(dataType)
-    console.log('Received datasetTypeID: ' + dataSetDataTypeID);
-  } catch (err) {
-    console.log('error receiving datasetTypeID....request rejected');
-  }
+    await this.uploadModel.insertAuthors(referenceAuthors);
 
-  dataSetName = jsonObj["dataset name"];
-  dataSetComments = jsonObj.data.comments;
-  try {
-    datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID,/** categoryIDs, */ material, dataSetComments)
-    console.log('DatasetID received: ' + datasetID);
-  } catch (err) {
-    console.log('error receiving datasetID....request rejected');
-  }
+    referenceTitle = jsonObj.reference.title;
+    referencePages = jsonObj.reference.pages;
+    referenceYear = jsonObj.reference.year;
+    referenceVolume = jsonObj.reference.volume;
+    let publicationID: number = await this.uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
 
-  //run check on variable vs contents length to see if they're equal
-  if (jsonObj.data.variables.length == jsonObj.data.contents.point.length) {
-    console.log("variable and content lengths are equal....proceed")
-  } else {
-    console.error('variable and content lengths dont match');
-  }
+    material = jsonObj.material;
+    await this.uploadModel.insertMaterial(material);
 
-  for (var i = 0; i < jsonObj.data.variables.length; i++) {
+    // TODO: DB crashes with duplicate key error on every entry with category & subcategory added in the file upload.
+    // Once there is an implemented solution of upsert in the project this should be uncommented and tested.
 
-    let dataPointValues = getDataInformationFromContentsArray(jsonObj.data.contents, i);
+    // category = jsonObj.category;
+    // subcategory = jsonObj.subcategory;
+    // let categoryIDs = await uploadModel.insertCategories(category, subcategory);
 
-    let dataVariableName = jsonObj.data.variables[i].name;
-    let units = jsonObj.data.variables[i].units;
-    let repr = jsonObj.data.variables[i].repr;
+    dataType = jsonObj["data type"];
+    let dataSetDataTypeID: number = await this.uploadModel.insertDataSetDataType(dataType)
 
-    try {
-      unitsID = await uploadModel.insertUnits(units);
-      console.log('added units id: ' + unitsID);
-      reprID = await uploadModel.insertRepresentation(repr);
-      console.log('added rep id: ' + reprID);
-    } catch (err) {
-      console.log('could not find units and representation ID....request rejected');
+    dataSetName = jsonObj["dataset name"];
+    dataSetComments = jsonObj.data.comments;
+    let datasetID: number = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID,/** categoryIDs, */ material, dataSetComments)
+
+    for (let i = 0; i < jsonObj.data.variables.length; i++) {
+
+      let dataPointValues: any[] = this.getDataInformationFromContentsArray(jsonObj.data.contents, i);
+      let dataVariableName: string = jsonObj.data.variables[i].name;
+      let units: string = jsonObj.data.variables[i].units;
+      let repr: string = jsonObj.data.variables[i].repr;
+
+      let unitsID: number = await this.uploadModel.insertUnits(units);
+      let reprID: number = await this.uploadModel.insertRepresentation(repr);
+      await this.uploadModel.insertDataPointsOfSet(datasetID, dataVariableName, dataPointValues[0], unitsID, reprID)
+      individualDataSetComments = dataPointValues[1];
     }
-    await uploadModel.insertDataPointsOfSet(datasetID, dataVariableName, dataPointValues[0], unitsID, reprID)
-    individualDataSetComments = dataPointValues[1];
+
+    await this.uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
+
+    return "Upload was successful!";
   }
-  //check and validate the individual data set comments array content are strings
-  arrTypeValidationCheck(individualDataSetComments, 'string');
 
-  await uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
+  private getDataInformationFromContentsArray(dataContentArray: any[], index: number): any[] {
 
-  return "Upload was successful!";
-}
+    let dataPointsForVariable: any = [];
+    let dataSetComments: string[] = [];
 
-const getDataInformationFromContentsArray = (dataContentArray, index) => {
-
-  let dataPointsForVariable = [];
-  let dataSetComments = [];
-
-  for (var i = 0; i < dataContentArray.length; i++) {
-    dataPointsForVariable.push(dataContentArray[i].point[index]);
-    dataSetComments.push(dataContentArray[i].comments);
+    for (var i = 0; i < dataContentArray.length; i++) {
+      dataPointsForVariable.push(dataContentArray[i].point[index]);
+      dataSetComments.push(dataContentArray[i].comments);
+    }
+    let contentsArrayInfo: any[] = [dataPointsForVariable, dataSetComments];
+    return contentsArrayInfo;
   }
-  //to check if the two helper arrays are empty or not
-  for (var j = 0; j < dataPointsForVariable.length; j++) {
-    if ((dataPointsForVariable == null || dataPointsForVariable[j] == '') ||
-      (dataSetComments == null || dataSetComments[j] == '')) {
-      console.log('dataset points are empty');
-    } else {
-      continue;
+
+  private checkReferenceType(someRefType: string): string {
+    let refType = '';
+    if (someRefType == "book") {
+      refType = "book";
+      return refType;
+    }
+    else if (someRefType == "magazine") {
+      refType = "magazine";
+      return refType;
+    }
+    else if (someRefType == "report") {
+      refType = "report";
+      return refType;
     }
   }
-  let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
-  return contentsArrayInfo;
-}
 
-const checkReferenceType = (someRefType) => {
-  let refType = '';
-  if (someRefType == "book") {
-    refType = "book";
-    return refType;
-  }
-  else if (someRefType == "magazine") {
-    refType = "magazine";
-    return refType;
-  }
-  else if (someRefType == "report") {
-    refType = "report";
-    return refType;
-  }
 }
-
-const isEmpty = (obj) => {
-  return Object.keys(obj).length === 0;
-}
-
-module.exports = {
-  processUpload
-}
-
-const stringValidation = (reference) => {
-  //basic if-else validation for checking referenceType input
-  if (typeof reference === 'string' && typeof reference != null) { //to check if the type is valid and not null
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-const numberValidation = (reference) => {
-  //basic if-else validation for checking referenceType input
-  if (typeof reference === 'number' && typeof reference != null) { //to check if the type is valid and not null
-    return true;
-  } else {
-    return false;
-  }
-}
-
-//Function to check the types of array objects
-const arrTypeValidationCheck = (x, type) => {
-  if (x.every(i => typeof (i) === type)) {
-    return true;
-  } else
-    return false;
-}
-
