@@ -24,7 +24,7 @@ describe('GraphView Component', () => {
         expect(spy).toBeCalledWith('loadOptionsList Test');
 
         // This second part of the test verifies the functionality of the deleteDataset function.
-        const button2 = wrapper.find('button#deleteDataset');
+        const button2 = wrapper.find('button#delete-dataset-btn');
         expect(button2.exists()).toEqual(true);
         button2.simulate('click');
         expect(spy).toBeCalledWith('deleteDataset Test');
