@@ -1,70 +1,17 @@
 import { getConnection } from "typeorm";
 import { Publications, selectPublicationsQuery } from './entities/Publications';
 import { Composition } from './entities/Composition';
-import { Dataset, selectDatasetsQuery } from './entities/Dataset';
+import { selectDatasetsQuery } from './entities/Dataset';
 import { Category } from './entities/Category';
 import { Subcategory } from './entities/Subcategory';
 import { selectDataPointsQuery } from './entities/Datapoints';
 import { selectMaterialQuery, selectMaterialBasedOnSingleMateriarlQuery } from './entities/Material';
 import { selectDataPointCommentsQuery } from './entities/Datapointcomments';
 import { selectAuthorsQuery, selectAuthorBasedOnSingleAuthorQuery } from "./entities/Authors";
-
-interface IPublicationModel {
-    publication_name: string
-    publication_doi: string
-    publication_pages: number
-    publication_volume: number
-    publication_year: number
-    publication_datePublished: Date
-    publication_dateAccessed: Date
-    dataset_id: number
-    publisher_name: string
-    publicationtype_name: string
-}
-
-interface IAuthorModel {
-    author_firstName: string
-    author_lastName: string
-    author_middleName: string
-    dataset_id: number
-}
-
-interface IDatasetModel {
-    dataset_id: string
-    dataset_name: string
-    dataset_comments: string
-    datasetdatatype_name: string
-    category_name: string
-    subcategory_name: string
-}
-
-interface IMaterialModel {
-    material_details: string
-    composition_name: string
-    dataset_id: number
-}
-
-interface IDataPointModel {
-    datapoints_name: string
-    datapoints_values: number[]
-    units_units: string
-    representations_repr: string
-    dataset_id: number
-}
-
-interface IDataPointCommentModel {
-    datapointcomments_comments: string[]
-    dataset_id: number
-}
-
-interface IDatasetResponseModel {
-    publications: IPublicationModel[]
-    authors: IAuthorModel[]
-    dataset: IDatasetModel[]
-    materials: IMaterialModel[]
-    dataPoints: IDataPointModel[]
-    dataPointComments: IDataPointCommentModel[]
-}
+import {
+    IAuthorModel, IDataPointCommentModel, IDataPointModel, IDatasetModel,
+    IDatasetResponseModel, IMaterialModel, IPublicationModel
+} from "./interfaces/DatasetResponseModelInterface";
 
 // TO-DO Dmitry was mentioning how more of the query building could be 
 // factored out into something more generic via chain of responsibility
