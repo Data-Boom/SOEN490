@@ -31,55 +31,59 @@ export const retrieveData = async (req) => {
         selectedDatasetIds = [datasetReceived];
     }
     else {
-        let materialRawData;
-        let yearRawData;
-        let authorRawData;
-        let categoryRawData;
-        let duplicateCheck = 0;
-        let materialDatasetIds = [];
-        let yearDatasetIds = [];
-        let authorDatasetIds = [];
-        let categoryDatasetIds = [];
-
-        // Check which variables were received and the data sets IDs linked to each variable
-        if (materialReceived != undefined) {
-            duplicateCheck++
-            materialRawData = await getDatasetIDFromMaterial(materialReceived);
-            for (let index = 0; index < materialRawData.length; index++) {
-                materialDatasetIds[index] = materialRawData[index].dataset_id;
-            }
-        }
-        if (yearReceived != undefined) {
-            duplicateCheck++
-            yearRawData = await getDatasetIDFromYear(yearReceived);
-            for (let index = 0; index < yearRawData.length; index++) {
-                yearDatasetIds[index] = yearRawData[index].dataset_id;
-            }
-        }
-        if (firstNameReceived != undefined && lastNameReceived != undefined) {
-            duplicateCheck++
-            authorRawData = await getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
-            for (let index = 0; index < authorRawData.length; index++) {
-                authorDatasetIds[index] = authorRawData[index].dataset_id;
-            }
-        }
-        if (categoryReceived != undefined) {
-            duplicateCheck++
-            if (subcategoryReceived != undefined) {
-                categoryRawData = await getDatasetIDFromSubcategory(categoryReceived, subcategoryReceived);
-            }
-            else {
-                categoryRawData = await getDatasetIDFromCategory(categoryReceived);
-            }
-            for (let index = 0; index < categoryRawData.length; index++) {
-                categoryDatasetIds[index] = categoryRawData[index].dataset_id;
-            }
-        }
-
-        selectedDatasetIds = await selectDatasetIds(duplicateCheck, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
+        selectedDatasetIds = await getDatasetIdsFromParams(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived)
     }
     setOfData = getDataFromDatasetIds(selectedDatasetIds)
     return setOfData;
+}
+
+export const getDatasetIdsFromParams = async (materialReceived: string, yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number) => {
+    let materialRawData;
+    let yearRawData;
+    let authorRawData;
+    let categoryRawData;
+    let duplicateCheck = 0;
+    let materialDatasetIds = [];
+    let yearDatasetIds = [];
+    let authorDatasetIds = [];
+    let categoryDatasetIds = [];
+
+    // Check which variables were received and the data sets IDs linked to each variable
+    if (materialReceived != undefined) {
+        duplicateCheck++
+        materialRawData = await getDatasetIDFromMaterial(materialReceived);
+        for (let index = 0; index < materialRawData.length; index++) {
+            materialDatasetIds[index] = materialRawData[index].dataset_id;
+        }
+    }
+    if (yearReceived != undefined) {
+        duplicateCheck++
+        yearRawData = await getDatasetIDFromYear(yearReceived);
+        for (let index = 0; index < yearRawData.length; index++) {
+            yearDatasetIds[index] = yearRawData[index].dataset_id;
+        }
+    }
+    if (firstNameReceived != undefined && lastNameReceived != undefined) {
+        duplicateCheck++
+        authorRawData = await getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
+        for (let index = 0; index < authorRawData.length; index++) {
+            authorDatasetIds[index] = authorRawData[index].dataset_id;
+        }
+    }
+    if (categoryReceived != undefined) {
+        duplicateCheck++
+        if (subcategoryReceived != undefined) {
+            categoryRawData = await getDatasetIDFromSubcategory(categoryReceived, subcategoryReceived);
+        }
+        else {
+            categoryRawData = await getDatasetIDFromCategory(categoryReceived);
+        }
+        for (let index = 0; index < categoryRawData.length; index++) {
+            categoryDatasetIds[index] = categoryRawData[index].dataset_id;
+        }
+    }
+    let selectedDatasetIds = await selectDatasetIds(duplicateCheck, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
+    return selectedDatasetIds
 }
 
 export const selectDatasetIds = async (duplicateCheck: number, materialDatasetIds: any[], yearDatasetIds: any[], authorDatasetIds: any[], categoryDatasetIds: any[]) => {
