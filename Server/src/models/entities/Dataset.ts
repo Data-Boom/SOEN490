@@ -82,10 +82,8 @@ export class Dataset {
 export const selectDatasetIdsQuery = (manager: EntityManager) =>
     manager.createQueryBuilder(Dataset, 'dataset')
         .select('dataset.id', 'dataset_id')
-        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
-        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
 
-export const selectDatasetsQuery = (manager: EntityManager, idArray: any[]) =>
+export const selectDatasetsQuery = (manager: EntityManager, dataset: number) =>
     manager.createQueryBuilder(Dataset, 'dataset')
         .select('dataset.name', 'dataset_name')
         .addSelect('dataset.id', 'dataset_id')
@@ -96,5 +94,5 @@ export const selectDatasetsQuery = (manager: EntityManager, idArray: any[]) =>
         .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-        .whereInIds(idArray)
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();

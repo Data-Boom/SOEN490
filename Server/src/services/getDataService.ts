@@ -24,11 +24,11 @@ export const retrieveData = async (req) => {
     let yearReceived = request.year;
     let categoryReceived = request.categoryId;
     let subcategoryReceived = request.subcategoryId;
-    let setOfRawData;
-    let setOfSortedData;
+    let setOfData: Array<IDatasetResponseModel> = []
+    let selectedDatasetIds = []
 
     if (datasetReceived != undefined) {
-        setOfRawData = await getAllData([datasetReceived]);
+        setOfData.push(await getAllData(datasetReceived));
     }
     else {
         let materialRawData;
@@ -41,6 +41,7 @@ export const retrieveData = async (req) => {
         let authorDatasetIds = [];
         let categoryDatasetIds = [];
 
+        // Check which variables were received and the data sets IDs linked to each variable
         if (materialReceived != undefined) {
             duplicateCheck++
             materialRawData = await getDatasetIDFromMaterial(materialReceived);
@@ -75,10 +76,10 @@ export const retrieveData = async (req) => {
             }
         }
 
+        // Find the intersection of data sets IDs among all the different variables
         let allDatasetIds = materialDatasetIds.concat(yearDatasetIds).concat(authorDatasetIds).concat(categoryDatasetIds)
         let count: number
         let currentDatasetId: number
-        let selectedDatasetIds = []
         for (let i = 0; i < allDatasetIds.length; i++) {
             count = 1;
             currentDatasetId = allDatasetIds[i]
@@ -91,8 +92,11 @@ export const retrieveData = async (req) => {
                 selectedDatasetIds.push(currentDatasetId);
             }
         }
-        setOfRawData = getAllData(selectedDatasetIds)
-    }
 
-    return setOfRawData;
+        // Query each data set ID to get its information and add to array of data
+        for (let i = 0; i < selectedDatasetIds.length; i++) {
+            setOfData.push(await getAllData(selectedDatasetIds[i]));
+        }
+    }
+    return setOfData;
 }

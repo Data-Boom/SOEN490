@@ -45,12 +45,12 @@ export class Material {
     updated: Date
 }
 
-export const selectMaterialQuery = (manager: EntityManager, idArray: any[]) =>
+export const selectMaterialQuery = (manager: EntityManager, dataset: number) =>
     manager.createQueryBuilder(Dataset, 'dataset')
         .select('composition.composition', 'composition_name')
         .addSelect('material.details', 'material_details')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin('dataset.materials', 'material')
         .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
-        .whereInIds(idArray)
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();

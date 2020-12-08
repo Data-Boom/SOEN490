@@ -79,7 +79,7 @@ export class Publications {
     authors: Authors[];
 }
 
-export const selectPublicationsQuery = (manager: EntityManager, idArray: any[]) =>
+export const selectPublicationsQuery = (manager: EntityManager, dataset: number) =>
     manager.createQueryBuilder(Dataset, 'dataset')
         .select('publication.name', 'publication_name')
         .addSelect('dataset.id', 'dataset_id')
@@ -94,5 +94,5 @@ export const selectPublicationsQuery = (manager: EntityManager, idArray: any[]) 
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
         .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
-        .whereInIds(idArray)
+        .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
