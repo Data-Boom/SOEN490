@@ -11,7 +11,7 @@ export class authenticateJWT {
         if (authHeader) {
             const token = authHeader.split(' ')[1];
 
-            jwt.verify(token, process.env.SECRET_KEY, (err) => {
+            jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err) => {
                 if (err) {
                     console.log(err);
                     return response.sendStatus(403);

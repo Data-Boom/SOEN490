@@ -2,9 +2,13 @@ import { Request, Response } from 'express';
 import { AuthenticationService } from '../services/authenticationService';
 
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
-import { ISignUpInformation } from '../genericInterfaces/SignUpInterface';
-import { ILoginInformation } from '../genericInterfaces/LoginInterface';
+import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 
+/**
+ * This controller is responsible for verifying the user request has correct parameters input.
+ * After request is verified, the appropriate service can be called to fulfill user signup or login
+ */
 export class AuthenticationController {
     private authenticationService: AuthenticationService;
     private invalidResponse: boolean;

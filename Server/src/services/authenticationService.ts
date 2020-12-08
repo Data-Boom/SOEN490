@@ -3,11 +3,12 @@ import * as argon2 from 'argon2';
 import 'dotenv/config';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
-import { ISignUpInformation } from '../genericInterfaces/SignUpInterface';
+
+import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
 
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
-
-
 
 export class AuthenticationService {
     private requestResponse: IResponse = {} as any;
@@ -39,7 +40,7 @@ export class AuthenticationService {
 
     }
 
-    async checkLoginCredentials(userInformation: any): Promise<IResponse> {
+    async checkLoginCredentials(userInformation: ILoginInformation): Promise<IResponse> {
 
         let verifiedEmail: string;
         let savedPasswordHash: string;
@@ -69,7 +70,7 @@ export class AuthenticationService {
             return this.requestResponse
         }
         else {
-            let jwtParams: JSON;
+            let jwtParams: IJwtParams;
             try {
                 jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
             } catch (error) {
@@ -95,16 +96,16 @@ export class AuthenticationService {
         return hashedPassword;
     }
 
-    private async generateJwtToken(jwtParams: any): Promise<string> {
+    private async generateJwtToken(jwtParams: IJwtParams): Promise<string> {
 
-        let accessToken: string;
-        const jwtKey = process.env.SECRET_KEY;
+        let token: string;
+        const jwtKey = process.env.ACCESS_SECRET_KEY;
         const jwtExpirySeconds = 300
-        accessToken = jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtKey, {
+        token = jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtKey, {
             expiresIn: jwtExpirySeconds
         })
 
-        return accessToken;
+        return token;
     }
 
     async validateJwtToken(accessToken: any) {
