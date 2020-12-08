@@ -1,19 +1,8 @@
 import { IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
 import {
-    getDataFromMaterialYearAuthorSubcategory, getDataFromMaterialYearAuthorCategory,
-    getDataFromMaterialYearAuthor, getDataFromMaterialYearSubcategory, getDataFromMaterialYearCategory,
-    getDataFromMaterialAuthorSubcategory, getDataFromMaterialAuthorCategory,
-    getDataFromYearAuthorSubcategory, getDataFromYearAuthorCategory
-} from "../models/SelectQueryMultipleTerm";
-import {
-    getDataFromDataset, getDataFromMaterial, getDataFromYear, getDataFromAuthor,
-    getDataFromSubcategory, getDataFromCategory, getDatasetIDFromMaterial, getDatasetIDFromAuthor, getDatasetIDFromCategory, getDatasetIDFromSubcategory, getDatasetIDFromYear, getAllData
-} from "../models/SelectQuerySingleTerm";
-import {
-    getDataFromMaterialYear, getDataFromMaterialAuthor, getDataFromMaterialSubcategory,
-    getDataFromMaterialCategory, getDataFromYearAuthor, getDataFromYearSubcategory,
-    getDataFromYearCategory, getDataFromAuthorSubcategory, getDataFromAuthorCategory
-} from "../models/SelectQueryTwoTerm";
+    getDatasetIDFromMaterial, getDatasetIDFromAuthor, getDatasetIDFromCategory,
+    getDatasetIDFromSubcategory, getDatasetIDFromYear, getAllData
+} from "../models/SelectQueryModel";
 
 interface IDataRequestModel {
     datasetId: number
@@ -97,7 +86,6 @@ export const retrieveData = async (req) => {
                 if (currentDatasetId == allDatasetIds[j]) {
                     count++
                 }
-                console.log("Checking count " + count)
             }
             if (count == duplicateCheck) {
                 selectedDatasetIds.push(currentDatasetId);
