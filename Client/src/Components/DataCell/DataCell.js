@@ -21,19 +21,15 @@ export default function DataCell() {
         e.preventDefault()
 
         const json = e.target.jsonFile.files[0];
-            try {
-                //so if this here is not proper json extension it will catch
-                var ext = getExtension(json.name);
-                if (ext != '.json') {
-                    console.error('file extension is not supported');
-                    }
-                } 
-            catch (err) {
-                    console.log("was not able to validate json of uploaded file")
-                    setOpen(true)
-                    return;
-                }
-
+           
+            //so if this here is not proper json extension it will catch
+            var ext = getExtension(json.name);
+            if (ext != '.json') {
+                console.error('file extension is not supported');
+                setOpen(true);
+                return;
+            }
+               
         const formData = new FormData()
         formData.append('file', json)
 
