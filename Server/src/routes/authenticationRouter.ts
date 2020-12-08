@@ -23,6 +23,7 @@ router.post('/login', async (request: Request, response: Response) => {
 
 router.get('/refresh', (request: Request, response: Response) => {
 
+    authenticationController.exchangeRefreshToken(request, response);
 });
 
 router.get('/resetPassword', (request: Request, response: Response) => {

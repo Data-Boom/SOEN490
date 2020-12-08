@@ -1,7 +1,7 @@
 import { getConnection } from 'typeorm';
 
 import { Accounts } from './entities/Accounts'
-import { ISignUpInformation } from '../genericInterfaces/SignUpInterface'
+import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
 
 
 export class AuthenticationModel {
