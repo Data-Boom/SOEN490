@@ -2,7 +2,7 @@ import { IDatasetResponseModel } from "../models/interfaces/DatasetResponseModel
 import {
     getDatasetIDFromMaterial, getDatasetIDFromAuthor, getDatasetIDFromCategory,
     getDatasetIDFromSubcategory, getDatasetIDFromYear, getAllData
-} from "../models/SelectQueryModel";
+} from "../models/DataQueryModel";
 
 interface IDataRequestModel {
     datasetId: number

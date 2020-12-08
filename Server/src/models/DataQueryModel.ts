@@ -13,15 +13,6 @@ import {
     IMaterialModel, IDataPointModel, IDataPointCommentModel
 } from "./interfaces/DatasetResponseModelInterface";
 
-// TO-DO Dmitry was mentioning how more of the query building could be 
-// factored out into something more generic via chain of responsibility
-// to be investigated later
-// export class DatasetQueryBuilder<Entity> extends SelectQueryBuilder<Entity>{
-//     whereDatasetId2(id:number){
-//         return this.andWhere('dataset.id = :datasetId', { datasetId: id })
-//     }
-// }
-
 export const getDatasetIDFromMaterial = async (material: string) => {
 
     const connection = getConnection();
@@ -39,7 +30,6 @@ export const getDatasetIDFromMaterial = async (material: string) => {
         .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
         .setParameters({ compositionRef: compositionId, materialDetails: material })
         .getRawMany();
-    console.log(materialDatasetData);
 
     return materialDatasetData;
 }
@@ -52,7 +42,6 @@ export const getDatasetIDFromYear = async (year: number) => {
         .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
         .where('publication.year = :yearRef', { yearRef: year })
         .getRawMany();
-    console.log(yearDatasetData);
 
     return yearDatasetData;
 }
@@ -68,7 +57,6 @@ export const getDatasetIDFromAuthor = async (firstName: string, lastName: string
         .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
         .setParameters({ firstNameRef: firstName, lastNameRef: lastName })
         .getRawMany();
-    console.log(authorDatasetData);
     return authorDatasetData;
 }
 
@@ -80,7 +68,6 @@ export const getDatasetIDFromCategory = async (category: number) => {
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .where('category.id = :categoryId', { categoryId: category })
         .getRawMany();
-    console.log(categoryDatasetData);
     return categoryDatasetData;
 }
 
@@ -94,7 +81,6 @@ export const getDatasetIDFromSubcategory = async (category: number, subcategory:
         .where('category.id = :categoryId', { categoryId: category })
         .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
         .getRawMany();
-    console.log(subcategoryDatasetData);
     return subcategoryDatasetData;
 }
 
