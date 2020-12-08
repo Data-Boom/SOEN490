@@ -42,7 +42,8 @@ export const getDatasetIdsFromParams = async (materialReceived: string, yearRece
     let yearRawData;
     let authorRawData;
     let categoryRawData;
-    let duplicateCheck = 0;
+    let paramsEntered = 0;
+    // paramsEntered is used to track how many params were entered
     let materialDatasetIds = [];
     let yearDatasetIds = [];
     let authorDatasetIds = [];
@@ -50,28 +51,28 @@ export const getDatasetIdsFromParams = async (materialReceived: string, yearRece
 
     // Check which variables were received and the data sets IDs linked to each variable
     if (materialReceived != undefined) {
-        duplicateCheck++
+        paramsEntered++
         materialRawData = await getDatasetIDFromMaterial(materialReceived);
         for (let index = 0; index < materialRawData.length; index++) {
             materialDatasetIds[index] = materialRawData[index].dataset_id;
         }
     }
     if (yearReceived != undefined) {
-        duplicateCheck++
+        paramsEntered++
         yearRawData = await getDatasetIDFromYear(yearReceived);
         for (let index = 0; index < yearRawData.length; index++) {
             yearDatasetIds[index] = yearRawData[index].dataset_id;
         }
     }
     if (firstNameReceived != undefined && lastNameReceived != undefined) {
-        duplicateCheck++
+        paramsEntered++
         authorRawData = await getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
         for (let index = 0; index < authorRawData.length; index++) {
             authorDatasetIds[index] = authorRawData[index].dataset_id;
         }
     }
     if (categoryReceived != undefined) {
-        duplicateCheck++
+        paramsEntered++
         if (subcategoryReceived != undefined) {
             categoryRawData = await getDatasetIDFromSubcategory(categoryReceived, subcategoryReceived);
         }
@@ -82,11 +83,11 @@ export const getDatasetIdsFromParams = async (materialReceived: string, yearRece
             categoryDatasetIds[index] = categoryRawData[index].dataset_id;
         }
     }
-    let selectedDatasetIds = await selectDatasetIds(duplicateCheck, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
+    let selectedDatasetIds = await selectDatasetIds(paramsEntered, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
     return selectedDatasetIds
 }
 
-export const selectDatasetIds = async (duplicateCheck: number, materialDatasetIds: any[], yearDatasetIds: any[], authorDatasetIds: any[], categoryDatasetIds: any[]) => {
+export const selectDatasetIds = async (paramsEntered: number, materialDatasetIds: any[], yearDatasetIds: any[], authorDatasetIds: any[], categoryDatasetIds: any[]) => {
     let selectedDatasetIds = []
     // Find the intersection of data sets IDs among all the different variables
     let allDatasetIds = materialDatasetIds.concat(yearDatasetIds).concat(authorDatasetIds).concat(categoryDatasetIds)
@@ -100,7 +101,7 @@ export const selectDatasetIds = async (duplicateCheck: number, materialDatasetId
                 count++
             }
         }
-        if (count == duplicateCheck) {
+        if (count == paramsEntered) {
             selectedDatasetIds.push(currentDatasetId);
         }
     }
