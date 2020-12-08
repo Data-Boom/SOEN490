@@ -1,6 +1,3 @@
-//Verify that material-ui lab and material-ui core are installed before running this file!
-// npm install @material-ui/lab
-
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { Container } from '@material-ui/core'

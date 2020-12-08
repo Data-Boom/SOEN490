@@ -1,7 +1,3 @@
-//Running and installing [npm i jsonschema] is required for this page to work
-//More details and examples about json schema validator can be found at:
-// https://github.com/tdegrunt/jsonschema#readme
-
 const fileSystem = require('fs');
 import { DataUploadModel } from '../models/DataUploadModel'
 import { IMaterials } from '../models/interfaces/MaterialsInterface';

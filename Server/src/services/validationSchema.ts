@@ -1,8 +1,3 @@
-//Running and installing [npm i jsonschema] is required for this page to work
-//More details and examples about json schema validator can be found at:
-// https://github.com/tdegrunt/jsonschema#readme
-
-
 export const schemaValidator = {
     'baseSchema': {
         "id": "/baseSchema",
