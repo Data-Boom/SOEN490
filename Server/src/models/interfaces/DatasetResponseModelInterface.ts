@@ -19,7 +19,7 @@ export interface IAuthorModel {
 }
 
 export interface IDatasetModel {
-    dataset_id: string
+    dataset_id: number
     dataset_name: string
     dataset_comments: string
     datasetdatatype_name: string

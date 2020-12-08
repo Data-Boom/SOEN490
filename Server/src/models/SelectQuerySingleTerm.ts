@@ -1,13 +1,18 @@
-import { getConnection } from "typeorm";
+import { EntityManager, getConnection } from "typeorm";
 import { selectAuthorsQuery, selectAuthorBasedOnSingleAuthorQuery } from "./entities/Authors";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
-import { selectDataPointCommentsQuery } from "./entities/Datapointcomments";
-import { selectDataPointsQuery } from "./entities/Datapoints";
-import { selectDatasetsQuery } from "./entities/Dataset";
+import { Datapointcomments, selectDataPointCommentsQuery } from "./entities/Datapointcomments";
+import { Datapoints, selectDataPointsQuery } from "./entities/Datapoints";
+import { selectDatasetsQuery, selectDatasetIdsQuery, Dataset } from "./entities/Dataset";
+import { Datasetdatatype } from "./entities/Datasetdatatype";
 import { selectMaterialQuery, selectMaterialBasedOnSingleMateriarlQuery } from "./entities/Material";
 import { selectPublicationsQuery, Publications } from "./entities/Publications";
+import { Publicationtype } from "./entities/Publicationtype";
+import { Publisher } from "./entities/Publisher";
+import { Representations } from "./entities/Representations";
 import { Subcategory } from "./entities/Subcategory";
+import { Units } from "./entities/Units";
 import {
     IDatasetResponseModel, IAuthorModel, IPublicationModel, IDatasetModel,
     IMaterialModel, IDataPointModel, IDataPointCommentModel
@@ -419,6 +424,188 @@ export const getDataFromSubcategory = async (category: number, subcategory: numb
         dataset: subcategoryDatasetData,
         materials: subcategoryMaterialData,
         dataPointComments: subcategoryDatapointComments
+    }
+    return allData;
+}
+
+export const getDatasetIDFromMaterial = async (material: string) => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based on material");
+
+    // Get composition ID if a compostion was entered instead of material details
+    let compositionIdRaw = await connection.manager.find(Composition, { composition: material });
+    let compositionId = -1; // fallback value if material details were entered
+    if (compositionIdRaw[0] != null) {
+        compositionId = compositionIdRaw[0].id;
+    };
+
+    let materialDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
+        .innerJoin('dataset.materials', 'material')
+        .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
+        .setParameters({ compositionRef: compositionId, materialDetails: material })
+        .getRawMany();
+    console.log(materialDatasetData);
+
+    return materialDatasetData;
+}
+
+export const getDatasetIDFromYear = async (year: number) => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based year");
+    let yearDatasetData = await selectDatasetIdsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .where('publication.year = :yearRef', { yearRef: year })
+        .getRawMany();
+    console.log(yearDatasetData);
+
+    return yearDatasetData;
+}
+
+export const getDatasetIDFromAuthor = async (firstName: string, lastName: string) => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based on author");
+    let authorDatasetData = await selectDatasetIdsQuery(connection.manager)
+        .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+        .innerJoin('publication.authors', 'author')
+        .where("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
+        .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
+        .setParameters({ firstNameRef: firstName, lastNameRef: lastName })
+        .getRawMany();
+    console.log(authorDatasetData);
+    return authorDatasetData;
+}
+
+export const getDatasetIDFromCategory = async (category: number) => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based on category");
+    let categoryDatasetData = await selectDatasetIdsQuery(connection.manager)
+        .where('category.id = :categoryId', { categoryId: category })
+        .getRawMany();
+    console.log(categoryDatasetData);
+    return categoryDatasetData;
+}
+
+export const getDatasetIDFromSubcategory = async (category: number, subcategory: number) => {
+
+    const connection = getConnection();
+    console.log("Getting data set info based on subcategory");
+    let subcategoryDatasetData = await selectDatasetIdsQuery(connection.manager)
+        .where('category.id = :categoryId', { categoryId: category })
+        .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+        .getRawMany();
+    console.log(subcategoryDatasetData);
+    return subcategoryDatasetData;
+}
+
+export const selectAuthorsQuery2 = (manager: EntityManager, idArray) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('author.firstName', 'author_firstName')
+        .addSelect('author.lastName', 'author_lastName')
+        .addSelect('author.middleName', 'author_middleName')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('publication.authors', 'author')
+        .whereInIds(idArray)
+        .getRawMany();
+
+export const selectPublicationsQuery2 = (manager: EntityManager, idArray) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('publication.name', 'publication_name')
+        .addSelect('dataset.id', 'dataset_id')
+        .addSelect('publication.doi', 'publication_doi')
+        .addSelect('publication.pages', 'publication_pages')
+        .addSelect('publication.volume', 'publication_volume')
+        .addSelect('publication.year', 'publication_year')
+        .addSelect('publication.datePublished', 'publication_datePublished')
+        .addSelect('publication.dateAccessed', 'publication_dateAccessed')
+        .addSelect('publisher.name', 'publisher_name')
+        .addSelect('publicationtype.name', 'publicationtype_name')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
+        .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
+        .whereInIds(idArray)
+        .getRawMany();
+
+export const selectDatasetsQuery2 = (manager: EntityManager, idArray) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.name', 'dataset_name')
+        .addSelect('dataset.id', 'dataset_id')
+        .addSelect('datasetdatatype.name', 'datasetdatatype_name')
+        .addSelect('category.name', 'category_name')
+        .addSelect('subcategory.name', 'subcategory_name')
+        .addSelect('dataset.comments', 'dataset_comments')
+        .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .whereInIds(idArray)
+        .getRawMany();
+
+export const selectDataPointsQuery2 = (manager: EntityManager, idArray) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('datapoints.name', 'datapoints_name')
+        .addSelect('datapoints.values', 'datapoints_values')
+        .addSelect('units.units', 'units_units')
+        .addSelect('representations.repr', 'representations_repr')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Datapoints, 'datapoints', 'datapoints.datasetId = dataset.id')
+        .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
+        .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')
+        .whereInIds(idArray)
+        .getRawMany();
+
+
+export const selectMaterialQuery2 = (manager: EntityManager, idArray) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('composition.composition', 'composition_name')
+        .addSelect('material.details', 'material_details')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+        .whereInIds(idArray)
+        .getRawMany();
+
+export const selectDataPointCommentsQuery2 = (manager: EntityManager, idArray) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('datapointcomments.comments', 'datapointcomments_comments')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Datapointcomments, 'datapointcomments', 'datapointcomments.datasetId = dataset.id')
+        .whereInIds(idArray)
+        .getRawMany();
+
+export const getAllData = async (idArray): Promise<IDatasetResponseModel> => {
+
+    const connection = getConnection();
+    console.log("Getting all data sets' raw data");
+
+    console.log("Getting publications");
+    let publicationData: IPublicationModel[] = await selectPublicationsQuery2(connection.manager, idArray)
+
+    console.log("Getting authors");
+    let authorData: IAuthorModel[] = await selectAuthorsQuery2(connection.manager, idArray)
+
+    console.log("Getting data sets");
+    let datasetData: IDatasetModel[] = await selectDatasetsQuery2(connection.manager, idArray)
+
+    console.log("Getting data point data");
+    let datapointData: IDataPointModel[] = await selectDataPointsQuery2(connection.manager, idArray)
+
+    console.log("Getting data set materials");
+    let materialData: IMaterialModel[] = await selectMaterialQuery2(connection.manager, idArray)
+
+    console.log("Getting data point comments");
+    let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery2(connection.manager, idArray)
+
+    const allData: IDatasetResponseModel = {
+        authors: authorData,
+        publications: publicationData,
+        dataPoints: datapointData,
+        dataset: datasetData,
+        materials: materialData,
+        dataPointComments: datapointComments
     }
     return allData;
 }

@@ -90,3 +90,9 @@ export const selectDatasetsQuery = (manager: EntityManager) =>
         .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+
+export const selectDatasetIdsQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.id', 'dataset_id')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')

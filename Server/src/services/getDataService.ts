@@ -1,3 +1,4 @@
+import { IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
 import {
     getDataFromMaterialYearAuthorSubcategory, getDataFromMaterialYearAuthorCategory,
     getDataFromMaterialYearAuthor, getDataFromMaterialYearSubcategory, getDataFromMaterialYearCategory,
@@ -6,7 +7,7 @@ import {
 } from "../models/SelectQueryMultipleTerm";
 import {
     getDataFromDataset, getDataFromMaterial, getDataFromYear, getDataFromAuthor,
-    getDataFromSubcategory, getDataFromCategory
+    getDataFromSubcategory, getDataFromCategory, getDatasetIDFromMaterial, getDatasetIDFromAuthor, getDatasetIDFromCategory, getDatasetIDFromSubcategory, getDatasetIDFromYear, getAllData
 } from "../models/SelectQuerySingleTerm";
 import {
     getDataFromMaterialYear, getDataFromMaterialAuthor, getDataFromMaterialSubcategory,
@@ -34,100 +35,76 @@ export const retrieveData = async (req) => {
     let yearReceived = request.year;
     let categoryReceived = request.categoryId;
     let subcategoryReceived = request.subcategoryId;
-    let setOfData;
+    let setOfRawData;
+    let setOfSortedData;
 
-
-    // To avoid checks for both first and last name, make a bool for author being entered
-    let authorEntered = false
-    if (firstNameReceived != undefined && lastNameReceived != undefined) {
-        authorEntered = true
-    }
-
-    //As subcategory requires an accompanying category, make a bool for
-    //Both category and subcategory being entered
-    let subcategoryEntered = false
-    if (categoryReceived != undefined && subcategoryReceived != undefined) {
-        subcategoryEntered = true
-    }
-    //Subcategory queries must always be listed above category queries, 
-    //as a subcategory query contains both a category and subcategory entry
     if (datasetReceived != undefined) {
-        setOfData = await getDataFromDataset(datasetReceived);
+        setOfRawData = await getAllData([datasetReceived]);
     }
-    else if (materialReceived != undefined) {
-        if (yearReceived != undefined && authorEntered && subcategoryEntered) {
-            setOfData = await getDataFromMaterialYearAuthorSubcategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
+    else {
+        let materialRawData;
+        let yearRawData;
+        let authorRawData;
+        let categoryRawData;
+        let duplicateCheck = 0;
+        let materialDatasetIds = [];
+        let yearDatasetIds = [];
+        let authorDatasetIds = [];
+        let categoryDatasetIds = [];
+
+        if (materialReceived != undefined) {
+            duplicateCheck++
+            materialRawData = await getDatasetIDFromMaterial(materialReceived);
+            for (let index = 0; index < materialRawData.length; index++) {
+                materialDatasetIds[index] = materialRawData[index].dataset_id;
+            }
         }
-        else if (yearReceived != undefined && authorEntered && categoryReceived != undefined) {
-            setOfData = await getDataFromMaterialYearAuthorCategory(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
+        if (yearReceived != undefined) {
+            duplicateCheck++
+            yearRawData = await getDatasetIDFromYear(yearReceived);
+            for (let index = 0; index < yearRawData.length; index++) {
+                yearDatasetIds[index] = yearRawData[index].dataset_id;
+            }
         }
-        else if (yearReceived != undefined && authorEntered) {
-            setOfData = await getDataFromMaterialYearAuthor(materialReceived, yearReceived, firstNameReceived, lastNameReceived);
+        if (firstNameReceived != undefined && lastNameReceived != undefined) {
+            duplicateCheck++
+            authorRawData = await getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
+            for (let index = 0; index < authorRawData.length; index++) {
+                authorDatasetIds[index] = authorRawData[index].dataset_id;
+            }
         }
-        else if (yearReceived != undefined && subcategoryEntered) {
-            setOfData = await getDataFromMaterialYearSubcategory(materialReceived, yearReceived, categoryReceived, subcategoryReceived);
+        if (categoryReceived != undefined) {
+            duplicateCheck++
+            if (subcategoryReceived != undefined) {
+                categoryRawData = await getDatasetIDFromSubcategory(categoryReceived, subcategoryReceived);
+            }
+            else {
+                categoryRawData = await getDatasetIDFromCategory(categoryReceived);
+            }
+            for (let index = 0; index < categoryRawData.length; index++) {
+                categoryDatasetIds[index] = categoryRawData[index].dataset_id;
+            }
         }
-        else if (yearReceived != undefined && categoryReceived != undefined) {
-            setOfData = await getDataFromMaterialYearCategory(materialReceived, yearReceived, categoryReceived);
+
+        let allDatasetIds = materialDatasetIds.concat(yearDatasetIds).concat(authorDatasetIds).concat(categoryDatasetIds)
+        let count: number
+        let currentDatasetId: number
+        let selectedDatasetIds = []
+        for (let i = 0; i < allDatasetIds.length; i++) {
+            count = 1;
+            currentDatasetId = allDatasetIds[i]
+            for (let j = i + 1; j < allDatasetIds.length; j++) {
+                if (currentDatasetId == allDatasetIds[j]) {
+                    count++
+                }
+                console.log("Checking count " + count)
+            }
+            if (count == duplicateCheck) {
+                selectedDatasetIds.push(currentDatasetId);
+            }
         }
-        else if (yearReceived != undefined) {
-            setOfData = await getDataFromMaterialYear(materialReceived, yearReceived);
-        }
-        else if (authorEntered && subcategoryEntered) {
-            setOfData = await getDataFromMaterialAuthorSubcategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
-        }
-        else if (authorEntered && categoryReceived != undefined) {
-            setOfData = await getDataFromMaterialAuthorCategory(materialReceived, firstNameReceived, lastNameReceived, categoryReceived);
-        }
-        else if (authorEntered) {
-            setOfData = await getDataFromMaterialAuthor(materialReceived, firstNameReceived, lastNameReceived);
-        }
-        else if (subcategoryEntered) {
-            setOfData = await getDataFromMaterialSubcategory(materialReceived, categoryReceived, subcategoryReceived);
-        }
-        else if (categoryReceived != undefined) {
-            setOfData = await getDataFromMaterialCategory(materialReceived, categoryReceived);
-        }
-        else {
-            setOfData = await getDataFromMaterial(materialReceived);
-        }
+        setOfRawData = getAllData(selectedDatasetIds)
     }
-    else if (yearReceived != undefined) {
-        if (authorEntered && subcategoryEntered) {
-            setOfData = await getDataFromYearAuthorSubcategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
-        }
-        else if (authorEntered && categoryReceived != undefined) {
-            setOfData = await getDataFromYearAuthorCategory(yearReceived, firstNameReceived, lastNameReceived, categoryReceived);
-        }
-        else if (authorEntered) {
-            setOfData = await getDataFromYearAuthor(yearReceived, firstNameReceived, lastNameReceived);
-        }
-        else if (subcategoryEntered) {
-            setOfData = await getDataFromYearSubcategory(yearReceived, categoryReceived, subcategoryReceived);
-        }
-        else if (categoryReceived != undefined) {
-            setOfData = await getDataFromYearCategory(yearReceived, categoryReceived);
-        }
-        else {
-            setOfData = await getDataFromYear(yearReceived);
-        }
-    }
-    else if (authorEntered) {
-        if (subcategoryEntered) {
-            setOfData = await getDataFromAuthorSubcategory(firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived);
-        }
-        else if (categoryReceived != undefined) {
-            setOfData = await getDataFromAuthorCategory(firstNameReceived, lastNameReceived, categoryReceived);
-        }
-        else {
-            setOfData = await getDataFromAuthor(firstNameReceived, lastNameReceived);
-        }
-    }
-    else if (subcategoryEntered) {
-        setOfData = await getDataFromSubcategory(categoryReceived, subcategoryReceived);
-    }
-    else if (categoryReceived != undefined) {
-        setOfData = await getDataFromCategory(categoryReceived);
-    }
-    return setOfData;
+
+    return setOfRawData;
 }
