@@ -137,3 +137,7 @@ sketch
 
 Client/.vscode/settings.json
 *.snap
+
+Client/package-lock.json
+
+Client/package.json
