@@ -24,10 +24,11 @@ export const retrieveData = async (req) => {
     let yearReceived = request.year;
     let categoryReceived = request.categoryId;
     let subcategoryReceived = request.subcategoryId;
-    let setOfData: Array<IDatasetResponseModel> = []
+    let selectedDatasetIds;
+    let setOfData;
 
     if (datasetReceived != undefined) {
-        setOfData.push(await getAllData(datasetReceived));
+        selectedDatasetIds = [datasetReceived];
     }
     else {
         let materialRawData;
@@ -75,12 +76,9 @@ export const retrieveData = async (req) => {
             }
         }
 
-        let selectedDatasetIds = await selectDatasetIds(duplicateCheck, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
-        // Query each data set ID to get its information and add to array of data
-        for (let i = 0; i < selectedDatasetIds.length; i++) {
-            setOfData.push(await getAllData(selectedDatasetIds[i]));
-        }
+        selectedDatasetIds = await selectDatasetIds(duplicateCheck, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
     }
+    setOfData = getDataFromDatasetIds(selectedDatasetIds)
     return setOfData;
 }
 
@@ -103,4 +101,13 @@ export const selectDatasetIds = async (duplicateCheck: number, materialDatasetId
         }
     }
     return selectedDatasetIds;
+}
+
+export const getDataFromDatasetIds = async (selectedDatasetIds: any[]) => {
+    // Query each data set ID to get its information and add to array of data
+    let setOfData: Array<IDatasetResponseModel> = []
+    for (let i = 0; i < selectedDatasetIds.length; i++) {
+        setOfData.push(await getAllData(selectedDatasetIds[i]));
+    }
+    return setOfData
 }
