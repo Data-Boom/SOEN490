@@ -63,11 +63,11 @@ export class AuthenticationController {
     }
 
     private validateLoginRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('email') || request.query.hasOwnProperty('password')) {
-            return true
+        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password')) {
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 
