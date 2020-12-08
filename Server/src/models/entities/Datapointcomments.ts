@@ -32,8 +32,10 @@ export class Datapointcomments {
     updated: Date
 }
 
-export const selectDataPointCommentsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Datapointcomments, 'datapointcomments')
+export const selectDataPointCommentsQuery = (manager: EntityManager, idArray: any[]) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
         .select('datapointcomments.comments', 'datapointcomments_comments')
         .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Dataset, 'dataset', 'datapointcomments.datasetId = dataset.id')
+        .innerJoin(Datapointcomments, 'datapointcomments', 'datapointcomments.datasetId = dataset.id')
+        .whereInIds(idArray)
+        .getRawMany();

@@ -61,13 +61,15 @@ export class Datapoints {
     updated: Date
 }
 
-export const selectDataPointsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Datapoints, 'datapoints')
+export const selectDataPointsQuery = (manager: EntityManager, idArray: any[]) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
         .select('datapoints.name', 'datapoints_name')
         .addSelect('datapoints.values', 'datapoints_values')
         .addSelect('units.units', 'units_units')
         .addSelect('representations.repr', 'representations_repr')
         .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Datapoints, 'datapoints', 'datapoints.datasetId = dataset.id')
         .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
         .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')
-        .innerJoin(Dataset, 'dataset', 'datapoints.datasetId = dataset.id')
+        .whereInIds(idArray)
+        .getRawMany();

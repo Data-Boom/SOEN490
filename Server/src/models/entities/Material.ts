@@ -45,18 +45,12 @@ export class Material {
     updated: Date
 }
 
-export const selectMaterialQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Material, 'material')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
-        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
-        .innerJoin('material.datasets', 'dataset')
-
-export const selectMaterialBasedOnSingleMateriarlQuery = (manager: EntityManager) =>
+export const selectMaterialQuery = (manager: EntityManager, idArray: any[]) =>
     manager.createQueryBuilder(Dataset, 'dataset')
         .select('composition.composition', 'composition_name')
         .addSelect('material.details', 'material_details')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin('dataset.materials', 'material')
         .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+        .whereInIds(idArray)
+        .getRawMany();
