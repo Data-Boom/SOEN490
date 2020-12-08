@@ -25,7 +25,6 @@ export const retrieveData = async (req) => {
     let categoryReceived = request.categoryId;
     let subcategoryReceived = request.subcategoryId;
     let setOfData: Array<IDatasetResponseModel> = []
-    let selectedDatasetIds = []
 
     if (datasetReceived != undefined) {
         setOfData.push(await getAllData(datasetReceived));
@@ -76,27 +75,32 @@ export const retrieveData = async (req) => {
             }
         }
 
-        // Find the intersection of data sets IDs among all the different variables
-        let allDatasetIds = materialDatasetIds.concat(yearDatasetIds).concat(authorDatasetIds).concat(categoryDatasetIds)
-        let count: number
-        let currentDatasetId: number
-        for (let i = 0; i < allDatasetIds.length; i++) {
-            count = 1;
-            currentDatasetId = allDatasetIds[i]
-            for (let j = i + 1; j < allDatasetIds.length; j++) {
-                if (currentDatasetId == allDatasetIds[j]) {
-                    count++
-                }
-            }
-            if (count == duplicateCheck) {
-                selectedDatasetIds.push(currentDatasetId);
-            }
-        }
-
+        let selectedDatasetIds = await selectDatasetIds(duplicateCheck, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
         // Query each data set ID to get its information and add to array of data
         for (let i = 0; i < selectedDatasetIds.length; i++) {
             setOfData.push(await getAllData(selectedDatasetIds[i]));
         }
     }
     return setOfData;
+}
+
+export const selectDatasetIds = async (duplicateCheck: number, materialDatasetIds: any[], yearDatasetIds: any[], authorDatasetIds: any[], categoryDatasetIds: any[]) => {
+    let selectedDatasetIds = []
+    // Find the intersection of data sets IDs among all the different variables
+    let allDatasetIds = materialDatasetIds.concat(yearDatasetIds).concat(authorDatasetIds).concat(categoryDatasetIds)
+    let count: number
+    let currentDatasetId: number
+    for (let i = 0; i < allDatasetIds.length; i++) {
+        count = 1;
+        currentDatasetId = allDatasetIds[i]
+        for (let j = i + 1; j < allDatasetIds.length; j++) {
+            if (currentDatasetId == allDatasetIds[j]) {
+                count++
+            }
+        }
+        if (count == duplicateCheck) {
+            selectedDatasetIds.push(currentDatasetId);
+        }
+    }
+    return selectedDatasetIds;
 }
