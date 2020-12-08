@@ -2,112 +2,127 @@
 //More details and examples about json schema validator can be found at:
 // https://github.com/tdegrunt/jsonschema#readme
 
-var Validator = require('jsonschema').Validator;
-// var v = new Validator();
 
-var schema = {
-    "id": "/baseSchema",
-    "type": "object",
-    "properties": {
-        "reference": {
-            "$ref": "/referenceSchema"
+export const schemaValidator = {
+    'baseSchema': {
+        "id": "/baseSchema",
+        "type": "object",
+        "properties": {
+            "reference": {
+                "$ref": "/referenceValidationSchema"
+            },
+            "datasetName": { "type": "string" },
+            "material": {
+                "$ref": "/materialValidationSchema"
+            },
+            "category": { "type": "string" },
+            "subcategory": { "type": "string" },
+            "data": {
+                "$ref": "/dataValidationSchema"
+            }
         },
-        "datasetName": { "type": "string" },
-        "material": {
-            "$ref": "/materialSchema"
+        "required": ["reference", "datasetName", "material", "data"]
+    },
+
+
+    'referenceValidationSchema': {
+        "id": "/referenceValidationSchema",
+        "type": "object",
+        "properties": {
+            "type": { "type": "string" },
+            "publisher": { "type": "string" },
+            "authors": {
+                "$ref": "/authorsValidationSchema"
+            },
+            "title": { "type": "string" },
+            "volume": { "type": "integer" },
+            "pages": { "type": "integer" },
+            "year": { "type": "integer" }
         },
-        "category": { "type": "string" },
-        "subcategory": { "type": "string" },
-        "data": {
-            "$ref": "/dataSchema"
+        "required": ["authors"]
+    },
+
+    'authorsValidationSchema': {
+        "id": "/authorsValidationSchema",
+        "type": "object",
+        "properties": {
+            "firstname": { "type": "string" },
+            "middlename": { "type": "string" },
+            "lasttname": { "type": "string" }
+        },
+        "required": ["firstname", "lastname"]
+    },
+
+    'materialValidationSchema': {
+        "id": "/materialValidationSchema",
+        "type": "array",
+        "items": {
+            "$ref": "/materialDetailsValidationSchema"
         }
-
     },
-    "required": ["reference", "datasetName", "material", "data"]
 
-};
-var referenceSchema = {
-    "id": "/referenceSchema",
-    "type": "object",
-    "properties": {
-        "type": { "type": "string" },
-        "publisher": { "type": "string" },
-        "authors": {
-            "$ref": "/authorsSchema"
+    'materialDetailsValidationSchema': {
+        "id": "/materialDetailsValidationSchema",
+        "type": "object",
+        "properties": {
+            "composition": { "type": "string" },
+            "details": { "type": "string" }
         },
-        "title": { "type": "string" },
-        "volume": { "type": "integer" },
-        "pages": { "type": "integer" },
-        "year": { "type": "integer" }
+        "required": ["composition", "details"]
     },
-    "required": ["authors"]
-};
 
-var materialSchema = {
-    "id": "/materialSchema",
-    "type": "array",
-    "items": {
-        "$ref": "/m2Schema"
-    }
-};
+    'dataValidationSchema': {
+        "id": "/dataValidationSchema",
+        "type": "object",
+        "properties": {
+            "variables": {
+                "$ref": "/variableValidationSchema"
+            },
+            "contents": {
+                "$ref": "/contentsValidationSchema"
+            },
+            "comments": { "type": "string" }
+        }
+    },
 
-var m2schema = {
-    "id": "/m2Schema",
-    "type": "object",
-    "properties": {
-        "composition": { "type": "string" },
-        "details": { "type": "string" }
+    'variableValidationSchema': {
+        "id": "/variableValidationSchema",
+        "type": "array",
+        "properties": {
+            "$ref": "/variableDetailsValidationSchema"
+        }
     },
-    "required": ["composition", "details"]
-};
 
-var dataSchema = {
-    "id": "/dataSchema",
-    "type": "object",
-    "properties": {
-        "variables": {
-            "$ref": "/variableSchema"
+    'variableDetailsValidationSchema': {
+        "id": "/variableDetailsValidationSchema",
+        "type": "object",
+        "properties": {
+            "name": { "type": "string" },
+            "repr": { "type": "string" },
+            "units": { "type": "string" }
         },
-        "contents": {
-            "$ref": "/contentsSchema"
-        },
-        "comments": { "type": "string" }
-    }
-};
-var counter = 0;
-var variableSchema = {
-    "id": "/variableSchema",
-    "type": "array",
-    "properties": {
-        "$ref": "/v2Schema"
-    }
-};
-var v2Schema = {
-    "id": "/v2Schema",
-    "type": "object",
-    "properties": {
-        "name": { "type": "string" },
-        "repr": { "type": "string" },
-        "units": { "type": "string" }
+        "required": ["name", "repr", "units"]
     },
-    "required": ["name", "repr", "units"]
-};
-var contentsSchema = {
-    "id": "/contentsSchema",
-    "type": "array",
-    "properties": {
-        "$ref": "/c2Schema"
-    }
-};
-var c2Schema = {
-    "id": "/c2Schema",
-    "type": "object",
-    "properties": {
-        "points": {
-            "type": "array",
-            "items": { "type": "number" },
-        },
-        "comments": { "type": "string" }
+
+    'contentsValidationSchema': {
+        "id": "/contentsValidationSchema",
+        "type": "array",
+        "properties": {
+            "$ref": "/contentsDetailsValidationSchema"
+        }
     },
-    "required": ["points"]
-};
+
+    'contentsDetailsValidationSchema': {
+        "id": "/contentsDetailsValidationSchema",
+        "type": "object",
+        "properties": {
+            "points": {
+                "type": "array",
+                "items": { "type": "number" },
+            },
+            "comments": { "type": "string" }
+        },
+        "required": ["points"]
+    },
+
+}
