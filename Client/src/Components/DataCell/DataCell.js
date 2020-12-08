@@ -17,44 +17,46 @@ export default function DataCell() {
      * Upon submission, the JSON file is extracted from the event and must be appended to formData
      * to be sent with API request.
      */
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
         const json = e.target.jsonFile.files[0];
-        try {
-            //so if this here is not proper json extension it will catch
-            var ext = getExtension(json.name);
-            if (ext != '.json') {
-                throw "File extension is not supported";
-            }
-        } catch (e) {
-            console.log("was not able to validate json of uploaded file")
-            setOpen(true)
-            return;
-        }
+            try {
+                //so if this here is not proper json extension it will catch
+                var ext = getExtension(json.name);
+                if (ext != '.json') {
+                    console.error('file extension is not supported');
+                    }
+                } 
+            catch (err) {
+                    console.log("was not able to validate json of uploaded file")
+                    setOpen(true)
+                    return;
+                }
 
-    const formData = new FormData()
-    formData.append('file', json)
+        const formData = new FormData()
+        formData.append('file', json)
 
         const options = {
             method: 'POST',
             body: formData,
-        };
+            };
 
-        try {
-            await fetch('http://localhost:4000/dataupload', options)
-                .then(resp => resp.json())
-                .then(result => {
-                    console.log(result[0])
+            try {
+                await fetch('http://localhost:4000/dataupload', options)
+                    .then(resp => resp.json())
+                    .then(result => {
+                        console.log(result[0])
                 })
-        } catch (err) {
-            console.log('wrong file submitted, only json file accepted')
-        }
+                }
+            catch (err) {
+                console.log('wrong file submitted, only json file accepted')
+                }
     }
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-            return;
-        }
+              return;
+            }
         setOpen(false);
     };
     //Function to get the extension of a file
@@ -70,6 +72,7 @@ export default function DataCell() {
                     Failed to parse json
                 </Alert>
             </Snackbar>
+
             <Container>
                 <Box border={30} p={4} borderColor="primary">
                     <form onSubmit={handleSubmit}>
