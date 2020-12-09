@@ -53,23 +53,17 @@ export const getDatasetIdsFromParams = async (materialReceived: string, yearRece
     if (materialReceived != undefined) {
         paramsEntered++
         materialRawData = await getDatasetIDFromMaterial(materialReceived);
-        for (let index = 0; index < materialRawData.length; index++) {
-            materialDatasetIds[index] = materialRawData[index].dataset_id;
-        }
+        materialDatasetIds = await createDatasetIdArray(materialRawData);
     }
     if (yearReceived != undefined) {
         paramsEntered++
         yearRawData = await getDatasetIDFromYear(yearReceived);
-        for (let index = 0; index < yearRawData.length; index++) {
-            yearDatasetIds[index] = yearRawData[index].dataset_id;
-        }
+        yearDatasetIds = await createDatasetIdArray(yearRawData);
     }
     if (firstNameReceived != undefined && lastNameReceived != undefined) {
         paramsEntered++
         authorRawData = await getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
-        for (let index = 0; index < authorRawData.length; index++) {
-            authorDatasetIds[index] = authorRawData[index].dataset_id;
-        }
+        authorDatasetIds = await createDatasetIdArray(authorRawData);
     }
     if (categoryReceived != undefined) {
         paramsEntered++
@@ -79,12 +73,18 @@ export const getDatasetIdsFromParams = async (materialReceived: string, yearRece
         else {
             categoryRawData = await getDatasetIDFromCategory(categoryReceived);
         }
-        for (let index = 0; index < categoryRawData.length; index++) {
-            categoryDatasetIds[index] = categoryRawData[index].dataset_id;
-        }
+        categoryDatasetIds = await createDatasetIdArray(categoryRawData);
     }
     let selectedDatasetIds = await selectDatasetIds(paramsEntered, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
     return selectedDatasetIds
+}
+
+export const createDatasetIdArray = async (rawData: any[]) => {
+    let datasetIdArray = [];
+    for (let index = 0; index < rawData.length; index++) {
+        datasetIdArray[index] = rawData[index].dataset_id;
+    }
+    return datasetIdArray;
 }
 
 export const selectDatasetIds = async (paramsEntered: number, materialDatasetIds: any[], yearDatasetIds: any[], authorDatasetIds: any[], categoryDatasetIds: any[]) => {
