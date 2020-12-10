@@ -21,7 +21,6 @@ export class DataQueryModel {
     async getDatasetIDFromMaterial(material: string): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
-        console.log("Getting data set info based on material");
 
         // Get composition ID if a compostion was entered instead of material details
         let compositionIdRaw = await connection.manager.find(Composition, { composition: material });
@@ -42,7 +41,6 @@ export class DataQueryModel {
     async getDatasetIDFromYear(year: number): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
-        console.log("Getting data set info based year");
         let yearDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .where('publication.year = :yearRef', { yearRef: year })
@@ -54,7 +52,6 @@ export class DataQueryModel {
     async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
-        console.log("Getting data set info based on author");
         let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
@@ -68,7 +65,6 @@ export class DataQueryModel {
     async getDatasetIDFromCategory(category: number): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
-        console.log("Getting data set info based on category");
         let categoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .where('category.id = :categoryId', { categoryId: category })
@@ -79,7 +75,6 @@ export class DataQueryModel {
     async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
-        console.log("Getting data set info based on subcategory");
         let subcategoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
@@ -91,24 +86,11 @@ export class DataQueryModel {
     async getAllData(id: number): Promise<IDatasetResponseModel> {
 
         const connection = getConnection();
-        console.log("Getting all data sets' raw data");
-
-        console.log("Getting publications");
         let publicationData: IPublicationModel[] = await selectPublicationsQuery(connection.manager, id)
-
-        console.log("Getting authors");
         let authorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager, id)
-
-        console.log("Getting data sets");
         let datasetData: IDatasetModel[] = await selectDatasetsQuery(connection.manager, id)
-
-        console.log("Getting data point data");
         let datapointData: IDataPointModel[] = await selectDataPointsQuery(connection.manager, id)
-
-        console.log("Getting data set materials");
         let materialData: IMaterialModel[] = await selectMaterialQuery(connection.manager, id)
-
-        console.log("Getting data point comments");
         let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(connection.manager, id)
 
         const allData: IDatasetResponseModel = {
