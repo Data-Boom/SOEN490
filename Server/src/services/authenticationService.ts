@@ -42,11 +42,9 @@ export class AuthenticationService {
 
     async checkLoginCredentials(userInformation: ILoginInformation): Promise<IResponse> {
 
-        let verifiedEmail: string;
+        let verifiedEmail: boolean;
         let savedPasswordHash: string;
         let accessToken: string;
-        let refreshToken: string;
-        let tokenExpiry: string;
 
         try {
             verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userInformation.email);
@@ -74,9 +72,7 @@ export class AuthenticationService {
             let jwtParams: IJwtParams;
             try {
                 jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
-                tokenExpiry = '1m';
-                accessToken = await this.generateJwtToken(jwtParams, tokenExpiry);
-                refreshToken = await this.generateJwtToken(jwtParams)
+                accessToken = await this.generateJwtToken(jwtParams);
             } catch (error) {
                 this.requestResponse.status = "Failure";
                 this.requestResponse.statusCode = 500;
@@ -86,10 +82,7 @@ export class AuthenticationService {
 
             this.requestResponse.status = "Success";
             this.requestResponse.statusCode = 200;
-            this.requestResponse.response = {
-                "AccessToken": accessToken,
-                "RefreshToken": refreshToken
-            };
+            this.requestResponse.response = accessToken;
         }
 
         return this.requestResponse;
@@ -102,43 +95,17 @@ export class AuthenticationService {
         return hashedPassword;
     }
 
-    private async generateJwtToken(jwtParams: IJwtParams, jwtExpiry?: string): Promise<string> {
+    private async generateJwtToken(jwtParams: IJwtParams): Promise<string> {
 
         let token: string;
+        let jwtExpiry: number = 300;
         const jwtAccessKey = process.env.ACCESS_SECRET_KEY;
-        const jwtRefreshKey = process.env.REFRESH_SECRET_KEY;
 
-        if (jwtExpiry !== undefined) {
-            token = await jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, process.env.ACCESS_SECRET_KEY, {
-                expiresIn: jwtExpiry
-            })
-        }
-        else {
-            token = await jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, process.env.REFRESH_SECRET_KEY)
-        }
+        token = await jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, process.env.ACCESS_SECRET_KEY, {
+            expiresIn: jwtExpiry
+        })
+
         return token;
-    }
-
-    async refreshToken(refreshToken: string): Promise<IResponse> {
-
-        let newToken: string;
-        let tokenExpiry: string;
-
-        jwt.verify(refreshToken, process.env.REFRESH_SECRET_KEY, (err: Error) => {
-            if (err) {
-                this.requestResponse.status = "Failure";
-                this.requestResponse.statusCode = 403;
-                this.requestResponse.response = "Failed to verify Refresh Token";
-                return this.requestResponse;
-            }
-        });
-        this.requestResponse.status = "Success";
-        this.requestResponse.statusCode = 200;
-        this.requestResponse.response = {
-            "AccessToken": newToken,
-            "RefreshToken": refreshToken
-        };
-        return this.requestResponse;
     }
 }
 

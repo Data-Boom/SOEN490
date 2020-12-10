@@ -3,7 +3,6 @@ import { getConnection } from 'typeorm';
 import { Accounts } from './entities/Accounts'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
 
-
 export class AuthenticationModel {
 
     static async insertSignUpInformation(signUpInfo: ISignUpInformation) {
@@ -22,7 +21,7 @@ export class AuthenticationModel {
         await connection.manager.save(signUpInformation);
     }
 
-    static async verifyIfEmailExists(email: string): Promise<any> {
+    static async verifyIfEmailExists(email: string): Promise<boolean> {
 
         let connection = getConnection();
         let userEmail = await connection.getRepository(Accounts)
