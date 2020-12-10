@@ -33,7 +33,6 @@ export class DataQueryModel {
             .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
             .setParameters({ compositionRef: compositionId, materialDetails: material })
             .getRawMany();
-
         return materialDatasetData;
     }
 
@@ -42,7 +41,6 @@ export class DataQueryModel {
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .where('publication.year = :yearRef', { yearRef: year })
             .getRawMany();
-
         return yearDatasetData;
     }
 
@@ -81,7 +79,6 @@ export class DataQueryModel {
         let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection.manager, id)
         let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection.manager, id)
         let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(this.connection.manager, id)
-
         const allData: IDatasetResponseModel = {
             authors: authorData,
             publications: publicationData,
