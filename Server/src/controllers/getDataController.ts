@@ -4,17 +4,12 @@ import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterfac
 export class getDataController {
     async createRequestForData(request: Request, response: Response) {
         let validatedData = this.validateInputData(request, response);
-        if (validatedData != false) {
-            try {
-                const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getArrayOfDatasets(validatedData)
-                return response.status(200).send(arrayOfData);
-            } catch (err) {
-                response.status(500).send(err);
-            }
-        }
-        else {
-            response.status(500).send("Invalid search params entered");
+        try {
+            const retrieveDataObject = new retrieveData();
+            let arrayOfData = await retrieveDataObject.getArrayOfDatasets(validatedData)
+            return response.status(200).send(arrayOfData);
+        } catch (err) {
+            response.status(500).send(err);
         }
     }
 
@@ -24,7 +19,7 @@ export class getDataController {
         if (validatedRequest.datasetId != undefined && validatedRequest.material != undefined
             && validatedRequest.year != undefined && validatedRequest.categoryId != undefined
             && (validatedRequest.firstName != undefined || validatedRequest.lastName != undefined))
-            return false;
+            response.status(500).send("Invalid search params entered");
         return validatedRequest
     }
 }
