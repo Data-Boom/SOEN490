@@ -1,6 +1,6 @@
 export interface IDataRequestModel {
     datasetId: number
-    material: string
+    material: string[]
     firstName: string
     lastName: string
     year: number

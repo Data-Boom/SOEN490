@@ -12,6 +12,7 @@ export class retrieveData {
     async getArrayOfDatasets(receivedData: IDataRequestModel) {
         let datasetReceived = receivedData.datasetId;
         let materialReceived = receivedData.material;
+        console.log(receivedData.material);
         let firstNameReceived = receivedData.firstName;
         let lastNameReceived = receivedData.lastName;
         let yearReceived = receivedData.year;
@@ -25,30 +26,29 @@ export class retrieveData {
         return setOfData;
     }
 
-    private async getDatasetIdsFromParams(materialReceived: string, yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number) {
+    private async getDatasetIdsFromParams(materialReceived: string[], yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number) {
         let rawData;
         let paramsEntered = 0;
         // paramsEntered is used to track how many params were entered
-        let materialDatasetIds = [];
-        let yearDatasetIds = [];
-        let authorDatasetIds = [];
-        let categoryDatasetIds = [];
+        let rawDatasetIds = [];
 
         // Check which variables were received and the data sets IDs linked to each variable
         if (materialReceived != undefined) {
-            paramsEntered++
-            rawData = await this.dataQuery.getDatasetIDFromMaterial(materialReceived);
-            materialDatasetIds = await this.createDatasetIdArray(rawData);
+            for (let i = 0; i < materialReceived.length; i++) {
+                paramsEntered++
+                rawData = await this.dataQuery.getDatasetIDFromMaterial(materialReceived[i]);
+                rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
+            }
         }
         if (yearReceived != undefined) {
             paramsEntered++
             rawData = await this.dataQuery.getDatasetIDFromYear(yearReceived);
-            yearDatasetIds = await this.createDatasetIdArray(rawData);
+            rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
         if (firstNameReceived != undefined && lastNameReceived != undefined) {
             paramsEntered++
             rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
-            authorDatasetIds = await this.createDatasetIdArray(rawData);
+            rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
         if (categoryReceived != undefined) {
             paramsEntered++
@@ -58,9 +58,9 @@ export class retrieveData {
             else {
                 rawData = await this.dataQuery.getDatasetIDFromCategory(categoryReceived);
             }
-            categoryDatasetIds = await this.createDatasetIdArray(rawData);
+            rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
-        let selectedDatasetIds = await this.selectDatasetIds(paramsEntered, materialDatasetIds, yearDatasetIds, authorDatasetIds, categoryDatasetIds)
+        let selectedDatasetIds = await this.selectDatasetIds(paramsEntered, rawDatasetIds)
         return selectedDatasetIds
     }
 
@@ -72,20 +72,19 @@ export class retrieveData {
         return datasetIdArray;
     }
 
-    private async selectDatasetIds(paramsEntered: number, materialDatasetIds: any[], yearDatasetIds: any[], authorDatasetIds: any[], categoryDatasetIds: any[]) {
+    private async selectDatasetIds(paramsEntered: number, rawDatasetIds: any[]) {
         let selectedDatasetIds = []
         // Find the intersection of data sets IDs among all the different variables
-        let allDatasetIds = materialDatasetIds.concat(yearDatasetIds).concat(authorDatasetIds).concat(categoryDatasetIds)
         let count: number
-        for (let i = 0; i < allDatasetIds.length; i++) {
+        for (let i = 0; i < rawDatasetIds.length; i++) {
             count = 1;
-            for (let j = i + 1; j < allDatasetIds.length; j++) {
-                if (allDatasetIds[i] == allDatasetIds[j]) {
+            for (let j = i + 1; j < rawDatasetIds.length; j++) {
+                if (rawDatasetIds[i] == rawDatasetIds[j]) {
                     count++
                 }
             }
             if (count == paramsEntered) {
-                selectedDatasetIds.push(allDatasetIds[i]);
+                selectedDatasetIds.push(rawDatasetIds[i]);
             }
         }
         return selectedDatasetIds;
