@@ -18,7 +18,7 @@ export class DataQueryModel {
     constructor() {
     }
 
-    async getDatasetIDFromMaterial(material: string) {
+    async getDatasetIDFromMaterial(material: string): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
         console.log("Getting data set info based on material");
@@ -39,11 +39,11 @@ export class DataQueryModel {
         return materialDatasetData;
     }
 
-    async getDatasetIDFromYear(year: number) {
+    async getDatasetIDFromYear(year: number): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
         console.log("Getting data set info based year");
-        let yearDatasetData = await selectDatasetIdsQuery(connection.manager)
+        let yearDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .where('publication.year = :yearRef', { yearRef: year })
             .getRawMany();
@@ -51,11 +51,11 @@ export class DataQueryModel {
         return yearDatasetData;
     }
 
-    async getDatasetIDFromAuthor(firstName: string, lastName: string) {
+    async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
         console.log("Getting data set info based on author");
-        let authorDatasetData = await selectDatasetIdsQuery(connection.manager)
+        let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
@@ -65,22 +65,22 @@ export class DataQueryModel {
         return authorDatasetData;
     }
 
-    async getDatasetIDFromCategory(category: number) {
+    async getDatasetIDFromCategory(category: number): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
         console.log("Getting data set info based on category");
-        let categoryDatasetData = await selectDatasetIdsQuery(connection.manager)
+        let categoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .where('category.id = :categoryId', { categoryId: category })
             .getRawMany();
         return categoryDatasetData;
     }
 
-    async getDatasetIDFromSubcategory(category: number, subcategory: number) {
+    async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetModel[]> {
 
         const connection = getConnection();
         console.log("Getting data set info based on subcategory");
-        let subcategoryDatasetData = await selectDatasetIdsQuery(connection.manager)
+        let subcategoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
             .where('category.id = :categoryId', { categoryId: category })

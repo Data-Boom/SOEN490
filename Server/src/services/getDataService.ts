@@ -1,32 +1,22 @@
 import { IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
+import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 import { DataQueryModel } from "../models/DataQueryModel";
 
-interface IDataRequestModel {
-    datasetId: number
-    material: string
-    firstName: string
-    lastName: string
-    year: number
-    categoryId: number
-    subcategoryId: number
-}
 export class retrieveData {
-    dataQuery: DataQueryModel;
+    private dataQuery: DataQueryModel;
 
     constructor() {
         this.dataQuery = new DataQueryModel();
     }
 
-    async getArrayOfDatasets(req) {
-        let request: IDataRequestModel;
-        request = req.query
-        let datasetReceived = request.datasetId;
-        let materialReceived = request.material;
-        let firstNameReceived = request.firstName;
-        let lastNameReceived = request.lastName;
-        let yearReceived = request.year;
-        let categoryReceived = request.categoryId;
-        let subcategoryReceived = request.subcategoryId;
+    async getArrayOfDatasets(receivedData: IDataRequestModel) {
+        let datasetReceived = receivedData.datasetId;
+        let materialReceived = receivedData.material;
+        let firstNameReceived = receivedData.firstName;
+        let lastNameReceived = receivedData.lastName;
+        let yearReceived = receivedData.year;
+        let categoryReceived = receivedData.categoryId;
+        let subcategoryReceived = receivedData.subcategoryId;
         let selectedDatasetIds = [];
         if (datasetReceived != undefined) {
             selectedDatasetIds = [datasetReceived];
@@ -110,7 +100,6 @@ export class retrieveData {
     }
 
     private async getDataFromDatasetIds(selectedDatasetIds: any[]) {
-        console.log("You're in getDataFromDatasetIds ")
         // Query each data set ID to get its information and add to array of data
         let setOfData: Array<IDatasetResponseModel> = [];
         for (let i = 0; i < selectedDatasetIds.length; i++) {

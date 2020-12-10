@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import { createRequestForData } from '../controllers/getDataController';
+import { Request, Response, Router } from 'express';
+import { getDataController } from '../controllers/getDataController';
 
 /**
  * This file contains the routes for a call to query or obtain a dataset. 
@@ -7,8 +7,11 @@ import { createRequestForData } from '../controllers/getDataController';
  * to continue processing of the request.
  */
 
-let getDataRouter = Router();
+let router = Router();
 
-getDataRouter.get('/dataset*', createRequestForData);
+router.get('/dataset*', (request: Request, response, Response) => {
+    let getDataControllerObject = new getDataController();
+    getDataControllerObject.createRequestForData(request, response);
+});
 
-export { getDataRouter as getDataRouter };
+export { router as getDataRouter };
