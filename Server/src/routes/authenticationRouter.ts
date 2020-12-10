@@ -1,6 +1,4 @@
-import { sign } from 'crypto';
 import { Request, Response, Router } from 'express';
-import { AuthenticationService } from '../services/authenticationService';
 import { AuthenticationController } from '../controllers/authenticationController'
 
 let router = Router();

@@ -14,3 +14,6 @@ export interface FailureIResponse extends IResponse {
     status: "Failure"
     statusCode: 400;
 }
+
+export interface ForbiddenIResponse extends IResponse {
+}

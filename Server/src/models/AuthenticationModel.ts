@@ -3,8 +3,17 @@ import { getConnection } from 'typeorm';
 import { Accounts } from './entities/Accounts'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
 
+/**
+ * This model contains all methods required for obtaining data from the Accounts
+ * table inside the database
+ */
 export class AuthenticationModel {
 
+    /**
+     * Method responsible for completing signup process. Extracting user information
+     * and sets the entity values
+     * @param signUpInfo - User Information from Frontend Request
+     */
     static async insertSignUpInformation(signUpInfo: ISignUpInformation) {
 
         let connection = getConnection();
@@ -21,6 +30,10 @@ export class AuthenticationModel {
         await connection.manager.save(signUpInformation);
     }
 
+    /**
+     * Method to verify Email exists. Returns true or undefined
+     * @param email - User Email
+     */
     static async verifyIfEmailExists(email: string): Promise<boolean> {
 
         let connection = getConnection();
@@ -32,7 +45,10 @@ export class AuthenticationModel {
         return userEmail !== undefined;
     }
 
-
+    /**
+     * Method used to verify Password of corresponding input email
+     * @param email - User Email
+     */
     static async verifyPassword(email: string): Promise<any> {
 
         let connection = getConnection();
@@ -45,6 +61,11 @@ export class AuthenticationModel {
         return userInfo[0].account_password;
     }
 
+    /**
+     * Method is used to verify Admin Status of the user - used for 
+     * new data approval API
+     * @param email - User Email
+     */
     static async verifyAdminStatus(email: string): Promise<boolean> {
 
         let adminStatus: any;
@@ -57,6 +78,10 @@ export class AuthenticationModel {
         return adminStatus.account_admin;
     }
 
+    /**
+     * Parameters that are will be used to build user JWT Token
+     * @param email - User Email
+     */
     static async obtainJWTParams(email: string): Promise<any> {
 
         let connection = getConnection();
