@@ -1,4 +1,4 @@
-import { getConnection } from "typeorm";
+import { Connection, getConnection } from "typeorm";
 import { selectAuthorsQuery } from "./entities/Authors";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
@@ -15,21 +15,20 @@ import {
 
 
 export class DataQueryModel {
+    private connection: Connection;
     constructor() {
+        this.connection = getConnection();
     }
 
     async getDatasetIDFromMaterial(material: string): Promise<IDatasetModel[]> {
-
-        const connection = getConnection();
-
         // Get composition ID if a compostion was entered instead of material details
-        let compositionIdRaw = await connection.manager.find(Composition, { composition: material });
+        let compositionIdRaw = await this.connection.manager.find(Composition, { composition: material });
         let compositionId = -1; // fallback value if material details were entered
         if (compositionIdRaw[0] != null) {
             compositionId = compositionIdRaw[0].id;
         };
 
-        let materialDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
+        let materialDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin('dataset.materials', 'material')
             .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
             .setParameters({ compositionRef: compositionId, materialDetails: material })
@@ -39,9 +38,7 @@ export class DataQueryModel {
     }
 
     async getDatasetIDFromYear(year: number): Promise<IDatasetModel[]> {
-
-        const connection = getConnection();
-        let yearDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
+        let yearDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .where('publication.year = :yearRef', { yearRef: year })
             .getRawMany();
@@ -50,9 +47,7 @@ export class DataQueryModel {
     }
 
     async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetModel[]> {
-
-        const connection = getConnection();
-        let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
+        let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
@@ -63,9 +58,7 @@ export class DataQueryModel {
     }
 
     async getDatasetIDFromCategory(category: number): Promise<IDatasetModel[]> {
-
-        const connection = getConnection();
-        let categoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
+        let categoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .where('category.id = :categoryId', { categoryId: category })
             .getRawMany();
@@ -73,9 +66,7 @@ export class DataQueryModel {
     }
 
     async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetModel[]> {
-
-        const connection = getConnection();
-        let subcategoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(connection.manager)
+        let subcategoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
             .where('category.id = :categoryId', { categoryId: category })
@@ -84,14 +75,12 @@ export class DataQueryModel {
         return subcategoryDatasetData;
     }
     async getAllData(id: number): Promise<IDatasetResponseModel> {
-
-        const connection = getConnection();
-        let publicationData: IPublicationModel[] = await selectPublicationsQuery(connection.manager, id)
-        let authorData: IAuthorModel[] = await selectAuthorsQuery(connection.manager, id)
-        let datasetData: IDatasetModel[] = await selectDatasetsQuery(connection.manager, id)
-        let datapointData: IDataPointModel[] = await selectDataPointsQuery(connection.manager, id)
-        let materialData: IMaterialModel[] = await selectMaterialQuery(connection.manager, id)
-        let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(connection.manager, id)
+        let publicationData: IPublicationModel[] = await selectPublicationsQuery(this.connection.manager, id)
+        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection.manager, id)
+        let datasetData: IDatasetModel[] = await selectDatasetsQuery(this.connection.manager, id)
+        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection.manager, id)
+        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection.manager, id)
+        let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(this.connection.manager, id)
 
         const allData: IDatasetResponseModel = {
             authors: authorData,
