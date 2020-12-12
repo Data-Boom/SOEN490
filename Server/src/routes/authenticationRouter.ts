@@ -9,12 +9,12 @@ let authenticationController = new AuthenticationController;
  * This route is used when an authentication API is called.
  */
 
-router.post('/signup', async (request: Request, response: Response) => {
+router.post('/signup', (request: Request, response: Response) => {
 
     authenticationController.createSignUpRequest(request, response);
 });
 
-router.post('/login', async (request: Request, response: Response) => {
+router.post('/login', (request: Request, response: Response) => {
 
     authenticationController.createLoginRequest(request, response);
 });

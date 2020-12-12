@@ -12,12 +12,14 @@ import bodyParser from 'body-parser';
  * to initialize the application. The initial connection to the database is also created here.
  */
 export class loadStartupProcess {
+  public app: express.Application
+
   constructor() {
 
     // Create a new express application instance
-    const app: express.Application = express();
+    this.app = express();
 
-    app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
+    this.app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
 
     /**
      *  Options for cors midddleware. These HTTP headers can be configured what the application requires. Will be modified in 
@@ -37,19 +39,18 @@ export class loadStartupProcess {
       preflightContinue: false,
     };
 
-    app.use(bodyParser.urlencoded({
+    this.app.use(bodyParser.urlencoded({
       extended: false
     }));
-    app.use(cors(options));
-    app.use(bodyParser.json());
+    this.app.use(cors(options));
+    this.app.use(bodyParser.json());
 
 
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    app.use('/', fileUploadRouter)
-    app.use('/', authenticationRouter)
-
+    this.app.use('/', fileUploadRouter)
+    this.app.use('/', authenticationRouter)
 
 
     const config: any = {
@@ -73,7 +74,7 @@ export class loadStartupProcess {
      */
     const port: number = Number(process.env.PORT)
     const startServer = async () => {
-      app.listen(port, () => {
+      this.app.listen(port, () => {
         console.log(`This Server is running on http://localhost:${process.env.PORT}`);
 
       });
@@ -82,8 +83,6 @@ export class loadStartupProcess {
     /**
      * Call the connect method from /Database to connect to the database and starts the nodejs Server
      */
-
-
     (async () => {
       try {
         await connectDB(config);

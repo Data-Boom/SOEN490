@@ -8,9 +8,9 @@ import { Request, Response, NextFunction } from 'express';
  * This class acts as the middleware to process an incoming Request to the application and 
  * verifies token existence
  */
-export class authenticateJWT {
+export class AuthenticateJWT {
 
-    static async verifyJWT(request: Request, response: Response, next: NextFunction) {
+    static async verifyJWT(request: Request, response: Response, next: NextFunction): Promise<Response> {
 
         const authHeader = request.headers.authorization;
 
@@ -20,12 +20,13 @@ export class authenticateJWT {
             jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err: Error) => {
                 if (err) {
                     console.log(err);
-                    return response.sendStatus(403);
+                    return response.status(403).json({ error: "JWT Token provided is incorrect" })
                 }
                 next();
             });
         } else {
-            response.sendStatus(401);
+            return response.status(401).json({ error: "Missing JWT token from the 'Authorization' header" });
         }
     }
 }
+

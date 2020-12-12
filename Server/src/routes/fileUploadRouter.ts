@@ -2,7 +2,7 @@
 import { Request, Response, Router, NextFunction } from 'express';
 import multer from 'multer';
 import { fileUploadController } from '../controllers/fileUploadController';
-import { authenticateJWT } from '../middleware/authenticateJWT';
+import { AuthenticateJWT } from '../middleware/authenticateJWT';
 
 interface MulterRequest extends Request {
   file: any;
@@ -16,7 +16,7 @@ let router = Router();
  * and the file is stored in a temporary directory called tmp/json. This route is referred for processing by 
  * the service.
  */
-router.post('/dataupload', [authenticateJWT.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
+router.post('/dataupload', [AuthenticateJWT.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
   try {
     let fileUpload = new fileUploadController(request.file.path);
     fileUpload.createRequest(request, response);
@@ -26,7 +26,7 @@ router.post('/dataupload', [authenticateJWT.verifyJWT, upload.single('file')], (
 });
 
 //File Upload Get Router
-router.get('/dataupload', authenticateJWT.verifyJWT, (request: Request, response, Response) => {
+router.get('/dataupload', AuthenticateJWT.verifyJWT, (request: Request, response, Response) => {
   // Call the controller for get
   response.status(200).json("upload endpoint is reached!");
 });
