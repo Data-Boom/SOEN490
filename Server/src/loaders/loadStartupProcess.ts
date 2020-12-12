@@ -1,19 +1,11 @@
 import 'dotenv/config';
-<<<<<<< HEAD
+import express from 'express';
 import cors from 'cors';
 import { connectDB } from '../database';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { authenticationRouter } from '../routes/authenticationRouter';
 import bodyParser from 'body-parser';
 
-=======
-
-import bodyParser from 'body-parser'
-import { connectDB } from '../database'
-import cors from 'cors';
-import express from 'express';
-import { fileUploadRouter } from '../routes/fileUploadRouter'
->>>>>>> reconfigureJestForTesting
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used

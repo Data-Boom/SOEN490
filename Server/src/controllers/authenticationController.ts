@@ -16,10 +16,10 @@ export class AuthenticationController {
     constructor() {
     }
 
-    createSignUpRequest(request: Request, response: Response) {
+    createSignUpRequest(request: Request, response: Response): Response {
         this.invalidResponse = this.validateSignUpRequest(request);
         if (this.invalidResponse) {
-            response.status(400).json("Request is invalid. Missing attributes")
+            return response.status(400).json("Request is invalid. Missing attributes")
         }
         else {
             let signUpInfo: ISignUpInformation;
@@ -40,10 +40,10 @@ export class AuthenticationController {
         }
     }
 
-    createLoginRequest(request: Request, response: Response) {
+    createLoginRequest(request: Request, response: Response): Response {
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
-            response.status(400).json("Request is invalid. Email or Password is attributes missing")
+            return response.status(400).json("Request is invalid. Email or Password is attributes missing")
         }
         else {
             let loginInfo: ILoginInformation;
@@ -75,15 +75,15 @@ export class AuthenticationController {
         }
     }
 
-    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response) {
+    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse = await this.authenticationService.processSignUp(signUpInfo);
-        response.status(serviceResponse.statusCode).json(serviceResponse);
+        return response.status(serviceResponse.statusCode).json(serviceResponse);
     }
 
-    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response) {
+    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-        response.status(serviceResponse.statusCode).json(serviceResponse);
+        return response.status(serviceResponse.statusCode).json(serviceResponse);
     }
 }

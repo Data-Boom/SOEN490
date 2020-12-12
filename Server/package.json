@@ -30,11 +30,7 @@
   },
   "dependencies": {
     "@types/cors": "^2.8.5",
-<<<<<<< HEAD
     "argon2": "^0.27.0",
-=======
-    "axios": "^0.21.0",
->>>>>>> reconfigureJestForTesting
     "cors": "^2.8.5",
     "csv-parse": "^4.12.0",
     "dotenv": "^8.2.0",
