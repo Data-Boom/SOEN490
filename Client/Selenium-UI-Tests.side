@@ -222,7 +222,7 @@
       "id": "77225102-c556-4e47-8453-7ffd018edb5a",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiBox-root-28 > .MuiButtonBase-root > .MuiButton-label",
+      "target": "id=delete-dataset-btn",
       "targets": [
         ["css=.MuiBox-root-28 > .MuiButtonBase-root > .MuiButton-label", "css:finder"],
         ["xpath=//div[@id='root']/div/div[2]/div/button/span", "xpath:idRelative"],
@@ -268,7 +268,7 @@
       "id": "5a797e90-3fbb-4624-8f34-045b84a470a7",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiBox-root-28 > .MuiButtonBase-root > .MuiButton-label",
+      "target": "id=delete-dataset-btn",
       "targets": [
         ["css=.MuiBox-root-28 > .MuiButtonBase-root > .MuiButton-label", "css:finder"],
         ["xpath=//div[@id='root']/div/div[2]/div/button/span", "xpath:idRelative"],
@@ -938,6 +938,164 @@
         ["css=.MuiButtonBase-root:nth-child(2) > .MuiButton-label", "css:finder"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/div/div/button[2]/span", "xpath:idRelative"],
         ["xpath=//button[2]/span", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "8e57857b-9e41-4016-b2c8-800cb1e47020",
+    "name": "Hiding Datapoints",
+    "commands": [{
+      "id": "82750317-de79-4bd3-ad3d-281c90f1aacf",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "df3be73f-bea0-4e0b-90c5-b51716a9ade8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "2406x1400",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dd82de92-560d-404a-9765-25c86588f7b6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.makeStyles-menuButton-4 path",
+      "targets": [
+        ["css=.makeStyles-menuButton-4 path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "38d75f42-a296-47e3-8c94-958d505f7635",
+      "comment": "",
+      "command": "click",
+      "target": "id=graph-id",
+      "targets": [
+        ["id=graph-id", "id"],
+        ["linkText=Graph", "linkText"],
+        ["css=#graph-id", "css:finder"],
+        ["xpath=//a[contains(text(),'Graph')]", "xpath:link"],
+        ["xpath=//a[@id='graph-id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div/ul/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/graph')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Graph')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e150148-886f-4bc1-b367-0cfea8f1ff4c",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root",
+      "targets": [
+        ["css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "51359502-a494-4e81-a48c-e48a69f16bb1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root",
+      "targets": [
+        ["css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "5043774d-68c5-4de8-ba7c-7d1346c6f41c",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root",
+      "targets": [
+        ["css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "07ca0c79-b7d7-4dd0-9cfe-341cc0369a7e",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label",
+      "targets": [
+        ["css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[2]/button/span", "xpath:idRelative"],
+        ["xpath=//div[2]/button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "627b923c-bca2-4a58-895a-95a4840650d0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label",
+      "targets": [
+        ["css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[2]/button/span", "xpath:idRelative"],
+        ["xpath=//div[2]/button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a8316afc-75bf-4c83-8476-e643758cedd8",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label",
+      "targets": [
+        ["css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label", "css:finder"],
+        ["xpath=//div[@id='root']/div/div[2]/button/span", "xpath:idRelative"],
+        ["xpath=//div[2]/button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6e7edbdc-fae3-4573-ab9b-bf1f410bd447",
+      "comment": "",
+      "command": "click",
+      "target": "css=#id2 > circle:nth-child(1)",
+      "targets": [
+        ["css=#id2 > circle:nth-child(1)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ad9b165-7998-42c2-a854-232248d923bd",
+      "comment": "",
+      "command": "click",
+      "target": "css=#id2 > circle:nth-child(5)",
+      "targets": [
+        ["css=#id2 > circle:nth-child(5)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "c346a2da-e0fd-4ccf-9662-a203b1276b50",
+      "comment": "",
+      "command": "click",
+      "target": "css=#id2 > circle:nth-child(3)",
+      "targets": [
+        ["css=#id2 > circle:nth-child(3)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce9994f2-0e18-46e1-9d89-156ff910ebae",
+      "comment": "",
+      "command": "click",
+      "target": "css=#id2 > circle:nth-child(1)",
+      "targets": [
+        ["css=#id2 > circle:nth-child(1)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "3fd8000b-55b7-4f08-aed2-0a1561e0f3c5",
+      "comment": "",
+      "command": "click",
+      "target": "css=#id2 > circle:nth-child(5)",
+      "targets": [
+        ["css=#id2 > circle:nth-child(5)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "561a5359-4a99-4d63-beae-800f4975d064",
+      "comment": "",
+      "command": "click",
+      "target": "css=#id2 > circle:nth-child(3)",
+      "targets": [
+        ["css=#id2 > circle:nth-child(3)", "css:finder"]
       ],
       "value": ""
     }]

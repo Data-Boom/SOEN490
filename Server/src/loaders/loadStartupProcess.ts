@@ -1,11 +1,19 @@
-import express from 'express';
 import 'dotenv/config';
+<<<<<<< HEAD
 import cors from 'cors';
 import { connectDB } from '../database';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { authenticationRouter } from '../routes/authenticationRouter';
 import bodyParser from 'body-parser';
 
+=======
+
+import bodyParser from 'body-parser'
+import { connectDB } from '../database'
+import cors from 'cors';
+import express from 'express';
+import { fileUploadRouter } from '../routes/fileUploadRouter'
+>>>>>>> reconfigureJestForTesting
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
@@ -57,7 +65,7 @@ export class loadStartupProcess {
       "type": process.env.DB_TYPE,
       "host": process.env.HOST,
       "port": process.env.DB_PORT,
-      "username": process.env.USERNAME,
+      "username": process.env.USER_NAME,
       "password": process.env.PASSWORD,
       "database": process.env.DB_NAME,
       "synchronize": true,
@@ -85,7 +93,12 @@ export class loadStartupProcess {
 
 
     (async () => {
-      await connectDB(config);
+      try {
+        await connectDB(config);
+      } catch (error) {
+        console.log("caught error while connecting to db:")
+        console.log(error)
+      }
       await startServer();
     })();
 
