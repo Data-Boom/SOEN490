@@ -44,7 +44,6 @@ export class fileUploadService {
     let referenceYear: number;
     let referencePages: number;
     let referenceVolume: number;
-
     let referenceTypeID: number;
     let publisherNameId: number;
     let publicationID: number;
