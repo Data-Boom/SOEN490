@@ -7,18 +7,19 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
+import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import DatasetUploadView from "../Views/DatasetUploadView"
 import FileUploadView from "../Views/FileUploadView"
 import GraphView from "../Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from '../Views/HomeView'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "../Views/SearchView"
 import clsx from "clsx"
 
@@ -29,14 +30,12 @@ export default function NavigationMenu() {
   const [open, setOpen] = React.useState(false)
   const classes = useStyles()
   const handleDrawerOpen = () => {
-    setOpen(true);
-    console.log("openDrawer Test")
-  };
+    setOpen(true)
+  }
 
   const handleDrawerClose = () => {
-    setOpen(false);
-    console.log("closeDrawer Test")
-  };
+    setOpen(false)
+  }
 
   const renderNavLink = (route, title, icon, navID = null) => {
     return (
@@ -67,6 +66,7 @@ export default function NavigationMenu() {
           {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
           {renderNavLink(searchRoute, "Search", <SearchIcon />)}
           {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
+          {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
         </List>
       </ Drawer>
     )
@@ -97,6 +97,7 @@ export default function NavigationMenu() {
           <Route path={graphRoute} component={GraphView} />
           <Route path={fileUploadRoute} component={FileUploadView} />
           <Route path={searchRoute} component={SearchView} />
+          <Route path={datasetUploadRoute} component={DatasetUploadView} />
         </Box>
       </HashRouter >
     </>
@@ -159,4 +160,4 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-}));
+}))
