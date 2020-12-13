@@ -3,7 +3,7 @@ import { AuthenticationController } from '../controllers/authenticationControlle
 
 let router = Router();
 
-let authenticationController = new AuthenticationController;
+let authenticationController = new AuthenticationController();
 
 /**
  * This route is used when an authentication API is called.

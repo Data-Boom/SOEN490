@@ -36,14 +36,15 @@ export class AuthenticationController {
             else {
                 signUpInfo.isAdmin = request.query.isAdmin as any;
             }
-            this.callServiceForSignUp(signUpInfo, response, next);
+            let serviceResponse: any = this.callServiceForSignUp(signUpInfo, response, next);
+            return response.status(serviceResponse.statusCode).json(serviceResponse);
         }
     }
 
     createLoginRequest(request: Request, response: Response, next: NextFunction): Response {
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
-            return response.status(400).json("Request is invalid. Email or Password is attributes missing")
+            return response.status(400).json("Request is invalid. Email or Password attribute missing")
         }
         else {
             let loginInfo: ILoginInformation;
@@ -75,10 +76,10 @@ export class AuthenticationController {
         }
     }
 
-    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<Response> {
+    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<IResponse> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse = await this.authenticationService.processSignUp(signUpInfo);
-        return response.status(serviceResponse.statusCode).json(serviceResponse);
+        return serviceResponse;
     }
 
     private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<Response> {
