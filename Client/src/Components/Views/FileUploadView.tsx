@@ -1,4 +1,4 @@
-import DataCell from '../Components/DataCell/DataCell'
+import DataCell from '../DataCell/DataCell'
 import React from 'react'
 
 const FileUploadView = () => {

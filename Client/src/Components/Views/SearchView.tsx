@@ -1,9 +1,9 @@
 import { Box, Button, Container } from '@material-ui/core'
-import { ICompleteDatasetEntity, exampleDatasets } from '../Models/Datasets/ICompleteDatasetEntity'
+import { ICompleteDatasetEntity, exampleDatasets } from '../../Models/Datasets/ICompleteDatasetEntity'
 import React, { useState } from 'react'
 
-import { SearchDatasetsForm } from '../Components/Search/SearchDatasetsForm'
-import { SearchResults } from '../Components/Search/SearchResults'
+import { SearchDatasetsForm } from '../Search/SearchDatasetsForm'
+import { SearchResults } from '../Search/SearchResults'
 import { SelectionChangeParams } from '@material-ui/data-grid'
 
 interface IProps {

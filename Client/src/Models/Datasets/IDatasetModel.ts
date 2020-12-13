@@ -36,7 +36,7 @@ export interface IData {
   comments: string;
 }
 
-export interface IExportDatasetModel {
+export interface IDatasetModel {
   reference: IReference;
   dataset_name: string;
   material: IMaterial[];
@@ -46,7 +46,29 @@ export interface IExportDatasetModel {
   data: IData;
 }
 
-export const exampleExportDatasetModel: IExportDatasetModel = {
+export const defaultDatasetModel: IDatasetModel = {
+  category: '',
+  data: {
+    comments: '',
+    contents: [],
+    variables: []
+  },
+  data_type: '',
+  dataset_name: '',
+  material: [],
+  reference: {
+    authors: [],
+    pages: 0,
+    publisher: '',
+    title: '',
+    type: '',
+    volume: 0,
+    year: 0
+  },
+  subcategory: ''
+}
+
+export const exampleExportDatasetModel: IDatasetModel = {
   "reference": {
     "type": "book",
     "publisher": "University of California Press",

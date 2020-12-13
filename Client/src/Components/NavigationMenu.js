@@ -12,15 +12,15 @@ import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import DatasetUploadView from "../Views/DatasetUploadView"
-import FileUploadView from "../Views/FileUploadView"
-import GraphView from "../Views/GraphView"
+import DatasetUploadView from "./DatasetUpload/DatasetUploadView"
+import FileUploadView from "./Views/FileUploadView"
+import GraphView from "./Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
-import HomeView from '../Views/HomeView'
+import HomeView from './Views/HomeView'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "../Views/SearchView"
+import SearchView from "./Views/SearchView"
 import clsx from "clsx"
 
 const drawerWidth = 240
