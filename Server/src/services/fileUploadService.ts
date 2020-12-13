@@ -71,16 +71,16 @@ export class fileUploadService {
     // TODO: DB crashes with duplicate key error on every entry with category & subcategory added in the file upload.
     // Once there is an implemented solution of upsert in the project this should be uncommented and tested.
 
-    // category = jsonObj.category;
-    // subcategory = jsonObj.subcategory;
-    // let categoryIDs = await uploadModel.insertCategories(category, subcategory);
+    category = jsonObj.category;
+    subcategory = jsonObj.subcategory;
+    let categoryIDs: number[] = await this.uploadModel.insertCategories(category, subcategory);
 
     dataType = jsonObj["data type"];
     let dataSetDataTypeID: number = await this.uploadModel.insertDataSetDataType(dataType)
 
     dataSetName = jsonObj["dataset name"];
     dataSetComments = jsonObj.data.comments;
-    let datasetID: number = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID,/** categoryIDs, */ material, dataSetComments)
+    let datasetID: number = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, material, dataSetComments)
 
     for (let i = 0; i < jsonObj.data.variables.length; i++) {
 

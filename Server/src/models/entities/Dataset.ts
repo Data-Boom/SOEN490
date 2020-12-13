@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
@@ -25,7 +25,8 @@ export class Dataset {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Datasetdatatype table
+    * is storing a Foreign Key reference to an entry in the Datasetdatatype table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Datasetdatatype)
     @JoinColumn()
@@ -36,27 +37,26 @@ export class Dataset {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Publications table
+    * is storing a Foreign Key reference to an entry in the Publications table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Publications)
     @JoinColumn()
     publication?: Publications
 
-    //TODO: Uncomment these after we have a solution for existing foreign key duplicate in DB
+    @Column({ default: 1 })
+    categoryId: number
 
-    // @Column({ default: 1 })
-    // categoryId: number
+    @ManyToOne(type => Category)
+    @JoinColumn()
+    category?: Category
 
-    // @ManyToOne(type => Category)
-    // @JoinColumn()
-    // category?: Category
+    @Column({ default: 1 })
+    subcategoryId: number
 
-    // @Column({ default: 1 })
-    // subcategoryId: number
-
-    // @ManyToOne(type => Subcategory)
-    // @JoinColumn()
-    // subcategory?: Subcategory
+    @ManyToOne(type => Subcategory)
+    @JoinColumn()
+    subcategory?: Subcategory
 
     /*
     * This ManyToMany and JoinTable snippet is used to link the Dataset table and the
@@ -78,3 +78,21 @@ export class Dataset {
     @UpdateDateColumn()
     updated: Date
 }
+
+export const selectDatasetIdsQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.id', 'dataset_id')
+
+export const selectDatasetsQuery = (manager: EntityManager, dataset: number) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.name', 'dataset_name')
+        .addSelect('dataset.id', 'dataset_id')
+        .addSelect('datasetdatatype.name', 'datasetdatatype_name')
+        .addSelect('category.name', 'category_name')
+        .addSelect('subcategory.name', 'subcategory_name')
+        .addSelect('dataset.comments', 'dataset_comments')
+        .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawMany();
