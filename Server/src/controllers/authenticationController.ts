@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AuthenticationService } from '../services/authenticationService';
 
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
@@ -16,7 +16,7 @@ export class AuthenticationController {
     constructor() {
     }
 
-    createSignUpRequest(request: Request, response: Response): Response {
+    createSignUpRequest(request: Request, response: Response, next: NextFunction): Response {
         this.invalidResponse = this.validateSignUpRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Missing attributes")
@@ -36,11 +36,11 @@ export class AuthenticationController {
             else {
                 signUpInfo.isAdmin = request.query.isAdmin as any;
             }
-            this.callServiceForSignUp(signUpInfo, response);
+            this.callServiceForSignUp(signUpInfo, response, next);
         }
     }
 
-    createLoginRequest(request: Request, response: Response): Response {
+    createLoginRequest(request: Request, response: Response, next: NextFunction): Response {
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Email or Password is attributes missing")
@@ -51,7 +51,7 @@ export class AuthenticationController {
             loginInfo.email = request.query.email as string;
             loginInfo.password = request.query.password as string;
 
-            this.callServiceForLogin(loginInfo, response);
+            this.callServiceForLogin(loginInfo, response, next);
         }
     }
 
@@ -75,15 +75,21 @@ export class AuthenticationController {
         }
     }
 
-    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response): Promise<Response> {
+    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse = await this.authenticationService.processSignUp(signUpInfo);
         return response.status(serviceResponse.statusCode).json(serviceResponse);
     }
 
-    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response): Promise<Response> {
+    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
-        let serviceResponse: IResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-        return response.status(serviceResponse.statusCode).json(serviceResponse);
+        let serviceResponse: IResponse
+        try {
+            serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
+            response.setHeader('Set-Cookie', serviceResponse.response);
+            return response.status(serviceResponse.statusCode).json(serviceResponse);
+        } catch (error) {
+            next(error);
+        }
     }
 }

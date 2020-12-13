@@ -132,8 +132,11 @@ export class AuthenticationService {
         token = await jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtAccessKey, {
             expiresIn: jwtExpiry
         })
-
         return token;
+    }
+
+    private async createCookie(token: string) {
+
     }
 }
 
