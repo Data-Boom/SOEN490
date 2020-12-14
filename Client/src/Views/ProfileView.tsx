@@ -56,7 +56,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                     {row.name}
                 </TableCell>
                 <TableCell align="right">{row.title}</TableCell>
-                <TableCell align="right">{row.name}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
