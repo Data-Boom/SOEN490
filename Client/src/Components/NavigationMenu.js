@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 
-import { AppBar, Box, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemIcon, Toolbar, Typography, makeStyles } from "@material-ui/core"
+import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemIcon, Toolbar, Typography, makeStyles } from "@material-ui/core"
 import {
   HashRouter,
   NavLink,
@@ -18,9 +18,10 @@ import HomeIcon from '@material-ui/icons/Home'
 import HomeView from '../Views/HomeView'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "../Views/SearchView"
 import clsx from "clsx"
+import universitylogo from './universitylogo.png'
 
 const drawerWidth = 240
 
@@ -29,14 +30,14 @@ export default function NavigationMenu() {
   const [open, setOpen] = React.useState(false)
   const classes = useStyles()
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen(true)
     console.log("openDrawer Test")
-  };
+  }
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen(false)
     console.log("closeDrawer Test")
-  };
+  }
 
   const renderNavLink = (route, title, icon, navID = null) => {
     return (
@@ -50,6 +51,11 @@ export default function NavigationMenu() {
       </ListItem>
     )
   }
+
+  const handleSignIn = () => {
+    console.log("handleSignIn Test")
+  }
+
 
   const drawer = () => {
     return (
@@ -77,16 +83,22 @@ export default function NavigationMenu() {
       <HashRouter>
         <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
           <Toolbar>
-            <Grid container justify="space-between" alignItems="center">
+            <Grid container direction="row" justify="space-between" alignItems="center">
               <Grid item>
                 <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
                   <MenuIcon />
                 </IconButton>
               </Grid>
-              <Grid item>
+              <Grid item align="start">
+                <img src={universitylogo} />
+              </Grid>
+              <Grid container item xs={4} justify="flex-end">
                 <Typography variant="h6" color="inherit">
-                  Detonation Database
+                  Shock and Detonation Physics Database
                 </Typography>
+              </Grid>
+              <Grid container item xs={4} justify="flex-end">
+                <Button id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
               </Grid>
             </Grid>
           </Toolbar>
@@ -159,4 +171,4 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-}));
+}))
