@@ -4,6 +4,12 @@ export interface IAuthor {
   lastname: string;
 }
 
+export const defaultAuthor: IAuthor = {
+  firstname: '',
+  lastname: '',
+  middlename: ''
+}
+
 export interface IReference {
   type: string;
   publisher: string;
