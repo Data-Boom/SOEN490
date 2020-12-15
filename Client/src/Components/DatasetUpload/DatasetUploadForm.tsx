@@ -3,6 +3,7 @@ import { IAuthor, IDatasetModel, IMaterial, defaultAuthor, defaultDatasetModel }
 import React, { useState } from 'react'
 
 import { AuthorsList } from './AuthorsList'
+import { DatasetDataTable } from './DatasetDataTable'
 import { SelectChipArray } from './SelectChipArray'
 
 interface IProps {
@@ -38,14 +39,24 @@ export const DatasetUploadForm = (props: IProps): any => {
   }
 
   const handleRemoveAuthor = (index: number) => {
-    let newAuthors: IAuthor[] = Array.from(formValues.reference.authors)
+    let newAuthors: IAuthor[] = [...formValues.reference.authors]
     newAuthors.splice(index, 1)
-    setFormValues({ ...formValues, reference: { ...formValues.reference, authors: newAuthors } })
+    updateFormAuthors(newAuthors)
   }
 
   const handleAddAuthor = () => {
-    let newAuthors: IAuthor[] = Array.from(formValues.reference.authors)
+    let newAuthors: IAuthor[] = [...formValues.reference.authors]
     newAuthors.push(defaultAuthor)
+    updateFormAuthors(newAuthors)
+  }
+
+  const handleAuthorChanged = (newAuthor: IAuthor, index: number) => {
+    let newAuthors: IAuthor[] = [...formValues.reference.authors]
+    newAuthors[index] = newAuthor
+    updateFormAuthors(newAuthors)
+  }
+
+  const updateFormAuthors = (newAuthors: IAuthor[]) => {
     setFormValues({ ...formValues, reference: { ...formValues.reference, authors: newAuthors } })
   }
 
@@ -103,6 +114,7 @@ export const DatasetUploadForm = (props: IProps): any => {
             authors={formValues.reference.authors}
             onRemoveAuthorClick={handleRemoveAuthor}
             onAddAuthorClick={handleAddAuthor}
+            onAuthorChange={handleAuthorChanged}
           />
         </Grid>
       </Box>
@@ -113,6 +125,7 @@ export const DatasetUploadForm = (props: IProps): any => {
     return (
       <Box className={classes.paperColor}>
         <Typography variant='h6' align="left">Data</Typography>
+        <DatasetDataTable />
       </Box>
     )
   }

@@ -63,7 +63,7 @@ export const defaultDatasetModel: IDatasetModel = {
   dataset_name: '',
   material: [],
   reference: {
-    authors: [],
+    authors: [defaultAuthor],
     pages: 0,
     publisher: '',
     title: '',
