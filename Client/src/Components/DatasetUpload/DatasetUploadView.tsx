@@ -20,7 +20,7 @@ const FileUploadView = () => {
 
   const handleSubmitForm = (formDataset: IDatasetModel) => {
     // todo: call backend to save dataset here
-    alert(JSON.stringify(formDataset, null, 4))
+    console.log(JSON.stringify(formDataset, null, 4))
   }
 
   return (
