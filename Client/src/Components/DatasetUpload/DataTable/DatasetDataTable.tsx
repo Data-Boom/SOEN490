@@ -14,6 +14,7 @@ interface IProps {
 
 export const DatasetDataTable = (props: IProps) => {
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
+  const [selectedIndeces, setSelectedIndeces] = useState([1])
 
   const handleClick = (indexOfClickedHeader: number) => {
     setEditedVariableIndex(indexOfClickedHeader)
@@ -57,6 +58,12 @@ export const DatasetDataTable = (props: IProps) => {
     props.onDataChange(copyData)
   }
 
+  const handleRemoveSelectedRows = () => {
+    const copyData = { ...props.data }
+    copyData.contents.filter((row, index) => selectedIndeces.find((element) => element === index) !== -1)
+    props.onDataChange(copyData)
+  }
+
   const handleAddRow = () => {
     const copyData = { ...props.data }
     copyData.contents.push({ comments: '', point: new Array(props.data.variables.length).fill(0) })
@@ -82,6 +89,7 @@ export const DatasetDataTable = (props: IProps) => {
   }
 
   const getRow = (index: number) => {
+    //todo
     const test = props.data.contents[index] && props.data.contents[index].point
     return test
   }
@@ -90,11 +98,8 @@ export const DatasetDataTable = (props: IProps) => {
     return (props && props.data.contents && props.data.contents[0] && props.data.contents.length)
   }
 
+  // source: https://adazzle.github.io/react-data-grid/docs/examples/default-editor
   const onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-    console.log("🚀 ~ file: DatasetDataTable.tsx ~ line 94 ~ onGridRowsUpdated ~ updated", updated)
-    console.log("🚀 ~ file: DatasetDataTable.tsx ~ line 94 ~ onGridRowsUpdated ~ toRow", toRow)
-    console.log("🚀 ~ file: DatasetDataTable.tsx ~ line 94 ~ onGridRowsUpdated ~ fromRow", fromRow)
-
     const copyData = { ...props.data }
     for (let i = fromRow; i <= toRow; i++) {
       copyData.contents[i].point = { ...copyData.contents[i].point, ...updated }
@@ -102,17 +107,41 @@ export const DatasetDataTable = (props: IProps) => {
     props.onDataChange(copyData)
   }
 
-  //todo implement add row
+  const onRowsSelected = rows => {
+    const copySelectedRows = [...selectedIndeces]
+
+    copySelectedRows.concat(
+      rows.map(r => r.rowIdx)
+    )
+
+    setSelectedIndeces(copySelectedRows)
+  }
+
+  const onRowsDeselected = rows => {
+    const copySelectedRows = [...selectedIndeces]
+
+    let rowIndexes = rows.map(r => r.rowIdx)
+    copySelectedRows.filter(
+      i => rowIndexes.indexOf(i) === -1
+    )
+
+    setSelectedIndeces(copySelectedRows)
+  }
+
   return (
     <>
       <Button variant="contained" color="primary" onClick={handleAddRow}>Add row</Button>
       <Button variant="contained" color="primary" onClick={handleAddColumn}>Add column</Button>
+      <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows}>Remove selected</Button>
       <ReactDataGrid
         columns={getColumns()}
         rowGetter={i => getRow(i)}
         rowsCount={getRowCount()}
         onGridRowsUpdated={onGridRowsUpdated}
         enableCellSelect={true}
+        rowSelection={{
+          showCheckbox: true,
+        }}
       />
     </>
   )
