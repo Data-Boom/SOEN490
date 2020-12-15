@@ -12,6 +12,8 @@ import { ICompleteDatasetEntity } from "../Models/Datasets/ICompleteDatasetEntit
 import { IGraphDatasetModel } from '../Models/Datasets/IGraphDatasetModel'
 import SearchView from './SearchView'
 import { exampleExportDatasetModel } from '../Models/Datasets/IExportDatasetModel'
+import queryString from "query-string"
+import { useLocation } from 'react-router-dom'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
@@ -26,6 +28,12 @@ export default function GraphView() {
   }))
 
   const classes = useStyles()
+
+  function useQuery(): string {
+    return queryString.parse(useLocation().search)
+  }
+  console.log(queryString.parse(useLocation().search))
+  console.log(useLocation().search)
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
@@ -58,6 +66,8 @@ export default function GraphView() {
 
     return graphDataset
   }
+
+
 
   //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
   function download(filename: string, text: string) {
