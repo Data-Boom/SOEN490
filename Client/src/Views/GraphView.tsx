@@ -29,11 +29,9 @@ export default function GraphView() {
 
   const classes = useStyles()
 
-  function useQuery(): string {
-    return queryString.parse(useLocation().search)
-  }
+  //Testing the query parser using quer-string for future use if needed
   console.log(queryString.parse(useLocation().search))
-  console.log(useLocation().search)
+
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
