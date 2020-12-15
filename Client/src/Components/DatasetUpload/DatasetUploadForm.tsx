@@ -125,7 +125,9 @@ export const DatasetUploadForm = (props: IProps): any => {
     return (
       <Box className={classes.paperColor}>
         <Typography variant='h6' align="left">Data</Typography>
-        <DatasetDataTable />
+        <DatasetDataTable
+          data={formValues.data}
+        />
       </Box>
     )
   }
