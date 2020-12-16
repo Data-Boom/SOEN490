@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { loadStartupProcess } from '../../loaders/loadStartupProcess';
 import { AuthenticationController } from '../../controllers/authenticationController';
-import request from 'supertest';
 
 describe('Authentiication Controller', () => {
     let mockRequest;
