@@ -41,11 +41,7 @@ const renderGraphRow = (row) => {
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
-      width: 200,
       borderBottom: 'unset',
-    },
-    body: {
-      width: 200,
     },
   },
 })
