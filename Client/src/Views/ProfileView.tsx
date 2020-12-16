@@ -41,7 +41,11 @@ const renderGraphRow = (row) => {
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
+      width: 200,
       borderBottom: 'unset',
+    },
+    body: {
+      width: 200,
     },
   },
 })
@@ -133,8 +137,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 
 export default function CollapsibleTable() {
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+    <TableContainer component={Paper} style={{ width: "50%" }}>
+      <Table aria-label="collapsible table" >
         <TableHead> Favourites
           <TableRow>
             <TableCell />
