@@ -1,7 +1,8 @@
 import { Authors } from './Authors';
 import { Publicationtype } from './Publicationtype';
 import { Publisher } from './Publisher';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
+import { Dataset } from './Dataset';
 
 
 /**
@@ -32,7 +33,8 @@ export class Publications {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Publicationtype table
+    * is storing a Foreign Key reference to an entry in the Publicationtype table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Publicationtype)
     @JoinColumn()
@@ -43,7 +45,8 @@ export class Publications {
 
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
-    * is storing a Foreign Key reference to an entry in the Publisher table
+    * is storing a Foreign Key reference to an entry in the Publisher table.
+    * Specifically, the format is Column xxxId connects to xxx?
     */
     @ManyToOne(type => Publisher)
     @JoinColumn()
@@ -75,3 +78,21 @@ export class Publications {
     @JoinTable()
     authors: Authors[];
 }
+
+export const selectPublicationsQuery = (manager: EntityManager, dataset: number) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('publication.name', 'publication_name')
+        .addSelect('dataset.id', 'dataset_id')
+        .addSelect('publication.doi', 'publication_doi')
+        .addSelect('publication.pages', 'publication_pages')
+        .addSelect('publication.volume', 'publication_volume')
+        .addSelect('publication.year', 'publication_year')
+        .addSelect('publication.datePublished', 'publication_datePublished')
+        .addSelect('publication.dateAccessed', 'publication_dateAccessed')
+        .addSelect('publisher.name', 'publisher_name')
+        .addSelect('publicationtype.name', 'publicationtype_name')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
+        .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
+        .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawMany();
