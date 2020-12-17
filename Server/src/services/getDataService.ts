@@ -169,7 +169,6 @@ export class retrieveData {
      * This is an array containing the data set IDs that we wish to get the full data set of: any[]
      */
     private async getDataFromDatasetIds(selectedDatasetIds: any[]) {
-        // Query each data set ID to get its information and add to array of data
         let setOfData: Array<IDatasetResponseModel> = [];
         for (let i = 0; i < selectedDatasetIds.length; i++) {
             setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
