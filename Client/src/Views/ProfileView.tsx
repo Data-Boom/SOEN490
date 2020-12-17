@@ -47,7 +47,7 @@ const useRowStyles = makeStyles({
 })
 
 //no oxidizer, add material detials and composition, comments keep author
-function createData(id, type: string, name: string, oxidizer: string, author: string, graphdatasets, comments: string) {
+function createData(id: number[], type: string, name: string, oxidizer: string, author: string, graphdatasets: string[], comments: string) {
   return { id, type, name, oxidizer, author, graphdatasets, comments }
 }
 
@@ -58,7 +58,7 @@ for (let i = 0; i < exampleDatasets.length; i++) {
     ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
 }
 
-function createGraphData(id, type: string, name: string, graphdatasets, comments: string) {
+function createGraphData(id: number[], type: string, name: string, graphdatasets: string[], comments: string) {
   return { id, type, name, graphdatasets, comments }
 }
 
