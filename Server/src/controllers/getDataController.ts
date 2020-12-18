@@ -3,7 +3,7 @@ import { retrieveData } from '../services/getDataService';
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
 export class getDataController {
-    private validatedRequest: IDataRequestModel;
+    private processedRequest: IDataRequestModel;
     constructor() {
     }
     /**
@@ -23,17 +23,11 @@ export class getDataController {
             response.status(500).send("Invalid search params entered");
         }
         else {
-            this.validatedRequest = {} as any;
-            this.validatedRequest.datasetId = request.query.datasetId as any[];
-            this.validatedRequest.material = request.query.material as string[];
-            this.validatedRequest.year = request.query.year as any;
-            this.validatedRequest.firstName = request.query.firstName as string;
-            this.validatedRequest.lastName = request.query.lastName as string;
-            this.validatedRequest.categoryId = request.query.categoryId as any;
-            this.validatedRequest.subcategoryId = request.query.subcategoryId as any;
+            let requestParams: any = { ...request.query };
+            this.processedRequest = requestParams;
             try {
                 const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getArrayOfDatasets(this.validatedRequest)
+                let arrayOfData = await retrieveDataObject.getArrayOfDatasets(this.processedRequest)
                 return response.status(200).send(arrayOfData);
             } catch (err) {
                 response.status(500).send(err);
