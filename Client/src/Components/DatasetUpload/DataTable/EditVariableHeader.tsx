@@ -19,8 +19,11 @@ interface IValidFieldsState {
   repr: boolean
 }
 
+//todo use formik and the YUP for validation
+
 export const EditVariableHeader = (props: IProps) => {
   const [variableData, setVariableData] = useState<IVariable>(props.variable)
+  const [validFields, setValidFields] = useState<IValidFieldsState>({ name: false, repr: false, units: false })
   const handleRemove = () => {
     props.onVariableRemove(props.index)
   }
@@ -35,11 +38,9 @@ export const EditVariableHeader = (props: IProps) => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
+    validFields[name] = value.length === 0 ? false : true
+    updateErrorState(name, value)
     setVariableData({ ...variableData, [name]: value })
-  }
-
-  const isValidField = (fieldName: string): boolean => {
-    return variableData[fieldName].length === 0
   }
 
   const openEditVariableModal = () => {
@@ -56,26 +57,17 @@ export const EditVariableHeader = (props: IProps) => {
 
   const classes = useStyles()
 
+  const updateErrorState = (name: string, value: string) => {
+    setValidFields({ ...validFields, [name]: value.length === 0 ? false : true })
+  }
+
   const getHelperText = (displayText: boolean) => {
     return displayText ? "field should not be empty" : ""
   }
 
   const isValidForm = () => {
-    return isValidField(variableData.units) && validFields.name && validFields.repr
+    return validFields.units && validFields.name && validFields.repr
   }
-
-
-
-
-
-
-
-
-
-
-
-
-  //todo  https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 
   return (
     <div>
