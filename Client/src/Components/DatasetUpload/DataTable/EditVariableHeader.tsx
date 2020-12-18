@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+
 import { Box, Button, Grid, Modal, Paper, TextField, makeStyles } from '@material-ui/core'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
@@ -14,19 +16,6 @@ interface IProps {
   onVariableRemove: (index: number) => void
 }
 
-interface IFormFields {
-  name: string,
-  units: string,
-  repr: string
-}
-
-const emptyFormValues: IFormFields = {
-  name: '',
-  units: '',
-  repr: ''
-}
-
-//todo use formik and the YUP for validation
 export const EditVariableHeader = (props: IProps) => {
   const handleRemove = () => {
     props.onVariableRemove(props.index)
@@ -40,6 +29,7 @@ export const EditVariableHeader = (props: IProps) => {
     props.onHeaderClick(props.index)
   }
 
+  //todo make reusable as this is duplicated
   const useStyles = makeStyles(() => ({
     modal: {
       display: 'flex',
@@ -50,36 +40,22 @@ export const EditVariableHeader = (props: IProps) => {
 
   const classes = useStyles()
 
-  const validate = (values: IFormFields) => {
-    const errors: IFormFields = { ...emptyFormValues }
-
-    if (!values.name.trim()) {
-      errors.name = 'Required'
-    }
-
-    if (!values.units.trim()) {
-      errors.units = 'Required'
-    }
-
-    if (!values.repr.trim()) {
-      errors.repr = 'Required'
-    }
-
-    return errors
-  }
-
   const formik = useFormik({
-    initialValues: emptyFormValues,
-    initialErrors: emptyFormValues,
-    validate: validate,
+    initialValues: { ...props.variable },
+    validationSchema: Yup.object({
+      name: Yup.string().trim().required('required'),
+      units: Yup.string().trim().required('required'),
+      repr: Yup.string().trim().required('required'),
+    }),
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2))
+      props.onVariableUpdate({ ...values }, props.index)
     },
   })
 
-  const handleUpdateClick = () => {
-    console.log("submitting")
-    formik.handleSubmit()
+  const getErrorAndFormikProps = (fieldName: string) => {
+    const error = formik.touched[fieldName] && !!formik.errors[fieldName]
+    const helperText = formik.touched[fieldName] && formik.errors[fieldName]
+    return { error: error, helperText: helperText, ...formik.getFieldProps(fieldName) }
   }
 
   return (
@@ -96,14 +72,9 @@ export const EditVariableHeader = (props: IProps) => {
                 <Grid item sm={4}>
                   <TextField
                     fullWidth
-                    variant="outlined"
                     label="Name"
-                    name="name"
-                    value={formik.values.name}
-                    error={formik.touched.name && formik.errors.name != ''}
-                    helperText={formik.touched.name && formik.errors.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    variant="outlined"
+                    {...getErrorAndFormikProps('name')}
                   />
                 </Grid>
                 <Grid item sm={4}>
@@ -111,12 +82,7 @@ export const EditVariableHeader = (props: IProps) => {
                     fullWidth
                     label="Units"
                     variant="outlined"
-                    name="units"
-                    value={formik.values.units}
-                    error={formik.touched.units && formik.errors.units != ''}
-                    helperText={formik.touched.units && formik.errors.units}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    {...getErrorAndFormikProps('units')}
                   />
                 </Grid>
                 <Grid item sm={4}>
@@ -124,12 +90,7 @@ export const EditVariableHeader = (props: IProps) => {
                     fullWidth
                     label="Representation"
                     variant="outlined"
-                    name="repr"
-                    value={formik.values.repr}
-                    error={formik.touched.repr && formik.errors.repr != ''}
-                    helperText={formik.touched.repr && formik.errors.repr}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    {...getErrorAndFormikProps('repr')}
                   />
                 </Grid>
               </Grid>
@@ -139,12 +100,12 @@ export const EditVariableHeader = (props: IProps) => {
                   <Button variant="contained" onClick={handleClose}>Close</Button>
                 </Grid>
                 <Grid item>
+                  <Button variant="contained" type="submit">Update</Button>
                 </Grid>
                 <Grid item>
                   <Button variant="contained" onClick={handleRemove}>Delete Column</Button>
                 </Grid>
               </Grid>
-              <button type="submit">Update</button>
             </form>
           </Box>
         </Paper>
