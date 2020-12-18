@@ -123,19 +123,13 @@ export const DatasetUploadForm = (props: IProps): any => {
     )
   }
 
-  const handleDataChanged = (newData: IData) => {
-    const copyDataset = { ...dataset }
-    copyDataset.data = newData
-    setDataset(copyDataset)
-  }
-
   const renderData = () => {
     return (
       <Box className={classes.paperColor}>
         <Typography variant='h6' align="left">Data</Typography>
         <DatasetDataTable
           data={dataset.data}
-          onDataChange={handleDataChanged}
+          onDataChange={(newData: IData) => setDataset({ ...dataset, data: newData })}
         />
       </Box>
     )
