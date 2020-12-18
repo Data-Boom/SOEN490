@@ -1,7 +1,8 @@
 import { Box, Button, Grid, Modal, Paper, TextField, makeStyles } from '@material-ui/core'
-import React, { useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
+import React from 'react'
+import { useFormik } from 'formik'
 
 interface IProps {
   variable: IVariable,
@@ -13,34 +14,26 @@ interface IProps {
   onVariableRemove: (index: number) => void
 }
 
-interface IValidFieldsState {
-  name: boolean,
-  units: boolean,
-  repr: boolean
+interface IFormFields {
+  name: string,
+  units: string,
+  repr: string
+}
+
+const emptyFormValues: IFormFields = {
+  name: '',
+  units: '',
+  repr: ''
 }
 
 //todo use formik and the YUP for validation
-
 export const EditVariableHeader = (props: IProps) => {
-  const [variableData, setVariableData] = useState<IVariable>(props.variable)
-  const [validFields, setValidFields] = useState<IValidFieldsState>({ name: false, repr: false, units: false })
   const handleRemove = () => {
     props.onVariableRemove(props.index)
   }
 
   const handleClose = () => {
     props.onEditModalClose()
-  }
-
-  const handleUpdate = () => {
-    props.onVariableUpdate(variableData, props.index)
-  }
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target
-    validFields[name] = value.length === 0 ? false : true
-    updateErrorState(name, value)
-    setVariableData({ ...variableData, [name]: value })
   }
 
   const openEditVariableModal = () => {
@@ -57,16 +50,36 @@ export const EditVariableHeader = (props: IProps) => {
 
   const classes = useStyles()
 
-  const updateErrorState = (name: string, value: string) => {
-    setValidFields({ ...validFields, [name]: value.length === 0 ? false : true })
+  const validate = (values: IFormFields) => {
+    const errors: IFormFields = { ...emptyFormValues }
+
+    if (!values.name.trim()) {
+      errors.name = 'Required'
+    }
+
+    if (!values.units.trim()) {
+      errors.units = 'Required'
+    }
+
+    if (!values.repr.trim()) {
+      errors.repr = 'Required'
+    }
+
+    return errors
   }
 
-  const getHelperText = (displayText: boolean) => {
-    return displayText ? "field should not be empty" : ""
-  }
+  const formik = useFormik({
+    initialValues: emptyFormValues,
+    initialErrors: emptyFormValues,
+    validate: validate,
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2))
+    },
+  })
 
-  const isValidForm = () => {
-    return validFields.units && validFields.name && validFields.repr
+  const handleUpdateClick = () => {
+    console.log("submitting")
+    formik.handleSubmit()
   }
 
   return (
@@ -78,29 +91,61 @@ export const EditVariableHeader = (props: IProps) => {
       >
         <Paper elevation={3}>
           <Box m={5}>
-            <Grid container spacing={4}>
-              <Grid item sm={4}>
-                <TextField fullWidth label="Name" variant="outlined" name="name" value={variableData.name} onChange={handleInputChange} helperText={getHelperText(!validFields.name)} error={!validFields.name} />
+            <form onSubmit={formik.handleSubmit}>
+              <Grid container spacing={4}>
+                <Grid item sm={4}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    label="Name"
+                    name="name"
+                    value={formik.values.name}
+                    error={formik.touched.name && formik.errors.name != ''}
+                    helperText={formik.touched.name && formik.errors.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </Grid>
+                <Grid item sm={4}>
+                  <TextField
+                    fullWidth
+                    label="Units"
+                    variant="outlined"
+                    name="units"
+                    value={formik.values.units}
+                    error={formik.touched.units && formik.errors.units != ''}
+                    helperText={formik.touched.units && formik.errors.units}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </Grid>
+                <Grid item sm={4}>
+                  <TextField
+                    fullWidth
+                    label="Representation"
+                    variant="outlined"
+                    name="repr"
+                    value={formik.values.repr}
+                    error={formik.touched.repr && formik.errors.repr != ''}
+                    helperText={formik.touched.repr && formik.errors.repr}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </Grid>
               </Grid>
-              <Grid item sm={4}>
-                <TextField fullWidth label="Units" variant="outlined" name="units" value={variableData.units} onChange={handleInputChange} helperText={getHelperText(!validFields.units)} error={!validFields.units} />
-              </Grid>
-              <Grid item sm={4}>
-                <TextField fullWidth label="Representation" variant="outlined" name="repr" value={variableData.repr} onChange={handleInputChange} helperText={getHelperText(!validFields.repr)} error={!validFields.repr} />
-              </Grid>
-            </Grid>
 
-            <Grid container spacing={4} justify="flex-end">
-              <Grid item>
-                <Button variant="contained" onClick={handleClose}>Close</Button>
+              <Grid container spacing={4} justify="flex-end">
+                <Grid item>
+                  <Button variant="contained" onClick={handleClose}>Close</Button>
+                </Grid>
+                <Grid item>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" onClick={handleRemove}>Delete Column</Button>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Button variant="contained" onClick={handleUpdate} disabled={!isValidForm()}>Update</Button>
-              </Grid>
-              <Grid item>
-                <Button variant="contained" onClick={handleRemove}>Delete Column</Button>
-              </Grid>
-            </Grid>
+              <button type="submit">Update</button>
+            </form>
           </Box>
         </Paper>
       </Modal>
