@@ -12,7 +12,7 @@ import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import DatasetUploadView from "../Views/FileUploadView"
+import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
 import FileUploadView from "../Views/FileUploadView"
 import GraphView from "../Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
@@ -56,7 +56,6 @@ export default function NavigationMenu() {
   const handleSignIn = () => {
     console.log("handleSignIn Test")
   }
-
 
   const drawer = () => {
     return (

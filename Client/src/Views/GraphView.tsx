@@ -11,7 +11,7 @@ import Graph from '../Components/Graph/Graph'
 import { ICompleteDatasetEntity } from "../Models/Datasets/ICompleteDatasetEntity"
 import { IGraphDatasetModel } from '../Models/Datasets/IGraphDatasetModel'
 import SearchView from './SearchView'
-import { exampleExportDatasetModel } from '../Models/Datasets/IExportDatasetModel'
+import { exampleExportDatasetModel } from '../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']

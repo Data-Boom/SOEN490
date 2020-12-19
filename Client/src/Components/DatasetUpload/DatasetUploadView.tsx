@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import { DatasetUploadForm } from './DatasetUploadForm'
 
-const FileUploadView = () => {
+export const DatasetUploadView = () => {
 
   const [materials, setMaterials] = useState<IMaterial[]>([])
   useEffect(() => setMaterials([
@@ -36,5 +36,3 @@ const FileUploadView = () => {
     </Container>
   )
 }
-
-export default FileUploadView
