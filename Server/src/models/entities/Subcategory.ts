@@ -11,7 +11,8 @@ export class Subcategory {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ unique: true })
+    //Readd { unique: true } later if desired. For now, potential source of crash in remote DB
+    @Column()
     name: string
 
     @CreateDateColumn()

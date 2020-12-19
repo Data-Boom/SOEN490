@@ -5,7 +5,7 @@ import { connectDB } from '../database';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { authenticationRouter } from '../routes/authenticationRouter';
 import bodyParser from 'body-parser';
-
+import { getDataRouter } from '../routes/queryDataRouter';
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
@@ -52,6 +52,7 @@ export class loadStartupProcess {
      */
     this.app.use('/', fileUploadRouter)
     this.app.use('/', authenticationRouter)
+    this.app.use('/', getDataRouter)
 
 
     this.config = {
