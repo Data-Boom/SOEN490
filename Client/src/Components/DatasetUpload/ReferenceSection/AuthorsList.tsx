@@ -2,7 +2,7 @@ import { Grid, IconButton, Typography } from "@material-ui/core"
 
 import AddIcon from '@material-ui/icons/Add'
 import { AuthorRow } from "./AuthorRow"
-import { IAuthor } from "../../Models/Datasets/IDatasetModel"
+import { IAuthor } from "../../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
 interface IProps {

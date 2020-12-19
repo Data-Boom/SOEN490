@@ -1,7 +1,8 @@
-import { Box, Button, Grid, Modal, Paper, TextField, makeStyles } from '@material-ui/core'
+import { Box, Button, Grid, Modal, Paper, TextField } from '@material-ui/core'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
+import { classStyles } from '../../../appTheme'
 import { getErrorAndFormikProps } from '../../../Util/FormUtil'
 import { useFormik } from 'formik'
 
@@ -28,30 +29,20 @@ export const EditVariableHeader = (props: IProps) => {
     props.onHeaderClick(props.index)
   }
 
-  //todo make reusable as this is duplicated
-  const useStyles = makeStyles(() => ({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }
-  }))
-
-  const classes = useStyles()
-
   const formik = useFormik({
     initialValues: { ...props.variable },
     onSubmit: values => {
       props.onVariableUpdate({ ...values }, props.index)
     },
   })
+  console.log("render")
 
   return (
     <div>
       <Modal
         open={props.editMode}
         onClose={handleClose}
-        className={classes.modal}
+        className={classStyles().modal}
       >
         <Paper elevation={3}>
           <Box m={5}>

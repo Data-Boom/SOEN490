@@ -1,7 +1,7 @@
 import { Grid, IconButton, TextField } from "@material-ui/core"
 
 import ClearIcon from '@material-ui/icons/Clear'
-import { IAuthor } from "../../Models/Datasets/IDatasetModel"
+import { IAuthor } from "../../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
 interface IProps {

@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createMuiTheme, makeStyles } from '@material-ui/core/styles'
 
 export const theme = createMuiTheme({
   spacing: 4,
@@ -17,3 +17,21 @@ export const theme = createMuiTheme({
     },
   }
 })
+
+export const classStyles = () => {
+  return makeStyles({
+    defaultBorder: {
+      borderColor: theme.palette.primary.light,
+      borderRadius: 3,
+      borderWidth: '1px',
+      border: 'solid',
+      padding: '15px',
+      margin: '15px 0'
+    },
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  })()
+}

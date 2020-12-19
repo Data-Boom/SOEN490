@@ -1,10 +1,10 @@
 import 'react-data-grid/dist/react-data-grid.css'
 
+import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
 import { IContent, IData, IVariable, defaultVariable } from '../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
-import { Button } from '@material-ui/core'
 import { EditVariableHeader } from './EditVariableHeader'
 
 interface IProps {
@@ -115,19 +115,48 @@ export const DatasetDataTable = (props: IProps) => {
     return props.data.contents.findIndex(suchRow => suchRow.point == row)
   }
 
+  const renderTopButtons = () => {
+    return (
+      <>
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={handleAddRow}>Add row</Button>
+        </Grid>
+
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={handleAddColumn}>New variable</Button>
+        </Grid>
+
+        <Grid item>
+          <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows}>Remove selected</Button>
+        </Grid>
+      </>
+    )
+  }
+
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleAddRow}>Add row</Button>
-      <Button variant="contained" color="primary" onClick={handleAddColumn}>New variable</Button>
-      <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows}>Remove selected</Button>
-      <DataGrid
-        rowKeyGetter={rowKeyGetter}
-        columns={getColumns()}
-        rows={getRows()}
-        onRowsChange={handleRowChange}
-        selectedRows={selectedRows}
-        onSelectedRowsChange={setSelectedRows}
-      />
+      <Grid container>
+        <Grid item container sm={6}>
+          <Grid item>
+            <Typography variant='h6' align="left">Data</Typography>
+          </Grid>
+        </Grid>
+
+        <Grid item container sm={6} spacing={2} justify='flex-end'>
+          {renderTopButtons()}
+        </Grid>
+      </Grid>
+
+      <Box width='100%' mt={4}>
+        <DataGrid
+          rowKeyGetter={rowKeyGetter}
+          columns={getColumns()}
+          rows={getRows()}
+          onRowsChange={handleRowChange}
+          selectedRows={selectedRows}
+          onSelectedRowsChange={setSelectedRows}
+        />
+      </Box>
     </>
   )
 }
