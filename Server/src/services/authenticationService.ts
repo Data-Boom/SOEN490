@@ -78,7 +78,7 @@ export class AuthenticationService {
             return this.requestResponse
         }
 
-        savedPasswordHash = await AuthenticationModel.verifyPassword(userInformation.email);
+        savedPasswordHash = await AuthenticationModel.getPasswordHash(userInformation.email);
 
         if (!(await argon2.verify(savedPasswordHash, userInformation.password))) {
             this.requestResponse.status = "Failure";
@@ -133,10 +133,6 @@ export class AuthenticationService {
             expiresIn: jwtExpiry
         })
         return token;
-    }
-
-    private async createCookie(token: string) {
-
     }
 }
 

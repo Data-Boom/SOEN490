@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthenticationController } from '../../controllers/authenticationController';
+import { createConnection, getConnection } from 'typeorm';
 
 describe('Authentiication Controller', () => {
     let mockRequest;
@@ -7,6 +8,14 @@ describe('Authentiication Controller', () => {
     let next;
     let authenticationController: AuthenticationController;
 
+    beforeAll(async () => {
+        await createConnection();
+        jest.setTimeout(60000) //need to increase from default to allow for DB connection
+    });
+
+    afterAll(async () => {
+        await getConnection().close();
+    });
 
     beforeEach(() => {
         authenticationController = new AuthenticationController();
@@ -43,4 +52,41 @@ describe('Authentiication Controller', () => {
         expect(mockResponse.status).toBeCalledWith(400);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
+
+    test('Testing Sign Up with Duplicate Email in System - Error 400', async () => {
+        const expectedResponse = "Email is already in the System. Please check again";
+        mockRequest = {
+            query: {
+                email: 'j.comkj',
+                password: '123',
+                isAdmin: 'false',
+                organizationName: 'Mugiwara',
+                dateOfBirth: '1980-01-01',
+                firstName: 'Ace',
+                lastName: 'FireFist'
+            }
+        }
+
+        await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+
+    test('Testing Login with unregistered Email - Error 400', async () => {
+        const expectedResponse = "Email is not in the System or its mispelled. Check Again";
+        mockRequest = {
+            query: {
+                email: 'j.comk',
+                password: '123',
+            }
+        }
+
+        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+
+
+
+
 })

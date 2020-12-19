@@ -19,6 +19,7 @@ router.post('/login', (request: Request, response: Response, next: NextFunction)
     authenticationController.createLoginRequest(request, response, next);
 });
 
+//TODO: Implement when doing password reset 
 router.get('/resetPassword', (request: Request, response: Response, next: NextFunction) => {
 
 })

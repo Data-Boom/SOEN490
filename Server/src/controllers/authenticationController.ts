@@ -16,43 +16,38 @@ export class AuthenticationController {
     constructor() {
     }
 
-    createSignUpRequest(request: Request, response: Response, next: NextFunction): Response {
+    async createSignUpRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
         this.invalidResponse = this.validateSignUpRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Missing attributes")
         }
         else {
-            let signUpInfo: ISignUpInformation;
-            signUpInfo = {} as any;
-            signUpInfo.email = request.query.email as string;
-            signUpInfo.password = request.query.password as string;
-            signUpInfo.firstName = request.query.firstName as string;
-            signUpInfo.lastName = request.query.lastName as string;
-            signUpInfo.dateOfBirth = request.query.dateOfBirth as any;
-            signUpInfo.organizationName = request.query.organizationName as string;
+            let requestParams: any = { ...request.query };
+            let signUpInfo: ISignUpInformation = requestParams;
+
             if (!request.query.hasOwnProperty("isAdmin")) {
                 signUpInfo.isAdmin = false;
             }
             else {
                 signUpInfo.isAdmin = request.query.isAdmin as any;
             }
-            let serviceResponse: any = this.callServiceForSignUp(signUpInfo, response, next);
-            return response.status(serviceResponse.statusCode).json(serviceResponse);
+            let res: IResponse = await this.callServiceForSignUp(signUpInfo, response, next);
+            return response.status(res.statusCode).json(res.response);
         }
     }
 
-    createLoginRequest(request: Request, response: Response, next: NextFunction): Response {
+    async createLoginRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
         }
         else {
-            let loginInfo: ILoginInformation;
-            loginInfo = {} as any;
-            loginInfo.email = request.query.email as string;
-            loginInfo.password = request.query.password as string;
+            let requestParams: any = { ...request.query };
+            let loginInfo: ILoginInformation = requestParams;
 
-            this.callServiceForLogin(loginInfo, response, next);
+            let res: IResponse = await this.callServiceForLogin(loginInfo, response, next);
+            //response.setHeader('Set-Cookie', res.response);
+            return response.status(res.statusCode).json(res.response);
         }
     }
 
@@ -82,13 +77,12 @@ export class AuthenticationController {
         return serviceResponse;
     }
 
-    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<Response> {
+    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<IResponse> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse
         try {
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-            response.setHeader('Set-Cookie', serviceResponse.response);
-            return response.status(serviceResponse.statusCode).json(serviceResponse);
+            return serviceResponse;
         } catch (error) {
             next(error);
         }

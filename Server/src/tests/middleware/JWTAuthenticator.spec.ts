@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { loadStartupProcess } from '../../loaders/loadStartupProcess';
-import { AuthenticateJWT } from '../../middleware/authenticateJWT';
+import { JWTAuthenticator } from '../../middleware/JWTAuthenticator';
 import * as app from '../../app'
 import request from 'supertest';
 
@@ -25,7 +25,7 @@ describe('Authorization Middleware', () => {
             headers: {
             }
         }
-        await AuthenticateJWT.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction);
+        await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(mockResponse.status).toBeCalledWith(401);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
@@ -40,7 +40,7 @@ describe('Authorization Middleware', () => {
                 'authorization': 'Bearer abc'
             }
         }
-        await AuthenticateJWT.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction);
+        await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction);
 
         expect(mockResponse.status).toBeCalledWith(403);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);

@@ -49,7 +49,7 @@ export class AuthenticationModel {
      * Method used to verify Password of corresponding input email
      * @param email - User Email
      */
-    static async verifyPassword(email: string): Promise<any> {
+    static async getPasswordHash(email: string): Promise<any> {
 
         let connection = getConnection();
         let userInfo = await connection.manager
@@ -66,7 +66,7 @@ export class AuthenticationModel {
      * new data approval API
      * @param email - User Email
      */
-    static async verifyAdminStatus(email: string): Promise<boolean> {
+    static async isAdminStatus(email: string): Promise<boolean> {
 
         let adminStatus: any;
         let connection = getConnection();
@@ -96,6 +96,7 @@ export class AuthenticationModel {
         return jwtParams[0];
     }
 
+    //TODO: Implement when doing password reset 
     static async resetPassword(email: string) {
 
         let connection = getConnection();

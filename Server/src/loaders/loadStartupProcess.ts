@@ -12,7 +12,8 @@ import bodyParser from 'body-parser';
  * to initialize the application. The initial connection to the database is also created here.
  */
 export class loadStartupProcess {
-  public app: express.Application
+  private app: express.Application
+  private config: any;
 
   constructor() {
 
@@ -53,8 +54,7 @@ export class loadStartupProcess {
     this.app.use('/', authenticationRouter)
 
 
-    const config: any = {
-
+    this.config = {
       "type": process.env.DB_TYPE,
       "host": process.env.HOST,
       "port": process.env.DB_PORT,
@@ -63,6 +63,7 @@ export class loadStartupProcess {
       "database": process.env.DB_NAME,
       "synchronize": true,
       "logging": true,
+      "migrationsRun": true,
       "entities": [
         "src/models/entities/**/*.ts",
         "dist/entities/**/*.js"
@@ -85,7 +86,7 @@ export class loadStartupProcess {
      */
     (async () => {
       try {
-        await connectDB(config);
+        await connectDB(this.config);
       } catch (error) {
         console.log("caught error while connecting to db:")
         console.log(error)
