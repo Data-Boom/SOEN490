@@ -31,6 +31,6 @@ export class Accounts {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @Column()
+    @Column({ default: 0 })
     admin: boolean
 }

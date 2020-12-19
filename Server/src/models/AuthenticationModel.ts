@@ -26,7 +26,7 @@ export class AuthenticationModel {
         signUpInformation.lastName = signUpInfo.lastName;
         signUpInformation.dateOfBirth = signUpInfo.dateOfBirth;
         signUpInformation.organizationName = signUpInfo.organizationName;
-        signUpInformation.admin = signUpInfo.isAdmin;
+        signUpInformation.admin = !!signUpInfo.isAdmin;
         await connection.manager.save(signUpInformation);
     }
 

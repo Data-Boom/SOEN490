@@ -76,7 +76,7 @@ describe('Authentiication Controller', () => {
         const expectedResponse = "Email is not in the System or its mispelled. Check Again";
         mockRequest = {
             query: {
-                email: 'j.comk',
+                email: 'j.comkwgwegwegwegw',
                 password: '123',
             }
         }

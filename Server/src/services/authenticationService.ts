@@ -27,14 +27,14 @@ export class AuthenticationService {
      * hashed and the user is registered.
      * @param SignUpInformation - User Sign in Information. ISignUp is an interface with all required params
      */
-    async processSignUp(SignUpInformation: ISignUpInformation): Promise<IResponse> {
+    async processSignUp(signUpInformation: ISignUpInformation): Promise<IResponse> {
 
         let email: boolean;
         try {
-            email = await AuthenticationModel.verifyIfEmailExists(SignUpInformation.email);
+            email = await AuthenticationModel.verifyIfEmailExists(signUpInformation.email);
             if (!email) {
-                SignUpInformation.password = await this.hashPassword(SignUpInformation.password)
-                await AuthenticationModel.insertSignUpInformation(SignUpInformation);
+                signUpInformation.password = await this.hashPassword(signUpInformation.password)
+                await AuthenticationModel.insertSignUpInformation(signUpInformation);
             }
             else throw new Error();
 
@@ -47,8 +47,8 @@ export class AuthenticationService {
         }
         this.requestResponse.status = "Success";
         this.requestResponse.statusCode = 200;
+        this.requestResponse.response = "Success";
         return this.requestResponse
-
     }
 
     /**
@@ -110,7 +110,7 @@ export class AuthenticationService {
      * Resposible for hashing the user input password
      * @param password - user password
      */
-    private async hashPassword(userPassword: string): Promise<string> {
+    async hashPassword(userPassword: string): Promise<string> {
 
         let hashedPassword: string;
         hashedPassword = await argon2.hash(userPassword);

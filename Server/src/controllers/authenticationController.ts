@@ -24,14 +24,8 @@ export class AuthenticationController {
         else {
             let requestParams: any = { ...request.query };
             let signUpInfo: ISignUpInformation = requestParams;
-
-            if (!request.query.hasOwnProperty("isAdmin")) {
-                signUpInfo.isAdmin = false;
-            }
-            else {
-                signUpInfo.isAdmin = request.query.isAdmin as any;
-            }
             let res: IResponse = await this.callServiceForSignUp(signUpInfo, response, next);
+            console.log(res);
             return response.status(res.statusCode).json(res.response);
         }
     }

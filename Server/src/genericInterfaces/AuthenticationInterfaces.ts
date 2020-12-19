@@ -10,7 +10,7 @@ export interface ISignUpInformation {
     lastName: string,
     dateOfBirth: Date,
     organizationName: string,
-    isAdmin: boolean
+    isAdmin?: boolean
 }
 
 export interface IJwtParams {

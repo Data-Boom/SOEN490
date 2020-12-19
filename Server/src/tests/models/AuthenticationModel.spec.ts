@@ -59,12 +59,12 @@ describe('Authentication Model Methods', () => {
     //     console.log('Checking Database if User Hash Exists - false');
     // });
 
-    // test('Checking Database if User is Admin - true', async () => {
-    //     let email: string = 'j.comkj'
-    //     let res = await AuthenticationModel.isAdminStatus(email);
-    //     expect(res).toBe(true);
-    //     console.log('Checking Database if User is Admin - true');
-    // });
+    test('Checking Database if User is Admin - true', async () => {
+        let email: string = 'tester.coma'
+        let res = await AuthenticationModel.isAdminStatus(email);
+        expect(res).toBe(1);
+        console.log('Checking Database if User is Admin - true');
+    });
 
     test('Checking Database if User is Admin - false', async () => {
         let email: string = 'j.comkj'
