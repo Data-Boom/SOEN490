@@ -73,6 +73,7 @@ export default function NavigationMenu() {
           {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
           {renderNavLink(searchRoute, "Search", <SearchIcon />)}
           {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
+          {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
         </List>
       </ Drawer>
     )
@@ -109,6 +110,7 @@ export default function NavigationMenu() {
           <Route path={graphRoute} component={GraphView} />
           <Route path={fileUploadRoute} component={FileUploadView} />
           <Route path={searchRoute} component={SearchView} />
+          <Route path={datasetUploadRoute} component={DatasetUploadView} />
         </Box>
       </HashRouter >
     </>
