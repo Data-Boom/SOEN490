@@ -7,11 +7,12 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
+import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import DatasetUploadView from "../Views/FileUploadView"
 import FileUploadView from "../Views/FileUploadView"
 import GraphView from "../Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
@@ -90,7 +91,7 @@ export default function NavigationMenu() {
                   <MenuIcon />
                 </IconButton>
               </Grid>
-              <Grid item align="start">
+              <Grid item>
                 <img src={universitylogo} />
               </Grid>
               <Grid container item xs={4} justify="flex-end">
