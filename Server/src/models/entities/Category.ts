@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, EntityManager } from "typeorm";
 
 
 /**
@@ -21,3 +21,9 @@ export class Category {
     @UpdateDateColumn()
     updated: Date
 }
+
+export const selectAllCategoriesQuery = (manager: EntityManager) =>
+    manager.createQueryBuilder(Category, 'category')
+        .select('category.name', 'name')
+        .addSelect('category.id', 'id')
+        .getRawMany();
