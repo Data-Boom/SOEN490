@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { AuthenticationController } from '../../controllers/authenticationController';
 import { createConnection, getConnection } from 'typeorm';
 
-describe('Authentiication Controller', () => {
+describe('Authentication Controller', () => {
     let mockRequest;
     let mockResponse;
     let next;
@@ -85,8 +85,4 @@ describe('Authentiication Controller', () => {
         expect(mockResponse.status).toBeCalledWith(400);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
-
-
-
-
 })
