@@ -39,7 +39,7 @@ const useRowStyles = makeStyles({
 })
 
 //no oxidizer, add material detials and composition, comments keep author
-function createData(id, type: string, name: string, oxidizer: string, author: string, graphdatasets, comments: string) {
+function createData(id: number[], type: string, name: string, oxidizer: string, author: string, graphdatasets: string[], comments: string) {
   return { id, type, name, oxidizer, author, graphdatasets, comments }
 }
 
@@ -50,7 +50,7 @@ for (let i = 0; i < exampleDatasets.length; i++) {
     ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
 }
 
-function createGraphData(id, type: string, name: string, graphdatasets, comments: string) {
+function createGraphData(id: number[], type: string, name: string, graphdatasets: string[], comments: string) {
   return { id, type, name, graphdatasets, comments }
 }
 
@@ -126,30 +126,30 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 export default function CollapsibleTable() {
   return (
     <>
-      <Profile
-        name="John Doe"
-        email="j_doe@live.concordia.ca"
-        dateOfBirth="1984-04-13"
-        organization="Concordia University"
-        password="test"
-      />
-
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead> Favourites
-            <TableRow>
-              <TableCell />
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Title</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <Row key={row.title} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+		<Profile
+	        name="John Doe"
+	        email="j_doe@live.concordia.ca"
+	        dateOfBirth="1984-04-13"
+	        organization="Concordia University"
+	        password="test"
+	      />
+	      
+	    <TableContainer component={Paper} style={{ width: "50%" }}>
+	      <Table aria-label="collapsible table" >
+	        <TableHead> Favourites
+	          <TableRow>
+	            <TableCell />
+	            <TableCell>Name</TableCell>
+	            <TableCell align="right">Title</TableCell>
+	          </TableRow>
+	        </TableHead>
+	        <TableBody>
+	          {rows.map((row) => (
+	            <Row key={row.title} row={row} />
+	          ))}
+	        </TableBody>
+	      </Table>
+	    </TableContainer>
     </>
   )
 }
