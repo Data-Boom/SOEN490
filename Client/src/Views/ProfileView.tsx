@@ -1,19 +1,11 @@
-import Box from '@material-ui/core/Box'
-import Collapse from '@material-ui/core/Collapse'
+import { Box, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
+
 import DataboomTestGraph from './DataboomTestGraph.png'
-import IconButton from '@material-ui/core/IconButton'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
-import Paper from '@material-ui/core/Paper'
+import Profile from '../Components/Profile/Profile'
 import React from 'react'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
 import { exampleDatasets } from '../Models/Datasets/ICompleteDatasetEntity'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -133,21 +125,31 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 
 export default function CollapsibleTable() {
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead> Favourites
-          <TableRow>
-            <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Title</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.title} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <Profile
+        name="John Doe"
+        email="j_doe@live.concordia.ca"
+        dateOfBirth="1984-04-13"
+        organization="Concordia University"
+        password="test"
+      />
+
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead> Favourites
+            <TableRow>
+              <TableCell />
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Title</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <Row key={row.title} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   )
 }

@@ -7,18 +7,18 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { fileUploadRoute, graphRoute, homeRoute, searchRoute, profileRoute } from '../Consts/Routes'
+import { fileUploadRoute, graphRoute, homeRoute, profileRoute, searchRoute } from '../Consts/Routes'
 
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import FileUploadView from "../Views/FileUploadView"
 import GraphView from "../Views/GraphView"
-import ProfileView from "../Views/ProfileView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from '../Views/HomeView'
 import MenuIcon from '@material-ui/icons/Menu'
+import ProfileView from "../Views/ProfileView"
 import React from 'react'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "../Views/SearchView"
@@ -57,7 +57,6 @@ export default function NavigationMenu() {
   const handleSignIn = () => {
     console.log("handleSignIn Test")
   }
-
 
   const drawer = () => {
     return (
