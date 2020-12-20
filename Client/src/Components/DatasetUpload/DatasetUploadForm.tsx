@@ -1,6 +1,7 @@
 import { Button, Typography } from '@material-ui/core'
 import { IData, IDatasetMeta, IDatasetModel, IMaterial, IReference, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
+import { DataForm } from './DataSection/DataForm'
 import { MetaForm } from './MetaSection/MetaForm'
 import React from 'react'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
@@ -37,7 +38,7 @@ export const DatasetUploadForm = (props: IProps): any => {
 
         <MetaForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'meta')} materials={materials} />
         <ReferenceForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'reference')} />
-        {/* <DataForm data={data} onDataChanged={formik.setFieldValue}></DataForm> */}
+        <DataForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'data')}></DataForm>
 
         <Button variant="contained" color="primary" type="submit"> Submit Dataset </Button>
       </form>
