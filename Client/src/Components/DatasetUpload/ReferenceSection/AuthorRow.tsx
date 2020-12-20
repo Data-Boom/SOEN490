@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+
 import { Box, Grid, IconButton, TextField } from "@material-ui/core"
 
 import ClearIcon from '@material-ui/icons/Clear'
@@ -31,6 +33,11 @@ export const AuthorRow = (props: IProps) => {
 
   const formik = useFormik({
     initialValues: { ...author },
+    validationSchema: Yup.object().shape({
+      firstname: Yup.string().required(),
+      middlename: Yup.string(),
+      lastname: Yup.string().required(),
+    }),
     onSubmit: () => { },
   })
 
@@ -41,7 +48,7 @@ export const AuthorRow = (props: IProps) => {
   return (
     <>
       <Box>
-        <Grid item container spacing={4} alignItems="center">
+        <Grid item container spacing={4}>
           <Grid item>
             <TextField fullWidth label="First Name" variant="outlined" {...getErrorAndFormikProps(formik, 'firstname')} />
           </Grid>

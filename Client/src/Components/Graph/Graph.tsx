@@ -13,7 +13,7 @@ interface IProps {
 
 export default function Graph(props: IProps) {
 
-  //todo this somehow can be done with reduce method of an array
+  //todo this somehow can be done with map/reduce method of an array
   const datalist: any[] = []
   props.datasets.forEach(dataset => datalist.push(dataset.points))
   const colourslist: string[] = []

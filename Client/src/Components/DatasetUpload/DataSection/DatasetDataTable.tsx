@@ -25,7 +25,6 @@ export const DatasetDataTable = (props: IProps) => {
   }
 
   const handleVariableUpdate = (variable: IVariable, index: number) => {
-    //todo if this works, remove the SJON.stringify
     const copyData = { ...props.data }
     copyData.variables[index] = variable
     props.onDataChange(copyData)
@@ -105,7 +104,7 @@ export const DatasetDataTable = (props: IProps) => {
 
   const handleRowChange = (changedRows) => {
     const copyData = { ...props.data }
-    //changedRows is the rows after user input, we need to update copyData's contents via a map with an index:
+    // changedRows is the rows after user input, we need to update copyData's contents via a map with an index:
     copyData.contents.map((row, index) => row.point = changedRows[index])
     // and then callback with updated data
     props.onDataChange(copyData)

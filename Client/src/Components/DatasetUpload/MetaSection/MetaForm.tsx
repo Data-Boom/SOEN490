@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+
 import { Grid, TextField, Typography } from '@material-ui/core'
 import { IDatasetMeta, IMaterial } from '../../../Models/Datasets/IDatasetModel'
 
@@ -19,6 +21,13 @@ export const MetaForm = (props: IProps) => {
 
   const formik = useFormik({
     initialValues: value,
+    validationSchema: Yup.object().shape({
+      dataset_name: Yup.string().required(),
+      data_type: Yup.string().required(),
+      category: Yup.string().required(),
+      subcategory: Yup.string().required(),
+      material: Yup.array().required().min(1)
+    }),
     //this is subform and therefore its not submitting, but istead is propagating change up
     onSubmit: () => { }
   })

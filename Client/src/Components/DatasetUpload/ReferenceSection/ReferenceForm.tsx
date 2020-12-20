@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+
 import { Box, Grid, TextField, Typography } from '@material-ui/core'
 
 import { AuthorsList } from './AuthorsList'
@@ -19,7 +21,15 @@ export const ReferenceForm = (props: IProps) => {
 
   const formik = useFormik({
     initialValues: value,
-    //this is subform and therefore its not submitting, but istead is propagating change up
+    validationSchema: Yup.object().shape({
+      year: Yup.number().integer().required().test('len', 'Must be exactly 4 characters', val => val && val.toString().length === 4),
+      volume: Yup.number().integer().required(),
+      pages: Yup.number().integer().required(),
+      title: Yup.string().required(),
+      type: Yup.string().required(),
+      publisher: Yup.string().required(),
+    }),
+    //this is subform and therefore its not submitting, but isntead is propagating change up
     onSubmit: () => { }
   })
 
@@ -40,6 +50,15 @@ export const ReferenceForm = (props: IProps) => {
         </Grid>
         <Grid item sm={4}>
           <TextField fullWidth label="Publisher" variant="outlined" {...getErrorAndFormikProps(formik, "publisher")} />
+        </Grid>
+        <Grid item sm={4}>
+          <TextField fullWidth label="Volume" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "volume")} />
+        </Grid>
+        <Grid item sm={4}>
+          <TextField fullWidth label="Pages" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "pages")} />
+        </Grid>
+        <Grid item sm={4}>
+          <TextField fullWidth label="Year" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "year")} />
         </Grid>
       </Grid>
       <Grid container spacing={4}>
