@@ -1,9 +1,9 @@
 import { Grid, IconButton, Typography } from "@material-ui/core"
 import { IAuthor, defaultAuthor } from "../../../Models/Datasets/IDatasetModel"
+import React, { useState } from 'react'
 
 import AddIcon from '@material-ui/icons/Add'
 import { AuthorRow } from "./AuthorRow"
-import React from 'react'
 
 interface IProps {
   name: string,
@@ -12,6 +12,11 @@ interface IProps {
 }
 
 export const AuthorsList = (props: IProps) => {
+  // this is a dirty hack to provide a unique key to the AuthorRow after the author was removed.
+  // proper solution would require completely redoing this whole datasetUploadform and sway away from useFormik hook 
+  // and using their <Formik></Formik> element
+  const [authorListVersion, setAuthorListVersion] = useState(0)
+
   const { value, name, setFieldValue } = props
 
   const handleAuthorChange = (author: IAuthor, index: number) => {
@@ -22,6 +27,7 @@ export const AuthorsList = (props: IProps) => {
 
   const handleRemoveAuthor = (indexToRemove: number) => {
     setFieldValue(name, value.filter((author, index) => index !== indexToRemove))
+    setAuthorListVersion(authorListVersion + 1)
   }
 
   const renderAuthorRows = () => {
@@ -29,7 +35,7 @@ export const AuthorsList = (props: IProps) => {
       return (
         <AuthorRow
           author={author}
-          key={index}
+          key={authorListVersion + '_' + index}
           index={index}
           onAuthorChange={handleAuthorChange}
           onRemoveAuthorClick={handleRemoveAuthor}
@@ -37,6 +43,10 @@ export const AuthorsList = (props: IProps) => {
         />
       )
     })
+  }
+
+  const authorToString = (author: IAuthor) => {
+    return `${author.firstname}_${author.middlename}_${author.lastname}`
   }
 
   const shouldRenderRemove = () => {
