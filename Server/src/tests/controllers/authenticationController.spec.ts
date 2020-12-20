@@ -8,17 +8,9 @@ describe('Authentication Controller', () => {
     let next;
     let authenticationController: AuthenticationController;
 
-    beforeAll(async () => {
-        jest.setTimeout(60000)
+    beforeEach(async () => {
         await createConnection();
-        jest.setTimeout(60000) //need to increase from default to allow for DB connection
-    });
-
-    afterAll(async () => {
-        await getConnection().close();
-    });
-
-    beforeEach(() => {
+        jest.setTimeout(60000)
         authenticationController = new AuthenticationController();
         mockRequest = {};
         mockResponse = {
@@ -26,6 +18,10 @@ describe('Authentication Controller', () => {
             json: jest.fn()
         }
         next = {};
+    });
+
+    afterEach(async () => {
+        await getConnection().close();
     });
 
     test('Valid SignUp Request', async () => {

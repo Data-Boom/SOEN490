@@ -55,7 +55,7 @@ export class AuthenticationModel {
         let userInfo = await connection.manager
             .createQueryBuilder(Accounts, 'account')
             .select('account.email', 'account_email')
-            .select('account.password', 'account_password')
+            .addSelect('account.password', 'account_password')
             .where('account.email = :email', { email: email })
             .getRawMany();
         return userInfo[0].account_password;
@@ -75,6 +75,7 @@ export class AuthenticationModel {
             .select('account.admin', 'account_admin')
             .where('account.email = :email', { email: email })
             .getRawOne();
+        console.log(adminStatus.account_admin);
         return adminStatus.account_admin;
     }
 

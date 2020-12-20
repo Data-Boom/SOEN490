@@ -9,16 +9,10 @@ describe('Authentication tests', () => {
     let next;
     let authenticationService: AuthenticationService;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
+
         await createConnection();
-        jest.setTimeout(60000) //need to increase from default to allow for DB connection
-    });
-
-    afterAll(async () => {
-        await getConnection().close();
-    });
-
-    beforeEach(() => {
+        jest.setTimeout(60000)
         authenticationService = new AuthenticationService();
         mockRequest = {};
         mockResponse = {
@@ -26,6 +20,10 @@ describe('Authentication tests', () => {
             json: jest.fn()
         }
         next = {};
+    });
+
+    afterEach(async () => {
+        await getConnection().close();
     });
 
     test('Test hashing function', async () => {

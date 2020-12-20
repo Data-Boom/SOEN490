@@ -8,7 +8,8 @@ describe('Authentication Model Methods', () => {
 
     beforeEach(async () => {
         await createConnection();
-        jest.setTimeout(60000) //need to increase from default to allow for DB connection
+        jest.setTimeout(60000)
+        //need to increase from default to allow for DB connection
     });
 
     afterEach(async () => {
@@ -17,7 +18,7 @@ describe('Authentication Model Methods', () => {
 
     test('Inserting new user into database by SignUp - Pass', async () => {
         let signUpInfo: ISignUpInformation = {
-            email: 'j.comkj',
+            email: 'j.com',
             password: '123',
             isAdmin: false,
             organizationName: 'Mugiwara',
@@ -45,8 +46,9 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Checking Database if User Hash Exists - true', async () => {
-        let email: string = 'j.comkj'
-        let mockRes = '$argon2i$v=19$m=4096,t=3,p=1$UAYbLcgcN4aECpcIjJz1DQ$/L4U//lZfi8WNw1IzeDbkecqq/KJss7OkoRvrX00d4Q';
+        let email: string = 'tester.com3ke'
+        let mockRes = '$argon2i$v=19$m=4096,t=3,p=1$G7joYzr8c2UsxAilhmA/xA$x9EMRPjhU5jLc3wpDM2lG3DyjaZGLBrlezE73RVJdvU';
+
         let res = await AuthenticationModel.getPasswordHash(email);
         expect(res).toBe(mockRes);
         console.log('Checking Database if User Hash Exists - true');
@@ -67,18 +69,18 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Checking Database if User is Admin - false', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j.comk'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(0);
         console.log('Checking Database if User is Admin - true');
     });
 
     test('Obtaining User JWT params from Database', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j.comk'
         let mockResponse = {
             'account_admin': 0,
             'account_firstName': 'g',
-            'account_id': 3
+            'account_id': 4
         }
         let res = await AuthenticationModel.obtainJWTParams(email);
         expect(res.account_admin).toBe(mockResponse.account_admin);
