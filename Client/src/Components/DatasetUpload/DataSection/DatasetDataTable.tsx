@@ -102,10 +102,10 @@ export const DatasetDataTable = (props: IProps) => {
     return props.data.contents.map(content => content.point)
   }
 
-  const handleRowChange = (changedRows) => {
+  const handleRowChange = (changedRows: number[][]) => {
     const copyData = { ...props.data }
     // changedRows is the rows after user input, we need to update copyData's contents via a map with an index:
-    copyData.contents.map((row, index) => row.point = changedRows[index])
+    copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
     // and then callback with updated data
     props.onDataChange(copyData)
   }
