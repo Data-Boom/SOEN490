@@ -42,6 +42,7 @@ export class AuthenticationService {
             await AuthenticationModel.insertSignUpInformation(signUpInformation);
         }
         this.requestResponse.message = "Success";
+        this.requestResponse.statusCode = 200;
         return this.requestResponse
     }
 
@@ -77,7 +78,6 @@ export class AuthenticationService {
             } catch (error) {
                 throw new InternalServerError("Internal Server Issue. Please try again later", error.message)
             }
-            this.requestResponse.status = "Success";
             this.requestResponse.statusCode = 200;
             this.requestResponse.message = accessToken;
         }

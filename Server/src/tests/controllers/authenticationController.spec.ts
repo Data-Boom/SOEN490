@@ -9,6 +9,7 @@ describe('Authentication Controller', () => {
     let authenticationController: AuthenticationController;
 
     beforeAll(async () => {
+        jest.setTimeout(60000)
         await createConnection();
         jest.setTimeout(60000) //need to increase from default to allow for DB connection
     });
@@ -26,6 +27,24 @@ describe('Authentication Controller', () => {
         }
         next = {};
     });
+
+    test('Valid SignUp Request', async () => {
+        const expectedResponse = "Success";
+        mockRequest = {
+            query: {
+                email: 'j.comkj23r23r23r23r2',
+                password: '123',
+                isAdmin: 'false',
+                organizationName: 'Mugiwara',
+                dateOfBirth: '1980-01-01',
+                firstName: 'Ace',
+                lastName: 'FireFist'
+            }
+        }
+        await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    })
 
     test('Invalid SignUp Request due to missing parameters - Error 400', async () => {
         const expectedResponse = "Request is invalid. Missing attributes";
@@ -54,7 +73,7 @@ describe('Authentication Controller', () => {
     });
 
     test('Testing Sign Up with Duplicate Email in System - Error 400', async () => {
-        const expectedResponse = "Email is already in the System. Please check again";
+        const expectedResponse = "Email already exists! Please enter a different email address";
         mockRequest = {
             query: {
                 email: 'j.comkj',

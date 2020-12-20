@@ -16,7 +16,7 @@ export class AuthenticationController {
     constructor() {
     }
 
-    createSignUpRequest(request: Request, response: Response, next: NextFunction): Response {
+    async createSignUpRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
         this.invalidResponse = this.validateSignUpRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Missing attributes")
@@ -24,11 +24,12 @@ export class AuthenticationController {
         else {
             let requestParams: any = { ...request.query };
             let signUpInfo: ISignUpInformation = requestParams;
-            this.callServiceForSignUp(signUpInfo, response, next);
+            let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
+            return res;
         }
     }
 
-    createLoginRequest(request: Request, response: Response, next: NextFunction): Response {
+    async createLoginRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
@@ -36,7 +37,8 @@ export class AuthenticationController {
         else {
             let requestParams: any = { ...request.query };
             let loginInfo: ILoginInformation = requestParams;
-            this.callServiceForLogin(loginInfo, response, next);
+            let res = await this.callServiceForLogin(loginInfo, response, next);
+            return res;
         }
     }
 
@@ -65,7 +67,7 @@ export class AuthenticationController {
         let serviceResponse: IResponse;
         try {
             serviceResponse = await this.authenticationService.processSignUp(signUpInfo);
-            return response.status(200).json('Success');
+            return response.status(serviceResponse.statusCode).json(serviceResponse.message);
         } catch (error) {
             return response.status(error.status).json(error.message);
         }

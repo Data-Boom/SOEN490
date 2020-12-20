@@ -6,6 +6,7 @@ module.exports = {
     "username": process.env.TEST_USER_NAME,
     "password": process.env.TEST_PASSWORD,
     "database": process.env.TEST_DB_NAME,
+    "dropSchema": true,
     "synchronize": true,
     "logging": false,
     "entities": [
