@@ -35,7 +35,6 @@ export const EditVariableHeader = (props: IProps) => {
       props.onVariableUpdate({ ...values }, props.index)
     },
   })
-  console.log("render")
 
   return (
     <div>

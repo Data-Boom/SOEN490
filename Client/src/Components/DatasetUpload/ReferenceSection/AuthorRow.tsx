@@ -1,8 +1,10 @@
-import { Grid, IconButton, TextField } from "@material-ui/core"
+import { Box, Grid, IconButton, TextField } from "@material-ui/core"
 
 import ClearIcon from '@material-ui/icons/Clear'
 import { IAuthor } from "../../../Models/Datasets/IDatasetModel"
 import React from 'react'
+import { getErrorAndFormikProps } from "../../../Util/FormUtil"
+import { useFormik } from "formik"
 
 interface IProps {
   author: IAuthor,
@@ -13,17 +15,13 @@ interface IProps {
 }
 
 export const AuthorRow = (props: IProps) => {
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target
-    const newAuthor: IAuthor = { ...props.author, [name]: value }
-    props.onAuthorChange(newAuthor, props.index)
-  }
+  const { author, index, onAuthorChange, onRemoveAuthorClick, renderRemoveButton } = props
 
   const handleRemoveClick = () => {
-    props.onRemoveAuthorClick(props.index)
+    onRemoveAuthorClick(index)
   }
-  const renderRemoveButton = () => {
+
+  const removeButton = () => {
     return (
       <IconButton color="primary" aria-label="remove author" onClick={handleRemoveClick}>
         <ClearIcon />
@@ -31,22 +29,36 @@ export const AuthorRow = (props: IProps) => {
     )
   }
 
+  const formik = useFormik({
+    initialValues: { ...author },
+    onSubmit: values => {
+      console.log("submitting author on blur")
+      onAuthorChange({ ...values }, index)
+    },
+  })
+
+  React.useEffect(() => {
+    formik.handleSubmit()
+  }, [formik.values])
+
   return (
     <>
-      <Grid item container spacing={4} alignItems="center">
-        <Grid item>
-          <TextField fullWidth label="First Name" variant="outlined" name="firstname" value={props.author.firstname} onChange={handleInputChange} />
+      <Box>
+        <Grid item container spacing={4} alignItems="center">
+          <Grid item>
+            <TextField fullWidth label="First Name" variant="outlined" {...getErrorAndFormikProps(formik, 'firstname')} onBlur={(event) => event.stopPropagation()} />
+          </Grid>
+          <Grid item>
+            <TextField fullWidth label="Middle Name" variant="outlined" {...getErrorAndFormikProps(formik, 'middlename')} onBlur={(event) => event.stopPropagation()} />
+          </Grid>
+          <Grid item>
+            <TextField fullWidth label="Last Name" variant="outlined" {...getErrorAndFormikProps(formik, 'lastname')} onBlur={(event) => event.stopPropagation()} />
+          </Grid>
+          <Grid item>
+            {renderRemoveButton ? removeButton() : null}
+          </Grid>
         </Grid>
-        <Grid item>
-          <TextField fullWidth label="Middle Name" variant="outlined" name="middlename" value={props.author.middlename} onChange={handleInputChange} />
-        </Grid>
-        <Grid item>
-          <TextField fullWidth label="Last Name" variant="outlined" name="lastname" value={props.author.lastname} onChange={handleInputChange} />
-        </Grid>
-        <Grid item>
-          {props.renderRemoveButton ? renderRemoveButton() : null}
-        </Grid>
-      </Grid>
+      </Box>
     </>
   )
 }

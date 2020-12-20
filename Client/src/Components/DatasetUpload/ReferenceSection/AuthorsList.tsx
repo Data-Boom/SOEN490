@@ -1,27 +1,41 @@
 import { Grid, IconButton, Typography } from "@material-ui/core"
+import { IAuthor, defaultAuthor } from "../../../Models/Datasets/IDatasetModel"
 
 import AddIcon from '@material-ui/icons/Add'
 import { AuthorRow } from "./AuthorRow"
-import { IAuthor } from "../../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
 interface IProps {
   authors: IAuthor[],
-  onRemoveAuthorClick: (index: number) => void,
-  onAddAuthorClick: () => void,
-  onAuthorChange: (changedAuthor: IAuthor, index: number) => void
+  onAuthorsChange: (changedAuthors: IAuthor[]) => void
 }
 
 export const AuthorsList = (props: IProps) => {
+  const { authors, onAuthorsChange } = props
+
+  const handleAuthorChange = (author: IAuthor, index: number) => {
+    let newAuthors: IAuthor[] = [...authors]
+    newAuthors[index] = author
+    onAuthorsChange(newAuthors)
+  }
+
+  const handleRemoveAuthor = (indexToRemove: number) => {
+    onAuthorsChange(authors.filter((author, index) => index !== indexToRemove))
+  }
+
+  const handleAddAuthor = () => {
+    onAuthorsChange([...authors, defaultAuthor])
+  }
+
   const renderAuthorRows = () => {
-    return props && props.authors && props.authors.map((author, index) => {
+    return authors && authors.map((author, index) => {
       return (
         <AuthorRow
           author={author}
           key={index}
           index={index}
-          onAuthorChange={props.onAuthorChange}
-          onRemoveAuthorClick={props.onRemoveAuthorClick}
+          onAuthorChange={handleAuthorChange}
+          onRemoveAuthorClick={handleRemoveAuthor}
           renderRemoveButton={shouldRenderRemove()}
         />
       )
@@ -38,9 +52,11 @@ export const AuthorsList = (props: IProps) => {
         <Grid item>
           <Typography variant='h6' align="left">Authors</Typography>
         </Grid>
-        {renderAuthorRows()}
         <Grid item>
-          <IconButton color="primary" aria-label="add author" onClick={props.onAddAuthorClick}>
+          {renderAuthorRows()}
+        </Grid>
+        <Grid item>
+          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor}>
             <AddIcon />
           </IconButton>
         </Grid>

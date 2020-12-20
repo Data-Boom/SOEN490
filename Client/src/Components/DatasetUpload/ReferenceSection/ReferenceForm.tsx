@@ -1,9 +1,11 @@
 import { Box, Grid, TextField, Typography } from '@material-ui/core'
-import { IAuthor, IReference, defaultAuthor } from '../../../Models/Datasets/IDatasetModel'
+import { IAuthor, IReference } from '../../../Models/Datasets/IDatasetModel'
 
 import { AuthorsList } from './AuthorsList'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
+import { getErrorAndFormikProps } from '../../../Util/FormUtil'
+import { useFormik } from 'formik'
 
 interface IProps {
   reference: IReference,
@@ -12,53 +14,41 @@ interface IProps {
 
 export const ReferenceForm = (props: IProps) => {
 
-  const { reference, onReferenceChange } = { ...props }
+  const { reference, onReferenceChange } = props
 
-  const handleRemoveAuthor = (index: number) => {
-    let newAuthors: IAuthor[] = [...reference.authors]
-    newAuthors.splice(index, 1)
-    onReferenceChange({ ...reference, authors: newAuthors })
-  }
+  const formik = useFormik({
+    initialValues: { ...reference },
+    onSubmit: values => {
+      onReferenceChange({ ...values })
+    },
+  })
 
-  const handleAddAuthor = () => {
-    let newAuthors: IAuthor[] = [...reference.authors]
-    newAuthors.push(defaultAuthor)
-    onReferenceChange({ ...reference, authors: newAuthors })
-  }
-
-  const handleAuthorChanged = (newAuthor: IAuthor, index: number) => {
-    let newAuthors: IAuthor[] = [...reference.authors]
-    newAuthors[index] = newAuthor
-    onReferenceChange({ ...reference, authors: newAuthors })
-  }
-
-  const handleInputChanged = (event) => {
-    const { name, value } = event.target
-    onReferenceChange({ ...reference, [name]: value })
+  const handleAuthorChange = (authors: IAuthor[]) => {
+    formik.setFieldValue('authors', authors)
+    formik.handleSubmit()
   }
 
   return (
-    <Box className={classStyles().defaultBorder}>
+    <Box className={classStyles().defaultBorder} onBlur={() => formik.handleSubmit()} >
       <Typography variant='h6' align="left">Reference</Typography>
       <Grid container spacing={4}>
         <Grid item sm={4}>
-          <TextField fullWidth label="Title" variant="outlined" name="title" value={reference.title} onChange={handleInputChanged} />
+          <TextField fullWidth label="Title" variant="outlined" {...getErrorAndFormikProps(formik, 'title')} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Type" variant="outlined" name="type" value={reference.type} onChange={handleInputChanged} />
+          <TextField fullWidth label="Type" variant="outlined" {...getErrorAndFormikProps(formik, 'type')} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Publisher" variant="outlined" name="publisher" value={reference.publisher} onChange={handleInputChanged} />
+          <TextField fullWidth label="Publisher" variant="outlined" {...getErrorAndFormikProps(formik, 'publisher')} />
         </Grid>
       </Grid>
       <Grid container spacing={4}>
         <AuthorsList
+          {...getErrorAndFormikProps(formik, 'authors')}
           authors={reference.authors}
-          onRemoveAuthorClick={handleRemoveAuthor}
-          onAddAuthorClick={handleAddAuthor}
-          onAuthorChange={handleAuthorChanged}
+          onAuthorsChange={handleAuthorChange}
         />
       </Grid>
-    </Box>
+    </Box >
   )
 }
