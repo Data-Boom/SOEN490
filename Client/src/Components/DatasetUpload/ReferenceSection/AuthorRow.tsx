@@ -31,14 +31,11 @@ export const AuthorRow = (props: IProps) => {
 
   const formik = useFormik({
     initialValues: { ...author },
-    onSubmit: values => {
-      console.log("submitting author on blur")
-      onAuthorChange({ ...values }, index)
-    },
+    onSubmit: () => { },
   })
 
   React.useEffect(() => {
-    formik.handleSubmit()
+    onAuthorChange({ ...formik.values }, index)
   }, [formik.values])
 
   return (
@@ -46,13 +43,13 @@ export const AuthorRow = (props: IProps) => {
       <Box>
         <Grid item container spacing={4} alignItems="center">
           <Grid item>
-            <TextField fullWidth label="First Name" variant="outlined" {...getErrorAndFormikProps(formik, 'firstname')} onBlur={(event) => event.stopPropagation()} />
+            <TextField fullWidth label="First Name" variant="outlined" {...getErrorAndFormikProps(formik, 'firstname')} />
           </Grid>
           <Grid item>
-            <TextField fullWidth label="Middle Name" variant="outlined" {...getErrorAndFormikProps(formik, 'middlename')} onBlur={(event) => event.stopPropagation()} />
+            <TextField fullWidth label="Middle Name" variant="outlined" {...getErrorAndFormikProps(formik, 'middlename')} />
           </Grid>
           <Grid item>
-            <TextField fullWidth label="Last Name" variant="outlined" {...getErrorAndFormikProps(formik, 'lastname')} onBlur={(event) => event.stopPropagation()} />
+            <TextField fullWidth label="Last Name" variant="outlined" {...getErrorAndFormikProps(formik, 'lastname')} />
           </Grid>
           <Grid item>
             {renderRemoveButton ? removeButton() : null}

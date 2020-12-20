@@ -32,12 +32,10 @@ export default function NavigationMenu() {
   const classes = useStyles()
   const handleDrawerOpen = () => {
     setOpen(true)
-    console.log("openDrawer Test")
   }
 
   const handleDrawerClose = () => {
     setOpen(false)
-    console.log("closeDrawer Test")
   }
 
   const renderNavLink = (route, title, icon, navID = null) => {
@@ -54,7 +52,6 @@ export default function NavigationMenu() {
   }
 
   const handleSignIn = () => {
-    console.log("handleSignIn Test")
   }
 
   const drawer = () => {

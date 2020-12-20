@@ -6,29 +6,26 @@ import { AuthorRow } from "./AuthorRow"
 import React from 'react'
 
 interface IProps {
-  authors: IAuthor[],
-  onAuthorsChange: (changedAuthors: IAuthor[]) => void
+  name: string,
+  value: IAuthor[],
+  setFieldValue: (fieldName: string, newAuthors: IAuthor[]) => void
 }
 
 export const AuthorsList = (props: IProps) => {
-  const { authors, onAuthorsChange } = props
+  const { value, name, setFieldValue } = props
 
   const handleAuthorChange = (author: IAuthor, index: number) => {
-    let newAuthors: IAuthor[] = [...authors]
+    let newAuthors: IAuthor[] = [...value]
     newAuthors[index] = author
-    onAuthorsChange(newAuthors)
+    setFieldValue(name, newAuthors)
   }
 
   const handleRemoveAuthor = (indexToRemove: number) => {
-    onAuthorsChange(authors.filter((author, index) => index !== indexToRemove))
-  }
-
-  const handleAddAuthor = () => {
-    onAuthorsChange([...authors, defaultAuthor])
+    setFieldValue(name, value.filter((author, index) => index !== indexToRemove))
   }
 
   const renderAuthorRows = () => {
-    return authors && authors.map((author, index) => {
+    return value && value.map((author, index) => {
       return (
         <AuthorRow
           author={author}
@@ -43,7 +40,11 @@ export const AuthorsList = (props: IProps) => {
   }
 
   const shouldRenderRemove = () => {
-    return props.authors.length > 1
+    return props.value.length > 1
+  }
+
+  const handleAddAuthor = () => {
+    setFieldValue(name, [...value, defaultAuthor])
   }
 
   return (

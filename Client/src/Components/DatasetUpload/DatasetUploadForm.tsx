@@ -1,10 +1,11 @@
 import { Button, Typography } from '@material-ui/core'
-import { IData, IDatasetModel, IMaterial, IReference, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import React, { useState } from 'react'
+import { IData, IDatasetMeta, IDatasetModel, IMaterial, IReference, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
-import { DataForm } from './DataSection/DataForm'
 import { MetaForm } from './MetaSection/MetaForm'
+import React from 'react'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
+import { getErrorAndFormikProps } from '../../Util/FormUtil'
+import { useFormik } from 'formik'
 
 interface IProps {
   materials: IMaterial[],
@@ -16,26 +17,30 @@ export const DatasetUploadForm = (props: IProps): any => {
   const { materials, handleSubmit } = props
 
   //todo revert to use defaultDatasetModel instead of example datasetModel
-  // eslint-disable-next-line no-undef
-  const [meta, setMeta] = useState<Omit<IDatasetModel, 'reference' | 'data'>>(exampleExportDatasetModel)
-  const [reference, setReference] = useState<IReference>(exampleExportDatasetModel.reference)
-  const [data, setData] = useState<IData>(exampleExportDatasetModel.data)
+  const meta: IDatasetMeta = exampleExportDatasetModel
+  const reference: IReference = exampleExportDatasetModel.reference
+  const data: IData = exampleExportDatasetModel.data
 
-  const handleSubmitDataset = () => {
-    handleSubmit({ ...meta, reference, data })
-  }
-
-  //todo slow as fuck, fix render issues
+  const formik = useFormik({
+    initialValues: { meta, reference, data },
+    onSubmit: values => {
+      let dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
+      handleSubmit(dataset)
+    },
+  })
 
   return (
     <>
-      <Typography variant='h4' align="left">New Dataset</Typography>
+      <form onSubmit={formik.handleSubmit}>
 
-      <MetaForm meta={meta} handleMetaChange={setMeta} materials={materials} />
-      <ReferenceForm reference={reference} onReferenceChange={setReference} />
-      <DataForm data={data} onDataChanged={setData}></DataForm>
+        <Typography variant='h4' align="left">New Dataset</Typography>
 
-      <Button variant="contained" color="primary" onClick={handleSubmitDataset}> Submit Dataset </Button>
+        <MetaForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'meta')} materials={materials} />
+        <ReferenceForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'reference')} />
+        {/* <DataForm data={data} onDataChanged={formik.setFieldValue}></DataForm> */}
+
+        <Button variant="contained" color="primary" type="submit"> Submit Dataset </Button>
+      </form>
     </>
   )
 }

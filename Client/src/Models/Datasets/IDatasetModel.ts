@@ -1,3 +1,4 @@
+
 export interface IAuthor {
   firstname: string;
   middlename: string;
@@ -58,6 +59,9 @@ export interface IDatasetModel {
   data_type: string;
   data: IData;
 }
+
+// eslint-disable-next-line no-undef
+export type IDatasetMeta = Omit<IDatasetModel, 'reference' | 'data'>
 
 export const defaultDatasetModel: IDatasetModel = {
   category: '',

@@ -37,12 +37,10 @@ export default function Graph(props: IProps) {
 
   const handleXScaleClick = () => {
     setXToggle(!isXLog)
-    console.log('Changed X: ' + isXLog)
   }
 
   const handleYScaleClick = () => {
     setYToggle(!isYLog)
-    console.log('Changed Y: ' + isYLog)
   }
 
   let active = [null, null, null, null]

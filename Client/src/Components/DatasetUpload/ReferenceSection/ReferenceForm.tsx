@@ -1,54 +1,53 @@
 import { Box, Grid, TextField, Typography } from '@material-ui/core'
-import { IAuthor, IReference } from '../../../Models/Datasets/IDatasetModel'
 
 import { AuthorsList } from './AuthorsList'
+import { IReference } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 import { getErrorAndFormikProps } from '../../../Util/FormUtil'
 import { useFormik } from 'formik'
 
 interface IProps {
-  reference: IReference,
-  onReferenceChange: (newReference: IReference) => void
+  name: string,
+  value: IReference,
+  setFieldValue: (fieldName: string, newReference: IReference) => void
 }
 
 export const ReferenceForm = (props: IProps) => {
 
-  const { reference, onReferenceChange } = props
+  const { name, value, setFieldValue } = props
 
   const formik = useFormik({
-    initialValues: { ...reference },
-    onSubmit: values => {
-      onReferenceChange({ ...values })
-    },
+    initialValues: value,
+    //this is subform and therefore its not submitting, but istead is propagating change up
+    onSubmit: () => { }
   })
 
-  const handleAuthorChange = (authors: IAuthor[]) => {
-    formik.setFieldValue('authors', authors)
-    formik.handleSubmit()
-  }
+  //anytime the current reference changes we will call parent component about it
+  React.useEffect(() => {
+    setFieldValue(name, formik.values)
+  }, [formik.values])
 
   return (
-    <Box className={classStyles().defaultBorder} onBlur={() => formik.handleSubmit()} >
+    <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Reference</Typography>
       <Grid container spacing={4}>
         <Grid item sm={4}>
-          <TextField fullWidth label="Title" variant="outlined" {...getErrorAndFormikProps(formik, 'title')} />
+          <TextField fullWidth label="Title" variant="outlined" {...getErrorAndFormikProps(formik, "title")} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Type" variant="outlined" {...getErrorAndFormikProps(formik, 'type')} />
+          <TextField fullWidth label="Type" variant="outlined" {...getErrorAndFormikProps(formik, "type")} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Publisher" variant="outlined" {...getErrorAndFormikProps(formik, 'publisher')} />
+          <TextField fullWidth label="Publisher" variant="outlined" {...getErrorAndFormikProps(formik, "publisher")} />
         </Grid>
       </Grid>
       <Grid container spacing={4}>
         <AuthorsList
-          {...getErrorAndFormikProps(formik, 'authors')}
-          authors={reference.authors}
-          onAuthorsChange={handleAuthorChange}
+          {...getErrorAndFormikProps(formik, "authors")}
+          setFieldValue={formik.setFieldValue}
         />
       </Grid>
     </Box >
   )
-}
+} 

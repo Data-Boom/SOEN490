@@ -1,5 +1,5 @@
 import { Grid, TextField, Typography } from '@material-ui/core'
-import { IDatasetModel, IMaterial } from '../../../Models/Datasets/IDatasetModel'
+import { IDatasetMeta, IMaterial } from '../../../Models/Datasets/IDatasetModel'
 
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
 import React from 'react'
@@ -8,35 +8,27 @@ import { getErrorAndFormikProps } from '../../../Util/FormUtil'
 import { useFormik } from 'formik'
 
 interface IProps {
-  // eslint-disable-next-line no-undef
-  meta: Omit<IDatasetModel, 'reference' | 'data'>,
+  name: string,
+  value: IDatasetMeta,
+  setFieldValue: (fieldName: string, newReference: IDatasetMeta) => void,
   materials: IMaterial[],
-  handleMetaChange: (event) => void
 }
 
 export const MetaForm = (props: IProps) => {
-
-  const { meta, materials, handleMetaChange } = props
+  const { name, value, setFieldValue, materials } = props
 
   const formik = useFormik({
-    initialValues: { ...meta },
-    onSubmit: values => {
-      handleMetaChange({ ...values })
-    },
+    initialValues: value,
+    //this is subform and therefore its not submitting, but istead is propagating change up
+    onSubmit: () => { }
   })
 
-  //since materials is a custom input, it needs a custom on change
-  const handleMaterialChange = (newMaterials: IMaterial[]) => {
-    formik.setFieldValue('material', newMaterials)
-    formik.handleSubmit()
-  }
-
+  //anytime the current reference changes we will call parent component about it
   React.useEffect(() => {
-    handleMetaChange({ ...formik.values })
+    setFieldValue(name, formik.values)
   }, [formik.values])
 
   return (
-    // we submit on blur so that the parent's state is only updated when the user is not directly interacting with the form
     <div className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Meta</Typography>
       <Grid container spacing={4}>
@@ -55,10 +47,9 @@ export const MetaForm = (props: IProps) => {
         <Grid item sm={12}>
           <MaterialSelectChipArray
             {...getErrorAndFormikProps(formik, 'material')}
-            selectedMaterials={meta.material}
-            label={"Material"}
+            selectedMaterials={value.material}
+            setFieldValue={formik.setFieldValue}
             options={materials}
-            onChange={handleMaterialChange}
           />
         </Grid>
       </Grid>
