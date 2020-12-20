@@ -1,7 +1,7 @@
 export interface IResponse {
     status: string
     statusCode: number
-    response?: string
+    message?: string
 }
 
 export interface SuccessIResponse extends IResponse {

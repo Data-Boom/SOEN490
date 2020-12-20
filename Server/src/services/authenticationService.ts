@@ -8,6 +8,8 @@ import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterface
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
 
+import { BadRequest, InternalServerError } from "@tsed/exceptions";
+
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 
 
@@ -30,24 +32,16 @@ export class AuthenticationService {
     async processSignUp(signUpInformation: ISignUpInformation): Promise<IResponse> {
 
         let email: boolean;
-        try {
-            email = await AuthenticationModel.verifyIfEmailExists(signUpInformation.email);
-            if (!email) {
-                signUpInformation.password = await this.hashPassword(signUpInformation.password)
-                await AuthenticationModel.insertSignUpInformation(signUpInformation);
-            }
-            else throw new Error();
 
-        } catch (error) {
-            this.requestResponse.status = "Failure";
-            this.requestResponse.statusCode = 400;
-            this.requestResponse.response = "Email is already in the System. Please check again";
-
-            return this.requestResponse
+        email = await AuthenticationModel.verifyIfEmailExists(signUpInformation.email);
+        if (email) {
+            throw new BadRequest("Email already exists! Please enter a different email address");
         }
-        this.requestResponse.status = "Success";
-        this.requestResponse.statusCode = 200;
-        this.requestResponse.response = "Success";
+        else {
+            signUpInformation.password = await this.hashPassword(signUpInformation.password)
+            await AuthenticationModel.insertSignUpInformation(signUpInformation);
+        }
+        this.requestResponse.message = "Success";
         return this.requestResponse
     }
 
@@ -65,27 +59,15 @@ export class AuthenticationService {
         let savedPasswordHash: string;
         let accessToken: string;
 
-        try {
-            verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userInformation.email);
-            if (!verifiedEmail)
-                throw new Error();
-        }
-        catch (error) {
-            this.requestResponse.status = "Failure";
-            this.requestResponse.statusCode = 400;
-            this.requestResponse.response = "Email is not in the System or its mispelled. Check Again";
-
-            return this.requestResponse
+        verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userInformation.email);
+        if (!verifiedEmail) {
+            throw new BadRequest("Email is not in the System or its mispelled. Check Again");
         }
 
         savedPasswordHash = await AuthenticationModel.getPasswordHash(userInformation.email);
 
         if (!(await argon2.verify(savedPasswordHash, userInformation.password))) {
-            this.requestResponse.status = "Failure";
-            this.requestResponse.statusCode = 400;
-            this.requestResponse.response = "Password does not match";
-
-            return this.requestResponse
+            throw new BadRequest("Password does not match");
         }
         else {
             let jwtParams: IJwtParams;
@@ -93,17 +75,12 @@ export class AuthenticationService {
                 jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
                 accessToken = await this.generateJwtToken(jwtParams);
             } catch (error) {
-                this.requestResponse.status = "Failure";
-                this.requestResponse.statusCode = 500;
-                this.requestResponse.response = "Internal Server Issue. Please try again later";
-                return this.requestResponse
+                throw new InternalServerError("Internal Server Issue. Please try again later", error.message)
             }
-
             this.requestResponse.status = "Success";
             this.requestResponse.statusCode = 200;
-            this.requestResponse.response = accessToken;
+            this.requestResponse.message = accessToken;
         }
-
         return this.requestResponse;
     }
     /**

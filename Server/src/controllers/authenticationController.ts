@@ -16,7 +16,7 @@ export class AuthenticationController {
     constructor() {
     }
 
-    async createSignUpRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+    createSignUpRequest(request: Request, response: Response, next: NextFunction): Response {
         this.invalidResponse = this.validateSignUpRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Missing attributes")
@@ -24,13 +24,11 @@ export class AuthenticationController {
         else {
             let requestParams: any = { ...request.query };
             let signUpInfo: ISignUpInformation = requestParams;
-            let res: IResponse = await this.callServiceForSignUp(signUpInfo, response, next);
-            console.log(res);
-            return response.status(res.statusCode).json(res.response);
+            this.callServiceForSignUp(signUpInfo, response, next);
         }
     }
 
-    async createLoginRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+    createLoginRequest(request: Request, response: Response, next: NextFunction): Response {
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
@@ -38,10 +36,7 @@ export class AuthenticationController {
         else {
             let requestParams: any = { ...request.query };
             let loginInfo: ILoginInformation = requestParams;
-
-            let res: IResponse = await this.callServiceForLogin(loginInfo, response, next);
-            //response.setHeader('Set-Cookie', res.response);
-            return response.status(res.statusCode).json(res.response);
+            this.callServiceForLogin(loginInfo, response, next);
         }
     }
 
@@ -65,20 +60,26 @@ export class AuthenticationController {
         }
     }
 
-    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<IResponse> {
+    private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
-        let serviceResponse: IResponse = await this.authenticationService.processSignUp(signUpInfo);
-        return serviceResponse;
+        let serviceResponse: IResponse;
+        try {
+            serviceResponse = await this.authenticationService.processSignUp(signUpInfo);
+            return response.status(200).json('Success');
+        } catch (error) {
+            return response.status(error.status).json(error.message);
+        }
     }
 
-    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<IResponse> {
+    private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse
         try {
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-            return serviceResponse;
+            response.setHeader('Set-Cookie', serviceResponse.message);
+            return response.status(serviceResponse.statusCode).json(serviceResponse.message);
         } catch (error) {
-            next(error);
+            return response.status(error.status).json(error.message);
         }
     }
 }
