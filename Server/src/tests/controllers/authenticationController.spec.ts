@@ -54,20 +54,7 @@ describe('Authentication Controller', () => {
         expect(mockResponse.status).toBeCalledWith(400);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
-
-    test('Invalid Logic Request due to missing parameters - Error 400', async () => {
-        const expectedResponse = "Request is invalid. Email or Password attribute missing";
-        mockRequest = {
-            query: {
-                email: 'g@123'
-            }
-        }
-
-        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(400);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    });
-
+    //CHECK
     test('Testing Sign Up with Duplicate Email in System - Error 400', async () => {
         const expectedResponse = "Email already exists! Please enter a different email address";
         mockRequest = {
@@ -87,7 +74,20 @@ describe('Authentication Controller', () => {
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
 
-    test('Testing Login with unregistered Email - Error 400', async () => {
+    test('Invalid Logic Request due to missing parameters - Error 400', async () => {
+        const expectedResponse = "Request is invalid. Email or Password attribute missing";
+        mockRequest = {
+            query: {
+                email: 'g@123'
+            }
+        }
+
+        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+    //CHECK
+    test('Login with unregistered Email - Error 400', async () => {
         const expectedResponse = "Email is not in the System or its mispelled. Check Again";
         mockRequest = {
             query: {
@@ -100,4 +100,18 @@ describe('Authentication Controller', () => {
         expect(mockResponse.status).toBeCalledWith(400);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
+    //CHECK
+    test('VALID valid Login Request', async () => {
+        const expectedResponse = "..."
+        mockRequest = {
+            query: {
+                email: 'j.comkwgwegwegwegw',
+                password: '123',
+            }
+        }
+
+        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(200);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    })
 })

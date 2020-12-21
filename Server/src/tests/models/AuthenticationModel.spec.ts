@@ -53,14 +53,7 @@ describe('Authentication Model Methods', () => {
         expect(res).toBe(mockRes);
         console.log('Checking Database if User Hash Exists - true');
     });
-
-    // test('Checking Database if User Hash Exists - Return false', async () => {
-    //     let email: string = 'j.comkwecwewcwewwej'
-    //     let res = await AuthenticationModel.getPasswordHash(email);
-    //     expect(res).toBeUndefined();
-    //     console.log('Checking Database if User Hash Exists - false');
-    // });
-
+    //CHECK
     test('Checking Database if User is Admin - true', async () => {
         let email: string = 'tester.coma'
         let res = await AuthenticationModel.isAdminStatus(email);
