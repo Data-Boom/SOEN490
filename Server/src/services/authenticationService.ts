@@ -38,8 +38,13 @@ export class AuthenticationService {
             throw new BadRequest("Email already exists! Please enter a different email address");
         }
         else {
-            signUpInformation.password = await this.hashPassword(signUpInformation.password)
-            await AuthenticationModel.insertSignUpInformation(signUpInformation);
+            try {
+                signUpInformation.password = await this.hashPassword(signUpInformation.password)
+                await AuthenticationModel.insertSignUpInformation(signUpInformation);
+            }
+            catch (error) {
+                new InternalServerError("Internal Server Issue. Please try again later", error.message);
+            }
         }
         this.requestResponse.message = "Success";
         this.requestResponse.statusCode = 200;
@@ -75,6 +80,7 @@ export class AuthenticationService {
             try {
                 jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
                 accessToken = await this.generateJwtToken(jwtParams);
+                await AuthenticationModel.isAdminStatus(userInformation.email);
             } catch (error) {
                 throw new InternalServerError("Internal Server Issue. Please try again later", error.message)
             }

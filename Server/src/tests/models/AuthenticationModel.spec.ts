@@ -46,8 +46,8 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Checking Database if User Hash Exists - true', async () => {
-        let email: string = 'tester.com3ke'
-        let mockRes = '$argon2i$v=19$m=4096,t=3,p=1$G7joYzr8c2UsxAilhmA/xA$x9EMRPjhU5jLc3wpDM2lG3DyjaZGLBrlezE73RVJdvU';
+        let email: string = 'j.comkj'
+        let mockRes = '$argon2i$v=19$m=4096,t=3,p=1$4Q7g9nGc70GYorwQ2Ts8gQ$EeLrpusfocpTH2N1MleDM7Xdmn66/6oC1IdVF4sB9VA';
 
         let res = await AuthenticationModel.getPasswordHash(email);
         expect(res).toBe(mockRes);
@@ -55,25 +55,25 @@ describe('Authentication Model Methods', () => {
     });
     //CHECK
     test('Checking Database if User is Admin - true', async () => {
-        let email: string = 'tester.coma'
+        let email: string = 'j.comkj'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(1);
         console.log('Checking Database if User is Admin - true');
     });
 
     test('Checking Database if User is Admin - false', async () => {
-        let email: string = 'j.comk'
+        let email: string = 'j.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(0);
         console.log('Checking Database if User is Admin - true');
     });
 
     test('Obtaining User JWT params from Database', async () => {
-        let email: string = 'j.comk'
+        let email: string = 'j.com'
         let mockResponse = {
             'account_admin': 0,
-            'account_firstName': 'g',
-            'account_id': 4
+            'account_firstName': 'Ace',
+            'account_id': 3
         }
         let res = await AuthenticationModel.obtainJWTParams(email);
         expect(res.account_admin).toBe(mockResponse.account_admin);

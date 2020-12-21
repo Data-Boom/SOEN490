@@ -5,6 +5,8 @@ import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 
+import { BadRequest, InternalServerError } from "@tsed/exceptions";
+
 /**
  * This controller is responsible for verifying the user request has correct parameters input.
  * After request is verified, the appropriate service can be called to fulfill user signup or login
@@ -69,7 +71,11 @@ export class AuthenticationController {
             serviceResponse = await this.authenticationService.processSignUp(signUpInfo);
             return response.status(serviceResponse.statusCode).json(serviceResponse.message);
         } catch (error) {
-            return response.status(error.status).json(error.message);
+            if (error instanceof BadRequest)
+                return response.status(error.status).json(error.message);
+            else {
+                return response.status(error.status).json("GENERIC ERROR");
+            }
         }
     }
 
@@ -81,7 +87,11 @@ export class AuthenticationController {
             response.setHeader('Set-Cookie', serviceResponse.message);
             return response.status(serviceResponse.statusCode).json(serviceResponse.message);
         } catch (error) {
-            return response.status(error.status).json(error.message);
+            if (error instanceof BadRequest)
+                return response.status(error.status).json(error.message);
+            else {
+                return response.status(error.status).json("GENERIC ERROR");
+            }
         }
     }
 }
