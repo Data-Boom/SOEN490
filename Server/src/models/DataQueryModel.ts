@@ -31,7 +31,6 @@ export class DataQueryModel {
      * A string containing either a material's composition or details: string
      */
     async getDatasetIDFromMaterial(material: string): Promise<IDatasetModel[]> {
-        // Get composition ID if a compostion was entered instead of material details
         let compositionIdRaw = await this.connection.manager.find(Composition, { composition: material });
         let compositionId = -1; // fallback value if material details were entered
         if (compositionIdRaw[0] != null) {
