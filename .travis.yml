@@ -10,7 +10,7 @@ branches:
   - master
 script:
 - cd Server && npm install && npm test
-- cd ../Client && npm install && npm test
+- cd ../Client && npm install
 env:
   global:
   - secure: O1oNtP8bHrL+iut0kh/r3pbRBsdhowP3uKLisqlNoxLfNowp2CzutyurGW6O7PDXTkcWgGboLwJHJIC9fgCo0oB9k2p3r4Yx9ZeevpBasZQxuI4QZGiBTrISMlxbpGMoHZZBRRheIbNrZuIll0JVULmmNK2a+Xu2IG8761UqrIV6jwy1bBYDYaeknvgrN+4VVjnLWzqrQxqoBxU/sqDm2Xmq9y49tYwNVhfvG1oMniqVXNI5o6XH0gitCE+NYQ0t4yVU/tMBiETCA6vCT+2u2zbvWf7Ot9WFm5kNlwXWKaeZrcLdteI9XQgdxVBSmVEwh2nhoDgAlVrHt1neJ4onAt63/Lxu+zVvi54UhNyTK4cr1y6UCtdMzl9EncJysqqsGwB96SFZCIGo3x7aqwmQ51lz5Dd0LKJWKyco6qV8cwjy5gfvQ5EnjxkWJiXx1pcgB2X1ISPXlvLLJoyHthIjPAuzQO8GCcTjkdCXiaeA2ieZjXlSCgIAX85wNuCh80VtXE2oVMe3HUvsB8KEn+yvHhTJULEpNqc8yCIPmSAhPJM5asrGS7A39PSovgpOvKoNcEmjOAu9UgBmK5mDQQ3zCvqjhFQCRmZSnEUucRRtr+4DfA22nieCxzpQZ48BBlOBSxj0/mqV3f4hkrp5abh553GmFfDU3b7CVFqfexevOI8=
