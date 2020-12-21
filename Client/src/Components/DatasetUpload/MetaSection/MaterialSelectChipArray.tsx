@@ -26,6 +26,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
   }
 
   const handleChange = (event, newMaterial: IMaterial) => {
+    //if newMaterial is null or empty
     if (!materialToString(newMaterial)) {
       return
     }

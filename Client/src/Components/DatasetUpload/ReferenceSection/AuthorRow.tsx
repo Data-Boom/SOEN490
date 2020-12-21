@@ -13,11 +13,11 @@ interface IProps {
   index: number,
   onRemoveAuthorClick: (index: number) => void,
   onAuthorChange: (changedAuthor: IAuthor, index: number) => void,
-  renderRemoveButton: boolean
+  removable: boolean
 }
 
 export const AuthorRow = (props: IProps) => {
-  const { author, index, onAuthorChange, onRemoveAuthorClick, renderRemoveButton } = props
+  const { author, index, onAuthorChange, onRemoveAuthorClick, removable } = props
 
   const handleRemoveClick = () => {
     onRemoveAuthorClick(index)
@@ -41,6 +41,7 @@ export const AuthorRow = (props: IProps) => {
     onSubmit: () => { },
   })
 
+  //todo refactor the whole form with one Formik at the top level, and the children using useFormikContext()
   React.useEffect(() => {
     onAuthorChange({ ...formik.values }, index)
   }, [formik.values])
@@ -59,7 +60,7 @@ export const AuthorRow = (props: IProps) => {
             <TextField fullWidth label="Last Name" variant="outlined" {...getErrorAndFormikProps(formik, 'lastname')} />
           </Grid>
           <Grid item>
-            {renderRemoveButton ? removeButton() : null}
+            {removable ? removeButton() : null}
           </Grid>
         </Grid>
       </Box>

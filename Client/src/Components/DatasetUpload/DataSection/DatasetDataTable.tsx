@@ -20,7 +20,7 @@ export const DatasetDataTable = (props: IProps) => {
     setEditedVariableIndex(indexOfClickedHeader)
   }
 
-  const handleClose = () => {
+  const closeEditVariableModal = () => {
     setEditedVariableIndex(-1)
   }
 
@@ -28,7 +28,8 @@ export const DatasetDataTable = (props: IProps) => {
     const copyData = { ...props.data }
     copyData.variables[index] = variable
     props.onDataChange(copyData)
-    handleClose()
+
+    closeEditVariableModal()
   }
 
   const handleVariableRemove = (index: number) => {
@@ -40,7 +41,7 @@ export const DatasetDataTable = (props: IProps) => {
     copyData.contents = copyContents
 
     props.onDataChange(copyData)
-    handleClose()
+    closeEditVariableModal()
   }
 
   const removeColumnPoints = (copyContents: IContent[], columnIndex: number) => {
@@ -56,7 +57,6 @@ export const DatasetDataTable = (props: IProps) => {
     copyData.variables.push(defaultVariable)
     props.onDataChange(copyData)
 
-    // once column added immediately enter edit state for that column
     setEditedVariableIndex(copyData.variables.length - 1)
   }
 
@@ -64,6 +64,7 @@ export const DatasetDataTable = (props: IProps) => {
     const copyData = { ...props.data }
     copyData.contents = copyData.contents.filter((row, index) => !selectedRows.has(index))
     props.onDataChange(copyData)
+
     resetSelection()
   }
 
@@ -87,7 +88,7 @@ export const DatasetDataTable = (props: IProps) => {
             index={index}
             editMode={editedVariableIndex === index}
             onHeaderClick={handleHeaderClick}
-            onEditModalClose={handleClose}
+            onEditModalClose={closeEditVariableModal}
             onVariableUpdate={handleVariableUpdate}
             onVariableRemove={handleVariableRemove}
           />

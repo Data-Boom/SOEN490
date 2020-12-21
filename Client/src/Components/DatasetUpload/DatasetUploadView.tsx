@@ -7,6 +7,7 @@ import { DatasetUploadForm } from './DatasetUploadForm'
 export const DatasetUploadView = () => {
 
   const [materials, setMaterials] = useState<IMaterial[]>([])
+  //todo implement materials endpoint
   useEffect(() => setMaterials([
     {
       "composition": "C",
@@ -27,10 +28,10 @@ export const DatasetUploadView = () => {
 
   return (
     <Container>
-      <Box pt={4}>
+      <Box pt={4} pb={4}>
         <DatasetUploadForm
           materials={materials}
-          handleSubmit={handleSubmitForm}
+          onSubmit={handleSubmitForm}
         />
       </Box>
     </Container>

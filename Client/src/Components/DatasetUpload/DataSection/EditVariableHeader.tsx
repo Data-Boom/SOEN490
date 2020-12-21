@@ -38,11 +38,7 @@ export const EditVariableHeader = (props: IProps) => {
 
   return (
     <div>
-      <Modal
-        open={props.editMode}
-        onClose={handleClose}
-        className={classStyles().modal}
-      >
+      <Modal open={props.editMode} onClose={handleClose} className={classStyles().modal}>
         <Paper elevation={3}>
           <Box m={5}>
             <form onSubmit={formik.handleSubmit}>
@@ -75,10 +71,10 @@ export const EditVariableHeader = (props: IProps) => {
 
               <Grid container spacing={4} justify="flex-end">
                 <Grid item>
-                  <Button variant="contained" onClick={handleClose} disabled={!formik.isValid}>Close</Button>
+                  <Button variant="contained" onClick={handleClose}>Close</Button>
                 </Grid>
                 <Grid item>
-                  <Button variant="contained" type="submit" disabled={!formik.isValid}>Update</Button>
+                  <Button variant="contained" type="submit">Update</Button>
                 </Grid>
                 <Grid item>
                   <Button variant="contained" onClick={handleRemove}>Delete Column</Button>

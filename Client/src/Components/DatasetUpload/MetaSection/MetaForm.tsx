@@ -28,7 +28,7 @@ export const MetaForm = (props: IProps) => {
       subcategory: Yup.string().required(),
       material: Yup.array().required().min(1)
     }),
-    //this is subform and therefore its not submitting, but istead is propagating change up
+    //this is subform and therefore its not submitting, but instead is propagating change up
     onSubmit: () => { }
   })
 

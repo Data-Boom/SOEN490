@@ -12,8 +12,9 @@ interface IProps {
 }
 
 export const AuthorsList = (props: IProps) => {
-  // this is a dirty hack to provide a unique key to the AuthorRow after the author was removed.
-  // proper solution would require completely redoing this whole datasetUploadform and sway away from useFormik hook 
+  // this is a hack to provide a unique key to the AuthorRow after the author was removed.
+  // proper solution would require completely redoing this whole datasetUploadform and sway away from useFormik 
+  // hook as it is lacking core functionality from the formik lib
   // and using their <Formik></Formik> element
   const [authorListVersion, setAuthorListVersion] = useState(0)
 
@@ -39,17 +40,14 @@ export const AuthorsList = (props: IProps) => {
           index={index}
           onAuthorChange={handleAuthorChange}
           onRemoveAuthorClick={handleRemoveAuthor}
-          renderRemoveButton={shouldRenderRemove()}
+          removable={shouldRenderRemove()}
         />
       )
     })
   }
 
-  const authorToString = (author: IAuthor) => {
-    return `${author.firstname}_${author.middlename}_${author.lastname}`
-  }
-
   const shouldRenderRemove = () => {
+    // allow removing authors if there is at least 2
     return props.value.length > 1
   }
 

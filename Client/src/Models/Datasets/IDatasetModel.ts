@@ -60,6 +60,7 @@ export interface IDatasetModel {
   data: IData;
 }
 
+// will build a type that is IDatasetModel without reference and data
 // eslint-disable-next-line no-undef
 export type IDatasetMeta = Omit<IDatasetModel, 'reference' | 'data'>
 
