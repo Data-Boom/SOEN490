@@ -14,7 +14,7 @@ interface IProps {
 
 export const DatasetDataTable = (props: IProps) => {
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
-  const [selectedRows, setSelectedRows] = useState(() => new Set<React.Key>())
+  const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
 
   const handleHeaderClick = (indexOfClickedHeader: number) => {
     setEditedVariableIndex(indexOfClickedHeader)
