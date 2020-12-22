@@ -18,11 +18,11 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
   const [isProcessingPaper, setIsProcessingPaper] = useState(false)
 
-  const handleSubmit = async (researchPaper: File) => {
+  const handleSubmit = async (researchPaper: File): Promise<void> => {
     analyzePaper(researchPaper)
   }
 
-  const analyzePaper = async (researchPaper: File) => {
+  const analyzePaper = async (researchPaper: File): Promise<void> => {
     setIsProcessingPaper(true)
     const fetchedDataset = await fetchDataset()
     setIsProcessingPaper(false)
@@ -41,7 +41,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
 
   const theme = useTheme()
 
-  const paperUploadSection = () => {
+  const paperUploadSection = (): any => {
     return (
       <>
         <Box pt={5}>

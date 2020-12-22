@@ -30,98 +30,6 @@ import universitylogo from './universitylogo.png'
 
 const drawerWidth = 240
 
-export default function NavigationMenu() {
-
-  const [open, setOpen] = React.useState(false)
-  const classes = useStyles()
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
-
-  const renderNavLink = (route, title, icon, navID = null) => {
-    return (
-      <ListItem button>
-        <ListItemIcon>
-          {icon}
-        </ListItemIcon>
-        <NavLink exact to={route} id={navID} >
-          {title}
-        </NavLink>
-      </ListItem>
-    )
-  }
-
-  const handleSignIn = () => {
-  }
-
-  const drawer = () => {
-    return (
-      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
-        paper: classes.drawerPaper,
-      }}>
-        <div className={classes.drawerHeader}>
-          <IconButton id='Close' onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {renderNavLink(homeRoute, "Home", <HomeIcon />)}
-          {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
-          {renderNavLink(searchRoute, "Search", <SearchIcon />)}
-          {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
-          {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
-          {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
-          {renderNavLink(aboutRoute, "About Databoom", <InfoIcon />)}
-        </List>
-      </ Drawer>
-    )
-  }
-
-  return (
-    <>
-      <HashRouter>
-        <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
-          <Toolbar>
-            <Grid container direction="row" justify="space-between" alignItems="center">
-              <Grid item>
-                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <img src={universitylogo} />
-              </Grid>
-              <Grid container item xs={4} justify="flex-end">
-                <Typography variant="h6" color="inherit">
-                  Shock and Detonation Physics Database
-                </Typography>
-              </Grid>
-              <Grid container item xs={4} justify="flex-end">
-                <Button id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-        {drawer()}
-        <Box pt={16}>
-          <Route exact path={homeRoute} component={HomeView} />
-          <Route path={graphRoute} component={GraphView} />
-          <Route path={fileUploadRoute} component={FileUploadView} />
-          <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
-          <Route path={searchRoute} component={SearchView} />
-          <Route path={datasetUploadRoute} component={DatasetUploadView} />
-          <Route path={aboutRoute} component={AboutView} />
-        </Box>
-      </HashRouter >
-    </>
-  )
-}
-
 //todo i dont like this useStyles() will refactor later, this is not a resuable component so whatever
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -179,3 +87,98 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
 }))
+
+const classes = useStyles()
+
+export default function NavigationMenu(): any {
+  const [open, setOpen] = React.useState(false)
+  const handleDrawerOpen = (): void => {
+    setOpen(true)
+  }
+
+  const handleDrawerClose = (): void => {
+    setOpen(false)
+  }
+
+  const renderNavLink = (route, title, icon, navID = null): any => {
+    return (
+      <ListItem button>
+        <ListItemIcon>
+          {icon}
+        </ListItemIcon>
+        <NavLink exact to={route} id={navID} >
+          {title}
+        </NavLink>
+      </ListItem>
+    )
+  }
+
+  const handleSignIn = (): void => {
+    console.log("")
+  }
+
+  const drawer = (): any => {
+    return (
+      <>
+        <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
+          paper: classes.drawerPaper,
+        }}>
+          <div className={classes.drawerHeader}>
+            <IconButton id='Close' onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {renderNavLink(homeRoute, "Home", <HomeIcon />)}
+            {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
+            {renderNavLink(searchRoute, "Search", <SearchIcon />)}
+            {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
+            {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
+            {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
+            {renderNavLink(aboutRoute, "About Databoom", <InfoIcon />)}
+          </List>
+        </ Drawer>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <HashRouter>
+        <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
+          <Toolbar>
+            <Grid container direction="row" justify="space-between" alignItems="center">
+              <Grid item>
+                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <img src={universitylogo} />
+              </Grid>
+              <Grid container item xs={4} justify="flex-end">
+                <Typography variant="h6" color="inherit">
+                  Shock and Detonation Physics Database
+                </Typography>
+              </Grid>
+              <Grid container item xs={4} justify="flex-end">
+                <Button id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        {drawer()}
+        <Box pt={16}>
+          <Route exact path={homeRoute} component={HomeView} />
+          <Route path={graphRoute} component={GraphView} />
+          <Route path={fileUploadRoute} component={FileUploadView} />
+          <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
+          <Route path={searchRoute} component={SearchView} />
+          <Route path={datasetUploadRoute} component={DatasetUploadView} />
+          <Route path={aboutRoute} component={AboutView} />
+        </Box>
+      </HashRouter >
+    </>
+  )
+}

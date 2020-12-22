@@ -1,7 +1,6 @@
 import { Box, Grid, IconButton, Typography } from "@material-ui/core"
 
 import DeleteIcon from '@material-ui/icons/Delete'
-import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React from 'react'
 import { classStyles } from "../../appTheme"
 

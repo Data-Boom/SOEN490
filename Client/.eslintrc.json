@@ -6,7 +6,8 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "eslint:recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -44,6 +45,8 @@
                 "args": "after-used",
                 "argsIgnorePattern": "^_"
             }
-        ]
+        ],
+        "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/no-use-before-define": "off"
     }
 }
