@@ -57,8 +57,8 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
 
   return (
     <>
-      {!analyzedDataset ? paperUploadSection()
-        :
+      {!analyzedDataset ?
+        paperUploadSection() :
         <DatasetUploadView initialDataset={analyzedDataset} />
       }
       <Loader
