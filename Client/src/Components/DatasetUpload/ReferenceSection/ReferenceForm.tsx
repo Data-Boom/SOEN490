@@ -1,22 +1,17 @@
 import * as Yup from 'yup'
 
 import { Box, Grid, TextField, Typography } from '@material-ui/core'
-import { Field, useFormik } from 'formik'
+import { FastField, Field, FieldArray, useFormik } from 'formik'
 
+import { AuthorRow } from './AuthorRow'
 import { AuthorsList } from './AuthorsList'
 import { IReference } from '../../../Models/Datasets/IDatasetModel'
+import { MuiTextFieldFormik } from '../../../Models/Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { getErrorAndFormikProps } from '../../../Util/FormUtil'
+import { get } from 'lodash';
 
 interface IProps {
-}
-
-const CustomInputComponent = (props) => {
-  console.log(props);
-  return (
-    <TextField {...props} />
-  )
 }
 
 export const ReferenceForm = (props: IProps) => {
@@ -25,30 +20,28 @@ export const ReferenceForm = (props: IProps) => {
       <Typography variant='h6' align="left">Reference</Typography>
       <Grid container spacing={4}>
         <Grid item sm={4}>
-          <Field name="reference.title" as={CustomInputComponent} />
-          {/* <TextField fullWidth label="Title" variant="outlined" /> */}
+          <FastField name="reference.title" component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          {/* <TextField fullWidth label="Type" variant="outlined" {...getErrorAndFormikProps(formik, "type")} /> */}
+          <FastField name="reference.type" component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          {/* <TextField fullWidth label="Publisher" variant="outlined" {...getErrorAndFormikProps(formik, "publisher")} /> */}
+          <FastField name="reference.publisher" component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          {/* <TextField fullWidth label="Volume" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "volume")} /> */}
+          <FastField name="reference.volume" component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          {/* <TextField fullWidth label="Pages" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "pages")} /> */}
+          <FastField name="reference.pages" component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          {/* <TextField fullWidth label="Year" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "year")} /> */}
+          <FastField name="reference.year" component={MuiTextFieldFormik} />
         </Grid>
       </Grid>
       <Grid container spacing={4}>
-        {/* <AuthorsList
-          {...getErrorAndFormikProps(formik, "authors")}
-          setFieldValue={formik.setFieldValue}
-        /> */}
+        <FieldArray name='reference.authors' >
+          {({ form, ...fieldArrayHelpers }) => <AuthorsList authors={get(form.values, 'reference.authors')} fieldArrayHelpers={fieldArrayHelpers} />}
+        </FieldArray>
       </Grid>
     </Box >
   )

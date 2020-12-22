@@ -20,6 +20,7 @@
     "enzyme-matchers": "^7.1.2",
     "formik": "^2.2.6",
     "immutable": "^4.0.0-rc.12",
+    "lodash": "^4.17.20",
     "mocha": "^8.2.1",
     "react": "^16.13.1",
     "react-data-grid": "^7.0.0-canary.30",

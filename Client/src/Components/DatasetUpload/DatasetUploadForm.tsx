@@ -31,27 +31,28 @@ export const DatasetUploadForm = (props: IProps): any => {
   const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
   const handleSubmit = (values: DatasetUploadFormValues, actions: unknown) => {
+    console.log('submitting');
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
   }
 
   const validationSchema = Yup.object().shape({
-    firstname: Yup.string().required(),
-    middlename: Yup.string(),
-    lastname: Yup.string().required(),
+    reference: Yup.object().shape({
+      title: Yup.string().required()
+    }),
   })
 
   return (
     <div>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        // validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         <Form>
           <MetaForm materials={materials} />
           <ReferenceForm />
-
+          <Button variant="contained" color="primary" type="submit"> Save Dataset </Button>
         </Form>
       </Formik>
     </div>

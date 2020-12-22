@@ -23,7 +23,7 @@ export const MetaForm = (props: IProps) => {
       <Typography variant='h6' align="left">Meta</Typography>
       <Grid container spacing={4}>
         <Grid item sm={3}>
-          <TextField fullWidth label="Dataset Name" variant="outlined" name={`${name}.dataset_name`} />
+          <TextField fullWidth label="Dataset Name" variant="outlined" />
         </Grid>
         <Grid item sm={3}>
           <TextField fullWidth label="Data Type" variant="outlined" {...getErrorAndFormikProps(formik, 'data_type')} />
