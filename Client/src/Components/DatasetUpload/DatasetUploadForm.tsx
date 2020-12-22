@@ -1,5 +1,5 @@
 import { Button, Typography } from '@material-ui/core'
-import { IData, IDatasetMeta, IDatasetModel, IMaterial, IReference, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { IData, IDatasetMeta, IDatasetModel, IMaterial, IReference } from '../../Models/Datasets/IDatasetModel'
 
 import { DataForm } from './DataSection/DataForm'
 import { MetaForm } from './MetaSection/MetaForm'
@@ -10,16 +10,17 @@ import { useFormik } from 'formik'
 
 interface IProps {
   materials: IMaterial[],
+  initialDataset: IDatasetModel,
   onSubmit(formDataset: IDatasetModel): void
 }
 
 export const DatasetUploadForm = (props: IProps): any => {
 
-  const { materials, onSubmit } = props
+  const { materials, initialDataset, onSubmit } = props
 
-  const meta: IDatasetMeta = defaultDatasetModel
-  const reference: IReference = defaultDatasetModel.reference
-  const data: IData = defaultDatasetModel.data
+  const meta: IDatasetMeta = initialDataset
+  const reference: IReference = initialDataset.reference
+  const data: IData = initialDataset.data
 
   const formik = useFormik({
     initialValues: { meta, reference, data },

@@ -1,10 +1,15 @@
 import { Box, Container } from '@material-ui/core'
-import { IDatasetModel, IMaterial } from '../../Models/Datasets/IDatasetModel'
+import { IDatasetModel, IMaterial, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 
 import { DatasetUploadForm } from './DatasetUploadForm'
 
-export const DatasetUploadView = () => {
+interface IProps {
+  initialDataset?: IDatasetModel
+}
+export const DatasetUploadView = (props: IProps) => {
+
+  const initialDataset = props.initialDataset || defaultDatasetModel
 
   const [materials, setMaterials] = useState<IMaterial[]>([])
   //todo implement materials endpoint
@@ -32,6 +37,7 @@ export const DatasetUploadView = () => {
         <DatasetUploadForm
           materials={materials}
           onSubmit={handleSubmitForm}
+          initialDataset={initialDataset}
         />
       </Box>
     </Container>
