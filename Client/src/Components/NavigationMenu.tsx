@@ -13,14 +13,14 @@ import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
-import FileUploadView from "../Views/FileUploadView"
-import GraphView from "../Views/GraphView"
+import FileUploadView from "./DataCell/FileUploadView"
+import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
-import HomeView from '../Views/HomeView'
+import HomeView from './Home/HomeView'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "../Views/SearchView"
+import SearchView from "./Search/SearchView"
 import clsx from "clsx"
 import universitylogo from './universitylogo.png'
 

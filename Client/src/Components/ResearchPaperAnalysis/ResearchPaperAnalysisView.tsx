@@ -4,7 +4,7 @@ interface IProps {
 
 }
 
-const ResearchPaperAnalysisView = (props: IProps) => {
+export const ResearchPaperAnalysisView = (props: IProps) => {
   return (
     <>
       upload and then view is there too
