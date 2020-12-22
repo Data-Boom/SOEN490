@@ -1,7 +1,8 @@
 import { Button, Typography } from '@material-ui/core'
+import { Field, Form, Formik, FormikHelpers } from 'formik'
 import { IData, IDatasetMeta, IDatasetModel, IMaterial, IReference } from '../../Models/Datasets/IDatasetModel'
 
-import { Formik } from 'formik'
+import { MetaForm } from './MetaSection/MetaForm'
 import React from 'react'
 
 interface IProps {
@@ -30,20 +31,51 @@ export const DatasetUploadForm = (props: IProps): any => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
   }
+
+  interface Values {
+    firstName: string;
+    lastName: string;
+    email: string;
+  }
+
   return (
-    <>
+    <div>
+      <h1>Signup</h1>
       <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
+        initialValues={{
+          firstName: '',
+          lastName: '',
+          email: '',
+        }}
+        onSubmit={(
+          values: Values,
+          { setSubmitting }: FormikHelpers<Values>
+        ) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 500);
+        }}
       >
-        <Typography variant='h4' align="left">New Dataset</Typography>
+        <Form>
+          <label htmlFor="firstName">First Name</label>
+          <Field id="firstName" name="firstName" placeholder="John" />
 
-        {/* <MetaForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'meta')} materials={materials} /> */}
-        {/* <ReferenceForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'reference')} />
-            <DataForm setFieldValue={formik.setFieldValue} {...getErrorAndFormikProps(formik, 'data')}></DataForm> */}
+          <label htmlFor="lastName">Last Name</label>
+          <Field id="lastName" name="lastName" placeholder="Doe" />
 
-        <Button variant="contained" color="primary" type="submit"> Save Dataset </Button>
+          <label htmlFor="email">Email</label>
+          <Field
+            id="email"
+            name="email"
+            placeholder="john@acme.com"
+            type="email"
+          />
+
+          <button type="submit">Submit</button>
+        </Form>
       </Formik>
-    </>
-  )
+    </div>
+  );
+};
 }
