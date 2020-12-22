@@ -29,7 +29,7 @@ export class Datapoints {
     name: string
 
     @Column({ type: "json" })
-    values: number[]
+    dataValues: number[]
 
     @Column({ default: 1 })
     unitsId: number
@@ -64,7 +64,7 @@ export class Datapoints {
 export const selectDataPointsQuery = (manager: EntityManager, dataset: number) =>
     manager.createQueryBuilder(Dataset, 'dataset')
         .select('datapoints.name', 'datapoints_name')
-        .addSelect('datapoints.values', 'datapoints_values')
+        .addSelect('datapoints.dataValues', 'datapoints_values')
         .addSelect('units.units', 'units_units')
         .addSelect('representations.repr', 'representations_repr')
         .addSelect('dataset.id', 'dataset_id')
