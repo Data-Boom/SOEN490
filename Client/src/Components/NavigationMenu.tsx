@@ -17,6 +17,7 @@ import FileUploadView from "./DataCell/FileUploadView"
 import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from './Home/HomeView'
+import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
@@ -70,9 +71,9 @@ export default function NavigationMenu() {
           {renderNavLink(homeRoute, "Home", <HomeIcon />)}
           {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
           {renderNavLink(searchRoute, "Search", <SearchIcon />)}
+          {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
           {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
           {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
-          {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <CloudUploadIcon />)}
         </List>
       </ Drawer>
     )
@@ -108,9 +109,9 @@ export default function NavigationMenu() {
           <Route exact path={homeRoute} component={HomeView} />
           <Route path={graphRoute} component={GraphView} />
           <Route path={fileUploadRoute} component={FileUploadView} />
+          <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
           <Route path={searchRoute} component={SearchView} />
           <Route path={datasetUploadRoute} component={DatasetUploadView} />
-          <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
         </Box>
       </HashRouter >
     </>

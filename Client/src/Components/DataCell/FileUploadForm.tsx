@@ -13,7 +13,7 @@ interface IProps {
   acceptFileFormat: string,
   onSubmit: (uploadedFile: File) => void,
   //return true if file isValid
-  validateFile: (uploadedFile: File) => boolean,
+  validateFile?: (uploadedFile: File) => boolean,
 }
 
 const fileInputId = 'fileInput'
@@ -26,7 +26,8 @@ export const FileUploadForm = (props: IProps) => {
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement, Event>) => {
     const input: HTMLInputElement = event.target[fileInputId]
     const file: File = input.files[0]
-    const isValidFile = validateFile(file)
+    //if validate file was not provided will isValidFile = true
+    const isValidFile = validateFile && validateFile(file) || true
     if (isValidFile) {
       onSubmit(file)
     }
