@@ -1,6 +1,7 @@
 import { Box, Grid, IconButton, Typography } from "@material-ui/core"
 
 import DeleteIcon from '@material-ui/icons/Delete'
+import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React from 'react'
 import { classStyles } from "../../appTheme"
 
@@ -10,7 +11,6 @@ interface IProps {
 }
 
 export const DatasetRow = (props: IProps) => {
-
   return (
     <Grid item>
       <Box className={classStyles().defaultBorder} mt={5}>
