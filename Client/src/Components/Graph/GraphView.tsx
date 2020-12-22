@@ -1,17 +1,14 @@
-// todo this highlights as an error but i dont know what to do with it, 
-// it doesnt break anything, saving image as png works well
-
 import * as svg from 'save-svg-as-png'
 
 import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
 import React, { useState } from "react"
 
-import { DatasetsList } from "../Components/Graph/DatasetsList"
-import Graph from '../Components/Graph/Graph'
-import { ICompleteDatasetEntity } from "../Models/Datasets/ICompleteDatasetEntity"
-import { IGraphDatasetModel } from '../Models/Datasets/IGraphDatasetModel'
-import SearchView from './SearchView'
-import { exampleExportDatasetModel } from '../Models/Datasets/IExportDatasetModel'
+import { DatasetsList } from "./DatasetsList"
+import Graph from './Graph'
+import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { IGraphDatasetModel } from '../../Models/Datasets/IGraphDatasetModel'
+import SearchView from '../Search/SearchView'
+import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
@@ -74,17 +71,13 @@ export default function GraphView() {
   }
 
   const onRemoveDataset = (datasetId: number) => {
-    console.log("removed dataset")
     setCompleteDatasets(completeDatasets.filter(dataset => dataset.id !== datasetId))
   }
 
   const handleDatasetsSelected = (selectedDatasets: ICompleteDatasetEntity[]) => {
-    console.log("just set datasets from handleDatasetsSelected")
-
-    // selectedDatasets.filter will return those datasets that meet
     let notYetSelectedDatasets: ICompleteDatasetEntity[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
-    let mergedDatasets: ICompleteDatasetEntity[] = JSON.parse(JSON.stringify(completeDatasets))
+    let mergedDatasets: ICompleteDatasetEntity[] = [...completeDatasets]
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
