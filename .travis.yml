@@ -9,7 +9,7 @@ branches:
   - develop
   - master
 before_script:
-- cd ../Server && npm install && ts-node ./node_modules/typeorm/cli.js migration:run
+- cd Server && npm install && ts-node ./node_modules/typeorm/cli.js migration:run
 - cd ../Client && npm install
 script:
 - cd ../Server && npm test
