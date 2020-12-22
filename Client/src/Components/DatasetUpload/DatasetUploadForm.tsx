@@ -38,7 +38,16 @@ export const DatasetUploadForm = (props: IProps): any => {
 
   const validationSchema = Yup.object().shape({
     reference: Yup.object().shape({
-      title: Yup.string().required()
+      title: Yup.string().required(),
+      authors: Yup.array().of(
+        Yup.object().shape(
+          {
+            firstname: Yup.string().trim().required('First Name is a required string'),
+            middlename: Yup.string(),
+            lastname: Yup.string().trim().required('Last Name is a required string')
+          }
+        )
+      ),
     }),
   })
 
@@ -46,7 +55,7 @@ export const DatasetUploadForm = (props: IProps): any => {
     <div>
       <Formik
         initialValues={initialValues}
-        // validationSchema={validationSchema}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         <Form>

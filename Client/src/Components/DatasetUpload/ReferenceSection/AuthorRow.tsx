@@ -29,7 +29,7 @@ export const AuthorRow = (props: IProps) => {
     <Box>
       <Grid item container spacing={4}>
         <Grid item>
-          <FastField name={`reference.authors[${index}].firstname`} component={MuiTextFieldFormik} />
+          <FastField name={`reference.authors[${index}].firstname`} label='First Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
           <FastField name={`reference.authors[${index}].middlename`} component={MuiTextFieldFormik} />
