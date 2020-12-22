@@ -33,17 +33,18 @@ describe('Authentication tests', () => {
         expect(regexp.test(passwordHash));
     });
 
-    // test('Valid Fetching User Details Request', async () => {
-    //     const expectedResponse = {
-    //         "account_email": "j.com",
-    //         "account_firstName": "g",
-    //         "account_lastName": "d23232323",
-    //         "account_dateOfBirth": "1980-01-01T00:00:00.000Z",
-    //         "account_organizationName": "mugiwara4545"
-    //     }
-    //     let userEmail: string = "j.com";
-    //     let res: any = await authenticationService.loadUserDetails(userEmail);
-    //     expect(res.status).toBeCalledWith(400);
-    //     expect(res.message).toBe(expectedResponse);
-    // });
+    test('Test Load User Details Function', async () => {
+        const expectedResponse = {
+            "account_email": "j.comkj",
+            "account_firstName": "Ace",
+            "account_lastName": "FireFist",
+            "account_dateOfBirth": "1980-01-01T05:00:00.000Z",
+            "account_organizationName": "Mugiwara"
+        }
+        let userEmail: string = "j.comkj";
+        let res: any = await authenticationService.loadUserDetails(userEmail);
+        expect(res.statusCode).toBe(200);
+        expect(res.message).toStrictEqual(JSON.stringify(expectedResponse));
+    });
+
 })
