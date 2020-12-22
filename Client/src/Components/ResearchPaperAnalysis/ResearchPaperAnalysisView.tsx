@@ -1,3 +1,4 @@
+import { Box, Typography, useTheme } from '@material-ui/core'
 import React, { useState } from 'react'
 
 import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
@@ -5,7 +6,6 @@ import { FileUploadForm } from '../DataCell/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import { useTheme } from '@material-ui/core'
 
 interface IProps {
 
@@ -19,10 +19,10 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
   const [isProcessingPaper, setIsProcessingPaper] = useState(false)
 
   const handleSubmit = async (researchPaper: File) => {
-    analyzePaper()
+    analyzePaper(researchPaper)
   }
 
-  const analyzePaper = async () => {
+  const analyzePaper = async (researchPaper: File) => {
     setIsProcessingPaper(true)
     const fetchedDataset = await fetchDataset()
     setIsProcessingPaper(false)
@@ -41,13 +41,24 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
 
   const theme = useTheme()
 
+  const paperUploadSection = () => {
+    return (
+      <>
+        <Box pt={5}>
+          <Typography>Page description pretty much</Typography>
+          <FileUploadForm
+            onSubmit={handleSubmit}
+            acceptFileFormat={fileFormat}
+          />
+        </Box>
+      </>
+    )
+  }
+
   return (
     <>
-      {!analyzedDataset ?
-        <FileUploadForm
-          onSubmit={handleSubmit}
-          acceptFileFormat={fileFormat}
-        /> :
+      {!analyzedDataset ? paperUploadSection()
+        :
         <DatasetUploadView initialDataset={analyzedDataset} />
       }
       <Loader
