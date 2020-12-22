@@ -17,7 +17,7 @@ export default function SearchView(props: IProps) {
   // array of selected ids
   const [selection, setSelection] = useState<SelectionChangeParams>(null)
 
-  const handleSearchClick = (formValues) => {
+  const handleSearchClick = () => {
     setFoundDatasets(exampleDatasets)
   }
 
