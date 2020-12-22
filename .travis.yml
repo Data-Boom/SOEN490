@@ -8,9 +8,11 @@ branches:
   only:
   - develop
   - master
-script:
-- cd Server && npm install && ts-node ./node_modules/typeorm/cli.js migration:run && npm test
+before_script:
+- cd Server && npm install && ts-node ./node_modules/typeorm/cli.js migration:run
 - cd ../Client && npm install
+script:
+- cd Server && npm test
 after_script:
 - cd Server && ts-node ./node_modules/typeorm/cli.js migration:revert
 env:
