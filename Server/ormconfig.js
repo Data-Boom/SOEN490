@@ -8,7 +8,6 @@ module.exports = {
     "database": process.env.TEST_DB_NAME,
     "synchronize": false,
     "logging": false,
-    "dropSchema": true,
     "entities": [
         '../models/entities/**/*.ts',
         '../models/entities/*.ts',
