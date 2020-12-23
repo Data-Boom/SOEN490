@@ -82,7 +82,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
 
     let category = new Category();
     category.id = 2;
-    category.name = "Cell Size";
+    category.name = "cell size";
     await connection.manager.save(category);
 
     let subcategory1 = new Subcategory();
@@ -92,7 +92,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
 
     let subcategory = new Subcategory();
     subcategory.id = 2;
-    subcategory.name = "Width";
+    subcategory.name = "width";
     await connection.manager.save(subcategory);
 
     let datasetdatatypeNone = new Datasetdatatype();
