@@ -1,35 +1,22 @@
 /* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
 
-import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemIcon, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import {
-  HashRouter,
-  NavLink,
-  Route
-} from "react-router-dom"
-import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
+import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
+import { ListRouter, getRoutedViews } from "./ListRouter"
 
-import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
-import FileUploadView from "../Views/FileUploadView"
-import GraphView from "../Views/GraphView"
-import HomeIcon from '@material-ui/icons/Home'
-import HomeView from '../Views/HomeView'
+import { HashRouter } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
-import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "../Views/SearchView"
 import clsx from "clsx"
+import { linkWidth } from './ListRouter'
 import universitylogo from './universitylogo.png'
 
-const drawerWidth = 240
+const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-
   const [open, setOpen] = React.useState(false)
   const classes = useStyles()
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -38,40 +25,19 @@ export default function NavigationMenu() {
     setOpen(false)
   }
 
-  const renderNavLink = (route, title, icon, navID = null) => {
-    return (
-      <ListItem button>
-        <ListItemIcon>
-          {icon}
-        </ListItemIcon>
-        <NavLink exact to={route} id={navID} >
-          {title}
-        </NavLink>
-      </ListItem>
-    )
-  }
-
   const handleSignIn = () => {
   }
 
   const drawer = () => {
     return (
-      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
-        paper: classes.drawerPaper,
-      }}>
+      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
         <div className={classes.drawerHeader}>
           <IconButton id='Close' onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {renderNavLink(homeRoute, "Home", <HomeIcon />)}
-          {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
-          {renderNavLink(searchRoute, "Search", <SearchIcon />)}
-          {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
-          {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
-        </List>
+        {ListRouter()}
       </ Drawer>
     )
   }
@@ -103,13 +69,10 @@ export default function NavigationMenu() {
         </AppBar>
         {drawer()}
         <Box pt={16}>
-          <Route exact path={homeRoute} component={HomeView} />
-          <Route path={graphRoute} component={GraphView} />
-          <Route path={fileUploadRoute} component={FileUploadView} />
-          <Route path={searchRoute} component={SearchView} />
-          <Route path={datasetUploadRoute} component={DatasetUploadView} />
+          {getRoutedViews()}
         </Box>
-      </HashRouter >
+      </HashRouter>
+
     </>
   )
 }
