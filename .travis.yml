@@ -12,6 +12,7 @@ before_script:
 - cd Server && npm install && ts-node ./node_modules/typeorm/cli.js migration:run
 - cd ../Client && npm install
 script:
+- "travis_wait 30 sleep 1800 &"
 - cd ../Server && npm test
 after_script:
 - cd ../Server && ts-node ./node_modules/typeorm/cli.js migration:revert
