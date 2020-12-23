@@ -26,16 +26,16 @@ const referenceValidationSchema = Yup.object().shape({
   ),
 })
 
+export const variableValidationSchema = Yup.object().shape(
+  {
+    name: Yup.string().trim().required(requiredMessage('Name')),
+    repr: Yup.string().trim().required(requiredMessage('Representation')),
+    units: Yup.string().trim().required(requiredMessage('Units'))
+  }
+)
+
 const dataValidationSchema = Yup.object().shape({
-  variables: Yup.array().of(
-    Yup.object().shape(
-      {
-        name: Yup.string().trim().required(requiredMessage('Name')),
-        repr: Yup.string().trim().required(requiredMessage('Representation')),
-        units: Yup.string().trim().required(requiredMessage('Units'))
-      }
-    )
-  ),
+  variables: Yup.array().of(variableValidationSchema),
   contents: Yup.array().of(
     Yup.object().shape(
       {

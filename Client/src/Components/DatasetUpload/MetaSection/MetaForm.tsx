@@ -1,15 +1,12 @@
-import * as Yup from 'yup'
+import { Box, Grid, Typography } from '@material-ui/core'
+import { FastField, FieldArray } from 'formik'
 
-import { Box, Grid, TextField, Typography } from '@material-ui/core'
-import { FastField, Field, FieldArray, useFormik } from 'formik'
-import { IDatasetMeta, IMaterial } from '../../../Models/Datasets/IDatasetModel'
-
+import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { get } from 'lodash';
-import { getErrorAndFormikProps } from '../../../Util/FormUtil'
+import { get } from 'lodash'
 
 interface IProps {
   materials: IMaterial[],
@@ -37,7 +34,6 @@ export const MetaForm = (props: IProps) => {
         <Grid item sm={12}>
           <FieldArray name='meta.material' >
             {({ form, ...fieldArrayHelpers }) => {
-              console.log(form.values);
               return (<MaterialSelectChipArray
                 value={get(form.values, 'meta.material')}
                 fieldArrayHelpers={fieldArrayHelpers}
