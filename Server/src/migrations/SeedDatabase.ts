@@ -243,5 +243,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
   }
-
+  
+   public async down(queryRunner: QueryRunner): Promise<any> {	}
+   
 }
