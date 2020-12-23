@@ -7,12 +7,13 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { fileUploadRoute, graphRoute, homeRoute, profileRoute, searchRoute } from '../Consts/Routes'
+import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, searchRoute } from '../Consts/Routes'
 
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
 import FileUploadView from "../Views/FileUploadView"
 import GraphView from "../Views/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
@@ -33,12 +34,10 @@ export default function NavigationMenu() {
   const classes = useStyles()
   const handleDrawerOpen = () => {
     setOpen(true)
-    console.log("openDrawer Test")
   }
 
   const handleDrawerClose = () => {
     setOpen(false)
-    console.log("closeDrawer Test")
   }
 
   const renderNavLink = (route, title, icon, navID = null) => {
@@ -55,7 +54,6 @@ export default function NavigationMenu() {
   }
 
   const handleSignIn = () => {
-    console.log("handleSignIn Test")
   }
 
   const drawer = () => {
@@ -75,6 +73,7 @@ export default function NavigationMenu() {
           {renderNavLink(searchRoute, "Search", <SearchIcon />)}
           {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
           {renderNavLink(profileRoute, "Profile", <AccountBoxIcon />)}
+          {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
         </List>
       </ Drawer>
     )
@@ -91,7 +90,7 @@ export default function NavigationMenu() {
                   <MenuIcon />
                 </IconButton>
               </Grid>
-              <Grid item align="start">
+              <Grid item>
                 <img src={universitylogo} />
               </Grid>
               <Grid container item xs={4} justify="flex-end">
@@ -112,6 +111,7 @@ export default function NavigationMenu() {
           <Route path={fileUploadRoute} component={FileUploadView} />
           <Route path={searchRoute} component={SearchView} />
           <Route path={profileRoute} component={ProfileView} />
+          <Route path={datasetUploadRoute} component={DatasetUploadView} />
         </Box>
       </HashRouter >
     </>

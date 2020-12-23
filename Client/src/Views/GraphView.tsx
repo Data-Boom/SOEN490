@@ -1,6 +1,3 @@
-// todo this highlights as an error but i dont know what to do with it, 
-// it doesnt break anything, saving image as png works well
-
 import * as svg from 'save-svg-as-png'
 
 import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
@@ -11,9 +8,7 @@ import Graph from '../Components/Graph/Graph'
 import { ICompleteDatasetEntity } from "../Models/Datasets/ICompleteDatasetEntity"
 import { IGraphDatasetModel } from '../Models/Datasets/IGraphDatasetModel'
 import SearchView from './SearchView'
-import { exampleExportDatasetModel } from '../Models/Datasets/IExportDatasetModel'
-import queryString from "query-string"
-import { useLocation } from 'react-router-dom'
+import { exampleExportDatasetModel } from '../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
@@ -28,10 +23,6 @@ export default function GraphView() {
   }))
 
   const classes = useStyles()
-
-  //Testing the query parser using quer-string for future use if needed
-  console.log(queryString.parse(useLocation().search))
-
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
@@ -65,8 +56,6 @@ export default function GraphView() {
     return graphDataset
   }
 
-
-
   //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
   function download(filename: string, text: string) {
     let element = document.createElement('a')
@@ -82,17 +71,13 @@ export default function GraphView() {
   }
 
   const onRemoveDataset = (datasetId: number) => {
-    console.log("removed dataset")
     setCompleteDatasets(completeDatasets.filter(dataset => dataset.id !== datasetId))
   }
 
   const handleDatasetsSelected = (selectedDatasets: ICompleteDatasetEntity[]) => {
-    console.log("just set datasets from handleDatasetsSelected")
-
-    // selectedDatasets.filter will return those datasets that meet
     let notYetSelectedDatasets: ICompleteDatasetEntity[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
-    let mergedDatasets: ICompleteDatasetEntity[] = JSON.parse(JSON.stringify(completeDatasets))
+    let mergedDatasets: ICompleteDatasetEntity[] = [...completeDatasets]
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
