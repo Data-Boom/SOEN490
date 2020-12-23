@@ -27,8 +27,6 @@ export class fileUploadService {
   }
 
   private async jsonUpload(filePathOfJson: string): Promise<string> {
-    // Category & sub-category still need to be handled - After there is a solution for duplicate DB key
-    // The values need to be added in the JSON file, parsed then inserted
 
     let category: string = '';
     let subcategory: string = '';
@@ -149,12 +147,10 @@ export class fileUploadService {
     } catch (err) {
       console.log('material not found');
     }
-    // TODO: DB crashes with duplicate key error on every entry with category & subcategory added in the file upload.
-    // Once there is an implemented solution of upsert in the project this should be uncommented and tested.
 
-    // category = jsonObj.category;
-    // subcategory = jsonObj.subcategory;
-    // let categoryIDs = await uploadModel.insertCategories(category, subcategory);
+    category = jsonObj.category;
+    subcategory = jsonObj.subcategory;
+    let categoryIDs = await this.uploadModel.insertCategories(category, subcategory);
 
     dataType = jsonObj["data type"];
     try {
@@ -167,7 +163,7 @@ export class fileUploadService {
     dataSetName = jsonObj["dataset name"];
     dataSetComments = jsonObj.data.comments;
     try {
-      datasetID = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID,/** categoryIDs, */ material, dataSetComments)
+      datasetID = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, material, dataSetComments)
       console.log('DatasetID received: ' + datasetID);
     } catch (err) {
       console.log('error receiving datasetID....request rejected');
