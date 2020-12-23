@@ -5,7 +5,7 @@ import { FastField, Field, useFormik } from "formik"
 
 import ClearIcon from '@material-ui/icons/Clear'
 import { IAuthor } from "../../../Models/Datasets/IDatasetModel"
-import { MuiTextFieldFormik } from '../../../Models/Forms/FormikFields'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 
 interface IProps {

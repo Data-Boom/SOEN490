@@ -6,14 +6,14 @@ import { FastField, Field, FieldArray, useFormik } from 'formik'
 import { AuthorRow } from './AuthorRow'
 import { AuthorsList } from './AuthorsList'
 import { IReference } from '../../../Models/Datasets/IDatasetModel'
-import { MuiTextFieldFormik } from '../../../Models/Forms/FormikFields'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 import { get } from 'lodash';
 
 interface IProps {
 }
-
+//todo add labels
 export const ReferenceForm = (props: IProps) => {
   return (
     <Box className={classStyles().defaultBorder}>
