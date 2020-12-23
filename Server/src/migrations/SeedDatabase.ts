@@ -246,5 +246,5 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
   
    public async down(queryRunner: QueryRunner): Promise<any> {	}
 	
- 
+ 	// Trigger PR build
 }
