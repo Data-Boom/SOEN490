@@ -1,12 +1,14 @@
 import * as Yup from 'yup'
 
-import { Field, useFormik, useFormikContext } from 'formik'
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Box, Grid, TextField, Typography } from '@material-ui/core'
+import { FastField, Field, FieldArray, useFormik } from 'formik'
 import { IDatasetMeta, IMaterial } from '../../../Models/Datasets/IDatasetModel'
 
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
+import { get } from 'lodash';
 import { getErrorAndFormikProps } from '../../../Util/FormUtil'
 
 interface IProps {
@@ -16,33 +18,35 @@ interface IProps {
 export const MetaForm = (props: IProps) => {
   const { materials } = props
 
-  const formik = useFormikContext()
-
   return (
-    <div className={classStyles().defaultBorder}>
+    <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Meta</Typography>
       <Grid container spacing={4}>
         <Grid item sm={3}>
-          <TextField fullWidth label="Dataset Name" variant="outlined" />
+          <FastField name="dataset_name" label='Dataset Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <TextField fullWidth label="Data Type" variant="outlined" {...getErrorAndFormikProps(formik, 'data_type')} />
+          <FastField name="data_type" label='Data Type' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <TextField fullWidth label="Category" variant="outlined" {...getErrorAndFormikProps(formik, 'category')} />
+          <FastField name="category" label='Category' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <TextField fullWidth label="Subcategory" variant="outlined" {...getErrorAndFormikProps(formik, 'subcategory')} />
+          <FastField name="subcategory" label='Subcategory' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={12}>
-          {/* <MaterialSelectChipArray
-            
-            selectedMaterials={value.material}
-            setFieldValue={formik.setFieldValue}
-            options={materials}
-          /> */}
+          <FieldArray name='meta.material' >
+            {({ form, ...fieldArrayHelpers }) => {
+              console.log(form.values);
+              return (<MaterialSelectChipArray
+                value={get(form.values, 'meta.material')}
+                fieldArrayHelpers={fieldArrayHelpers}
+                options={materials}
+              />)
+            }}
+          </FieldArray>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   )
 }

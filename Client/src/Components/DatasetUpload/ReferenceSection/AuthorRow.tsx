@@ -32,10 +32,10 @@ export const AuthorRow = (props: IProps) => {
           <FastField name={`reference.authors[${index}].firstname`} label='First Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
-          <FastField name={`reference.authors[${index}].middlename`} component={MuiTextFieldFormik} />
+          <FastField name={`reference.authors[${index}].middlename`} label='Middle Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
-          <FastField name={`reference.authors[${index}].lastname`} component={MuiTextFieldFormik} />
+          <FastField name={`reference.authors[${index}].lastname`} label='Last Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
           {removable ? removeButton() : null}

@@ -27,7 +27,6 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     const fetchedDataset = await fetchDataset()
     setIsProcessingPaper(false)
     setAnalyzedDataset(fetchedDataset)
-    console.log(fetchedDataset)
   }
 
   const fetchDataset = (): Promise<IDatasetModel> => {

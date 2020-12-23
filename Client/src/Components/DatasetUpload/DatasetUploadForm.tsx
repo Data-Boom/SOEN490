@@ -30,7 +30,6 @@ export const DatasetUploadForm = (props: IProps): any => {
   const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
   const handleSubmit = (values: DatasetUploadFormValues, actions: unknown) => {
-    console.log('submitting');
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
   }
@@ -45,7 +44,7 @@ export const DatasetUploadForm = (props: IProps): any => {
         <Form>
           <MetaForm materials={materials} />
           <ReferenceForm />
-          <Button variant="contained" color="primary" type="submit"> Save Dataset </Button>
+          <Button variant="contained" color="primary" type="submit">Save Dataset</Button>
         </Form>
       </Formik>
     </div>

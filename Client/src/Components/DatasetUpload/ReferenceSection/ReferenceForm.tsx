@@ -1,41 +1,36 @@
 import * as Yup from 'yup'
 
-import { Box, Grid, TextField, Typography } from '@material-ui/core'
-import { FastField, Field, FieldArray, useFormik } from 'formik'
+import { Box, Grid, Typography } from '@material-ui/core'
+import { FastField, FieldArray } from 'formik'
 
-import { AuthorRow } from './AuthorRow'
 import { AuthorsList } from './AuthorsList'
-import { IReference } from '../../../Models/Datasets/IDatasetModel'
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 import { get } from 'lodash';
 
-interface IProps {
-}
-//todo add labels
-export const ReferenceForm = (props: IProps) => {
+export const ReferenceForm = () => {
   return (
     <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Reference</Typography>
       <Grid container spacing={4}>
         <Grid item sm={4}>
-          <FastField name="reference.title" component={MuiTextFieldFormik} />
+          <FastField name="reference.title" label='Title' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.type" component={MuiTextFieldFormik} />
+          <FastField name="reference.type" label='Type' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.publisher" component={MuiTextFieldFormik} />
+          <FastField name="reference.publisher" label='Publisher' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.volume" component={MuiTextFieldFormik} />
+          <FastField name="reference.volume" label='Volume' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.pages" component={MuiTextFieldFormik} />
+          <FastField name="reference.pages" label='Pages' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.year" component={MuiTextFieldFormik} />
+          <FastField name="reference.year" label='Year' component={MuiTextFieldFormik} />
         </Grid>
       </Grid>
       <Grid container spacing={4}>

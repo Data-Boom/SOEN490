@@ -56,7 +56,6 @@ export default function NavigationMenu(): any {
   }
 
   const handleSignIn = (): void => {
-    console.log("")
   }
 
   const drawer = (): any => {

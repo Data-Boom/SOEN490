@@ -9,7 +9,7 @@ const requiredMessage = (fieldName: string): string => {
 }
 
 const referenceValidationSchema = Yup.object().shape({
-  year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Must be exactly 4 characters', val => val && val.toString().length === 4),
+  year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
   volume: Yup.number().integer(integerMessage('Volume')).required(requiredMessage('Volume')),
   pages: Yup.number().integer(integerMessage('Pages')).required(requiredMessage('Pages')),
   title: Yup.string().trim().required(requiredMessage('Title')),
@@ -30,14 +30,17 @@ const dataValidationSchema = Yup.object().shape({
   variables: Yup.array().of(
     Yup.object().shape(
       {
-
+        name: Yup.string().trim().required(requiredMessage('Name')),
+        repr: Yup.string().trim().required(requiredMessage('Representation')),
+        units: Yup.string().trim().required(requiredMessage('Units'))
       }
     )
   ),
   contents: Yup.array().of(
     Yup.object().shape(
       {
-
+        point: Yup.array().of(Yup.number()),
+        comments: Yup.string()
       }
     )
   ),
