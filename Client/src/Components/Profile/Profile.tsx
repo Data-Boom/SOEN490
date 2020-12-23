@@ -1,5 +1,10 @@
+import * as Yup from 'yup'
+
 import { Box, Button, Grid, Paper, TextField, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
+
+import { getErrorAndFormikProps } from '../../Util/FormUtil'
+import { useFormik } from 'formik'
 
 interface IProps {
   name: string,
@@ -117,6 +122,23 @@ export default function Profile(props: IProps) {
     setChangePassword(!changePassword)
   }
 
+  const formik = useFormik({
+    initialValues: {
+      name: temporaryName,
+      email: temporaryEmail,
+      dateOfBirth: temporaryDateOfBirth,
+      organization: temporaryOrganization
+    },
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email('Please enter a valid email').required(),
+      date_of_birth: Yup.string().required(),
+      organization: Yup.string().required()
+    }),
+    //this is subform and therefore its not submitting, but instead is propagating change up
+    onSubmit: () => { }
+  })
+
   return (
     <Paper elevation={3}>
       <Grid container spacing={2}>
@@ -133,77 +155,72 @@ export default function Profile(props: IProps) {
       </Grid>
       <Grid container spacing={10}>
         <Grid item xs={6}>
-          <Box border={10} p={4} borderColor="primary" height={325}>
+          <Box border={10} p={4} borderColor="primary" height={360}>
             <Grid container spacing={10}>
-              <Grid item xs={6}>
-                <Typography variant="h3">
-                  Name:
-                </Typography>
-              </Grid>
               {editProfile ? (
-                <Grid item xs={6}>
-                  <TextField label="Edit Name" variant="outlined" name="name" value={temporaryName} onChange={handleNameChange} />
-                </Grid>
-              ) : (
-                  <Grid item xs={6}>
-                    <Typography variant="h4">
-                      {name}
-                    </Typography>
+                <>
+                  <Grid item xs={12}>
+                    <TextField fullWidth label="Edit Name" variant="outlined" name="name" onChange={handleNameChange} {...getErrorAndFormikProps(formik, 'name')} />
                   </Grid>
-                )}
-              <Grid item xs={6}>
-                <Typography variant="h3">
-                  E-mail:
-                </Typography>
-              </Grid>
-              {editProfile ? (
-                <Grid item xs={6}>
-                  <TextField label="Edit Email" variant="outlined" name="email" value={temporaryEmail} onChange={handleEmailChange} />
-                </Grid>
-              ) : (
-                  <Grid item xs={6}>
-                    <Typography variant="h4">
-                      {email}
-                    </Typography>
+                  <Grid item xs={12}>
+                    <TextField fullWidth label="Edit Email" variant="outlined" name="email" onChange={handleEmailChange} {...getErrorAndFormikProps(formik, 'email')} />
                   </Grid>
-                )}
-              <Grid item xs={6}>
-                <Typography variant="h3">
-                  Date of Birth:
-                </Typography>
-              </Grid>
-              {editProfile ? (
-                <Grid item xs={6}>
-                  <TextField label="Edit DOB" type="date" variant="outlined" name="dateOfBirth" value={temporaryDateOfBirth} onChange={handleDOBChange} />
-                </Grid>
-              ) : (
-                  <Grid item xs={6}>
-                    <Typography variant="h4">
-                      {dateOfBirth}
-                    </Typography>
+                  <Grid item xs={12}>
+                    <TextField fullWidth label="Edit DOB" type="date" variant="outlined" value={temporaryDateOfBirth} name="dateOfBirth" onChange={handleDOBChange} />
                   </Grid>
-                )}
-              <Grid item xs={6}>
-                <Typography variant="h3">
-                  Organization:
-                </Typography>
-              </Grid>
-              {editProfile ? (
-                <Grid item xs={6}>
-                  <TextField label="Edit Organization" variant="outlined" name="organization" value={temporaryOrganization} onChange={handleOrganizationChange} />
-                </Grid>
-              ) : (
-                  <Grid item xs={6}>
-                    <Typography variant="h4">
-                      {organization}
-                    </Typography>
+                  <Grid item xs={12}>
+                    <TextField fullWidth label="Edit Organization" variant="outlined" name="organization" onChange={handleOrganizationChange} {...getErrorAndFormikProps(formik, 'organization')} />
                   </Grid>
+                </>
+              ) : (
+                  <>
+                    <Grid item xs={6}>
+                      <Typography variant="h3">
+                        Name:
+                    </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h4">
+                        {name}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h3">
+                        E-mail:
+                    </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h4">
+                        {email}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h3">
+                        Date of Birth:
+                    </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h4">
+                        {dateOfBirth}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h3">
+                        Organization:
+                    </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h4">
+                        {organization}
+                      </Typography>
+                    </Grid>
+                  </>
                 )}
             </Grid>
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <Box border={10} p={4} borderColor="primary" height={325}>
+          <Box border={10} p={4} borderColor="primary" height={360}>
             <Grid container spacing={10}>
               {changePassword ? (
                 <>
@@ -254,6 +271,6 @@ export default function Profile(props: IProps) {
             </Grid>
           )}
       </Grid>
-    </Paper>
+    </Paper >
   )
 }
