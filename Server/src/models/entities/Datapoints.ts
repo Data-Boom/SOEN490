@@ -64,7 +64,7 @@ export class Datapoints {
 export const selectDataPointsQuery = (manager: EntityManager, dataset: number) =>
     manager.createQueryBuilder(Dataset, 'dataset')
         .select('datapoints.name', 'datapoints_name')
-        .addSelect('datapoints.dataValues', 'datapoints_values')
+        .addSelect('datapoints.values', 'datapoints_values')
         .addSelect('units.units', 'units_units')
         .addSelect('representations.repr', 'representations_repr')
         .addSelect('dataset.id', 'dataset_id')

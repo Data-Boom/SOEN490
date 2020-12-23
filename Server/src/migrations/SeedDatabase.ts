@@ -243,7 +243,24 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
   }
-  
-   public async down(queryRunner: QueryRunner): Promise<any> {	}
-   
+
+  public async down(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query('DELETE FROM dataset_materials_material');
+    await queryRunner.query('DELETE FROM publications_authors_authors');
+    await queryRunner.query('DELETE FROM datapointcomments');
+    await queryRunner.query('DELETE FROM datapoints');
+    await queryRunner.query('DELETE FROM units');
+    await queryRunner.query('DELETE FROM representations');
+    await queryRunner.query('DELETE FROM authors');
+    await queryRunner.query('DELETE FROM dataset');
+    await queryRunner.query('DELETE FROM publications');
+    await queryRunner.query('DELETE FROM datasetdatatype');
+    await queryRunner.query('DELETE FROM material');
+    await queryRunner.query('DELETE FROM composition');
+    await queryRunner.query('DELETE FROM category');
+    await queryRunner.query('DELETE FROM subcategory');
+    await queryRunner.query('DELETE FROM publisher');
+    await queryRunner.query('DELETE FROM publicationtype');
+  }
+
 }
