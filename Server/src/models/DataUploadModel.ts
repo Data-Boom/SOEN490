@@ -185,7 +185,7 @@ export class DataUploadModel {
         datapoint.id;
         datapoint.datasetId = dataSetID;
         datapoint.name = dataVariableName;
-        datapoint.dataValues = dataPointValues;
+        datapoint.values = dataPointValues;
         datapoint.unitsId = unitsID;
         datapoint.representationsId = reprID;
         await connection.manager.save(datapoint);

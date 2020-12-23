@@ -184,7 +184,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint3.id;
     datapoint3.datasetId = dataset.id;
     datapoint3.name = "Initial Pressure";
-    datapoint3.dataValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    datapoint3.values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     datapoint3.unitsId = unitsGigapascal.id;
     datapoint3.representationsId = reprNone.id;
     await connection.manager.save(datapoint3);
@@ -193,7 +193,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint4.id;
     datapoint4.datasetId = dataset.id;
     datapoint4.name = "Shock Velocity";
-    datapoint4.dataValues = [5.235, 6.013, 6.320, 6.551, 6.704, 7.960, 8.762, 8.836, 9.208, 9.627, 9.556];
+    datapoint4.values = [5.235, 6.013, 6.320, 6.551, 6.704, 7.960, 8.762, 8.836, 9.208, 9.627, 9.556];
     datapoint4.unitsId = unitsKMPS.id;
     datapoint4.representationsId = reprNone.id;
     await connection.manager.save(datapoint4);
@@ -202,7 +202,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint5.id;
     datapoint5.datasetId = dataset.id;
     datapoint5.name = "Particle Velocity";
-    datapoint5.dataValues = [1.026, 1.380, 1.972, 2.607, 2.779, 3.370, 3.748, 3.801, 3.948, 4.138, 4.290];
+    datapoint5.values = [1.026, 1.380, 1.972, 2.607, 2.779, 3.370, 3.748, 3.801, 3.948, 4.138, 4.290];
     datapoint5.unitsId = unitsKMPS.id;
     datapoint5.representationsId = reprNone.id;
     await connection.manager.save(datapoint5);
@@ -211,7 +211,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint6.id;
     datapoint6.datasetId = dataset.id;
     datapoint6.name = "Pressure";
-    datapoint6.dataValues = [11.349, 17.617, 26.459, 36.599, 39.888, 57.567, 70.343, 71.672, 77.614, 85.091, 87.657];
+    datapoint6.values = [11.349, 17.617, 26.459, 36.599, 39.888, 57.567, 70.343, 71.672, 77.614, 85.091, 87.657];
     datapoint6.unitsId = unitsGigapascal.id;
     datapoint6.representationsId = reprNone.id;
     await connection.manager.save(datapoint6);
@@ -220,7 +220,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint7.id;
     datapoint7.datasetId = dataset.id;
     datapoint7.name = "Specific Volume";
-    datapoint7.dataValues = [0.3805, 0.3629, 0.3241, 0.2809, 0.2735, 0.2687, 0.2672, 0.2670, 0.2676, 0.2669, 0.2582];
+    datapoint7.values = [0.3805, 0.3629, 0.3241, 0.2809, 0.2735, 0.2687, 0.2672, 0.2670, 0.2676, 0.2669, 0.2582];
     datapoint7.unitsId = unitsCCG.id;
     datapoint7.representationsId = reprNone.id;
     await connection.manager.save(datapoint7);
@@ -229,7 +229,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint8.id;
     datapoint8.datasetId = dataset.id;
     datapoint8.name = "Density";
-    datapoint8.dataValues = [2.628, 2.755, 3.086, 3.560, 3.657, 3.722, 3.743, 3.745, 3.737, 3.746, 3.873];
+    datapoint8.values = [2.628, 2.755, 3.086, 3.560, 3.657, 3.722, 3.743, 3.745, 3.737, 3.746, 3.873];
     datapoint8.unitsId = unitsGCC.id;
     datapoint8.representationsId = reprNone.id;
     await connection.manager.save(datapoint8);
@@ -238,13 +238,10 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.id;
     datapoint9.datasetId = dataset.id;
     datapoint9.name = "Compression Ratio";
-    datapoint9.dataValues = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
+    datapoint9.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
     datapoint9.unitsId = unitsNone.id;
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
   }
-  
-   public async down(queryRunner: QueryRunner): Promise<any> {	}
-	
- 	// Trigger PR build
+
 }

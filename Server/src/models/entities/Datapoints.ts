@@ -29,7 +29,7 @@ export class Datapoints {
     name: string
 
     @Column({ type: "json" })
-    dataValues: number[]
+    values: number[]
 
     @Column({ default: 1 })
     unitsId: number
