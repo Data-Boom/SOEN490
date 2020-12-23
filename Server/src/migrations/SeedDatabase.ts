@@ -160,13 +160,13 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await connection.manager.save(reprNone);
 
     // Data points below this line. Due to an oddity with queryRunner, 'values' is a reserved term and thus
-    // the field was renamed to 'dataValues' in testing
+    // the field was renamed to 'values' in testing
 
     let datapoint = new Datapoints();
     datapoint.id;
     datapoint.datasetId = dataset.id;
     datapoint.name = "Initial Density";
-    datapoint.dataValues = [2.113, 2.123, 2.123, 2.143, 2.141, 2.146, 2.142, 2.134, 2.135, 2.136, 2.136];
+    datapoint.values = [2.113, 2.123, 2.123, 2.143, 2.141, 2.146, 2.142, 2.134, 2.135, 2.136, 2.136];
     datapoint.unitsId = unitsGCC.id;
     datapoint.representationsId = reprNone.id;
     await connection.manager.save(datapoint);
@@ -175,7 +175,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint2.id;
     datapoint2.datasetId = dataset.id;
     datapoint2.name = "Initial Temperature";
-    datapoint2.dataValues = [273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15];
+    datapoint2.values = [273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15];
     datapoint2.unitsId = unitsKelvin.id;
     datapoint2.representationsId = reprNone.id;
     await connection.manager.save(datapoint2);
