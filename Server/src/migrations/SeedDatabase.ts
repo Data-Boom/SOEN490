@@ -17,68 +17,6 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 
-    await queryRunner.query('CREATE TABLE publicationtype (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE publisher (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE category (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE subcategory (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE composition (id int NOT NULL AUTO_INCREMENT, composition varchar(50) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE material (id int NOT NULL AUTO_INCREMENT, compositionId int NOT NULL, details varchar(255) NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE datasetdatatype (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE dataset (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, datatypeId int NOT NULL, publicationId int NOT NULL, categoryId int NOT NULL, subcategoryId int NOT NULL, comments varchar(255) NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE publications (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, doi varchar(255) NULL, pages int NULL, volume int NULL, publicationtypeId int NOT NULL, publisherId int NOT NULL, year int(4) NOT NULL, datePublished datetime NULL, dateAccessed datetime NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE authors (id int NOT NULL AUTO_INCREMENT, firstName varchar(255) NOT NULL, lastName varchar(255) NOT NULL, middleName varchar(255) NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE representations (id int NOT NULL AUTO_INCREMENT, repr varchar(20) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE units (id int NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, units varchar(10) NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE datapoints (id int NOT NULL AUTO_INCREMENT, datasetId int NOT NULL, name varchar(255) NOT NULL, dataValues json NOT NULL, unitsId int NOT NULL, representationsId int NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE datapointcomments (id int NOT NULL AUTO_INCREMENT, datasetId int NOT NULL, comments json NOT NULL, created datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), updated datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), PRIMARY KEY (id))');
-
-    await queryRunner.query('CREATE TABLE dataset_materials_material (datasetId int NOT NULL, materialId int NOT NULL, INDEX IDX_e7616706c7e903abdf5d3476fe (datasetId), INDEX IDX_9cdbf64f43b823df7439f02f11 (materialId), PRIMARY KEY (datasetId, materialId))');
-
-    await queryRunner.query('CREATE TABLE publications_authors_authors (publicationsId int NOT NULL, authorsId int NOT NULL, INDEX IDX_2e8fe19c4e343980e449ecc977 (publicationsId), INDEX IDX_b8cf82d3ae0d7b4f70e123f390 (authorsId), PRIMARY KEY (publicationsId, authorsId))');
-
-    await queryRunner.query('ALTER TABLE `material` ADD CONSTRAINT `FK_bb553325fa1f8bd6b3cc6edfe58` FOREIGN KEY (`compositionId`) REFERENCES `composition`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `dataset` ADD CONSTRAINT `FK_326e43033879ccd249b434df183` FOREIGN KEY (`datatypeId`) REFERENCES `datasetdatatype`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `dataset` ADD CONSTRAINT `FK_8e00ea03b2530167eef64f59ce3` FOREIGN KEY (`publicationId`) REFERENCES `publications`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `dataset` ADD CONSTRAINT `FK_2b2dac06a80879ed471a6c365f6` FOREIGN KEY (`categoryId`) REFERENCES `category`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `dataset` ADD CONSTRAINT `FK_1abae03dcaa374d055d746641ad` FOREIGN KEY (`subcategoryId`) REFERENCES `subcategory`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `publications` ADD CONSTRAINT `FK_6596979daf16462f4cd5dcb2485` FOREIGN KEY (`publicationtypeId`) REFERENCES `publicationtype`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `publications` ADD CONSTRAINT `FK_62ed69b626977b878aba6c6cbaa` FOREIGN KEY (`publisherId`) REFERENCES `publisher`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `datapoints` ADD CONSTRAINT `FK_dfb47d645d285b6933c3c623783` FOREIGN KEY (`datasetId`) REFERENCES `dataset`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `datapoints` ADD CONSTRAINT `FK_443397e0b728e1ec6b54841a48c` FOREIGN KEY (`unitsId`) REFERENCES `units`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `datapoints` ADD CONSTRAINT `FK_89c804e29c76bf42359402d0ad3` FOREIGN KEY (`representationsId`) REFERENCES `representations`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `datapointcomments` ADD CONSTRAINT `FK_b02391f9e4a4830c473a6dc8e33` FOREIGN KEY (`datasetId`) REFERENCES `dataset`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `dataset_materials_material` ADD CONSTRAINT `FK_e7616706c7e903abdf5d3476fe3` FOREIGN KEY (`datasetId`) REFERENCES `dataset`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `dataset_materials_material` ADD CONSTRAINT `FK_9cdbf64f43b823df7439f02f117` FOREIGN KEY (`materialId`) REFERENCES `material`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `publications_authors_authors` ADD CONSTRAINT `FK_2e8fe19c4e343980e449ecc977b` FOREIGN KEY (`publicationsId`) REFERENCES `publications`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION');
-
-    await queryRunner.query('ALTER TABLE `publications_authors_authors` ADD CONSTRAINT `FK_b8cf82d3ae0d7b4f70e123f3907` FOREIGN KEY (`authorsId`) REFERENCES `authors`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION');
-
     let book = new Publicationtype();
     book.id;
     book.name = "Book";
@@ -306,22 +244,4 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await connection.manager.save(datapoint9);
   }
 
-  public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query('DROP TABLE dataset_materials_material');
-    await queryRunner.query('DROP TABLE publications_authors_authors');
-    await queryRunner.query('DROP TABLE datapointcomments');
-    await queryRunner.query('DROP TABLE datapoints');
-    await queryRunner.query('DROP TABLE units');
-    await queryRunner.query('DROP TABLE representations');
-    await queryRunner.query('DROP TABLE authors');
-    await queryRunner.query('DROP TABLE dataset');
-    await queryRunner.query('DROP TABLE publications');
-    await queryRunner.query('DROP TABLE datasetdatatype');
-    await queryRunner.query('DROP TABLE material');
-    await queryRunner.query('DROP TABLE composition');
-    await queryRunner.query('DROP TABLE category');
-    await queryRunner.query('DROP TABLE subcategory');
-    await queryRunner.query('DROP TABLE publisher');
-    await queryRunner.query('DROP TABLE publicationtype');
-  }
 }
