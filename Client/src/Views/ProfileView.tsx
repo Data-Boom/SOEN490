@@ -126,30 +126,30 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 export default function CollapsibleTable() {
   return (
     <>
-		<Profile
-	        name="John Doe"
-	        email="j_doe@live.concordia.ca"
-	        dateOfBirth="1984-04-13"
-	        organization="Concordia University"
-	        password="test"
-	      />
-	      
-	    <TableContainer component={Paper} style={{ width: "50%" }}>
-	      <Table aria-label="collapsible table" >
-	        <TableHead> Favourites
+      <Profile
+        name="John Doe"
+        email="j_doe@live.concordia.ca"
+        dateOfBirth="1984-04-13"
+        organization="Concordia University"
+        password="test"
+      />
+
+      <TableContainer component={Paper} style={{ width: "50%" }}>
+        <Table aria-label="collapsible table" >
+          <TableHead> Favourites
 	          <TableRow>
-	            <TableCell />
-	            <TableCell>Name</TableCell>
-	            <TableCell align="right">Title</TableCell>
-	          </TableRow>
-	        </TableHead>
-	        <TableBody>
-	          {rows.map((row) => (
-	            <Row key={row.title} row={row} />
-	          ))}
-	        </TableBody>
-	      </Table>
-	    </TableContainer>
+              <TableCell />
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Title</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <Row key={row.title} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   )
 }
