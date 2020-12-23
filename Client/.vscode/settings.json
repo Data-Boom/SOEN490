@@ -24,5 +24,6 @@
     "editor.detectIndentation": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
-    }
+    },
+    "todo-tree.regex.regexCaseSensitive": false
 }
