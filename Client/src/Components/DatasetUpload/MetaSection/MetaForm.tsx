@@ -20,16 +20,16 @@ export const MetaForm = (props: IProps) => {
       <Typography variant='h6' align="left">Meta</Typography>
       <Grid container spacing={4}>
         <Grid item sm={3}>
-          <FastField name="dataset_name" label='Dataset Name' component={MuiTextFieldFormik} />
+          <FastField name="meta.dataset_name" label='Dataset Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="data_type" label='Data Type' component={MuiTextFieldFormik} />
+          <FastField name="meta.data_type" label='Data Type' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="category" label='Category' component={MuiTextFieldFormik} />
+          <FastField name="meta.category" label='Category' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="subcategory" label='Subcategory' component={MuiTextFieldFormik} />
+          <FastField name="meta.subcategory" label='Subcategory' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={12}>
           <FieldArray name='meta.material' >
