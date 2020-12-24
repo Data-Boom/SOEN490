@@ -7,20 +7,22 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
+import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, researchPaperAnalysisRoute, searchRoute } from '../Consts/Routes'
 
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
-import FileUploadView from "../Views/FileUploadView"
-import GraphView from "../Views/GraphView"
+import FileUploadView from "./DataCell/FileUploadView"
+import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
-import HomeView from '../Views/HomeView'
+import HomeView from './Home/HomeView'
+import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
+import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "../Views/SearchView"
+import SearchView from "./Search/SearchView"
 import clsx from "clsx"
 import universitylogo from './universitylogo.png'
 
@@ -69,6 +71,7 @@ export default function NavigationMenu() {
           {renderNavLink(homeRoute, "Home", <HomeIcon />)}
           {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
           {renderNavLink(searchRoute, "Search", <SearchIcon />)}
+          {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
           {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
           {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
         </List>
@@ -106,6 +109,7 @@ export default function NavigationMenu() {
           <Route exact path={homeRoute} component={HomeView} />
           <Route path={graphRoute} component={GraphView} />
           <Route path={fileUploadRoute} component={FileUploadView} />
+          <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
           <Route path={searchRoute} component={SearchView} />
           <Route path={datasetUploadRoute} component={DatasetUploadView} />
         </Box>

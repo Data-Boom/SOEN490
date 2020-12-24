@@ -1,9 +1,9 @@
-import './../App.css'
+import './../../App.css'
 
 import React, { useEffect, useState } from "react"
 
-import Blurb from '../Components/Blurb/Blurb'
-import Splash from '../Components/Splash/Splash'
+import Blurb from './Blurb/Blurb'
+import Splash from './Splash/Splash'
 import fetch from "node-fetch"
 
 export default function HomeView() {
