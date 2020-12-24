@@ -9,15 +9,14 @@ import { getDataController } from '../controllers/getDataController';
 
 let router = Router();
 
-router.get('/dataset*', (request: Request, response: Response) => {
+router.get('/dataset/uploadedBy/:uploadedBy', (request: Request, response: Response) => {
     let getDataControllerObject = new getDataController();
     getDataControllerObject.createRequestForUserUploads(request, response);
 });
 
-//To re-add; idea is to have seperate routes for general searches and specific cases
-//router.get('/dataset*', (request: Request, response: Response) => {
-//    let getDataControllerObject = new getDataController();
-//    getDataControllerObject.createRequestForData(request, response);
-//});
+router.get('/dataset*', (request: Request, response: Response) => {
+    let getDataControllerObject = new getDataController();
+    getDataControllerObject.createRequestForData(request, response);
+});
 
 export { router as getDataRouter };

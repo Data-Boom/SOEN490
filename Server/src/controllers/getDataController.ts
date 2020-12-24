@@ -37,8 +37,9 @@ export class getDataController {
     }
 
     async createRequestForUserUploads(request: Request, response: Response) {
-        let requestParams: any = { ...request.query };
+        let requestParams: any = { ...request.params };
         this.userId = requestParams;
+        console.log("your userID is " + this.userId)
         try {
             const retrieveDataObject = new retrieveData();
             let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(this.userId)
