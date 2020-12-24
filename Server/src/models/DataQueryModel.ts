@@ -118,7 +118,7 @@ export class DataQueryModel {
     }
 
     /**
-     * This method will run a query find all the data set IDs based on an entered year
+     * This method will run a query find all the data set IDs by a specific user ID
      * and return a raw data packet containing that information. 
      * 
      * @param id 
@@ -130,6 +130,22 @@ export class DataQueryModel {
             .where('account.id = :idRef', { idRef: id })
             .getRawMany();
         return idDatasetData;
+    }
+
+    /**
+     * This method will run a query find all the data set IDs favorited by specific user ID
+     * and return a raw data packet containing that information. 
+     * 
+     * @param id 
+     * Account ID: number
+     */
+    async getFavoritedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
+
+        let materialDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+            .innerJoin('dataset.accounts', 'account')
+            .where('account.id = :idRef', { idRef: id })
+            .getRawMany();
+        return materialDatasetData;
     }
 
     /**

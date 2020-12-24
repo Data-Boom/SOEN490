@@ -39,10 +39,21 @@ export class getDataController {
     async createRequestForUserUploads(request: Request, response: Response) {
         let requestParams: any = { ...request.params };
         this.userId = requestParams;
-        console.log("your userID is " + this.userId)
         try {
             const retrieveDataObject = new retrieveData();
             let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(this.userId)
+            return response.status(200).send(arrayOfData);
+        } catch (err) {
+            response.status(500).send(err);
+        }
+    }
+
+    async createRequestForUserFavorites(request: Request, response: Response) {
+        let requestParams: any = { ...request.params };
+        this.userId = requestParams;
+        try {
+            const retrieveDataObject = new retrieveData();
+            let arrayOfData = await retrieveDataObject.getUserFavoritedDatasets(this.userId)
             return response.status(200).send(arrayOfData);
         } catch (err) {
             response.status(500).send(err);

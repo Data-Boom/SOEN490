@@ -52,6 +52,14 @@ export class retrieveData {
         return setOfData;
     }
 
+    async getUserFavoritedDatasets(receivedData: IUserUploadsModel) {
+        let userReceived = receivedData.favoritesOf;
+        let rawData = await this.dataQuery.getFavoritedDatasetIDOfUser(userReceived);
+        let selectedDatasetIds = await this.createDatasetIdArray(rawData);
+        let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
+        return setOfData;
+    }
+
     /**
      * This method is used to get an array of data set IDs that match all the entered search parameters. 
      * Notably at the beginning it declares paramsEntered, which is a number value that will keep 
