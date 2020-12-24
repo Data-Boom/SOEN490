@@ -50,6 +50,8 @@ export default function Profile(props: IProps) {
     editTempOrganization(value)
   }
 
+
+
   const handleEditPassword1 = (event) => {
     const { value } = event.target
     editTemporaryPassword1(value)
