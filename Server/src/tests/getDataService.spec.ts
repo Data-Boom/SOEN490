@@ -95,6 +95,22 @@ describe('data service test', () => {
     done()
   });
 
+  test('Feeds last name of Marsh andexpects to see the author named Stanley P. Marsh', async done => {
+    let testData: IDataRequestModel;
+    testData = {} as any;
+    testData.datasetId = undefined;
+    testData.material = undefined;
+    testData.year = undefined;
+    testData.firstName = undefined;
+    testData.lastName = "Marsh";
+    testData.categoryId = undefined;
+    testData.subcategoryId = undefined;
+    let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
+    expect(arrayOfData[0].authors[0])
+      .toEqual(expect.objectContaining({ author_firstName: "Stanley", author_lastName: "Marsh", author_middleName: "P." }));
+    done()
+  });
+
   test('Feeds category ID of 2 and expects to see a data set with category name of cell size returned', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
@@ -165,21 +181,6 @@ describe('data service test', () => {
     testData.year = undefined;
     testData.firstName = "Stanley";
     testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
-    let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData).toEqual(expect.arrayContaining([]));
-    done()
-  });
-
-  test('Feeds last name of Marsh and expects to see an empty array returned', async done => {
-    let testData: IDataRequestModel;
-    testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = "Marsh";
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)

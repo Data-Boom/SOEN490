@@ -95,9 +95,14 @@ export class retrieveData {
             rawData = await this.dataQuery.getDatasetIDFromYear(yearReceived);
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
-        if (firstNameReceived != undefined && lastNameReceived != undefined) {
+        if (lastNameReceived != undefined) {
             paramsEntered++
-            rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
+            if (firstNameReceived != undefined) {
+                rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
+            }
+            else {
+                rawData = await this.dataQuery.getDatasetIDFromAuthorLastName(lastNameReceived);
+            }
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
         if (categoryReceived != undefined) {

@@ -84,6 +84,22 @@ export class DataQueryModel {
     }
 
     /**
+     * This method will run a query find all the data set IDs based on an entered author's 
+     * last name and return a raw data packet containing that information. 
+     * 
+     * @param lastName 
+     * The last name of an author: string
+     */
+    async getDatasetIDFromAuthorLastName(lastName: string): Promise<IDatasetModel[]> {
+        let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+            .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+            .innerJoin('publication.authors', 'author')
+            .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+            .getRawMany();
+        return authorDatasetData;
+    }
+
+    /**
      * This method will run a query find all the data set IDs based on an entered category ID
      * and return a raw data packet containing that information. 
      * 
