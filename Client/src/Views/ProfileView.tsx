@@ -1,6 +1,7 @@
 import { Box, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
 
 import DataboomTestGraph from './DataboomTestGraph.png'
+import { IUser } from '../Components/Profile/Profile'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
@@ -123,15 +124,24 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   )
 }
 
-export default function CollapsibleTable() {
+const user: IUser = {
+  name: "John Doe",
+  email: "j_doe@live.concordia.ca",
+  dateOfBirth: "1984-04-13",
+  organization: "Concordia University",
+  password: "test"
+}
+
+const handleSubmit = (user: IUser): void => {
+  console.log(JSON.stringify(user, null, 4))
+}
+
+export function ProfileView() {
   return (
     <>
       <Profile
-        name="John Doe"
-        email="j_doe@live.concordia.ca"
-        dateOfBirth="1984-04-13"
-        organization="Concordia University"
-        password="test"
+        user={user}
+        onSubmit={handleSubmit}
       />
 
       <TableContainer component={Paper} style={{ width: "50%" }}>
