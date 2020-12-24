@@ -1,5 +1,5 @@
-import { IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
-import { IDataRequestModel, IUserUploadsModel } from "../models/interfaces/DataRequestModelInterface";
+import { IDatasetModel, IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
+import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 import { DataQueryModel } from "../models/DataQueryModel";
 
 export class retrieveData {
@@ -40,22 +40,6 @@ export class retrieveData {
         if (datasetReceived == undefined) {
             selectedDatasetIds = await this.getDatasetIdsFromParams(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived)
         }
-        let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
-        return setOfData;
-    }
-
-    async getUserUploadedDatasets(receivedData: IUserUploadsModel) {
-        let userReceived = receivedData.uploadedBy;
-        let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
-        let selectedDatasetIds = await this.createDatasetIdArray(rawData);
-        let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
-        return setOfData;
-    }
-
-    async getUserFavoritedDatasets(receivedData: IUserUploadsModel) {
-        let userReceived = receivedData.favoritesOf;
-        let rawData = await this.dataQuery.getFavoritedDatasetIDOfUser(userReceived);
-        let selectedDatasetIds = await this.createDatasetIdArray(rawData);
         let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
         return setOfData;
     }
@@ -190,5 +174,48 @@ export class retrieveData {
             setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
         }
         return setOfData
+    }
+
+    /**
+     * This method is used to get an array of data set IDs that were uploaded by the specifed user ID. 
+     * It will call a query to get a raw data packet which contains the data set IDs matching this parameter, 
+     * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
+     * 
+     * @param userReceived
+     * Account ID: number
+     */
+    async getUserUploadedDatasets(userReceived: number) {
+        let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
+        let setOfData = await this.getDatasetsFromRawData(rawData);
+        return setOfData;
+    }
+
+    /**
+     * This method is used to get an array of data set IDs that were favorited by the specifed user ID. 
+     * It will call a query to get a raw data packet which contains the data set IDs matching this parameter, 
+     * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
+     * 
+     * @param userReceived
+     * Account ID: number
+     */
+    async getUserFavoritedDatasets(userReceived: number) {
+        let rawData = await this.dataQuery.getFavoritedDatasetIDOfUser(userReceived);
+        let setOfData = await this.getDatasetsFromRawData(rawData);
+        return setOfData;
+    }
+
+    /**
+     * This method accepts an array of IDatasetModel models where each object has a data set ID that we wish to acquire
+     * the full data set of. It sends this information to the createDatasetIdArray method to acquire an array containing
+     * the aforementioned data set IDs. After it will then send this array of data set IDs to getDataFromDatasetIds 
+     * to get all of the data sets matching those data set IDs.
+     * 
+     * @param rawData 
+     * Array of IDatasetModel objects: IDatasetModel[]
+     */
+    private async getDatasetsFromRawData(rawData: IDatasetModel[]) {
+        let selectedDatasetIds = await this.createDatasetIdArray(rawData);
+        let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds);
+        return setOfData;
     }
 }
