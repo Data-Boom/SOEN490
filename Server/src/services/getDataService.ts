@@ -1,5 +1,5 @@
 import { IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
-import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { IDataRequestModel, IUserUploadsModel } from "../models/interfaces/DataRequestModelInterface";
 import { DataQueryModel } from "../models/DataQueryModel";
 
 export class retrieveData {
@@ -40,6 +40,14 @@ export class retrieveData {
         if (datasetReceived == undefined) {
             selectedDatasetIds = await this.getDatasetIdsFromParams(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived)
         }
+        let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
+        return setOfData;
+    }
+
+    async getUserUploadedDatasets(receivedData: IUserUploadsModel) {
+        let userReceived = receivedData.uploadedBy;
+        let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
+        let selectedDatasetIds = await this.createDatasetIdArray(rawData);
         let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
         return setOfData;
     }

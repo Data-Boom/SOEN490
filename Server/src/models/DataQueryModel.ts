@@ -1,4 +1,5 @@
 import { Connection, getConnection } from "typeorm";
+import { Accounts } from "./entities/Accounts";
 import { selectAuthorsQuery } from "./entities/Authors";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
@@ -114,6 +115,21 @@ export class DataQueryModel {
             .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
             .getRawMany();
         return subcategoryDatasetData;
+    }
+
+    /**
+     * This method will run a query find all the data set IDs based on an entered year
+     * and return a raw data packet containing that information. 
+     * 
+     * @param id 
+     * Account ID: number
+     */
+    async getUploadedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
+        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+            .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
+            .where('account.id = :idRef', { idRef: id })
+            .getRawMany();
+        return idDatasetData;
     }
 
     /**

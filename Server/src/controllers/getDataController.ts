@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { retrieveData } from '../services/getDataService';
-import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { IDataRequestModel, IUserUploadsModel } from "../models/interfaces/DataRequestModelInterface";
 
 export class getDataController {
     private processedRequest: IDataRequestModel;
+    private userId: IUserUploadsModel;
     constructor() {
     }
     /**
@@ -32,6 +33,18 @@ export class getDataController {
             } catch (err) {
                 response.status(500).send(err);
             }
+        }
+    }
+
+    async createRequestForUserUploads(request: Request, response: Response) {
+        let requestParams: any = { ...request.query };
+        this.userId = requestParams;
+        try {
+            const retrieveDataObject = new retrieveData();
+            let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(this.userId)
+            return response.status(200).send(arrayOfData);
+        } catch (err) {
+            response.status(500).send(err);
         }
     }
 

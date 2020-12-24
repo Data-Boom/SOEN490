@@ -7,3 +7,8 @@ export interface IDataRequestModel {
     categoryId: number
     subcategoryId: number
 }
+
+export interface IUserUploadsModel {
+    uploadedBy: number
+    favoritesOf: number
+}
