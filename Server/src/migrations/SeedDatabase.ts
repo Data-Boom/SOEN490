@@ -1,4 +1,5 @@
 import { getConnection, MigrationInterface, QueryRunner } from "typeorm";
+import { Accounts } from "../models/entities/Accounts";
 import { Authors } from "../models/entities/Authors";
 import { Category } from "../models/entities/Category";
 import { Composition } from "../models/entities/Composition";
@@ -16,6 +17,25 @@ import { Units } from "../models/entities/Units";
 export class SeedDatabase1608609071666 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
+
+    // Adding in uploader Foreign Key to Dataset table
+    await queryRunner.query('ALTER TABLE dataset ADD COLUMN uploaderId int(11) NULL');
+    await queryRunner.query('ALTER TABLE dataset ADD CONSTRAINT FK_26457c71143806e88e157a54b05 FOREIGN KEY (uploaderId) REFERENCES accounts(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
+
+    // Populating tables
+    let account = new Accounts();
+    account.id = 900;
+    account.email = "test@email.com";
+    account.password = "password";
+    account.firstName = "Crystal";
+    account.lastName = "Grail";
+    account.dateOfBirth = new Date(2000 - 12 - 17);
+    account.organizationName = "Databoom Org";
+    account.createdAt;
+    account.updatedAt
+    account.admin;
+    account.datasets = [];
+    await connection.manager.save(account);
 
     let book = new Publicationtype();
     book.id;
@@ -52,6 +72,19 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     publication.dateAccessed;
     publication.authors = [author1, author2];
     await connection.manager.save(publication);
+
+    let publication2 = new Publications();
+    publication2.id;
+    publication2.name = "Someone's Favorite Publisher";
+    publication2.pages;
+    publication2.publicationtypeId = book.id;
+    publication2.publisherId = publisherName.id;
+    publication2.year = 1900;
+    publication2.volume;
+    publication2.datePublished;
+    publication2.dateAccessed;
+    publication2.authors = [];
+    await connection.manager.save(publication2);
 
     let compositionC = new Composition();
     compositionC.id;
@@ -114,7 +147,20 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     dataset.subcategoryId = subcategory.id;
     dataset.comments = "References 5,6,14\nAverage density = 2.134 g/cc";
     dataset.materials = [materialC, materialO2];
+    dataset.uploaderId = 900;
     await connection.manager.save(dataset);
+
+    let dataset2 = new Dataset();
+    dataset2.id = 2;
+    dataset2.name = "Someone's Favorite";
+    dataset2.datatypeId = datasetdatatypeNone.id;
+    dataset2.publicationId = publication2.id;
+    dataset2.categoryId = category1.id;
+    dataset2.subcategoryId = subcategory1.id;
+    dataset2.comments = "";
+    dataset2.materials = [];
+    dataset2.uploaderId;
+    await connection.manager.save(dataset2);
 
     // Units below this line
 
@@ -159,8 +205,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     reprNone.repr = "N/A";
     await connection.manager.save(reprNone);
 
-    // Data points below this line. Due to an oddity with queryRunner, 'values' is a reserved term and thus
-    // the field was renamed to 'values' in testing
+    // Data points below this line. 
 
     let datapoint = new Datapoints();
     datapoint.id;
@@ -242,11 +287,16 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.unitsId = unitsNone.id;
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
+
+    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (900, 1)');
+    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (900, 2)');
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query('ALTER TABLE dataset DROP FOREIGN KEY `FK_26457c71143806e88e157a54b05`');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
+    await queryRunner.query('DELETE FROM accounts_datasets_dataset');
     await queryRunner.query('DELETE FROM datapointcomments');
     await queryRunner.query('DELETE FROM datapoints');
     await queryRunner.query('DELETE FROM units');
@@ -261,6 +311,8 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await queryRunner.query('DELETE FROM subcategory');
     await queryRunner.query('DELETE FROM publisher');
     await queryRunner.query('DELETE FROM publicationtype');
+    await queryRunner.query('DELETE FROM accounts');
+    await queryRunner.query('ALTER TABLE dataset DROP COLUMN uploaderId');
   }
 
 }
