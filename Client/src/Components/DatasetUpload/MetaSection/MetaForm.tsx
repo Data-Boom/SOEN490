@@ -1,67 +1,48 @@
-import * as Yup from 'yup'
+import { Box, Grid, Typography } from '@material-ui/core'
+import { FastField, FieldArray } from 'formik'
 
-import { Grid, TextField, Typography } from '@material-ui/core'
-import { IDatasetMeta, IMaterial } from '../../../Models/Datasets/IDatasetModel'
-
+import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { getErrorAndFormikProps } from '../../../Util/FormUtil'
-import { useFormik } from 'formik'
+import { get } from 'lodash'
 
 interface IProps {
-  name: string,
-  value: IDatasetMeta,
-  setFieldValue: (fieldName: string, newReference: IDatasetMeta) => void,
   materials: IMaterial[],
 }
 
 export const MetaForm = (props: IProps) => {
-  const { name, value, setFieldValue, materials } = props
-
-  const formik = useFormik({
-    initialValues: value,
-    validationSchema: Yup.object().shape({
-      dataset_name: Yup.string().required(),
-      data_type: Yup.string().required(),
-      category: Yup.string().required(),
-      subcategory: Yup.string().required(),
-      material: Yup.array().required().min(1)
-    }),
-    //this is subform and therefore its not submitting, but instead is propagating change up
-    onSubmit: () => { }
-  })
-
-  //anytime the current reference changes we will call parent component about it
-  React.useEffect(() => {
-    setFieldValue(name, formik.values)
-  }, [formik.values])
+  const { materials } = props
 
   return (
-    <div className={classStyles().defaultBorder}>
+    <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Meta</Typography>
       <Grid container spacing={4}>
         <Grid item sm={3}>
-          <TextField fullWidth label="Dataset Name" variant="outlined" {...getErrorAndFormikProps(formik, 'dataset_name')} />
+          <FastField name="dataset_name" label='Dataset Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <TextField fullWidth label="Data Type" variant="outlined" {...getErrorAndFormikProps(formik, 'data_type')} />
+          <FastField name="data_type" label='Data Type' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <TextField fullWidth label="Category" variant="outlined" {...getErrorAndFormikProps(formik, 'category')} />
+          <FastField name="category" label='Category' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <TextField fullWidth label="Subcategory" variant="outlined" {...getErrorAndFormikProps(formik, 'subcategory')} />
+          <FastField name="subcategory" label='Subcategory' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={12}>
-          <MaterialSelectChipArray
-            {...getErrorAndFormikProps(formik, 'material')}
-            selectedMaterials={value.material}
-            setFieldValue={formik.setFieldValue}
-            options={materials}
-          />
+          <FieldArray name='meta.material' >
+            {({ form, ...fieldArrayHelpers }) => {
+              return (<MaterialSelectChipArray
+                value={get(form.values, 'meta.material')}
+                fieldArrayHelpers={fieldArrayHelpers}
+                options={materials}
+              />)
+            }}
+          </FieldArray>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   )
 }

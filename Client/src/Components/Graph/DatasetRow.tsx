@@ -1,8 +1,9 @@
-import { Box, Grid, IconButton, Typography, makeStyles, useTheme } from "@material-ui/core"
+import { Box, Grid, IconButton, Typography } from "@material-ui/core"
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React from 'react'
+import { classStyles } from "../../appTheme"
 
 interface IProps {
   dataset: ICompleteDatasetEntity,
@@ -10,21 +11,9 @@ interface IProps {
 }
 
 export const DatasetRow = (props: IProps) => {
-  const theme = useTheme()
-
-  const classes = makeStyles({
-    paperColor: {
-      borderColor: theme.palette.primary.light,
-      borderRadius: 3,
-      borderWidth: '2px',
-      border: 'solid',
-      padding: '0 30px'
-    },
-  })()
-
   return (
     <Grid item>
-      <Box className={classes.paperColor} mt={5}>
+      <Box className={classStyles().defaultBorder} mt={5}>
         <Grid item container alignItems='center' justify='space-between'>
           <Typography>
             {props.dataset.name}

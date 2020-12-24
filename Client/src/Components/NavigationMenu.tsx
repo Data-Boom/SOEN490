@@ -7,31 +7,33 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, searchRoute } from '../Consts/Routes'
+import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
 
-import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
-import FileUploadView from "../Views/FileUploadView"
-import GraphView from "../Views/GraphView"
+import FileUploadView from "./DataCell/FileUploadView"
+import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
-import HomeView from '../Views/HomeView'
+import HomeView from './Home/HomeView'
+import ImageSearchIcon from '@material-ui/icons/ImageSearch'
+import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import ProfileView from "../Views/ProfileView"
 import React from 'react'
+import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "../Views/SearchView"
+import SearchView from "./Search/SearchView"
 import clsx from "clsx"
 import universitylogo from './universitylogo.png'
 
 const drawerWidth = 240
 
-export default function NavigationMenu() {
-
+export default function NavigationMenu(): any {
   const [open, setOpen] = React.useState(false)
   const classes = useStyles()
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -53,10 +55,10 @@ export default function NavigationMenu() {
     )
   }
 
-  const handleSignIn = () => {
+  const handleSignIn = (): void => {
   }
 
-  const drawer = () => {
+  const drawer = (): any => {
     return (
       <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
         paper: classes.drawerPaper,
@@ -109,9 +111,11 @@ export default function NavigationMenu() {
           <Route exact path={homeRoute} component={HomeView} />
           <Route path={graphRoute} component={GraphView} />
           <Route path={fileUploadRoute} component={FileUploadView} />
+          <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
           <Route path={searchRoute} component={SearchView} />
           <Route path={profileRoute} component={ProfileView} />
           <Route path={datasetUploadRoute} component={DatasetUploadView} />
+          <Route path={aboutRoute} component={AboutView} />
         </Box>
       </HashRouter >
     </>
