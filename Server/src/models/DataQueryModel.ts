@@ -20,8 +20,17 @@ export class DataQueryModel {
         this.connection = getConnection();
     }
 
+    /**
+     * This method will run a query find all the data set IDs based on an entered material
+     * and return a raw data packet containing that information. 
+     * Before running this query, there will be a check done to see if a composition was entered
+     * and will grab the composition foreign key ID, to use both this ID and the original string  
+     * as search terms in the query.
+     * 
+     * @param material 
+     * A string containing either a material's composition or details: string
+     */
     async getDatasetIDFromMaterial(material: string): Promise<IDatasetModel[]> {
-        // Get composition ID if a compostion was entered instead of material details
         let compositionIdRaw = await this.connection.manager.find(Composition, { composition: material });
         let compositionId = -1; // fallback value if material details were entered
         if (compositionIdRaw[0] != null) {
@@ -36,6 +45,13 @@ export class DataQueryModel {
         return materialDatasetData;
     }
 
+    /**
+     * This method will run a query find all the data set IDs based on an entered year
+     * and return a raw data packet containing that information. 
+     * 
+     * @param year 
+     * Publication year: number
+     */
     async getDatasetIDFromYear(year: number): Promise<IDatasetModel[]> {
         let yearDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
@@ -44,6 +60,17 @@ export class DataQueryModel {
         return yearDatasetData;
     }
 
+    /**
+     * This method will run a query find all the data set IDs based on an entered author's name
+     * and return a raw data packet containing that information. 
+     * This specific query will work if even if an author's name is entered in reverse, 
+     * i.e. if a first name was entered as a last name and the last name was entered as a first name.
+     * 
+     * @param firstName 
+     * The first name of an author: string
+     * @param lastName 
+     * The last name of an author: string
+     */
     async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetModel[]> {
         let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
@@ -55,6 +82,13 @@ export class DataQueryModel {
         return authorDatasetData;
     }
 
+    /**
+     * This method will run a query find all the data set IDs based on an entered category ID
+     * and return a raw data packet containing that information. 
+     * 
+     * @param category
+     * A category ID: number
+     */
     async getDatasetIDFromCategory(category: number): Promise<IDatasetModel[]> {
         let categoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
@@ -63,6 +97,15 @@ export class DataQueryModel {
         return categoryDatasetData;
     }
 
+    /**
+     * This method will run a query find all the data set IDs based on an entered category ID plus
+     * a suncategory ID and return a raw data packet containing that information. 
+     * 
+     * @param category 
+     * A category ID: number
+     * @param subcategory 
+     * A subcategory ID: number
+     */
     async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetModel[]> {
         let subcategoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
@@ -72,6 +115,15 @@ export class DataQueryModel {
             .getRawMany();
         return subcategoryDatasetData;
     }
+
+    /**
+     * This method takes a data set ID, runs 6 queries to get the publication, author, data set, material,
+     * data point, and data point comment information corresponding to this data set ID. The returns of these
+     * 6 queries are then combined into a single IDatasetResponseModel object and subsiquently returned.
+     * 
+     * @param id 
+     * A data set ID: number
+     */
     async getAllData(id: number): Promise<IDatasetResponseModel> {
         let publicationData: IPublicationModel[] = await selectPublicationsQuery(this.connection.manager, id)
         let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection.manager, id)
