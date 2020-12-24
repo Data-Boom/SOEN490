@@ -188,14 +188,14 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds account ID of 900 and expects to see a data set with ID of 1 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(900)
+  test('Feeds account ID of 1 and expects to see a data set with ID of 1 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(1)
     expect(arrayOfData[0].dataset[0].dataset_id).toEqual(1);
     done()
   });
 
-  test('Feeds account ID of 900 and expects to see two data sets returned, one with ID of 1 and another ID being 2', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoritedDatasets(900)
+  test('Feeds account ID of 1 and expects to see two data sets returned, one with ID of 1 and another ID being 2', async done => {
+    let arrayOfData = await retrieveDataObject.getUserFavoritedDatasets(1)
     expect(arrayOfData[0].dataset[0].dataset_id).toEqual(2);
     expect(arrayOfData[1].dataset[0].dataset_id).toEqual(1);
     done()

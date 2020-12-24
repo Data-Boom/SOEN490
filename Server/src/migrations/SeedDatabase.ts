@@ -23,8 +23,9 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await queryRunner.query('ALTER TABLE dataset ADD CONSTRAINT FK_26457c71143806e88e157a54b05 FOREIGN KEY (uploaderId) REFERENCES accounts(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
 
     // Populating tables
+
     let account = new Accounts();
-    account.id = 900;
+    account.id = 1;
     account.email = "test@email.com";
     account.password = "password";
     account.firstName = "Crystal";
@@ -36,6 +37,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     account.admin;
     account.datasets = [];
     await connection.manager.save(account);
+
 
     let book = new Publicationtype();
     book.id;
@@ -147,7 +149,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     dataset.subcategoryId = subcategory.id;
     dataset.comments = "References 5,6,14\nAverage density = 2.134 g/cc";
     dataset.materials = [materialC, materialO2];
-    dataset.uploaderId = 900;
+    dataset.uploaderId = 1;
     await connection.manager.save(dataset);
 
     let dataset2 = new Dataset();
@@ -288,8 +290,8 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
 
-    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (900, 1)');
-    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (900, 2)');
+    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 1)');
+    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
@@ -312,6 +314,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publisher');
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
+    await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
     await queryRunner.query('ALTER TABLE dataset DROP COLUMN uploaderId');
   }
 
