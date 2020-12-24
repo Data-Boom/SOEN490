@@ -1,4 +1,4 @@
-import { retrieveData } from '../services/getDataService';
+import { retrieveData } from '../services/getDatasetService';
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 import { createConnection, getConnection } from 'typeorm';
 

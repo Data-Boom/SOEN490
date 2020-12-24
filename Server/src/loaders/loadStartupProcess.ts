@@ -5,7 +5,7 @@ import { connectDB } from '../database'
 import cors from 'cors';
 import express from 'express';
 import { fileUploadRouter } from '../routes/fileUploadRouter'
-import { getDataRouter } from '../routes/queryDataRouter';
+import { getDataRouter } from '../routes/getDatasetRouter';
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
