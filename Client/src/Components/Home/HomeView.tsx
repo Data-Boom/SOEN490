@@ -6,11 +6,11 @@ import Blurb from './Blurb/Blurb'
 import Splash from './Splash/Splash'
 import fetch from "node-fetch"
 
-export default function HomeView() {
+export default function HomeView(): any {
 
   const [apiResponse, setApiResponse] = useState('')
 
-  function callAPI() {
+  function callAPI(): void {
     fetch('http://localhost:4000/note')
       .then(res => res.json())
       .then(data => setApiResponse(data))

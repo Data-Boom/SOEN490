@@ -30,10 +30,10 @@ import universitylogo from './universitylogo.png'
 
 const drawerWidth = 240
 
-export default function NavigationMenu() {
-
+export default function NavigationMenu(): any {
   const [open, setOpen] = React.useState(false)
   const classes = useStyles()
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -55,30 +55,32 @@ export default function NavigationMenu() {
     )
   }
 
-  const handleSignIn = () => {
+  const handleSignIn = (): void => {
   }
 
-  const drawer = () => {
+  const drawer = (): any => {
     return (
-      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
-        paper: classes.drawerPaper,
-      }}>
-        <div className={classes.drawerHeader}>
-          <IconButton id='Close' onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {renderNavLink(homeRoute, "Home", <HomeIcon />)}
-          {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
-          {renderNavLink(searchRoute, "Search", <SearchIcon />)}
-          {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
-          {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
-          {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
-          {renderNavLink(aboutRoute, "About Databoom", <InfoIcon />)}
-        </List>
-      </ Drawer>
+      <>
+        <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
+          paper: classes.drawerPaper,
+        }}>
+          <div className={classes.drawerHeader}>
+            <IconButton id='Close' onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {renderNavLink(homeRoute, "Home", <HomeIcon />)}
+            {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
+            {renderNavLink(searchRoute, "Search", <SearchIcon />)}
+            {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
+            {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
+            {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
+            {renderNavLink(aboutRoute, "About Databoom", <InfoIcon />)}
+          </List>
+        </ Drawer>
+      </>
     )
   }
 
