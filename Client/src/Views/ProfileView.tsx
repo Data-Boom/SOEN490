@@ -151,11 +151,13 @@ export function ProfileView() {
   const handleSubmit = (user: IUser): void => {
     console.log(JSON.stringify(user, null, 4))
     setUser(user)
+    setEditProfile(false)
     // TODO: Implement endpoint for user details and password.
   }
 
   const handlePasswordChange = (password: IPasswordSettings): void => {
     console.log(JSON.stringify(password, null, 4))
+    setEditPassword(false)
   }
 
   const handleEditProfile = () => {
