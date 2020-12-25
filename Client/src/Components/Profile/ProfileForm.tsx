@@ -23,7 +23,7 @@ interface IProps {
   onSubmit: (user: IUser) => void
 }
 
-export default function Profile(props: IProps) {
+export default function ProfileForm(props: IProps) {
 
   const { user, onSubmit } = props
 

@@ -1,12 +1,15 @@
-import { Box, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
+import { Box, Button, Collapse, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
+import React, { useState } from 'react'
 
 import DataboomTestGraph from './DataboomTestGraph.png'
-import { IUser } from '../Components/Profile/Profile'
+import { IPasswordSettings } from '../Components/Profile/PasswordForm'
+import { IUser } from '../Components/Profile/ProfileForm'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
-import Profile from '../Components/Profile/Profile'
-import React from 'react'
+import PasswordForm from '../Components/Profile/PasswordForm'
+import ProfileDetails from '../Components/Profile/ProfileSection/ProfileDetails'
+import ProfileForm from '../Components/Profile/ProfileForm'
 import { exampleDatasets } from '../Models/Datasets/ICompleteDatasetEntity'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -124,26 +127,81 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   )
 }
 
-const user: IUser = {
-  name: "John Doe",
-  email: "j_doe@live.concordia.ca",
-  dateOfBirth: "1984-04-13",
-  organization: "Concordia University",
-  password: "test"
-}
-
-const handleSubmit = (user: IUser): void => {
-  console.log(JSON.stringify(user, null, 4))
-}
-
 export function ProfileView() {
+
+
+  const [editProfile, setEditProfile] = useState(false)
+  const [editPassword, setEditPassword] = useState(false)
+  const [user, setUser] = useState<IUser>(
+    {
+      name: "John Doe",
+      email: "j_doe@live.concordia.ca",
+      dateOfBirth: "1984-04-13",
+      organization: "Concordia University",
+      password: "test"
+    }
+  )
+
+  const password: IPasswordSettings = {
+    password: "password",
+    passwordConfirmation: "password"
+
+  }
+
+  const handleSubmit = (user: IUser): void => {
+    console.log(JSON.stringify(user, null, 4))
+    setUser(user)
+    // TODO: Implement endpoint for user details and password.
+  }
+
+  const handlePasswordChange = (password: IPasswordSettings): void => {
+    console.log(JSON.stringify(password, null, 4))
+  }
+
+  const handleEditProfile = () => {
+    setEditProfile(!editProfile)
+    setEditPassword(false)
+  }
+
+  const handleEditPassword = () => {
+    setEditPassword(!editPassword)
+    setEditProfile(false)
+  }
+
   return (
     <>
-      <Profile
-        user={user}
-        onSubmit={handleSubmit}
-      />
-
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h2">
+            Profile
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <ProfileDetails
+            user={user}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" onClick={handleEditProfile}>Edit Profile</Button>
+          <Button variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
+        </Grid>
+        {editProfile &&
+          <Grid item xs={12}>
+            < ProfileForm
+              user={user}
+              onSubmit={handleSubmit}
+            />
+          </Grid>
+        }
+        {editPassword &&
+          <Grid item xs={12}>
+            < PasswordForm
+              password={password}
+              onSubmit={handlePasswordChange}
+            />
+          </Grid>
+        }
+      </Grid>
       <TableContainer component={Paper} style={{ width: "50%" }}>
         <Table aria-label="collapsible table" >
           <TableHead> Favourites

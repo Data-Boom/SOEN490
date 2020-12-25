@@ -12,7 +12,7 @@ interface IProps {
 export const ProfileSection = (props: IProps) => {
   return (
     <Box className={classStyles().defaultBorder}>
-      <Typography variant='h6' align="left">Profile</Typography>
+      <Typography variant='h6' align="left">Edit Profile</Typography>
       <Grid container spacing={4}>
         <Grid item sm={3}>
           <FastField name="name" label='Name' component={MuiTextFieldFormik} />
@@ -21,7 +21,7 @@ export const ProfileSection = (props: IProps) => {
           <FastField name="email" label='Email' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="dateOfBirth" label='Date of Birth' component={MuiTextFieldFormik} />
+          <FastField name="dateOfBirth" label='Date of Birth' type="date" component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
           <FastField name="organization" label='Organization' component={MuiTextFieldFormik} />
