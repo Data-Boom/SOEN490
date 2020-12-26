@@ -1,5 +1,5 @@
-import { retrieveData } from '../services/getDataService';
-import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { retrieveData } from '../../services/getDataService';
+import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 import { createConnection, getConnection } from 'typeorm';
 
 describe('data service test', () => {

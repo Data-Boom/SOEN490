@@ -28,21 +28,18 @@ describe('Authentication Model Methods', () => {
         }
         let res = await AuthenticationModel.insertSignUpInformation(signUpInfo);
         expect(res).toBeUndefined();
-        console.log('Inserting new user into database by SignUp');
     });
 
     test('Checking Database if Email Exists - Return true', async () => {
         let email: string = 'j.comkj'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeTruthy();
-        console.log('Checking Database if Email Exists - true');
     });
 
     test('Checking Database if Email Exists - Return false', async () => {
         let email: string = 'j.comkj4wfwefwefwefw'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeFalsy();
-        console.log('Checking Database if Email Exists - return false');
     });
 
     //CHECK
@@ -50,14 +47,12 @@ describe('Authentication Model Methods', () => {
         let email: string = 'j.comkj'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(1);
-        console.log('Checking Database if User is Admin - true');
     });
 
     test('Checking Database if User is Admin - false', async () => {
         let email: string = 'j.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(0);
-        console.log('Checking Database if User is Admin - true');
     });
 
     test('Obtaining User JWT params from Database', async () => {
@@ -71,7 +66,6 @@ describe('Authentication Model Methods', () => {
         expect(res.account_admin).toBe(mockResponse.account_admin);
         expect(res.account_firstName).toBe(mockResponse.account_firstName)
         expect(res.account_id).toBe(mockResponse.account_id)
-        console.log('Obtaining User JWT params from Database');
     });
 
 });

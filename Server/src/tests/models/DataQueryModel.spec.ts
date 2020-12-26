@@ -1,5 +1,5 @@
 import { createConnection, getConnection } from 'typeorm';
-import { DataQueryModel } from '../models/DataQueryModel';
+import { DataQueryModel } from '../../models/DataQueryModel';
 
 describe('data service test', () => {
     let dataQueryModel: DataQueryModel;
