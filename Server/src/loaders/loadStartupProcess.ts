@@ -12,8 +12,10 @@ import { getDataRouter } from '../routes/queryDataRouter';
  * to initialize the application. The initial connection to the database is also created here.
  */
 export class loadStartupProcess {
-  private app: express.Application
+  private app: express.Application;
   private config: any;
+  private server: any;
+  private port: Number;
 
   constructor() {
 
@@ -74,12 +76,8 @@ export class loadStartupProcess {
     /**
      * The following starts the server on port 4000 
      */
-    const port: number = Number(process.env.PORT)
-    const startServer = async () => {
-      this.app.listen(port, () => {
-        console.log(`This Server is running on http://localhost:${process.env.PORT}`);
-
-      });
+    this.port = Number(process.env.PORT)
+    this.server = async () => {
     };
 
     /**
@@ -92,8 +90,20 @@ export class loadStartupProcess {
         console.log("caught error while connecting to db:")
         console.log(error)
       }
-      await startServer();
+      await this.server();
     })();
 
+  }
+
+  getServer() {
+    return this.server;
+  }
+
+  getApp() {
+    return this.app;
+  }
+
+  getPort() {
+    return this.port;
   }
 }

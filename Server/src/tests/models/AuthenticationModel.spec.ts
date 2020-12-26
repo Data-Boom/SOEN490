@@ -45,14 +45,6 @@ describe('Authentication Model Methods', () => {
         console.log('Checking Database if Email Exists - return false');
     });
 
-    test('Checking Database if User Hash Exists - true', async () => {
-        let email: string = 'j.comkj'
-        let mockRes = '$argon2i$v=19$m=4096,t=3,p=1$4Q7g9nGc70GYorwQ2Ts8gQ$EeLrpusfocpTH2N1MleDM7Xdmn66/6oC1IdVF4sB9VA';
-
-        let res = await AuthenticationModel.getPasswordHash(email);
-        expect(res).toBe(mockRes);
-        console.log('Checking Database if User Hash Exists - true');
-    });
     //CHECK
     test('Checking Database if User is Admin - true', async () => {
         let email: string = 'j.comkj'
@@ -69,11 +61,11 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Obtaining User JWT params from Database', async () => {
-        let email: string = 'j.com'
+        let email: string = 'j.comkj'
         let mockResponse = {
-            'account_admin': 0,
+            'account_admin': 1,
             'account_firstName': 'Ace',
-            'account_id': 3
+            'account_id': 1
         }
         let res = await AuthenticationModel.obtainJWTParams(email);
         expect(res.account_admin).toBe(mockResponse.account_admin);
