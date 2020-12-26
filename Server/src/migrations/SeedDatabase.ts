@@ -12,6 +12,9 @@ import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
+import { Accounts } from '../models/entities/Accounts';
+
+import { AuthenticationService } from '../services/authenticationService';
 
 export class SeedDatabase1608609071666 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -242,6 +245,44 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.unitsId = unitsNone.id;
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
+
+    // Accounts Data
+    let authenticationService = new AuthenticationService();
+
+    let user1 = new Accounts();
+    user1.id = 1;
+    user1.email = 'j.comkj';
+    user1.password = await authenticationService.hashPassword('123') as any;
+    user1.firstName = 'Ace';
+    user1.lastName = 'FireFist';
+    user1.dateOfBirth = '1980-01-01' as any;
+    user1.organizationName = 'Mugiwara';
+    user1.admin = !!true;
+    await connection.manager.save(user1);
+
+    let user2 = new Accounts();
+    user2.id;
+    user2.email = 'test@t.com';
+    user2.password = await authenticationService.hashPassword('123') as any;
+    user2.firstName = 'Tom';
+    user2.lastName = 'Happy';
+    user2.dateOfBirth = '1980-01-01' as any;
+    user2.organizationName = 'Mobil';
+    user2.admin;
+    await connection.manager.save(user2);
+
+    let user3 = new Accounts();
+    user3.id;
+    user3.email = 'tester@123.com';
+    user3.password = await authenticationService.hashPassword('123') as any;
+    user3.firstName = 'Wyatt';
+    user3.lastName = 'forfore';
+    user3.dateOfBirth = '1980-01-01' as any;
+    user3.organizationName = 'Ozark';
+    user3.admin = !!true;
+    await connection.manager.save(user3);
+
+
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
@@ -261,6 +302,8 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await queryRunner.query('DELETE FROM subcategory');
     await queryRunner.query('DELETE FROM publisher');
     await queryRunner.query('DELETE FROM publicationtype');
+    await queryRunner.query('DELETE FROM accounts');
+    await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
   }
 
 }
