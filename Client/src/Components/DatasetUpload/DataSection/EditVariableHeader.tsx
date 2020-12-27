@@ -1,10 +1,11 @@
-import { Box, Button, Grid, Modal, Paper, TextField } from '@material-ui/core'
+import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
+import { FastField, Form, Formik } from 'formik'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { getErrorAndFormikProps } from '../../../Util/FormUtil'
-import { useFormik } from 'formik'
+import { variableValidationSchema } from '../DatasetValidationSchema'
 
 interface IProps {
   variable: IVariable,
@@ -29,58 +30,38 @@ export const EditVariableHeader = (props: IProps) => {
     props.onHeaderClick(props.index)
   }
 
-  const formik = useFormik({
-    initialValues: { ...props.variable },
-    onSubmit: values => {
-      props.onVariableUpdate({ ...values }, props.index)
-    },
-  })
-
   return (
     <div>
       <Modal open={props.editMode} onClose={handleClose} className={classStyles().modal}>
         <Paper elevation={3}>
           <Box m={5}>
-            <form onSubmit={formik.handleSubmit}>
-              <Grid container spacing={4}>
-                <Grid item sm={4}>
-                  <TextField
-                    fullWidth
-                    label="Name"
-                    variant="outlined"
-                    {...getErrorAndFormikProps(formik, 'name')}
-                  />
+            <Formik initialValues={props.variable} validationSchema={variableValidationSchema} onSubmit={values => { props.onVariableUpdate({ ...values }, props.index) }}>
+              <Form>
+                <Grid container spacing={4}>
+                  <Grid item sm={4}>
+                    <FastField name="name" label='Name' component={MuiTextFieldFormik} />
+                  </Grid>
+                  <Grid item sm={4}>
+                    <FastField name="units" label='Units' component={MuiTextFieldFormik} />
+                  </Grid>
+                  <Grid item sm={4}>
+                    <FastField name="repr" label='Representation' component={MuiTextFieldFormik} />
+                  </Grid>
                 </Grid>
-                <Grid item sm={4}>
-                  <TextField
-                    fullWidth
-                    label="Units"
-                    variant="outlined"
-                    {...getErrorAndFormikProps(formik, 'units')}
-                  />
-                </Grid>
-                <Grid item sm={4}>
-                  <TextField
-                    fullWidth
-                    label="Representation"
-                    variant="outlined"
-                    {...getErrorAndFormikProps(formik, 'repr')}
-                  />
-                </Grid>
-              </Grid>
 
-              <Grid container spacing={4} justify="flex-end">
-                <Grid item>
-                  <Button variant="contained" onClick={handleClose}>Close</Button>
+                <Grid container spacing={4} justify="flex-end">
+                  <Grid item>
+                    <Button variant="contained" onClick={handleClose}>Close</Button>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" type="submit">Update</Button>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" onClick={handleRemove}>Delete Column</Button>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Button variant="contained" type="submit">Update</Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="contained" onClick={handleRemove}>Delete Column</Button>
-                </Grid>
-              </Grid>
-            </form>
+              </Form>
+            </Formik>
           </Box>
         </Paper>
       </Modal>

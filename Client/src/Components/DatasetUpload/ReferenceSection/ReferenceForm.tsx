@@ -1,71 +1,42 @@
 import * as Yup from 'yup'
 
-import { Box, Grid, TextField, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@material-ui/core'
+import { FastField, FieldArray } from 'formik'
 
 import { AuthorsList } from './AuthorsList'
-import { IReference } from '../../../Models/Datasets/IDatasetModel'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { getErrorAndFormikProps } from '../../../Util/FormUtil'
-import { useFormik } from 'formik'
+import { get } from 'lodash';
 
-interface IProps {
-  name: string,
-  value: IReference,
-  setFieldValue: (fieldName: string, newReference: IReference) => void
-}
-
-export const ReferenceForm = (props: IProps) => {
-
-  const { name, value, setFieldValue } = props
-
-  const formik = useFormik({
-    initialValues: value,
-    validationSchema: Yup.object().shape({
-      year: Yup.number().integer().required().test('len', 'Must be exactly 4 characters', val => val && val.toString().length === 4),
-      volume: Yup.number().integer().required(),
-      pages: Yup.number().integer().required(),
-      title: Yup.string().required(),
-      type: Yup.string().required(),
-      publisher: Yup.string().required(),
-    }),
-    //this is subform and therefore its not submitting, but isntead is propagating change up
-    onSubmit: () => { }
-  })
-
-  //anytime the current reference changes we will call parent component about it
-  React.useEffect(() => {
-    setFieldValue(name, formik.values)
-  }, [formik.values])
-
+export const ReferenceForm = () => {
   return (
     <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Reference</Typography>
       <Grid container spacing={4}>
         <Grid item sm={4}>
-          <TextField fullWidth label="Title" variant="outlined" {...getErrorAndFormikProps(formik, "title")} />
+          <FastField name="reference.title" label='Title' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Type" variant="outlined" {...getErrorAndFormikProps(formik, "type")} />
+          <FastField name="reference.type" label='Type' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Publisher" variant="outlined" {...getErrorAndFormikProps(formik, "publisher")} />
+          <FastField name="reference.publisher" label='Publisher' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Volume" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "volume")} />
+          <FastField name="reference.volume" label='Volume' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Pages" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "pages")} />
+          <FastField name="reference.pages" label='Pages' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <TextField fullWidth label="Year" variant="outlined" type='number' {...getErrorAndFormikProps(formik, "year")} />
+          <FastField name="reference.year" label='Year' component={MuiTextFieldFormik} />
         </Grid>
       </Grid>
       <Grid container spacing={4}>
-        <AuthorsList
-          {...getErrorAndFormikProps(formik, "authors")}
-          setFieldValue={formik.setFieldValue}
-        />
+        <FieldArray name='reference.authors' >
+          {({ form, ...fieldArrayHelpers }) => <AuthorsList authors={get(form.values, 'reference.authors')} fieldArrayHelpers={fieldArrayHelpers} />}
+        </FieldArray>
       </Grid>
     </Box >
   )
