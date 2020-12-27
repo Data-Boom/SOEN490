@@ -38,7 +38,7 @@ describe('Authentication tests', () => {
             "account_email": "j.comkj",
             "account_firstName": "Ace",
             "account_lastName": "FireFist",
-            "account_dateOfBirth": "1980-01-01T05:00:00.000Z",
+            "account_dateOfBirth": "1980-01-01T00:00:00.000Z",
             "account_organizationName": "Mugiwara"
         }
         let userEmail: string = "j.comkj";
