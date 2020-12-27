@@ -2,20 +2,15 @@ sudo: required
 language: node_js
 node_js:
 - '14'
-services:
-- docker
 branches:
   only:
   - develop
   - master
 before_script:
-- cd Server && npm install && ts-node ./node_modules/typeorm/cli.js migration:run
+- cd Server && npm install
 - cd ../Client && npm install
 script:
-- "travis_wait 30 sleep 1800 &"
 - cd ../Server && npm test
-after_script:
-- cd ../Server && ts-node ./node_modules/typeorm/cli.js migration:revert
 env:
   global:
   - secure: l1TKrYBRbfwJn9fsAHZvEpbDmNieXveskkUYgttFVpjODkNaTokUO3Dr74WK6JKGFY2JEeDilv/MsfRWoSuVDDCx0nZkNhQtfZ9fmdeulSWX4Np4XQSXtNGwydYEdpnRgcmLl5ndYju8HEuR7E1wk2bhMMmN/8eBxZk8hlE+MnO10nI434OcoRbneD9r5jwq9AQ4Jol47PRgci1dNPpLwLX7JScgeGPnMJzg+jd5oQE1pnaBPoLi9Hx1TPxXFcXOqLOQS7thzWGdWfjtj3Ndjx+XwfMnO3D5ZfKyyZrUcp2PEOgc3/HcQkUnHV7pzdAE/tqqdgrZ7JpTNm2Vn+6f346eVVFzNro/UPKF+Pr25XuhPI6af0NLIHosyzkreIiKjCcwBJMhQLdZa3Xw/yv36PzslTPZCL3YHK0/XzGJP5no8WiCg1Ps17nRzEvj3oGTJy+JHMN6NUSY91WN/HIQQP81N+DC05pQTQ8cfZQe0n6rKoqfjP/fEUrGmoIxU0GR7uMY4Dra9nFNCNstjJVtbE5itrHbEH2FjP6VDfaioiUZduaCh718UWpkWFxZAUf83AhKiiZurZvC/OUQ7VfcDR3rouPV2rVGfORHjhqpFNDlVu9B3odO1W25PnxfaAJhUX0I4oMLDSth00DNRmhYqnGvSnHiYBDo8lYHuJ2LMzg=
