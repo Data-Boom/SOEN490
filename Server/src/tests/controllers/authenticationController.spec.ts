@@ -105,7 +105,7 @@ describe('Authentication Controller', () => {
     test('Valid Login Request', async () => {
         mockRequest = {
             query: {
-                email: 'test@t.com',
+                email: 'tester@123.com',
                 password: '123'
             }
         }
