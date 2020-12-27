@@ -110,7 +110,7 @@ describe('Authentication Controller', () => {
             }
         }
         let regex: RegExp = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
-
+        //
         await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
         expect(regex.test(mockResponse.json));
         expect(mockResponse.status).toBeCalledWith(200);
