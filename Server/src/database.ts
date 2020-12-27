@@ -1,5 +1,4 @@
 import { createConnection } from 'typeorm';
-import 'dotenv/config';
 
 export const connectDB = async (config: any) => {
   await createConnection(config).then(async connection => {
