@@ -18,7 +18,6 @@ export default function SearchView(props: IProps) {
   const [selection, setSelection] = useState<SelectionChangeParams>(null)
 
   const handleSearchClick = (formValues) => {
-    // todo actually call backend
     setFoundDatasets(exampleDatasets)
   }
 

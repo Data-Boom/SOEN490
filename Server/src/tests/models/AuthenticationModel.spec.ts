@@ -28,58 +28,44 @@ describe('Authentication Model Methods', () => {
         }
         let res = await AuthenticationModel.insertSignUpInformation(signUpInfo);
         expect(res).toBeUndefined();
-        console.log('Inserting new user into database by SignUp');
     });
 
     test('Checking Database if Email Exists - Return true', async () => {
         let email: string = 'j.comkj'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeTruthy();
-        console.log('Checking Database if Email Exists - true');
     });
 
     test('Checking Database if Email Exists - Return false', async () => {
         let email: string = 'j.comkj4wfwefwefwefw'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeFalsy();
-        console.log('Checking Database if Email Exists - return false');
     });
 
-    test('Checking Database if User Hash Exists - true', async () => {
-        let email: string = 'j.comkj'
-        let mockRes = '$argon2i$v=19$m=4096,t=3,p=1$4Q7g9nGc70GYorwQ2Ts8gQ$EeLrpusfocpTH2N1MleDM7Xdmn66/6oC1IdVF4sB9VA';
-
-        let res = await AuthenticationModel.getPasswordHash(email);
-        expect(res).toBe(mockRes);
-        console.log('Checking Database if User Hash Exists - true');
-    });
     //CHECK
     test('Checking Database if User is Admin - true', async () => {
         let email: string = 'j.comkj'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(1);
-        console.log('Checking Database if User is Admin - true');
     });
 
     test('Checking Database if User is Admin - false', async () => {
         let email: string = 'j.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(0);
-        console.log('Checking Database if User is Admin - true');
     });
 
     test('Obtaining User JWT params from Database', async () => {
-        let email: string = 'j.com'
+        let email: string = 'j.comkj'
         let mockResponse = {
-            'account_admin': 0,
+            'account_admin': 1,
             'account_firstName': 'Ace',
-            'account_id': 3
+            'account_id': 1
         }
         let res = await AuthenticationModel.obtainJWTParams(email);
         expect(res.account_admin).toBe(mockResponse.account_admin);
         expect(res.account_firstName).toBe(mockResponse.account_firstName)
         expect(res.account_id).toBe(mockResponse.account_id)
-        console.log('Obtaining User JWT params from Database');
     });
 
 });

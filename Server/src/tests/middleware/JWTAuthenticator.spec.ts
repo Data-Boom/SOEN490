@@ -1,20 +1,38 @@
-import { Request, Response, NextFunction } from 'express';
-import { loadStartupProcess } from '../../loaders/loadStartupProcess';
+import { Request, Response, NextFunction, response } from 'express';
+import { AuthenticationController } from '../../controllers/authenticationController';
 import { JWTAuthenticator } from '../../middleware/JWTAuthenticator';
-import * as app from '../../app'
+import { createConnection, getConnection } from 'typeorm';
 import request from 'supertest';
+import { loadStartupProcess } from '../../loaders/loadStartupProcess';
+
+
 
 describe('Authorization Middleware', () => {
     let mockRequest;
     let mockResponse;
+    let newRequest;
+    let anotherResponse;
     let nextFunction: NextFunction = jest.fn();
 
-    beforeEach(() => {
-        mockRequest = {};
+    beforeAll(async () => {
+        mockRequest = {} as Request;
         mockResponse = {
             status: jest.fn(() => mockResponse),
-            json: jest.fn()
+            json: jest.fn(),
+            setHeader: jest.fn(() => mockResponse)
         }
+        anotherResponse = {
+            status: jest.fn(() => anotherResponse),
+            json: jest.fn(),
+            setHeader: jest.fn(() => anotherResponse)
+        }
+        newRequest = {} as Request;
+        await createConnection();
+        jest.setTimeout(60000)
+    });
+
+    afterAll(async () => {
+        await getConnection().close();
     });
 
     test('Request Without Auth Headers - Return error 401', async () => {
@@ -25,7 +43,7 @@ describe('Authorization Middleware', () => {
             headers: {
             }
         }
-        await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction);
+        await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction as NextFunction);
 
         expect(mockResponse.status).toBeCalledWith(401);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
@@ -40,24 +58,43 @@ describe('Authorization Middleware', () => {
                 'authorization': 'Bearer abc'
             }
         }
-        await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction);
+        await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction as NextFunction);
 
         expect(mockResponse.status).toBeCalledWith(403);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
 
-    //CHECK
     // test('Request with Auth Header & Correct JWT Token Provided', async () => {
 
-    //     const expressLoader = new loadStartupProcess();
-    //     const result = await request(expressLoader.app).post('/login');
-
+    // Leaving this here - unfinished testing
+    // let startup: loadStartupProcess;
+    // startup = await new loadStartupProcess();
+    // let token;
+    // token = await request.agent(startup.getApp())
+    //     .post('/login')
+    //     .send({
+    //         query: {
+    //             email: 'test@t.com',
+    //             password: '123'
+    //         }
+    //     });
+    // console.log(token);
     //     mockRequest = {
-    //         headers: {
-    //             //'authorization': 
+    //         query: {
+    //             email: 'test@t.com',
+    //             password: '123'
     //         }
     //     }
-    //     await AuthenticateJWT.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction);
-    //     expect(nextFunction).toBeCalledTimes(1);
+    //     let authenticationController = new AuthenticationController();
+    //     await authenticationController.createLoginRequest(mockRequest as Request, anotherResponse as Response, nextFunction as NextFunction);
+    //     newRequest = {
+    //         headers: {
+    //             'authorization': `${anotherResponse.json}`
+    //         }
+    //     }
+    //     // expect(anotherResponse.json).toBeCalledWith(200);
+    //     await JWTAuthenticator.verifyJWT(newRequest as Request, mockResponse as Response, nextFunction as NextFunction);
+    //     expect(mockResponse.json).toBeCalledWith(200);
+    //     //expect(nextFunction).toHaveBeenCalledTimes(1);
     // })
 });

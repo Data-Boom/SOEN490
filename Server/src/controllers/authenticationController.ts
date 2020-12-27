@@ -39,7 +39,7 @@ export class AuthenticationController {
         else {
             let requestParams: any = { ...request.query };
             let loginInfo: ILoginInformation = requestParams;
-            let res = await this.callServiceForLogin(loginInfo, response, next);
+            let res: any = await this.callServiceForLogin(loginInfo, response, next);
             return res;
         }
     }
@@ -74,7 +74,7 @@ export class AuthenticationController {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);
             else {
-                return response.status(error.status).json("GENERIC ERROR");
+                return response.status(error.status).json("Something went Wrong");
             }
         }
     }
@@ -90,7 +90,7 @@ export class AuthenticationController {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);
             else {
-                return response.status(error.status).json("GENERIC ERROR");
+                return response.status(error.status).json(error.message);
             }
         }
     }
