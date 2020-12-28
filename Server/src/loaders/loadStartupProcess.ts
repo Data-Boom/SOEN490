@@ -1,10 +1,10 @@
 import 'dotenv/config';
-
-import bodyParser from 'body-parser'
-import { connectDB } from '../database'
-import cors from 'cors';
 import express from 'express';
-import { fileUploadRouter } from '../routes/fileUploadRouter'
+import cors from 'cors';
+import { connectDB } from '../database';
+import { fileUploadRouter } from '../routes/fileUploadRouter';
+import { authenticationRouter } from '../routes/authenticationRouter';
+import bodyParser from 'body-parser';
 import { getDataRouter } from '../routes/queryDataRouter';
 
 /**
@@ -12,12 +12,17 @@ import { getDataRouter } from '../routes/queryDataRouter';
  * to initialize the application. The initial connection to the database is also created here.
  */
 export class loadStartupProcess {
+  private app: express.Application;
+  private config: any;
+  private server: any;
+  private port: Number;
+
   constructor() {
 
     // Create a new express application instance
-    const app: express.Application = express();
+    this.app = express();
 
-    app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
+    this.app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
 
     /**
      *  Options for cors midddleware. These HTTP headers can be configured what the application requires. Will be modified in 
@@ -37,23 +42,22 @@ export class loadStartupProcess {
       preflightContinue: false,
     };
 
-    app.use(bodyParser.urlencoded({
+    this.app.use(bodyParser.urlencoded({
       extended: false
     }));
-    app.use(cors(options));
-    app.use(bodyParser.json());
+    this.app.use(cors(options));
+    this.app.use(bodyParser.json());
 
 
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    app.use('/', fileUploadRouter)
-    app.use('/', getDataRouter)
+    this.app.use('/', fileUploadRouter)
+    this.app.use('/', authenticationRouter)
+    this.app.use('/', getDataRouter)
 
 
-
-    const config: any = {
-
+    this.config = {
       "type": process.env.DB_TYPE,
       "host": process.env.HOST,
       "port": process.env.DB_PORT,
@@ -62,6 +66,7 @@ export class loadStartupProcess {
       "database": process.env.DB_NAME,
       "synchronize": true,
       "logging": true,
+      "migrationsRun": true,
       "entities": [
         "src/models/entities/**/*.ts",
         "dist/entities/**/*.js"
@@ -71,28 +76,34 @@ export class loadStartupProcess {
     /**
      * The following starts the server on port 4000 
      */
-    const port: number = Number(process.env.PORT)
-    const startServer = async () => {
-      app.listen(port, () => {
-        console.log(`This Server is running on http://localhost:${process.env.PORT}`);
-
-      });
+    this.port = Number(process.env.PORT)
+    this.server = async () => {
     };
 
     /**
      * Call the connect method from /Database to connect to the database and starts the nodejs Server
      */
-
-
     (async () => {
       try {
-        await connectDB(config);
+        await connectDB(this.config);
       } catch (error) {
         console.log("caught error while connecting to db:")
         console.log(error)
       }
-      await startServer();
+      await this.server();
     })();
 
+  }
+
+  getServer() {
+    return this.server;
+  }
+
+  getApp() {
+    return this.app;
+  }
+
+  getPort() {
+    return this.port;
   }
 }
