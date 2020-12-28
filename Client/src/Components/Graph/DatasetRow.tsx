@@ -11,7 +11,6 @@ interface IProps {
 }
 
 export const DatasetRow = (props: IProps) => {
-
   return (
     <Grid item>
       <Box className={classStyles().defaultBorder} mt={5}>

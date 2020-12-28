@@ -13,6 +13,7 @@ import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
+import { AuthenticationService } from '../services/authenticationService';
 
 export class SeedDatabase1608609071666 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -22,22 +23,41 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await queryRunner.query('ALTER TABLE dataset ADD COLUMN uploaderId int(11) NULL');
     await queryRunner.query('ALTER TABLE dataset ADD CONSTRAINT FK_26457c71143806e88e157a54b05 FOREIGN KEY (uploaderId) REFERENCES accounts(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
 
-    // Populating tables
+    // Accounts Data
+    let authenticationService = new AuthenticationService();
 
-    let account = new Accounts();
-    account.id = 1;
-    account.email = "test@email.com";
-    account.password = "password";
-    account.firstName = "Crystal";
-    account.lastName = "Grail";
-    account.dateOfBirth = new Date(2000 - 12 - 17);
-    account.organizationName = "Databoom Org";
-    account.createdAt;
-    account.updatedAt
-    account.admin;
-    account.datasets = [];
-    await connection.manager.save(account);
+    let user1 = new Accounts();
+    user1.id = 1;
+    user1.email = 'j.comkj';
+    user1.password = await authenticationService.hashPassword('123') as any;
+    user1.firstName = 'Ace';
+    user1.lastName = 'FireFist';
+    user1.dateOfBirth = '1980-01-01' as any;
+    user1.organizationName = 'Mugiwara';
+    user1.admin = !!true;
+    await connection.manager.save(user1);
 
+    let user2 = new Accounts();
+    user2.id;
+    user2.email = 'test@t.com';
+    user2.password = await authenticationService.hashPassword('123') as any;
+    user2.firstName = 'Tom';
+    user2.lastName = 'Happy';
+    user2.dateOfBirth = '1980-01-01' as any;
+    user2.organizationName = 'Mobil';
+    user2.admin;
+    await connection.manager.save(user2);
+
+    let user3 = new Accounts();
+    user3.id;
+    user3.email = 'tester@123.com';
+    user3.password = await authenticationService.hashPassword('123') as any;
+    user3.firstName = 'Wyatt';
+    user3.lastName = 'forfore';
+    user3.dateOfBirth = '1980-01-01' as any;
+    user3.organizationName = 'Ozark';
+    user3.admin = !!true;
+    await connection.manager.save(user3);
 
     let book = new Publicationtype();
     book.id;

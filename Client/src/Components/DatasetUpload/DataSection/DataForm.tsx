@@ -1,29 +1,22 @@
 import { Box } from '@material-ui/core'
 import { DatasetDataTable } from './DatasetDataTable'
+import { FastField } from 'formik'
 import { IData } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 
 interface IProps {
-  name: string,
-  value: IData,
-  setFieldValue: (fieldName: string, newReference: IData) => void
 }
 
 export const DataForm = (props: IProps) => {
 
-  const { name, value, setFieldValue } = props
-
-  const handleDataChange = (newData: IData) => {
-    setFieldValue(name, newData)
+  const FormikDatasetDataTable = ({ field, form, ...props }) => {
+    return <DatasetDataTable data={field.value} onDataChange={(newData: IData) => form.setFieldValue(field.name, newData)} />
   }
 
   return (
     <Box className={classStyles().defaultBorder}>
-      <DatasetDataTable
-        data={value}
-        onDataChange={handleDataChange}
-      />
+      <FastField name="data" label='Dataset Name' component={FormikDatasetDataTable} />
     </Box>
   )
 }

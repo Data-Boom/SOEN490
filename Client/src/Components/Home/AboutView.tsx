@@ -12,7 +12,7 @@ export const AboutView = () => {
           <Box className={classStyles().defaultBorder}>
             This database is brought to you by a team of 10 undergraduate students from Concordia University as the final project to graduate from Software Engineering.
             It was a joy to work on this project because of the dedication and commitment from this amazing team.
-            The stakeholder's passion for his work made it possible to create this opportunity for all of you.
+            The stakeholder`s passion for his work made it possible to create this opportunity for all of you.
           </Box>
         </Grid>
         <Grid item sm={12}>
