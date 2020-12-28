@@ -12,19 +12,19 @@ interface IProps {
   onDataChange: (newData: IData) => void
 }
 
-export const DatasetDataTable = (props: IProps) => {
+export const DatasetDataTable = (props: IProps): any => {
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
 
-  const handleHeaderClick = (indexOfClickedHeader: number) => {
+  const handleHeaderClick = (indexOfClickedHeader: number): void => {
     setEditedVariableIndex(indexOfClickedHeader)
   }
 
-  const closeEditVariableModal = () => {
+  const closeEditVariableModal = (): any => {
     setEditedVariableIndex(-1)
   }
 
-  const handleVariableUpdate = (variable: IVariable, index: number) => {
+  const handleVariableUpdate = (variable: IVariable, index: number): void => {
     const copyData = { ...props.data }
     copyData.variables[index] = variable
     props.onDataChange(copyData)
@@ -32,11 +32,11 @@ export const DatasetDataTable = (props: IProps) => {
     closeEditVariableModal()
   }
 
-  const handleVariableRemove = (index: number) => {
+  const handleVariableRemove = (index: number): void => {
     const copyData = { ...props.data }
     copyData.variables.splice(index, 1)
 
-    let copyContents: IContent[] = [...props.data.contents]
+    const copyContents: IContent[] = [...props.data.contents]
     removeColumnPoints(copyContents, index)
     copyData.contents = copyContents
 
@@ -44,7 +44,7 @@ export const DatasetDataTable = (props: IProps) => {
     closeEditVariableModal()
   }
 
-  const removeColumnPoints = (copyContents: IContent[], columnIndex: number) => {
+  const removeColumnPoints = (copyContents: IContent[], columnIndex: number): void => {
     for (let i = 0; i < copyContents.length; i++) {
       copyContents[i].point = copyContents[i].point.filter((point, index) => {
         return index !== columnIndex
@@ -52,7 +52,7 @@ export const DatasetDataTable = (props: IProps) => {
     }
   }
 
-  const handleAddColumn = () => {
+  const handleAddColumn = (): void => {
     const copyData = { ...props.data }
     copyData.variables.push(defaultVariable)
     props.onDataChange(copyData)
@@ -60,7 +60,7 @@ export const DatasetDataTable = (props: IProps) => {
     setEditedVariableIndex(copyData.variables.length - 1)
   }
 
-  const handleRemoveSelectedRows = () => {
+  const handleRemoveSelectedRows = (): void => {
     const copyData = { ...props.data }
     copyData.contents = copyData.contents.filter((row, index) => !selectedRows.has(index))
     props.onDataChange(copyData)
@@ -68,22 +68,22 @@ export const DatasetDataTable = (props: IProps) => {
     resetSelection()
   }
 
-  const handleAddRow = () => {
+  const handleAddRow = (): void => {
     const copyData = { ...props.data }
     copyData.contents.push({ comments: '', point: new Array(props.data.variables.length).fill(0) })
     props.onDataChange(copyData)
   }
 
-  const resetSelection = () => {
+  const resetSelection = (): void => {
     setSelectedRows(() => new Set<React.Key>())
   }
 
-  const getColumns = () => {
+  const getColumns = (): any[] => {
     const columns = props.data.variables.map((variable, index) => {
       return (
         {
           // eslint-disable-next-line react/display-name
-          key: `${index}`, name: variable.name, editable: true, editor: TextEditor, headerRenderer: () => <EditVariableHeader
+          key: `${index}`, name: variable.name, editable: true, editor: TextEditor, headerRenderer: (): any => <EditVariableHeader
             variable={variable}
             index={index}
             editMode={editedVariableIndex === index}
@@ -99,11 +99,11 @@ export const DatasetDataTable = (props: IProps) => {
     return [SelectColumn, ...columns]
   }
 
-  const getRows = () => {
+  const getRows = (): number[][] => {
     return props.data.contents.map(content => content.point)
   }
 
-  const handleRowChange = (changedRows: number[][]) => {
+  const handleRowChange = (changedRows: number[][]): void => {
     const copyData = { ...props.data }
     // changedRows is the rows after user input, we need to update copyData's contents via a map with an index:
     copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
@@ -111,11 +111,11 @@ export const DatasetDataTable = (props: IProps) => {
     props.onDataChange(copyData)
   }
 
-  const rowKeyGetter = (row: any) => {
+  const rowKeyGetter = (row: any): number => {
     return props.data.contents.findIndex(suchRow => suchRow.point == row)
   }
 
-  const renderTopButtons = () => {
+  const renderTopButtons = (): any => {
     return (
       <>
         <Grid item>
