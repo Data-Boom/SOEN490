@@ -107,4 +107,33 @@ export class AuthenticationModel {
 
         let connection = getConnection();
     }
+
+
+    //for issue 146
+    static async updateUserDetail(email: string, passwordHash: string): Promise<boolean> {
+
+        let connection = getConnection();
+        //for password
+        await connection.manager
+            .createQueryBuilder(Accounts, 'accounts')
+            .update('accounts')
+            .set({ password: passwordHash })
+            .where('accounts.email = :emailRef', { emailRef: email })
+            .execute()
+
+        return true
+    }
+    static async updateUserDetail2(email: string, organization: string): Promise<boolean> {
+
+        let connection = getConnection();
+        //for organization
+        await connection.manager
+            .createQueryBuilder(Accounts, 'accounts')
+            .update('accounts')
+            .set({ organizationName: organization })
+            .where('accounts.email = :emailRef', { emailRef: email })
+            .execute()
+
+        return true
+    }
 }
