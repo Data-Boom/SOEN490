@@ -95,7 +95,7 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds last name of Marsh andexpects to see the author named Stanley P. Marsh', async done => {
+  test('Feeds last name of Marsh and expects to see the author named Stanley P. Marsh', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
     testData.datasetId = undefined;

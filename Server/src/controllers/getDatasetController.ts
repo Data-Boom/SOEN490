@@ -21,7 +21,7 @@ export class getDataController {
     async createRequestForData(request: Request, response: Response) {
         let validateData = this.validateInputData(request)
         if (!validateData) {
-            response.status(500).send("Invalid search params entered");
+            response.status(400).send("Invalid search params entered");
         }
         else {
             let requestParams: any = { ...request.query };
@@ -31,7 +31,7 @@ export class getDataController {
                 let arrayOfData = await retrieveDataObject.getArrayOfDatasets(this.processedRequest)
                 return response.status(200).send(arrayOfData);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(400).send(err);
             }
         }
     }
@@ -51,7 +51,7 @@ export class getDataController {
         let requestParam = request.params.uploadedBy;
         let userId: number = +requestParam;
         if (isNaN(userId)) {
-            response.status(500).send("Invalid search params entered");
+            response.status(400).send("Invalid search params entered");
         }
         else {
             try {
