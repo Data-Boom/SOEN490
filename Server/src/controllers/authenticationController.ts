@@ -1,3 +1,4 @@
+import { IUserDetailUpdater } from './../genericInterfaces/AuthenticationInterfaces';
 import { Request, Response, NextFunction } from 'express';
 import { AuthenticationService } from '../services/authenticationService';
 
@@ -61,6 +62,40 @@ export class AuthenticationController {
         }
         else {
             return true;
+        }
+    }
+
+    private validateUserDetailRequest(request: Request): boolean {
+        if (request.query.hasOwnProperty('password')) {
+            return true;
+        } else
+            return false;
+    }
+
+    async updateUserDetailRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+
+        this.invalidResponse = this.validateUserDetailRequest(request);
+        if (!this.invalidResponse) {
+            return response.status(400).json("Request is invalid. ") //whats the right msg for this?
+        } else {
+            let requestParams: any = { ...request.query };
+            let updateUserDetail: IUserDetailUpdater = requestParams;
+            //call validateUserDetails from service inside callServiceForUpdateUserDetails
+            let userDetailService: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
+            return userDetailService;
+            //response.status(200);
+            //.json('successful update');
+        }
+    }
+    //to get info passed from update user details method from service layer
+    private async callServiceForUpdateUserDetails(updateUserDetail: IUserDetailUpdater, response: Response, next: NextFunction): Promise<Response> {
+        this.authenticationService = new AuthenticationService();
+        try {
+            let serviceResponse: IResponse = await this.authenticationService.validateUserDetails(updateUserDetail);
+            return response.status(serviceResponse.statusCode).json(serviceResponse.message);
+        }
+        catch (error) {
+            return response.status(error.status).json(error.message);
         }
     }
 
