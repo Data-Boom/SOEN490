@@ -110,7 +110,7 @@ export class AuthenticationModel {
 
 
     //for issue 146
-    static async updateUserDetail(email: string, passwordHash: string): Promise<boolean> {
+    static async updateUserPasswordDetail(email: string, passwordHash: string): Promise<boolean> {
 
         let connection = getConnection();
         //for password
@@ -123,7 +123,7 @@ export class AuthenticationModel {
 
         return true
     }
-    static async updateUserDetail2(email: string, organization: string): Promise<boolean> {
+    static async updateUserOrganizationDetail(email: string, organization: string): Promise<boolean> {
 
         let connection = getConnection();
         //for organization

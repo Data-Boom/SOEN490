@@ -7,6 +7,7 @@ import { AuthenticationModel } from '../models/AuthenticationModel'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
+import { IUserDetailUpdater } from './../genericInterfaces/AuthenticationInterfaces';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
@@ -116,6 +117,30 @@ export class AuthenticationService {
             expiresIn: jwtExpiry
         })
         return token;
+    }
+
+    //for issue 146 (similar to process sign up)
+    async validateUserDetails(userDetailUpdater: IUserDetailUpdater): Promise<IResponse> {
+        let email = userDetailUpdater.email
+        let password = userDetailUpdater.password
+        let organization = userDetailUpdater.organization
+
+        // email = await AuthenticationModel.verifyIfEmailExists(userDetailUpdater.email);
+        if (await AuthenticationModel.verifyIfEmailExists(email)) {
+            if (password != undefined) {
+                password = await this.hashPassword(password)
+                await AuthenticationModel.updateUserPasswordDetail(email, password);
+            }
+            if (organization != undefined) {
+                await AuthenticationModel.updateUserOrganizationDetail(email, organization);
+            }
+        }
+        else {
+            throw new BadRequest("email not valid");
+        }
+        this.requestResponse.status = "success";
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse
     }
 }
 
