@@ -8,19 +8,17 @@ import { getDataController } from '../controllers/getDatasetController';
  */
 
 let router = Router();
+let getDataControllerObject = new getDataController();
 
 router.get('/dataset/uploadedBy/:uploadedBy', (request: Request, response: Response) => {
-    let getDataControllerObject = new getDataController();
     getDataControllerObject.createRequestForUserUploads(request, response);
 });
 
 router.get('/dataset/favoritesOf/:favoritesOf', (request: Request, response: Response) => {
-    let getDataControllerObject = new getDataController();
     getDataControllerObject.createRequestForUserFavorites(request, response);
 });
 
 router.get('/dataset*', (request: Request, response: Response) => {
-    let getDataControllerObject = new getDataController();
     getDataControllerObject.createRequestForData(request, response);
 });
 
