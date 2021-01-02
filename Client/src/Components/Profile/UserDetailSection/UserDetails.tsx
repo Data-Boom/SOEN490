@@ -1,12 +1,12 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 
-import { IUser } from "../ProfileForm"
+import { IUser } from '../../../Models/Profile/IProfileModel'
 import React from 'react'
 
 interface IProps {
   user: IUser
 }
-export default function ProfileDetails(props: IProps) {
+export default function UserDetails(props: IProps) {
 
   const { user } = props
 

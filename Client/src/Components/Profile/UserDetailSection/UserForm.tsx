@@ -5,25 +5,15 @@ import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 
-interface IProps {
-
-}
-
-export const ProfileSection = (props: IProps) => {
+export const UserForm = () => {
   return (
     <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Edit Profile</Typography>
       <Grid container spacing={4}>
-        <Grid item sm={3}>
-          <FastField name="name" label='Name' component={MuiTextFieldFormik} />
-        </Grid>
-        <Grid item sm={3}>
+        <Grid item sm={6}>
           <FastField name="email" label='Email' component={MuiTextFieldFormik} />
         </Grid>
-        <Grid item sm={3}>
-          <FastField name="dateOfBirth" label='Date of Birth' type="date" component={MuiTextFieldFormik} />
-        </Grid>
-        <Grid item sm={3}>
+        <Grid item sm={6}>
           <FastField name="organization" label='Organization' component={MuiTextFieldFormik} />
         </Grid>
       </Grid>

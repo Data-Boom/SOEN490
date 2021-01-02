@@ -2,14 +2,14 @@ import { Box, Button, Collapse, Grid, IconButton, Paper, Table, TableBody, Table
 import React, { useState } from 'react'
 
 import DataboomTestGraph from './DataboomTestGraph.png'
-import { IPasswordSettings } from '../Components/Profile/PasswordForm'
-import { IUser } from '../Components/Profile/ProfileForm'
+import { IPasswordSettings } from '../Models/Profile/IProfileModel'
+import { IUser } from '../Models/Profile/IProfileModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
 import PasswordForm from '../Components/Profile/PasswordForm'
-import ProfileDetails from '../Components/Profile/ProfileSection/ProfileDetails'
 import ProfileForm from '../Components/Profile/ProfileForm'
+import UserDetails from '../Components/Profile/UserDetailSection/UserDetails'
 import { exampleDatasets } from '../Models/Datasets/ICompleteDatasetEntity'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -129,7 +129,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 
 export function ProfileView() {
 
-
   const [editProfile, setEditProfile] = useState(false)
   const [editPassword, setEditPassword] = useState(false)
   const [user, setUser] = useState<IUser>(
@@ -179,7 +178,7 @@ export function ProfileView() {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <ProfileDetails
+          <UserDetails
             user={user}
           />
         </Grid>

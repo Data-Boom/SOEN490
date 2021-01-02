@@ -5,11 +5,7 @@ import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 
-interface IProps {
-
-}
-
-export const PasswordSection = (props: IProps) => {
+export const EditPassword = () => {
   return (
     <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Change Password</Typography>

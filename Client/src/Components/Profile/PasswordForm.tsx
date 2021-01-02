@@ -3,13 +3,9 @@ import * as Yup from 'yup'
 import { Button, Container } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 
-import { PasswordSection } from './PasswordSection/PasswordSection'
+import { EditPassword } from './PasswordSection/EditPassword'
+import { IPasswordSettings } from '../../Models/Profile/IProfileModel'
 import React from 'react'
-
-export interface IPasswordSettings {
-  password: string,
-  passwordConfirmation: string
-}
 
 interface IProps {
   password: IPasswordSettings,
@@ -34,7 +30,7 @@ export default function ProfileForm(props: IProps) {
         onSubmit={onSubmit}
       >
         <Form>
-          <PasswordSection />
+          <EditPassword />
           <Button variant="contained" color="primary" type="submit">Confirm Password</Button>
         </Form>
       </Formik>
