@@ -83,8 +83,6 @@ export class AuthenticationController {
             //call validateUserDetails from service inside callServiceForUpdateUserDetails
             let userDetailService: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
             return userDetailService;
-            //response.status(200);
-            //.json('successful update');
         }
     }
     //to get info passed from update user details method from service layer

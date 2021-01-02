@@ -22,6 +22,12 @@ router.post('/login', (request: Request, response: Response, next: NextFunction)
 //TODO: Implement when doing password reset 
 router.get('/resetPassword', (request: Request, response: Response, next: NextFunction) => {
 
+});
+
+router.post('/updateUserInfo', (request: Request, response: Response, next: NextFunction) => {
+    //make an updatePasswordRequest and validatePasswordRequest 
+    authenticationController.updateUserDetailRequest(request, response, next);
 })
+
 
 export { router as authenticationRouter }
