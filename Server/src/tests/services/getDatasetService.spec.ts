@@ -1,4 +1,4 @@
-import { retrieveData } from '../../services/getDataService';
+import { retrieveData } from "../../services/getDatasetService";
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 import { createConnection, getConnection } from 'typeorm';
 
@@ -16,7 +16,6 @@ describe('data service test', () => {
   });
 
   test('Feeds data set ID of 1 and expects to see a data set with ID of 1 returned', async done => {
-    //
     let testData: IDataRequestModel;
     testData = {} as any;
     testData.datasetId = [1];
@@ -88,6 +87,22 @@ describe('data service test', () => {
     testData.year = undefined;
     testData.firstName = "Marsh";
     testData.lastName = "Stanley";
+    testData.categoryId = undefined;
+    testData.subcategoryId = undefined;
+    let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
+    expect(arrayOfData[0].authors[0])
+      .toEqual(expect.objectContaining({ author_firstName: "Stanley", author_lastName: "Marsh", author_middleName: "P." }));
+    done()
+  });
+
+  test('Feeds last name of Marsh and expects to see the author named Stanley P. Marsh', async done => {
+    let testData: IDataRequestModel;
+    testData = {} as any;
+    testData.datasetId = undefined;
+    testData.material = undefined;
+    testData.year = undefined;
+    testData.firstName = undefined;
+    testData.lastName = "Marsh";
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
@@ -173,17 +188,27 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds last name of Marsh and expects to see an empty array returned', async done => {
-    let testData: IDataRequestModel;
-    testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = "Marsh";
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
-    let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
+  test('Feeds account ID of 1 and expects to see a data set with ID of 1 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(1)
+    expect(arrayOfData[0].dataset[0].dataset_id).toEqual(1);
+    done()
+  });
+
+  test('Feeds account ID of 1 and expects to see two data sets returned, one with ID of 1 and another ID being 2', async done => {
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(1)
+    expect(arrayOfData[0].dataset[0].dataset_id).toEqual(2);
+    expect(arrayOfData[1].dataset[0].dataset_id).toEqual(1);
+    done()
+  });
+
+  test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(-1)
+    expect(arrayOfData).toEqual(expect.arrayContaining([]));
+    done()
+  });
+
+  test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(-1)
     expect(arrayOfData).toEqual(expect.arrayContaining([]));
     done()
   });

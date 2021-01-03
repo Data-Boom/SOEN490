@@ -4,6 +4,7 @@ import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
 import { Datasetdatatype } from './Datasetdatatype';
+import { Accounts } from './Accounts';
 
 /**
  * The entity annotation indicates that a table is being created
@@ -71,6 +72,30 @@ export class Dataset {
 
     @Column({ nullable: true })
     comments: string
+
+    /*
+    * This ManyToMany snippet is used to complete the link between the 
+    * Dataset and Accounts tables. JoinTable is intentionally ommitted as this 
+    * side is the "independent" side of the relation.
+    * The 'account => account.datasets' line is added for use in query building
+    * for it defines the direction of the "link" with the Accounts table
+    * 
+    * Specifically this is being used to track the 'favorited' datasets of a user,
+    * in contrast to the previous relation
+    */
+    @ManyToMany(type => Accounts, account => account.datasets)
+    accounts: Accounts[];
+
+    /* 
+    * This particular ManyToOne relation is being used to track which account uploaded
+    * the dataset in question
+    */
+    @Column({ nullable: true })
+    uploaderId: number
+
+    @ManyToOne(type => Accounts)
+    @JoinColumn()
+    uploader?: Accounts
 
     @CreateDateColumn()
     created: Date
