@@ -17,3 +17,11 @@ export interface IJwtParams {
     account_id: number,
     firstName: string
 }
+
+export interface IUserDetails {
+    email: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: Date,
+    organizationName: string,
+}

@@ -102,6 +102,37 @@ describe('Authentication Controller', () => {
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
 
+
+    test('Valid Request to get UserDetails', async () => {
+        const expectedResponse = {
+            "account_email": "j.comkj",
+            "account_firstName": "Ace",
+            "account_lastName": "FireFist",
+            "account_dateOfBirth": "1980-01-01T00:00:00.000Z",
+            "account_organizationName": "Mugiwara"
+        }
+        mockRequest = {
+            query: {
+                email: 'j.comkj',
+            }
+        }
+        await authenticationController.createFetchUserDetailsRequest(mockRequest as Request, mockResponse as Response);
+        expect(mockResponse.status).toBeCalledWith(200);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+
+    test('Invalid Request to get UserDetails - Bad Email Error 400', async () => {
+        const expectedResponse = "Cannot fetch details for this email";
+        mockRequest = {
+            query: {
+                email: 'j.comksefsfsj',
+            }
+        }
+
+        await authenticationController.createFetchUserDetailsRequest(mockRequest as Request, mockResponse as Response);
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
     test('Valid Login Request', async () => {
         mockRequest = {
             query: {
