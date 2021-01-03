@@ -1,0 +1,758 @@
+{
+    "1": {
+        "authorid": 1, 
+        "pubid": "1"
+    }, 
+    "2": {
+        "authorid": 2, 
+        "pubid": "1"
+    }, 
+    "3": {
+        "authorid": 3, 
+        "pubid": "1"
+    }, 
+    "4": {
+        "authorid": 4, 
+        "pubid": "2"
+    }, 
+    "5": {
+        "authorid": 5, 
+        "pubid": "2"
+    }, 
+    "6": {
+        "authorid": 6, 
+        "pubid": "3"
+    }, 
+    "7": {
+        "authorid": 7, 
+        "pubid": "3"
+    }, 
+    "8": {
+        "authorid": 8, 
+        "pubid": "3"
+    }, 
+    "9": {
+        "authorid": 9, 
+        "pubid": "3"
+    }, 
+    "10": {
+        "authorid": 10, 
+        "pubid": "4"
+    }, 
+    "11": {
+        "authorid": 11, 
+        "pubid": "4"
+    }, 
+    "12": {
+        "authorid": 12, 
+        "pubid": "4"
+    }, 
+    "13": {
+        "authorid": 13, 
+        "pubid": "5"
+    }, 
+    "14": {
+        "authorid": 14, 
+        "pubid": "5"
+    }, 
+    "15": {
+        "authorid": 15, 
+        "pubid": "6"
+    }, 
+    "16": {
+        "authorid": 16, 
+        "pubid": "6"
+    }, 
+    "17": {
+        "authorid": 17, 
+        "pubid": "7"
+    }, 
+    "18": {
+        "authorid": 18, 
+        "pubid": "7"
+    }, 
+    "19": {
+        "authorid": 19, 
+        "pubid": "7"
+    }, 
+    "20": {
+        "authorid": 20, 
+        "pubid": "8"
+    }, 
+    "21": {
+        "authorid": 21, 
+        "pubid": "8"
+    }, 
+    "22": {
+        "authorid": 22, 
+        "pubid": "8"
+    }, 
+    "23": {
+        "authorid": 23, 
+        "pubid": "9"
+    }, 
+    "24": {
+        "authorid": 24, 
+        "pubid": "10"
+    }, 
+    "25": {
+        "authorid": 25, 
+        "pubid": "11"
+    }, 
+    "26": {
+        "authorid": 26, 
+        "pubid": "11"
+    }, 
+    "27": {
+        "authorid": 27, 
+        "pubid": "12"
+    }, 
+    "28": {
+        "authorid": 28, 
+        "pubid": "13"
+    }, 
+    "29": {
+        "authorid": 29, 
+        "pubid": "13"
+    }, 
+    "30": {
+        "authorid": 30, 
+        "pubid": "13"
+    }, 
+    "31": {
+        "authorid": 31, 
+        "pubid": "13"
+    }, 
+    "32": {
+        "authorid": 32, 
+        "pubid": "13"
+    }, 
+    "33": {
+        "authorid": 33, 
+        "pubid": "13"
+    }, 
+    "34": {
+        "authorid": 34, 
+        "pubid": "13"
+    }, 
+    "35": {
+        "authorid": 35, 
+        "pubid": "14"
+    }, 
+    "36": {
+        "authorid": 36, 
+        "pubid": "14"
+    }, 
+    "37": {
+        "authorid": 37, 
+        "pubid": "15"
+    }, 
+    "38": {
+        "authorid": 38, 
+        "pubid": "15"
+    }, 
+    "39": {
+        "authorid": 39, 
+        "pubid": "16"
+    }, 
+    "40": {
+        "authorid": 40, 
+        "pubid": "17"
+    }, 
+    "41": {
+        "authorid": 41, 
+        "pubid": "17"
+    }, 
+    "42": {
+        "authorid": 42, 
+        "pubid": "17"
+    }, 
+    "43": {
+        "authorid": 43, 
+        "pubid": "18"
+    }, 
+    "44": {
+        "authorid": 44, 
+        "pubid": "18"
+    }, 
+    "45": {
+        "authorid": 45, 
+        "pubid": "19"
+    }, 
+    "46": {
+        "authorid": 46, 
+        "pubid": "19"
+    }, 
+    "47": {
+        "authorid": 47, 
+        "pubid": "20"
+    }, 
+    "48": {
+        "authorid": 48, 
+        "pubid": "23"
+    }, 
+    "49": {
+        "authorid": 49, 
+        "pubid": "23"
+    }, 
+    "50": {
+        "authorid": 50, 
+        "pubid": "26"
+    }, 
+    "51": {
+        "authorid": 51, 
+        "pubid": "27"
+    }, 
+    "52": {
+        "authorid": 52, 
+        "pubid": "28"
+    }, 
+    "53": {
+        "authorid": 53, 
+        "pubid": "29"
+    }, 
+    "54": {
+        "authorid": 54, 
+        "pubid": "29"
+    }, 
+    "55": {
+        "authorid": 55, 
+        "pubid": "29"
+    }, 
+    "56": {
+        "authorid": 56, 
+        "pubid": "29"
+    }, 
+    "57": {
+        "authorid": 57, 
+        "pubid": "29"
+    }, 
+    "58": {
+        "authorid": 58, 
+        "pubid": "29"
+    }, 
+    "59": {
+        "authorid": 59, 
+        "pubid": "30"
+    }, 
+    "60": {
+        "authorid": 60, 
+        "pubid": "30"
+    }, 
+    "61": {
+        "authorid": 61, 
+        "pubid": "30"
+    }, 
+    "62": {
+        "authorid": 62, 
+        "pubid": "30"
+    }, 
+    "63": {
+        "authorid": 63, 
+        "pubid": "31"
+    }, 
+    "64": {
+        "authorid": 64, 
+        "pubid": "31"
+    }, 
+    "65": {
+        "authorid": 65, 
+        "pubid": "33"
+    }, 
+    "66": {
+        "authorid": 66, 
+        "pubid": "37"
+    }, 
+    "67": {
+        "authorid": 67, 
+        "pubid": "37"
+    }, 
+    "68": {
+        "authorid": 68, 
+        "pubid": "38"
+    }, 
+    "69": {
+        "authorid": 69, 
+        "pubid": "39"
+    }, 
+    "70": {
+        "authorid": 70, 
+        "pubid": "40"
+    }, 
+    "71": {
+        "authorid": 71, 
+        "pubid": "41"
+    }, 
+    "72": {
+        "authorid": 72, 
+        "pubid": "42"
+    }, 
+    "73": {
+        "authorid": 73, 
+        "pubid": "43"
+    }, 
+    "74": {
+        "authorid": 74, 
+        "pubid": "44"
+    }, 
+    "75": {
+        "authorid": 75, 
+        "pubid": "45"
+    }, 
+    "76": {
+        "authorid": 76, 
+        "pubid": "45"
+    }, 
+    "77": {
+        "authorid": 77, 
+        "pubid": "46"
+    }, 
+    "78": {
+        "authorid": 78, 
+        "pubid": "46"
+    }, 
+    "79": {
+        "authorid": 79, 
+        "pubid": "47"
+    }, 
+    "80": {
+        "authorid": 80, 
+        "pubid": "47"
+    }, 
+    "81": {
+        "authorid": 81, 
+        "pubid": "47"
+    }, 
+    "82": {
+        "authorid": 82, 
+        "pubid": "48"
+    }, 
+    "83": {
+        "authorid": 83, 
+        "pubid": "48"
+    }, 
+    "84": {
+        "authorid": 84, 
+        "pubid": "48"
+    }, 
+    "85": {
+        "authorid": 85, 
+        "pubid": "50"
+    }, 
+    "86": {
+        "authorid": 86, 
+        "pubid": "50"
+    }, 
+    "87": {
+        "authorid": 87, 
+        "pubid": "51"
+    }, 
+    "88": {
+        "authorid": 88, 
+        "pubid": "51"
+    }, 
+    "89": {
+        "authorid": 89, 
+        "pubid": "52"
+    }, 
+    "90": {
+        "authorid": 90, 
+        "pubid": "52"
+    }, 
+    "91": {
+        "authorid": 91, 
+        "pubid": "54"
+    }, 
+    "92": {
+        "authorid": 92, 
+        "pubid": "54"
+    }, 
+    "93": {
+        "authorid": 93, 
+        "pubid": "57"
+    }, 
+    "94": {
+        "authorid": 94, 
+        "pubid": "58"
+    }, 
+    "95": {
+        "authorid": 95, 
+        "pubid": "60"
+    }, 
+    "96": {
+        "authorid": 96, 
+        "pubid": "60"
+    }, 
+    "97": {
+        "authorid": 97, 
+        "pubid": "61"
+    }, 
+    "98": {
+        "authorid": 98, 
+        "pubid": "62"
+    }, 
+    "99": {
+        "authorid": 99, 
+        "pubid": "63"
+    }, 
+    "100": {
+        "authorid": 100, 
+        "pubid": "63"
+    }, 
+    "101": {
+        "authorid": 101, 
+        "pubid": "63"
+    }, 
+    "102": {
+        "authorid": 102, 
+        "pubid": "63"
+    }, 
+    "103": {
+        "authorid": 103, 
+        "pubid": "66"
+    }, 
+    "104": {
+        "authorid": 104, 
+        "pubid": "67"
+    }, 
+    "105": {
+        "authorid": 105, 
+        "pubid": "68"
+    }, 
+    "106": {
+        "authorid": 106, 
+        "pubid": "68"
+    }, 
+    "107": {
+        "authorid": 107, 
+        "pubid": "69"
+    }, 
+    "108": {
+        "authorid": 108, 
+        "pubid": "69"
+    }, 
+    "109": {
+        "authorid": 109, 
+        "pubid": "71"
+    }, 
+    "110": {
+        "authorid": 110, 
+        "pubid": "71"
+    }, 
+    "111": {
+        "authorid": 111, 
+        "pubid": "72"
+    }, 
+    "112": {
+        "authorid": 112, 
+        "pubid": "72"
+    }, 
+    "113": {
+        "authorid": 113, 
+        "pubid": "73"
+    }, 
+    "114": {
+        "authorid": 114, 
+        "pubid": "73"
+    }, 
+    "115": {
+        "authorid": 115, 
+        "pubid": "73"
+    }, 
+    "116": {
+        "authorid": 116, 
+        "pubid": "74"
+    }, 
+    "117": {
+        "authorid": 117, 
+        "pubid": "75"
+    }, 
+    "118": {
+        "authorid": 118, 
+        "pubid": "76"
+    }, 
+    "119": {
+        "authorid": 119, 
+        "pubid": "76"
+    }, 
+    "120": {
+        "authorid": 120, 
+        "pubid": "76"
+    }, 
+    "121": {
+        "authorid": 121, 
+        "pubid": "76"
+    }, 
+    "122": {
+        "authorid": 122, 
+        "pubid": "76"
+    }, 
+    "123": {
+        "authorid": 123, 
+        "pubid": "76"
+    }, 
+    "124": {
+        "authorid": 124, 
+        "pubid": "77"
+    }, 
+    "125": {
+        "authorid": 125, 
+        "pubid": "77"
+    }, 
+    "126": {
+        "authorid": 126, 
+        "pubid": "78"
+    }, 
+    "127": {
+        "authorid": 127, 
+        "pubid": "78"
+    }, 
+    "128": {
+        "authorid": 128, 
+        "pubid": "79"
+    }, 
+    "129": {
+        "authorid": 129, 
+        "pubid": "82"
+    }, 
+    "130": {
+        "authorid": 130, 
+        "pubid": "83"
+    }, 
+    "131": {
+        "authorid": 131, 
+        "pubid": "84"
+    }, 
+    "132": {
+        "authorid": 132, 
+        "pubid": "84"
+    }, 
+    "133": {
+        "authorid": 133, 
+        "pubid": "84"
+    }, 
+    "134": {
+        "authorid": 134, 
+        "pubid": "84"
+    }, 
+    "135": {
+        "authorid": 135, 
+        "pubid": "85"
+    }, 
+    "136": {
+        "authorid": 136, 
+        "pubid": "85"
+    }, 
+    "137": {
+        "authorid": 137, 
+        "pubid": "85"
+    }, 
+    "138": {
+        "authorid": 138, 
+        "pubid": "86"
+    }, 
+    "139": {
+        "authorid": 139, 
+        "pubid": "87"
+    }, 
+    "140": {
+        "authorid": 140, 
+        "pubid": "88"
+    }, 
+    "141": {
+        "authorid": 141, 
+        "pubid": "88"
+    }, 
+    "142": {
+        "authorid": 142, 
+        "pubid": "88"
+    }, 
+    "143": {
+        "authorid": 143, 
+        "pubid": "92"
+    }, 
+    "144": {
+        "authorid": 144, 
+        "pubid": "92"
+    }, 
+    "145": {
+        "authorid": 145, 
+        "pubid": "92"
+    }, 
+    "146": {
+        "authorid": 146, 
+        "pubid": "92"
+    }, 
+    "147": {
+        "authorid": 147, 
+        "pubid": "93"
+    }, 
+    "148": {
+        "authorid": 148, 
+        "pubid": "95"
+    }, 
+    "149": {
+        "authorid": 149, 
+        "pubid": "95"
+    }, 
+    "150": {
+        "authorid": 150, 
+        "pubid": "95"
+    }, 
+    "151": {
+        "authorid": 151, 
+        "pubid": "97"
+    }, 
+    "152": {
+        "authorid": 152, 
+        "pubid": "97"
+    }, 
+    "153": {
+        "authorid": 153, 
+        "pubid": "97"
+    }, 
+    "154": {
+        "authorid": 154, 
+        "pubid": "97"
+    }, 
+    "155": {
+        "authorid": 155, 
+        "pubid": "98"
+    }, 
+    "156": {
+        "authorid": 156, 
+        "pubid": "99"
+    }, 
+    "157": {
+        "authorid": 157, 
+        "pubid": "100"
+    }, 
+    "158": {
+        "authorid": 158, 
+        "pubid": "105"
+    }, 
+    "159": {
+        "authorid": 159, 
+        "pubid": "105"
+    }, 
+    "160": {
+        "authorid": 160, 
+        "pubid": "107"
+    }, 
+    "161": {
+        "authorid": 161, 
+        "pubid": "110"
+    }, 
+    "162": {
+        "authorid": 162, 
+        "pubid": "110"
+    }, 
+    "163": {
+        "authorid": 163, 
+        "pubid": "110"
+    }, 
+    "164": {
+        "authorid": 164, 
+        "pubid": "111"
+    }, 
+    "165": {
+        "authorid": 165, 
+        "pubid": "111"
+    }, 
+    "166": {
+        "authorid": 166, 
+        "pubid": "112"
+    }, 
+    "167": {
+        "authorid": 167, 
+        "pubid": "115"
+    }, 
+    "168": {
+        "authorid": 168, 
+        "pubid": "115"
+    }, 
+    "169": {
+        "authorid": 169, 
+        "pubid": "115"
+    }, 
+    "170": {
+        "authorid": 170, 
+        "pubid": "115"
+    }, 
+    "171": {
+        "authorid": 171, 
+        "pubid": "116"
+    }, 
+    "172": {
+        "authorid": 172, 
+        "pubid": "116"
+    }, 
+    "173": {
+        "authorid": 173, 
+        "pubid": "116"
+    }, 
+    "174": {
+        "authorid": 174, 
+        "pubid": "117"
+    }, 
+    "175": {
+        "authorid": 175, 
+        "pubid": "117"
+    }, 
+    "176": {
+        "authorid": 176, 
+        "pubid": "118"
+    }, 
+    "177": {
+        "authorid": 177, 
+        "pubid": "119"
+    }, 
+    "178": {
+        "authorid": 178, 
+        "pubid": "121"
+    }, 
+    "179": {
+        "authorid": 179, 
+        "pubid": "123"
+    }, 
+    "180": {
+        "authorid": 180, 
+        "pubid": "124"
+    }, 
+    "181": {
+        "authorid": 181, 
+        "pubid": "124"
+    }, 
+    "182": {
+        "authorid": 182, 
+        "pubid": "125"
+    }, 
+    "183": {
+        "authorid": 183, 
+        "pubid": "125"
+    }, 
+    "184": {
+        "authorid": 184, 
+        "pubid": "128"
+    }, 
+    "185": {
+        "authorid": 185, 
+        "pubid": "128"
+    }, 
+    "186": {
+        "authorid": 186, 
+        "pubid": "129"
+    }, 
+    "187": {
+        "authorid": 187, 
+        "pubid": "129"
+    }, 
+    "188": {
+        "authorid": 188, 
+        "pubid": "130"
+    }, 
+    "189": {
+        "authorid": 189, 
+        "pubid": "130"
+    }
+}

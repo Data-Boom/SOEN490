@@ -1,0 +1,647 @@
+{
+    "130": {
+        "details": "Shock Waves, 4(6):331-337, ", 
+        "name": "Direct initiation of detonation in cryogenic gaseous H_2-O_2 mixtures", 
+        "year": "1995"
+    }, 
+    "24": {
+        "details": "Combust. Flame, 35(1):27-40", 
+        "name": "Concentration limits to unconfined detonation of ethane-air", 
+        "year": "1979"
+    }, 
+    "25": {
+        "details": "Combust. Flame, 34(3):327--330", 
+        "name": "Susceptibility of methane-ethane mixtures to gaseous detonation in air", 
+        "year": "1979"
+    }, 
+    "26": {
+        "details": "J. Phys. D, 9(13):1991-2000", 
+        "name": "A study of spherical detonation in mixtures of methane and oxygen diluted by nitrogen", 
+        "year": "1976"
+    }, 
+    "27": {
+        "details": "Combust. Flame, 45(1):7-22", 
+        "name": "Detonation cell structures in fuel/air mixtures", 
+        "year": "1982"
+    }, 
+    "20": {
+        "details": "Combust. Explos. Shock Waves (USSR), 13(5):618-621", 
+        "name": "Detonation limits of hydrocarbon-air mixtures in tubes", 
+        "year": "1977"
+    }, 
+    "21": {
+        "details": "Trans. Inst. Chem. Eng., 57(4):219-227", 
+        "name": "Concentration limits to the initiation of unconfined detonation in fuel/air mixtures", 
+        "year": "1979"
+    }, 
+    "22": {
+        "details": "In Fuel-Air Explosions, pages 139-155. University of Waterloo Press", 
+        "name": "Towards an understanding of the detonability of vapour clouds", 
+        "year": "1982"
+    }, 
+    "23": {
+        "details": "Acta Astron., 5(11):997-1008", 
+        "name": "Initiation of spherical detonation in hydrocarbon/air mixtures", 
+        "year": "1978"
+    }, 
+    "28": {
+        "details": "Combust. Flame, 21(3):383-385", 
+        "name": "Spherical detonations in gas-oxygen mixtures", 
+        "year": "1973"
+    }, 
+    "29": {
+        "details": "Combust. Flame, 99(2):212-220", 
+        "name": "Detonation cell size measurements and predictions in hydrogen-air-steam mixtures at elevated temperatures", 
+        "year": "1994"
+    }, 
+    "4": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 153, pages 203-228", 
+        "name": "Cylindrical detonations in methane-oxygen-nitrogen mixtures", 
+        "year": "1993"
+    }, 
+    "8": {
+        "details": "In 13th Symp. Int. Combust. Proc., pages 1097-1110", 
+        "name": "Initiation criteria for diverging gaseous detonations", 
+        "year": "1971"
+    }, 
+    "119": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 104-117", 
+        "name": "Cellular structure in detonation of acetylene-oxygen mixtures", 
+        "year": "1984"
+    }, 
+    "120": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 114, pages 186-200", 
+        "name": "Role of an inhibitor on the onset of gas detonations in acetylene mixtures", 
+        "year": "1988"
+    }, 
+    "121": {
+        "details": "Combust. Explos. Shock Waves (USSR), 18(2):245-249", 
+        "name": "Geometric limits of gas detonation propagation", 
+        "year": "1982"
+    }, 
+    "122": {
+        "details": "Combust. Explos. Shock Waves (USSR), 19(1):115-123", 
+        "name": "Critical initiation of a gas detonation", 
+        "year": "1983"
+    }, 
+    "123": {
+        "details": "Combust. Explos. Shock Waves (USSR), 16(6):579-585", 
+        "name": "Critical conditions for gas detonation in sharply expanding channels", 
+        "year": "1980"
+    }, 
+    "124": {
+        "details": "Combust. Explos. Shock Waves (USSR), 13(3):338-341", 
+        "name": "Analysis of the cell parameters of a multifront gas detonation", 
+        "year": "1977"
+    }, 
+    "125": {
+        "details": "Technical Report FTD-MT-64-527 (AD 633821), Wright-Patterson AFB", 
+        "name": "The structure of a detonation front in gases", 
+        "year": "1966"
+    }, 
+    "126": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 151-174", 
+        "name": "Chemical kinetics of propane oxidation in gaseous detonations", 
+        "year": "1984"
+    }, 
+    "127": {
+        "details": "In 19th Symp. Int. Combust. Proc., pages 615-623", 
+        "name": "Chemical kinetic prediction of critical parameters in gaseous detonation", 
+        "year": "1982"
+    }, 
+    "128": {
+        "details": "In 18th Symp. Int. Combust. Proc., pages 1651-1660", 
+        "name": "Detonation of methane-air mixtures", 
+        "year": "1981"
+    }, 
+    "129": {
+        "details": "Sov. Phys. Tech. Phys., 1:1689-1713", 
+        "name": "An experimental investigation of spherical detonation in gases", 
+        "year": "1956"
+    }, 
+    "118": {
+        "details": "Combust. Sci. Technol., 21(1):75-78", 
+        "name": "Blast wave initiation energy for the detonation of methane-ethane-air mixtures", 
+        "year": "1979"
+    }, 
+    "59": {
+        "details": "Sov. Phys. Tech. Phys., 3(9):1875-1879", 
+        "name": "Investigation of the pressure at the end of a tube in connection with rapid nonstationary combustion", 
+        "year": "1958"
+    }, 
+    "58": {
+        "details": "Sov. Phys. Tech. Phys., 3(9):1904-1916", 
+        "name": "Detonation of methane-air mixtures and the detonation limits of hydrocarbon-air mixtures in a large-diameter pipe", 
+        "year": "1958"
+    }, 
+    "55": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 114, pages 32-44", 
+        "name": "Detonation parameters for the hydrogen-chlorine system", 
+        "year": "1988"
+    }, 
+    "54": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 23-37", 
+        "name": "Measurement of cell size in hydrocarbon-air mixtures and predictions of critical tube diameter, critical initiation energy, and detonability limits", 
+        "year": "1984"
+    }, 
+    "57": {
+        "details": "Combust. Flame, 115:424-436", 
+        "name": "Flame acceleration and transition to detonation in benzene-air mixtures", 
+        "year": "1998"
+    }, 
+    "56": {
+        "details": "Combust. Flame, 48(1):63-83", 
+        "name": "The critical tube diameter for detonation failure in hydrocarbon-air mixtures", 
+        "year": "1982"
+    }, 
+    "51": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 153, pages 132-143", 
+        "name": "Experimental study of the fine structure in spin detonations", 
+        "year": "1993"
+    }, 
+    "50": {
+        "details": "Technical report, Safety Information Centre, Institution for Safety of High Pressure Gas Engineering, Tokyo, Japan", 
+        "name": "A report on the experimental results of explosions and fires of liquid ethylene facilities", 
+        "year": "1975"
+    }, 
+    "53": {
+        "details": "PhD thesis, California Institute of Technology", 
+        "name": "Gaseous Detonation Initiation and Stabilization by Hypervelocity Projectiles", 
+        "year": "1999"
+    }, 
+    "52": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 38-54", 
+        "name": "Power-energy relations for the direct initiation of gaseous detonations", 
+        "year": "1984"
+    }, 
+    "115": {
+        "details": "Astronaut. Acta, 15(5):377-386", 
+        "name": "On the dual property and the limit of hydrogen-oxygen free detonation waves", 
+        "year": "1970"
+    }, 
+    "114": {
+        "details": "Combust. Flame, 84(3):376-390", 
+        "name": "Gaseous hydrocarbon-air detonations", 
+        "year": "1991"
+    }, 
+    "88": {
+        "details": "In 7th Symp. Mil. App. Blast Sim., pages 6.3(b)1-6.3(b)28", 
+        "name": "Direct initiation of detonation in unconfined ethylene-air mixtures-influence of bag size", 
+        "year": "1981"
+    }, 
+    "89": {
+        "details": "Combust. Flame, 52(3):269-289", 
+        "name": "On the transformation of planar detonations to cylindrical detonation", 
+        "year": "1983"
+    }, 
+    "111": {
+        "details": "AIAA J., 7(2):323-328", 
+        "name": "Transverse waves in detonations: I. spacings in the hydrogen-oxygen system", 
+        "year": "1969"
+    }, 
+    "110": {
+        "details": "In 11th Symp. Int. Combust. Proc., pages 683-692", 
+        "name": "Transverse wave structure in detonations", 
+        "year": "1967"
+    }, 
+    "113": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 106, pages 205-219", 
+        "name": "Detonation cell size measurements in hydrogen-air-steam mixtures", 
+        "year": "1986"
+    }, 
+    "112": {
+        "details": "Technical Report NUREG/CR-4905, SAND85-1263, Sandia National Laboratories", 
+        "name": "Detonability of H_2-air-diluent mixtures", 
+        "year": "1987"
+    }, 
+    "82": {
+        "details": "J. Hazard M., 33(2):159-192", 
+        "name": "Transition to detonation in fuel air explosive clouds", 
+        "year": "1993"
+    }, 
+    "83": {
+        "details": "In 18th Symp. Int. Combust. Proc., pages 1615-1622", 
+        "name": "The influence of confinement on the propagation of detonations near the detonability limits", 
+        "year": "1981"
+    }, 
+    "80": {
+        "details": "17th Symp. Int. Combust. Proc., pages 1269-1280", 
+        "name": "On the measure of the relative detonation hazards of gaseous fuel-oxygen and air mixtures", 
+        "year": "1979"
+    }, 
+    "81": {
+        "details": "Combust. Explos. Shock Waves (USSR), 19(4):531-535", 
+        "name": "Certain critical phenomena in detonation associated with momentum losses", 
+        "year": "1983"
+    }, 
+    "86": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 106, pages 220-243", 
+        "name": "Influence of cellular regularity on the behavior of gaseous detonations", 
+        "year": "1986"
+    }, 
+    "87": {
+        "details": "In 20th Symp. Int. Combust. Proc., pages 1717-1726", 
+        "name": "The influence of diluents and inhibitors on detonations", 
+        "year": "1985"
+    }, 
+    "84": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 55-79", 
+        "name": "Detonation length scales for fuel-air explosives", 
+        "year": "1984"
+    }, 
+    "85": {
+        "details": "In 19th Symp. Int. Combust. Proc., pages 635-644", 
+        "name": "Diffraction of detonation from tubes into a large fuel-air explosive cloud", 
+        "year": "1982"
+    }, 
+    "3": {
+        "details": "Technical Report FM97-3, Explosion Dynamics Laboratory, California Institute of Technology", 
+        "name": "Detonations in H_2-N_2O-CH_4-NH_3-O_2-N_2 mixtures", 
+        "year": "1997"
+    }, 
+    "7": {
+        "details": "Combust. Flame, 39(3):287-300", 
+        "name": "Initiation of spherical detonation in hydrogen-air", 
+        "year": "1980"
+    }, 
+    "108": {
+        "details": "AIAA J., 7(3):492-496", 
+        "name": "Transverse waves in detonations: II. structure and spacing in H_2-O_2, C_2H_2-O_2, C_2H_4-O_2 and CH_4-O_2 systems", 
+        "year": "1969"
+    }, 
+    "109": {
+        "details": "Astronaut. Acta, 15(5):345-357", 
+        "name": "Multi-dimensional detonation wave structure", 
+        "year": "1970"
+    }, 
+    "102": {
+        "details": "In Fuel-Air Explosions, pages 553-564. University of Waterloo Press", 
+        "name": "Transmission of detonation through tubes and orifices", 
+        "year": "1982"
+    }, 
+    "103": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 106, pages 294-320", 
+        "name": "Chemical kinetics and cellular structure of detonations in hydrogen sulfide and air", 
+        "year": "1986"
+    }, 
+    "100": {
+        "details": "Combust. Flame, 6(3):157-162", 
+        "name": "Investigation of the dependence of the limits of detonability on tube diameter", 
+        "year": "1962"
+    }, 
+    "101": {
+        "details": "Ber. Bunsenges. Phys. Chem., 69(6):503-513", 
+        "name": "Einflus des rohrdurchmessers auf die ausbreitung einer detonation in explosiblen gasgemischen teil i: Inertgas - und rohrdurchmessereinflus auf die detonationsgrenzen einiger explosibler gasgemische", 
+        "year": "1965"
+    }, 
+    "106": {
+        "details": "Combust. Flame, 83(3):353-364", 
+        "name": "The influence of initial pressure and temperature on hydrogen-air-diluent detonations", 
+        "year": "1991"
+    }, 
+    "107": {
+        "details": "Astronaut. Acta, 14(5):539-548", 
+        "name": "The nature of transverse waves in detonations", 
+        "year": "1969"
+    }, 
+    "104": {
+        "details": "In 21st Symp. Int. Combust. Proc., pages 1649-1658", 
+        "name": "Analyses of the cellular structure of detonations", 
+        "year": "1988"
+    }, 
+    "105": {
+        "details": "Technical Report NUREG/CR-5525, SAND89-2398, Sandia National Laboratories", 
+        "name": "Hydrogen-air-diluent detonation study for nuclear reactor safety analyses", 
+        "year": "1991"
+    }, 
+    "38": {
+        "details": "Prog. Astronaut. Aeronaut., 106:131-143", 
+        "name": "Critical diameter of diffraction for strong plane detonations", 
+        "year": "1986"
+    }, 
+    "33": {
+        "details": "These 3e cycle, Universite de Poitiers", 
+        "name": "Celerites de propagation des detonations spheriques divergentes dans les melanges gazeux", 
+        "year": "1973"
+    }, 
+    "32": {
+        "details": "Sov. Phys. Tech. Phys., 5(4):419-431", 
+        "name": "Structure of gaseous detonation in tubes", 
+        "year": "1960"
+    }, 
+    "31": {
+        "details": "Dokl. Akad. Nauk SSSR, 125(1):110-113", 
+        "name": "Pulsating and spinning detonation of gaseous mixtures in tubes", 
+        "year": "1959"
+    }, 
+    "30": {
+        "details": "Technical Report NUREG/CR-6391, BNL-NUREG-52482, Brookhaven National Laboratory", 
+        "name": "Detonation cell size measurements in high-temperature hydrogen-air-steam mixtures at the bnl high-temperature combustion facility", 
+        "year": "1997"
+    }, 
+    "37": {
+        "details": "Prog. Astronaut. Aeronaut., 153:347-359", 
+        "name": "Failure of the classical dynamic parameters relationships in highly regular cellular detonation systems", 
+        "year": "1993"
+    }, 
+    "36": {
+        "details": "PhD thesis, Universite de Poitiers", 
+        "name": "Aspects stationnaires et transitoires de la detonation dans les gaz: relation avec la structure cellulaire du front", 
+        "year": "1990"
+    }, 
+    "35": {
+        "details": "Prog. Astronaut. Aeronaut., 114:170-185", 
+        "name": "Transmission of overdriven plane detonations: Critical diameter as a function of cell regularity and size", 
+        "year": "1988"
+    }, 
+    "34": {
+        "details": "Prog. Astronaut. Aeronaut., 106:166-180", 
+        "name": "Correlation between shock flame predetonation zone size and cell spacing in critically initiated spherical detonations", 
+        "year": "1986"
+    }, 
+    "60": {
+        "details": "Combust. Explos. Shock Waves (USSR), 1(2):22-34", 
+        "name": "Investigation of spherical detonation of gas mixtures", 
+        "year": "1965"
+    }, 
+    "61": {
+        "details": "Combust. Flame, 80(2):157-169", 
+        "name": "Detonation cell widths in hydrogen-oxygen-diluent mixtures", 
+        "year": "1990"
+    }, 
+    "62": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 153, pages 381-396", 
+        "name": "Propagation and extinction of detonation waves in tube bundles", 
+        "year": "1993"
+    }, 
+    "63": {
+        "details": "Combust. Flame, 27(3):331-340", 
+        "name": "On the concept of the critical size of a detonation kernel", 
+        "year": "1976"
+    }, 
+    "64": {
+        "details": "Annu. Rev. Phys. Chem., 28:75-104", 
+        "name": "Initiation of gaseous detonation", 
+        "year": "1977"
+    }, 
+    "65": {
+        "details": "Annu. Rev. Fluid Mech., 16:311-336", 
+        "name": "Dynamic parameters of gaseous detonations", 
+        "year": "1984"
+    }, 
+    "66": {
+        "details": "Combust. Flame, 56(2):227-239", 
+        "name": "High speed turbulent deflagrations and transition to detonation in H_2-Air mixtures", 
+        "year": "1984"
+    }, 
+    "67": {
+        "details": "Phys. Fluids, 9(1):221-222", 
+        "name": "Direct initiation of cylindrical gaseous detonations", 
+        "year": "1966"
+    }, 
+    "68": {
+        "details": "Combust. Flame, 28(1):61-66", 
+        "name": "A comparison of the critical energies for direct initiation of spherical detonation in acetylene-oxygen mixtures", 
+        "year": "1977"
+    }, 
+    "69": {
+        "details": "Astronaut. Acta, 14(5):565-584", 
+        "name": "Current views on gaseous detonation", 
+        "year": "1969"
+    }, 
+    "2": {
+        "details": "Combust. Explos. Shock Waves (USSR), 30(1):91-100", 
+        "name": "Computation of the detonation limits in gaseous hydrogen-containing mixtures", 
+        "year": "1994"
+    }, 
+    "6": {
+        "details": "Z. Phys. Chem. Neue Folge, 175(2):129-143", 
+        "name": "The structure of gaseous detonations as revealed by laser-induced fluorescence of the OH-radical", 
+        "year": "1992"
+    }, 
+    "99": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 133, pages 37-55", 
+        "name": "Detonation of cryogenic gaseous hydrogen-oxygen mixtures", 
+        "year": "1991"
+    }, 
+    "98": {
+        "details": "Technical Report FM-98-5, Graduate Aeronautical Laboratories, California Institute of Technology", 
+        "name": "Detonation cell width measurements for H_2-N_2O-N_2-O_2-CH_4-NH_3 mixtures", 
+        "year": "1998"
+    }, 
+    "91": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 106, pages 329-355", 
+        "name": "The influence of physical boundaries on gaseous detonation waves", 
+        "year": "1986"
+    }, 
+    "90": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 80-103", 
+        "name": "The influence of yielding confinement on large-scale ethylene-air detonations", 
+        "year": "1984"
+    }, 
+    "93": {
+        "details": "Combust. Sci. Technol., 7(2):57-63", 
+        "name": "A simple model for the detonation limits of gas mixtures", 
+        "year": "1973"
+    }, 
+    "92": {
+        "details": "In 17th Symp. Int. Combust. Proc., pages 1223-1234", 
+        "name": "Detonability of unconfined natural gas-air clouds", 
+        "year": "1979"
+    }, 
+    "95": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 3-22", 
+        "name": "Direct initiation of planar detonation waves in methane/oxygen/nitrogen mixtures", 
+        "year": "1984"
+    }, 
+    "94": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 133, pages 77-88", 
+        "name": "Influence of tetrafluoromethane on hydrogen-oxygen-argon detonations", 
+        "year": "1991"
+    }, 
+    "97": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 114, pages 45-63", 
+        "name": "Hydrazine vapor detonations", 
+        "year": "1988"
+    }, 
+    "96": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 133, pages 63-76", 
+        "name": "Correlation between chemical kinetics and detonation structure for gaseous explosive systems", 
+        "year": "1991"
+    }, 
+    "11": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 118-129", 
+        "name": "The influence of initial pressure on critical diameters of gaseous explosive mixtures", 
+        "year": "1984"
+    }, 
+    "10": {
+        "details": "PhD thesis, Universite de Poitiers", 
+        "name": "Contribution a l'etude de la detonation des melanges explosifs gazeux a pression initiale elevee", 
+        "year": "1985"
+    }, 
+    "13": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 133, pages 19-36", 
+        "name": "Detonability of hydrocabon fuels in air", 
+        "year": "1991"
+    }, 
+    "12": {
+        "details": "Combust. Flame, 64(1):113-123", 
+        "name": "Measurement of cell lengths in the detonation front of hydrocarbon oxygen and nitrogen mixtures at elevated initial pressures", 
+        "year": "1986"
+    }, 
+    "15": {
+        "details": "Combust. Flame, 15(1):83-84", 
+        "name": "Detonation limits of unconfined hydrocarbon-air mixtures", 
+        "year": "1970"
+    }, 
+    "14": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 106, pages 181-202", 
+        "name": "Critical charge for the direct initiation of detonation in gaseous fuel-air mixtures", 
+        "year": "1986"
+    }, 
+    "17": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 133, pages 118-132", 
+        "name": "Detonation of unconfined and semiconfined charges of gaseous mixtures", 
+        "year": "1991"
+    }, 
+    "16": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 546-555", 
+        "name": "Large-scale experiments on the transmission of fuel-air detonations from two-dimensional channels", 
+        "year": "1984"
+    }, 
+    "19": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 153, pages 312-323", 
+        "name": "Effect of flame inhibitors on detonation characteristics of fuel-air mixtures", 
+        "year": "1993"
+    }, 
+    "18": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 133, pages 142-155", 
+        "name": "Critical energy of direct detonation initiation in gaseous mixtures", 
+        "year": "1991"
+    }, 
+    "117": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 75, pages 370-384", 
+        "name": "Effects of cellular structure on the behaviour of gaseous detonation waves under transient conditions", 
+        "year": "1981"
+    }, 
+    "116": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 523-545", 
+        "name": "Initiation of unconfined gaseous detonation by diffraction of a detonation front emerging from a pipe", 
+        "year": "1984"
+    }, 
+    "48": {
+        "details": "In 19th Symp. Int. Combust. Proc., pages 583-590", 
+        "name": "Hydrogen-air detonations", 
+        "year": "1982"
+    }, 
+    "49": {
+        "details": "Technical Report NUREG/CR-4961, SAND87-7128, Sandia National Laboratories/McGill University", 
+        "name": "A summary of hydrogen-air detonation experiments", 
+        "year": "1989"
+    }, 
+    "46": {
+        "details": "AIAA J., 12(12):1703-1708", 
+        "name": "Blast initiation and propagation of cylindrical detonations in MAPP-Air mixtures", 
+        "year": "1974"
+    }, 
+    "47": {
+        "details": "Ber. Bunsenges. Phys. Chem., 70(2):143-148", 
+        "name": "Einflus des rohrdurchmessers auf die ausbreitung einer detonation in explosiblen gasgemischen teil ii: Einflus des ausgangsdruckes und des rohrdurchmessers auf die detonationsgrenzen der systeme CH_4-O_2-N_2 und CH_4-O_2-Ar", 
+        "year": "1966"
+    }, 
+    "44": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 94, pages 130-150", 
+        "name": "\"Galloping\" gas detonations in the spherical mode", 
+        "year": "1984"
+    }, 
+    "45": {
+        "details": "In 9th Symp. Int. Combust. Proc., pages 275-281", 
+        "name": "Spherical detonations of acetylene-oxygen-nitrogen mixtures as a function of nature and strength of initiation", 
+        "year": "1962"
+    }, 
+    "42": {
+        "details": "J. Phys. D, 11(13):2103-2117", 
+        "name": "The quasi-steady regime in critically initiated detonation waves", 
+        "year": "1978"
+    }, 
+    "43": {
+        "details": "Combust. Flame, 55(2):237-243", 
+        "name": "The susceptibility of propene-propane/air mixtures to detonation", 
+        "year": "1984"
+    }, 
+    "40": {
+        "details": "In 12th Symp. Int. Combust. Proc., pages 819-828", 
+        "name": "A survey of recent work on the structure of detonation waves", 
+        "year": "1969"
+    }, 
+    "41": {
+        "details": "Acta Astron., 3(1):117-130", 
+        "name": "An experimental investigation of the direct initiation of spherical detonations", 
+        "year": "1976"
+    }, 
+    "1": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 153, pages 162-181", 
+        "name": "Oxidation of gaseous unsymmetrical dimethylhydrazine at high temperatures and detonation of UDMH/O_2 mixtures", 
+        "year": "1991"
+    }, 
+    "5": {
+        "details": "In 24th Symp. Int. Combust. Proc., pages 1853-1860", 
+        "name": "Measurements of normal detonation wave structure using rayleigh imaging", 
+        "year": "1992"
+    }, 
+    "9": {
+        "details": "Phys. Fluids, 17(8):1547-1553", 
+        "name": "Predicted spacings in hydrogen-oxygen-argon detonations", 
+        "year": "1974"
+    }, 
+    "77": {
+        "details": "In 25th Symp. Int. Combust. Proc., pages 65-71", 
+        "name": "Critical diameter for the transmission of a detonation wave into a porous medium", 
+        "year": "1994"
+    }, 
+    "76": {
+        "details": "Combust. Explos. Shock Waves (USSR), 19(5):548-550", 
+        "name": "Combustion and detonation of hydrogen-air mixtures in free spaces", 
+        "year": "1983"
+    }, 
+    "75": {
+        "details": "AIAA J., 1(8):1915-1918", 
+        "name": "Effect of additives on formation of spherical detonation waves in hydrogen-oxygen-mixtures", 
+        "year": "1963"
+    }, 
+    "74": {
+        "details": "Combust. Flame, 56(2):215-225", 
+        "name": "Effect of geometry on the transmission of detonation through an orifice", 
+        "year": "1984"
+    }, 
+    "73": {
+        "details": "In 9th Symp. Int. Combust. Proc., pages 282-286", 
+        "name": "Direct electrical initiation of freely expanding gaseous detonation waves", 
+        "year": "1962"
+    }, 
+    "72": {
+        "details": "In 15th Symp. Int. Combust. Proc., pages 79-86", 
+        "name": "The role of chemical kinetics on structure of detonation waves", 
+        "year": "1975"
+    }, 
+    "71": {
+        "details": "In Prog. Astronaut. Aeronaut., volume 153, pages 144-161", 
+        "name": "Influence of fluorocarbons on H_2-O_2-Ar detonation: Experiments and modeling", 
+        "year": "1993"
+    }, 
+    "70": {
+        "details": "In Fuel-Air Explosions, pages 157-187. University of Waterloo Press", 
+        "name": "The link between cell size, critical tube diameter, initiation energy and detonability limits", 
+        "year": "1982"
+    }, 
+    "79": {
+        "details": "Combust. Explos. Shock Waves (USSR), 10(1):89-95", 
+        "name": "Measurement of inhomogeneities of a detonation front in gas mixtures at elevated pressures", 
+        "year": "1974"
+    }, 
+    "78": {
+        "details": "Combust. Explos. Shock Waves (USSR), 9(5):614-620", 
+        "name": "The stability of detonation shock waves with a spinning configuration", 
+        "year": "1973"
+    }
+}
