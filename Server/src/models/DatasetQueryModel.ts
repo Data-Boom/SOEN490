@@ -155,13 +155,13 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getFavoritedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
+    async getSavedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
 
-        let materialDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
             .innerJoin('dataset.accounts', 'account')
             .where('account.id = :idRef', { idRef: id })
             .getRawMany();
-        return materialDatasetData;
+        return idDatasetData;
     }
 
     /**

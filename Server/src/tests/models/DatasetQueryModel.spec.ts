@@ -73,4 +73,29 @@ describe('data service test', () => {
         expect(id.dataset[0]).toBeUndefined()
         done()
     });
+
+    test('Feeds account ID of 1 and expects to see a data set ID of 1 returned', async done => {
+        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser(1)
+        expect(arrayOfData[0].dataset_id).toEqual(1);
+        done()
+    });
+
+    test('Feeds account ID of 1 and expects to see two data sets IDs returned, one being 1 and another being 2', async done => {
+        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser(1)
+        expect(arrayOfData[0].dataset_id).toEqual(2);
+        expect(arrayOfData[1].dataset_id).toEqual(1);
+        done()
+    });
+
+    test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
+        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser(-1)
+        expect(arrayOfData).toEqual(expect.arrayContaining([]));
+        done()
+    });
+
+    test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
+        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser(-1)
+        expect(arrayOfData).toEqual(expect.arrayContaining([]));
+        done()
+    });
 })

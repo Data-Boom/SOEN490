@@ -195,7 +195,7 @@ describe('data service test', () => {
   });
 
   test('Feeds account ID of 1 and expects to see two data sets returned, one with ID of 1 and another ID being 2', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoritedDatasets(1)
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(1)
     expect(arrayOfData[0].dataset[0].dataset_id).toEqual(2);
     expect(arrayOfData[1].dataset[0].dataset_id).toEqual(1);
     done()
@@ -208,7 +208,7 @@ describe('data service test', () => {
   });
 
   test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoritedDatasets(-1)
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(-1)
     expect(arrayOfData).toEqual(expect.arrayContaining([]));
     done()
   });

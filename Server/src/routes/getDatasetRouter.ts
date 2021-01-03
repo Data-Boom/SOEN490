@@ -10,12 +10,12 @@ import { getDataController } from '../controllers/getDatasetController';
 let router = Router();
 let getDataControllerObject = new getDataController();
 
-router.get('/dataset/uploadedBy/:uploadedBy', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestForUserUploads(request, response);
+router.get('/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
+    getDataControllerObject.createRequestForUserUploadedDatasets(request, response);
 });
 
-router.get('/dataset/favoritesOf/:favoritesOf', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestForUserFavorites(request, response);
+router.get('/dataset/userSavedDatsets/:userSavedDatsets', (request: Request, response: Response) => {
+    getDataControllerObject.createRequestForUserSavedDatsets(request, response);
 });
 
 router.get('/dataset*', (request: Request, response: Response) => {

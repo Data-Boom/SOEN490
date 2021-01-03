@@ -203,8 +203,8 @@ export class retrieveData {
      * @param userReceived
      * Account ID: number
      */
-    async getUserFavoritedDatasets(userReceived: number) {
-        let rawData = await this.dataQuery.getFavoritedDatasetIDOfUser(userReceived);
+    async getUserSavedDatasets(userReceived: number) {
+        let rawData = await this.dataQuery.getSavedDatasetIDOfUser(userReceived);
         let setOfData = await this.getDatasetsFromRawData(rawData);
         return setOfData;
     }

@@ -47,8 +47,8 @@ export class getDataController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForUserUploads(request: Request, response: Response) {
-        let requestParam = request.params.uploadedBy;
+    async createRequestForUserUploadedDatasets(request: Request, response: Response) {
+        let requestParam = request.params.userUploadedDatasets;
         let userId: number = +requestParam;
         if (isNaN(userId)) {
             response.status(400).send("Invalid search params entered");
@@ -66,7 +66,7 @@ export class getDataController {
 
     /**
      * This controller will take a request, grab the user ID, and if it a real number will then process the request,
-     * send it to the getDataService to acquire an array of data sets that were favorited by this user ID, and
+     * send it to the getDataService to acquire an array of data sets that were saved by this user ID, and
      * then return a response with the array of data sets. If the request is invalid, or some other problem arrises, 
      * it will throw an error.
      * 
@@ -75,8 +75,8 @@ export class getDataController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForUserFavorites(request: Request, response: Response) {
-        let requestParam = request.params.favoritesOf;
+    async createRequestForUserSavedDatsets(request: Request, response: Response) {
+        let requestParam = request.params.userSavedDatsets;
         let userId: number = +requestParam;
         if (isNaN(userId)) {
             response.status(500).send("Invalid search params entered");
@@ -84,7 +84,7 @@ export class getDataController {
         else {
             try {
                 const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getUserFavoritedDatasets(userId)
+                let arrayOfData = await retrieveDataObject.getUserSavedDatasets(userId)
                 return response.status(200).send(arrayOfData);
             } catch (err) {
                 response.status(500).send(err);
