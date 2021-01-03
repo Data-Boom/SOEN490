@@ -21,9 +21,3 @@ export class Category {
     @UpdateDateColumn()
     updated: Date
 }
-
-export const selectAllCategoriesQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Category, 'category')
-        .select('category.name', 'name')
-        .addSelect('category.id', 'id')
-        .getRawMany();

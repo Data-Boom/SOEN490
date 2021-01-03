@@ -21,9 +21,3 @@ export class Subcategory {
     @UpdateDateColumn()
     updated: Date
 }
-
-export const selectAllSubcategoriesQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Subcategory, 'subcategory')
-        .select('subcategory.name', 'name')
-        .addSelect('subcategory.id', 'id')
-        .getRawMany();
