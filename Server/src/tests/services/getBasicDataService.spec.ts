@@ -1,5 +1,5 @@
 import { createConnection, getConnection } from 'typeorm';
-import { retrieveBasicData } from '../services/getBasicDataService';
+import { retrieveBasicData } from '../../services/getBasicDataService';
 
 describe('basic data service test', () => {
     let retrieveBasicDataObject: retrieveBasicData;
