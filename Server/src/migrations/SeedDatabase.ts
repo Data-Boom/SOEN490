@@ -1,4 +1,5 @@
 import { getConnection, MigrationInterface, QueryRunner } from "typeorm";
+import { Accounts } from "../models/entities/Accounts";
 import { Authors } from "../models/entities/Authors";
 import { Category } from "../models/entities/Category";
 import { Composition } from "../models/entities/Composition";
@@ -12,13 +13,51 @@ import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
-import { Accounts } from '../models/entities/Accounts';
-
 import { AuthenticationService } from '../services/authenticationService';
 
 export class SeedDatabase1608609071666 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
+
+    // Adding in uploader Foreign Key to Dataset table
+    await queryRunner.query('ALTER TABLE dataset ADD COLUMN uploaderId int(11) NULL');
+    await queryRunner.query('ALTER TABLE dataset ADD CONSTRAINT FK_26457c71143806e88e157a54b05 FOREIGN KEY (uploaderId) REFERENCES accounts(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
+
+    // Accounts Data
+    let authenticationService = new AuthenticationService();
+
+    let user1 = new Accounts();
+    user1.id = 1;
+    user1.email = 'j.comkj';
+    user1.password = await authenticationService.hashPassword('123') as any;
+    user1.firstName = 'Ace';
+    user1.lastName = 'FireFist';
+    user1.dateOfBirth = '1980-01-01' as any;
+    user1.organizationName = 'Mugiwara';
+    user1.admin = !!true;
+    await connection.manager.save(user1);
+
+    let user2 = new Accounts();
+    user2.id;
+    user2.email = 'test@t.com';
+    user2.password = await authenticationService.hashPassword('123') as any;
+    user2.firstName = 'Tom';
+    user2.lastName = 'Happy';
+    user2.dateOfBirth = '1980-01-01' as any;
+    user2.organizationName = 'Mobil';
+    user2.admin;
+    await connection.manager.save(user2);
+
+    let user3 = new Accounts();
+    user3.id;
+    user3.email = 'tester@123.com';
+    user3.password = await authenticationService.hashPassword('123') as any;
+    user3.firstName = 'Wyatt';
+    user3.lastName = 'forfore';
+    user3.dateOfBirth = '1980-01-01' as any;
+    user3.organizationName = 'Ozark';
+    user3.admin = !!true;
+    await connection.manager.save(user3);
 
     let book = new Publicationtype();
     book.id;
@@ -55,6 +94,19 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     publication.dateAccessed;
     publication.authors = [author1, author2];
     await connection.manager.save(publication);
+
+    let publication2 = new Publications();
+    publication2.id;
+    publication2.name = "Someone's Favorite Publisher";
+    publication2.pages;
+    publication2.publicationtypeId = book.id;
+    publication2.publisherId = publisherName.id;
+    publication2.year = 1900;
+    publication2.volume;
+    publication2.datePublished;
+    publication2.dateAccessed;
+    publication2.authors = [];
+    await connection.manager.save(publication2);
 
     let compositionC = new Composition();
     compositionC.id;
@@ -117,7 +169,20 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     dataset.subcategoryId = subcategory.id;
     dataset.comments = "References 5,6,14\nAverage density = 2.134 g/cc";
     dataset.materials = [materialC, materialO2];
+    dataset.uploaderId = 1;
     await connection.manager.save(dataset);
+
+    let dataset2 = new Dataset();
+    dataset2.id = 2;
+    dataset2.name = "Someone's Favorite";
+    dataset2.datatypeId = datasetdatatypeNone.id;
+    dataset2.publicationId = publication2.id;
+    dataset2.categoryId = category1.id;
+    dataset2.subcategoryId = subcategory1.id;
+    dataset2.comments = "";
+    dataset2.materials = [];
+    dataset2.uploaderId;
+    await connection.manager.save(dataset2);
 
     // Units below this line
 
@@ -162,8 +227,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     reprNone.repr = "N/A";
     await connection.manager.save(reprNone);
 
-    // Data points below this line. Due to an oddity with queryRunner, 'values' is a reserved term and thus
-    // the field was renamed to 'values' in testing
+    // Data points below this line. 
 
     let datapoint = new Datapoints();
     datapoint.id;
@@ -246,48 +310,15 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
 
-    // Accounts Data
-    let authenticationService = new AuthenticationService();
-
-    let user1 = new Accounts();
-    user1.id = 1;
-    user1.email = 'j.comkj';
-    user1.password = await authenticationService.hashPassword('123') as any;
-    user1.firstName = 'Ace';
-    user1.lastName = 'FireFist';
-    user1.dateOfBirth = '1980-01-01' as any;
-    user1.organizationName = 'Mugiwara';
-    user1.admin = !!true;
-    await connection.manager.save(user1);
-
-    let user2 = new Accounts();
-    user2.id;
-    user2.email = 'test@t.com';
-    user2.password = await authenticationService.hashPassword('123') as any;
-    user2.firstName = 'Tom';
-    user2.lastName = 'Happy';
-    user2.dateOfBirth = '1980-01-01' as any;
-    user2.organizationName = 'Mobil';
-    user2.admin;
-    await connection.manager.save(user2);
-
-    let user3 = new Accounts();
-    user3.id;
-    user3.email = 'tester@123.com';
-    user3.password = await authenticationService.hashPassword('123') as any;
-    user3.firstName = 'Wyatt';
-    user3.lastName = 'forfore';
-    user3.dateOfBirth = '1980-01-01' as any;
-    user3.organizationName = 'Ozark';
-    user3.admin = !!true;
-    await connection.manager.save(user3);
-
-
+    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 1)');
+    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query('ALTER TABLE dataset DROP FOREIGN KEY `FK_26457c71143806e88e157a54b05`');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
+    await queryRunner.query('DELETE FROM accounts_datasets_dataset');
     await queryRunner.query('DELETE FROM datapointcomments');
     await queryRunner.query('DELETE FROM datapoints');
     await queryRunner.query('DELETE FROM units');
@@ -304,6 +335,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
+    await queryRunner.query('ALTER TABLE dataset DROP COLUMN uploaderId');
   }
 
 }
