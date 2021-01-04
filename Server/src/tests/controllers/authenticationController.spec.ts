@@ -41,7 +41,7 @@ describe('Authentication Controller', () => {
         await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
         expect(mockResponse.status).toBeCalledWith(200);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    })
+    });
 
     test('Invalid SignUp Request due to missing parameters - Error 400', async () => {
         const expectedResponse = "Request is invalid. Missing attributes";
@@ -114,5 +114,20 @@ describe('Authentication Controller', () => {
         await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
         expect(regex.test(mockResponse.json));
         expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('valid user detail update request', async () => {
+        const expectedResponse = "Success";
+
+        mockRequest = {
+            query: {
+                email: 'j.com',
+                password: '456',
+                organizationName: 'Yorozuya'
+            }
+        }
+        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(200);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
     })
 })

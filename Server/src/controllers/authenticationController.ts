@@ -76,7 +76,7 @@ export class AuthenticationController {
 
         this.invalidResponse = this.validateUserDetailRequest(request);
         if (!this.invalidResponse) {
-            return response.status(400).json("Request is invalid. ") //whats the right msg for this?
+            return response.status(400).json("Request is invalid. ")
         } else {
             let requestParams: any = { ...request.query };
             let updateUserDetail: IUserDetailUpdater = requestParams;

@@ -136,7 +136,7 @@ export class AuthenticationService {
             }
         }
         else {
-            throw new BadRequest("email not valid");
+            throw new BadRequest("email is not valid. Please enter the correct email!");
         }
         this.requestResponse.status = "success";
         this.requestResponse.statusCode = 200;
