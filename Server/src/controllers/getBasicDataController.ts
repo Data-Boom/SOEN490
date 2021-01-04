@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { retrieveBasicData } from '../services/getBasicDataService';
 
 export class getBasicDataController {
-    private retrieveBasicDataObject = new retrieveBasicData();
+    private retrieveBasicDataObject: retrieveBasicData;
     constructor() {
+        this.retrieveBasicDataObject = new retrieveBasicData();
     }
 
     /**
@@ -16,8 +17,12 @@ export class getBasicDataController {
      * An object containing a response: Response
      */
     async createRequestForAllCategories(request: Request, response: Response) {
-        let arrayOfData = await this.retrieveBasicDataObject.getBasicCategoryDataService()
-        return response.status(200).send(arrayOfData);
+        try {
+            let arrayOfData = await this.retrieveBasicDataObject.getBasicCategoryDataService()
+            return response.status(200).send(arrayOfData);
+        } catch (err) {
+            response.status(500).send(err);
+        }
     }
 
     /**
@@ -30,8 +35,12 @@ export class getBasicDataController {
      * An object containing a response: Response
      */
     async createRequestForAllSubcategories(request: Request, response: Response) {
-        let arrayOfData = await this.retrieveBasicDataObject.getBasicSubcategoryDataService()
-        return response.status(200).send(arrayOfData);
+        try {
+            let arrayOfData = await this.retrieveBasicDataObject.getBasicSubcategoryDataService()
+            return response.status(200).send(arrayOfData);
+        } catch (err) {
+            response.status(500).send(err);
+        }
     }
 
     /**
@@ -44,7 +53,11 @@ export class getBasicDataController {
      * An object containing a response: Response
      */
     async createRequestForAllMaterials(request: Request, response: Response) {
-        let arrayOfData = await this.retrieveBasicDataObject.getBasicMaterialDataService()
-        return response.status(200).send(arrayOfData);
+        try {
+            let arrayOfData = await this.retrieveBasicDataObject.getBasicMaterialDataService()
+            return response.status(200).send(arrayOfData);
+        } catch (err) {
+            response.status(500).send(err);
+        }
     }
 }
