@@ -1,0 +1,390 @@
+[1] S. Abid, G. Dupre, and C. Paillard.
+Oxidation of gaseous unsymmetrical dimethylhydrazine at high temperatures and detonation of UDMH/O_2 mixtures.
+In Prog. Astronaut. Aeronaut., volume 153, pages 162-181, 1991.
+[2] G.L. Agafonov and S.M. Frolov.
+Computation of the detonation limits in gaseous hydrogen-containing mixtures.
+Combust. Explos. Shock Waves (USSR), 30(1):91-100, 1994.
+[3] R. Akbar, M.J. Kaneshige, E. Schultz, and J.E. Shepherd.
+Detonations in H_2-N_2O-CH_4-NH_3-O_2-N_2 mixtures.
+Technical Report FM97-3, Explosion Dynamics Laboratory, California Institute of Technology, 1997.
+[4] M. Aminallah, J. Brossard, and A. Vasiliev.
+Cylindrical detonations in methane-oxygen-nitrogen mixtures.
+In Prog. Astronaut. Aeronaut., volume 153, pages 203-228, 1993.
+[5] T.J. Anderson and E.K. Dabora.
+Measurements of normal detonation wave structure using rayleigh imaging.
+In 24th Symp. Int. Combust. Proc., pages 1853-1860, 1992.
+[6] P. Andresen and W. Reckers.
+The structure of gaseous detonations as revealed by laser-induced fluorescence of the OH-radical.
+Z. Phys. Chem. Neue Folge, 175(2):129-143, 1992.
+[7] R. Atkinson, D.C. Bull, and P.J. Shuff.
+Initiation of spherical detonation in hydrogen-air.
+Combust. Flame, 39(3):287-300, 1980.
+[8] G.G. Bach, R. Knystautas, and J.H. Lee.
+Initiation criteria for diverging gaseous detonations.
+In 13th Symp. Int. Combust. Proc., pages 1097-1110, 1971.
+[9] H.O. Barthel.
+Predicted spacings in hydrogen-oxygen-argon detonations.
+Phys. Fluids, 17(8):1547-1553, 1974.
+[10] P. Bauer.
+Contribution a l'etude de la detonation des melanges explosifs gazeux a pression initiale elevee.
+PhD thesis, Universite de Poitiers, 1985.
+[11] P. Bauer, C. Brochet, and H.N. Presles.
+The influence of initial pressure on critical diameters of gaseous explosive mixtures.
+In Prog. Astronaut. Aeronaut., volume 94, pages 118-129, 1984.
+[12] P. Bauer, H.N. Presles, O. Heuze, and C. Brochet.
+Measurement of cell lengths in the detonation front of hydrocarbon oxygen and nitrogen mixtures at elevated initial pressures.
+Combust. Flame, 64(1):113-123, 1986.
+[13] H.D. Beeson, R.D. McClenagan, C.V. Bishop, F.J. Benz, W.J. Pitz, C.K. Westbrook, and J.H.S. Lee. 
+Detonability of hydrocabon fuels in air.
+In Prog. Astronaut. Aeronaut., volume 133, pages 19-36, 1991.
+[14] W.B. Benedick, C.M. Guirao, R. Knystautas, and J.H. Lee.
+Critical charge for the direct initiation of detonation in gaseous fuel-air mixtures.
+In Prog. Astronaut. Aeronaut., volume 106, pages 181-202, 1986.
+[15] W.B. Benedick, J.D. Kennedy, and B. Morosin.
+Detonation limits of unconfined hydrocarbon-air mixtures.
+Combust. Flame, 15(1):83-84, 1970.
+[16] W.B. Benedick, R. Knystautas, and J.H.S. Lee.
+Large-scale experiments on the transmission of fuel-air detonations from two-dimensional channels.
+In Prog. Astronaut. Aeronaut., volume 94, pages 546-555, 1984.
+[17] A.A. Borisov, S.V. Khomic, and V.N. Mikhalkin.
+Detonation of unconfined and semiconfined charges of gaseous mixtures.
+In Prog. Astronaut. Aeronaut., volume 133, pages 118-132, 1991.
+[18] A.A. Borisov, S.V. Khomik, V.N. Mikhalkin, and E.V. Saneev.
+Critical energy of direct detonation initiation in gaseous mixtures.
+In Prog. Astronaut. Aeronaut., volume 133, pages 142-155, 1991.
+[19] A.A. Borisov, V.V. Kosenkov, A.E. Mailkov, V.N. Mikhalkin, and S.V. Khomik.
+Effect of flame inhibitors on detonation characteristics of fuel-air mixtures.
+In Prog. Astronaut. Aeronaut., volume 153, pages 312-323, 1993.
+[20] A.A. Borisov and S. Loban'.
+Detonation limits of hydrocarbon-air mixtures in tubes.
+Combust. Explos. Shock Waves (USSR), 13(5):618-621, 1977.
+[21] D.C. Bull.
+Concentration limits to the initiation of unconfined detonation in fuel/air mixtures.
+Trans. Inst. Chem. Eng., 57(4):219-227, 1979.
+[22] D.C. Bull.
+Towards an understanding of the detonability of vapour clouds.
+In Fuel-Air Explosions, pages 139-155. University of Waterloo Press, 1982.
+[23] D.C. Bull, J.E. Elsworth, and G. Hooper.
+Initiation of spherical detonation in hydrocarbon/air mixtures.
+Acta Astron., 5(11):997-1008, 1978.
+[24] D.C. Bull, J.E. Elsworth, and G. Hooper.
+Concentration limits to unconfined detonation of ethane-air.
+Combust. Flame, 35(1):27-40, 1979.
+[25] D.C. Bull, J.E. Elsworth, and G. Hooper.
+Susceptibility of methane-ethane mixtures to gaseous detonation in air.
+Combust. Flame, 34(3):327--330, 1979.
+[26] D.C. Bull, J.E. Elsworth, G. Hooper, and C.P. Quinn.
+A study of spherical detonation in mixtures of methane and oxygen diluted by nitrogen.
+J. Phys. D, 9(13):1991-2000, 1976.
+[27] D.C. Bull, J.E. Elsworth, P.J. Shuff, and E. Metcalfe.
+Detonation cell structures in fuel/air mixtures.
+Combust. Flame, 45(1):7-22, 1982.
+[28] G.A. Carlson.
+Spherical detonations in gas-oxygen mixtures.
+Combust. Flame, 21(3):383-385, 1973.
+[29] G. Ciccarelli, T. Ginsberg, J. Boccio, C. Economos, K. Sato, and M. Kinoshita.
+Detonation cell size measurements and predictions in hydrogen-air-steam mixtures at elevated temperatures.
+Combust. Flame, 99(2):212-220, 1994.
+[30] G. Ciccarelli, T. Ginsberg, J. Boccio, C. Finfrock, L. Gerlach, H. Tagawa, and A. Malliakos.
+Detonation cell size measurements in high-temperature hydrogen-air-steam mixtures at the bnl high-temperature combustion facility.
+Technical Report NUREG/CR-6391, BNL-NUREG-52482, Brookhaven National Laboratory, 1997.
+[31] Yu.N. Denisov and Ya.K. Troshin.
+Pulsating and spinning detonation of gaseous mixtures in tubes.
+Dokl. Akad. Nauk SSSR, 125(1):110-113, 1959.
+[32] Yu.N. Denisov and Ya.K. Troshin.
+Structure of gaseous detonation in tubes.
+Sov. Phys. Tech. Phys., 5(4):419-431, 1960.
+[33] D. Desbordes.
+Celerites de propagation des detonations spheriques divergentes dans les melanges gazeux.
+These 3e cycle, Universite de Poitiers, 1973.
+[34] D. Desbordes.
+Correlation between shock flame predetonation zone size and cell spacing in critically initiated spherical detonations.
+Prog. Astronaut. Aeronaut., 106:166-180, 1986.
+[35] D. Desbordes.
+Transmission of overdriven plane detonations: Critical diameter as a function of cell regularity and size.
+Prog. Astronaut. Aeronaut., 114:170-185, 1988.
+[36] D. Desbordes.
+Aspects stationnaires et transitoires de la detonation dans les gaz: relation avec la structure cellulaire du front.
+PhD thesis, Universite de Poitiers, 1990.
+[37] D. Desbordes, C. Guerraud, L. Hamada, and H.N. Presles.
+Failure of the classical dynamic parameters relationships in highly regular cellular detonation systems.
+Prog. Astronaut. Aeronaut., 153:347-359, 1993.
+[38] D. Desbordes and M. Vachon.
+Critical diameter of diffraction for strong plane detonations.
+Prog. Astronaut. Aeronaut., 106:131-143, 1986.
+[39] EDL.
+Califonia Institute of Technology, unpublished.
+0000.
+[40] D.H. Edwards.
+A survey of recent work on the structure of detonation waves.
+In 12th Symp. Int. Combust. Proc., pages 819-828, 1969.
+[41] D.H. Edwards, G. Hooper, and J.M. Morgan.
+An experimental investigation of the direct initiation of spherical detonations.
+Acta Astron., 3(1):117-130, 1976.
+[42] D.H. Edwards, G. Hooper, J.M. Morgan, and G.O. Thomas.
+The quasi-steady regime in critically initiated detonation waves.
+J. Phys. D, 11(13):2103-2117, 1978.
+[43] J.E. Elsworth and J.A. Eyre.
+The susceptibility of propene-propane/air mixtures to detonation.
+Combust. Flame, 55(2):237-243, 1984.
+[44] J.E. Elsworth, P.J. Shuff, and A. Ungut.
+"Galloping" gas detonations in the spherical mode.
+In Prog. Astronaut. Aeronaut., volume 94, pages 130-150, 1984.
+[45] H. Freiwald and H.W. Koch.
+Spherical detonations of acetylene-oxygen-nitrogen mixtures as a function of nature and strength of initiation.
+In 9th Symp. Int. Combust. Proc., pages 275-281, 1962.
+[46] R.S. Fry and J.A. Nicholls.
+Blast initiation and propagation of cylindrical detonations in MAPP-Air mixtures.
+AIAA J., 12(12):1703-1708, 1974.
+[47] K. Guhlmann, W. Pusch, and H.Gg. Wagner.
+Einflus des rohrdurchmessers auf die ausbreitung einer detonation in explosiblen gasgemischen teil ii: Einflus des ausgangsdruckes und des rohrdurchmessers auf die detonationsgrenzen der systeme CH_4-O_2-N_2 und CH_4-O_2-Ar.
+Ber. Bunsenges. Phys. Chem., 70(2):143-148, 1966.
+[48] C.M. Guirao, R. Knystautas, J. Lee, W. Benedick, and M. Berman.
+Hydrogen-air detonations.
+In 19th Symp. Int. Combust. Proc., pages 583-590, 1982.
+[49] C.M. Guirao, R. Knystautas, and J.H. Lee.
+A summary of hydrogen-air detonation experiments.
+Technical Report NUREG/CR-4961, SAND87-7128, Sandia National Laboratories/McGill University, 1989.
+[50] T. Hikita and al. et.
+A report on the experimental results of explosions and fires of liquid ethylene facilities.
+Technical report, Safety Information Centre, Institution for Safety of High Pressure Gas Engineering, Tokyo, Japan, 1975.
+[51] Z.W. Huang and Tiggelen Van.
+Experimental study of the fine structure in spin detonations.
+In Prog. Astronaut. Aeronaut., volume 153, pages 132-143, 1993.
+[52] K. Kailasanath and E.S. Oran.
+Power-energy relations for the direct initiation of gaseous detonations.
+In Prog. Astronaut. Aeronaut., volume 94, pages 38-54, 1984.
+[53] M.J. Kaneshige.
+Gaseous Detonation Initiation and Stabilization by Hypervelocity Projectiles.
+PhD thesis, California Institute of Technology, 1999.
+[54] R. Knystautas, C. Guirao, J.H. Lee, and A. Sulmistras.
+Measurement of cell size in hydrocarbon-air mixtures and predictions of critical tube diameter, critical initiation energy, and detonability limits.
+In Prog. Astronaut. Aeronaut., volume 94, pages 23-37, 1984.
+[55] R. Knystautas and J.H. Lee.
+Detonation parameters for the hydrogen-chlorine system.
+In Prog. Astronaut. Aeronaut., volume 114, pages 32-44, 1988.
+[56] R. Knystautas, J.H. Lee, and C.M. Guirao.
+The critical tube diameter for detonation failure in hydrocarbon-air mixtures.
+Combust. Flame, 48(1):63-83, 1982.
+[57] R. Knystautas, J.H.S. Lee, J.E. Shepherd, and A. Teodorczyk.
+Flame acceleration and transition to detonation in benzene-air mixtures.
+Combust. Flame, 115:424-436, 1998.
+[58] S.M. Kogarko.
+Detonation of methane-air mixtures and the detonation limits of hydrocarbon-air mixtures in a large-diameter pipe.
+Sov. Phys. Tech. Phys., 3(9):1904-1916, 1958.
+[59] S.M. Kogarko.
+Investigation of the pressure at the end of a tube in connection with rapid nonstationary combustion.
+Sov. Phys. Tech. Phys., 3(9):1875-1879, 1958.
+[60] S.M. Kogarko, V.V. Adushkin, and A.G. Lyamin.
+Investigation of spherical detonation of gas mixtures.
+Combust. Explos. Shock Waves (USSR), 1(2):22-34, 1965.
+[61] R.K. Kumar.
+Detonation cell widths in hydrogen-oxygen-diluent mixtures.
+Combust. Flame, 80(2):157-169, 1990.
+[62] S. Laberge, R. Knystautas, and J.H.S. Lee.
+Propagation and extinction of detonation waves in tube bundles.
+In Prog. Astronaut. Aeronaut., volume 153, pages 381-396, 1993.
+[63] Lee, J.H., Ramamurthi, and R.
+On the concept of the critical size of a detonation kernel.
+Combust. Flame, 27(3):331-340, 1976.
+[64] J.H. Lee.
+Initiation of gaseous detonation.
+Annu. Rev. Phys. Chem., 28:75-104, 1977.
+[65] J.H. Lee.
+Dynamic parameters of gaseous detonations.
+Annu. Rev. Fluid Mech., 16:311-336, 1984.
+[66] J.H. Lee, R. Knystautas, and A. Freiman.
+High speed turbulent deflagrations and transition to detonation in H_2-Air mixtures.
+Combust. Flame, 56(2):227-239, 1984.
+[67] J.H. Lee, B.H.K. Lee, and R. Knystautas.
+Direct initiation of cylindrical gaseous detonations.
+Phys. Fluids, 9(1):221-222, 1966.
+[68] J.H Lee and H. Matsui.
+A comparison of the critical energies for direct initiation of spherical detonation in acetylene-oxygen mixtures.
+Combust. Flame, 28(1):61-66, 1977.
+[69] J.H. Lee, R.I. Soloukhin, and A.K. Oppenheim.
+Current views on gaseous detonation.
+Astronaut. Acta, 14(5):565-584, 1969.
+[70] J.H.S. Lee, R. Knystautas, and C. Guirao.
+The link between cell size, critical tube diameter, initiation energy and detonability limits.
+In Fuel-Air Explosions, pages 157-187. University of Waterloo Press, 1982.
+[71] M.H. Lefebvre, E. Nzeyimana, and Tiggelen Van.
+Influence of fluorocarbons on H_2-O_2-Ar detonation: Experiments and modeling.
+In Prog. Astronaut. Aeronaut., volume 153, pages 144-161, 1993.
+[72] J.C. Libouton, M. Dormal, and Tiggelen Van.
+The role of chemical kinetics on structure of detonation waves.
+In 15th Symp. Int. Combust. Proc., pages 79-86, 1975.
+[73] E.L. Litchfield, M.H. Hay, and D.R. Forshey.
+Direct electrical initiation of freely expanding gaseous detonation waves.
+In 9th Symp. Int. Combust. Proc., pages 282-286, 1962.
+[74] Y.K. Liu, J.H. Lee, and R. Knystautas.
+Effect of geometry on the transmission of detonation through an orifice.
+Combust. Flame, 56(2):215-225, 1984.
+[75] A. Macek.
+Effect of additives on formation of spherical detonation waves in hydrogen-oxygen-mixtures.
+AIAA J., 1(8):1915-1918, 1963.
+[76] V.I. Makeev, Yu.A. Gostintsev, V.V. Strogonov, Yu.A. Bokhon, Yu.N. Chernushkin, and V.N. Kulikov.
+Combustion and detonation of hydrogen-air mixtures in free spaces.
+Combust. Explos. Shock Waves (USSR), 19(5):548-550, 1983.
+[77] A. Makris, T.J. Oh, J.H.S. Lee, and R. Knystautas.
+Critical diameter for the transmission of a detonation wave into a porous medium.
+In 25th Symp. Int. Combust. Proc., pages 65-71, 1994.
+[78] V.I. Manzhalei and V.V. Mitrofanov.
+The stability of detonation shock waves with a spinning configuration.
+Combust. Explos. Shock Waves (USSR), 9(5):614-620, 1973.
+[79] V.I. Manzhalei, V.V. Mitrofanov, and V.A. Subbotin.
+Measurement of inhomogeneities of a detonation front in gas mixtures at elevated pressures.
+Combust. Explos. Shock Waves (USSR), 10(1):89-95, 1974.
+[80] H. Matsui.
+On the measure of the relative detonation hazards of gaseous fuel-oxygen and air mixtures.
+17th Symp. Int. Combust. Proc., pages 1269-1280, 1979.
+[81] V.V. Mitrofanov.
+Certain critical phenomena in detonation associated with momentum losses.
+Combust. Explos. Shock Waves (USSR), 19(4):531-535, 1983.
+[82] I.O. Moen.
+Transition to detonation in fuel air explosive clouds.
+J. Hazard M., 33(2):159-192, 1993.
+[83] I.O. Moen, M. Donato, R. Knystautas, and J.H. Lee.
+The influence of confinement on the propagation of detonations near the detonability limits.
+In 18th Symp. Int. Combust. Proc., pages 1615-1622, 1981.
+[84] I.O. Moen, J.W. Funk, S.A. Ward, G.M. Rude, and P.A. Thibault.
+Detonation length scales for fuel-air explosives.
+In Prog. Astronaut. Aeronaut., volume 94, pages 55-79, 1984.
+[85] I.O. Moen, S.B. Murray, D. Bjerketvedt, A. Rinnan, R. Knystautas, and J.H. Lee.
+Diffraction of detonation from tubes into a large fuel-air explosive cloud.
+In 19th Symp. Int. Combust. Proc., pages 635-644, 1982.
+[86] I.O. Moen, A. Sulmistras, G. Thomas, D. Bjerketvedt, and P.A. Thibault.
+Influence of cellular regularity on the behavior of gaseous detonations.
+In Prog. Astronaut. Aeronaut., volume 106, pages 220-243, 1986.
+[87] I.O. Moen, S.A. Ward, P.A. Thibault, J.H. Lee, R. Knystautas, T. Dean, and C.K. Westbrook.
+The influence of diluents and inhibitors on detonations.
+In 20th Symp. Int. Combust. Proc., pages 1717-1726, 1985.
+[88] S.B. Murray, J.J. Gottlieb, C. Coffey, I.O. Moen, J.H. Lee, and .D. Remboutsikas.
+Direct initiation of detonation in unconfined ethylene-air mixtures-influence of bag size.
+In 7th Symp. Mil. App. Blast Sim., pages 6.3(b)1-6.3(b)28, 1981.
+[89] S.B. Murray and J.H. Lee.
+On the transformation of planar detonations to cylindrical detonation.
+Combust. Flame, 52(3):269-289, 1983.
+[90] S.B. Murray and J.H. Lee.
+The influence of yielding confinement on large-scale ethylene-air detonations.
+In Prog. Astronaut. Aeronaut., volume 94, pages 80-103, 1984.
+[91] S.B. Murray and J.H. Lee.
+The influence of physical boundaries on gaseous detonation waves.
+In Prog. Astronaut. Aeronaut., volume 106, pages 329-355, 1986.
+[92] J.A. Nicholls, M. Sichel, Z. Gabrijel, R.D. Oza, and R. Vandermolen.
+Detonability of unconfined natural gas-air clouds.
+In 17th Symp. Int. Combust. Proc., pages 1223-1234, 1979.
+[93] M.E. Nolan.
+A simple model for the detonation limits of gas mixtures.
+Combust. Sci. Technol., 7(2):57-63, 1973.
+[94] E. Nzeyimana and Tiggelen Van.
+Influence of tetrafluoromethane on hydrogen-oxygen-argon detonations.
+In Prog. Astronaut. Aeronaut., volume 133, pages 77-88, 1991.
+[95] S. Ohyagi, T. Yoshihashi, and Y. Harigaya.
+Direct initiation of planar detonation waves in methane/oxygen/nitrogen mixtures.
+In Prog. Astronaut. Aeronaut., volume 94, pages 3-22, 1984.
+[96] C. Paillard.
+Correlation between chemical kinetics and detonation structure for gaseous explosive systems.
+In Prog. Astronaut. Aeronaut., volume 133, pages 63-76, 1991.
+[97] M.D. Pedley, C.V. Bishop, F.J. Benz, C.A. Bennett, R.D. McClenagan, D.L. Fenton, R. Knystautas, J.H. Lee, O. Peraldi, G. Dupre, and J.E. Shepherd.
+Hydrazine vapor detonations.
+In Prog. Astronaut. Aeronaut., volume 114, pages 45-63, 1988.
+[98] U. Pfahl, E. Schultz, and J.E. Shepherd.
+Detonation cell width measurements for H_2-N_2O-N_2-O_2-CH_4-NH_3 mixtures.
+Technical Report FM-98-5, Graduate Aeronautical Laboratories, California Institute of Technology, 1998.
+[99] M. Plaster, R.D. McClenagan, F.J. Benz, J.E. Shepherd, and J.H.S. Lee.
+Detonation of cryogenic gaseous hydrogen-oxygen mixtures.
+In Prog. Astronaut. Aeronaut., volume 133, pages 37-55, 1991.
+[100] W. Pusch and H.G. Wagner.
+Investigation of the dependence of the limits of detonability on tube diameter.
+Combust. Flame, 6(3):157-162, 1962.
+[101] W. Pusch and H.G. Wagner.
+Einflus des rohrdurchmessers auf die ausbreitung einer detonation in explosiblen gasgemischen teil i: Inertgas - und rohrdurchmessereinflus auf die detonationsgrenzen einiger explosibler gasgemische.
+Ber. Bunsenges. Phys. Chem., 69(6):503-513, 1965.
+[102] A. Rinnan.
+Transmission of detonation through tubes and orifices.
+In Fuel-Air Explosions, pages 553-564. University of Waterloo Press, 1982.
+[103] J.E. Shepherd.
+Chemical kinetics and cellular structure of detonations in hydrogen sulfide and air.
+In Prog. Astronaut. Aeronaut., volume 106, pages 294-320, 1986.
+[104] J.E. Shepherd, I.O. Moen, S.B. Murray, and P.A. Thibault.
+Analyses of the cellular structure of detonations.
+In 21st Symp. Int. Combust. Proc., pages 1649-1658, 1988.
+[105] D.W. Stamps, W.B. Benedick, and S.R. Tieszen.
+Hydrogen-air-diluent detonation study for nuclear reactor safety analyses.
+Technical Report NUREG/CR-5525, SAND89-2398, Sandia National Laboratories, 1991.
+[106] D.W. Stamps and S.R. Tieszen.
+The influence of initial pressure and temperature on hydrogen-air-diluent detonations.
+Combust. Flame, 83(3):353-364, 1991.
+[107] R.A. Strehlow.
+The nature of transverse waves in detonations.
+Astronaut. Acta, 14(5):539-548, 1969.
+[108] R.A. Strehlow.
+Transverse waves in detonations: II. structure and spacing in H_2-O_2, C_2H_2-O_2, C_2H_4-O_2 and CH_4-O_2 systems.
+AIAA J., 7(3):492-496, 1969.
+[109] R.A. Strehlow.
+Multi-dimensional detonation wave structure.
+Astronaut. Acta, 15(5):345-357, 1970.
+[110] R.A. Strehlow, R. Liangminas, R.H. Watson, and J.R. Eyman.
+Transverse wave structure in detonations.
+In 11th Symp. Int. Combust. Proc., pages 683-692, 1967.
+[111] R.A. Strehlow, R.E. Maurer, and S. Rajan.
+Transverse waves in detonations: I. spacings in the hydrogen-oxygen system.
+AIAA J., 7(2):323-328, 1969.
+[112] S.R. Tieszen, M.P. Sherman, W.B. Benedick, and M. Berman.
+Detonability of H_2-air-diluent mixtures.
+Technical Report NUREG/CR-4905, SAND85-1263, Sandia National Laboratories, 1987.
+[113] S.R. Tieszen, M.P. Sherman, W.B. Benedick, J.E. Shepherd, R. Knystautas, and J.H.S. Lee.
+Detonation cell size measurements in hydrogen-air-steam mixtures.
+In Prog. Astronaut. Aeronaut., volume 106, pages 205-219, 1986.
+[114] S.R. Tieszen, D.W. Stamps, C.K. Westbrook, and W.J. Pitz.
+Gaseous hydrocarbon-air detonations.
+Combust. Flame, 84(3):376-390, 1991.
+[115] S. Tsuge, H. Furukawa, M. Matsukawa, and T. Nakagawa.
+On the dual property and the limit of hydrogen-oxygen free detonation waves.
+Astronaut. Acta, 15(5):377-386, 1970.
+[116] Aziz Ungut, Philip. J. Shuff, and John. A. Eyre.
+Initiation of unconfined gaseous detonation by diffraction of a detonation front emerging from a pipe.
+In Prog. Astronaut. Aeronaut., volume 94, pages 523-545, 1984.
+[117] P.A. Urtiew and C.M. Tarver.
+Effects of cellular structure on the behaviour of gaseous detonation waves under transient conditions.
+In Prog. Astronaut. Aeronaut., volume 75, pages 370-384, 1981.
+[118] Molen Vander and J.A. Nicholls.
+Blast wave initiation energy for the detonation of methane-ethane-air mixtures.
+Combust. Sci. Technol., 21(1):75-78, 1979.
+[119] M. Vandermeiren and Tiggelen Van.
+Cellular structure in detonation of acetylene-oxygen mixtures.
+In Prog. Astronaut. Aeronaut., volume 94, pages 104-117, 1984.
+[120] M. Vandermeiren and Tiggelen Van.
+Role of an inhibitor on the onset of gas detonations in acetylene mixtures.
+In Prog. Astronaut. Aeronaut., volume 114, pages 186-200, 1988.
+[121] A.A. Vasil'ev.
+Geometric limits of gas detonation propagation.
+Combust. Explos. Shock Waves (USSR), 18(2):245-249, 1982.
+[122] A.A. Vasil'ev.
+Critical initiation of a gas detonation.
+Combust. Explos. Shock Waves (USSR), 19(1):115-123, 1983.
+[123] A.A. Vasil'ev and V.V. Grigor'ev.
+Critical conditions for gas detonation in sharply expanding channels.
+Combust. Explos. Shock Waves (USSR), 16(6):579-585, 1980.
+[124] A.A. Vasil'ev, Yu.A. Nikolaev, and Ul'yanitskii.
+Analysis of the cell parameters of a multifront gas detonation.
+Combust. Explos. Shock Waves (USSR), 13(3):338-341, 1977.
+[125] B.V. Voitsekhovskii, V.V. Mitrofanov, and M.E. Topchian.
+The structure of a detonation front in gases.
+Technical Report FTD-MT-64-527 (AD 633821), Wright-Patterson AFB, 1966.
+[126] C.K. Westbrook, W.J. Pitz, and P.A. Urtiew.
+Chemical kinetics of propane oxidation in gaseous detonations.
+In Prog. Astronaut. Aeronaut., volume 94, pages 151-174, 1984.
+[127] C.K. Westbrook and P.A. Urtiew.
+Chemical kinetic prediction of critical parameters in gaseous detonation.
+In 19th Symp. Int. Combust. Proc., pages 615-623, 1982.
+[128] P. Wolanski, C.W. Kauffman, M. Sichel, and J.A. Nicholls.
+Detonation of methane-air mixtures.
+In 18th Symp. Int. Combust. Proc., pages 1651-1660, 1981.
+[129] Ia.B. Zeldovich, S.M. Kogarko, and N.N. Simonov.
+An experimental investigation of spherical detonation in gases.
+Sov. Phys. Tech. Phys., 1:1689-1713, 1956.
+[130] R. Zitoun, D. Desbordes, C. Guerraud, and B. Deshaies.
+Direct initiation of detonation in cryogenic gaseous H_2-O_2 mixtures.
+Shock Waves, 4(6):331-337, 1995.
