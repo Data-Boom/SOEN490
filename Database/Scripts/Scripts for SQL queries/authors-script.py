@@ -1,3 +1,6 @@
+# This python script produces the authors-query.txt file containing the queries used to populate the authors table in databoom_db_test. 
+# The JSON used is authors.json which was produced by the authors-paa-builder.py script found in Builders folder. 
+
 import json
 
 file = open('authors-query.txt', "w+")
