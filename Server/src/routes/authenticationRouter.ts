@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import { AuthenticationController } from '../controllers/authenticationController'
+import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 
 let router = Router();
 
@@ -28,6 +29,10 @@ router.post('/updateUserInfo', (request: Request, response: Response, next: Next
     //make an updatePasswordRequest and validatePasswordRequest 
     authenticationController.updateUserDetailRequest(request, response, next);
 })
+router.get('/userDetails', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
+
+    authenticationController.createFetchUserDetailsRequest(request, response);
+});
 
 
 export { router as authenticationRouter }

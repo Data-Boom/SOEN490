@@ -127,4 +127,17 @@ export class AuthenticationController {
             }
         }
     }
+
+    async createFetchUserDetailsRequest(request, response): Promise<Response> {
+        let serviceResponse: IResponse;
+        try {
+            let userEmail: any = request.query.email;
+            this.authenticationService = new AuthenticationService();
+            serviceResponse = await this.authenticationService.loadUserDetails(userEmail);
+            return response.status(serviceResponse.statusCode).json(JSON.parse(serviceResponse.message));
+        } catch (error) {
+            return response.status(error.status).json(error.message);
+        }
+    }
+
 }
