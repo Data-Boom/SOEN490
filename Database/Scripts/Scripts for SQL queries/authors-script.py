@@ -3,9 +3,9 @@
 
 import json
 
-file = open('authors-query.txt', "w+")
+file = open('./Queries in txt/authors-query.txt', "w+")
 
-with open('authors.json') as f:
+with open('./Scraped JSONs/authors.json') as f:
   data = json.load(f)
   
 file.write("SET FOREIGN_KEY_CHECKS=0;\n")

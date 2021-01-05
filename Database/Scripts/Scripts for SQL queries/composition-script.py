@@ -1,10 +1,14 @@
+# This python script produces the category-subcat-query.txt file containing the queries used to populate 
+# the composition, material and dataset_materials_material tables in databoom_db_test. 
+# The JSON used is the datasets-with-datapoints.json which was produced by the datasets-builder.py script found in Builders folder.
+
 import json
 
-file = open('composition-query.txt', "w+")
-materialFile = open('material-query.txt', "w+")
-dmmFile = open('dataset-materials-material-query.txt', "w+")
+file = open('./Queries in txt/composition-query.txt', "w+")
+materialFile = open('./Queries in txt/material-query.txt', "w+")
+dmmFile = open('./Queries in txt/dataset-materials-material-query.txt', "w+")
 
-with open('newdatasets.json') as f:
+with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
   data = json.load(f)
   
 file.write("SET FOREIGN_KEY_CHECKS=0;\n")
@@ -42,11 +46,11 @@ for x in data: # Loop through dataset
         
             dmmFile.write(" INSERT INTO `databoom_db_test`.`dataset_materials_material` (`datasetId`, `materialId`) VALUES ("+str(data[x]['datasetId'])+", "+str(list_of_composition[y['composition']]['id'])+");\n")
 
-with open('list_of_composition.json', 'w') as outfile:
+with open('./Scraped JSONs/list_of_composition.json', 'w') as outfile:
     json.dump(list_of_composition, outfile, indent=4)
 outfile.close
 
-with open('dataset_materials_material.json', 'w') as outfile:
+with open('./Scraped JSONs/dataset_materials_material.json', 'w') as outfile:
     json.dump(dataset_materials_material, outfile, indent=4)
 outfile.close
 

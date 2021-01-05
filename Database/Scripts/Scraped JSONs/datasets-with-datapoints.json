@@ -59,7 +59,9 @@
                 }
             ]
         },
-        "datasetId": 1
+        "datasetId": 1,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8b": {
         "category": "cell size",
@@ -121,7 +123,9 @@
                 }
             ]
         },
-        "datasetId": 2
+        "datasetId": 2,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8a": {
         "category": "cell size",
@@ -187,7 +191,9 @@
                 }
             ]
         },
-        "datasetId": 3
+        "datasetId": 3,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8e": {
         "category": "cell size",
@@ -249,7 +255,9 @@
                 }
             ]
         },
-        "datasetId": 4
+        "datasetId": 4,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8d": {
         "category": "cell size",
@@ -311,7 +319,9 @@
                 }
             ]
         },
-        "datasetId": 5
+        "datasetId": 5,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja18a": {
         "category": "cell size",
@@ -417,7 +427,9 @@
                 }
             ]
         },
-        "datasetId": 6
+        "datasetId": 6,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at124d": {
         "category": "critical energy",
@@ -493,7 +505,9 @@
                 }
             ]
         },
-        "datasetId": 7
+        "datasetId": 7,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "ja18b": {
         "category": "cell size",
@@ -619,7 +633,9 @@
                 }
             ]
         },
-        "datasetId": 8
+        "datasetId": 8,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23f": {
         "category": "cell size",
@@ -677,7 +693,9 @@
                 }
             ]
         },
-        "datasetId": 9
+        "datasetId": 9,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at21a": {
         "category": "cell size",
@@ -759,7 +777,9 @@
                 }
             ]
         },
-        "datasetId": 10
+        "datasetId": 10,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at21c": {
         "category": "cell size",
@@ -821,7 +841,9 @@
                 }
             ]
         },
-        "datasetId": 11
+        "datasetId": 11,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at21b": {
         "category": "cell size",
@@ -875,7 +897,9 @@
                 }
             ]
         },
-        "datasetId": 12
+        "datasetId": 12,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1a": {
         "category": "cell size",
@@ -956,7 +980,9 @@
                 }
             ]
         },
-        "datasetId": 13
+        "datasetId": 13,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1b": {
         "category": "cell size",
@@ -1032,7 +1058,9 @@
                 }
             ]
         },
-        "datasetId": 14
+        "datasetId": 14,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1c": {
         "category": "cell size",
@@ -1126,7 +1154,9 @@
                 }
             ]
         },
-        "datasetId": 15
+        "datasetId": 15,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1d": {
         "category": "cell size",
@@ -1200,7 +1230,9 @@
                 }
             ]
         },
-        "datasetId": 16
+        "datasetId": 16,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1e": {
         "category": "cell size",
@@ -1274,7 +1306,9 @@
                 }
             ]
         },
-        "datasetId": 17
+        "datasetId": 17,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at67a": {
         "category": "critical energy",
@@ -1348,7 +1382,9 @@
                 }
             ]
         },
-        "datasetId": 18
+        "datasetId": 18,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at169c": {
         "category": "cell size",
@@ -1426,7 +1462,9 @@
                 }
             ]
         },
-        "datasetId": 19
+        "datasetId": 19,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at124b": {
         "category": "critical energy",
@@ -1502,7 +1540,9 @@
                 }
             ]
         },
-        "datasetId": 20
+        "datasetId": 20,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at129f": {
         "category": "cell size",
@@ -1592,7 +1632,9 @@
                 }
             ]
         },
-        "datasetId": 21
+        "datasetId": 21,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at129e": {
         "category": "cell size",
@@ -1710,7 +1752,9 @@
                 }
             ]
         },
-        "datasetId": 22
+        "datasetId": 22,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at129c": {
         "category": "cell size",
@@ -1796,7 +1840,9 @@
                 }
             ]
         },
-        "datasetId": 23
+        "datasetId": 23,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja27b": {
         "category": "cell size",
@@ -1852,7 +1898,9 @@
                 }
             ]
         },
-        "datasetId": 24
+        "datasetId": 24,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja27a": {
         "category": "cell size",
@@ -1914,7 +1962,9 @@
                 }
             ]
         },
-        "datasetId": 25
+        "datasetId": 25,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at189": {
         "category": "cell size",
@@ -2019,7 +2069,9 @@
                 }
             ]
         },
-        "datasetId": 26
+        "datasetId": 26,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "ja12": {
         "category": "cell size",
@@ -2100,7 +2152,9 @@
                 }
             ]
         },
-        "datasetId": 27
+        "datasetId": 27,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja13": {
         "category": "cell size",
@@ -2191,7 +2245,9 @@
                 }
             ]
         },
-        "datasetId": 28
+        "datasetId": 28,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja17": {
         "category": "cell size",
@@ -2261,7 +2317,9 @@
                 }
             ]
         },
-        "datasetId": 29
+        "datasetId": 29,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja19": {
         "category": "cell size",
@@ -2352,7 +2410,9 @@
                 }
             ]
         },
-        "datasetId": 30
+        "datasetId": 30,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57c-mk": {
         "category": "cell size",
@@ -2470,7 +2530,9 @@
                 }
             ]
         },
-        "datasetId": 31
+        "datasetId": 31,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at73": {
         "category": "cell size",
@@ -2540,7 +2602,9 @@
                 }
             ]
         },
-        "datasetId": 32
+        "datasetId": 32,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at74": {
         "category": "cell size",
@@ -2634,7 +2698,9 @@
                 }
             ]
         },
-        "datasetId": 33
+        "datasetId": 33,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69e": {
         "category": "cell size",
@@ -2744,7 +2810,9 @@
                 }
             ]
         },
-        "datasetId": 34
+        "datasetId": 34,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69d": {
         "category": "cell size",
@@ -2846,7 +2914,9 @@
                 }
             ]
         },
-        "datasetId": 35
+        "datasetId": 35,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69g": {
         "category": "cell size",
@@ -2932,7 +3002,9 @@
                 }
             ]
         },
-        "datasetId": 36
+        "datasetId": 36,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69f": {
         "category": "cell size",
@@ -3034,7 +3106,9 @@
                 }
             ]
         },
-        "datasetId": 37
+        "datasetId": 37,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69a": {
         "category": "cell size",
@@ -3152,7 +3226,9 @@
                 }
             ]
         },
-        "datasetId": 38
+        "datasetId": 38,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69c": {
         "category": "cell size",
@@ -3270,7 +3346,9 @@
                 }
             ]
         },
-        "datasetId": 39
+        "datasetId": 39,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69b": {
         "category": "cell size",
@@ -3352,7 +3430,9 @@
                 }
             ]
         },
-        "datasetId": 40
+        "datasetId": 40,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at75d": {
         "category": "critical tube",
@@ -3413,7 +3493,10 @@
                 }
             ]
         },
-        "datasetId": 41
+        "datasetId": 41,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at75a": {
         "category": "critical tube",
@@ -3474,7 +3557,10 @@
                 }
             ]
         },
-        "datasetId": 42
+        "datasetId": 42,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at75b": {
         "category": "critical tube",
@@ -3531,7 +3617,10 @@
                 }
             ]
         },
-        "datasetId": 43
+        "datasetId": 43,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at75c": {
         "category": "critical tube",
@@ -3588,7 +3677,10 @@
                 }
             ]
         },
-        "datasetId": 44
+        "datasetId": 44,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at32e": {
         "category": "critical energy",
@@ -3699,7 +3791,9 @@
                 }
             ]
         },
-        "datasetId": 45
+        "datasetId": 45,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at32g": {
         "category": "critical energy",
@@ -3801,7 +3895,9 @@
                 }
             ]
         },
-        "datasetId": 46
+        "datasetId": 46,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at32f": {
         "category": "critical energy",
@@ -3903,7 +3999,9 @@
                 }
             ]
         },
-        "datasetId": 47
+        "datasetId": 47,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at32b": {
         "category": "critical energy",
@@ -3975,7 +4073,9 @@
                 }
             ]
         },
-        "datasetId": 48
+        "datasetId": 48,
+        "categoryId": 3,
+        "subcategoryId": 7
     },
     "at35a": {
         "category": "cell size",
@@ -4081,7 +4181,9 @@
                 }
             ]
         },
-        "datasetId": 49
+        "datasetId": 49,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at35b": {
         "category": "cell size",
@@ -4167,7 +4269,9 @@
                 }
             ]
         },
-        "datasetId": 50
+        "datasetId": 50,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja11b": {
         "category": "cell size",
@@ -4243,7 +4347,9 @@
                 }
             ]
         },
-        "datasetId": 51
+        "datasetId": 51,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja11a": {
         "category": "cell size",
@@ -4336,7 +4442,9 @@
                 }
             ]
         },
-        "datasetId": 52
+        "datasetId": 52,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk142a": {
         "category": "critical tube",
@@ -4439,7 +4547,10 @@
                 }
             ]
         },
-        "datasetId": 53
+        "datasetId": 53,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at200c": {
         "category": "critical tube",
@@ -4542,7 +4653,10 @@
                 }
             ]
         },
-        "datasetId": 54
+        "datasetId": 54,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at109a": {
         "category": "critical energy",
@@ -4604,7 +4718,9 @@
                 }
             ]
         },
-        "datasetId": 55
+        "datasetId": 55,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at109c": {
         "category": "critical energy",
@@ -4666,7 +4782,9 @@
                 }
             ]
         },
-        "datasetId": 56
+        "datasetId": 56,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at109b": {
         "category": "critical energy",
@@ -4728,7 +4846,9 @@
                 }
             ]
         },
-        "datasetId": 57
+        "datasetId": 57,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at199d": {
         "category": "cell size",
@@ -4814,7 +4934,9 @@
                 }
             ]
         },
-        "datasetId": 58
+        "datasetId": 58,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at199a": {
         "category": "cell size",
@@ -4892,7 +5014,9 @@
                 }
             ]
         },
-        "datasetId": 59
+        "datasetId": 59,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at199c": {
         "category": "cell size",
@@ -5002,7 +5126,9 @@
                 }
             ]
         },
-        "datasetId": 60
+        "datasetId": 60,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13a": {
         "category": "cell size",
@@ -5056,7 +5182,9 @@
                 }
             ]
         },
-        "datasetId": 61
+        "datasetId": 61,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13b": {
         "category": "cell size",
@@ -5166,7 +5294,9 @@
                 }
             ]
         },
-        "datasetId": 62
+        "datasetId": 62,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13d": {
         "category": "cell size",
@@ -5228,7 +5358,9 @@
                 }
             ]
         },
-        "datasetId": 63
+        "datasetId": 63,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13e": {
         "category": "cell size",
@@ -5322,7 +5454,9 @@
                 }
             ]
         },
-        "datasetId": 64
+        "datasetId": 64,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13f": {
         "category": "cell size",
@@ -5392,7 +5526,9 @@
                 }
             ]
         },
-        "datasetId": 65
+        "datasetId": 65,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at139b": {
         "category": "cell size",
@@ -5474,7 +5610,9 @@
                 }
             ]
         },
-        "datasetId": 66
+        "datasetId": 66,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at139c": {
         "category": "cell size",
@@ -5560,7 +5698,9 @@
                 }
             ]
         },
-        "datasetId": 67
+        "datasetId": 67,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at139a": {
         "category": "cell size",
@@ -5654,7 +5794,9 @@
                 }
             ]
         },
-        "datasetId": 68
+        "datasetId": 68,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at139d": {
         "category": "cell size",
@@ -5712,7 +5854,9 @@
                 }
             ]
         },
-        "datasetId": 69
+        "datasetId": 69,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at139e": {
         "category": "cell size",
@@ -5774,7 +5918,9 @@
                 }
             ]
         },
-        "datasetId": 70
+        "datasetId": 70,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "ja23h": {
         "category": "cell size",
@@ -5828,7 +5974,9 @@
                 }
             ]
         },
-        "datasetId": 71
+        "datasetId": 71,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23g": {
         "category": "cell size",
@@ -5882,7 +6030,9 @@
                 }
             ]
         },
-        "datasetId": 72
+        "datasetId": 72,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at124e": {
         "category": "critical energy",
@@ -5958,7 +6108,9 @@
                 }
             ]
         },
-        "datasetId": 73
+        "datasetId": 73,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "ja23e": {
         "category": "cell size",
@@ -6016,7 +6168,9 @@
                 }
             ]
         },
-        "datasetId": 74
+        "datasetId": 74,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23d": {
         "category": "cell size",
@@ -6074,7 +6228,9 @@
                 }
             ]
         },
-        "datasetId": 75
+        "datasetId": 75,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23c": {
         "category": "cell size",
@@ -6132,7 +6288,9 @@
                 }
             ]
         },
-        "datasetId": 76
+        "datasetId": 76,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23b": {
         "category": "cell size",
@@ -6194,7 +6352,9 @@
                 }
             ]
         },
-        "datasetId": 77
+        "datasetId": 77,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23a": {
         "category": "cell size",
@@ -6256,7 +6416,9 @@
                 }
             ]
         },
-        "datasetId": 78
+        "datasetId": 78,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at124c": {
         "category": "critical energy",
@@ -6322,7 +6484,9 @@
                 }
             ]
         },
-        "datasetId": 79
+        "datasetId": 79,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at192a": {
         "category": "cell size",
@@ -6392,7 +6556,9 @@
                 }
             ]
         },
-        "datasetId": 80
+        "datasetId": 80,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at169b": {
         "category": "cell size",
@@ -6462,7 +6628,9 @@
                 }
             ]
         },
-        "datasetId": 81
+        "datasetId": 81,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at169a": {
         "category": "cell size",
@@ -6548,7 +6716,9 @@
                 }
             ]
         },
-        "datasetId": 82
+        "datasetId": 82,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at192b": {
         "category": "cell size",
@@ -6618,7 +6788,9 @@
                 }
             ]
         },
-        "datasetId": 83
+        "datasetId": 83,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at169e": {
         "category": "cell size",
@@ -6688,7 +6860,9 @@
                 }
             ]
         },
-        "datasetId": 84
+        "datasetId": 84,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at169d": {
         "category": "cell size",
@@ -6762,7 +6936,9 @@
                 }
             ]
         },
-        "datasetId": 85
+        "datasetId": 85,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk7d": {
         "category": "cell size",
@@ -6873,7 +7049,9 @@
                 }
             ]
         },
-        "datasetId": 86
+        "datasetId": 86,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at133": {
         "category": "minimum tube",
@@ -6950,7 +7128,10 @@
                 }
             ]
         },
-        "datasetId": 87
+        "datasetId": 87,
+        "subcategory": "N/A",
+        "categoryId": 5,
+        "subcategoryId": 1
     },
     "mk7a": {
         "category": "cell size",
@@ -7042,7 +7223,9 @@
                 }
             ]
         },
-        "datasetId": 88
+        "datasetId": 88,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk7c": {
         "category": "cell size",
@@ -7123,7 +7306,9 @@
                 }
             ]
         },
-        "datasetId": 89
+        "datasetId": 89,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk7b": {
         "category": "cell size",
@@ -7204,7 +7389,9 @@
                 }
             ]
         },
-        "datasetId": 90
+        "datasetId": 90,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at66e": {
         "category": "critical tube",
@@ -7301,7 +7488,10 @@
                 }
             ]
         },
-        "datasetId": 91
+        "datasetId": 91,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at37": {
         "category": "cell size",
@@ -7392,7 +7582,9 @@
                 }
             ]
         },
-        "datasetId": 92
+        "datasetId": 92,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at56d": {
         "category": "critical tube",
@@ -7445,7 +7637,10 @@
                 }
             ]
         },
-        "datasetId": 93
+        "datasetId": 93,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at56c": {
         "category": "critical tube",
@@ -7517,7 +7712,10 @@
                 }
             ]
         },
-        "datasetId": 94
+        "datasetId": 94,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at56a": {
         "category": "critical tube",
@@ -7582,7 +7780,10 @@
                 }
             ]
         },
-        "datasetId": 95
+        "datasetId": 95,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "H2-Air1": {
         "category": "cell size",
@@ -7776,7 +7977,9 @@
                 }
             ]
         },
-        "datasetId": 96
+        "datasetId": 96,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at93a": {
         "category": "cell size",
@@ -7850,7 +8053,9 @@
                 }
             ]
         },
-        "datasetId": 97
+        "datasetId": 97,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "ja16c": {
         "category": "cell size",
@@ -7926,7 +8131,9 @@
                 }
             ]
         },
-        "datasetId": 98
+        "datasetId": 98,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja16b": {
         "category": "cell size",
@@ -8003,7 +8210,9 @@
                 }
             ]
         },
-        "datasetId": 99
+        "datasetId": 99,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja16a": {
         "category": "cell size",
@@ -8088,7 +8297,9 @@
                 }
             ]
         },
-        "datasetId": 100
+        "datasetId": 100,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3d": {
         "category": "cell size",
@@ -8154,7 +8365,9 @@
                 }
             ]
         },
-        "datasetId": 101
+        "datasetId": 101,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3b": {
         "category": "cell size",
@@ -8236,7 +8449,9 @@
                 }
             ]
         },
-        "datasetId": 102
+        "datasetId": 102,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3c": {
         "category": "cell size",
@@ -8302,7 +8517,9 @@
                 }
             ]
         },
-        "datasetId": 103
+        "datasetId": 103,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3a": {
         "category": "cell size",
@@ -8408,7 +8625,9 @@
                 }
             ]
         },
-        "datasetId": 104
+        "datasetId": 104,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at71a": {
         "category": "critical tube",
@@ -8505,7 +8724,10 @@
                 }
             ]
         },
-        "datasetId": 105
+        "datasetId": 105,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at49b": {
         "category": "critical energy",
@@ -8567,7 +8789,9 @@
                 }
             ]
         },
-        "datasetId": 106
+        "datasetId": 106,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at49a": {
         "category": "critical energy",
@@ -8625,7 +8849,9 @@
                 }
             ]
         },
-        "datasetId": 107
+        "datasetId": 107,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at62a": {
         "category": "cell size",
@@ -8743,7 +8969,9 @@
                 }
             ]
         },
-        "datasetId": 108
+        "datasetId": 108,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at62b": {
         "category": "cell size",
@@ -8825,7 +9053,9 @@
                 }
             ]
         },
-        "datasetId": 109
+        "datasetId": 109,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39d": {
         "category": "cell size",
@@ -8940,7 +9170,9 @@
                 }
             ]
         },
-        "datasetId": 110
+        "datasetId": 110,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39a": {
         "category": "cell size",
@@ -9025,7 +9257,9 @@
                 }
             ]
         },
-        "datasetId": 111
+        "datasetId": 111,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39b": {
         "category": "cell size",
@@ -9115,7 +9349,9 @@
                 }
             ]
         },
-        "datasetId": 112
+        "datasetId": 112,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39c": {
         "category": "cell size",
@@ -9210,7 +9446,9 @@
                 }
             ]
         },
-        "datasetId": 113
+        "datasetId": 113,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk168b": {
         "category": "cell size",
@@ -9275,7 +9513,9 @@
                 }
             ]
         },
-        "datasetId": 114
+        "datasetId": 114,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26d": {
         "category": "cell size",
@@ -9369,7 +9609,9 @@
                 }
             ]
         },
-        "datasetId": 115
+        "datasetId": 115,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26e": {
         "category": "cell size",
@@ -9435,7 +9677,9 @@
                 }
             ]
         },
-        "datasetId": 116
+        "datasetId": 116,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26f": {
         "category": "cell size",
@@ -9509,7 +9753,9 @@
                 }
             ]
         },
-        "datasetId": 117
+        "datasetId": 117,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26a": {
         "category": "cell size",
@@ -9579,7 +9825,9 @@
                 }
             ]
         },
-        "datasetId": 118
+        "datasetId": 118,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26b": {
         "category": "cell size",
@@ -9689,7 +9937,9 @@
                 }
             ]
         },
-        "datasetId": 119
+        "datasetId": 119,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26c": {
         "category": "cell size",
@@ -9755,7 +10005,9 @@
                 }
             ]
         },
-        "datasetId": 120
+        "datasetId": 120,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at195c": {
         "category": "critical energy",
@@ -9809,7 +10061,9 @@
                 }
             ]
         },
-        "datasetId": 121
+        "datasetId": 121,
+        "categoryId": 3,
+        "subcategoryId": 8
     },
     "at195d": {
         "category": "critical energy",
@@ -9879,7 +10133,9 @@
                 }
             ]
         },
-        "datasetId": 122
+        "datasetId": 122,
+        "categoryId": 3,
+        "subcategoryId": 9
     },
     "at195e": {
         "category": "critical energy",
@@ -9953,7 +10209,9 @@
                 }
             ]
         },
-        "datasetId": 123
+        "datasetId": 123,
+        "categoryId": 3,
+        "subcategoryId": 9
     },
     "mk4d": {
         "category": "cell size",
@@ -10018,7 +10276,9 @@
                 }
             ]
         },
-        "datasetId": 124
+        "datasetId": 124,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at181b": {
         "category": "critical energy",
@@ -10072,7 +10332,9 @@
                 }
             ]
         },
-        "datasetId": 125
+        "datasetId": 125,
+        "categoryId": 3,
+        "subcategoryId": 10
     },
     "mk4a": {
         "category": "cell size",
@@ -10134,7 +10396,9 @@
                 }
             ]
         },
-        "datasetId": 126
+        "datasetId": 126,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk4b": {
         "category": "cell size",
@@ -10202,7 +10466,9 @@
                 }
             ]
         },
-        "datasetId": 127
+        "datasetId": 127,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk4c": {
         "category": "cell size",
@@ -10267,7 +10533,9 @@
                 }
             ]
         },
-        "datasetId": 128
+        "datasetId": 128,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk3a": {
         "category": "cell size",
@@ -10325,7 +10593,9 @@
                 }
             ]
         },
-        "datasetId": 129
+        "datasetId": 129,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk3c": {
         "category": "cell size",
@@ -10380,7 +10650,9 @@
                 }
             ]
         },
-        "datasetId": 130
+        "datasetId": 130,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk3b": {
         "category": "cell size",
@@ -10438,7 +10710,9 @@
                 }
             ]
         },
-        "datasetId": 131
+        "datasetId": 131,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk3d": {
         "category": "cell size",
@@ -10499,7 +10773,9 @@
                 }
             ]
         },
-        "datasetId": 132
+        "datasetId": 132,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk157n": {
         "category": "cell size",
@@ -10565,7 +10841,9 @@
                 }
             ]
         },
-        "datasetId": 133
+        "datasetId": 133,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk157g": {
         "category": "cell size",
@@ -10627,7 +10905,9 @@
                 }
             ]
         },
-        "datasetId": 134
+        "datasetId": 134,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at140a": {
         "category": "cell size",
@@ -10717,7 +10997,9 @@
                 }
             ]
         },
-        "datasetId": 135
+        "datasetId": 135,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at177a": {
         "category": "critical energy",
@@ -10771,7 +11053,9 @@
                 }
             ]
         },
-        "datasetId": 136
+        "datasetId": 136,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at72a": {
         "category": "critical tube",
@@ -10868,7 +11152,10 @@
                 }
             ]
         },
-        "datasetId": 137
+        "datasetId": 137,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at203": {
         "category": "cell size",
@@ -10990,7 +11277,9 @@
                 }
             ]
         },
-        "datasetId": 138
+        "datasetId": 138,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at72c": {
         "category": "critical tube",
@@ -11105,7 +11394,10 @@
                 }
             ]
         },
-        "datasetId": 139
+        "datasetId": 139,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at44a": {
         "category": "critical energy",
@@ -11161,7 +11453,9 @@
                 }
             ]
         },
-        "datasetId": 140
+        "datasetId": 140,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at44c": {
         "category": "critical energy",
@@ -11227,7 +11521,9 @@
                 }
             ]
         },
-        "datasetId": 141
+        "datasetId": 141,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at33b": {
         "category": "cell size",
@@ -11293,7 +11589,9 @@
                 }
             ]
         },
-        "datasetId": 142
+        "datasetId": 142,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at33c": {
         "category": "cell size",
@@ -11351,7 +11649,9 @@
                 }
             ]
         },
-        "datasetId": 143
+        "datasetId": 143,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at33a": {
         "category": "cell size",
@@ -11421,7 +11721,9 @@
                 }
             ]
         },
-        "datasetId": 144
+        "datasetId": 144,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at147c": {
         "category": "critical tube",
@@ -11478,7 +11780,10 @@
                 }
             ]
         },
-        "datasetId": 145
+        "datasetId": 145,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at4": {
         "category": "cell size",
@@ -11568,7 +11873,9 @@
                 }
             ]
         },
-        "datasetId": 146
+        "datasetId": 146,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157k": {
         "category": "cell size",
@@ -11638,7 +11945,9 @@
                 }
             ]
         },
-        "datasetId": 147
+        "datasetId": 147,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157h": {
         "category": "cell size",
@@ -11704,7 +12013,9 @@
                 }
             ]
         },
-        "datasetId": 148
+        "datasetId": 148,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at5a": {
         "category": "cell size",
@@ -11774,7 +12085,9 @@
                 }
             ]
         },
-        "datasetId": 149
+        "datasetId": 149,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at5b": {
         "category": "cell size",
@@ -11840,7 +12153,9 @@
                 }
             ]
         },
-        "datasetId": 150
+        "datasetId": 150,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at20a": {
         "category": "critical tube",
@@ -11905,7 +12220,10 @@
                 }
             ]
         },
-        "datasetId": 151
+        "datasetId": 151,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at65": {
         "category": "cell size",
@@ -11995,7 +12313,9 @@
                 }
             ]
         },
-        "datasetId": 152
+        "datasetId": 152,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at66a": {
         "category": "critical tube",
@@ -12074,7 +12394,10 @@
                 }
             ]
         },
-        "datasetId": 153
+        "datasetId": 153,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at66b": {
         "category": "critical tube",
@@ -12171,7 +12494,10 @@
                 }
             ]
         },
-        "datasetId": 154
+        "datasetId": 154,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at66c": {
         "category": "critical tube",
@@ -12268,7 +12594,10 @@
                 }
             ]
         },
-        "datasetId": 155
+        "datasetId": 155,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at66d": {
         "category": "critical tube",
@@ -12359,7 +12688,10 @@
                 }
             ]
         },
-        "datasetId": 156
+        "datasetId": 156,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at84a": {
         "category": "critical energy",
@@ -12571,7 +12903,9 @@
                 }
             ]
         },
-        "datasetId": 157
+        "datasetId": 157,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at66f": {
         "category": "critical tube",
@@ -12668,7 +13002,10 @@
                 }
             ]
         },
-        "datasetId": 158
+        "datasetId": 158,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at150b": {
         "category": "cell size",
@@ -12834,7 +13171,9 @@
                 }
             ]
         },
-        "datasetId": 159
+        "datasetId": 159,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at150a": {
         "category": "cell size",
@@ -12916,7 +13255,9 @@
                 }
             ]
         },
-        "datasetId": 160
+        "datasetId": 160,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk22e": {
         "category": "critical tube",
@@ -12973,7 +13314,10 @@
                 }
             ]
         },
-        "datasetId": 161
+        "datasetId": 161,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "ja22a": {
         "category": "cell size",
@@ -13049,7 +13393,9 @@
                 }
             ]
         },
-        "datasetId": 162
+        "datasetId": 162,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22b": {
         "category": "cell size",
@@ -13120,7 +13466,9 @@
                 }
             ]
         },
-        "datasetId": 163
+        "datasetId": 163,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22c": {
         "category": "cell size",
@@ -13196,7 +13544,9 @@
                 }
             ]
         },
-        "datasetId": 164
+        "datasetId": 164,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22d": {
         "category": "cell size",
@@ -13262,7 +13612,9 @@
                 }
             ]
         },
-        "datasetId": 165
+        "datasetId": 165,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22e": {
         "category": "cell size",
@@ -13328,7 +13680,9 @@
                 }
             ]
         },
-        "datasetId": 166
+        "datasetId": 166,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22f": {
         "category": "cell size",
@@ -13390,7 +13744,9 @@
                 }
             ]
         },
-        "datasetId": 167
+        "datasetId": 167,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at166b": {
         "category": "cell size",
@@ -13464,7 +13820,9 @@
                 }
             ]
         },
-        "datasetId": 168
+        "datasetId": 168,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at166a": {
         "category": "cell size",
@@ -13550,7 +13908,9 @@
                 }
             ]
         },
-        "datasetId": 169
+        "datasetId": 169,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at161c": {
         "category": "critical tube",
@@ -13627,7 +13987,10 @@
                 }
             ]
         },
-        "datasetId": 170
+        "datasetId": 170,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at161b": {
         "category": "critical tube",
@@ -13700,7 +14063,10 @@
                 }
             ]
         },
-        "datasetId": 171
+        "datasetId": 171,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at161a": {
         "category": "critical tube",
@@ -13773,7 +14139,10 @@
                 }
             ]
         },
-        "datasetId": 172
+        "datasetId": 172,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at161d": {
         "category": "critical tube",
@@ -13846,7 +14215,10 @@
                 }
             ]
         },
-        "datasetId": 173
+        "datasetId": 173,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at210b": {
         "category": "critical energy",
@@ -13926,7 +14298,9 @@
                 }
             ]
         },
-        "datasetId": 174
+        "datasetId": 174,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at210a": {
         "category": "critical energy",
@@ -14043,7 +14417,9 @@
                 }
             ]
         },
-        "datasetId": 175
+        "datasetId": 175,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at158": {
         "category": "cell size",
@@ -14135,7 +14511,9 @@
                 }
             ]
         },
-        "datasetId": 176
+        "datasetId": 176,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at152": {
         "category": "cell size",
@@ -14221,7 +14599,9 @@
                 }
             ]
         },
-        "datasetId": 177
+        "datasetId": 177,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at153": {
         "category": "cell size",
@@ -14303,7 +14683,9 @@
                 }
             ]
         },
-        "datasetId": 178
+        "datasetId": 178,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at151": {
         "category": "cell size",
@@ -14397,7 +14779,9 @@
                 }
             ]
         },
-        "datasetId": 179
+        "datasetId": 179,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at27b": {
         "category": "minimum tube",
@@ -14479,7 +14863,9 @@
                 }
             ]
         },
-        "datasetId": 180
+        "datasetId": 180,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "at27a": {
         "category": "minimum tube",
@@ -14561,7 +14947,9 @@
                 }
             ]
         },
-        "datasetId": 181
+        "datasetId": 181,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "mk184d": {
         "category": "cell size",
@@ -14609,7 +14997,9 @@
                 }
             ]
         },
-        "datasetId": 182
+        "datasetId": 182,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at148a": {
         "category": "cell size",
@@ -14707,7 +15097,9 @@
                 }
             ]
         },
-        "datasetId": 183
+        "datasetId": 183,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at79a": {
         "category": "critical energy",
@@ -14773,7 +15165,9 @@
                 }
             ]
         },
-        "datasetId": 184
+        "datasetId": 184,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at79b": {
         "category": "critical energy",
@@ -14847,7 +15241,9 @@
                 }
             ]
         },
-        "datasetId": 185
+        "datasetId": 185,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "ja25e": {
         "category": "cell size",
@@ -14917,7 +15313,9 @@
                 }
             ]
         },
-        "datasetId": 186
+        "datasetId": 186,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25d": {
         "category": "cell size",
@@ -14979,7 +15377,9 @@
                 }
             ]
         },
-        "datasetId": 187
+        "datasetId": 187,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25f": {
         "category": "cell size",
@@ -15061,7 +15461,9 @@
                 }
             ]
         },
-        "datasetId": 188
+        "datasetId": 188,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25a": {
         "category": "cell size",
@@ -15127,7 +15529,9 @@
                 }
             ]
         },
-        "datasetId": 189
+        "datasetId": 189,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25c": {
         "category": "cell size",
@@ -15201,7 +15605,9 @@
                 }
             ]
         },
-        "datasetId": 190
+        "datasetId": 190,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25b": {
         "category": "cell size",
@@ -15271,7 +15677,9 @@
                 }
             ]
         },
-        "datasetId": 191
+        "datasetId": 191,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at24": {
         "category": "critical energy",
@@ -15401,7 +15809,9 @@
                 }
             ]
         },
-        "datasetId": 192
+        "datasetId": 192,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at26": {
         "category": "minimum tube",
@@ -15498,7 +15908,9 @@
                 }
             ]
         },
-        "datasetId": 193
+        "datasetId": 193,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "ja7b": {
         "category": "cell size",
@@ -15571,7 +15983,9 @@
                 }
             ]
         },
-        "datasetId": 194
+        "datasetId": 194,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7c": {
         "category": "cell size",
@@ -15640,7 +16054,9 @@
                 }
             ]
         },
-        "datasetId": 195
+        "datasetId": 195,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7a": {
         "category": "cell size",
@@ -15717,7 +16133,9 @@
                 }
             ]
         },
-        "datasetId": 196
+        "datasetId": 196,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7d": {
         "category": "cell size",
@@ -15793,7 +16211,9 @@
                 }
             ]
         },
-        "datasetId": 197
+        "datasetId": 197,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7e": {
         "category": "cell size",
@@ -15869,7 +16289,9 @@
                 }
             ]
         },
-        "datasetId": 198
+        "datasetId": 198,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198c": {
         "category": "cell size",
@@ -15967,7 +16389,9 @@
                 }
             ]
         },
-        "datasetId": 199
+        "datasetId": 199,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198b": {
         "category": "cell size",
@@ -16061,7 +16485,9 @@
                 }
             ]
         },
-        "datasetId": 200
+        "datasetId": 200,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198a": {
         "category": "cell size",
@@ -16143,7 +16569,9 @@
                 }
             ]
         },
-        "datasetId": 201
+        "datasetId": 201,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198d": {
         "category": "cell size",
@@ -16197,7 +16625,9 @@
                 }
             ]
         },
-        "datasetId": 202
+        "datasetId": 202,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at80b": {
         "category": "critical tube",
@@ -16250,7 +16680,10 @@
                 }
             ]
         },
-        "datasetId": 203
+        "datasetId": 203,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at80c": {
         "category": "critical tube",
@@ -16303,7 +16736,10 @@
                 }
             ]
         },
-        "datasetId": 204
+        "datasetId": 204,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "js13c": {
         "category": "cell size",
@@ -16413,7 +16849,9 @@
                 }
             ]
         },
-        "datasetId": 205
+        "datasetId": 205,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at181a": {
         "category": "critical energy",
@@ -16467,7 +16905,9 @@
                 }
             ]
         },
-        "datasetId": 206
+        "datasetId": 206,
+        "categoryId": 3,
+        "subcategoryId": 10
     },
     "at162b": {
         "category": "critical tube",
@@ -16536,7 +16976,10 @@
                 }
             ]
         },
-        "datasetId": 207
+        "datasetId": 207,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at162c": {
         "category": "critical tube",
@@ -16605,7 +17048,10 @@
                 }
             ]
         },
-        "datasetId": 208
+        "datasetId": 208,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at162a": {
         "category": "critical tube",
@@ -16674,7 +17120,10 @@
                 }
             ]
         },
-        "datasetId": 209
+        "datasetId": 209,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at154b": {
         "category": "cell size",
@@ -16748,7 +17197,9 @@
                 }
             ]
         },
-        "datasetId": 210
+        "datasetId": 210,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at154a": {
         "category": "cell size",
@@ -16826,7 +17277,9 @@
                 }
             ]
         },
-        "datasetId": 211
+        "datasetId": 211,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at53": {
         "category": "critical energy",
@@ -16932,7 +17385,9 @@
                 }
             ]
         },
-        "datasetId": 212
+        "datasetId": 212,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at77d": {
         "category": "critical tube",
@@ -16989,7 +17444,10 @@
                 }
             ]
         },
-        "datasetId": 213
+        "datasetId": 213,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at77b": {
         "category": "critical tube",
@@ -17046,7 +17504,10 @@
                 }
             ]
         },
-        "datasetId": 214
+        "datasetId": 214,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at77c": {
         "category": "critical tube",
@@ -17103,7 +17564,10 @@
                 }
             ]
         },
-        "datasetId": 215
+        "datasetId": 215,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at77a": {
         "category": "critical tube",
@@ -17160,7 +17624,10 @@
                 }
             ]
         },
-        "datasetId": 216
+        "datasetId": 216,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at47a": {
         "category": "cell size",
@@ -17226,7 +17693,9 @@
                 }
             ]
         },
-        "datasetId": 217
+        "datasetId": 217,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at47b": {
         "category": "cell size",
@@ -17316,7 +17785,9 @@
                 }
             ]
         },
-        "datasetId": 218
+        "datasetId": 218,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57a": {
         "category": "cell size",
@@ -17510,7 +17981,9 @@
                 }
             ]
         },
-        "datasetId": 219
+        "datasetId": 219,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57d": {
         "category": "cell size",
@@ -17620,7 +18093,9 @@
                 }
             ]
         },
-        "datasetId": 220
+        "datasetId": 220,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57f": {
         "category": "cell size",
@@ -17754,7 +18229,9 @@
                 }
             ]
         },
-        "datasetId": 221
+        "datasetId": 221,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja9": {
         "category": "cell size",
@@ -17835,7 +18312,9 @@
                 }
             ]
         },
-        "datasetId": 222
+        "datasetId": 222,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja4": {
         "category": "cell size",
@@ -17926,7 +18405,9 @@
                 }
             ]
         },
-        "datasetId": 223
+        "datasetId": 223,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja2": {
         "category": "cell size",
@@ -18002,7 +18483,9 @@
                 }
             ]
         },
-        "datasetId": 224
+        "datasetId": 224,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja3": {
         "category": "cell size",
@@ -18098,7 +18581,9 @@
                 }
             ]
         },
-        "datasetId": 225
+        "datasetId": 225,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172p": {
         "category": "cell size",
@@ -18152,7 +18637,9 @@
                 }
             ]
         },
-        "datasetId": 226
+        "datasetId": 226,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172o": {
         "category": "cell size",
@@ -18206,7 +18693,9 @@
                 }
             ]
         },
-        "datasetId": 227
+        "datasetId": 227,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172n": {
         "category": "cell size",
@@ -18260,7 +18749,9 @@
                 }
             ]
         },
-        "datasetId": 228
+        "datasetId": 228,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172m": {
         "category": "cell size",
@@ -18314,7 +18805,9 @@
                 }
             ]
         },
-        "datasetId": 229
+        "datasetId": 229,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172l": {
         "category": "cell size",
@@ -18368,7 +18861,9 @@
                 }
             ]
         },
-        "datasetId": 230
+        "datasetId": 230,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172k": {
         "category": "cell size",
@@ -18422,7 +18917,9 @@
                 }
             ]
         },
-        "datasetId": 231
+        "datasetId": 231,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172j": {
         "category": "cell size",
@@ -18476,7 +18973,9 @@
                 }
             ]
         },
-        "datasetId": 232
+        "datasetId": 232,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172i": {
         "category": "cell size",
@@ -18530,7 +19029,9 @@
                 }
             ]
         },
-        "datasetId": 233
+        "datasetId": 233,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172h": {
         "category": "cell size",
@@ -18588,7 +19089,9 @@
                 }
             ]
         },
-        "datasetId": 234
+        "datasetId": 234,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172g": {
         "category": "cell size",
@@ -18642,7 +19145,9 @@
                 }
             ]
         },
-        "datasetId": 235
+        "datasetId": 235,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172f": {
         "category": "cell size",
@@ -18696,7 +19201,9 @@
                 }
             ]
         },
-        "datasetId": 236
+        "datasetId": 236,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172e": {
         "category": "cell size",
@@ -18750,7 +19257,9 @@
                 }
             ]
         },
-        "datasetId": 237
+        "datasetId": 237,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172d": {
         "category": "cell size",
@@ -18808,7 +19317,9 @@
                 }
             ]
         },
-        "datasetId": 238
+        "datasetId": 238,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172c": {
         "category": "cell size",
@@ -18862,7 +19373,9 @@
                 }
             ]
         },
-        "datasetId": 239
+        "datasetId": 239,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172b": {
         "category": "cell size",
@@ -18916,7 +19429,9 @@
                 }
             ]
         },
-        "datasetId": 240
+        "datasetId": 240,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172a": {
         "category": "cell size",
@@ -18974,7 +19489,9 @@
                 }
             ]
         },
-        "datasetId": 241
+        "datasetId": 241,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at28b": {
         "category": "minimum tube",
@@ -19055,7 +19572,9 @@
                 }
             ]
         },
-        "datasetId": 242
+        "datasetId": 242,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "at28c": {
         "category": "minimum tube",
@@ -19136,7 +19655,9 @@
                 }
             ]
         },
-        "datasetId": 243
+        "datasetId": 243,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "at93b": {
         "category": "cell size",
@@ -19230,7 +19751,9 @@
                 }
             ]
         },
-        "datasetId": 244
+        "datasetId": 244,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at28a": {
         "category": "minimum tube",
@@ -19311,7 +19834,9 @@
                 }
             ]
         },
-        "datasetId": 245
+        "datasetId": 245,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "at28d": {
         "category": "minimum tube",
@@ -19377,7 +19902,9 @@
                 }
             ]
         },
-        "datasetId": 246
+        "datasetId": 246,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "at28e": {
         "category": "minimum tube",
@@ -19443,7 +19970,9 @@
                 }
             ]
         },
-        "datasetId": 247
+        "datasetId": 247,
+        "categoryId": 5,
+        "subcategoryId": 11
     },
     "at143a": {
         "category": "critical tube",
@@ -19540,7 +20069,10 @@
                 }
             ]
         },
-        "datasetId": 248
+        "datasetId": 248,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "ja21a": {
         "category": "cell size",
@@ -19602,7 +20134,9 @@
                 }
             ]
         },
-        "datasetId": 249
+        "datasetId": 249,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at126c": {
         "category": "critical energy",
@@ -19673,7 +20207,9 @@
                 }
             ]
         },
-        "datasetId": 250
+        "datasetId": 250,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "ja21c": {
         "category": "cell size",
@@ -19731,7 +20267,9 @@
                 }
             ]
         },
-        "datasetId": 251
+        "datasetId": 251,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at126a": {
         "category": "critical energy",
@@ -19812,7 +20350,9 @@
                 }
             ]
         },
-        "datasetId": 252
+        "datasetId": 252,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at126d": {
         "category": "critical energy",
@@ -19883,7 +20423,9 @@
                 }
             ]
         },
-        "datasetId": 253
+        "datasetId": 253,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at126e": {
         "category": "critical energy",
@@ -19959,7 +20501,9 @@
                 }
             ]
         },
-        "datasetId": 254
+        "datasetId": 254,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at126b": {
         "category": "critical energy",
@@ -20035,7 +20579,9 @@
                 }
             ]
         },
-        "datasetId": 255
+        "datasetId": 255,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "ja21b": {
         "category": "cell size",
@@ -20097,7 +20643,9 @@
                 }
             ]
         },
-        "datasetId": 256
+        "datasetId": 256,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk5c": {
         "category": "cell size",
@@ -20163,7 +20711,9 @@
                 }
             ]
         },
-        "datasetId": 257
+        "datasetId": 257,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk5b": {
         "category": "cell size",
@@ -20233,7 +20783,9 @@
                 }
             ]
         },
-        "datasetId": 258
+        "datasetId": 258,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at194a": {
         "category": "cell size",
@@ -20287,7 +20839,9 @@
                 }
             ]
         },
-        "datasetId": 259
+        "datasetId": 259,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at115": {
         "category": "critical energy",
@@ -20361,7 +20915,9 @@
                 }
             ]
         },
-        "datasetId": 260
+        "datasetId": 260,
+        "categoryId": 3,
+        "subcategoryId": 12
     },
     "at182d": {
         "category": "cell size",
@@ -20523,7 +21079,9 @@
                 }
             ]
         },
-        "datasetId": 261
+        "datasetId": 261,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at182a": {
         "category": "cell size",
@@ -20609,7 +21167,9 @@
                 }
             ]
         },
-        "datasetId": 262
+        "datasetId": 262,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at182b": {
         "category": "cell size",
@@ -20699,7 +21259,9 @@
                 }
             ]
         },
-        "datasetId": 263
+        "datasetId": 263,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at182c": {
         "category": "cell size",
@@ -20781,7 +21343,9 @@
                 }
             ]
         },
-        "datasetId": 264
+        "datasetId": 264,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at42b": {
         "category": "cell size",
@@ -20875,7 +21439,9 @@
                 }
             ]
         },
-        "datasetId": 265
+        "datasetId": 265,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at42a": {
         "category": "cell size",
@@ -20969,7 +21535,9 @@
                 }
             ]
         },
-        "datasetId": 266
+        "datasetId": 266,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at54a": {
         "category": "critical energy",
@@ -21027,7 +21595,9 @@
                 }
             ]
         },
-        "datasetId": 267
+        "datasetId": 267,
+        "categoryId": 3,
+        "subcategoryId": 13
     },
     "mk8a": {
         "category": "cell size",
@@ -21117,7 +21687,9 @@
                 }
             ]
         },
-        "datasetId": 268
+        "datasetId": 268,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk8b": {
         "category": "cell size",
@@ -21207,7 +21779,9 @@
                 }
             ]
         },
-        "datasetId": 269
+        "datasetId": 269,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at19": {
         "category": "cell size",
@@ -21305,7 +21879,9 @@
                 }
             ]
         },
-        "datasetId": 270
+        "datasetId": 270,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at14": {
         "category": "cell size",
@@ -21395,7 +21971,9 @@
                 }
             ]
         },
-        "datasetId": 271
+        "datasetId": 271,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at15": {
         "category": "cell size",
@@ -21493,7 +22071,9 @@
                 }
             ]
         },
-        "datasetId": 272
+        "datasetId": 272,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at16": {
         "category": "cell size",
@@ -21607,7 +22187,9 @@
                 }
             ]
         },
-        "datasetId": 273
+        "datasetId": 273,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14d": {
         "category": "cell size",
@@ -21733,7 +22315,9 @@
                 }
             ]
         },
-        "datasetId": 274
+        "datasetId": 274,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14a": {
         "category": "cell size",
@@ -21849,7 +22433,9 @@
                 }
             ]
         },
-        "datasetId": 275
+        "datasetId": 275,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14c": {
         "category": "cell size",
@@ -21950,7 +22536,9 @@
                 }
             ]
         },
-        "datasetId": 276
+        "datasetId": 276,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14b": {
         "category": "cell size",
@@ -22066,7 +22654,9 @@
                 }
             ]
         },
-        "datasetId": 277
+        "datasetId": 277,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at176a": {
         "category": "cell size",
@@ -22120,7 +22710,9 @@
                 }
             ]
         },
-        "datasetId": 278
+        "datasetId": 278,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at209a": {
         "category": "critical energy",
@@ -22174,7 +22766,9 @@
                 }
             ]
         },
-        "datasetId": 279
+        "datasetId": 279,
+        "categoryId": 3,
+        "subcategoryId": 13
     },
     "at123e": {
         "category": "critical energy",
@@ -22250,7 +22844,9 @@
                 }
             ]
         },
-        "datasetId": 280
+        "datasetId": 280,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at123d": {
         "category": "critical energy",
@@ -22331,7 +22927,9 @@
                 }
             ]
         },
-        "datasetId": 281
+        "datasetId": 281,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at123f": {
         "category": "critical energy",
@@ -22397,7 +22995,9 @@
                 }
             ]
         },
-        "datasetId": 282
+        "datasetId": 282,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at123a": {
         "category": "critical energy",
@@ -22478,7 +23078,9 @@
                 }
             ]
         },
-        "datasetId": 283
+        "datasetId": 283,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at123b": {
         "category": "critical energy",
@@ -22554,7 +23156,9 @@
                 }
             ]
         },
-        "datasetId": 284
+        "datasetId": 284,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at197b": {
         "category": "cell size",
@@ -22652,7 +23256,9 @@
                 }
             ]
         },
-        "datasetId": 285
+        "datasetId": 285,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at197c": {
         "category": "cell size",
@@ -22746,7 +23352,9 @@
                 }
             ]
         },
-        "datasetId": 286
+        "datasetId": 286,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk168a": {
         "category": "cell size",
@@ -22823,7 +23431,9 @@
                 }
             ]
         },
-        "datasetId": 287
+        "datasetId": 287,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at197a": {
         "category": "cell size",
@@ -22913,7 +23523,9 @@
                 }
             ]
         },
-        "datasetId": 288
+        "datasetId": 288,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187d": {
         "category": "cell size",
@@ -23027,7 +23639,9 @@
                 }
             ]
         },
-        "datasetId": 289
+        "datasetId": 289,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187c": {
         "category": "cell size",
@@ -23173,7 +23787,9 @@
                 }
             ]
         },
-        "datasetId": 290
+        "datasetId": 290,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187b": {
         "category": "cell size",
@@ -23275,7 +23891,9 @@
                 }
             ]
         },
-        "datasetId": 291
+        "datasetId": 291,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187a": {
         "category": "cell size",
@@ -23421,7 +24039,9 @@
                 }
             ]
         },
-        "datasetId": 292
+        "datasetId": 292,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at194c": {
         "category": "cell size",
@@ -23487,7 +24107,9 @@
                 }
             ]
         },
-        "datasetId": 293
+        "datasetId": 293,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at140b": {
         "category": "cell size",
@@ -23561,7 +24183,9 @@
                 }
             ]
         },
-        "datasetId": 294
+        "datasetId": 294,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at194b": {
         "category": "cell size",
@@ -23615,7 +24239,9 @@
                 }
             ]
         },
-        "datasetId": 295
+        "datasetId": 295,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at157c": {
         "category": "cell size",
@@ -23713,7 +24339,9 @@
                 }
             ]
         },
-        "datasetId": 296
+        "datasetId": 296,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157a": {
         "category": "cell size",
@@ -23771,7 +24399,9 @@
                 }
             ]
         },
-        "datasetId": 297
+        "datasetId": 297,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157f": {
         "category": "cell size",
@@ -23825,7 +24455,9 @@
                 }
             ]
         },
-        "datasetId": 298
+        "datasetId": 298,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk5a": {
         "category": "cell size",
@@ -23895,7 +24527,9 @@
                 }
             ]
         },
-        "datasetId": 299
+        "datasetId": 299,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at157e": {
         "category": "cell size",
@@ -23949,7 +24583,9 @@
                 }
             ]
         },
-        "datasetId": 300
+        "datasetId": 300,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157j": {
         "category": "cell size",
@@ -24003,7 +24639,9 @@
                 }
             ]
         },
-        "datasetId": 301
+        "datasetId": 301,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at147b": {
         "category": "critical tube",
@@ -24056,7 +24694,10 @@
                 }
             ]
         },
-        "datasetId": 302
+        "datasetId": 302,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at147a": {
         "category": "critical tube",
@@ -24113,7 +24754,10 @@
                 }
             ]
         },
-        "datasetId": 303
+        "datasetId": 303,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at157l": {
         "category": "cell size",
@@ -24167,7 +24811,9 @@
                 }
             ]
         },
-        "datasetId": 304
+        "datasetId": 304,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157m": {
         "category": "cell size",
@@ -24221,7 +24867,9 @@
                 }
             ]
         },
-        "datasetId": 305
+        "datasetId": 305,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk23b": {
         "category": "critical tube",
@@ -24282,7 +24930,10 @@
                 }
             ]
         },
-        "datasetId": 306
+        "datasetId": 306,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "mk23a": {
         "category": "critical tube",
@@ -24368,7 +25019,10 @@
                 }
             ]
         },
-        "datasetId": 307
+        "datasetId": 307,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "mk1c": {
         "category": "cell size",
@@ -24429,7 +25083,9 @@
                 }
             ]
         },
-        "datasetId": 308
+        "datasetId": 308,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk1b": {
         "category": "cell size",
@@ -24490,7 +25146,9 @@
                 }
             ]
         },
-        "datasetId": 309
+        "datasetId": 309,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk1a": {
         "category": "cell size",
@@ -24566,7 +25224,9 @@
                 }
             ]
         },
-        "datasetId": 310
+        "datasetId": 310,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "mk1d": {
         "category": "cell size",
@@ -24618,7 +25278,9 @@
                 }
             ]
         },
-        "datasetId": 311
+        "datasetId": 311,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at58a": {
         "category": "cell size",
@@ -24788,7 +25450,9 @@
                 }
             ]
         },
-        "datasetId": 312
+        "datasetId": 312,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at58c": {
         "category": "cell size",
@@ -24914,7 +25578,9 @@
                 }
             ]
         },
-        "datasetId": 313
+        "datasetId": 313,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at58b": {
         "category": "cell size",
@@ -25048,7 +25714,9 @@
                 }
             ]
         },
-        "datasetId": 314
+        "datasetId": 314,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at34c": {
         "category": "critical energy",
@@ -25280,7 +25948,9 @@
                 }
             ]
         },
-        "datasetId": 315
+        "datasetId": 315,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at34b": {
         "category": "critical energy",
@@ -25365,7 +26035,9 @@
                 }
             ]
         },
-        "datasetId": 316
+        "datasetId": 316,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at105a": {
         "category": "critical energy",
@@ -25443,7 +26115,9 @@
                 }
             ]
         },
-        "datasetId": 317
+        "datasetId": 317,
+        "categoryId": 3,
+        "subcategoryId": 8
     },
     "at170b": {
         "category": "cell size",
@@ -25497,7 +26171,9 @@
                 }
             ]
         },
-        "datasetId": 318
+        "datasetId": 318,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10a": {
         "category": "cell size",
@@ -25583,7 +26259,9 @@
                 }
             ]
         },
-        "datasetId": 319
+        "datasetId": 319,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10c": {
         "category": "cell size",
@@ -25645,7 +26323,9 @@
                 }
             ]
         },
-        "datasetId": 320
+        "datasetId": 320,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10b": {
         "category": "cell size",
@@ -25707,7 +26387,9 @@
                 }
             ]
         },
-        "datasetId": 321
+        "datasetId": 321,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10e": {
         "category": "cell size",
@@ -25769,7 +26451,9 @@
                 }
             ]
         },
-        "datasetId": 322
+        "datasetId": 322,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10d": {
         "category": "cell size",
@@ -25831,7 +26515,9 @@
                 }
             ]
         },
-        "datasetId": 323
+        "datasetId": 323,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at149a": {
         "category": "cell size",
@@ -25941,7 +26627,9 @@
                 }
             ]
         },
-        "datasetId": 324
+        "datasetId": 324,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at22a1": {
         "category": "critical tube",
@@ -25994,7 +26682,10 @@
                 }
             ]
         },
-        "datasetId": 325
+        "datasetId": 325,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at22a4": {
         "category": "critical tube",
@@ -26047,7 +26738,10 @@
                 }
             ]
         },
-        "datasetId": 326
+        "datasetId": 326,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at64b": {
         "category": "cell size",
@@ -26117,7 +26811,9 @@
                 }
             ]
         },
-        "datasetId": 327
+        "datasetId": 327,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at64c": {
         "category": "cell size",
@@ -26195,7 +26891,9 @@
                 }
             ]
         },
-        "datasetId": 328
+        "datasetId": 328,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at64a": {
         "category": "cell size",
@@ -26269,7 +26967,9 @@
                 }
             ]
         },
-        "datasetId": 329
+        "datasetId": 329,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja6a": {
         "category": "cell size",
@@ -26350,7 +27050,9 @@
                 }
             ]
         },
-        "datasetId": 330
+        "datasetId": 330,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at86a": {
         "category": "cell size",
@@ -26436,7 +27138,9 @@
                 }
             ]
         },
-        "datasetId": 331
+        "datasetId": 331,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja6b": {
         "category": "cell size",
@@ -26507,7 +27211,9 @@
                 }
             ]
         },
-        "datasetId": 332
+        "datasetId": 332,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128a": {
         "category": "cell size",
@@ -26605,7 +27311,9 @@
                 }
             ]
         },
-        "datasetId": 333
+        "datasetId": 333,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128b": {
         "category": "cell size",
@@ -26691,7 +27399,9 @@
                 }
             ]
         },
-        "datasetId": 334
+        "datasetId": 334,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128c": {
         "category": "cell size",
@@ -26793,7 +27503,9 @@
                 }
             ]
         },
-        "datasetId": 335
+        "datasetId": 335,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128d": {
         "category": "cell size",
@@ -26915,7 +27627,9 @@
                 }
             ]
         },
-        "datasetId": 336
+        "datasetId": 336,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk127": {
         "category": "critical tube",
@@ -27030,7 +27744,10 @@
                 }
             ]
         },
-        "datasetId": 337
+        "datasetId": 337,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at147d": {
         "category": "critical tube",
@@ -27087,7 +27804,10 @@
                 }
             ]
         },
-        "datasetId": 338
+        "datasetId": 338,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at137h": {
         "category": "critical tube",
@@ -27152,7 +27872,10 @@
                 }
             ]
         },
-        "datasetId": 339
+        "datasetId": 339,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at137i": {
         "category": "critical tube",
@@ -27213,7 +27936,10 @@
                 }
             ]
         },
-        "datasetId": 340
+        "datasetId": 340,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at137j": {
         "category": "critical tube",
@@ -27278,7 +28004,10 @@
                 }
             ]
         },
-        "datasetId": 341
+        "datasetId": 341,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at137g": {
         "category": "critical tube",
@@ -27343,7 +28072,10 @@
                 }
             ]
         },
-        "datasetId": 342
+        "datasetId": 342,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "ja20b": {
         "category": "cell size",
@@ -27413,7 +28145,9 @@
                 }
             ]
         },
-        "datasetId": 343
+        "datasetId": 343,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja20c": {
         "category": "cell size",
@@ -27491,7 +28225,9 @@
                 }
             ]
         },
-        "datasetId": 344
+        "datasetId": 344,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja20a": {
         "category": "cell size",
@@ -27569,7 +28305,9 @@
                 }
             ]
         },
-        "datasetId": 345
+        "datasetId": 345,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk30": {
         "category": "critical energy",
@@ -27651,7 +28389,9 @@
                 }
             ]
         },
-        "datasetId": 346
+        "datasetId": 346,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at193b": {
         "category": "cell size",
@@ -27745,7 +28485,9 @@
                 }
             ]
         },
-        "datasetId": 347
+        "datasetId": 347,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at193a": {
         "category": "cell size",
@@ -27859,7 +28601,9 @@
                 }
             ]
         },
-        "datasetId": 348
+        "datasetId": 348,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at163a": {
         "category": "critical tube",
@@ -27944,7 +28688,10 @@
                 }
             ]
         },
-        "datasetId": 349
+        "datasetId": 349,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at92": {
         "category": "critical energy",
@@ -28066,7 +28813,9 @@
                 }
             ]
         },
-        "datasetId": 350
+        "datasetId": 350,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at70c": {
         "category": "cell size",
@@ -28166,7 +28915,9 @@
                 }
             ]
         },
-        "datasetId": 351
+        "datasetId": 351,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at70b": {
         "category": "cell size",
@@ -28276,7 +29027,9 @@
                 }
             ]
         },
-        "datasetId": 352
+        "datasetId": 352,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at70a": {
         "category": "cell size",
@@ -28371,7 +29124,9 @@
                 }
             ]
         },
-        "datasetId": 353
+        "datasetId": 353,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at31c": {
         "category": "critical tube",
@@ -28432,7 +29187,10 @@
                 }
             ]
         },
-        "datasetId": 354
+        "datasetId": 354,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at22b": {
         "category": "critical tube",
@@ -28485,7 +29243,10 @@
                 }
             ]
         },
-        "datasetId": 355
+        "datasetId": 355,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at22c": {
         "category": "critical tube",
@@ -28542,7 +29303,10 @@
                 }
             ]
         },
-        "datasetId": 356
+        "datasetId": 356,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "att2": {
         "category": "critical tube",
@@ -28595,7 +29359,10 @@
                 }
             ]
         },
-        "datasetId": 357
+        "datasetId": 357,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at38c": {
         "category": "cell size",
@@ -28710,7 +29477,9 @@
                 }
             ]
         },
-        "datasetId": 358
+        "datasetId": 358,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at38b": {
         "category": "cell size",
@@ -28810,7 +29579,9 @@
                 }
             ]
         },
-        "datasetId": 359
+        "datasetId": 359,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at38a": {
         "category": "cell size",
@@ -28920,7 +29691,9 @@
                 }
             ]
         },
-        "datasetId": 360
+        "datasetId": 360,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at43": {
         "category": "critical tube",
@@ -28993,7 +29766,10 @@
                 }
             ]
         },
-        "datasetId": 361
+        "datasetId": 361,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "mk137k": {
         "category": "critical tube",
@@ -29050,7 +29826,10 @@
                 }
             ]
         },
-        "datasetId": 362
+        "datasetId": 362,
+        "subcategory": "N/A",
+        "categoryId": 4,
+        "subcategoryId": 1
     },
     "at171b": {
         "category": "cell size",
@@ -29108,7 +29887,9 @@
                 }
             ]
         },
-        "datasetId": 363
+        "datasetId": 363,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk82a": {
         "category": "critical energy",
@@ -29178,7 +29959,9 @@
                 }
             ]
         },
-        "datasetId": 364
+        "datasetId": 364,
+        "categoryId": 3,
+        "subcategoryId": 13
     },
     "at171a": {
         "category": "cell size",
@@ -29236,7 +30019,9 @@
                 }
             ]
         },
-        "datasetId": 365
+        "datasetId": 365,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at108b": {
         "category": "critical energy",
@@ -29298,7 +30083,9 @@
                 }
             ]
         },
-        "datasetId": 366
+        "datasetId": 366,
+        "categoryId": 3,
+        "subcategoryId": 6
     },
     "at108a": {
         "category": "critical energy",
@@ -29375,7 +30162,9 @@
                 }
             ]
         },
-        "datasetId": 367
+        "datasetId": 367,
+        "categoryId": 3,
+        "subcategoryId": 7
     },
     "ja5d": {
         "category": "cell size",
@@ -29456,7 +30245,9 @@
                 }
             ]
         },
-        "datasetId": 368
+        "datasetId": 368,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5e": {
         "category": "cell size",
@@ -29550,7 +30341,9 @@
                 }
             ]
         },
-        "datasetId": 369
+        "datasetId": 369,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5a": {
         "category": "cell size",
@@ -29648,7 +30441,9 @@
                 }
             ]
         },
-        "datasetId": 370
+        "datasetId": 370,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5b": {
         "category": "cell size",
@@ -29726,7 +30521,9 @@
                 }
             ]
         },
-        "datasetId": 371
+        "datasetId": 371,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5c": {
         "category": "cell size",
@@ -29812,7 +30609,9 @@
                 }
             ]
         },
-        "datasetId": 372
+        "datasetId": 372,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at82b": {
         "category": "critical energy",
@@ -29882,7 +30681,9 @@
                 }
             ]
         },
-        "datasetId": 373
+        "datasetId": 373,
+        "categoryId": 3,
+        "subcategoryId": 13
     },
     "at82c": {
         "category": "critical energy",
@@ -29952,7 +30753,9 @@
                 }
             ]
         },
-        "datasetId": 374
+        "datasetId": 374,
+        "categoryId": 3,
+        "subcategoryId": 4
     },
     "at184b": {
         "category": "cell size",
@@ -30029,7 +30832,9 @@
                 }
             ]
         },
-        "datasetId": 375
+        "datasetId": 375,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at184a": {
         "category": "cell size",
@@ -30103,7 +30908,9 @@
                 }
             ]
         },
-        "datasetId": 376
+        "datasetId": 376,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk6": {
         "category": "cell size",
@@ -30405,7 +31212,9 @@
                 }
             ]
         },
-        "datasetId": 377
+        "datasetId": 377,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk2": {
         "category": "cell size",
@@ -30515,7 +31324,9 @@
                 }
             ]
         },
-        "datasetId": 378
+        "datasetId": 378,
+        "categoryId": 2,
+        "subcategoryId": 5
     },
     "at170a": {
         "category": "cell size",
@@ -30585,7 +31396,9 @@
                 }
             ]
         },
-        "datasetId": 379
+        "datasetId": 379,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at55b": {
         "category": "critical energy",
@@ -30687,7 +31500,9 @@
                 }
             ]
         },
-        "datasetId": 380
+        "datasetId": 380,
+        "categoryId": 3,
+        "subcategoryId": 3
     },
     "at55a": {
         "category": "critical energy",
@@ -30761,7 +31576,9 @@
                 }
             ]
         },
-        "datasetId": 381
+        "datasetId": 381,
+        "categoryId": 3,
+        "subcategoryId": 10
     },
     "mk9b": {
         "category": "cell size",
@@ -30859,7 +31676,9 @@
                 }
             ]
         },
-        "datasetId": 382
+        "datasetId": 382,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk9a": {
         "category": "cell size",
@@ -30921,7 +31740,9 @@
                 }
             ]
         },
-        "datasetId": 383
+        "datasetId": 383,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja15b": {
         "category": "cell size",
@@ -31002,7 +31823,9 @@
                 }
             ]
         },
-        "datasetId": 384
+        "datasetId": 384,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja15c": {
         "category": "cell size",
@@ -31098,7 +31921,9 @@
                 }
             ]
         },
-        "datasetId": 385
+        "datasetId": 385,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at170c": {
         "category": "cell size",
@@ -31164,7 +31989,9 @@
                 }
             ]
         },
-        "datasetId": 386
+        "datasetId": 386,
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja15a": {
         "category": "cell size",
@@ -31245,6 +32072,8 @@
                 }
             ]
         },
-        "datasetId": 387
+        "datasetId": 387,
+        "categoryId": 2,
+        "subcategoryId": 2
     }
 }
