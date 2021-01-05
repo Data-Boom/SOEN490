@@ -116,14 +116,15 @@ describe('Authentication Controller', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
+    //to fix
     test('valid user detail update request', async () => {
         const expectedResponse = "Success";
 
         mockRequest = {
             query: {
-                email: 'j.com',
+                email: '321@efg.com',
                 password: '456',
-                organizationName: 'Yorozuya'
+                organizationName: 'soen490'
             }
         }
         await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)

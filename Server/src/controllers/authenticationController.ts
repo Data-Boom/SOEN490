@@ -81,8 +81,8 @@ export class AuthenticationController {
             let requestParams: any = { ...request.query };
             let updateUserDetail: IUserDetailUpdater = requestParams;
             //call validateUserDetails from service inside callServiceForUpdateUserDetails
-            let userDetailService: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
-            return userDetailService;
+            let res: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
+            return res;
         }
     }
     //to get info passed from update user details method from service layer
