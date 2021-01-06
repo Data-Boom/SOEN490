@@ -153,7 +153,7 @@ describe('Authentication Controller', () => {
 
         mockRequest = {
             query: {
-                email: '321@efg.com',
+                email: 'test@t.com',
                 password: '456',
                 organizationName: 'soen490'
             }

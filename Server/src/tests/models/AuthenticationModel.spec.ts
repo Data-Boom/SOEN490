@@ -76,13 +76,6 @@ describe('Authentication Model Methods', () => {
 
         expect(res).toBe(true);
     });
-    // test('updating users password inside the database - Return false', async () => {
-    //     let email: string = 'jkbh.com'
-    //     let passwordHash: string = '456'
-    //     let res = await AuthenticationModel.updateUserPasswordDetail(email, passwordHash);
-
-    //     expect(res).toBe(false);
-    // });
     //for testing userOrganizationNameUpdate
     test('updating users organization name inside the database - Return true', async () => {
         let email: string = 'j.com'
@@ -90,12 +83,5 @@ describe('Authentication Model Methods', () => {
         let res = await AuthenticationModel.updateUserPasswordDetail(email, organizationName);
 
         expect(res).toBe(true);
-    });
-    // test('updating users organization name inside the database - Return false', async () => {
-    //     let email: string = 'jackA55 .com'
-    //     let organizationName = 'Shichibukai'
-    //     let res = await AuthenticationModel.updateUserPasswordDetail(email, organizationName);
-
-    //     expect(res).toBe(false);
-    // });
+    })
 });

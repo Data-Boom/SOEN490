@@ -23,6 +23,7 @@ export interface IUserDetailUpdater {
     password?: string,
     organization?: string
 }
+
 export interface IUserDetails {
     email: string,
     firstName: string,

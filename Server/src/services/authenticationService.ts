@@ -139,7 +139,7 @@ export class AuthenticationService {
         else {
             throw new BadRequest("email is not valid. Please enter the correct email!");
         }
-        this.requestResponse.status = "success";
+        this.requestResponse.message = "success";
         this.requestResponse.statusCode = 200;
         return this.requestResponse
     }
@@ -148,7 +148,7 @@ export class AuthenticationService {
      * call userModel to fetch all required data 
      * @param userEmail User Email
      */
-    async loadUserDetails(userEmail: string): Promise<IResponse> {
+    async loadUserDetails(userEmail: string): Promise<IResponse> {//need test
 
         let userDetails: IUserDetails
         let verifiedEmail: boolean;
