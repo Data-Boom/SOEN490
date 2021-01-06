@@ -1,5 +1,5 @@
 import { Button, FormControl, FormControlLabel, Grid, InputLabel, Select, Switch, TextField, Typography } from '@material-ui/core'
-import { ISearchDatasetsFormModel, defaultSearchDatasetsModel } from '../../Models/Forms/ISearchDatasetsFormModel'
+import { ISearchDatasetsFormModel, defaultSearchDatasetsModel } from './ISearchDatasetsFormModel'
 import React, { useEffect, useState } from 'react'
 
 interface IProps {
@@ -14,7 +14,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
 
   useEffect(() => {
     //useEffect with [] will run once component renders the first time ever. Now we are passing mocked values but we need to create endpoint to get those categories
-    //todo create categories endpoint
+    // todo create categories endpoint
     setCategories([{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }, { value: 4, text: "new value" }])
   }, [])
 
