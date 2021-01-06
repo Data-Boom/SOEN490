@@ -80,7 +80,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 1,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5e": {
         "materials": [
@@ -176,7 +178,9 @@
         "subcategory": "width",
         "diluent": "Air",
         "datasetId": 2,
-        "dataset-comment": "The initial pressure is between the range of 70-100. The equivalence ratio is between the range of 0.07-0.39. "
+        "dataset-comment": "The initial pressure is between the range of 70-100. The equivalence ratio is between the range of 0.07-0.39. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at33a": {
         "materials": [
@@ -248,7 +252,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 3,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at33b": {
         "materials": [
@@ -316,7 +322,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 4,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at33c": {
         "materials": [
@@ -376,7 +384,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 5,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at58a": {
         "materials": [
@@ -547,7 +557,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 6,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at58b": {
         "materials": [
@@ -683,7 +695,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 7,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at58c": {
         "materials": [
@@ -811,7 +825,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 8,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at19": {
         "materials": [
@@ -910,7 +926,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 9,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at14": {
         "materials": [
@@ -1001,7 +1019,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 10,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at15": {
         "materials": [
@@ -1100,7 +1120,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 11,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at16": {
         "materials": [
@@ -1215,7 +1237,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 12,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja20a": {
         "materials": [
@@ -1294,7 +1318,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 13,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja20b": {
         "materials": [
@@ -1365,7 +1391,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 14,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja20c": {
         "materials": [
@@ -1444,7 +1472,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 15,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja21a": {
         "materials": [
@@ -1508,7 +1538,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 16,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja21b": {
         "materials": [
@@ -1572,7 +1604,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 17,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja21c": {
         "materials": [
@@ -1631,7 +1665,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 18,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22a": {
         "materials": [
@@ -1709,7 +1745,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 19,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22b": {
         "materials": [
@@ -1782,7 +1820,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 20,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22c": {
         "materials": [
@@ -1860,7 +1900,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 21,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22d": {
         "materials": [
@@ -1928,7 +1970,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 22,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22e": {
         "materials": [
@@ -1996,7 +2040,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 23,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja22f": {
         "materials": [
@@ -2060,7 +2106,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 24,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk9b": {
         "materials": [
@@ -2159,7 +2207,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 25,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at21a": {
         "materials": [
@@ -2242,7 +2292,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 26,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja2": {
         "materials": [
@@ -2320,7 +2372,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 27,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja3": {
         "materials": [
@@ -2418,7 +2472,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 28,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja4": {
         "materials": [
@@ -2511,7 +2567,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 29,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "H2-Air1": {
         "materials": [
@@ -2706,7 +2764,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 30,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26b": {
         "materials": [
@@ -2818,7 +2878,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 31,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26d": {
         "materials": [
@@ -2914,7 +2976,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 32,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26f": {
         "materials": [
@@ -2990,7 +3054,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 33,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1a": {
         "materials": [
@@ -3073,7 +3139,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 34,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1c": {
         "materials": [
@@ -3169,7 +3237,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 35,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1d": {
         "materials": [
@@ -3245,7 +3315,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 36,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1e": {
         "materials": [
@@ -3321,7 +3393,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 37,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at182a": {
         "materials": [
@@ -3408,7 +3482,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 38,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at182b": {
         "materials": [
@@ -3499,7 +3575,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 39,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at182c": {
         "materials": [
@@ -3582,7 +3660,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 40,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at182d": {
         "materials": [
@@ -3745,7 +3825,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 41,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk7b": {
         "materials": [
@@ -3828,7 +3910,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 42,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at74": {
         "materials": [
@@ -3923,7 +4007,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 43,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at35a": {
         "materials": [
@@ -4031,7 +4117,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 44,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at35b": {
         "materials": [
@@ -4119,7 +4207,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 45,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at38a": {
         "materials": [
@@ -4227,7 +4317,9 @@
         "subcategory": "width",
         "diluent": "He and CO2",
         "datasetId": 46,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at38b": {
         "materials": [
@@ -4325,7 +4417,9 @@
         "subcategory": "width",
         "diluent": "He and CO2",
         "datasetId": 47,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at38c": {
         "materials": [
@@ -4438,7 +4532,9 @@
         "subcategory": "width",
         "diluent": "He and CO2",
         "datasetId": 48,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39a": {
         "materials": [
@@ -4521,7 +4617,9 @@
         "subcategory": "width",
         "diluent": "He and H2O",
         "datasetId": 49,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39b": {
         "materials": [
@@ -4609,7 +4707,9 @@
         "subcategory": "width",
         "diluent": "He and H2O",
         "datasetId": 50,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39c": {
         "materials": [
@@ -4702,7 +4802,9 @@
         "subcategory": "width",
         "diluent": "He and H2O",
         "datasetId": 51,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at39d": {
         "materials": [
@@ -4815,7 +4917,9 @@
         "subcategory": "width",
         "diluent": "He and H2O",
         "datasetId": 52,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at42a": {
         "materials": [
@@ -4911,7 +5015,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 53,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at42b": {
         "materials": [
@@ -5007,7 +5113,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 54,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at47a": {
         "materials": [
@@ -5074,7 +5182,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 55,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at47b": {
         "materials": [
@@ -5166,7 +5276,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 56,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57a": {
         "materials": [
@@ -5361,7 +5473,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 57,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5a": {
         "materials": [
@@ -5460,7 +5574,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 58,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5b": {
         "materials": [
@@ -5540,7 +5656,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 59,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja5c": {
         "materials": [
@@ -5624,7 +5742,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 60,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at5a": {
         "materials": [
@@ -5695,7 +5815,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 61,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at5b": {
         "materials": [
@@ -5762,7 +5884,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 62,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23a": {
         "materials": [
@@ -5826,7 +5950,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 63,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23c": {
         "materials": [
@@ -5886,7 +6012,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 64,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23e": {
         "materials": [
@@ -5946,7 +6074,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 65,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23g": {
         "materials": [
@@ -6001,7 +6131,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 66,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25a": {
         "materials": [
@@ -6069,7 +6201,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 67,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25b": {
         "materials": [
@@ -6141,7 +6275,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 68,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25c": {
         "materials": [
@@ -6217,7 +6353,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 69,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25d": {
         "materials": [
@@ -6281,7 +6419,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 70,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25e": {
         "materials": [
@@ -6353,7 +6493,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 71,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja25f": {
         "materials": [
@@ -6436,7 +6578,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 72,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at64c": {
         "materials": [
@@ -6516,7 +6660,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 73,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at64b": {
         "materials": [
@@ -6588,7 +6734,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 74,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at64a": {
         "materials": [
@@ -6664,7 +6812,9 @@
         "subcategory": "width",
         "diluent": "3.75Ar+N2",
         "datasetId": 75,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at62a": {
         "materials": [
@@ -6783,7 +6933,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 76,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at62b": {
         "materials": [
@@ -6867,7 +7019,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 77,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69f": {
         "materials": [
@@ -6971,7 +7125,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 78,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69c": {
         "materials": [
@@ -7091,7 +7247,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 79,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69d": {
         "materials": [
@@ -7195,7 +7353,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 80,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69e": {
         "materials": [
@@ -7307,7 +7467,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 81,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69g": {
         "materials": [
@@ -7395,7 +7557,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 82,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at65": {
         "materials": [
@@ -7478,7 +7642,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 83,
-        "dataset-comment": "The initial temperature is between the range of 600-800. "
+        "dataset-comment": "The initial temperature is between the range of 600-800. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3a": {
         "materials": [
@@ -7571,7 +7737,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 84,
-        "dataset-comment": "The initial pressure is between the range of 150-300. "
+        "dataset-comment": "The initial pressure is between the range of 150-300. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3b": {
         "materials": [
@@ -7648,7 +7816,9 @@
         "subcategory": "width",
         "diluent": "steam",
         "datasetId": 85,
-        "dataset-comment": "The initial pressure is between the range of 150-304. "
+        "dataset-comment": "The initial pressure is between the range of 150-304. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3c": {
         "materials": [
@@ -7713,7 +7883,9 @@
         "subcategory": "width",
         "diluent": "steam",
         "datasetId": 86,
-        "dataset-comment": "The initial pressure is between the range of 150-304. "
+        "dataset-comment": "The initial pressure is between the range of 150-304. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at3d": {
         "materials": [
@@ -7778,7 +7950,9 @@
         "subcategory": "width",
         "diluent": "steam",
         "datasetId": 87,
-        "dataset-comment": "The initial pressure is between the range of 150-304. "
+        "dataset-comment": "The initial pressure is between the range of 150-304. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at4": {
         "materials": [
@@ -7869,7 +8043,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 88,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23b": {
         "materials": [
@@ -7933,7 +8109,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 89,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23d": {
         "materials": [
@@ -7993,7 +8171,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 90,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23f": {
         "materials": [
@@ -8053,7 +8233,9 @@
         "subcategory": "width",
         "diluent": "H2O",
         "datasetId": 91,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja23h": {
         "materials": [
@@ -8108,7 +8290,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 92,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26a": {
         "materials": [
@@ -8180,7 +8364,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 93,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26c": {
         "materials": [
@@ -8248,7 +8434,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 94,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja26e": {
         "materials": [
@@ -8316,7 +8504,9 @@
         "subcategory": "width",
         "diluent": "CO2",
         "datasetId": 95,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja27a": {
         "materials": [
@@ -8379,7 +8569,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 96,
-        "dataset-comment": "The equivalence ratio is between the range of 0.448-0.51. "
+        "dataset-comment": "The equivalence ratio is between the range of 0.448-0.51. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja27b": {
         "materials": [
@@ -8436,7 +8628,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 97,
-        "dataset-comment": "The initial pressure is between the range of 100-102. The equivalence ratio is between the range of 0.446-0.511. "
+        "dataset-comment": "The initial pressure is between the range of 100-102. The equivalence ratio is between the range of 0.446-0.511. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk8a": {
         "materials": [
@@ -8527,7 +8721,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 98,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at21b": {
         "materials": [
@@ -8582,7 +8778,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 99,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at21c": {
         "materials": [
@@ -8645,7 +8843,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 100,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja1b": {
         "materials": [
@@ -8723,7 +8923,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 101,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at192a": {
         "materials": [
@@ -8794,7 +8996,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 102,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja6a": {
         "materials": [
@@ -8877,7 +9081,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 103,
-        "dataset-comment": "The initial pressure is between the range of 70-72. "
+        "dataset-comment": "The initial pressure is between the range of 70-72. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja6b": {
         "materials": [
@@ -8950,7 +9156,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 104,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7a": {
         "materials": [
@@ -9029,7 +9237,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 105,
-        "dataset-comment": "The initial pressure is between the range of 57-72. "
+        "dataset-comment": "The initial pressure is between the range of 57-72. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7b": {
         "materials": [
@@ -9104,7 +9314,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 106,
-        "dataset-comment": "The initial pressure is between the range of 77-87. "
+        "dataset-comment": "The initial pressure is between the range of 77-87. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7c": {
         "materials": [
@@ -9175,7 +9387,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 107,
-        "dataset-comment": "The initial pressure is between the range of 92-97. "
+        "dataset-comment": "The initial pressure is between the range of 92-97. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7d": {
         "materials": [
@@ -9253,7 +9467,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 108,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja7e": {
         "materials": [
@@ -9331,7 +9547,9 @@
         "subcategory": "width",
         "diluent": "Air",
         "datasetId": 109,
-        "dataset-comment": "The initial pressure is between the range of 86-97. The equivalence ratio is between the range of 0.5-0.7. "
+        "dataset-comment": "The initial pressure is between the range of 86-97. The equivalence ratio is between the range of 0.5-0.7. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at193b": {
         "materials": [
@@ -9426,7 +9644,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 110,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at176a": {
         "materials": [
@@ -9481,7 +9701,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 111,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13a": {
         "materials": [
@@ -9536,7 +9758,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 112,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at73": {
         "materials": [
@@ -9607,7 +9831,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 113,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at199a": {
         "materials": [
@@ -9686,7 +9912,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 114,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57d": {
         "materials": [
@@ -9797,7 +10025,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 115,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157a": {
         "materials": [
@@ -9856,7 +10086,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 116,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at184a": {
         "materials": [
@@ -9931,7 +10163,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 117,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128a": {
         "materials": [
@@ -10031,7 +10265,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 118,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at171a": {
         "materials": [
@@ -10090,7 +10326,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 119,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157l": {
         "materials": [
@@ -10145,7 +10383,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 120,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk9a": {
         "materials": [
@@ -10208,7 +10448,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 121,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187a": {
         "materials": [
@@ -10355,7 +10597,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 122,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187b": {
         "materials": [
@@ -10459,7 +10703,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 123,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187c": {
         "materials": [
@@ -10607,7 +10853,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 124,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at187d": {
         "materials": [
@@ -10723,7 +10971,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 125,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at166b": {
         "materials": [
@@ -10798,7 +11048,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 126,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at197a": {
         "materials": [
@@ -10890,7 +11142,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 127,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at197b": {
         "materials": [
@@ -10990,7 +11244,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 128,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at197c": {
         "materials": [
@@ -11086,7 +11342,9 @@
         "subcategory": "width",
         "diluent": "Kr",
         "datasetId": 129,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198a": {
         "materials": [
@@ -11170,7 +11428,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 130,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198b": {
         "materials": [
@@ -11266,7 +11526,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 131,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198c": {
         "materials": [
@@ -11366,7 +11628,9 @@
         "subcategory": "width",
         "diluent": "Kr",
         "datasetId": 132,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at198d": {
         "materials": [
@@ -11421,7 +11685,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 133,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at166a": {
         "materials": [
@@ -11508,7 +11774,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 134,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "js13c": {
         "materials": [
@@ -11619,7 +11887,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 135,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk7a": {
         "materials": [
@@ -11713,7 +11983,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 136,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at148a": {
         "materials": [
@@ -11812,7 +12084,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 137,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at150a": {
         "materials": [
@@ -11895,7 +12169,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 138,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at150b": {
         "materials": [
@@ -12062,7 +12338,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 139,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at151": {
         "materials": [
@@ -12157,7 +12435,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 140,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at199c": {
         "materials": [
@@ -12268,7 +12548,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 141,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at199d": {
         "materials": [
@@ -12355,7 +12637,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 142,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at86a": {
         "materials": [
@@ -12443,7 +12727,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 143,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57f": {
         "materials": [
@@ -12578,7 +12864,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 144,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at57c-mk": {
         "materials": [
@@ -12697,7 +12985,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 145,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk157n": {
         "materials": [
@@ -12764,7 +13054,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 146,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk6": {
         "materials": [
@@ -13068,7 +13360,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 147,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at184b": {
         "materials": [
@@ -13146,7 +13440,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 148,
-        "dataset-comment": "The initial pressure is between the range of 1.3-13. "
+        "dataset-comment": "The initial pressure is between the range of 1.3-13. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at129c": {
         "materials": [
@@ -13233,7 +13529,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 149,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at129e": {
         "materials": [
@@ -13352,7 +13650,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 150,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at129f": {
         "materials": [
@@ -13444,7 +13744,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 151,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69a": {
         "materials": [
@@ -13564,7 +13866,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 152,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at69b": {
         "materials": [
@@ -13648,7 +13952,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 153,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172a": {
         "materials": [
@@ -13707,7 +14013,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 154,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk8b": {
         "materials": [
@@ -13798,7 +14106,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 155,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at192b": {
         "materials": [
@@ -13869,7 +14179,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 156,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157e": {
         "materials": [
@@ -13924,7 +14236,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 157,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10a": {
         "materials": [
@@ -14012,7 +14326,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 158,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10b": {
         "materials": [
@@ -14076,7 +14392,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 159,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10c": {
         "materials": [
@@ -14140,7 +14458,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 160,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10d": {
         "materials": [
@@ -14204,7 +14524,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 161,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja10e": {
         "materials": [
@@ -14268,7 +14590,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 162,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja11b": {
         "materials": [
@@ -14346,7 +14670,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 163,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja12": {
         "materials": [
@@ -14429,7 +14755,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 164,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja11a": {
         "materials": [
@@ -14524,7 +14852,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 165,
-        "dataset-comment": "The initial pressure is between the range of 45-50. "
+        "dataset-comment": "The initial pressure is between the range of 45-50. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13b": {
         "materials": [
@@ -14635,7 +14965,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 166,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk7c": {
         "materials": [
@@ -14718,7 +15050,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 167,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at149a": {
         "materials": [
@@ -14829,7 +15163,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 168,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157c": {
         "materials": [
@@ -14928,7 +15264,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 169,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157f": {
         "materials": [
@@ -14983,7 +15321,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 170,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk157g": {
         "materials": [
@@ -15046,7 +15386,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 171,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at203": {
         "materials": [
@@ -15169,7 +15511,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 172,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at158": {
         "materials": [
@@ -15262,7 +15606,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 173,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128b": {
         "materials": [
@@ -15349,7 +15695,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 174,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128c": {
         "materials": [
@@ -15453,7 +15801,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 175,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at128d": {
         "materials": [
@@ -15577,7 +15927,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 176,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172d": {
         "materials": [
@@ -15636,7 +15988,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 177,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja16a": {
         "materials": [
@@ -15723,7 +16077,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 178,
-        "dataset-comment": "The initial pressure is between the range of 66-81. "
+        "dataset-comment": "The initial pressure is between the range of 66-81. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja16b": {
         "materials": [
@@ -15802,7 +16158,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 179,
-        "dataset-comment": "The initial pressure is between the range of 55-75. "
+        "dataset-comment": "The initial pressure is between the range of 55-75. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja16c": {
         "materials": [
@@ -15880,7 +16238,9 @@
         "subcategory": "width",
         "diluent": "Air",
         "datasetId": 180,
-        "dataset-comment": "The initial pressure is between the range of 60-91. The equivalence ratio is between the range of 1-0.71. "
+        "dataset-comment": "The initial pressure is between the range of 60-91. The equivalence ratio is between the range of 1-0.71. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157j": {
         "materials": [
@@ -15935,7 +16295,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 181,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157m": {
         "materials": [
@@ -15990,7 +16352,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 182,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8b": {
         "materials": [
@@ -16054,7 +16418,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 183,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8c": {
         "materials": [
@@ -16118,7 +16484,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 184,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8d": {
         "materials": [
@@ -16182,7 +16550,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 185,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8e": {
         "materials": [
@@ -16246,7 +16616,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 186,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja13": {
         "materials": [
@@ -16339,7 +16711,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 187,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14a": {
         "materials": [
@@ -16457,7 +16831,9 @@
         "subcategory": "width",
         "diluent": "H2",
         "datasetId": 188,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14b": {
         "materials": [
@@ -16575,7 +16951,9 @@
         "subcategory": "width",
         "diluent": "C2H4",
         "datasetId": 189,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14c": {
         "materials": [
@@ -16678,7 +17056,9 @@
         "subcategory": "width",
         "diluent": "C2H2",
         "datasetId": 190,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja14d": {
         "materials": [
@@ -16806,7 +17186,9 @@
         "subcategory": "width",
         "diluent": "CO",
         "datasetId": 191,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja15a": {
         "materials": [
@@ -16889,7 +17271,9 @@
         "subcategory": "width",
         "diluent": "H2",
         "datasetId": 192,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja15b": {
         "materials": [
@@ -16972,7 +17356,9 @@
         "subcategory": "width",
         "diluent": "C2H2",
         "datasetId": 193,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja15c": {
         "materials": [
@@ -17070,7 +17456,9 @@
         "subcategory": "width",
         "diluent": "C2H4",
         "datasetId": 194,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja17": {
         "materials": [
@@ -17141,7 +17529,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 195,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja18a": {
         "materials": [
@@ -17249,7 +17639,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 196,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja18b": {
         "materials": [
@@ -17377,7 +17769,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 197,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja8a": {
         "materials": [
@@ -17444,7 +17838,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 198,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja9": {
         "materials": [
@@ -17527,7 +17923,9 @@
         "subcategory": "width",
         "diluent": "Ar",
         "datasetId": 199,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13f": {
         "materials": [
@@ -17598,7 +17996,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 200,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13e": {
         "materials": [
@@ -17693,7 +18093,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 201,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at13d": {
         "materials": [
@@ -17756,7 +18158,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 202,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk7d": {
         "materials": [
@@ -17869,7 +18273,9 @@
         "subcategory": "width",
         "diluent": "N2",
         "datasetId": 203,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at154b": {
         "materials": [
@@ -17944,7 +18350,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 204,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at152": {
         "materials": [
@@ -18031,7 +18439,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 205,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at153": {
         "materials": [
@@ -18114,7 +18524,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 206,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at154a": {
         "materials": [
@@ -18193,7 +18605,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 207,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "ja19": {
         "materials": [
@@ -18286,7 +18700,9 @@
         "subcategory": "width",
         "diluent": "H2",
         "datasetId": 208,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at37": {
         "materials": [
@@ -18379,7 +18795,9 @@
         "subcategory": "width",
         "diluent": "He",
         "datasetId": 209,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157h": {
         "materials": [
@@ -18446,7 +18864,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 210,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at157k": {
         "materials": [
@@ -18517,7 +18937,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 211,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk184d": {
         "materials": [
@@ -18566,7 +18988,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 212,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk168a": {
         "materials": [
@@ -18644,7 +19068,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 213,
-        "dataset-comment": "The equivalence ratio is between the range of 0.78-1.18. "
+        "dataset-comment": "The equivalence ratio is between the range of 0.78-1.18. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk168b": {
         "materials": [
@@ -18710,7 +19136,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 214,
-        "dataset-comment": "The equivalence ratio is between the range of 0.78-1.18. "
+        "dataset-comment": "The equivalence ratio is between the range of 0.78-1.18. ",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172b": {
         "materials": [
@@ -18765,7 +19193,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 215,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at171b": {
         "materials": [
@@ -18824,7 +19254,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 216,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172c": {
         "materials": [
@@ -18879,7 +19311,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 217,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172e": {
         "materials": [
@@ -18934,7 +19368,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 218,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172f": {
         "materials": [
@@ -18989,7 +19425,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 219,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172g": {
         "materials": [
@@ -19044,7 +19482,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 220,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172h": {
         "materials": [
@@ -19103,7 +19543,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 221,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172i": {
         "materials": [
@@ -19158,7 +19600,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 222,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172j": {
         "materials": [
@@ -19213,7 +19657,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 223,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172k": {
         "materials": [
@@ -19268,7 +19714,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 224,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at170a": {
         "materials": [
@@ -19339,7 +19787,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 225,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at170b": {
         "materials": [
@@ -19394,7 +19844,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 226,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at170c": {
         "materials": [
@@ -19461,7 +19913,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 227,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172l": {
         "materials": [
@@ -19516,7 +19970,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 228,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172m": {
         "materials": [
@@ -19571,7 +20027,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 229,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172n": {
         "materials": [
@@ -19626,7 +20084,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 230,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172o": {
         "materials": [
@@ -19681,7 +20141,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 231,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "at172p": {
         "materials": [
@@ -19736,7 +20198,9 @@
         "category": "cell size",
         "subcategory": "width",
         "datasetId": 232,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 2
     },
     "mk2": {
         "materials": [
@@ -19847,7 +20311,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 233,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at189": {
         "materials": [
@@ -19950,7 +20416,9 @@
         "subcategory": "length",
         "diluent": "Ar+CF3H",
         "datasetId": 234,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at70a": {
         "materials": [
@@ -20043,7 +20511,9 @@
         "subcategory": "length",
         "diluent": "Ar+CF4",
         "datasetId": 235,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at70b": {
         "materials": [
@@ -20151,7 +20621,9 @@
         "subcategory": "length",
         "diluent": "Ar+CF4",
         "datasetId": 236,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at70c": {
         "materials": [
@@ -20249,7 +20721,9 @@
         "subcategory": "length",
         "diluent": "Ar+CF4",
         "datasetId": 237,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at193a": {
         "materials": [
@@ -20364,7 +20838,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 238,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at194c": {
         "materials": [
@@ -20431,7 +20907,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 239,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at194a": {
         "materials": [
@@ -20486,7 +20964,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 240,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk1a": {
         "materials": [
@@ -20563,7 +21043,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 241,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk1b": {
         "materials": [
@@ -20625,7 +21107,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 242,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk1c": {
         "materials": [
@@ -20687,7 +21171,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 243,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk1d": {
         "materials": [
@@ -20740,7 +21226,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 244,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk3a": {
         "materials": [
@@ -20799,7 +21287,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 245,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk3b": {
         "materials": [
@@ -20858,7 +21348,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 246,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk3c": {
         "materials": [
@@ -20914,7 +21406,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 247,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk3d": {
         "materials": [
@@ -20976,7 +21470,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 248,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk4a": {
         "materials": [
@@ -21040,7 +21536,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 249,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk4b": {
         "materials": [
@@ -21110,7 +21608,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 250,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk4c": {
         "materials": [
@@ -21177,7 +21677,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 251,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk4d": {
         "materials": [
@@ -21244,7 +21746,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 252,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk5a": {
         "materials": [
@@ -21316,7 +21820,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 253,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk5b": {
         "materials": [
@@ -21388,7 +21894,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 254,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk5c": {
         "materials": [
@@ -21456,7 +21964,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 255,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at194b": {
         "materials": [
@@ -21511,7 +22021,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 256,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at93a": {
         "materials": [
@@ -21587,7 +22099,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 257,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at93b": {
         "materials": [
@@ -21683,7 +22197,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 258,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at139a": {
         "materials": [
@@ -21778,7 +22294,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 259,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at139e": {
         "materials": [
@@ -21841,7 +22359,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 260,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at139b": {
         "materials": [
@@ -21925,7 +22445,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 261,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at139c": {
         "materials": [
@@ -22013,7 +22535,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 262,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at139d": {
         "materials": [
@@ -22073,7 +22597,9 @@
         "subcategory": "length",
         "diluent": "N2",
         "datasetId": 263,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at140a": {
         "materials": [
@@ -22164,7 +22690,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 264,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at140b": {
         "materials": [
@@ -22239,7 +22767,9 @@
         "category": "cell size",
         "subcategory": "length",
         "datasetId": 265,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at169e": {
         "materials": [
@@ -22311,7 +22841,9 @@
         "subcategory": "length",
         "diluent": "11.88Ar+CF3Br",
         "datasetId": 266,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at169a": {
         "materials": [
@@ -22399,7 +22931,9 @@
         "subcategory": "length",
         "diluent": "Ar",
         "datasetId": 267,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at169d": {
         "materials": [
@@ -22475,7 +23009,9 @@
         "subcategory": "length",
         "diluent": "11.88Ar+CFCl3",
         "datasetId": 268,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at169c": {
         "materials": [
@@ -22555,7 +23091,9 @@
         "subcategory": "length",
         "diluent": "11.88Ar+CF2Cl2",
         "datasetId": 269,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "at169b": {
         "materials": [
@@ -22627,7 +23165,9 @@
         "subcategory": "length",
         "diluent": "11.88Ar+CF3Cl",
         "datasetId": 270,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 2,
+        "subcategoryId": 3
     },
     "mk23a": {
         "materials": [
@@ -22714,7 +23254,10 @@
         "reference": "48",
         "category": "critical tube",
         "datasetId": 271,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "mk23b": {
         "materials": [
@@ -22776,7 +23319,10 @@
         "reference": "48",
         "category": "critical tube",
         "datasetId": 272,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at72a": {
         "materials": [
@@ -22875,7 +23421,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 273,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at56a": {
         "materials": [
@@ -22941,7 +23490,10 @@
         "reference": "77",
         "category": "critical tube",
         "datasetId": 274,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at75a": {
         "materials": [
@@ -23003,7 +23555,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 275,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at72c": {
         "materials": [
@@ -23120,7 +23675,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 276,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at75b": {
         "materials": [
@@ -23178,7 +23736,10 @@
         "reference": "87",
         "category": "critical tube",
         "datasetId": 277,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at75d": {
         "materials": [
@@ -23241,7 +23802,10 @@
         "category": "critical tube",
         "diluent": "CF3Br",
         "datasetId": 278,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at75c": {
         "materials": [
@@ -23300,7 +23864,10 @@
         "category": "critical tube",
         "diluent": "CO2",
         "datasetId": 279,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at43": {
         "materials": [
@@ -23374,7 +23941,10 @@
         "reference": "99",
         "category": "critical tube",
         "datasetId": 280,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at161a": {
         "materials": [
@@ -23449,7 +24019,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 281,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at161b": {
         "materials": [
@@ -23524,7 +24097,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 282,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at161c": {
         "materials": [
@@ -23603,7 +24179,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 283,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at161d": {
         "materials": [
@@ -23678,7 +24257,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 284,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at147a": {
         "materials": [
@@ -23737,7 +24319,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 285,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at147b": {
         "materials": [
@@ -23791,7 +24376,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 286,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at147c": {
         "materials": [
@@ -23850,7 +24438,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 287,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at147d": {
         "materials": [
@@ -23909,7 +24500,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 288,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "mk137k": {
         "materials": [
@@ -23967,7 +24561,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 289,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "att2": {
         "materials": [
@@ -24021,7 +24618,10 @@
         "reference": "129",
         "category": "critical tube",
         "datasetId": 290,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at71a": {
         "materials": [
@@ -24120,7 +24720,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 291,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at22a4": {
         "materials": [
@@ -24174,7 +24777,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 292,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at66b": {
         "materials": [
@@ -24273,7 +24879,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 293,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at66a": {
         "materials": [
@@ -24354,7 +24963,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 294,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at22a1": {
         "materials": [
@@ -24408,7 +25020,10 @@
         "reference": "84",
         "category": "critical tube",
         "datasetId": 295,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at20a": {
         "materials": [
@@ -24474,7 +25089,10 @@
         "reference": "102",
         "category": "critical tube",
         "datasetId": 296,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "mk127": {
         "materials": [
@@ -24591,7 +25209,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 297,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at162a": {
         "materials": [
@@ -24662,7 +25283,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 298,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at162b": {
         "materials": [
@@ -24733,7 +25357,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 299,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at162c": {
         "materials": [
@@ -24804,7 +25431,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 300,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at163a": {
         "materials": [
@@ -24891,7 +25521,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 301,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "mk142a": {
         "materials": [
@@ -24996,7 +25629,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 302,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at56c": {
         "materials": [
@@ -25069,7 +25705,10 @@
         "reference": "77",
         "category": "critical tube",
         "datasetId": 303,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at137g": {
         "materials": [
@@ -25135,7 +25774,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 304,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at56d": {
         "materials": [
@@ -25189,7 +25831,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 305,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at80b": {
         "materials": [
@@ -25243,7 +25888,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 306,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at80c": {
         "materials": [
@@ -25297,7 +25945,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 307,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at66c": {
         "materials": [
@@ -25396,7 +26047,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 308,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at22b": {
         "materials": [
@@ -25450,7 +26104,10 @@
         "reference": "84",
         "category": "critical tube",
         "datasetId": 309,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at22c": {
         "materials": [
@@ -25508,7 +26165,10 @@
         "reference": "85",
         "category": "critical tube",
         "datasetId": 310,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at77a": {
         "materials": [
@@ -25567,7 +26227,10 @@
         "category": "critical tube",
         "diluent": "CF4",
         "datasetId": 311,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at77b": {
         "materials": [
@@ -25626,7 +26289,10 @@
         "category": "critical tube",
         "diluent": "CF3Br",
         "datasetId": 312,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at77c": {
         "materials": [
@@ -25685,7 +26351,10 @@
         "category": "critical tube",
         "diluent": "CF3Br",
         "datasetId": 313,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at77d": {
         "materials": [
@@ -25744,7 +26413,10 @@
         "category": "critical tube",
         "diluent": "CO2",
         "datasetId": 314,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at200c": {
         "materials": [
@@ -25849,7 +26521,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 315,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at31c": {
         "materials": [
@@ -25911,7 +26586,10 @@
         "reference": "102",
         "category": "critical tube",
         "datasetId": 316,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at143a": {
         "materials": [
@@ -26010,7 +26688,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 317,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at137h": {
         "materials": [
@@ -26076,7 +26757,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 318,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at137i": {
         "materials": [
@@ -26138,7 +26822,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 319,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at137j": {
         "materials": [
@@ -26204,7 +26891,10 @@
         "reference": "80",
         "category": "critical tube",
         "datasetId": 320,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at66d": {
         "materials": [
@@ -26297,7 +26987,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 321,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at66e": {
         "materials": [
@@ -26396,7 +27089,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 322,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "at66f": {
         "materials": [
@@ -26495,7 +27191,10 @@
         "category": "critical tube",
         "diluent": "N2",
         "datasetId": 323,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "mk22e": {
         "materials": [
@@ -26553,7 +27252,10 @@
         "reference": "84",
         "category": "critical tube",
         "datasetId": 324,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 3,
+        "subcategoryId": 1
     },
     "mk30": {
         "materials": [
@@ -26636,7 +27338,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 325,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at34b": {
         "materials": [
@@ -26722,7 +27426,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 326,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at34c": {
         "materials": [
@@ -26955,7 +27661,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 327,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at24": {
         "materials": [
@@ -27086,7 +27794,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 328,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at181a": {
         "materials": [
@@ -27141,7 +27851,9 @@
         "category": "critical energy",
         "subcategory": "spherical, spark",
         "datasetId": 329,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 5
     },
     "at181b": {
         "materials": [
@@ -27196,7 +27908,9 @@
         "category": "critical energy",
         "subcategory": "spherical, spark",
         "datasetId": 330,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 5
     },
     "mk82a": {
         "materials": [
@@ -27267,7 +27981,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical",
         "datasetId": 331,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 6
     },
     "at55a": {
         "materials": [
@@ -27342,7 +28058,9 @@
         "category": "critical energy",
         "subcategory": "spherical, spark",
         "datasetId": 332,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 5
     },
     "at55b": {
         "materials": [
@@ -27445,7 +28163,9 @@
         "category": "critical energy",
         "subcategory": "spherical, exploding wire",
         "datasetId": 333,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at123a": {
         "materials": [
@@ -27528,7 +28248,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "CH4",
         "datasetId": 334,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at123b": {
         "materials": [
@@ -27606,7 +28328,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "CH3Cl",
         "datasetId": 335,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at123d": {
         "materials": [
@@ -27689,7 +28413,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "CCl4",
         "datasetId": 336,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at123e": {
         "materials": [
@@ -27767,7 +28493,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "CHCl3",
         "datasetId": 337,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at123f": {
         "materials": [
@@ -27835,7 +28563,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "Cl2",
         "datasetId": 338,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at124b": {
         "materials": [
@@ -27913,7 +28643,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "C2H6",
         "datasetId": 339,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at124c": {
         "materials": [
@@ -27981,7 +28713,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "i-C4H10",
         "datasetId": 340,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at124d": {
         "materials": [
@@ -28059,7 +28793,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "n-C4H10",
         "datasetId": 341,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at124e": {
         "materials": [
@@ -28137,7 +28873,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "C3H8",
         "datasetId": 342,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at126a": {
         "materials": [
@@ -28220,7 +28958,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "Isobutene",
         "datasetId": 343,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at126b": {
         "materials": [
@@ -28298,7 +29038,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "Trans-butene-2",
         "datasetId": 344,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at126c": {
         "materials": [
@@ -28371,7 +29113,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "Propylene",
         "datasetId": 345,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at126d": {
         "materials": [
@@ -28444,7 +29188,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "Butene-1",
         "datasetId": 346,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at126e": {
         "materials": [
@@ -28522,7 +29268,9 @@
         "subcategory": "spherical, exploding wire",
         "diluent": "Ethylene",
         "datasetId": 347,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 7
     },
     "at53": {
         "materials": [
@@ -28629,7 +29377,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 348,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at67a": {
         "materials": [
@@ -28704,7 +29454,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 349,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at49a": {
         "materials": [
@@ -28763,7 +29515,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 350,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at49b": {
         "materials": [
@@ -28826,7 +29580,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 351,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at195d": {
         "materials": [
@@ -28897,7 +29653,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical, exploding wire",
         "datasetId": 352,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 9
     },
     "at195e": {
         "materials": [
@@ -28972,7 +29730,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical, exploding wire",
         "datasetId": 353,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 9
     },
     "at177a": {
         "materials": [
@@ -29027,7 +29787,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 354,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at210a": {
         "materials": [
@@ -29146,7 +29908,9 @@
         "subcategory": "spherical, high explosive",
         "diluent": "N2",
         "datasetId": 355,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at209a": {
         "materials": [
@@ -29201,7 +29965,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical",
         "datasetId": 356,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 6
     },
     "at210b": {
         "materials": [
@@ -29283,7 +30049,9 @@
         "subcategory": "spherical, high explosive",
         "diluent": "N2",
         "datasetId": 357,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at79a": {
         "materials": [
@@ -29350,7 +30118,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 358,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at195c": {
         "materials": [
@@ -29405,7 +30175,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical, high explosive",
         "datasetId": 359,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 10
     },
     "at115": {
         "materials": [
@@ -29480,7 +30252,9 @@
         "category": "critical energy",
         "subcategory": "planar",
         "datasetId": 360,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 11
     },
     "at108a": {
         "materials": [
@@ -29558,7 +30332,9 @@
         "category": "critical energy",
         "subcategory": "high explosive",
         "datasetId": 361,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 12
     },
     "at108b": {
         "materials": [
@@ -29621,7 +30397,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 362,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at82c": {
         "materials": [
@@ -29692,7 +30470,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 363,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at82b": {
         "materials": [
@@ -29763,7 +30543,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical",
         "datasetId": 364,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 6
     },
     "at44a": {
         "materials": [
@@ -29820,7 +30602,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 365,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at54a": {
         "materials": [
@@ -29879,7 +30663,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical",
         "datasetId": 366,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 6
     },
     "at105a": {
         "materials": [
@@ -29958,7 +30744,9 @@
         "category": "critical energy",
         "subcategory": "cylindrical, high explosive",
         "datasetId": 367,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 10
     },
     "at84a": {
         "materials": [
@@ -30171,7 +30959,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 368,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at109a": {
         "materials": [
@@ -30234,7 +31024,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 369,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at109b": {
         "materials": [
@@ -30297,7 +31089,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 370,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at109c": {
         "materials": [
@@ -30360,7 +31154,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 371,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at79b": {
         "materials": [
@@ -30435,7 +31231,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 372,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at32b": {
         "materials": [
@@ -30508,7 +31306,9 @@
         "category": "critical energy",
         "subcategory": "high explosive",
         "datasetId": 373,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 12
     },
     "at92": {
         "materials": [
@@ -30631,7 +31431,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 374,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at32f": {
         "materials": [
@@ -30734,7 +31536,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 375,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at32g": {
         "materials": [
@@ -30837,7 +31641,9 @@
         "category": "critical energy",
         "subcategory": "spherical, high explosive",
         "datasetId": 376,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at32e": {
         "materials": [
@@ -30950,7 +31756,9 @@
         "subcategory": "spherical, high explosive",
         "diluent": "N2",
         "datasetId": 377,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 4
     },
     "at44c": {
         "materials": [
@@ -31017,7 +31825,9 @@
         "category": "critical energy",
         "subcategory": "spherical",
         "datasetId": 378,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 4,
+        "subcategoryId": 8
     },
     "at26": {
         "materials": [
@@ -31115,7 +31925,9 @@
         "category": "minimum tube",
         "subcategory": "round, confined",
         "datasetId": 379,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at27a": {
         "materials": [
@@ -31198,7 +32010,9 @@
         "category": "minimum tube",
         "subcategory": "round, confined",
         "datasetId": 380,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at27b": {
         "materials": [
@@ -31281,7 +32095,9 @@
         "category": "minimum tube",
         "subcategory": "round, confined",
         "datasetId": 381,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at28a": {
         "materials": [
@@ -31364,7 +32180,9 @@
         "subcategory": "round, confined",
         "diluent": "Ar",
         "datasetId": 382,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at28b": {
         "materials": [
@@ -31447,7 +32265,9 @@
         "subcategory": "round, confined",
         "diluent": "He",
         "datasetId": 383,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at28c": {
         "materials": [
@@ -31530,7 +32350,9 @@
         "subcategory": "round, confined",
         "diluent": "N2",
         "datasetId": 384,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at28d": {
         "materials": [
@@ -31598,7 +32420,9 @@
         "subcategory": "round, confined",
         "diluent": "Ar",
         "datasetId": 385,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at28e": {
         "materials": [
@@ -31666,7 +32490,9 @@
         "subcategory": "round, confined",
         "diluent": "He",
         "datasetId": 386,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "categoryId": 5,
+        "subcategoryId": 13
     },
     "at133": {
         "materials": [
@@ -31744,6 +32570,9 @@
         "reference": "100",
         "category": "minimum tube",
         "datasetId": 387,
-        "dataset-comment": ""
+        "dataset-comment": "",
+        "subcategory": "N/A",
+        "categoryId": 5,
+        "subcategoryId": 1
     }
 }
