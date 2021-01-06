@@ -4,9 +4,9 @@
 
 import json
 
-file = open('./Queries in txt/composition-query.txt', "w+")
-materialFile = open('./Queries in txt/material-query.txt', "w+")
-dmmFile = open('./Queries in txt/dataset-materials-material-query.txt', "w+")
+file = open('./Queries in txt/4 - composition-query.txt', "w+")
+materialFile = open('./Queries in txt/5 - material-query.txt', "w+")
+dmmFile = open('./Queries in txt/10 - dataset-materials-material-query.txt', "w+")
 
 with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
   data = json.load(f)
@@ -27,7 +27,7 @@ for x in data: # Loop through dataset
             list_of_composition[y['composition']] = {"name": y['composition'], "id": count} # Insert composition into dictionary
             dataset_materials_material[x] = {"compositionId": count, "datasetId": data[x]['datasetId']} # Insert compositionId and datasetId
             
-            # Build 3 SQL queries
+            # Build 3 sets of txt files with SQL queries
             # Composition query
             file.write(" INSERT INTO `databoom_db_test`.`composition` (`id`, `composition`) VALUES ("+str(count)+", \""+y['composition']+"\");\n")
             

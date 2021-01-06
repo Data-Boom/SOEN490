@@ -3,15 +3,22 @@ import json
 with open('./Scraped JSONs/datasets.json') as f:
   data = json.load(f)
 
+datasetIdCount = 1
+
 for key in data:
+    data[key]["datasetId"] = datasetIdCount
+    data[key]["dataset-comment"] = ""
+    datasetIdCount += 1
     #This opens the txt file with the datapoints per dataset
-    datasetfile = open("txt/" + key + ".txt", "r")
+    datasetfile = open("Builders/txt with datapoints/" + key + ".txt", "r")
     #Each datapoints txt file has a header that contains the name as well as the units
     header = datasetfile.readline()
     temp = header.replace("#", "").lower().split(",")
     variableNames = []
     #For each of the variables inside the header, the points are noted down in an array
     for variable in temp :
+      if "diluent" in data[key]:
+        variable = variable.replace("diluent", data[key]["diluent"])
       #The if statement checks if the variable of the header does not match the variables from the website 
       # because that means a new variable must be declared
       if "initial temperature" not in variable and "initial pressure" not in variable and "equivalence ratio" not in variable :
@@ -65,22 +72,24 @@ for key in data:
       if each["name"] == "initial temperature" and not isinstance(each["value"], list) :
         if "-" in each["value"] :
           each["details"] = each["value"]
+          data[key]["dataset-comment"] += "The " + each['name'] + " is between the range of " + each['details'] + ". "
           each["value"] = []
         else :
           each["value"] = [each["value"]] * data[key]["data"]["count"]
       elif each["name"] == "initial pressure" and not isinstance(each["value"], list) :
         if "-" in each["value"] :
           each["details"] = each["value"]
+          data[key]["dataset-comment"] += "The " + each['name'] + " is between the range of " + each['details'] + ". "
           each["value"] = []
         else :
           each["value"] = [each["value"]] * data[key]["data"]["count"]
       elif each["name"] == "equivalence ratio" and not isinstance(each["value"], list) :
         if "-" in each["value"] :
           each["details"] = each["value"]
+          data[key]["dataset-comment"] += "The " + each['name'] + " is between the range of " + each['details'] + ". "
           each["value"] = []
         else :
           each["value"] = [each["value"]] * data[key]["data"]["count"]
-
 
 # dumps the new datasets into a new json file (with the arrays correctly)
 with open('./Scraped JSONs/datasets-with-datapoints.json', 'w') as outfile:

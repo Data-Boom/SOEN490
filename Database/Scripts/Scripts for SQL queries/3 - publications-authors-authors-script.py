@@ -4,7 +4,7 @@
 
 import json
 
-file = open('./Queries in txt/p-a-a-query.txt', "w+")
+file = open('./Queries in txt/3 - p-a-a-query.txt', "w+")
 
 with open('./Scraped JSONs/PAA.json') as f:
   data = json.load(f)

@@ -3,7 +3,7 @@
 
 import json
 
-file = open('./Queries in txt/category-subcat-query.txt', "w+")
+file = open('./Queries in txt/6 - category-subcat-query.txt', "w+")
 with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
   data = json.load(f)
   

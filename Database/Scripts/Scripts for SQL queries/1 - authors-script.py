@@ -3,7 +3,7 @@
 
 import json
 
-file = open('./Queries in txt/authors-query.txt', "w+")
+file = open('./Queries in txt/1 - authors-query.txt', "w+")
 
 with open('./Scraped JSONs/authors.json') as f:
   data = json.load(f)

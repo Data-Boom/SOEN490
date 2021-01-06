@@ -1,4 +1,4 @@
-from urllib2 import urlopen
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import json
 
@@ -61,20 +61,24 @@ for f in urllist :
                         tempobject["category"] = info.get_text().strip()
                     #case 1,3,5 are the materials
                     elif tdcount == 1 or tdcount == 3 or tdcount == 5 :
+                        if tdcount == 5:
+                            tempobject['diluent'] = info.get_text().strip()
                         tempobject["materials"].append({"composition": info.get_text().strip(),"details": ""})
                     #case 2 is the subcategory
                     elif tdcount == 2 :
                         tempobject["subcategory"] = info.get_text().strip()
                     #case 6 is the initial temperature (sometimes there is no value, just a unit, heance the extra "if" statement)
                     elif tdcount == 6 :
-                        temp = info.get_text().strip().split()
-                        if info.get_text().strip() != "K" :
+                        temp = info.get_text().replace(" - ", "-").strip().split()
+                        if tempobject["dataset name"] == "at172h":
+                            temp = "K"
+                        if info.get_text().strip() != "K" and temp != "K":
                             tempobject["data"]["variables"].append({"name": "initial temperature","repr": "T_0","units": temp[1], "value" : temp[0]})     
                         else :
                             tempobject["data"]["variables"].append({"name": "initial temperature","repr": "T_0","units": temp[0], "value" : []})     
                     elif tdcount == 4 :
                     #case 4 is the initial pressure (sometimes there is no value, just a unit, heance the extra "if" statement)
-                        temp = info.get_text().strip().split()
+                        temp = info.get_text().replace(" - ", "-").strip().split()
                         if info.get_text().strip() != "kPa" :
                             tempobject["data"]["variables"].append({"name": "initial pressure", "repr": "P_0", "units": temp[1],"value" : temp[0]}) 
                         else :
