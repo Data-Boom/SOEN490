@@ -1,13 +1,15 @@
 # This python script produces the category-subcat-query.txt file containing the queries used to populate the category and subcategory tables in databoom_db_test. 
 # The JSON used is the datasets-with-datapoints.json which was produced by the datasets-builder.py script found in Builders folder.
 
+# WARNING: 
+# This script MUST be RUN before dataset-script.py
+# This is because of Line 59, where we update dataset-with-datapoints.json to include categoryId's and subcategoryId's
+
 import json
 
 file = open('./Queries in txt/6 - category-subcat-query.txt', "w+")
 with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
   data = json.load(f)
-  
-file.write("SET FOREIGN_KEY_CHECKS=0;\n")
 
 file.write(" INSERT INTO `databoom_db_test`.`category` (`name`, `id`) VALUES ('N/A', 1);\n")
 file.write(" INSERT INTO `databoom_db_test`.`subcategory` (`name`, `id`) VALUES ('N/A', 1);\n")

@@ -128,7 +128,7 @@ J. Phys. D, 11(13):2103-2117, 1978.
 The susceptibility of propene-propane/air mixtures to detonation.
 Combust. Flame, 55(2):237-243, 1984.
 [44] J.E. Elsworth, P.J. Shuff, and A. Ungut.
-"Galloping" gas detonations in the spherical mode.
+Galloping gas detonations in the spherical mode.
 In Prog. Astronaut. Aeronaut., volume 94, pages 130-150, 1984.
 [45] H. Freiwald and H.W. Koch.
 Spherical detonations of acetylene-oxygen-nitrogen mixtures as a function of nature and strength of initiation.

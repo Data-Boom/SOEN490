@@ -9,8 +9,6 @@ datapointsFile = open('./Queries in txt/9 - datapoints-query.txt', "w+")
 
 with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
   data = json.load(f)
-  
-file.write("SET FOREIGN_KEY_CHECKS=0;\n")
 
 list_of_units = dict()
 list_of_representations = dict()
