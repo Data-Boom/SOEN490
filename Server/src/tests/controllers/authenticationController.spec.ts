@@ -161,5 +161,35 @@ describe('Authentication Controller', () => {
         await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
         expect(mockResponse.status).toBeCalledWith(200);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+
+    test('invalid user detail update request', async () => {
+        const expectedResponse = "Email is not valid. Please enter the correct email!";
+
+        mockRequest = {
+            query: {
+                email: '',
+                password: '456',
+                organizationName: 'soen490'
+            }
+        }
+        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+
+    test('invalid user detail update request, missing password and organization name', async () => {
+        const expectedResponse = "Request is invalid";
+
+        mockRequest = {
+            query: {
+                email: 'test@t.com',
+                password: '',
+                organizationName: ''
+            }
+        }
+        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
     })
 })

@@ -120,7 +120,6 @@ export class AuthenticationService {
         return token;
     }
 
-    //for issue 146 (similar to process sign up)
     async validateUserDetails(userDetailUpdater: IUserDetailUpdater): Promise<IResponse> {
         let email = userDetailUpdater.email
         let password = userDetailUpdater.password
@@ -128,18 +127,22 @@ export class AuthenticationService {
 
         // email = await AuthenticationModel.verifyIfEmailExists(userDetailUpdater.email);
         if (await AuthenticationModel.verifyIfEmailExists(email)) {
-            if (password != undefined) {
-                password = await this.hashPassword(password)
-                await AuthenticationModel.updateUserPasswordDetail(email, password);
-            }
-            if (organization != undefined) {
-                await AuthenticationModel.updateUserOrganizationDetail(email, organization);
+            try {
+                if (password != undefined) {
+                    password = await this.hashPassword(password)
+                    await AuthenticationModel.updateUserPasswordDetail(email, password);
+                }
+                if (organization != undefined) {
+                    await AuthenticationModel.updateUserOrganizationDetail(email, organization);
+                }
+            } catch (error) {
+                throw new InternalServerError("Internal server problem...try again!");
             }
         }
         else {
-            throw new BadRequest("email is not valid. Please enter the correct email!");
+            throw new BadRequest("Email is not valid. Please enter the correct email!");
         }
-        this.requestResponse.message = "success";
+        this.requestResponse.message = "Success";
         this.requestResponse.statusCode = 200;
         return this.requestResponse
     }

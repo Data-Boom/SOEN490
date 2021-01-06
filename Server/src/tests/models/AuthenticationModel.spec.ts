@@ -80,7 +80,7 @@ describe('Authentication Model Methods', () => {
     test('updating users organization name inside the database - Return true', async () => {
         let email: string = 'j.com'
         let organizationName = 'Shichibukai'
-        let res = await AuthenticationModel.updateUserPasswordDetail(email, organizationName);
+        let res = await AuthenticationModel.updateUserOrganizationDetail(email, organizationName);
 
         expect(res).toBe(true);
     })
