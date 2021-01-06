@@ -25,10 +25,11 @@ router.get('/resetPassword', (request: Request, response: Response, next: NextFu
 
 });
 
-router.post('/updateUserInfo', (request: Request, response: Response, next: NextFunction) => {
-    //make an updatePasswordRequest and validatePasswordRequest 
+router.post('/updateUserInfo', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
+
     authenticationController.updateUserDetailRequest(request, response, next);
-})
+});
+
 router.get('/userDetails', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
 
     authenticationController.createFetchUserDetailsRequest(request, response);

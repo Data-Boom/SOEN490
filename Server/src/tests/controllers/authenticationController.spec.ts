@@ -164,7 +164,7 @@ describe('Authentication Controller', () => {
     });
 
     test('invalid user detail update request', async () => {
-        const expectedResponse = "Email is not valid. Please enter the correct email!";
+        const expectedResponse = "Email cannot be found. Request declined";
 
         mockRequest = {
             query: {
@@ -184,8 +184,7 @@ describe('Authentication Controller', () => {
         mockRequest = {
             query: {
                 email: 'test@t.com',
-                password: '',
-                organizationName: ''
+
             }
         }
         await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)

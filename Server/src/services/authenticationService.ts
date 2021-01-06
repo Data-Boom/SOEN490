@@ -7,8 +7,8 @@ import { AuthenticationModel } from '../models/AuthenticationModel'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
-import { IUserDetailUpdater } from './../genericInterfaces/AuthenticationInterfaces';
-import { IUserDetails } from '../genericInterfaces/AuthenticationInterfaces';
+import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
+import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
@@ -120,7 +120,7 @@ export class AuthenticationService {
         return token;
     }
 
-    async validateUserDetails(userDetailUpdater: IUserDetailUpdater): Promise<IResponse> {
+    async validateUserDetails(userDetailUpdater: IUpdateUserDetail): Promise<IResponse> {
         let email = userDetailUpdater.email
         let password = userDetailUpdater.password
         let organization = userDetailUpdater.organization
@@ -140,7 +140,7 @@ export class AuthenticationService {
             }
         }
         else {
-            throw new BadRequest("Email is not valid. Please enter the correct email!");
+            throw new BadRequest("Email cannot be found. Request declined");
         }
         this.requestResponse.message = "Success";
         this.requestResponse.statusCode = 200;
@@ -151,9 +151,9 @@ export class AuthenticationService {
      * call userModel to fetch all required data 
      * @param userEmail User Email
      */
-    async loadUserDetails(userEmail: string): Promise<IResponse> {//need test
+    async loadUserDetails(userEmail: string): Promise<IResponse> {
 
-        let userDetails: IUserDetails
+        let userDetails: IFetchUserDetail
         let verifiedEmail: boolean;
         verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userEmail);
         if (!verifiedEmail) {

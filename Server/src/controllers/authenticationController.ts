@@ -1,4 +1,4 @@
-import { IUserDetailUpdater } from './../genericInterfaces/AuthenticationInterfaces';
+import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
 import { Request, Response, NextFunction } from 'express';
 import { AuthenticationService } from '../services/authenticationService';
 
@@ -76,11 +76,10 @@ export class AuthenticationController {
 
         this.invalidResponse = this.validateUserDetailRequest(request);
         if (!this.invalidResponse) {
-            return response.status(400).json("Request is invalid. ")
+            return response.status(400).json("Request is invalid")
         } else {
             let requestParams: any = { ...request.query };
-            let updateUserDetail: IUserDetailUpdater = requestParams;
-            //call validateUserDetails from service inside callServiceForUpdateUserDetails
+            let updateUserDetail: IUpdateUserDetail = requestParams;
             try {
                 let res: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
                 return response.status(res.statusCode).json(res.message);
@@ -92,7 +91,7 @@ export class AuthenticationController {
         }
     }
     //to get info passed from update user details method from service layer
-    private async callServiceForUpdateUserDetails(updateUserDetail: IUserDetailUpdater, response: Response, next: NextFunction): Promise<Response> {
+    private async callServiceForUpdateUserDetails(updateUserDetail: IUpdateUserDetail, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         try {
             let serviceResponse: IResponse = await this.authenticationService.validateUserDetails(updateUserDetail);
