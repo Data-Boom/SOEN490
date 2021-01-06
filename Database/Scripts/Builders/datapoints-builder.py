@@ -65,7 +65,7 @@ for key in data:
           if data[key]["data"]["variables"][each]["name"] == attempt :
             if not isinstance(data[key]["data"]["variables"][each]["value"], list) :
               data[key]["data"]["variables"][each]["value"] = []
-            data[key]["data"]["variables"][each]["value"].append(points[x].replace("\n", "").strip())
+            data[key]["data"]["variables"][each]["value"].append(float(points[x].replace("\n", "").strip()))
     
     # Same as above but for the case 2.
     for each in data[key]["data"]["variables"] :
@@ -75,21 +75,21 @@ for key in data:
           data[key]["dataset-comment"] += "The " + each['name'] + " is between the range of " + each['details'] + ". "
           each["value"] = []
         else :
-          each["value"] = [each["value"]] * data[key]["data"]["count"]
+          each["value"] = [float(each["value"])] * data[key]["data"]["count"]
       elif each["name"] == "initial pressure" and not isinstance(each["value"], list) :
         if "-" in each["value"] :
           each["details"] = each["value"]
           data[key]["dataset-comment"] += "The " + each['name'] + " is between the range of " + each['details'] + ". "
           each["value"] = []
         else :
-          each["value"] = [each["value"]] * data[key]["data"]["count"]
+          each["value"] = [float(each["value"])] * data[key]["data"]["count"]
       elif each["name"] == "equivalence ratio" and not isinstance(each["value"], list) :
         if "-" in each["value"] :
           each["details"] = each["value"]
           data[key]["dataset-comment"] += "The " + each['name'] + " is between the range of " + each['details'] + ". "
           each["value"] = []
         else :
-          each["value"] = [each["value"]] * data[key]["data"]["count"]
+          each["value"] = [float(each["value"])] * data[key]["data"]["count"]
 
 # dumps the new datasets into a new json file (with the arrays correctly)
 with open('./Scraped JSONs/datasets-with-datapoints.json', 'w') as outfile:

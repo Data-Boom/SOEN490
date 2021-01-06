@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import json
+import json 
 
 #These are all the urls from the caltech website that needed scraping
 references = BeautifulSoup(urlopen("https://shepherd.caltech.edu/detn_db/html/references.html"), 'html.parser')
@@ -23,8 +23,6 @@ urllist = [
     "https://shepherd.caltech.edu/detn_db/html/db_139.html", 
     "https://shepherd.caltech.edu/detn_db/html/db_140.html",  
     "https://shepherd.caltech.edu/detn_db/html/db_141.html"
-
-    
 ]
 #This is to keep all the datasets and their information for transfering to a json file
 datasetlist = dict()
