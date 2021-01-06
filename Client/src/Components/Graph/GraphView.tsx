@@ -25,7 +25,7 @@ export default function GraphView() {
   const classes = useStyles()
 
   //Testing the query parser using quer-string for future use if needed
-  console.log(queryString.parse(useLocation().search))
+  //console.log(queryString.parse(useLocation().search))
 
 
   //sample datasets to try, just needs to gather from the backend instead.

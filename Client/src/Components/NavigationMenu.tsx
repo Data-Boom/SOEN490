@@ -7,9 +7,10 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { aboutRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, researchPaperAnalysisRoute, searchRoute } from '../Consts/Routes'
+import { aboutRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute } from '../Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
@@ -21,6 +22,7 @@ import HomeView from './Home/HomeView'
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
+import ProfileView from "../Views/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import SearchIcon from '@material-ui/icons/Search'
@@ -76,6 +78,7 @@ export default function NavigationMenu(): any {
             {renderNavLink(searchRoute, "Search", <SearchIcon />)}
             {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
             {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
+            {renderNavLink(profileRoute, "Profile", <AccountBoxIcon />)}
             {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
             {renderNavLink(aboutRoute, "About Databoom", <InfoIcon />)}
           </List>
