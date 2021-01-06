@@ -32,7 +32,7 @@ for x in data: # Loop through dataset
         list_of_category[data[x]['category']] = {"name": data[x]['category'], "id": categoryIdCount} # insert category into dictionary
         
         # Category query
-        file.write(" INSERT INTO `databoom_db_test`.`category` (`name`) VALUES (\""+data[x]['category']+"\");\n")
+        file.write(" INSERT INTO `databoom_db_test`.`category` (`id`,`name`) VALUES ("+str(categoryIdCount)+",\""+data[x]['category']+"\");\n")
 
         # Create categoryId object in JSON
         data[x]['categoryId'] = categoryIdCount
@@ -46,7 +46,7 @@ for x in data: # Loop through dataset
         list_of_subcategory[data[x]['subcategory']] = {"name": data[x]['subcategory'], "id": subcategoryIdCount} # insert category into dictionary
         
         # Subcategory query
-        file.write(" INSERT INTO `databoom_db_test`.`subcategory` (`name`) VALUES (\""+data[x]['subcategory']+"\");\n")
+        file.write(" INSERT INTO `databoom_db_test`.`subcategory` (`id`,`name`) VALUES ("+str(subcategoryIdCount)+",\""+data[x]['subcategory']+"\");\n")
 
         # Create subcategoryId object in JSON
         data[x]['subcategoryId'] = subcategoryIdCount
