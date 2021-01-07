@@ -7,6 +7,7 @@ import { AuthenticationModel } from '../models/AuthenticationModel'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
+import { IUserDetails } from '../genericInterfaces/AuthenticationInterfaces';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
@@ -109,13 +110,37 @@ export class AuthenticationService {
     private async generateJwtToken(jwtParams: IJwtParams): Promise<string> {
 
         let token: string;
-        let jwtExpiry: number = 300;
+        let jwtExpiry: number = 3000;
         const jwtAccessKey = process.env.ACCESS_SECRET_KEY;
 
         token = await jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtAccessKey, {
             expiresIn: jwtExpiry
         })
         return token;
+    }
+
+    /**
+     * This method is used to loadUserDetails upon logging on user page. This will 
+     * call userModel to fetch all required data 
+     * @param userEmail User Email
+     */
+    async loadUserDetails(userEmail: string): Promise<IResponse> {
+
+        let userDetails: IUserDetails
+        let verifiedEmail: boolean;
+        verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userEmail);
+        if (!verifiedEmail) {
+            throw new BadRequest("Cannot fetch details for this email");
+        }
+        try {
+            userDetails = await AuthenticationModel.getUserDetails(userEmail);
+        }
+        catch (error) {
+            throw new InternalServerError("Internal Server Error fetching Details. Try again later")
+        }
+        this.requestResponse.message = JSON.stringify(userDetails);
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse
     }
 }
 

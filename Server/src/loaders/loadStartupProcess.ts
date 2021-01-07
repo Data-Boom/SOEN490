@@ -5,7 +5,7 @@ import { connectDB } from '../database';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { authenticationRouter } from '../routes/authenticationRouter';
 import bodyParser from 'body-parser';
-import { getDataRouter } from '../routes/queryDataRouter';
+import { getDataRouter } from '../routes/getDatasetRouter';
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used

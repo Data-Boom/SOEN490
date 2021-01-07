@@ -1,4 +1,5 @@
 import { Connection, getConnection } from "typeorm";
+import { Accounts } from "./entities/Accounts";
 import { selectAuthorsQuery } from "./entities/Authors";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
@@ -83,6 +84,22 @@ export class DataQueryModel {
     }
 
     /**
+     * This method will run a query find all the data set IDs based on an entered author's 
+     * last name and return a raw data packet containing that information. 
+     * 
+     * @param lastName 
+     * The last name of an author: string
+     */
+    async getDatasetIDFromAuthorLastName(lastName: string): Promise<IDatasetModel[]> {
+        let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+            .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
+            .innerJoin('publication.authors', 'author')
+            .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
+            .getRawMany();
+        return authorDatasetData;
+    }
+
+    /**
      * This method will run a query find all the data set IDs based on an entered category ID
      * and return a raw data packet containing that information. 
      * 
@@ -114,6 +131,37 @@ export class DataQueryModel {
             .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
             .getRawMany();
         return subcategoryDatasetData;
+    }
+
+    /**
+     * This method will run a query find all the data set IDs by a specific user ID
+     * and return a raw data packet containing that information. 
+     * 
+     * @param id 
+     * Account ID: number
+     */
+    async getUploadedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
+        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+            .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
+            .where('account.id = :idRef', { idRef: id })
+            .getRawMany();
+        return idDatasetData;
+    }
+
+    /**
+     * This method will run a query find all the data set IDs favorited by specific user ID
+     * and return a raw data packet containing that information. 
+     * 
+     * @param id 
+     * Account ID: number
+     */
+    async getSavedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
+
+        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+            .innerJoin('dataset.accounts', 'account')
+            .where('account.id = :idRef', { idRef: id })
+            .getRawMany();
+        return idDatasetData;
     }
 
     /**

@@ -2,6 +2,7 @@ import { getConnection } from 'typeorm';
 
 import { Accounts } from './entities/Accounts'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
+import { IUserDetails } from '../genericInterfaces/AuthenticationInterfaces';
 
 /**
  * This model contains all methods required for obtaining data from the Accounts
@@ -95,6 +96,25 @@ export class AuthenticationModel {
             .where('account.email = :email', { email: email })
             .getRawMany();
         return jwtParams[0];
+    }
+
+    /**
+     * This will fetch email, firstname, lastname, organization and dob.
+     * @param email - User Email
+     */
+    static async getUserDetails(userEmail: string): Promise<IUserDetails> {
+
+        let connection = getConnection();
+        let userInfo = await connection.manager
+            .createQueryBuilder(Accounts, 'account')
+            .select('account.email', 'account_email')
+            .addSelect('account.firstName', 'account_firstName')
+            .addSelect('account.lastName', 'account_lastName')
+            .addSelect('account.organizationName', 'account_organizationName')
+            .addSelect('account.dateOfBirth', 'account_dateOfBirth')
+            .where('account.email = :email', { email: userEmail })
+            .getRawMany();
+        return userInfo[0];
     }
 
     //TODO: Implement when doing password reset 
