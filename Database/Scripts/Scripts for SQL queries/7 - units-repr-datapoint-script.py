@@ -25,7 +25,7 @@ for x in data: # Loop through each dataset
     if y['units'] not in list_of_units and y['units'] != "" and y['units'] != "N/A":
       list_of_units[y['units']] = {"name": y['units'], "id": unitCount}
       
-      file.write(" INSERT INTO `databoom_db_test`.`units` (`id`, `name`, `units`) VALUES ("+str(unitCount)+", \""+y['units']+"\", \""+y['units']+"\");\n")
+      file.write(" INSERT INTO `databoom_db`.`units` (`id`, `name`, `units`) VALUES ("+str(unitCount)+", \""+y['units']+"\", \""+y['units']+"\");\n")
       
       y['unitsId'] = list_of_units[y['units']]['id']
       unitCount += 1
@@ -39,7 +39,7 @@ for x in data: # Loop through each dataset
     if y['repr'] not in list_of_representations and y['repr'] != "" and y['repr'] != "N/A":
       list_of_representations[y['repr']] = {"name": y['repr'], "id": reprCount}
       
-      file.write(" INSERT INTO `databoom_db_test`.`representations` (`id`, `repr`) VALUES ("+str(reprCount)+", \""+y['repr']+"\");\n")
+      file.write(" INSERT INTO `databoom_db`.`representations` (`id`, `repr`) VALUES ("+str(reprCount)+", \""+y['repr']+"\");\n")
       
       y['reprId'] = list_of_representations[y['repr']]['id']
       reprCount += 1
@@ -49,7 +49,7 @@ for x in data: # Loop through each dataset
       y['reprId'] = list_of_representations[y['repr']]['id']
     
     # Datapoints query
-    datapointsFile.write(" INSERT INTO `databoom_db_test`.`datapoints`(`datasetId`, `name`, `values`, `unitsId`, `representationsId`) VALUES ("+str(data[x]['datasetId'])+", \""+y['name']+"\", \""+str(y['value'])+"\", "+str(y['unitsId'])+", "+str(y['reprId'])+");\n")
+    datapointsFile.write(" INSERT INTO `databoom_db`.`datapoints`(`datasetId`, `name`, `values`, `unitsId`, `representationsId`) VALUES ("+str(data[x]['datasetId'])+", \""+y['name']+"\", \""+str(y['value'])+"\", "+str(y['unitsId'])+", "+str(y['reprId'])+");\n")
     
 file.close()
 datapointsFile.close()

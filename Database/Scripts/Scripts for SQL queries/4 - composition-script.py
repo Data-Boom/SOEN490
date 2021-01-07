@@ -10,10 +10,6 @@ dmmFile = open('./Queries in txt/10 - dataset-materials-material-query.txt', "w+
 
 with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
   data = json.load(f)
-  
-file.write("SET FOREIGN_KEY_CHECKS=0;\n")
-materialFile.write("SET FOREIGN_KEY_CHECKS=0;\n")
-dmmFile.write("SET FOREIGN_KEY_CHECKS=0;\n")
 
 list_of_composition = dict()
 dataset_materials_material = dict()
@@ -29,14 +25,14 @@ for x in data: # Loop through dataset
             
             # Build 3 sets of txt files with SQL queries
             # Composition query
-            file.write(" INSERT INTO `databoom_db_test`.`composition` (`id`, `composition`) VALUES ("+str(count)+", \""+y['composition']+"\");\n")
+            file.write(" INSERT INTO `databoom_db`.`composition` (`id`, `composition`) VALUES ("+str(count)+", \""+y['composition']+"\");\n")
             
             # Material query
-            materialFile.write(" INSERT INTO `databoom_db_test`.`material` (`id`, `compositionId`, `details`) VALUES ("+str(count)+", "+str(count)+", \""+y['composition']+"\");\n")
+            materialFile.write(" INSERT INTO `databoom_db`.`material` (`id`, `compositionId`, `details`) VALUES ("+str(count)+", "+str(count)+", \""+y['composition']+"\");\n")
             
             # Dataset Material Material query
             
-            dmmFile.write(" INSERT INTO `databoom_db_test`.`dataset_materials_material` (`datasetId`, `materialId`) VALUES ("+str(data[x]['datasetId'])+", "+str(count)+");\n")
+            dmmFile.write(" INSERT INTO `databoom_db`.`dataset_materials_material` (`datasetId`, `materialId`) VALUES ("+str(data[x]['datasetId'])+", "+str(count)+");\n")
             
             count += 1
         else: # composition is already in dictionary
@@ -44,7 +40,7 @@ for x in data: # Loop through dataset
             
             # Dataset Material Material query 
         
-            dmmFile.write(" INSERT INTO `databoom_db_test`.`dataset_materials_material` (`datasetId`, `materialId`) VALUES ("+str(data[x]['datasetId'])+", "+str(list_of_composition[y['composition']]['id'])+");\n")
+            dmmFile.write(" INSERT INTO `databoom_db`.`dataset_materials_material` (`datasetId`, `materialId`) VALUES ("+str(data[x]['datasetId'])+", "+str(list_of_composition[y['composition']]['id'])+");\n")
 
 with open('./Scraped JSONs/list_of_composition.json', 'w') as outfile:
     json.dump(list_of_composition, outfile, indent=4)

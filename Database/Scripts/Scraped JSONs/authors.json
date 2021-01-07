@@ -1,1788 +1,1788 @@
 {
-    "Y.K. Liu": {
-        "middle": "K", 
-        "listOfRef": [
-            "74"
-        ], 
-        "last": "Liu", 
-        "id": 116, 
-        "first": "Y"
-    }, 
-    "Z.W. Huang": {
-        "middle": "W", 
-        "listOfRef": [
-            "51"
-        ], 
-        "last": "Huang", 
-        "id": 87, 
-        "first": "Z"
-    }, 
-    "Aziz Ungut": {
-        "listOfRef": [
-            "116"
-        ], 
-        "last": "Ungut", 
-        "id": 171, 
-        "first": "Aziz"
-    }, 
-    "J.H. Lee": {
-        "middle": "H", 
-        "listOfRef": [
-            "8", 
-            "14", 
-            "49", 
-            "54", 
-            "55", 
-            "56", 
-            "64", 
-            "65", 
-            "66", 
-            "67", 
-            "69", 
-            "74", 
-            "83", 
-            "85", 
-            "87", 
-            "88", 
-            "89", 
-            "90", 
-            "91", 
-            "97"
-        ], 
-        "last": "Lee", 
-        "id": 22, 
-        "first": "J"
-    }, 
-    "M.H. Hay": {
-        "middle": "H", 
-        "listOfRef": [
-            "73"
-        ], 
-        "last": "Hay", 
-        "id": 114, 
-        "first": "M"
-    }, 
-    "W.B. Benedick": {
-        "middle": "B", 
-        "listOfRef": [
-            "14", 
-            "15", 
-            "16", 
-            "105", 
-            "112", 
-            "113"
-        ], 
-        "last": "Benedick", 
-        "id": 35, 
-        "first": "W"
-    }, 
     "S. Abid": {
         "listOfRef": [
             "1"
-        ], 
-        "last": "Abid", 
-        "id": 1, 
-        "first": "S"
-    }, 
-    "A.K. Oppenheim": {
-        "middle": "K", 
-        "listOfRef": [
-            "69"
-        ], 
-        "last": "Oppenheim", 
-        "id": 108, 
-        "first": "A"
-    }, 
-    "A.G. Lyamin": {
-        "middle": "G", 
-        "listOfRef": [
-            "60"
-        ], 
-        "last": "Lyamin", 
-        "id": 96, 
-        "first": "A"
-    }, 
-    "R.I. Soloukhin": {
-        "middle": "I", 
-        "listOfRef": [
-            "69"
-        ], 
-        "last": "Soloukhin", 
-        "id": 107, 
-        "first": "R"
-    }, 
-    "A.A. Borisov": {
-        "middle": "A", 
-        "listOfRef": [
-            "17", 
-            "18", 
-            "19", 
-            "20"
-        ], 
-        "last": "Borisov", 
-        "id": 40, 
-        "first": "A"
-    }, 
-    "A. Rinnan": {
-        "listOfRef": [
-            "85", 
-            "102"
-        ], 
-        "last": "Rinnan", 
-        "id": 137, 
-        "first": "A"
-    }, 
-    "T. Ginsberg": {
-        "listOfRef": [
-            "29", 
-            "30"
-        ], 
-        "last": "Ginsberg", 
-        "id": 54, 
-        "first": "T"
-    }, 
-    "V.V. Kosenkov": {
-        "middle": "V", 
-        "listOfRef": [
-            "19"
-        ], 
-        "last": "Kosenkov", 
-        "id": 45, 
-        "first": "V"
-    }, 
-    "H. Freiwald": {
-        "listOfRef": [
-            "45"
-        ], 
-        "last": "Freiwald", 
-        "id": 75, 
-        "first": "H"
-    }, 
-    "B. Deshaies": {
-        "listOfRef": [
-            "130"
-        ], 
-        "last": "Deshaies", 
-        "id": 189, 
-        "first": "B"
-    }, 
-    "F.J. Benz": {
-        "middle": "J", 
-        "listOfRef": [
-            "13", 
-            "97", 
-            "99"
-        ], 
-        "last": "Benz", 
-        "id": 31, 
-        "first": "F"
-    }, 
-    "H.O. Barthel": {
-        "middle": "O", 
-        "listOfRef": [
-            "9"
-        ], 
-        "last": "Barthel", 
-        "id": 23, 
-        "first": "H"
-    }, 
-    "M. Aminallah": {
-        "listOfRef": [
-            "4"
-        ], 
-        "last": "Aminallah", 
-        "id": 10, 
-        "first": "M"
-    }, 
-    "R. Knystautas": {
-        "listOfRef": [
-            "8", 
-            "14", 
-            "16", 
-            "48", 
-            "49", 
-            "54", 
-            "55", 
-            "56", 
-            "57", 
-            "62", 
-            "66", 
-            "67", 
-            "70", 
-            "74", 
-            "77", 
-            "83", 
-            "85", 
-            "87", 
-            "97", 
-            "113"
-        ], 
-        "last": "Knystautas", 
-        "id": 21, 
-        "first": "R"
-    }, 
-    "S. Rajan": {
-        "listOfRef": [
-            "111"
-        ], 
-        "last": "Rajan", 
-        "id": 165, 
-        "first": "S"
-    }, 
-    "K. Guhlmann": {
-        "listOfRef": [
-            "47"
-        ], 
-        "last": "Guhlmann", 
-        "id": 79, 
-        "first": "K"
-    }, 
-    "J.M. Morgan": {
-        "middle": "M", 
-        "listOfRef": [
-            "41", 
-            "42"
-        ], 
-        "last": "Morgan", 
-        "id": 71, 
-        "first": "J"
-    }, 
-    "N.N. Simonov": {
-        "middle": "N", 
-        "listOfRef": [
-            "129"
-        ], 
-        "last": "Simonov", 
-        "id": 187, 
-        "first": "N"
-    }, 
-    "C.W. Kauffman": {
-        "middle": "W", 
-        "listOfRef": [
-            "128"
-        ], 
-        "last": "Kauffman", 
-        "id": 185, 
-        "first": "C"
-    }, 
-    "Yu.A. Gostintsev": {
-        "middle": "A", 
-        "listOfRef": [
-            "76"
-        ], 
-        "last": "Gostintsev", 
-        "id": 119, 
-        "first": "Yu"
-    }, 
-    "H.G. Wagner": {
-        "middle": "G", 
-        "listOfRef": [
-            "100", 
-            "101"
-        ], 
-        "last": "Wagner", 
-        "id": 157, 
-        "first": "H"
-    }, 
-    "G. Hooper": {
-        "listOfRef": [
-            "23", 
-            "24", 
-            "25", 
-            "26", 
-            "41", 
-            "42"
-        ], 
-        "last": "Hooper", 
-        "id": 49, 
-        "first": "G"
-    }, 
-    "S.B. Murray": {
-        "middle": "B", 
-        "listOfRef": [
-            "85", 
-            "88", 
-            "89", 
-            "90", 
-            "91", 
-            "104"
-        ], 
-        "last": "Murray", 
-        "id": 135, 
-        "first": "S"
-    }, 
-    "R.D. Oza": {
-        "middle": "D", 
-        "listOfRef": [
-            "92"
-        ], 
-        "last": "Oza", 
-        "id": 145, 
-        "first": "R"
-    }, 
-    "P. Wolanski": {
-        "listOfRef": [
-            "128"
-        ], 
-        "last": "Wolanski", 
-        "id": 184, 
-        "first": "P"
-    }, 
-    "H. Matsui": {
-        "listOfRef": [
-            "68", 
-            "80"
-        ], 
-        "last": "Matsui", 
-        "id": 106, 
-        "first": "H"
-    }, 
-    "D.H. Edwards": {
-        "middle": "H", 
-        "listOfRef": [
-            "40", 
-            "41", 
-            "42"
-        ], 
-        "last": "Edwards", 
-        "id": 70, 
-        "first": "D"
-    }, 
-    "G. Ciccarelli": {
-        "listOfRef": [
-            "29", 
-            "30"
-        ], 
-        "last": "Ciccarelli", 
-        "id": 53, 
-        "first": "G"
-    }, 
-    "P. Andresen": {
-        "listOfRef": [
-            "6"
-        ], 
-        "last": "Andresen", 
-        "id": 15, 
-        "first": "P"
-    }, 
-    "C.P. Quinn": {
-        "middle": "P", 
-        "listOfRef": [
-            "26"
-        ], 
-        "last": "Quinn", 
-        "id": 50, 
-        "first": "C"
-    }, 
-    "M. Plaster": {
-        "listOfRef": [
-            "99"
-        ], 
-        "last": "Plaster", 
-        "id": 156, 
-        "first": "M"
-    }, 
-    "T. Dean": {
-        "listOfRef": [
-            "87"
-        ], 
-        "last": "Dean", 
-        "id": 139, 
-        "first": "T"
-    }, 
-    "H.Gg. Wagner": {
-        "middle": "Gg", 
-        "listOfRef": [
-            "47"
-        ], 
-        "last": "Wagner", 
-        "id": 81, 
-        "first": "H"
-    }, 
-    "B. Morosin": {
-        "listOfRef": [
-            "15"
-        ], 
-        "last": "Morosin", 
-        "id": 38, 
-        "first": "B"
-    }, 
-    "E. Metcalfe": {
-        "listOfRef": [
-            "27"
-        ], 
-        "last": "Metcalfe", 
-        "id": 51, 
-        "first": "E"
-    }, 
-    "R. Vandermolen": {
-        "listOfRef": [
-            "92"
-        ], 
-        "last": "Vandermolen", 
-        "id": 146, 
-        "first": "R"
-    }, 
-    "A. Malliakos": {
-        "listOfRef": [
-            "30"
-        ], 
-        "last": "Malliakos", 
-        "id": 62, 
-        "first": "A"
-    }, 
-    "W. Pusch": {
-        "listOfRef": [
-            "47", 
-            "100", 
-            "101"
-        ], 
-        "last": "Pusch", 
-        "id": 80, 
-        "first": "W"
-    }, 
-    "M. Berman": {
-        "listOfRef": [
-            "48", 
-            "112"
-        ], 
-        "last": "Berman", 
-        "id": 84, 
-        "first": "M"
-    }, 
-    "M.J. Kaneshige": {
-        "middle": "J", 
-        "listOfRef": [
-            "3", 
-            "53"
-        ], 
-        "last": "Kaneshige", 
-        "id": 7, 
-        "first": "M"
-    }, 
-    "P.A. Urtiew": {
-        "middle": "A", 
-        "listOfRef": [
-            "117", 
-            "126", 
-            "127"
-        ], 
-        "last": "Urtiew", 
-        "id": 174, 
-        "first": "P"
-    }, 
-    "H.D. Beeson": {
-        "middle": "D", 
-        "listOfRef": [
-            "13"
-        ], 
-        "last": "Beeson", 
-        "id": 28, 
-        "first": "H"
-    }, 
-    "L. Gerlach": {
-        "listOfRef": [
-            "30"
-        ], 
-        "last": "Gerlach", 
-        "id": 60, 
-        "first": "L"
-    }, 
-    "W. Reckers": {
-        "listOfRef": [
-            "6"
-        ], 
-        "last": "Reckers", 
-        "id": 16, 
-        "first": "W"
-    }, 
-    "J.A. Eyre": {
-        "middle": "A", 
-        "listOfRef": [
-            "43"
-        ], 
-        "last": "Eyre", 
-        "id": 73, 
-        "first": "J"
-    }, 
-    "J.H Lee": {
-        "listOfRef": [
-            "68"
-        ], 
-        "last": "HLee", 
-        "id": 105, 
-        "first": "J"
-    }, 
-    "A. Makris": {
-        "listOfRef": [
-            "77"
-        ], 
-        "last": "Makris", 
-        "id": 124, 
-        "first": "A"
-    }, 
-    "C. Guirao": {
-        "listOfRef": [
-            "54", 
-            "70"
-        ], 
-        "last": "Guirao", 
-        "id": 91, 
-        "first": "C"
-    }, 
-    "H. Tagawa": {
-        "listOfRef": [
-            "30"
-        ], 
-        "last": "Tagawa", 
-        "id": 61, 
-        "first": "H"
-    }, 
-    "P.A. Thibault": {
-        "middle": "A", 
-        "listOfRef": [
-            "84", 
-            "86", 
-            "87", 
-            "104"
-        ], 
-        "last": "Thibault", 
-        "id": 134, 
-        "first": "P"
-    }, 
-    "C. Finfrock": {
-        "listOfRef": [
-            "30"
-        ], 
-        "last": "Finfrock", 
-        "id": 59, 
-        "first": "C"
-    }, 
-    "J.E. Elsworth": {
-        "middle": "E", 
-        "listOfRef": [
-            "23", 
-            "24", 
-            "25", 
-            "26", 
-            "27", 
-            "43", 
-            "44"
-        ], 
-        "last": "Elsworth", 
-        "id": 48, 
-        "first": "J"
-    }, 
-    "G.M. Rude": {
-        "middle": "M", 
-        "listOfRef": [
-            "84"
-        ], 
-        "last": "Rude", 
-        "id": 133, 
-        "first": "G"
-    }, 
-    "Ul'yanitskii": {
-        "listOfRef": [
-            "124"
-        ], 
-        "last": "Ul'yanitskii", 
-        "id": 181
-    }, 
-    "H.W. Koch": {
-        "middle": "W", 
-        "listOfRef": [
-            "45"
-        ], 
-        "last": "Koch", 
-        "id": 76, 
-        "first": "H"
-    }, 
-    "J.C. Libouton": {
-        "middle": "C", 
-        "listOfRef": [
-            "72"
-        ], 
-        "last": "Libouton", 
-        "id": 111, 
-        "first": "J"
-    }, 
-    "C.M. Tarver": {
-        "middle": "M", 
-        "listOfRef": [
-            "117"
-        ], 
-        "last": "Tarver", 
-        "id": 175, 
-        "first": "C"
-    }, 
-    "J.H.S. Lee. ": {
-        "middle": "H.H", 
-        "listOfRef": [
-            "13"
-        ], 
-        "last": "S", 
-        "id": 34, 
-        "first": "J"
-    }, 
-    "G. Thomas": {
-        "listOfRef": [
-            "86"
-        ], 
-        "last": "Thomas", 
-        "id": 138, 
-        "first": "G"
-    }, 
-    "J.D. Kennedy": {
-        "middle": "D", 
-        "listOfRef": [
-            "15"
-        ], 
-        "last": "Kennedy", 
-        "id": 37, 
-        "first": "J"
-    }, 
-    "Lee": {
-        "listOfRef": [
-            "63"
-        ], 
-        "last": "Lee", 
-        "id": 99
-    }, 
-    "S.M. Kogarko": {
-        "middle": "M", 
-        "listOfRef": [
-            "58", 
-            "59", 
-            "60", 
-            "129"
-        ], 
-        "last": "Kogarko", 
-        "id": 94, 
-        "first": "S"
-    }, 
-    "M.D. Pedley": {
-        "middle": "D", 
-        "listOfRef": [
-            "97"
-        ], 
-        "last": "Pedley", 
-        "id": 151, 
-        "first": "M"
-    }, 
-    "Ia.B. Zeldovich": {
-        "middle": "B", 
-        "listOfRef": [
-            "129"
-        ], 
-        "last": "Zeldovich", 
-        "id": 186, 
-        "first": "Ia"
-    }, 
-    "A.A. Vasil'ev": {
-        "middle": "A", 
-        "listOfRef": [
-            "121", 
-            "122", 
-            "123", 
-            "124"
-        ], 
-        "last": "Vasil'ev", 
-        "id": 178, 
-        "first": "A"
-    }, 
-    "Yu.N. Chernushkin": {
-        "middle": "N", 
-        "listOfRef": [
-            "76"
-        ], 
-        "last": "Chernushkin", 
-        "id": 122, 
-        "first": "Yu"
-    }, 
-    "Ya.K. Troshin": {
-        "middle": "K", 
-        "listOfRef": [
-            "31", 
-            "32"
-        ], 
-        "last": "Troshin", 
-        "id": 64, 
-        "first": "Ya"
-    }, 
-    "P.J. Shuff": {
-        "middle": "J", 
-        "listOfRef": [
-            "7", 
-            "27", 
-            "44"
-        ], 
-        "last": "Shuff", 
-        "id": 19, 
-        "first": "P"
-    }, 
-    "M.E. Nolan": {
-        "middle": "E", 
-        "listOfRef": [
-            "93"
-        ], 
-        "last": "Nolan", 
-        "id": 147, 
-        "first": "M"
-    }, 
-    "Molen Vander": {
-        "listOfRef": [
-            "118"
-        ], 
-        "last": "Vander", 
-        "id": 176, 
-        "first": "Molen"
-    }, 
-    "D. Desbordes": {
-        "listOfRef": [
-            "33", 
-            "34", 
-            "35", 
-            "36", 
-            "37", 
-            "38", 
-            "130"
-        ], 
-        "last": "Desbordes", 
-        "id": 65, 
-        "first": "D"
-    }, 
-    "M. Matsukawa": {
-        "listOfRef": [
-            "115"
-        ], 
-        "last": "Matsukawa", 
-        "id": 169, 
-        "first": "M"
-    }, 
-    "R.H. Watson": {
-        "middle": "H", 
-        "listOfRef": [
-            "110"
-        ], 
-        "last": "Watson", 
-        "id": 162, 
-        "first": "R"
-    }, 
-    "R.K. Kumar": {
-        "middle": "K", 
-        "listOfRef": [
-            "61"
-        ], 
-        "last": "Kumar", 
-        "id": 97, 
-        "first": "R"
-    }, 
-    "J.W. Funk": {
-        "middle": "W", 
-        "listOfRef": [
-            "84"
-        ], 
-        "last": "Funk", 
-        "id": 131, 
-        "first": "J"
-    }, 
-    "S.M. Frolov": {
-        "middle": "M", 
-        "listOfRef": [
-            "2"
-        ], 
-        "last": "Frolov", 
-        "id": 5, 
-        "first": "S"
-    }, 
-    "A. Teodorczyk": {
-        "listOfRef": [
-            "57"
-        ], 
-        "last": "Teodorczyk", 
-        "id": 93, 
-        "first": "A"
-    }, 
-    "S. Tsuge": {
-        "listOfRef": [
-            "115"
-        ], 
-        "last": "Tsuge", 
-        "id": 167, 
-        "first": "S"
-    }, 
-    "C.V. Bishop": {
-        "middle": "V", 
-        "listOfRef": [
-            "13", 
-            "97"
-        ], 
-        "last": "Bishop", 
-        "id": 30, 
-        "first": "C"
-    }, 
-    "G.A. Carlson": {
-        "middle": "A", 
-        "listOfRef": [
-            "28"
-        ], 
-        "last": "Carlson", 
-        "id": 52, 
-        "first": "G"
-    }, 
-    "T. Hikita": {
-        "listOfRef": [
-            "50"
-        ], 
-        "last": "Hikita", 
-        "id": 85, 
-        "first": "T"
-    }, 
-    "M. Kinoshita": {
-        "listOfRef": [
-            "29"
-        ], 
-        "last": "Kinoshita", 
-        "id": 58, 
-        "first": "M"
-    }, 
-    "D. Bjerketvedt": {
-        "listOfRef": [
-            "85", 
-            "86"
-        ], 
-        "last": "Bjerketvedt", 
-        "id": 136, 
-        "first": "D"
-    }, 
-    "T.J. Anderson": {
-        "middle": "J", 
-        "listOfRef": [
-            "5"
-        ], 
-        "last": "Anderson", 
-        "id": 13, 
-        "first": "T"
-    }, 
-    "H.N. Presles": {
-        "middle": "N", 
-        "listOfRef": [
-            "11", 
-            "12", 
-            "37"
-        ], 
-        "last": "Presles", 
-        "id": 26, 
-        "first": "H"
-    }, 
-    "V.V. Strogonov": {
-        "middle": "V", 
-        "listOfRef": [
-            "76"
-        ], 
-        "last": "Strogonov", 
-        "id": 120, 
-        "first": "V"
-    }, 
-    "C.A. Bennett": {
-        "middle": "A", 
-        "listOfRef": [
-            "97"
-        ], 
-        "last": "Bennett", 
-        "id": 152, 
-        "first": "C"
-    }, 
-    "A.E. Mailkov": {
-        "middle": "E", 
-        "listOfRef": [
-            "19"
-        ], 
-        "last": "Mailkov", 
-        "id": 46, 
-        "first": "A"
-    }, 
-    "D.C. Bull": {
-        "middle": "C", 
-        "listOfRef": [
-            "7", 
-            "21", 
-            "22", 
-            "23", 
-            "24", 
-            "25", 
-            "26", 
-            "27"
-        ], 
-        "last": "Bull", 
-        "id": 18, 
-        "first": "D"
-    }, 
-    "M. Vachon": {
-        "listOfRef": [
-            "38"
-        ], 
-        "last": "Vachon", 
-        "id": 68, 
-        "first": "M"
-    }, 
-    "V.V. Adushkin": {
-        "middle": "V", 
-        "listOfRef": [
-            "60"
-        ], 
-        "last": "Adushkin", 
-        "id": 95, 
-        "first": "V"
-    }, 
-    "O. Peraldi": {
-        "listOfRef": [
-            "97"
-        ], 
-        "last": "Peraldi", 
-        "id": 154, 
-        "first": "O"
-    }, 
-    "V.N. Mikhalkin": {
-        "middle": "N", 
-        "listOfRef": [
-            "17", 
-            "18", 
-            "19"
-        ], 
-        "last": "Mikhalkin", 
-        "id": 42, 
-        "first": "V"
-    }, 
-    "E.L. Litchfield": {
-        "middle": "L", 
-        "listOfRef": [
-            "73"
-        ], 
-        "last": "Litchfield", 
-        "id": 113, 
-        "first": "E"
-    }, 
-    "I.O. Moen": {
-        "middle": "O", 
-        "listOfRef": [
-            "82", 
-            "83", 
-            "84", 
-            "85", 
-            "86", 
-            "87", 
-            "88", 
-            "104"
-        ], 
-        "last": "Moen", 
-        "id": 129, 
-        "first": "I"
-    }, 
-    "A. Macek": {
-        "listOfRef": [
-            "75"
-        ], 
-        "last": "Macek", 
-        "id": 117, 
-        "first": "A"
-    }, 
-    "Yu.N. Denisov": {
-        "middle": "N", 
-        "listOfRef": [
-            "31", 
-            "32"
-        ], 
-        "last": "Denisov", 
-        "id": 63, 
-        "first": "Yu"
-    }, 
-    "A. Ungut": {
-        "listOfRef": [
-            "44"
-        ], 
-        "last": "Ungut", 
-        "id": 74, 
-        "first": "A"
-    }, 
-    "D. Remboutsikas": {
-        "listOfRef": [
-            "88"
-        ], 
-        "last": "Remboutsikas", 
-        "id": 142, 
-        "first": "D"
-    }, 
-    "B.H.K. Lee": {
-        "middle": "H.H", 
-        "listOfRef": [
-            "67"
-        ], 
-        "last": "K", 
-        "id": 104, 
-        "first": "B"
-    }, 
-    "A. Sulmistras": {
-        "listOfRef": [
-            "54", 
-            "86"
-        ], 
-        "last": "Sulmistras", 
-        "id": 92, 
-        "first": "A"
-    }, 
-    "J.H": {
-        "listOfRef": [
-            "63"
-        ], 
-        "last": "H", 
-        "id": 100, 
-        "first": "J"
-    }, 
-    "Philip. J. Shuff": {
-        "middle": "J", 
-        "listOfRef": [
-            "116"
-        ], 
-        "last": "Shuff", 
-        "id": 172, 
-        "first": "Philip"
-    }, 
-    "L. Hamada": {
-        "listOfRef": [
-            "37"
-        ], 
-        "last": "Hamada", 
-        "id": 67, 
-        "first": "L"
-    }, 
-    "T.J. Oh": {
-        "middle": "J", 
-        "listOfRef": [
-            "77"
-        ], 
-        "last": "Oh", 
-        "id": 125, 
-        "first": "T"
-    }, 
-    "R.D. McClenagan": {
-        "middle": "D", 
-        "listOfRef": [
-            "13", 
-            "97", 
-            "99"
-        ], 
-        "last": "McClenagan", 
-        "id": 29, 
-        "first": "R"
-    }, 
-    "G.L. Agafonov": {
-        "middle": "L", 
-        "listOfRef": [
-            "2"
-        ], 
-        "last": "Agafonov", 
-        "id": 4, 
-        "first": "G"
-    }, 
-    "J.H.S. Lee": {
-        "middle": "H.H", 
-        "listOfRef": [
-            "16", 
-            "57", 
-            "62", 
-            "70", 
-            "77", 
-            "99", 
-            "113"
-        ], 
-        "last": "S", 
-        "id": 39, 
-        "first": "J"
-    }, 
-    "John. A. Eyre": {
-        "middle": "A", 
-        "listOfRef": [
-            "116"
-        ], 
-        "last": "Eyre", 
-        "id": 173, 
-        "first": "John"
-    }, 
-    "C.M. Guirao": {
-        "middle": "M", 
-        "listOfRef": [
-            "14", 
-            "48", 
-            "49", 
-            "56"
-        ], 
-        "last": "Guirao", 
-        "id": 36, 
-        "first": "C"
-    }, 
-    "K. Kailasanath": {
-        "listOfRef": [
-            "52"
-        ], 
-        "last": "Kailasanath", 
-        "id": 89, 
-        "first": "K"
-    }, 
-    "C. Economos": {
-        "listOfRef": [
-            "29"
-        ], 
-        "last": "Economos", 
-        "id": 56, 
-        "first": "C"
-    }, 
-    "E.V. Saneev": {
-        "middle": "V", 
-        "listOfRef": [
-            "18"
-        ], 
-        "last": "Saneev", 
-        "id": 44, 
-        "first": "E"
-    }, 
-    "J.E. Shepherd": {
-        "middle": "E", 
-        "listOfRef": [
-            "3", 
-            "57", 
-            "97", 
-            "98", 
-            "99", 
-            "103", 
-            "104", 
-            "113"
-        ], 
-        "last": "Shepherd", 
-        "id": 9, 
-        "first": "J"
-    }, 
-    "E.S. Oran": {
-        "middle": "S", 
-        "listOfRef": [
-            "52"
-        ], 
-        "last": "Oran", 
-        "id": 90, 
-        "first": "E"
-    }, 
-    "S.R. Tieszen": {
-        "middle": "R", 
-        "listOfRef": [
-            "105", 
-            "106", 
-            "112", 
-            "113", 
-            "114"
-        ], 
-        "last": "Tieszen", 
-        "id": 159, 
-        "first": "S"
-    }, 
-    "S. Laberge": {
-        "listOfRef": [
-            "62"
-        ], 
-        "last": "Laberge", 
-        "id": 98, 
-        "first": "S"
-    }, 
-    "R. Atkinson": {
-        "listOfRef": [
-            "7"
-        ], 
-        "last": "Atkinson", 
-        "id": 17, 
-        "first": "R"
-    }, 
+        ],
+        "first": "S",
+        "last": "Abid",
+        "id": 1
+    },
     "G. Dupre": {
         "listOfRef": [
-            "1", 
+            "1",
             "97"
-        ], 
-        "last": "Dupre", 
-        "id": 2, 
-        "first": "G"
-    }, 
-    "H. Furukawa": {
-        "listOfRef": [
-            "115"
-        ], 
-        "last": "Furukawa", 
-        "id": 168, 
-        "first": "H"
-    }, 
-    "J.J. Gottlieb": {
-        "middle": "J", 
-        "listOfRef": [
-            "88"
-        ], 
-        "last": "Gottlieb", 
-        "id": 140, 
-        "first": "J"
-    }, 
-    "V.V. Mitrofanov": {
-        "middle": "V", 
-        "listOfRef": [
-            "78", 
-            "79", 
-            "81", 
-            "125"
-        ], 
-        "last": "Mitrofanov", 
-        "id": 127, 
-        "first": "V"
-    }, 
-    "M. Donato": {
-        "listOfRef": [
-            "83"
-        ], 
-        "last": "Donato", 
-        "id": 130, 
-        "first": "M"
-    }, 
-    "R": {
-        "listOfRef": [
-            "63"
-        ], 
-        "last": "R", 
-        "id": 102
-    }, 
-    "W. Benedick": {
-        "listOfRef": [
-            "48"
-        ], 
-        "last": "Benedick", 
-        "id": 83, 
-        "first": "W"
-    }, 
-    "E. Schultz": {
-        "listOfRef": [
-            "3", 
-            "98"
-        ], 
-        "last": "Schultz", 
-        "id": 8, 
-        "first": "E"
-    }, 
-    "R.E. Maurer": {
-        "middle": "E", 
-        "listOfRef": [
-            "111"
-        ], 
-        "last": "Maurer", 
-        "id": 164, 
-        "first": "R"
-    }, 
-    "M.P. Sherman": {
-        "middle": "P", 
-        "listOfRef": [
-            "112", 
-            "113"
-        ], 
-        "last": "Sherman", 
-        "id": 166, 
-        "first": "M"
-    }, 
-    "V.V. Grigor'ev": {
-        "middle": "V", 
-        "listOfRef": [
-            "123"
-        ], 
-        "last": "Grigor'ev", 
-        "id": 179, 
-        "first": "V"
-    }, 
-    "Ramamurthi": {
-        "listOfRef": [
-            "63"
-        ], 
-        "last": "Ramamurthi", 
-        "id": 101
-    }, 
-    "C.K. Westbrook": {
-        "middle": "K", 
-        "listOfRef": [
-            "13", 
-            "87", 
-            "114", 
-            "126", 
-            "127"
-        ], 
-        "last": "Westbrook", 
-        "id": 33, 
-        "first": "C"
-    }, 
-    "M. Dormal": {
-        "listOfRef": [
-            "72"
-        ], 
-        "last": "Dormal", 
-        "id": 112, 
-        "first": "M"
-    }, 
-    "G.G. Bach": {
-        "middle": "G", 
-        "listOfRef": [
-            "8"
-        ], 
-        "last": "Bach", 
-        "id": 20, 
-        "first": "G"
-    }, 
-    "EDL": {
-        "listOfRef": [
-            "39"
-        ], 
-        "last": "EDL", 
-        "id": 69
-    }, 
-    "Yu.A. Bokhon": {
-        "middle": "A", 
-        "listOfRef": [
-            "76"
-        ], 
-        "last": "Bokhon", 
-        "id": 121, 
-        "first": "Yu"
-    }, 
-    "Yu.A. Nikolaev": {
-        "middle": "A", 
-        "listOfRef": [
-            "124"
-        ], 
-        "last": "Nikolaev", 
-        "id": 180, 
-        "first": "Yu"
-    }, 
-    "R.S. Fry": {
-        "middle": "S", 
-        "listOfRef": [
-            "46"
-        ], 
-        "last": "Fry", 
-        "id": 77, 
-        "first": "R"
-    }, 
-    "G.O. Thomas": {
-        "middle": "O", 
-        "listOfRef": [
-            "42"
-        ], 
-        "last": "Thomas", 
-        "id": 72, 
-        "first": "G"
-    }, 
-    "C. Coffey": {
-        "listOfRef": [
-            "88"
-        ], 
-        "last": "Coffey", 
-        "id": 141, 
-        "first": "C"
-    }, 
-    "V.I. Makeev": {
-        "middle": "I", 
-        "listOfRef": [
-            "76"
-        ], 
-        "last": "Makeev", 
-        "id": 118, 
-        "first": "V"
-    }, 
-    "T. Yoshihashi": {
-        "listOfRef": [
-            "95"
-        ], 
-        "last": "Yoshihashi", 
-        "id": 149, 
-        "first": "T"
-    }, 
-    "P. Bauer": {
-        "listOfRef": [
-            "10", 
-            "11", 
-            "12"
-        ], 
-        "last": "Bauer", 
-        "id": 24, 
-        "first": "P"
-    }, 
-    "D.L. Fenton": {
-        "middle": "L", 
-        "listOfRef": [
-            "97"
-        ], 
-        "last": "Fenton", 
-        "id": 153, 
-        "first": "D"
-    }, 
-    "D.W. Stamps": {
-        "middle": "W", 
-        "listOfRef": [
-            "105", 
-            "106", 
-            "114"
-        ], 
-        "last": "Stamps", 
-        "id": 158, 
-        "first": "D"
-    }, 
-    "M. Sichel": {
-        "listOfRef": [
-            "92", 
-            "128"
-        ], 
-        "last": "Sichel", 
-        "id": 143, 
-        "first": "M"
-    }, 
-    "Z. Gabrijel": {
-        "listOfRef": [
-            "92"
-        ], 
-        "last": "Gabrijel", 
-        "id": 144, 
-        "first": "Z"
-    }, 
-    "J. Boccio": {
-        "listOfRef": [
-            "29", 
-            "30"
-        ], 
-        "last": "Boccio", 
-        "id": 55, 
-        "first": "J"
-    }, 
-    "Y. Harigaya": {
-        "listOfRef": [
-            "95"
-        ], 
-        "last": "Harigaya", 
-        "id": 150, 
-        "first": "Y"
-    }, 
-    "S. Ohyagi": {
-        "listOfRef": [
-            "95"
-        ], 
-        "last": "Ohyagi", 
-        "id": 148, 
-        "first": "S"
-    }, 
-    "M.E. Topchian": {
-        "middle": "E", 
-        "listOfRef": [
-            "125"
-        ], 
-        "last": "Topchian", 
-        "id": 183, 
-        "first": "M"
-    }, 
-    "J.A. Nicholls": {
-        "middle": "A", 
-        "listOfRef": [
-            "46", 
-            "92", 
-            "118", 
-            "128"
-        ], 
-        "last": "Nicholls", 
-        "id": 78, 
-        "first": "J"
-    }, 
-    "B.V. Voitsekhovskii": {
-        "middle": "V", 
-        "listOfRef": [
-            "125"
-        ], 
-        "last": "Voitsekhovskii", 
-        "id": 182, 
-        "first": "B"
-    }, 
-    "K. Sato": {
-        "listOfRef": [
-            "29"
-        ], 
-        "last": "Sato", 
-        "id": 57, 
-        "first": "K"
-    }, 
-    "C. Guerraud": {
-        "listOfRef": [
-            "37", 
-            "130"
-        ], 
-        "last": "Guerraud", 
-        "id": 66, 
-        "first": "C"
-    }, 
-    "J.R. Eyman": {
-        "middle": "R", 
-        "listOfRef": [
-            "110"
-        ], 
-        "last": "Eyman", 
-        "id": 163, 
-        "first": "J"
-    }, 
-    "C. Brochet": {
-        "listOfRef": [
-            "11", 
-            "12"
-        ], 
-        "last": "Brochet", 
-        "id": 25, 
-        "first": "C"
-    }, 
+        ],
+        "first": "G",
+        "last": "Dupre",
+        "id": 2
+    },
     "C. Paillard": {
         "listOfRef": [
-            "1", 
+            "1",
             "96"
-        ], 
-        "last": "Paillard", 
-        "id": 3, 
-        "first": "C"
-    }, 
-    "J. Lee": {
+        ],
+        "first": "C",
+        "last": "Paillard",
+        "id": 3
+    },
+    "G.L. Agafonov": {
         "listOfRef": [
-            "48"
-        ], 
-        "last": "Lee", 
-        "id": 82, 
-        "first": "J"
-    }, 
-    "A. Freiman": {
+            "2"
+        ],
+        "first": "G",
+        "middle": "L",
+        "last": "Agafonov",
+        "id": 4
+    },
+    "S.M. Frolov": {
         "listOfRef": [
-            "66"
-        ], 
-        "last": "Freiman", 
-        "id": 103, 
-        "first": "A"
-    }, 
-    "D.R. Forshey": {
-        "middle": "R", 
-        "listOfRef": [
-            "73"
-        ], 
-        "last": "Forshey", 
-        "id": 115, 
-        "first": "D"
-    }, 
-    "E. Nzeyimana": {
-        "listOfRef": [
-            "71", 
-            "94"
-        ], 
-        "last": "Nzeyimana", 
-        "id": 110, 
-        "first": "E"
-    }, 
-    "J. Brossard": {
-        "listOfRef": [
-            "4"
-        ], 
-        "last": "Brossard", 
-        "id": 11, 
-        "first": "J"
-    }, 
-    "W.J. Pitz": {
-        "middle": "J", 
-        "listOfRef": [
-            "13", 
-            "114", 
-            "126"
-        ], 
-        "last": "Pitz", 
-        "id": 32, 
-        "first": "W"
-    }, 
-    "S.A. Ward": {
-        "middle": "A", 
-        "listOfRef": [
-            "84", 
-            "87"
-        ], 
-        "last": "Ward", 
-        "id": 132, 
-        "first": "S"
-    }, 
-    "O. Heuze": {
-        "listOfRef": [
-            "12"
-        ], 
-        "last": "Heuze", 
-        "id": 27, 
-        "first": "O"
-    }, 
-    "S.V. Khomic": {
-        "middle": "V", 
-        "listOfRef": [
-            "17"
-        ], 
-        "last": "Khomic", 
-        "id": 41, 
-        "first": "S"
-    }, 
-    "R. Zitoun": {
-        "listOfRef": [
-            "130"
-        ], 
-        "last": "Zitoun", 
-        "id": 188, 
-        "first": "R"
-    }, 
-    "M.H. Lefebvre": {
-        "middle": "H", 
-        "listOfRef": [
-            "71"
-        ], 
-        "last": "Lefebvre", 
-        "id": 109, 
-        "first": "M"
-    }, 
-    "S.V. Khomik": {
-        "middle": "V", 
-        "listOfRef": [
-            "18", 
-            "19"
-        ], 
-        "last": "Khomik", 
-        "id": 43, 
-        "first": "S"
-    }, 
-    "Tiggelen Van": {
-        "listOfRef": [
-            "51", 
-            "71", 
-            "72", 
-            "94", 
-            "119", 
-            "120"
-        ], 
-        "last": "Van", 
-        "id": 88, 
-        "first": "Tiggelen"
-    }, 
-    "T. Nakagawa": {
-        "listOfRef": [
-            "115"
-        ], 
-        "last": "Nakagawa", 
-        "id": 170, 
-        "first": "T"
-    }, 
-    "S. Loban'": {
-        "listOfRef": [
-            "20"
-        ], 
-        "last": "Loban'", 
-        "id": 47, 
-        "first": "S"
-    }, 
-    "V.I. Manzhalei": {
-        "middle": "I", 
-        "listOfRef": [
-            "78", 
-            "79"
-        ], 
-        "last": "Manzhalei", 
-        "id": 126, 
-        "first": "V"
-    }, 
-    "U. Pfahl": {
-        "listOfRef": [
-            "98"
-        ], 
-        "last": "Pfahl", 
-        "id": 155, 
-        "first": "U"
-    }, 
-    "R. Liangminas": {
-        "listOfRef": [
-            "110"
-        ], 
-        "last": "Liangminas", 
-        "id": 161, 
-        "first": "R"
-    }, 
-    "M. Vandermeiren": {
-        "listOfRef": [
-            "119", 
-            "120"
-        ], 
-        "last": "Vandermeiren", 
-        "id": 177, 
-        "first": "M"
-    }, 
-    "V.N. Kulikov": {
-        "middle": "N", 
-        "listOfRef": [
-            "76"
-        ], 
-        "last": "Kulikov", 
-        "id": 123, 
-        "first": "V"
-    }, 
-    "al. et": {
-        "listOfRef": [
-            "50"
-        ], 
-        "last": "et", 
-        "id": 86, 
-        "first": "al"
-    }, 
-    "V.A. Subbotin": {
-        "middle": "A", 
-        "listOfRef": [
-            "79"
-        ], 
-        "last": "Subbotin", 
-        "id": 128, 
-        "first": "V"
-    }, 
-    "R.A. Strehlow": {
-        "middle": "A", 
-        "listOfRef": [
-            "107", 
-            "108", 
-            "109", 
-            "110", 
-            "111"
-        ], 
-        "last": "Strehlow", 
-        "id": 160, 
-        "first": "R"
-    }, 
-    "E.K. Dabora": {
-        "middle": "K", 
-        "listOfRef": [
-            "5"
-        ], 
-        "last": "Dabora", 
-        "id": 14, 
-        "first": "E"
-    }, 
+            "2"
+        ],
+        "first": "S",
+        "middle": "M",
+        "last": "Frolov",
+        "id": 5
+    },
     "R. Akbar": {
         "listOfRef": [
             "3"
-        ], 
-        "last": "Akbar", 
-        "id": 6, 
-        "first": "R"
-    }, 
+        ],
+        "first": "R",
+        "last": "Akbar",
+        "id": 6
+    },
+    "M.J. Kaneshige": {
+        "listOfRef": [
+            "3",
+            "53"
+        ],
+        "first": "M",
+        "middle": "J",
+        "last": "Kaneshige",
+        "id": 7
+    },
+    "E. Schultz": {
+        "listOfRef": [
+            "3",
+            "98"
+        ],
+        "first": "E",
+        "last": "Schultz",
+        "id": 8
+    },
+    "J.E. Shepherd": {
+        "listOfRef": [
+            "3",
+            "57",
+            "97",
+            "98",
+            "99",
+            "103",
+            "104",
+            "113"
+        ],
+        "first": "J",
+        "middle": "E",
+        "last": "Shepherd",
+        "id": 9
+    },
+    "M. Aminallah": {
+        "listOfRef": [
+            "4"
+        ],
+        "first": "M",
+        "last": "Aminallah",
+        "id": 10
+    },
+    "J. Brossard": {
+        "listOfRef": [
+            "4"
+        ],
+        "first": "J",
+        "last": "Brossard",
+        "id": 11
+    },
     "A. Vasiliev": {
         "listOfRef": [
             "4"
-        ], 
-        "last": "Vasiliev", 
-        "id": 12, 
-        "first": "A"
+        ],
+        "first": "A",
+        "last": "Vasiliev",
+        "id": 12
+    },
+    "T.J. Anderson": {
+        "listOfRef": [
+            "5"
+        ],
+        "first": "T",
+        "middle": "J",
+        "last": "Anderson",
+        "id": 13
+    },
+    "E.K. Dabora": {
+        "listOfRef": [
+            "5"
+        ],
+        "first": "E",
+        "middle": "K",
+        "last": "Dabora",
+        "id": 14
+    },
+    "P. Andresen": {
+        "listOfRef": [
+            "6"
+        ],
+        "first": "P",
+        "last": "Andresen",
+        "id": 15
+    },
+    "W. Reckers": {
+        "listOfRef": [
+            "6"
+        ],
+        "first": "W",
+        "last": "Reckers",
+        "id": 16
+    },
+    "R. Atkinson": {
+        "listOfRef": [
+            "7"
+        ],
+        "first": "R",
+        "last": "Atkinson",
+        "id": 17
+    },
+    "D.C. Bull": {
+        "listOfRef": [
+            "7",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27"
+        ],
+        "first": "D",
+        "middle": "C",
+        "last": "Bull",
+        "id": 18
+    },
+    "P.J. Shuff": {
+        "listOfRef": [
+            "7",
+            "27",
+            "44"
+        ],
+        "first": "P",
+        "middle": "J",
+        "last": "Shuff",
+        "id": 19
+    },
+    "G.G. Bach": {
+        "listOfRef": [
+            "8"
+        ],
+        "first": "G",
+        "middle": "G",
+        "last": "Bach",
+        "id": 20
+    },
+    "R. Knystautas": {
+        "listOfRef": [
+            "8",
+            "14",
+            "16",
+            "48",
+            "49",
+            "54",
+            "55",
+            "56",
+            "57",
+            "62",
+            "66",
+            "67",
+            "70",
+            "74",
+            "77",
+            "83",
+            "85",
+            "87",
+            "97",
+            "113"
+        ],
+        "first": "R",
+        "last": "Knystautas",
+        "id": 21
+    },
+    "J.H. Lee": {
+        "listOfRef": [
+            "8",
+            "14",
+            "49",
+            "54",
+            "55",
+            "56",
+            "64",
+            "65",
+            "66",
+            "67",
+            "69",
+            "74",
+            "83",
+            "85",
+            "87",
+            "88",
+            "89",
+            "90",
+            "91",
+            "97"
+        ],
+        "first": "J",
+        "middle": "H",
+        "last": "Lee",
+        "id": 22
+    },
+    "H.O. Barthel": {
+        "listOfRef": [
+            "9"
+        ],
+        "first": "H",
+        "middle": "O",
+        "last": "Barthel",
+        "id": 23
+    },
+    "P. Bauer": {
+        "listOfRef": [
+            "10",
+            "11",
+            "12"
+        ],
+        "first": "P",
+        "last": "Bauer",
+        "id": 24
+    },
+    "C. Brochet": {
+        "listOfRef": [
+            "11",
+            "12"
+        ],
+        "first": "C",
+        "last": "Brochet",
+        "id": 25
+    },
+    "H.N. Presles": {
+        "listOfRef": [
+            "11",
+            "12",
+            "37"
+        ],
+        "first": "H",
+        "middle": "N",
+        "last": "Presles",
+        "id": 26
+    },
+    "O. Heuze": {
+        "listOfRef": [
+            "12"
+        ],
+        "first": "O",
+        "last": "Heuze",
+        "id": 27
+    },
+    "H.D. Beeson": {
+        "listOfRef": [
+            "13"
+        ],
+        "first": "H",
+        "middle": "D",
+        "last": "Beeson",
+        "id": 28
+    },
+    "R.D. McClenagan": {
+        "listOfRef": [
+            "13",
+            "97",
+            "99"
+        ],
+        "first": "R",
+        "middle": "D",
+        "last": "McClenagan",
+        "id": 29
+    },
+    "C.V. Bishop": {
+        "listOfRef": [
+            "13",
+            "97"
+        ],
+        "first": "C",
+        "middle": "V",
+        "last": "Bishop",
+        "id": 30
+    },
+    "F.J. Benz": {
+        "listOfRef": [
+            "13",
+            "97",
+            "99"
+        ],
+        "first": "F",
+        "middle": "J",
+        "last": "Benz",
+        "id": 31
+    },
+    "W.J. Pitz": {
+        "listOfRef": [
+            "13",
+            "114",
+            "126"
+        ],
+        "first": "W",
+        "middle": "J",
+        "last": "Pitz",
+        "id": 32
+    },
+    "C.K. Westbrook": {
+        "listOfRef": [
+            "13",
+            "87",
+            "114",
+            "126",
+            "127"
+        ],
+        "first": "C",
+        "middle": "K",
+        "last": "Westbrook",
+        "id": 33
+    },
+    "J.H.S. Lee. ": {
+        "listOfRef": [
+            "13"
+        ],
+        "first": "J",
+        "middle": "H.H",
+        "last": "S",
+        "id": 34
+    },
+    "W.B. Benedick": {
+        "listOfRef": [
+            "14",
+            "15",
+            "16",
+            "105",
+            "112",
+            "113"
+        ],
+        "first": "W",
+        "middle": "B",
+        "last": "Benedick",
+        "id": 35
+    },
+    "C.M. Guirao": {
+        "listOfRef": [
+            "14",
+            "48",
+            "49",
+            "56"
+        ],
+        "first": "C",
+        "middle": "M",
+        "last": "Guirao",
+        "id": 36
+    },
+    "J.D. Kennedy": {
+        "listOfRef": [
+            "15"
+        ],
+        "first": "J",
+        "middle": "D",
+        "last": "Kennedy",
+        "id": 37
+    },
+    "B. Morosin": {
+        "listOfRef": [
+            "15"
+        ],
+        "first": "B",
+        "last": "Morosin",
+        "id": 38
+    },
+    "J.H.S. Lee": {
+        "listOfRef": [
+            "16",
+            "57",
+            "62",
+            "70",
+            "77",
+            "99",
+            "113"
+        ],
+        "first": "J",
+        "middle": "H.H",
+        "last": "S",
+        "id": 39
+    },
+    "A.A. Borisov": {
+        "listOfRef": [
+            "17",
+            "18",
+            "19",
+            "20"
+        ],
+        "first": "A",
+        "middle": "A",
+        "last": "Borisov",
+        "id": 40
+    },
+    "S.V. Khomic": {
+        "listOfRef": [
+            "17"
+        ],
+        "first": "S",
+        "middle": "V",
+        "last": "Khomic",
+        "id": 41
+    },
+    "V.N. Mikhalkin": {
+        "listOfRef": [
+            "17",
+            "18",
+            "19"
+        ],
+        "first": "V",
+        "middle": "N",
+        "last": "Mikhalkin",
+        "id": 42
+    },
+    "S.V. Khomik": {
+        "listOfRef": [
+            "18",
+            "19"
+        ],
+        "first": "S",
+        "middle": "V",
+        "last": "Khomik",
+        "id": 43
+    },
+    "E.V. Saneev": {
+        "listOfRef": [
+            "18"
+        ],
+        "first": "E",
+        "middle": "V",
+        "last": "Saneev",
+        "id": 44
+    },
+    "V.V. Kosenkov": {
+        "listOfRef": [
+            "19"
+        ],
+        "first": "V",
+        "middle": "V",
+        "last": "Kosenkov",
+        "id": 45
+    },
+    "A.E. Mailkov": {
+        "listOfRef": [
+            "19"
+        ],
+        "first": "A",
+        "middle": "E",
+        "last": "Mailkov",
+        "id": 46
+    },
+    "S. Loban'": {
+        "listOfRef": [
+            "20"
+        ],
+        "first": "S",
+        "last": "Loban'",
+        "id": 47
+    },
+    "J.E. Elsworth": {
+        "listOfRef": [
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "43",
+            "44"
+        ],
+        "first": "J",
+        "middle": "E",
+        "last": "Elsworth",
+        "id": 48
+    },
+    "G. Hooper": {
+        "listOfRef": [
+            "23",
+            "24",
+            "25",
+            "26",
+            "41",
+            "42"
+        ],
+        "first": "G",
+        "last": "Hooper",
+        "id": 49
+    },
+    "C.P. Quinn": {
+        "listOfRef": [
+            "26"
+        ],
+        "first": "C",
+        "middle": "P",
+        "last": "Quinn",
+        "id": 50
+    },
+    "E. Metcalfe": {
+        "listOfRef": [
+            "27"
+        ],
+        "first": "E",
+        "last": "Metcalfe",
+        "id": 51
+    },
+    "G.A. Carlson": {
+        "listOfRef": [
+            "28"
+        ],
+        "first": "G",
+        "middle": "A",
+        "last": "Carlson",
+        "id": 52
+    },
+    "G. Ciccarelli": {
+        "listOfRef": [
+            "29",
+            "30"
+        ],
+        "first": "G",
+        "last": "Ciccarelli",
+        "id": 53
+    },
+    "T. Ginsberg": {
+        "listOfRef": [
+            "29",
+            "30"
+        ],
+        "first": "T",
+        "last": "Ginsberg",
+        "id": 54
+    },
+    "J. Boccio": {
+        "listOfRef": [
+            "29",
+            "30"
+        ],
+        "first": "J",
+        "last": "Boccio",
+        "id": 55
+    },
+    "C. Economos": {
+        "listOfRef": [
+            "29"
+        ],
+        "first": "C",
+        "last": "Economos",
+        "id": 56
+    },
+    "K. Sato": {
+        "listOfRef": [
+            "29"
+        ],
+        "first": "K",
+        "last": "Sato",
+        "id": 57
+    },
+    "M. Kinoshita": {
+        "listOfRef": [
+            "29"
+        ],
+        "first": "M",
+        "last": "Kinoshita",
+        "id": 58
+    },
+    "C. Finfrock": {
+        "listOfRef": [
+            "30"
+        ],
+        "first": "C",
+        "last": "Finfrock",
+        "id": 59
+    },
+    "L. Gerlach": {
+        "listOfRef": [
+            "30"
+        ],
+        "first": "L",
+        "last": "Gerlach",
+        "id": 60
+    },
+    "H. Tagawa": {
+        "listOfRef": [
+            "30"
+        ],
+        "first": "H",
+        "last": "Tagawa",
+        "id": 61
+    },
+    "A. Malliakos": {
+        "listOfRef": [
+            "30"
+        ],
+        "first": "A",
+        "last": "Malliakos",
+        "id": 62
+    },
+    "Yu.N. Denisov": {
+        "listOfRef": [
+            "31",
+            "32"
+        ],
+        "first": "Yu",
+        "middle": "N",
+        "last": "Denisov",
+        "id": 63
+    },
+    "Ya.K. Troshin": {
+        "listOfRef": [
+            "31",
+            "32"
+        ],
+        "first": "Ya",
+        "middle": "K",
+        "last": "Troshin",
+        "id": 64
+    },
+    "D. Desbordes": {
+        "listOfRef": [
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "130"
+        ],
+        "first": "D",
+        "last": "Desbordes",
+        "id": 65
+    },
+    "C. Guerraud": {
+        "listOfRef": [
+            "37",
+            "130"
+        ],
+        "first": "C",
+        "last": "Guerraud",
+        "id": 66
+    },
+    "L. Hamada": {
+        "listOfRef": [
+            "37"
+        ],
+        "first": "L",
+        "last": "Hamada",
+        "id": 67
+    },
+    "M. Vachon": {
+        "listOfRef": [
+            "38"
+        ],
+        "first": "M",
+        "last": "Vachon",
+        "id": 68
+    },
+    "EDL": {
+        "listOfRef": [
+            "39"
+        ],
+        "last": "EDL",
+        "id": 69
+    },
+    "D.H. Edwards": {
+        "listOfRef": [
+            "40",
+            "41",
+            "42"
+        ],
+        "first": "D",
+        "middle": "H",
+        "last": "Edwards",
+        "id": 70
+    },
+    "J.M. Morgan": {
+        "listOfRef": [
+            "41",
+            "42"
+        ],
+        "first": "J",
+        "middle": "M",
+        "last": "Morgan",
+        "id": 71
+    },
+    "G.O. Thomas": {
+        "listOfRef": [
+            "42"
+        ],
+        "first": "G",
+        "middle": "O",
+        "last": "Thomas",
+        "id": 72
+    },
+    "J.A. Eyre": {
+        "listOfRef": [
+            "43"
+        ],
+        "first": "J",
+        "middle": "A",
+        "last": "Eyre",
+        "id": 73
+    },
+    "A. Ungut": {
+        "listOfRef": [
+            "44"
+        ],
+        "first": "A",
+        "last": "Ungut",
+        "id": 74
+    },
+    "H. Freiwald": {
+        "listOfRef": [
+            "45"
+        ],
+        "first": "H",
+        "last": "Freiwald",
+        "id": 75
+    },
+    "H.W. Koch": {
+        "listOfRef": [
+            "45"
+        ],
+        "first": "H",
+        "middle": "W",
+        "last": "Koch",
+        "id": 76
+    },
+    "R.S. Fry": {
+        "listOfRef": [
+            "46"
+        ],
+        "first": "R",
+        "middle": "S",
+        "last": "Fry",
+        "id": 77
+    },
+    "J.A. Nicholls": {
+        "listOfRef": [
+            "46",
+            "92",
+            "118",
+            "128"
+        ],
+        "first": "J",
+        "middle": "A",
+        "last": "Nicholls",
+        "id": 78
+    },
+    "K. Guhlmann": {
+        "listOfRef": [
+            "47"
+        ],
+        "first": "K",
+        "last": "Guhlmann",
+        "id": 79
+    },
+    "W. Pusch": {
+        "listOfRef": [
+            "47",
+            "100",
+            "101"
+        ],
+        "first": "W",
+        "last": "Pusch",
+        "id": 80
+    },
+    "H.Gg. Wagner": {
+        "listOfRef": [
+            "47"
+        ],
+        "first": "H",
+        "middle": "Gg",
+        "last": "Wagner",
+        "id": 81
+    },
+    "J. Lee": {
+        "listOfRef": [
+            "48"
+        ],
+        "first": "J",
+        "last": "Lee",
+        "id": 82
+    },
+    "W. Benedick": {
+        "listOfRef": [
+            "48"
+        ],
+        "first": "W",
+        "last": "Benedick",
+        "id": 83
+    },
+    "M. Berman": {
+        "listOfRef": [
+            "48",
+            "112"
+        ],
+        "first": "M",
+        "last": "Berman",
+        "id": 84
+    },
+    "T. Hikita": {
+        "listOfRef": [
+            "50"
+        ],
+        "first": "T",
+        "last": "Hikita",
+        "id": 85
+    },
+    "al. et": {
+        "listOfRef": [
+            "50"
+        ],
+        "first": "al",
+        "last": "et",
+        "id": 86
+    },
+    "Z.W. Huang": {
+        "listOfRef": [
+            "51"
+        ],
+        "first": "Z",
+        "middle": "W",
+        "last": "Huang",
+        "id": 87
+    },
+    "Tiggelen Van": {
+        "listOfRef": [
+            "51",
+            "71",
+            "72",
+            "94",
+            "119",
+            "120"
+        ],
+        "first": "Tiggelen",
+        "last": "Van",
+        "id": 88
+    },
+    "K. Kailasanath": {
+        "listOfRef": [
+            "52"
+        ],
+        "first": "K",
+        "last": "Kailasanath",
+        "id": 89
+    },
+    "E.S. Oran": {
+        "listOfRef": [
+            "52"
+        ],
+        "first": "E",
+        "middle": "S",
+        "last": "Oran",
+        "id": 90
+    },
+    "C. Guirao": {
+        "listOfRef": [
+            "54",
+            "70"
+        ],
+        "first": "C",
+        "last": "Guirao",
+        "id": 91
+    },
+    "A. Sulmistras": {
+        "listOfRef": [
+            "54",
+            "86"
+        ],
+        "first": "A",
+        "last": "Sulmistras",
+        "id": 92
+    },
+    "A. Teodorczyk": {
+        "listOfRef": [
+            "57"
+        ],
+        "first": "A",
+        "last": "Teodorczyk",
+        "id": 93
+    },
+    "S.M. Kogarko": {
+        "listOfRef": [
+            "58",
+            "59",
+            "60",
+            "129"
+        ],
+        "first": "S",
+        "middle": "M",
+        "last": "Kogarko",
+        "id": 94
+    },
+    "V.V. Adushkin": {
+        "listOfRef": [
+            "60"
+        ],
+        "first": "V",
+        "middle": "V",
+        "last": "Adushkin",
+        "id": 95
+    },
+    "A.G. Lyamin": {
+        "listOfRef": [
+            "60"
+        ],
+        "first": "A",
+        "middle": "G",
+        "last": "Lyamin",
+        "id": 96
+    },
+    "R.K. Kumar": {
+        "listOfRef": [
+            "61"
+        ],
+        "first": "R",
+        "middle": "K",
+        "last": "Kumar",
+        "id": 97
+    },
+    "S. Laberge": {
+        "listOfRef": [
+            "62"
+        ],
+        "first": "S",
+        "last": "Laberge",
+        "id": 98
+    },
+    "Lee": {
+        "listOfRef": [
+            "63"
+        ],
+        "last": "Lee",
+        "id": 99
+    },
+    "J.H": {
+        "listOfRef": [
+            "63"
+        ],
+        "first": "J",
+        "last": "H",
+        "id": 100
+    },
+    "Ramamurthi": {
+        "listOfRef": [
+            "63"
+        ],
+        "last": "Ramamurthi",
+        "id": 101
+    },
+    "R": {
+        "listOfRef": [
+            "63"
+        ],
+        "last": "R",
+        "id": 102
+    },
+    "A. Freiman": {
+        "listOfRef": [
+            "66"
+        ],
+        "first": "A",
+        "last": "Freiman",
+        "id": 103
+    },
+    "B.H.K. Lee": {
+        "listOfRef": [
+            "67"
+        ],
+        "first": "B",
+        "middle": "H.H",
+        "last": "K",
+        "id": 104
+    },
+    "J.H Lee": {
+        "listOfRef": [
+            "68"
+        ],
+        "first": "J",
+        "last": "HLee",
+        "id": 105
+    },
+    "H. Matsui": {
+        "listOfRef": [
+            "68",
+            "80"
+        ],
+        "first": "H",
+        "last": "Matsui",
+        "id": 106
+    },
+    "R.I. Soloukhin": {
+        "listOfRef": [
+            "69"
+        ],
+        "first": "R",
+        "middle": "I",
+        "last": "Soloukhin",
+        "id": 107
+    },
+    "A.K. Oppenheim": {
+        "listOfRef": [
+            "69"
+        ],
+        "first": "A",
+        "middle": "K",
+        "last": "Oppenheim",
+        "id": 108
+    },
+    "M.H. Lefebvre": {
+        "listOfRef": [
+            "71"
+        ],
+        "first": "M",
+        "middle": "H",
+        "last": "Lefebvre",
+        "id": 109
+    },
+    "E. Nzeyimana": {
+        "listOfRef": [
+            "71",
+            "94"
+        ],
+        "first": "E",
+        "last": "Nzeyimana",
+        "id": 110
+    },
+    "J.C. Libouton": {
+        "listOfRef": [
+            "72"
+        ],
+        "first": "J",
+        "middle": "C",
+        "last": "Libouton",
+        "id": 111
+    },
+    "M. Dormal": {
+        "listOfRef": [
+            "72"
+        ],
+        "first": "M",
+        "last": "Dormal",
+        "id": 112
+    },
+    "E.L. Litchfield": {
+        "listOfRef": [
+            "73"
+        ],
+        "first": "E",
+        "middle": "L",
+        "last": "Litchfield",
+        "id": 113
+    },
+    "M.H. Hay": {
+        "listOfRef": [
+            "73"
+        ],
+        "first": "M",
+        "middle": "H",
+        "last": "Hay",
+        "id": 114
+    },
+    "D.R. Forshey": {
+        "listOfRef": [
+            "73"
+        ],
+        "first": "D",
+        "middle": "R",
+        "last": "Forshey",
+        "id": 115
+    },
+    "Y.K. Liu": {
+        "listOfRef": [
+            "74"
+        ],
+        "first": "Y",
+        "middle": "K",
+        "last": "Liu",
+        "id": 116
+    },
+    "A. Macek": {
+        "listOfRef": [
+            "75"
+        ],
+        "first": "A",
+        "last": "Macek",
+        "id": 117
+    },
+    "V.I. Makeev": {
+        "listOfRef": [
+            "76"
+        ],
+        "first": "V",
+        "middle": "I",
+        "last": "Makeev",
+        "id": 118
+    },
+    "Yu.A. Gostintsev": {
+        "listOfRef": [
+            "76"
+        ],
+        "first": "Yu",
+        "middle": "A",
+        "last": "Gostintsev",
+        "id": 119
+    },
+    "V.V. Strogonov": {
+        "listOfRef": [
+            "76"
+        ],
+        "first": "V",
+        "middle": "V",
+        "last": "Strogonov",
+        "id": 120
+    },
+    "Yu.A. Bokhon": {
+        "listOfRef": [
+            "76"
+        ],
+        "first": "Yu",
+        "middle": "A",
+        "last": "Bokhon",
+        "id": 121
+    },
+    "Yu.N. Chernushkin": {
+        "listOfRef": [
+            "76"
+        ],
+        "first": "Yu",
+        "middle": "N",
+        "last": "Chernushkin",
+        "id": 122
+    },
+    "V.N. Kulikov": {
+        "listOfRef": [
+            "76"
+        ],
+        "first": "V",
+        "middle": "N",
+        "last": "Kulikov",
+        "id": 123
+    },
+    "A. Makris": {
+        "listOfRef": [
+            "77"
+        ],
+        "first": "A",
+        "last": "Makris",
+        "id": 124
+    },
+    "T.J. Oh": {
+        "listOfRef": [
+            "77"
+        ],
+        "first": "T",
+        "middle": "J",
+        "last": "Oh",
+        "id": 125
+    },
+    "V.I. Manzhalei": {
+        "listOfRef": [
+            "78",
+            "79"
+        ],
+        "first": "V",
+        "middle": "I",
+        "last": "Manzhalei",
+        "id": 126
+    },
+    "V.V. Mitrofanov": {
+        "listOfRef": [
+            "78",
+            "79",
+            "81",
+            "125"
+        ],
+        "first": "V",
+        "middle": "V",
+        "last": "Mitrofanov",
+        "id": 127
+    },
+    "V.A. Subbotin": {
+        "listOfRef": [
+            "79"
+        ],
+        "first": "V",
+        "middle": "A",
+        "last": "Subbotin",
+        "id": 128
+    },
+    "I.O. Moen": {
+        "listOfRef": [
+            "82",
+            "83",
+            "84",
+            "85",
+            "86",
+            "87",
+            "88",
+            "104"
+        ],
+        "first": "I",
+        "middle": "O",
+        "last": "Moen",
+        "id": 129
+    },
+    "M. Donato": {
+        "listOfRef": [
+            "83"
+        ],
+        "first": "M",
+        "last": "Donato",
+        "id": 130
+    },
+    "J.W. Funk": {
+        "listOfRef": [
+            "84"
+        ],
+        "first": "J",
+        "middle": "W",
+        "last": "Funk",
+        "id": 131
+    },
+    "S.A. Ward": {
+        "listOfRef": [
+            "84",
+            "87"
+        ],
+        "first": "S",
+        "middle": "A",
+        "last": "Ward",
+        "id": 132
+    },
+    "G.M. Rude": {
+        "listOfRef": [
+            "84"
+        ],
+        "first": "G",
+        "middle": "M",
+        "last": "Rude",
+        "id": 133
+    },
+    "P.A. Thibault": {
+        "listOfRef": [
+            "84",
+            "86",
+            "87",
+            "104"
+        ],
+        "first": "P",
+        "middle": "A",
+        "last": "Thibault",
+        "id": 134
+    },
+    "S.B. Murray": {
+        "listOfRef": [
+            "85",
+            "88",
+            "89",
+            "90",
+            "91",
+            "104"
+        ],
+        "first": "S",
+        "middle": "B",
+        "last": "Murray",
+        "id": 135
+    },
+    "D. Bjerketvedt": {
+        "listOfRef": [
+            "85",
+            "86"
+        ],
+        "first": "D",
+        "last": "Bjerketvedt",
+        "id": 136
+    },
+    "A. Rinnan": {
+        "listOfRef": [
+            "85",
+            "102"
+        ],
+        "first": "A",
+        "last": "Rinnan",
+        "id": 137
+    },
+    "G. Thomas": {
+        "listOfRef": [
+            "86"
+        ],
+        "first": "G",
+        "last": "Thomas",
+        "id": 138
+    },
+    "T. Dean": {
+        "listOfRef": [
+            "87"
+        ],
+        "first": "T",
+        "last": "Dean",
+        "id": 139
+    },
+    "J.J. Gottlieb": {
+        "listOfRef": [
+            "88"
+        ],
+        "first": "J",
+        "middle": "J",
+        "last": "Gottlieb",
+        "id": 140
+    },
+    "C. Coffey": {
+        "listOfRef": [
+            "88"
+        ],
+        "first": "C",
+        "last": "Coffey",
+        "id": 141
+    },
+    "D. Remboutsikas": {
+        "listOfRef": [
+            "88"
+        ],
+        "first": "D",
+        "last": "Remboutsikas",
+        "id": 142
+    },
+    "M. Sichel": {
+        "listOfRef": [
+            "92",
+            "128"
+        ],
+        "first": "M",
+        "last": "Sichel",
+        "id": 143
+    },
+    "Z. Gabrijel": {
+        "listOfRef": [
+            "92"
+        ],
+        "first": "Z",
+        "last": "Gabrijel",
+        "id": 144
+    },
+    "R.D. Oza": {
+        "listOfRef": [
+            "92"
+        ],
+        "first": "R",
+        "middle": "D",
+        "last": "Oza",
+        "id": 145
+    },
+    "R. Vandermolen": {
+        "listOfRef": [
+            "92"
+        ],
+        "first": "R",
+        "last": "Vandermolen",
+        "id": 146
+    },
+    "M.E. Nolan": {
+        "listOfRef": [
+            "93"
+        ],
+        "first": "M",
+        "middle": "E",
+        "last": "Nolan",
+        "id": 147
+    },
+    "S. Ohyagi": {
+        "listOfRef": [
+            "95"
+        ],
+        "first": "S",
+        "last": "Ohyagi",
+        "id": 148
+    },
+    "T. Yoshihashi": {
+        "listOfRef": [
+            "95"
+        ],
+        "first": "T",
+        "last": "Yoshihashi",
+        "id": 149
+    },
+    "Y. Harigaya": {
+        "listOfRef": [
+            "95"
+        ],
+        "first": "Y",
+        "last": "Harigaya",
+        "id": 150
+    },
+    "M.D. Pedley": {
+        "listOfRef": [
+            "97"
+        ],
+        "first": "M",
+        "middle": "D",
+        "last": "Pedley",
+        "id": 151
+    },
+    "C.A. Bennett": {
+        "listOfRef": [
+            "97"
+        ],
+        "first": "C",
+        "middle": "A",
+        "last": "Bennett",
+        "id": 152
+    },
+    "D.L. Fenton": {
+        "listOfRef": [
+            "97"
+        ],
+        "first": "D",
+        "middle": "L",
+        "last": "Fenton",
+        "id": 153
+    },
+    "O. Peraldi": {
+        "listOfRef": [
+            "97"
+        ],
+        "first": "O",
+        "last": "Peraldi",
+        "id": 154
+    },
+    "U. Pfahl": {
+        "listOfRef": [
+            "98"
+        ],
+        "first": "U",
+        "last": "Pfahl",
+        "id": 155
+    },
+    "M. Plaster": {
+        "listOfRef": [
+            "99"
+        ],
+        "first": "M",
+        "last": "Plaster",
+        "id": 156
+    },
+    "H.G. Wagner": {
+        "listOfRef": [
+            "100",
+            "101"
+        ],
+        "first": "H",
+        "middle": "G",
+        "last": "Wagner",
+        "id": 157
+    },
+    "D.W. Stamps": {
+        "listOfRef": [
+            "105",
+            "106",
+            "114"
+        ],
+        "first": "D",
+        "middle": "W",
+        "last": "Stamps",
+        "id": 158
+    },
+    "S.R. Tieszen": {
+        "listOfRef": [
+            "105",
+            "106",
+            "112",
+            "113",
+            "114"
+        ],
+        "first": "S",
+        "middle": "R",
+        "last": "Tieszen",
+        "id": 159
+    },
+    "R.A. Strehlow": {
+        "listOfRef": [
+            "107",
+            "108",
+            "109",
+            "110",
+            "111"
+        ],
+        "first": "R",
+        "middle": "A",
+        "last": "Strehlow",
+        "id": 160
+    },
+    "R. Liangminas": {
+        "listOfRef": [
+            "110"
+        ],
+        "first": "R",
+        "last": "Liangminas",
+        "id": 161
+    },
+    "R.H. Watson": {
+        "listOfRef": [
+            "110"
+        ],
+        "first": "R",
+        "middle": "H",
+        "last": "Watson",
+        "id": 162
+    },
+    "J.R. Eyman": {
+        "listOfRef": [
+            "110"
+        ],
+        "first": "J",
+        "middle": "R",
+        "last": "Eyman",
+        "id": 163
+    },
+    "R.E. Maurer": {
+        "listOfRef": [
+            "111"
+        ],
+        "first": "R",
+        "middle": "E",
+        "last": "Maurer",
+        "id": 164
+    },
+    "S. Rajan": {
+        "listOfRef": [
+            "111"
+        ],
+        "first": "S",
+        "last": "Rajan",
+        "id": 165
+    },
+    "M.P. Sherman": {
+        "listOfRef": [
+            "112",
+            "113"
+        ],
+        "first": "M",
+        "middle": "P",
+        "last": "Sherman",
+        "id": 166
+    },
+    "S. Tsuge": {
+        "listOfRef": [
+            "115"
+        ],
+        "first": "S",
+        "last": "Tsuge",
+        "id": 167
+    },
+    "H. Furukawa": {
+        "listOfRef": [
+            "115"
+        ],
+        "first": "H",
+        "last": "Furukawa",
+        "id": 168
+    },
+    "M. Matsukawa": {
+        "listOfRef": [
+            "115"
+        ],
+        "first": "M",
+        "last": "Matsukawa",
+        "id": 169
+    },
+    "T. Nakagawa": {
+        "listOfRef": [
+            "115"
+        ],
+        "first": "T",
+        "last": "Nakagawa",
+        "id": 170
+    },
+    "Aziz Ungut": {
+        "listOfRef": [
+            "116"
+        ],
+        "first": "Aziz",
+        "last": "Ungut",
+        "id": 171
+    },
+    "Philip. J. Shuff": {
+        "listOfRef": [
+            "116"
+        ],
+        "first": "Philip",
+        "middle": "J",
+        "last": "Shuff",
+        "id": 172
+    },
+    "John. A. Eyre": {
+        "listOfRef": [
+            "116"
+        ],
+        "first": "John",
+        "middle": "A",
+        "last": "Eyre",
+        "id": 173
+    },
+    "P.A. Urtiew": {
+        "listOfRef": [
+            "117",
+            "126",
+            "127"
+        ],
+        "first": "P",
+        "middle": "A",
+        "last": "Urtiew",
+        "id": 174
+    },
+    "C.M. Tarver": {
+        "listOfRef": [
+            "117"
+        ],
+        "first": "C",
+        "middle": "M",
+        "last": "Tarver",
+        "id": 175
+    },
+    "Molen Vander": {
+        "listOfRef": [
+            "118"
+        ],
+        "first": "Molen",
+        "last": "Vander",
+        "id": 176
+    },
+    "M. Vandermeiren": {
+        "listOfRef": [
+            "119",
+            "120"
+        ],
+        "first": "M",
+        "last": "Vandermeiren",
+        "id": 177
+    },
+    "A.A. Vasil'ev": {
+        "listOfRef": [
+            "121",
+            "122",
+            "123",
+            "124"
+        ],
+        "first": "A",
+        "middle": "A",
+        "last": "Vasil'ev",
+        "id": 178
+    },
+    "V.V. Grigor'ev": {
+        "listOfRef": [
+            "123"
+        ],
+        "first": "V",
+        "middle": "V",
+        "last": "Grigor'ev",
+        "id": 179
+    },
+    "Yu.A. Nikolaev": {
+        "listOfRef": [
+            "124"
+        ],
+        "first": "Yu",
+        "middle": "A",
+        "last": "Nikolaev",
+        "id": 180
+    },
+    "Ul'yanitskii": {
+        "listOfRef": [
+            "124"
+        ],
+        "last": "Ul'yanitskii",
+        "id": 181
+    },
+    "B.V. Voitsekhovskii": {
+        "listOfRef": [
+            "125"
+        ],
+        "first": "B",
+        "middle": "V",
+        "last": "Voitsekhovskii",
+        "id": 182
+    },
+    "M.E. Topchian": {
+        "listOfRef": [
+            "125"
+        ],
+        "first": "M",
+        "middle": "E",
+        "last": "Topchian",
+        "id": 183
+    },
+    "P. Wolanski": {
+        "listOfRef": [
+            "128"
+        ],
+        "first": "P",
+        "last": "Wolanski",
+        "id": 184
+    },
+    "C.W. Kauffman": {
+        "listOfRef": [
+            "128"
+        ],
+        "first": "C",
+        "middle": "W",
+        "last": "Kauffman",
+        "id": 185
+    },
+    "Ia.B. Zeldovich": {
+        "listOfRef": [
+            "129"
+        ],
+        "first": "Ia",
+        "middle": "B",
+        "last": "Zeldovich",
+        "id": 186
+    },
+    "N.N. Simonov": {
+        "listOfRef": [
+            "129"
+        ],
+        "first": "N",
+        "middle": "N",
+        "last": "Simonov",
+        "id": 187
+    },
+    "R. Zitoun": {
+        "listOfRef": [
+            "130"
+        ],
+        "first": "R",
+        "last": "Zitoun",
+        "id": 188
+    },
+    "B. Deshaies": {
+        "listOfRef": [
+            "130"
+        ],
+        "first": "B",
+        "last": "Deshaies",
+        "id": 189
     }
 }

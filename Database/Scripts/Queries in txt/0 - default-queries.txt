@@ -1,6 +1,5 @@
-SET FOREIGN_KEY_CHECKS=0;
-INSERT INTO `databoom_db_test`.`publisher`(`name`, `id`) VALUES ("N/A", 1);
-INSERT INTO `databoom_db_test`.`publicationtype` (`name`, `id`) VALUES ("N/A", 1);
-INSERT INTO `databoom_db_test`.`units` (`name`, `units`, `id`) VALUES ('N/A', 'N/A', 1);
-INSERT INTO `databoom_db_test`.`representations` (`repr`, `id`) VALUES ('N/A', 1);
-INSERT INTO `databoom_db_test`.`datasetdatatype` (`name`, `id`) VALUES ('N/A', 1);
+INSERT INTO `databoom_db`.`publisher`(`name`, `id`) VALUES ("N/A", 1);
+INSERT INTO `databoom_db`.`publicationtype` (`name`, `id`) VALUES ("N/A", 1);
+INSERT INTO `databoom_db`.`units` (`name`, `units`, `id`) VALUES ('N/A', 'N/A', 1);
+INSERT INTO `databoom_db`.`representations` (`repr`, `id`) VALUES ('N/A', 1);
+INSERT INTO `databoom_db`.`datasetdatatype` (`name`, `id`) VALUES ('N/A', 1);
