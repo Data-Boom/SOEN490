@@ -14,6 +14,6 @@ with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
   data = json.load(f)
 
 for x in data:
-    file.write(" INSERT INTO `databoom_db_test`.`dataset` (`id`, `name`, `datatypeId`, `publicationId`, `categoryId`, `subcategoryId`, `comments`) VALUES ("+str(data[x]['datasetId'])+", \""+x+"\", 1, "+str(data[x]['reference'])+", "+str(data[x]['categoryId'])+", "+str(data[x]['subcategoryId'])+", \""+data[x]['dataset-comment']+"\");\n")
+    file.write(" INSERT INTO `databoom_db`.`dataset` (`id`, `name`, `datatypeId`, `publicationId`, `categoryId`, `subcategoryId`, `comments`) VALUES ("+str(data[x]['datasetId'])+", \""+x+"\", 1, "+str(data[x]['reference'])+", "+str(data[x]['categoryId'])+", "+str(data[x]['subcategoryId'])+", \""+data[x]['dataset-comment']+"\");\n")
 
 file.close()

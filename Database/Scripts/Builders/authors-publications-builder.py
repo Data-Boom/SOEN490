@@ -8,7 +8,7 @@
 import json
 import re
 
-f = open('text_files_for_building/citations.txt')
+f = open('Builders/text_files_for_building/citations.txt')
 
 tempCobject = {       
 
@@ -74,14 +74,14 @@ for x in f:
         tempCobject["name"] = x.replace(".\n", "")
 
 #dumping the dictionaries into the appropriate files.
-with open('authors.json', 'w') as outfile:
+with open('./Scraped JSONs/authors.json', 'w') as outfile:
     json.dump(AuthorsList, outfile, indent=4)
 outfile.close
 
-with open('publications.json', 'w') as outfile:
+with open('./Scraped JSONs/publications.json', 'w') as outfile:
     json.dump(CitationList, outfile, indent=4)
 outfile.close
 
-with open('PAA.json', 'w') as outfile:
+with open('./Scraped JSONs/PAA.json', 'w') as outfile:
     json.dump(PAA, outfile, indent=4)
 outfile.close

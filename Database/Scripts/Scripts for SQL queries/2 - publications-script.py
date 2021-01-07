@@ -8,10 +8,8 @@ file = open('./Queries in txt/2 - publications-query.txt', "w+")
 
 with open('./Scraped JSONs/publications.json') as f:
   data = json.load(f)
-  
-file.write("SET FOREIGN_KEY_CHECKS=0;\n")
 
 for x in data:
-   file.write(" INSERT INTO `databoom_db_test`.`publications` (`id`, `name`, `doi`, `year`) VALUES ("+x+", \""+data[x]['name']+"\",\""+data[x]['details']+"\", "+data[x]['year']+");\n")
+   file.write(" INSERT INTO `databoom_db`.`publications` (`id`, `name`, `doi`, `year`) VALUES ("+x+", \""+data[x]['name']+"\",\""+data[x]['details']+"\", "+data[x]['year']+");\n")
 
 file.close()
