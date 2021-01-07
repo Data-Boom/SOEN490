@@ -206,7 +206,7 @@ export function ProfileView() {
       <TableContainer component={Paper} style={{ width: "50%" }}>
         <Table aria-label="collapsible table" >
           <TableHead> Favourites
-	          <TableRow>
+            <TableRow>
               <TableCell />
               <TableCell>Name</TableCell>
               <TableCell align="right">Title</TableCell>

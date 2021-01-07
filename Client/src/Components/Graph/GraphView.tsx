@@ -24,6 +24,10 @@ export default function GraphView() {
 
   const classes = useStyles()
 
+  //Testing the query parser using quer-string for future use if needed
+  //console.log(queryString.parse(useLocation().search))
+
+
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
   const [completeDatasets, setCompleteDatasets] = useState<ICompleteDatasetEntity[]>([])
@@ -55,6 +59,8 @@ export default function GraphView() {
 
     return graphDataset
   }
+
+
 
   //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
   function download(filename: string, text: string) {
