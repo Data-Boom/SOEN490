@@ -1,5 +1,6 @@
-import { Box, Button, Collapse, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
+import { AppBar, Box, Button, Collapse, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
+import { Theme, makeStyles } from '@material-ui/core/styles'
 
 import DataboomTestGraph from './DataboomTestGraph.png'
 import { IPasswordSettings } from '../Models/Profile/IProfileModel'
@@ -11,7 +12,6 @@ import PasswordForm from '../Components/Profile/PasswordForm'
 import ProfileForm from '../Components/Profile/ProfileForm'
 import UserDetails from '../Components/Profile/UserDetailSection/UserDetails'
 import { exampleDatasets } from '../Models/Datasets/ICompleteDatasetEntity'
-import { makeStyles } from '@material-ui/core/styles'
 
 const renderGraphRow = (row) => {
   return (<Table size="small" aria-label="purchases">
@@ -33,6 +33,50 @@ const renderGraphRow = (row) => {
     </TableBody>
   </Table>)
 }
+
+// Tab code taken from: https://material-ui.com/components/tabs/
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  )
+}
+
+function a11yProps(index: any) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  }
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+  button: {
+    marginRight: 10,
+  },
+}))
 
 const useRowStyles = makeStyles({
   root: {
@@ -168,57 +212,74 @@ export function ProfileView() {
     setEditPassword(!editPassword)
     setEditProfile(false)
   }
+  const classes = useStyles()
+  const [tab, setTab] = React.useState(0)
 
+  const handleChange = (event: React.ChangeEvent<{}>, newTab: number) => {
+    setTab(newTab)
+  }
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h2">
-            Profile
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <UserDetails
-            user={user}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" color="primary" onClick={handleEditProfile}>Edit Profile</Button>
-          <Button variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
-        </Grid>
-        {editProfile &&
-          <Grid item xs={12}>
-            < ProfileForm
-              user={user}
-              onSubmit={handleSubmit}
-            />
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Tabs value={tab} onChange={handleChange}>
+            <Tab label="View Profile" {...a11yProps(0)} />
+            <Tab label="View Favourites" {...a11yProps(1)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={tab} index={0}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h2">
+                Profile
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <UserDetails
+                user={user}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary" onClick={handleEditProfile} className={classes.button}>Edit Profile</Button>
+              <Button variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
+            </Grid>
+            {editProfile &&
+              <Grid item xs={12}>
+                < ProfileForm
+                  user={user}
+                  onSubmit={handleSubmit}
+                />
+              </Grid>
+            }
+            {editPassword &&
+              <Grid item xs={12}>
+                < PasswordForm
+                  password={password}
+                  onSubmit={handlePasswordChange}
+                />
+              </Grid>
+            }
           </Grid>
-        }
-        {editPassword &&
-          <Grid item xs={12}>
-            < PasswordForm
-              password={password}
-              onSubmit={handlePasswordChange}
-            />
-          </Grid>
-        }
-      </Grid>
-      <TableContainer component={Paper} style={{ width: "50%" }}>
-        <Table aria-label="collapsible table" >
-          <TableHead> Favourites
-            <TableRow>
-              <TableCell />
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Title</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <Row key={row.title} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+        </TabPanel>
+        <TabPanel value={tab} index={1}>
+          <TableContainer component={Paper} style={{ width: "50%" }}>
+            <Table aria-label="collapsible table" >
+              <TableHead> Favourites
+                <TableRow>
+                  <TableCell />
+                  <TableCell>Name</TableCell>
+                  <TableCell align="right">Title</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <Row key={row.title} row={row} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </TabPanel>
+      </div>
     </>
   )
 }
