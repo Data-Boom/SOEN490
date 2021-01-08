@@ -160,7 +160,7 @@ export class AuthenticationService {
             throw new BadRequest("Cannot fetch details for this email");
         }
         try {
-            userDetails = await AuthenticationModel.getUserDetails(userEmail);
+            userDetails = await AuthenticationModel.fetchUserDetails(userEmail);
         }
         catch (error) {
             throw new InternalServerError("Internal Server Error fetching Details. Try again later")

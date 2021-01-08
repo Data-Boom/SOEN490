@@ -102,7 +102,7 @@ export class AuthenticationModel {
      * This will fetch email, firstname, lastname, organization and dob.
      * @param email - User Email
      */
-    static async getUserDetails(userEmail: string): Promise<IFetchUserDetail> {
+    static async fetchUserDetails(userEmail: string): Promise<IFetchUserDetail> {
 
         let connection = getConnection();
         let userInfo = await connection.manager
