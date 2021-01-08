@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { retrieveBasicData } from '../services/getBasicDataService';
+import { fetchAllCategoriesMaterialsService } from '../services/fetchAllCategoriesMaterialsService';
 
-export class getBasicDataController {
-    private retrieveBasicDataObject: retrieveBasicData;
+export class fetchAllCategoriesMaterialsController {
+    private fetchAllCategoriesMaterialsService: fetchAllCategoriesMaterialsService;
     constructor() {
-        this.retrieveBasicDataObject = new retrieveBasicData();
+        this.fetchAllCategoriesMaterialsService = new fetchAllCategoriesMaterialsService();
     }
 
     /**
@@ -18,7 +18,7 @@ export class getBasicDataController {
      */
     async createRequestForAllCategories(request: Request, response: Response) {
         try {
-            let arrayOfData = await this.retrieveBasicDataObject.getBasicCategoryDataService()
+            let arrayOfData = await this.fetchAllCategoriesMaterialsService.getBasicCategoryDataService()
             return response.status(200).send(arrayOfData);
         } catch (err) {
             response.status(500).send(err);
@@ -36,7 +36,7 @@ export class getBasicDataController {
      */
     async createRequestForAllSubcategories(request: Request, response: Response) {
         try {
-            let arrayOfData = await this.retrieveBasicDataObject.getBasicSubcategoryDataService()
+            let arrayOfData = await this.fetchAllCategoriesMaterialsService.getBasicSubcategoryDataService()
             return response.status(200).send(arrayOfData);
         } catch (err) {
             response.status(500).send(err);
@@ -54,7 +54,7 @@ export class getBasicDataController {
      */
     async createRequestForAllMaterials(request: Request, response: Response) {
         try {
-            let arrayOfData = await this.retrieveBasicDataObject.getBasicMaterialDataService()
+            let arrayOfData = await this.fetchAllCategoriesMaterialsService.getBasicMaterialDataService()
             return response.status(200).send(arrayOfData);
         } catch (err) {
             response.status(500).send(err);

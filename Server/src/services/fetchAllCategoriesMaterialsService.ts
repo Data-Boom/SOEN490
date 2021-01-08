@@ -1,13 +1,13 @@
-import { GetBasicDataModel } from "../models/GetBasicDataModel";
+import { FetchAllCategoriesMaterialsModel } from "../models/FetchAllCategoriesMaterialsModel";
 import { ICategory } from "../models/interfaces/CategoryInterface";
 import { IMaterial } from "../models/interfaces/MaterialInterface";
 import { ISubcategory } from "../models/interfaces/SubcategoryInterface";
 
-export class retrieveBasicData {
-    private dataQuery: GetBasicDataModel;
+export class fetchAllCategoriesMaterialsService {
+    private dataQuery: FetchAllCategoriesMaterialsModel;
 
     constructor() {
-        this.dataQuery = new GetBasicDataModel();
+        this.dataQuery = new FetchAllCategoriesMaterialsModel();
     }
     async getBasicCategoryDataService() {
         let categoryData: ICategory[] = await this.dataQuery.getBasicCategoryDataQuery()

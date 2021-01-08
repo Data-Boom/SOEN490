@@ -5,7 +5,7 @@ import { connectDB } from '../database';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { authenticationRouter } from '../routes/authenticationRouter';
 import bodyParser from 'body-parser';
-import { getBasicDataRouter } from '../routes/getBasicDataRouter';
+import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
 import { getDataRouter } from '../routes/getDatasetRouter';
 
 /**
@@ -56,7 +56,7 @@ export class loadStartupProcess {
     this.app.use('/', fileUploadRouter)
     this.app.use('/', authenticationRouter)
     this.app.use('/', getDataRouter)
-    this.app.use('/', getBasicDataRouter)
+    this.app.use('/', fetchAllCategoriesMaterialsRouter)
 
 
     this.config = {

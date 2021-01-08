@@ -7,7 +7,7 @@ import { ICategory } from "./interfaces/CategoryInterface";
 import { IMaterial } from "./interfaces/MaterialInterface";
 import { ISubcategory } from "./interfaces/SubcategoryInterface";
 
-export class GetBasicDataModel {
+export class FetchAllCategoriesMaterialsModel {
     private connection: Connection;
     constructor() {
         this.connection = getConnection();

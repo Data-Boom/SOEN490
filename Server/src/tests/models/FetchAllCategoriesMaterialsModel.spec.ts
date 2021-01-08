@@ -1,13 +1,13 @@
 import { createConnection, getConnection } from 'typeorm';
-import { GetBasicDataModel } from '../../models/GetBasicDataModel';
+import { FetchAllCategoriesMaterialsModel } from '../../models/FetchAllCategoriesMaterialsModel';
 
 describe('data service test', () => {
-    let basicDataModel: GetBasicDataModel;
+    let basicDataModel: FetchAllCategoriesMaterialsModel;
     jest.setTimeout(60000)
 
     beforeAll(async () => {
         await createConnection();
-        basicDataModel = new GetBasicDataModel();
+        basicDataModel = new FetchAllCategoriesMaterialsModel();
     });
 
     afterAll(async () => {
