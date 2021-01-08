@@ -7,6 +7,8 @@
 # This is because dataset-with-datapoints.json must include categoryId's and subcategoryId's -> these are added from the category-subcat-script.py
 
 import json
+import os
+os.chdir('.')
 
 file = open('./Queries in txt/8 - dataset-query.txt', "w+")
 

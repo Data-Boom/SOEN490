@@ -1,4 +1,6 @@
 import json
+import os
+os.chdir('.')
 
 with open('./Scraped JSONs/datasets.json') as f:
   data = json.load(f)
@@ -42,7 +44,6 @@ for key in data:
           units = vari[1].replace("(", "").replace(")", "")
           if "bar" in units or "torr" in units or "atm" in units :
             variableNames.append("skip")
-            print(units)
           else :
             variableNames.append(variableName)
         else :

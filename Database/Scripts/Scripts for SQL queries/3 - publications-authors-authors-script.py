@@ -3,6 +3,8 @@
 # The JSON used is the PAA.json which was produced by the authors-paa-builder.py script found in Builders folder.
 
 import json
+import os
+os.chdir('.')
 
 file = open('./Queries in txt/3 - p-a-a-query.txt', "w+")
 

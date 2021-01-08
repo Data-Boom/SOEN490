@@ -3,6 +3,9 @@
 # The JSON used is the publications.json which was produced by the authors-paa-builder.py script found in Builders folder.
 
 import json
+import os
+os.chdir('.')
+
 
 file = open('./Queries in txt/2 - publications-query.txt', "w+")
 

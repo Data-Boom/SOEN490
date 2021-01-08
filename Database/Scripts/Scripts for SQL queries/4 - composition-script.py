@@ -3,6 +3,8 @@
 # The JSON used is the datasets-with-datapoints.json which was produced by the datasets-builder.py script found in Builders folder.
 
 import json
+import os
+os.chdir('.')
 
 file = open('./Queries in txt/4 - composition-query.txt', "w+")
 materialFile = open('./Queries in txt/5 - material-query.txt', "w+")

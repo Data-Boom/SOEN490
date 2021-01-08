@@ -6,6 +6,8 @@
 # This is because of Line 59, where we update dataset-with-datapoints.json to include categoryId's and subcategoryId's
 
 import json
+import os
+os.chdir('.')
 
 file = open('./Queries in txt/6 - category-subcat-query.txt', "w+")
 with open('./Scraped JSONs/datasets-with-datapoints.json') as f:

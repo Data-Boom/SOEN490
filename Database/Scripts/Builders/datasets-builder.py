@@ -1,6 +1,8 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import json 
+import os
+os.chdir('.')
 
 #These are all the urls from the caltech website that needed scraping
 references = BeautifulSoup(urlopen("https://shepherd.caltech.edu/detn_db/html/references.html"), 'html.parser')

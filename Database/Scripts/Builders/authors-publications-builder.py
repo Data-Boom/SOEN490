@@ -7,6 +7,8 @@
 
 import json
 import re
+import os
+os.chdir('.')
 
 f = open('Builders/text_files_for_building/citations.txt')
 
