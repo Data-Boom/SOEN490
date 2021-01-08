@@ -19,7 +19,7 @@ export default function DataCell() {
                                                                      */
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        
         const json = e.target.jsonFile.files[0]
 
         //so if this here is not proper json extension it will catch

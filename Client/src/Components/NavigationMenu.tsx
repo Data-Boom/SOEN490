@@ -57,7 +57,9 @@ export default function NavigationMenu(): any {
     )
   }
 
-  const handleSignIn = (): void => {
+  const handleSignIn = (): void => 
+  {
+    
   }
 
   const drawer = (): any => {
