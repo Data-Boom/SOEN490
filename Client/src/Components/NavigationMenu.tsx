@@ -22,7 +22,7 @@ import HomeView from './Home/HomeView'
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
-import ProfileView from "../Views/ProfileView"
+import { ProfileView } from "../Views/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import SearchIcon from '@material-ui/icons/Search'
