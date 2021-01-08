@@ -66,7 +66,7 @@ export class AuthenticationController {
     }
 
     private validateUserDetailRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('password')) {
+        if (request.query.hasOwnProperty('password') || request.query.hasOwnProperty('organization')) {
             return true;
         } else
             return false;
