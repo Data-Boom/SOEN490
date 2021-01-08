@@ -14,7 +14,7 @@ export class GetBasicDataModel {
     }
     async getBasicCategoryDataQuery(): Promise<ICategory[]> {
         let categoryData: ICategory[] =
-            await this.connection.manager.createQueryBuilder(Category, 'category')
+            await this.connection.createQueryBuilder(Category, 'category')
                 .select('category.name', 'name')
                 .addSelect('category.id', 'id')
                 .getRawMany();
@@ -23,7 +23,7 @@ export class GetBasicDataModel {
 
     async getBasicSubcategoryDataQuery(): Promise<ISubcategory[]> {
         let subcategoryData: ISubcategory[] =
-            await this.connection.manager.createQueryBuilder(Subcategory, 'subcategory')
+            await this.connection.createQueryBuilder(Subcategory, 'subcategory')
                 .select('subcategory.name', 'name')
                 .addSelect('subcategory.id', 'id')
                 .getRawMany();
@@ -31,7 +31,7 @@ export class GetBasicDataModel {
     }
     async getBasicMaterialDataQuery(): Promise<IMaterial[]> {
         let materialData: IMaterial[] =
-            await this.connection.manager.createQueryBuilder(Material, 'Material')
+            await this.connection.createQueryBuilder(Material, 'Material')
                 .select('composition.composition', 'composition')
                 .addSelect('material.details', 'details')
                 .addSelect('material.id', 'id')
