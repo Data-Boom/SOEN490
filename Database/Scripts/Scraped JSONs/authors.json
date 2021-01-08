@@ -172,7 +172,8 @@
         "listOfRef": [
             "7",
             "27",
-            "44"
+            "44",
+            "116"
         ],
         "first": "P",
         "middle": "J",
@@ -223,10 +224,12 @@
             "54",
             "55",
             "56",
+            "63",
             "64",
             "65",
             "66",
             "67",
+            "68",
             "69",
             "74",
             "83",
@@ -355,13 +358,21 @@
         "last": "Westbrook",
         "id": 33
     },
-    "J.H.S. Lee. ": {
+    "J.H.S. Lee": {
         "listOfRef": [
-            "13"
+            "13",
+            "16",
+            "48",
+            "57",
+            "62",
+            "70",
+            "77",
+            "99",
+            "113"
         ],
         "first": "J",
-        "middle": "H.H",
-        "last": "S",
+        "middle": "H.S",
+        "last": "Lee",
         "id": 34
     },
     "W.B. Benedick": {
@@ -369,6 +380,7 @@
             "14",
             "15",
             "16",
+            "48",
             "105",
             "112",
             "113"
@@ -383,7 +395,9 @@
             "14",
             "48",
             "49",
-            "56"
+            "54",
+            "56",
+            "70"
         ],
         "first": "C",
         "middle": "M",
@@ -407,21 +421,6 @@
         "last": "Morosin",
         "id": 38
     },
-    "J.H.S. Lee": {
-        "listOfRef": [
-            "16",
-            "57",
-            "62",
-            "70",
-            "77",
-            "99",
-            "113"
-        ],
-        "first": "J",
-        "middle": "H.H",
-        "last": "S",
-        "id": 39
-    },
     "A.A. Borisov": {
         "listOfRef": [
             "17",
@@ -432,7 +431,7 @@
         "first": "A",
         "middle": "A",
         "last": "Borisov",
-        "id": 40
+        "id": 39
     },
     "S.V. Khomic": {
         "listOfRef": [
@@ -441,7 +440,7 @@
         "first": "S",
         "middle": "V",
         "last": "Khomic",
-        "id": 41
+        "id": 40
     },
     "V.N. Mikhalkin": {
         "listOfRef": [
@@ -452,7 +451,7 @@
         "first": "V",
         "middle": "N",
         "last": "Mikhalkin",
-        "id": 42
+        "id": 41
     },
     "S.V. Khomik": {
         "listOfRef": [
@@ -462,7 +461,7 @@
         "first": "S",
         "middle": "V",
         "last": "Khomik",
-        "id": 43
+        "id": 42
     },
     "E.V. Saneev": {
         "listOfRef": [
@@ -471,7 +470,7 @@
         "first": "E",
         "middle": "V",
         "last": "Saneev",
-        "id": 44
+        "id": 43
     },
     "V.V. Kosenkov": {
         "listOfRef": [
@@ -480,7 +479,7 @@
         "first": "V",
         "middle": "V",
         "last": "Kosenkov",
-        "id": 45
+        "id": 44
     },
     "A.E. Mailkov": {
         "listOfRef": [
@@ -489,7 +488,7 @@
         "first": "A",
         "middle": "E",
         "last": "Mailkov",
-        "id": 46
+        "id": 45
     },
     "S. Loban'": {
         "listOfRef": [
@@ -497,7 +496,7 @@
         ],
         "first": "S",
         "last": "Loban'",
-        "id": 47
+        "id": 46
     },
     "J.E. Elsworth": {
         "listOfRef": [
@@ -512,7 +511,7 @@
         "first": "J",
         "middle": "E",
         "last": "Elsworth",
-        "id": 48
+        "id": 47
     },
     "G. Hooper": {
         "listOfRef": [
@@ -525,7 +524,7 @@
         ],
         "first": "G",
         "last": "Hooper",
-        "id": 49
+        "id": 48
     },
     "C.P. Quinn": {
         "listOfRef": [
@@ -534,7 +533,7 @@
         "first": "C",
         "middle": "P",
         "last": "Quinn",
-        "id": 50
+        "id": 49
     },
     "E. Metcalfe": {
         "listOfRef": [
@@ -542,7 +541,7 @@
         ],
         "first": "E",
         "last": "Metcalfe",
-        "id": 51
+        "id": 50
     },
     "G.A. Carlson": {
         "listOfRef": [
@@ -551,7 +550,7 @@
         "first": "G",
         "middle": "A",
         "last": "Carlson",
-        "id": 52
+        "id": 51
     },
     "G. Ciccarelli": {
         "listOfRef": [
@@ -560,7 +559,7 @@
         ],
         "first": "G",
         "last": "Ciccarelli",
-        "id": 53
+        "id": 52
     },
     "T. Ginsberg": {
         "listOfRef": [
@@ -569,7 +568,7 @@
         ],
         "first": "T",
         "last": "Ginsberg",
-        "id": 54
+        "id": 53
     },
     "J. Boccio": {
         "listOfRef": [
@@ -578,7 +577,7 @@
         ],
         "first": "J",
         "last": "Boccio",
-        "id": 55
+        "id": 54
     },
     "C. Economos": {
         "listOfRef": [
@@ -586,7 +585,7 @@
         ],
         "first": "C",
         "last": "Economos",
-        "id": 56
+        "id": 55
     },
     "K. Sato": {
         "listOfRef": [
@@ -594,7 +593,7 @@
         ],
         "first": "K",
         "last": "Sato",
-        "id": 57
+        "id": 56
     },
     "M. Kinoshita": {
         "listOfRef": [
@@ -602,7 +601,7 @@
         ],
         "first": "M",
         "last": "Kinoshita",
-        "id": 58
+        "id": 57
     },
     "C. Finfrock": {
         "listOfRef": [
@@ -610,7 +609,7 @@
         ],
         "first": "C",
         "last": "Finfrock",
-        "id": 59
+        "id": 58
     },
     "L. Gerlach": {
         "listOfRef": [
@@ -618,7 +617,7 @@
         ],
         "first": "L",
         "last": "Gerlach",
-        "id": 60
+        "id": 59
     },
     "H. Tagawa": {
         "listOfRef": [
@@ -626,7 +625,7 @@
         ],
         "first": "H",
         "last": "Tagawa",
-        "id": 61
+        "id": 60
     },
     "A. Malliakos": {
         "listOfRef": [
@@ -634,7 +633,7 @@
         ],
         "first": "A",
         "last": "Malliakos",
-        "id": 62
+        "id": 61
     },
     "Yu.N. Denisov": {
         "listOfRef": [
@@ -644,7 +643,7 @@
         "first": "Yu",
         "middle": "N",
         "last": "Denisov",
-        "id": 63
+        "id": 62
     },
     "Ya.K. Troshin": {
         "listOfRef": [
@@ -654,7 +653,7 @@
         "first": "Ya",
         "middle": "K",
         "last": "Troshin",
-        "id": 64
+        "id": 63
     },
     "D. Desbordes": {
         "listOfRef": [
@@ -668,7 +667,7 @@
         ],
         "first": "D",
         "last": "Desbordes",
-        "id": 65
+        "id": 64
     },
     "C. Guerraud": {
         "listOfRef": [
@@ -677,7 +676,7 @@
         ],
         "first": "C",
         "last": "Guerraud",
-        "id": 66
+        "id": 65
     },
     "L. Hamada": {
         "listOfRef": [
@@ -685,7 +684,7 @@
         ],
         "first": "L",
         "last": "Hamada",
-        "id": 67
+        "id": 66
     },
     "M. Vachon": {
         "listOfRef": [
@@ -693,14 +692,14 @@
         ],
         "first": "M",
         "last": "Vachon",
-        "id": 68
+        "id": 67
     },
     "EDL": {
         "listOfRef": [
             "39"
         ],
         "last": "EDL",
-        "id": 69
+        "id": 68
     },
     "D.H. Edwards": {
         "listOfRef": [
@@ -711,7 +710,7 @@
         "first": "D",
         "middle": "H",
         "last": "Edwards",
-        "id": 70
+        "id": 69
     },
     "J.M. Morgan": {
         "listOfRef": [
@@ -721,7 +720,7 @@
         "first": "J",
         "middle": "M",
         "last": "Morgan",
-        "id": 71
+        "id": 70
     },
     "G.O. Thomas": {
         "listOfRef": [
@@ -730,24 +729,26 @@
         "first": "G",
         "middle": "O",
         "last": "Thomas",
-        "id": 72
+        "id": 71
     },
     "J.A. Eyre": {
         "listOfRef": [
-            "43"
+            "43",
+            "116"
         ],
         "first": "J",
         "middle": "A",
         "last": "Eyre",
-        "id": 73
+        "id": 72
     },
-    "A. Ungut": {
+    "Aziz Ungut": {
         "listOfRef": [
-            "44"
+            "44",
+            "116"
         ],
-        "first": "A",
+        "first": "Aziz",
         "last": "Ungut",
-        "id": 74
+        "id": 73
     },
     "H. Freiwald": {
         "listOfRef": [
@@ -755,7 +756,7 @@
         ],
         "first": "H",
         "last": "Freiwald",
-        "id": 75
+        "id": 74
     },
     "H.W. Koch": {
         "listOfRef": [
@@ -764,7 +765,7 @@
         "first": "H",
         "middle": "W",
         "last": "Koch",
-        "id": 76
+        "id": 75
     },
     "R.S. Fry": {
         "listOfRef": [
@@ -773,7 +774,7 @@
         "first": "R",
         "middle": "S",
         "last": "Fry",
-        "id": 77
+        "id": 76
     },
     "J.A. Nicholls": {
         "listOfRef": [
@@ -785,7 +786,7 @@
         "first": "J",
         "middle": "A",
         "last": "Nicholls",
-        "id": 78
+        "id": 77
     },
     "K. Guhlmann": {
         "listOfRef": [
@@ -793,7 +794,7 @@
         ],
         "first": "K",
         "last": "Guhlmann",
-        "id": 79
+        "id": 78
     },
     "W. Pusch": {
         "listOfRef": [
@@ -803,32 +804,18 @@
         ],
         "first": "W",
         "last": "Pusch",
-        "id": 80
+        "id": 79
     },
-    "H.Gg. Wagner": {
+    "H.G. Wagner": {
         "listOfRef": [
-            "47"
+            "47",
+            "100",
+            "101"
         ],
         "first": "H",
-        "middle": "Gg",
+        "middle": "G",
         "last": "Wagner",
-        "id": 81
-    },
-    "J. Lee": {
-        "listOfRef": [
-            "48"
-        ],
-        "first": "J",
-        "last": "Lee",
-        "id": 82
-    },
-    "W. Benedick": {
-        "listOfRef": [
-            "48"
-        ],
-        "first": "W",
-        "last": "Benedick",
-        "id": 83
+        "id": 80
     },
     "M. Berman": {
         "listOfRef": [
@@ -837,7 +824,7 @@
         ],
         "first": "M",
         "last": "Berman",
-        "id": 84
+        "id": 81
     },
     "T. Hikita": {
         "listOfRef": [
@@ -845,7 +832,7 @@
         ],
         "first": "T",
         "last": "Hikita",
-        "id": 85
+        "id": 82
     },
     "al. et": {
         "listOfRef": [
@@ -853,7 +840,7 @@
         ],
         "first": "al",
         "last": "et",
-        "id": 86
+        "id": 83
     },
     "Z.W. Huang": {
         "listOfRef": [
@@ -862,7 +849,7 @@
         "first": "Z",
         "middle": "W",
         "last": "Huang",
-        "id": 87
+        "id": 84
     },
     "Tiggelen Van": {
         "listOfRef": [
@@ -875,7 +862,7 @@
         ],
         "first": "Tiggelen",
         "last": "Van",
-        "id": 88
+        "id": 85
     },
     "K. Kailasanath": {
         "listOfRef": [
@@ -883,7 +870,7 @@
         ],
         "first": "K",
         "last": "Kailasanath",
-        "id": 89
+        "id": 86
     },
     "E.S. Oran": {
         "listOfRef": [
@@ -892,16 +879,7 @@
         "first": "E",
         "middle": "S",
         "last": "Oran",
-        "id": 90
-    },
-    "C. Guirao": {
-        "listOfRef": [
-            "54",
-            "70"
-        ],
-        "first": "C",
-        "last": "Guirao",
-        "id": 91
+        "id": 87
     },
     "A. Sulmistras": {
         "listOfRef": [
@@ -910,7 +888,7 @@
         ],
         "first": "A",
         "last": "Sulmistras",
-        "id": 92
+        "id": 88
     },
     "A. Teodorczyk": {
         "listOfRef": [
@@ -918,7 +896,7 @@
         ],
         "first": "A",
         "last": "Teodorczyk",
-        "id": 93
+        "id": 89
     },
     "S.M. Kogarko": {
         "listOfRef": [
@@ -930,7 +908,7 @@
         "first": "S",
         "middle": "M",
         "last": "Kogarko",
-        "id": 94
+        "id": 90
     },
     "V.V. Adushkin": {
         "listOfRef": [
@@ -939,7 +917,7 @@
         "first": "V",
         "middle": "V",
         "last": "Adushkin",
-        "id": 95
+        "id": 91
     },
     "A.G. Lyamin": {
         "listOfRef": [
@@ -948,7 +926,7 @@
         "first": "A",
         "middle": "G",
         "last": "Lyamin",
-        "id": 96
+        "id": 92
     },
     "R.K. Kumar": {
         "listOfRef": [
@@ -957,7 +935,7 @@
         "first": "R",
         "middle": "K",
         "last": "Kumar",
-        "id": 97
+        "id": 93
     },
     "S. Laberge": {
         "listOfRef": [
@@ -965,36 +943,15 @@
         ],
         "first": "S",
         "last": "Laberge",
-        "id": 98
+        "id": 94
     },
-    "Lee": {
+    "K. Ramamurthi": {
         "listOfRef": [
             "63"
         ],
-        "last": "Lee",
-        "id": 99
-    },
-    "J.H": {
-        "listOfRef": [
-            "63"
-        ],
-        "first": "J",
-        "last": "H",
-        "id": 100
-    },
-    "Ramamurthi": {
-        "listOfRef": [
-            "63"
-        ],
+        "first": "K",
         "last": "Ramamurthi",
-        "id": 101
-    },
-    "R": {
-        "listOfRef": [
-            "63"
-        ],
-        "last": "R",
-        "id": 102
+        "id": 95
     },
     "A. Freiman": {
         "listOfRef": [
@@ -1002,24 +959,16 @@
         ],
         "first": "A",
         "last": "Freiman",
-        "id": 103
+        "id": 96
     },
     "B.H.K. Lee": {
         "listOfRef": [
             "67"
         ],
         "first": "B",
-        "middle": "H.H",
-        "last": "K",
-        "id": 104
-    },
-    "J.H Lee": {
-        "listOfRef": [
-            "68"
-        ],
-        "first": "J",
-        "last": "HLee",
-        "id": 105
+        "middle": "H.K",
+        "last": "Lee",
+        "id": 97
     },
     "H. Matsui": {
         "listOfRef": [
@@ -1028,7 +977,7 @@
         ],
         "first": "H",
         "last": "Matsui",
-        "id": 106
+        "id": 98
     },
     "R.I. Soloukhin": {
         "listOfRef": [
@@ -1037,7 +986,7 @@
         "first": "R",
         "middle": "I",
         "last": "Soloukhin",
-        "id": 107
+        "id": 99
     },
     "A.K. Oppenheim": {
         "listOfRef": [
@@ -1046,7 +995,7 @@
         "first": "A",
         "middle": "K",
         "last": "Oppenheim",
-        "id": 108
+        "id": 100
     },
     "M.H. Lefebvre": {
         "listOfRef": [
@@ -1055,7 +1004,7 @@
         "first": "M",
         "middle": "H",
         "last": "Lefebvre",
-        "id": 109
+        "id": 101
     },
     "E. Nzeyimana": {
         "listOfRef": [
@@ -1064,7 +1013,7 @@
         ],
         "first": "E",
         "last": "Nzeyimana",
-        "id": 110
+        "id": 102
     },
     "J.C. Libouton": {
         "listOfRef": [
@@ -1073,7 +1022,7 @@
         "first": "J",
         "middle": "C",
         "last": "Libouton",
-        "id": 111
+        "id": 103
     },
     "M. Dormal": {
         "listOfRef": [
@@ -1081,7 +1030,7 @@
         ],
         "first": "M",
         "last": "Dormal",
-        "id": 112
+        "id": 104
     },
     "E.L. Litchfield": {
         "listOfRef": [
@@ -1090,7 +1039,7 @@
         "first": "E",
         "middle": "L",
         "last": "Litchfield",
-        "id": 113
+        "id": 105
     },
     "M.H. Hay": {
         "listOfRef": [
@@ -1099,7 +1048,7 @@
         "first": "M",
         "middle": "H",
         "last": "Hay",
-        "id": 114
+        "id": 106
     },
     "D.R. Forshey": {
         "listOfRef": [
@@ -1108,7 +1057,7 @@
         "first": "D",
         "middle": "R",
         "last": "Forshey",
-        "id": 115
+        "id": 107
     },
     "Y.K. Liu": {
         "listOfRef": [
@@ -1117,7 +1066,7 @@
         "first": "Y",
         "middle": "K",
         "last": "Liu",
-        "id": 116
+        "id": 108
     },
     "A. Macek": {
         "listOfRef": [
@@ -1125,7 +1074,7 @@
         ],
         "first": "A",
         "last": "Macek",
-        "id": 117
+        "id": 109
     },
     "V.I. Makeev": {
         "listOfRef": [
@@ -1134,7 +1083,7 @@
         "first": "V",
         "middle": "I",
         "last": "Makeev",
-        "id": 118
+        "id": 110
     },
     "Yu.A. Gostintsev": {
         "listOfRef": [
@@ -1143,7 +1092,7 @@
         "first": "Yu",
         "middle": "A",
         "last": "Gostintsev",
-        "id": 119
+        "id": 111
     },
     "V.V. Strogonov": {
         "listOfRef": [
@@ -1152,7 +1101,7 @@
         "first": "V",
         "middle": "V",
         "last": "Strogonov",
-        "id": 120
+        "id": 112
     },
     "Yu.A. Bokhon": {
         "listOfRef": [
@@ -1161,7 +1110,7 @@
         "first": "Yu",
         "middle": "A",
         "last": "Bokhon",
-        "id": 121
+        "id": 113
     },
     "Yu.N. Chernushkin": {
         "listOfRef": [
@@ -1170,7 +1119,7 @@
         "first": "Yu",
         "middle": "N",
         "last": "Chernushkin",
-        "id": 122
+        "id": 114
     },
     "V.N. Kulikov": {
         "listOfRef": [
@@ -1179,7 +1128,7 @@
         "first": "V",
         "middle": "N",
         "last": "Kulikov",
-        "id": 123
+        "id": 115
     },
     "A. Makris": {
         "listOfRef": [
@@ -1187,7 +1136,7 @@
         ],
         "first": "A",
         "last": "Makris",
-        "id": 124
+        "id": 116
     },
     "T.J. Oh": {
         "listOfRef": [
@@ -1196,7 +1145,7 @@
         "first": "T",
         "middle": "J",
         "last": "Oh",
-        "id": 125
+        "id": 117
     },
     "V.I. Manzhalei": {
         "listOfRef": [
@@ -1206,7 +1155,7 @@
         "first": "V",
         "middle": "I",
         "last": "Manzhalei",
-        "id": 126
+        "id": 118
     },
     "V.V. Mitrofanov": {
         "listOfRef": [
@@ -1218,7 +1167,7 @@
         "first": "V",
         "middle": "V",
         "last": "Mitrofanov",
-        "id": 127
+        "id": 119
     },
     "V.A. Subbotin": {
         "listOfRef": [
@@ -1227,7 +1176,7 @@
         "first": "V",
         "middle": "A",
         "last": "Subbotin",
-        "id": 128
+        "id": 120
     },
     "I.O. Moen": {
         "listOfRef": [
@@ -1243,7 +1192,7 @@
         "first": "I",
         "middle": "O",
         "last": "Moen",
-        "id": 129
+        "id": 121
     },
     "M. Donato": {
         "listOfRef": [
@@ -1251,7 +1200,7 @@
         ],
         "first": "M",
         "last": "Donato",
-        "id": 130
+        "id": 122
     },
     "J.W. Funk": {
         "listOfRef": [
@@ -1260,7 +1209,7 @@
         "first": "J",
         "middle": "W",
         "last": "Funk",
-        "id": 131
+        "id": 123
     },
     "S.A. Ward": {
         "listOfRef": [
@@ -1270,7 +1219,7 @@
         "first": "S",
         "middle": "A",
         "last": "Ward",
-        "id": 132
+        "id": 124
     },
     "G.M. Rude": {
         "listOfRef": [
@@ -1279,7 +1228,7 @@
         "first": "G",
         "middle": "M",
         "last": "Rude",
-        "id": 133
+        "id": 125
     },
     "P.A. Thibault": {
         "listOfRef": [
@@ -1291,7 +1240,7 @@
         "first": "P",
         "middle": "A",
         "last": "Thibault",
-        "id": 134
+        "id": 126
     },
     "S.B. Murray": {
         "listOfRef": [
@@ -1305,7 +1254,7 @@
         "first": "S",
         "middle": "B",
         "last": "Murray",
-        "id": 135
+        "id": 127
     },
     "D. Bjerketvedt": {
         "listOfRef": [
@@ -1314,7 +1263,7 @@
         ],
         "first": "D",
         "last": "Bjerketvedt",
-        "id": 136
+        "id": 128
     },
     "A. Rinnan": {
         "listOfRef": [
@@ -1323,7 +1272,7 @@
         ],
         "first": "A",
         "last": "Rinnan",
-        "id": 137
+        "id": 129
     },
     "G. Thomas": {
         "listOfRef": [
@@ -1331,7 +1280,7 @@
         ],
         "first": "G",
         "last": "Thomas",
-        "id": 138
+        "id": 130
     },
     "T. Dean": {
         "listOfRef": [
@@ -1339,7 +1288,7 @@
         ],
         "first": "T",
         "last": "Dean",
-        "id": 139
+        "id": 131
     },
     "J.J. Gottlieb": {
         "listOfRef": [
@@ -1348,7 +1297,7 @@
         "first": "J",
         "middle": "J",
         "last": "Gottlieb",
-        "id": 140
+        "id": 132
     },
     "C. Coffey": {
         "listOfRef": [
@@ -1356,7 +1305,7 @@
         ],
         "first": "C",
         "last": "Coffey",
-        "id": 141
+        "id": 133
     },
     "D. Remboutsikas": {
         "listOfRef": [
@@ -1364,7 +1313,7 @@
         ],
         "first": "D",
         "last": "Remboutsikas",
-        "id": 142
+        "id": 134
     },
     "M. Sichel": {
         "listOfRef": [
@@ -1373,7 +1322,7 @@
         ],
         "first": "M",
         "last": "Sichel",
-        "id": 143
+        "id": 135
     },
     "Z. Gabrijel": {
         "listOfRef": [
@@ -1381,7 +1330,7 @@
         ],
         "first": "Z",
         "last": "Gabrijel",
-        "id": 144
+        "id": 136
     },
     "R.D. Oza": {
         "listOfRef": [
@@ -1390,7 +1339,7 @@
         "first": "R",
         "middle": "D",
         "last": "Oza",
-        "id": 145
+        "id": 137
     },
     "R. Vandermolen": {
         "listOfRef": [
@@ -1398,7 +1347,7 @@
         ],
         "first": "R",
         "last": "Vandermolen",
-        "id": 146
+        "id": 138
     },
     "M.E. Nolan": {
         "listOfRef": [
@@ -1407,7 +1356,7 @@
         "first": "M",
         "middle": "E",
         "last": "Nolan",
-        "id": 147
+        "id": 139
     },
     "S. Ohyagi": {
         "listOfRef": [
@@ -1415,7 +1364,7 @@
         ],
         "first": "S",
         "last": "Ohyagi",
-        "id": 148
+        "id": 140
     },
     "T. Yoshihashi": {
         "listOfRef": [
@@ -1423,7 +1372,7 @@
         ],
         "first": "T",
         "last": "Yoshihashi",
-        "id": 149
+        "id": 141
     },
     "Y. Harigaya": {
         "listOfRef": [
@@ -1431,7 +1380,7 @@
         ],
         "first": "Y",
         "last": "Harigaya",
-        "id": 150
+        "id": 142
     },
     "M.D. Pedley": {
         "listOfRef": [
@@ -1440,7 +1389,7 @@
         "first": "M",
         "middle": "D",
         "last": "Pedley",
-        "id": 151
+        "id": 143
     },
     "C.A. Bennett": {
         "listOfRef": [
@@ -1449,7 +1398,7 @@
         "first": "C",
         "middle": "A",
         "last": "Bennett",
-        "id": 152
+        "id": 144
     },
     "D.L. Fenton": {
         "listOfRef": [
@@ -1458,7 +1407,7 @@
         "first": "D",
         "middle": "L",
         "last": "Fenton",
-        "id": 153
+        "id": 145
     },
     "O. Peraldi": {
         "listOfRef": [
@@ -1466,7 +1415,7 @@
         ],
         "first": "O",
         "last": "Peraldi",
-        "id": 154
+        "id": 146
     },
     "U. Pfahl": {
         "listOfRef": [
@@ -1474,7 +1423,7 @@
         ],
         "first": "U",
         "last": "Pfahl",
-        "id": 155
+        "id": 147
     },
     "M. Plaster": {
         "listOfRef": [
@@ -1482,17 +1431,7 @@
         ],
         "first": "M",
         "last": "Plaster",
-        "id": 156
-    },
-    "H.G. Wagner": {
-        "listOfRef": [
-            "100",
-            "101"
-        ],
-        "first": "H",
-        "middle": "G",
-        "last": "Wagner",
-        "id": 157
+        "id": 148
     },
     "D.W. Stamps": {
         "listOfRef": [
@@ -1503,7 +1442,7 @@
         "first": "D",
         "middle": "W",
         "last": "Stamps",
-        "id": 158
+        "id": 149
     },
     "S.R. Tieszen": {
         "listOfRef": [
@@ -1516,7 +1455,7 @@
         "first": "S",
         "middle": "R",
         "last": "Tieszen",
-        "id": 159
+        "id": 150
     },
     "R.A. Strehlow": {
         "listOfRef": [
@@ -1529,7 +1468,7 @@
         "first": "R",
         "middle": "A",
         "last": "Strehlow",
-        "id": 160
+        "id": 151
     },
     "R. Liangminas": {
         "listOfRef": [
@@ -1537,7 +1476,7 @@
         ],
         "first": "R",
         "last": "Liangminas",
-        "id": 161
+        "id": 152
     },
     "R.H. Watson": {
         "listOfRef": [
@@ -1546,7 +1485,7 @@
         "first": "R",
         "middle": "H",
         "last": "Watson",
-        "id": 162
+        "id": 153
     },
     "J.R. Eyman": {
         "listOfRef": [
@@ -1555,7 +1494,7 @@
         "first": "J",
         "middle": "R",
         "last": "Eyman",
-        "id": 163
+        "id": 154
     },
     "R.E. Maurer": {
         "listOfRef": [
@@ -1564,7 +1503,7 @@
         "first": "R",
         "middle": "E",
         "last": "Maurer",
-        "id": 164
+        "id": 155
     },
     "S. Rajan": {
         "listOfRef": [
@@ -1572,7 +1511,7 @@
         ],
         "first": "S",
         "last": "Rajan",
-        "id": 165
+        "id": 156
     },
     "M.P. Sherman": {
         "listOfRef": [
@@ -1582,7 +1521,7 @@
         "first": "M",
         "middle": "P",
         "last": "Sherman",
-        "id": 166
+        "id": 157
     },
     "S. Tsuge": {
         "listOfRef": [
@@ -1590,7 +1529,7 @@
         ],
         "first": "S",
         "last": "Tsuge",
-        "id": 167
+        "id": 158
     },
     "H. Furukawa": {
         "listOfRef": [
@@ -1598,7 +1537,7 @@
         ],
         "first": "H",
         "last": "Furukawa",
-        "id": 168
+        "id": 159
     },
     "M. Matsukawa": {
         "listOfRef": [
@@ -1606,7 +1545,7 @@
         ],
         "first": "M",
         "last": "Matsukawa",
-        "id": 169
+        "id": 160
     },
     "T. Nakagawa": {
         "listOfRef": [
@@ -1614,33 +1553,7 @@
         ],
         "first": "T",
         "last": "Nakagawa",
-        "id": 170
-    },
-    "Aziz Ungut": {
-        "listOfRef": [
-            "116"
-        ],
-        "first": "Aziz",
-        "last": "Ungut",
-        "id": 171
-    },
-    "Philip. J. Shuff": {
-        "listOfRef": [
-            "116"
-        ],
-        "first": "Philip",
-        "middle": "J",
-        "last": "Shuff",
-        "id": 172
-    },
-    "John. A. Eyre": {
-        "listOfRef": [
-            "116"
-        ],
-        "first": "John",
-        "middle": "A",
-        "last": "Eyre",
-        "id": 173
+        "id": 161
     },
     "P.A. Urtiew": {
         "listOfRef": [
@@ -1651,7 +1564,7 @@
         "first": "P",
         "middle": "A",
         "last": "Urtiew",
-        "id": 174
+        "id": 162
     },
     "C.M. Tarver": {
         "listOfRef": [
@@ -1660,7 +1573,7 @@
         "first": "C",
         "middle": "M",
         "last": "Tarver",
-        "id": 175
+        "id": 163
     },
     "Molen Vander": {
         "listOfRef": [
@@ -1668,7 +1581,7 @@
         ],
         "first": "Molen",
         "last": "Vander",
-        "id": 176
+        "id": 164
     },
     "M. Vandermeiren": {
         "listOfRef": [
@@ -1677,7 +1590,7 @@
         ],
         "first": "M",
         "last": "Vandermeiren",
-        "id": 177
+        "id": 165
     },
     "A.A. Vasil'ev": {
         "listOfRef": [
@@ -1689,7 +1602,7 @@
         "first": "A",
         "middle": "A",
         "last": "Vasil'ev",
-        "id": 178
+        "id": 166
     },
     "V.V. Grigor'ev": {
         "listOfRef": [
@@ -1698,7 +1611,7 @@
         "first": "V",
         "middle": "V",
         "last": "Grigor'ev",
-        "id": 179
+        "id": 167
     },
     "Yu.A. Nikolaev": {
         "listOfRef": [
@@ -1707,14 +1620,14 @@
         "first": "Yu",
         "middle": "A",
         "last": "Nikolaev",
-        "id": 180
+        "id": 168
     },
     "Ul'yanitskii": {
         "listOfRef": [
             "124"
         ],
         "last": "Ul'yanitskii",
-        "id": 181
+        "id": 169
     },
     "B.V. Voitsekhovskii": {
         "listOfRef": [
@@ -1723,7 +1636,7 @@
         "first": "B",
         "middle": "V",
         "last": "Voitsekhovskii",
-        "id": 182
+        "id": 170
     },
     "M.E. Topchian": {
         "listOfRef": [
@@ -1732,7 +1645,7 @@
         "first": "M",
         "middle": "E",
         "last": "Topchian",
-        "id": 183
+        "id": 171
     },
     "P. Wolanski": {
         "listOfRef": [
@@ -1740,7 +1653,7 @@
         ],
         "first": "P",
         "last": "Wolanski",
-        "id": 184
+        "id": 172
     },
     "C.W. Kauffman": {
         "listOfRef": [
@@ -1749,7 +1662,7 @@
         "first": "C",
         "middle": "W",
         "last": "Kauffman",
-        "id": 185
+        "id": 173
     },
     "Ia.B. Zeldovich": {
         "listOfRef": [
@@ -1758,7 +1671,7 @@
         "first": "Ia",
         "middle": "B",
         "last": "Zeldovich",
-        "id": 186
+        "id": 174
     },
     "N.N. Simonov": {
         "listOfRef": [
@@ -1767,7 +1680,7 @@
         "first": "N",
         "middle": "N",
         "last": "Simonov",
-        "id": 187
+        "id": 175
     },
     "R. Zitoun": {
         "listOfRef": [
@@ -1775,7 +1688,7 @@
         ],
         "first": "R",
         "last": "Zitoun",
-        "id": 188
+        "id": 176
     },
     "B. Deshaies": {
         "listOfRef": [
@@ -1783,6 +1696,6 @@
         ],
         "first": "B",
         "last": "Deshaies",
-        "id": 189
+        "id": 177
     }
 }

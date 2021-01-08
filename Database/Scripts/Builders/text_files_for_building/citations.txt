@@ -127,7 +127,7 @@ J. Phys. D, 11(13):2103-2117, 1978.
 [43] J.E. Elsworth and J.A. Eyre.
 The susceptibility of propene-propane/air mixtures to detonation.
 Combust. Flame, 55(2):237-243, 1984.
-[44] J.E. Elsworth, P.J. Shuff, and A. Ungut.
+[44] J.E. Elsworth, P.J. Shuff, and Aziz Ungut.
 Galloping gas detonations in the spherical mode.
 In Prog. Astronaut. Aeronaut., volume 94, pages 130-150, 1984.
 [45] H. Freiwald and H.W. Koch.
@@ -136,10 +136,10 @@ In 9th Symp. Int. Combust. Proc., pages 275-281, 1962.
 [46] R.S. Fry and J.A. Nicholls.
 Blast initiation and propagation of cylindrical detonations in MAPP-Air mixtures.
 AIAA J., 12(12):1703-1708, 1974.
-[47] K. Guhlmann, W. Pusch, and H.Gg. Wagner.
+[47] K. Guhlmann, W. Pusch, and H.G. Wagner.
 Einflus des rohrdurchmessers auf die ausbreitung einer detonation in explosiblen gasgemischen teil ii: Einflus des ausgangsdruckes und des rohrdurchmessers auf die detonationsgrenzen der systeme CH_4-O_2-N_2 und CH_4-O_2-Ar.
 Ber. Bunsenges. Phys. Chem., 70(2):143-148, 1966.
-[48] C.M. Guirao, R. Knystautas, J. Lee, W. Benedick, and M. Berman.
+[48] C.M. Guirao, R. Knystautas, J.H.S. Lee, W.B. Benedick, and M. Berman.
 Hydrogen-air detonations.
 In 19th Symp. Int. Combust. Proc., pages 583-590, 1982.
 [49] C.M. Guirao, R. Knystautas, and J.H. Lee.
@@ -157,7 +157,7 @@ In Prog. Astronaut. Aeronaut., volume 94, pages 38-54, 1984.
 [53] M.J. Kaneshige.
 Gaseous Detonation Initiation and Stabilization by Hypervelocity Projectiles.
 PhD thesis, California Institute of Technology, 1999.
-[54] R. Knystautas, C. Guirao, J.H. Lee, and A. Sulmistras.
+[54] R. Knystautas, C.M. Guirao, J.H. Lee, and A. Sulmistras.
 Measurement of cell size in hydrocarbon-air mixtures and predictions of critical tube diameter, critical initiation energy, and detonability limits.
 In Prog. Astronaut. Aeronaut., volume 94, pages 23-37, 1984.
 [55] R. Knystautas and J.H. Lee.
@@ -184,7 +184,7 @@ Combust. Flame, 80(2):157-169, 1990.
 [62] S. Laberge, R. Knystautas, and J.H.S. Lee.
 Propagation and extinction of detonation waves in tube bundles.
 In Prog. Astronaut. Aeronaut., volume 153, pages 381-396, 1993.
-[63] Lee, J.H., Ramamurthi, and R.
+[63] J.H. Lee, K. Ramamurthi.
 On the concept of the critical size of a detonation kernel.
 Combust. Flame, 27(3):331-340, 1976.
 [64] J.H. Lee.
@@ -199,13 +199,13 @@ Combust. Flame, 56(2):227-239, 1984.
 [67] J.H. Lee, B.H.K. Lee, and R. Knystautas.
 Direct initiation of cylindrical gaseous detonations.
 Phys. Fluids, 9(1):221-222, 1966.
-[68] J.H Lee and H. Matsui.
+[68] J.H. Lee, and H. Matsui.
 A comparison of the critical energies for direct initiation of spherical detonation in acetylene-oxygen mixtures.
 Combust. Flame, 28(1):61-66, 1977.
 [69] J.H. Lee, R.I. Soloukhin, and A.K. Oppenheim.
 Current views on gaseous detonation.
 Astronaut. Acta, 14(5):565-584, 1969.
-[70] J.H.S. Lee, R. Knystautas, and C. Guirao.
+[70] J.H.S. Lee, R. Knystautas, and C.M. Guirao.
 The link between cell size, critical tube diameter, initiation energy and detonability limits.
 In Fuel-Air Explosions, pages 157-187. University of Waterloo Press, 1982.
 [71] M.H. Lefebvre, E. Nzeyimana, and Tiggelen Van.
@@ -343,7 +343,7 @@ Combust. Flame, 84(3):376-390, 1991.
 [115] S. Tsuge, H. Furukawa, M. Matsukawa, and T. Nakagawa.
 On the dual property and the limit of hydrogen-oxygen free detonation waves.
 Astronaut. Acta, 15(5):377-386, 1970.
-[116] Aziz Ungut, Philip. J. Shuff, and John. A. Eyre.
+[116] Aziz Ungut, P.J. Shuff, and J.A. Eyre.
 Initiation of unconfined gaseous detonation by diffraction of a detonation front emerging from a pipe.
 In Prog. Astronaut. Aeronaut., volume 94, pages 523-545, 1984.
 [117] P.A. Urtiew and C.M. Tarver.

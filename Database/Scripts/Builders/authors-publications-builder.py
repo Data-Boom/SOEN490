@@ -34,7 +34,7 @@ for x in f:
         listOfAuthors = authors.split(",")
         # Looks like a lot but it is really just separating the author into first, last, and middle based on the length of the author array
         for author in listOfAuthors :
-            author = author.strip(".")
+            author = author.strip().strip(".")
             if author not in AuthorsList :
                 if "." not in author :
                     fml = author.split(" ")
@@ -51,8 +51,8 @@ for x in f:
                     tempAobject["last"] = fml[2]
                 else :
                     tempAobject["first"] = fml[0]
-                    tempAobject["middle"] = fml[1] + "." + fml[1]
-                    tempAobject["last"] = fml[2]
+                    tempAobject["middle"] = fml[1] + "." + fml[2]
+                    tempAobject["last"] = fml[3]
                 #adding the authors and publication_author_author entry to the dictionary
                 tempAobject["listOfRef"] = [ref]
                 PAA[count] = {"authorid" : count, "pubid" : ref}
