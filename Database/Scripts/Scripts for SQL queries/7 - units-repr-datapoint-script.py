@@ -4,7 +4,7 @@
 
 import json
 
-file = open('./Queries in txt/7 - units-repr-datapoint-query.txt', "w+")
+file = open('./Queries in txt/7 - units-repr-query.txt', "w+")
 datapointsFile = open('./Queries in txt/9 - datapoints-query.txt', "w+")
 
 with open('./Scraped JSONs/datasets-with-datapoints.json') as f:
