@@ -100,11 +100,34 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                id="organization"
+                label="Organization"
+                name="organization"
+                autoComplete="organization"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="confirmPassword"
+                id="confirmPassword"
+                autoComplete="confirm-password"
               />
             </Grid>
             <Grid item xs={12}>
