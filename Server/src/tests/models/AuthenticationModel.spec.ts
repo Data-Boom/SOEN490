@@ -68,4 +68,20 @@ describe('Authentication Model Methods', () => {
         expect(res.account_id).toBe(mockResponse.account_id)
     });
 
+    //for testing userPasswordUpdate
+    test('updating users password inside the database - Return true', async () => {
+        let email: string = 'j.com'
+        let passwordHash: string = '456'
+        let res = await AuthenticationModel.updateUserPasswordDetail(email, passwordHash);
+
+        expect(res).toBe(true);
+    });
+    //for testing userOrganizationNameUpdate
+    test('updating users organization name inside the database - Return true', async () => {
+        let email: string = 'j.com'
+        let organizationName = 'Shichibukai'
+        let res = await AuthenticationModel.updateUserOrganizationDetail(email, organizationName);
+
+        expect(res).toBe(true);
+    })
 });

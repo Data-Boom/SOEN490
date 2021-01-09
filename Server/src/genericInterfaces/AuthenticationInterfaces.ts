@@ -18,7 +18,13 @@ export interface IJwtParams {
     firstName: string
 }
 
-export interface IUserDetails {
+export interface IUpdateUserDetail {
+    email: string,
+    password?: string,
+    organization?: string
+}
+
+export interface IFetchUserDetail {
     email: string,
     firstName: string,
     lastName: string,
