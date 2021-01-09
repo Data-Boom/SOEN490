@@ -12,11 +12,12 @@ import { Snackbar } from '@material-ui/core'
  */
 export default function DataCell() {
     const [open, setOpen] = useState(false)
+    const [alertSuccess, setAlertSuccess] = useState(false)
 
     /**
-                                                                     * Upon submission, the JSON file is extracted from the event and must be appended to formData
-                                                                     * to be sent with API request.
-                                                                     */
+    * Upon submission, the JSON file is extracted from the event and must be appended to formData
+     * to be sent with API request.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -29,6 +30,7 @@ export default function DataCell() {
             setOpen(true)
             return
         }
+        setAlertSuccess(true)
 
         const formData = new FormData()
         formData.append('file', json)
@@ -66,9 +68,15 @@ export default function DataCell() {
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error">
                     Failed to parse json
-        </Alert>
+                </Alert>
             </Snackbar>
 
+           <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
+                <Alert onClose={() => setAlertSuccess(false)} severity="success">
+                    File Successfully updated!! ^_^
+                </Alert>
+            </Snackbar>
+          
             <Container>
                 <Box border={30} p={4} borderColor="primary">
                     <form onSubmit={handleSubmit}>

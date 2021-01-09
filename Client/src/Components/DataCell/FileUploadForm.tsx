@@ -22,6 +22,8 @@ export const FileUploadForm = (props: IProps) => {
   const { onSubmit, validateFile, acceptFileFormat } = props
 
   const [alertOpen, setAlertOpen] = useState(false)
+  const [alertSuccess, setAlertSuccess] = useState(false)
+
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement, Event>) => {
     const input: HTMLInputElement = event.target[fileInputId]
@@ -30,6 +32,8 @@ export const FileUploadForm = (props: IProps) => {
     const isValidFile = validateFile && validateFile(file) || true
     if (isValidFile) {
       onSubmit(file)
+      console.log('File successfully uploaded')
+      setAlertSuccess(true)
     }
     else {
       setAlertOpen(true)
@@ -41,7 +45,13 @@ export const FileUploadForm = (props: IProps) => {
       {/* Snackbar is used to show an error on the screen when a wrong file type is selected for uploading */}
       <Snackbar open={alertOpen} autoHideDuration={3000} onClose={() => setAlertOpen(false)}>
         <Alert onClose={() => setAlertOpen(false)} severity="error">
-          Failed to parse json
+          Failed to parse file
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
+        <Alert onClose={() => setAlertSuccess(false)} severity="success">
+          File Successfully updated!! ^_^
         </Alert>
       </Snackbar>
 
