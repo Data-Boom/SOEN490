@@ -125,7 +125,6 @@ export class AuthenticationService {
         let password = userDetailUpdater.password
         let organization = userDetailUpdater.organization
 
-        // email = await AuthenticationModel.verifyIfEmailExists(userDetailUpdater.email);
         if (await AuthenticationModel.verifyIfEmailExists(email)) {
             try {
                 if (password != undefined) {
