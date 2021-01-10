@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from  'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as Yup from 'yup'
+import { Form, Formik } from 'formik'
+import { ISignInUser } from '../Models/Profile/IProfileModel';
+
 
 function Copyright() {
   return (
@@ -47,9 +50,78 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+ /*const state={
+  user:
+  [
+    {email: '123@databoom.ca', password: 'password123'},
+    {email: 'abc@databoom.ca', password: 'passwordabc'},
+    {email: 'xyz@databoom.ca', password: 'passwordxyz'}
+  ]
+}*/
+
+
+
+
+
 export default function SignIn() {
   const classes = useStyles();
 
+  const handleSignIn = () =>
+{
+  alert("Sign in button clicked");
+}
+
+const[email, setEmail] = useState("");
+const[password, setPassword] = useState("");
+
+const[emailError, setEmailError]= useState({});
+const[passwordError, setPasswordError] = useState({});
+const emailErrMsg = useState({});
+
+
+
+const onSubmit =(e)=>{
+  e.preventDefault();
+  const isValid = formValidation();
+
+  if(isValid)
+  {
+    //send the data to some backend
+  }
+}
+
+const formValidation =()=>{
+const emailError ={};
+const passwordError ={};
+//const emailErrMsg ={};
+const passwordErrMsg ="";
+let isValid = true;
+
+ if(!email.includes("@")){
+   //emailError.emailErrMsg = "Invalid email";
+   alert("invalid email");
+   isValid = false;
+ }
+
+ if(password != "password123")
+ {
+   alert("incorrect password");
+   isValid = false;
+ }
+
+ setEmailError(emailError);
+ setPasswordError(passwordError);
+ return isValid;
+}
+
+
+
+
+
+
+
+  //console.log("signin function run");
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -60,7 +132,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit ={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -71,6 +143,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={(e)=>{setEmail(e.target.value)}}
           />
           <TextField
             variant="outlined"
@@ -82,6 +156,9 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(e)=>{setPassword(e.target.value)}}
+
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -93,6 +170,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            
           >
             Sign In
           </Button>
