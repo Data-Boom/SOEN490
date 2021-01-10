@@ -41,7 +41,7 @@ describe('Authentication Controller', () => {
         await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
         expect(mockResponse.status).toBeCalledWith(200);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    })
+    });
 
     test('Invalid SignUp Request due to missing parameters - Error 400', async () => {
         const expectedResponse = "Request is invalid. Missing attributes";
@@ -145,5 +145,50 @@ describe('Authentication Controller', () => {
         await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
         expect(regex.test(mockResponse.json));
         expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    //to fix
+    test('valid user detail update request', async () => {
+        const expectedResponse = "Success";
+
+        mockRequest = {
+            query: {
+                email: 'test@t.com',
+                password: '456',
+                organizationName: 'soen490'
+            }
+        }
+        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(200);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+
+    test('invalid user detail update request', async () => {
+        const expectedResponse = "Email cannot be found. Request declined";
+
+        mockRequest = {
+            query: {
+                email: '',
+                password: '456',
+                organizationName: 'soen490'
+            }
+        }
+        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    });
+
+    test('invalid user detail update request, missing password and organization name', async () => {
+        const expectedResponse = "Request is invalid";
+
+        mockRequest = {
+            query: {
+                email: 'test@t.com',
+
+            }
+        }
+        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        expect(mockResponse.status).toBeCalledWith(400);
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
     })
 })
