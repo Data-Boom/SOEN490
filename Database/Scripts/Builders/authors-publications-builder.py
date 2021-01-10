@@ -10,10 +10,7 @@ import re
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-print(os.getcwd() + " Before")
 dir_path = os.chdir(dir_path)
-print(os.getcwd() + " After")
-
 
 f = open("text_files_for_building/citations.txt")
 tempCobject = {}
