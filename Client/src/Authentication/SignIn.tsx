@@ -100,7 +100,6 @@ export default function SignIn() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
-                    autoFocus
                     component={MuiTextFieldFormik}
                   />
                   <FastField
@@ -125,7 +124,6 @@ export default function SignIn() {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-
                   >
                     Sign In
                   </Button>
