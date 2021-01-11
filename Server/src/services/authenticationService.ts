@@ -7,7 +7,8 @@ import { AuthenticationModel } from '../models/AuthenticationModel'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
-import { IUserDetails } from '../genericInterfaces/AuthenticationInterfaces';
+import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
+import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
@@ -119,6 +120,31 @@ export class AuthenticationService {
         return token;
     }
 
+    async validateUserDetails(userDetailUpdater: IUpdateUserDetail): Promise<IResponse> {
+        let email = userDetailUpdater.email
+        let password = userDetailUpdater.password
+        let organization = userDetailUpdater.organization
+
+        if (await AuthenticationModel.verifyIfEmailExists(email)) {
+            try {
+                if (password != undefined) {
+                    password = await this.hashPassword(password)
+                    await AuthenticationModel.updateUserPasswordDetail(email, password);
+                }
+                if (organization != undefined) {
+                    await AuthenticationModel.updateUserOrganizationDetail(email, organization);
+                }
+            } catch (error) {
+                throw new InternalServerError("Internal server problem...try again!");
+            }
+        }
+        else {
+            throw new BadRequest("Email cannot be found. Request declined");
+        }
+        this.requestResponse.message = "Success";
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse
+    }
     /**
      * This method is used to loadUserDetails upon logging on user page. This will 
      * call userModel to fetch all required data 
@@ -126,14 +152,14 @@ export class AuthenticationService {
      */
     async loadUserDetails(userEmail: string): Promise<IResponse> {
 
-        let userDetails: IUserDetails
+        let userDetails: IFetchUserDetail
         let verifiedEmail: boolean;
         verifiedEmail = await AuthenticationModel.verifyIfEmailExists(userEmail);
         if (!verifiedEmail) {
             throw new BadRequest("Cannot fetch details for this email");
         }
         try {
-            userDetails = await AuthenticationModel.getUserDetails(userEmail);
+            userDetails = await AuthenticationModel.fetchUserDetails(userEmail);
         }
         catch (error) {
             throw new InternalServerError("Internal Server Error fetching Details. Try again later")

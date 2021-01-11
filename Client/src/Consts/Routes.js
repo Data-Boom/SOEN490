@@ -6,5 +6,8 @@ export const datasetUploadRoute = '/uploadDataset'
 export const researchPaperAnalysisRoute = '/researchAnalysis'
 export const aboutRoute = '/about'
 export const profileRoute = '/profile'
+
 export const signInRoute = '/sign-in'
 export const signUpRoute = '/sign-up'
+
+export const dataCellAnalysisRoute = '/dataCellAnalysis'

@@ -2,7 +2,7 @@ import { getConnection } from 'typeorm';
 
 import { Accounts } from './entities/Accounts'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
-import { IUserDetails } from '../genericInterfaces/AuthenticationInterfaces';
+import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
 
 /**
  * This model contains all methods required for obtaining data from the Accounts
@@ -102,7 +102,7 @@ export class AuthenticationModel {
      * This will fetch email, firstname, lastname, organization and dob.
      * @param email - User Email
      */
-    static async getUserDetails(userEmail: string): Promise<IUserDetails> {
+    static async fetchUserDetails(userEmail: string): Promise<IFetchUserDetail> {
 
         let connection = getConnection();
         let userInfo = await connection.manager
@@ -126,5 +126,33 @@ export class AuthenticationModel {
     static async deleteAccounts(email: string) {
 
         let connection = getConnection();
+    }
+    //for password
+    static async updateUserPasswordDetail(email: string, passwordHash: string): Promise<boolean> {
+
+        let connection = getConnection();
+
+        await connection.manager
+            .createQueryBuilder(Accounts, 'accounts')
+            .update('accounts')
+            .set({ password: passwordHash })
+            .where('accounts.email = :emailRef', { emailRef: email })
+            .execute()
+
+        return true
+    }
+    //for organization Name
+    static async updateUserOrganizationDetail(email: string, organization: string): Promise<boolean> {
+
+        let connection = getConnection();
+
+        await connection.manager
+            .createQueryBuilder(Accounts, 'accounts')
+            .update('accounts')
+            .set({ organizationName: organization })
+            .where('accounts.email = :emailRef', { emailRef: email })
+            .execute()
+
+        return true
     }
 }

@@ -14,16 +14,16 @@ export default function DataCell() {
     const [open, setOpen] = useState(false)
 
     /**
-                                                                     * Upon submission, the JSON file is extracted from the event and must be appended to formData
-                                                                     * to be sent with API request.
-                                                                     */
+                                                                         * Upon submission, the JSON file is extracted from the event and must be appended to formData
+                                                                         * to be sent with API request.
+                                                                         */
     const handleSubmit = async (e) => {
         e.preventDefault()
         
         const json = e.target.jsonFile.files[0]
 
         //so if this here is not proper json extension it will catch
-        let ext = getExtension(json.name)
+        const ext = getExtension(json.name)
         if (ext != '.json') {
             console.error('file extension is not supported')
             setOpen(true)
@@ -57,7 +57,7 @@ export default function DataCell() {
     }
     //Function to get the extension of a file
     function getExtension(filename) {
-        let i = filename.lastIndexOf('.')
+        const i = filename.lastIndexOf('.')
         return (i < 0) ? '' : filename.substr(i)
     }
     //Snackbar is used to show an error on the screen when a wrong file type is selected for uploading
@@ -65,7 +65,7 @@ export default function DataCell() {
         <>
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error">
-                    Failed to parse json
+                    Failed to parse file
         </Alert>
             </Snackbar>
 

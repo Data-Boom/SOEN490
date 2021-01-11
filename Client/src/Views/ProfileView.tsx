@@ -92,9 +92,12 @@ function createData(id: number[], type: string, name: string, oxidizer: string, 
 }
 
 const rows = []
+const rowsOfUploads = []
 
 for (let i = 0; i < exampleDatasets.length; i++) {
   rows.push(createData([exampleDatasets[i].id], 'Dataset', exampleDatasets[i].name, exampleDatasets[i].oxidizer, exampleDatasets[i].author,
+    ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
+  rowsOfUploads.push(createData([exampleDatasets[i].id], 'Dataset', exampleDatasets[i].name, exampleDatasets[i].oxidizer, exampleDatasets[i].author,
     ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
 }
 
@@ -171,6 +174,58 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   )
 }
 
+// eslint-disable-next-line no-undef
+function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) {
+  const { rowsOfUploads } = props
+  const [open, setOpen] = React.useState(false)
+  const classes = useRowStyles()
+  return (
+    < React.Fragment >
+      <TableRow className={classes.root}>
+        <TableCell>
+          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          <Link to={"graph?datasetId[]=" + String(parseIdArray(rowsOfUploads.id))}>{rowsOfUploads.name}</Link>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box margin={1}>
+              <Typography variant="h6" gutterBottom component="div">
+                Details
+              </Typography>
+              <div>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Oxidizer</TableCell>
+                      <TableCell>Author</TableCell>
+                      <TableCell>Comments</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        {rowsOfUploads.oxidizer}
+                      </TableCell>
+                      <TableCell>{rowsOfUploads.author}</TableCell>
+                      <TableCell>{rowsOfUploads.comments}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment >
+  )
+}
+
 export function ProfileView() {
 
   const [editProfile, setEditProfile] = useState(false)
@@ -225,6 +280,7 @@ export function ProfileView() {
           <Tabs value={tab} onChange={handleChange}>
             <Tab label="View Profile" {...a11yProps(0)} />
             <Tab label="View Favourites" {...a11yProps(1)} />
+            <Tab label="View Uploads" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <TabPanel value={tab} index={0}>
@@ -274,6 +330,23 @@ export function ProfileView() {
               <TableBody>
                 {rows.map((row) => (
                   <Row key={row.title} row={row} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </TabPanel>
+        <TabPanel value={tab} index={2}>
+          <TableContainer component={Paper} style={{ width: "50%" }}>
+            <Table aria-label="collapsible table" >
+              <TableHead>Uploads
+                <TableRow>
+                  <TableCell />
+                  <TableCell>Name</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rowsOfUploads.map((rowsOfUpload) => (
+                  <RowsOfUploads key={rowsOfUpload.title} rowsOfUploads={rowsOfUpload} />
                 ))}
               </TableBody>
             </Table>

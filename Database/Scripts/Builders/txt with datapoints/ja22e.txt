@@ -1,0 +1,2 @@
+#Percent Steam, Cell Width (mm)
+7.5, 429.0

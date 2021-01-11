@@ -1,0 +1,5 @@
+#Equivalence Ratio, Critical Energy (J), Critical Energy (g tetryl)
+0.49, 2085528.0, 461.4
+0.54, 541270.0, 119.75
+0.59, 101700.0, 22.5
+3.4, 2084172.0, 461.1

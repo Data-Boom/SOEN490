@@ -1,0 +1,4 @@
+#Initial Pressure (atm), Initial Pressure (kPa), Cell Length (mm)
+0.59096, 59.879, 129.16
+0.80758, 81.828, 114.64
+0.95229, 96.49, 89.506

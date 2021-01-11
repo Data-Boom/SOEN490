@@ -8,14 +8,18 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-import { aboutRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Consts/Routes'
+
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute} from '../Consts/Routes'
+
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
+import DonutSmallIcon from '@material-ui/icons/DonutSmall'
 import FileUploadView from "./DataCell/FileUploadView"
 import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
@@ -82,6 +86,7 @@ export default function NavigationMenu(): any {
             {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
             {renderNavLink(searchRoute, "Search", <SearchIcon />)}
             {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
+            {renderNavLink(dataCellAnalysisRoute, "Data Cell Analysis", <DonutSmallIcon />)}
             {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
             {renderNavLink(profileRoute, "Profile", <AccountBoxIcon />)}
             {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
@@ -124,6 +129,7 @@ export default function NavigationMenu(): any {
           <Route path={graphRoute} component={GraphView} />
           <Route path={fileUploadRoute} component={FileUploadView} />
           <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
+          <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
           <Route path={searchRoute} component={SearchView} />
           <Route path={datasetUploadRoute} component={DatasetUploadView} />
           <Route path={aboutRoute} component={AboutView} />

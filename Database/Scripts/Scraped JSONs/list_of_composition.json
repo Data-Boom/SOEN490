@@ -1,0 +1,262 @@
+{
+    "H2": {
+        "name": "H2",
+        "id": 1
+    },
+    "N2O": {
+        "name": "N2O",
+        "id": 2
+    },
+    "N2": {
+        "name": "N2",
+        "id": 3
+    },
+    "Air": {
+        "name": "Air",
+        "id": 4
+    },
+    "O2": {
+        "name": "O2",
+        "id": 5
+    },
+    "Ar": {
+        "name": "Ar",
+        "id": 6
+    },
+    "H2O": {
+        "name": "H2O",
+        "id": 7
+    },
+    "He": {
+        "name": "He",
+        "id": 8
+    },
+    "CO2": {
+        "name": "CO2",
+        "id": 9
+    },
+    "Cl2": {
+        "name": "Cl2",
+        "id": 10
+    },
+    "He and CO2": {
+        "name": "He and CO2",
+        "id": 11
+    },
+    "He and H2O": {
+        "name": "He and H2O",
+        "id": 12
+    },
+    "N2O + O2": {
+        "name": "N2O + O2",
+        "id": 13
+    },
+    "3.75Ar+N2": {
+        "name": "3.75Ar+N2",
+        "id": 14
+    },
+    "steam": {
+        "name": "steam",
+        "id": 15
+    },
+    "CH4": {
+        "name": "CH4",
+        "id": 16
+    },
+    "C2H2": {
+        "name": "C2H2",
+        "id": 17
+    },
+    "Kr": {
+        "name": "Kr",
+        "id": 18
+    },
+    "C2H4": {
+        "name": "C2H4",
+        "id": 19
+    },
+    "NH3": {
+        "name": "NH3",
+        "id": 20
+    },
+    "C2H6": {
+        "name": "C2H6",
+        "id": 21
+    },
+    "C3H8": {
+        "name": "C3H8",
+        "id": 22
+    },
+    "C6H14": {
+        "name": "C6H14",
+        "id": 23
+    },
+    "CO": {
+        "name": "CO",
+        "id": 24
+    },
+    "C3H6O": {
+        "name": "C3H6O",
+        "id": 25
+    },
+    "C4H10": {
+        "name": "C4H10",
+        "id": 26
+    },
+    "C3H6": {
+        "name": "C3H6",
+        "id": 27
+    },
+    "C6H6": {
+        "name": "C6H6",
+        "id": 28
+    },
+    "Deuterium": {
+        "name": "Deuterium",
+        "id": 29
+    },
+    "N2H4": {
+        "name": "N2H4",
+        "id": 30
+    },
+    "H2S": {
+        "name": "H2S",
+        "id": 31
+    },
+    "n-octane, C8H18": {
+        "name": "n-octane, C8H18",
+        "id": 32
+    },
+    "1-Octene": {
+        "name": "1-Octene",
+        "id": 33
+    },
+    "1,7-Octadiene": {
+        "name": "1,7-Octadiene",
+        "id": 34
+    },
+    "Octyne": {
+        "name": "Octyne",
+        "id": 35
+    },
+    "1,7-Octadiyne": {
+        "name": "1,7-Octadiyne",
+        "id": 36
+    },
+    "JP4": {
+        "name": "JP4",
+        "id": 37
+    },
+    "C10H22": {
+        "name": "C10H22",
+        "id": 38
+    },
+    "Hexylnitrate": {
+        "name": "Hexylnitrate",
+        "id": 39
+    },
+    "Nitrohexane": {
+        "name": "Nitrohexane",
+        "id": 40
+    },
+    "Nitroethane": {
+        "name": "Nitroethane",
+        "id": 41
+    },
+    "2,2,4-Trimethylpentane": {
+        "name": "2,2,4-Trimethylpentane",
+        "id": 42
+    },
+    "Cyclooctane, C8H18": {
+        "name": "Cyclooctane, C8H18",
+        "id": 43
+    },
+    "Cis-Cyclooctene": {
+        "name": "Cis-Cyclooctene",
+        "id": 44
+    },
+    "Pentyl Ether": {
+        "name": "Pentyl Ether",
+        "id": 45
+    },
+    "1,2-Epoxydecane": {
+        "name": "1,2-Epoxydecane",
+        "id": 46
+    },
+    "Ar+CF3H": {
+        "name": "Ar+CF3H",
+        "id": 47
+    },
+    "Ar+CF4": {
+        "name": "Ar+CF4",
+        "id": 48
+    },
+    "18.46CO+H2": {
+        "name": "18.46CO+H2",
+        "id": 49
+    },
+    "11.88Ar+CF3Br": {
+        "name": "11.88Ar+CF3Br",
+        "id": 50
+    },
+    "11.88Ar+CFCl3": {
+        "name": "11.88Ar+CFCl3",
+        "id": 51
+    },
+    "11.88Ar+CF2Cl2": {
+        "name": "11.88Ar+CF2Cl2",
+        "id": 52
+    },
+    "11.88Ar+CF3Cl": {
+        "name": "11.88Ar+CF3Cl",
+        "id": 53
+    },
+    "CF3Br": {
+        "name": "CF3Br",
+        "id": 54
+    },
+    "CF4": {
+        "name": "CF4",
+        "id": 55
+    },
+    "CH3Cl": {
+        "name": "CH3Cl",
+        "id": 56
+    },
+    "CCl4": {
+        "name": "CCl4",
+        "id": 57
+    },
+    "CHCl3": {
+        "name": "CHCl3",
+        "id": 58
+    },
+    "i-C4H10": {
+        "name": "i-C4H10",
+        "id": 59
+    },
+    "n-C4H10": {
+        "name": "n-C4H10",
+        "id": 60
+    },
+    "Isobutene": {
+        "name": "Isobutene",
+        "id": 61
+    },
+    "Trans-butene-2": {
+        "name": "Trans-butene-2",
+        "id": 62
+    },
+    "Propylene": {
+        "name": "Propylene",
+        "id": 63
+    },
+    "Butene-1": {
+        "name": "Butene-1",
+        "id": 64
+    },
+    "Ethylene": {
+        "name": "Ethylene",
+        "id": 65
+    }
+}
