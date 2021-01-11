@@ -11,50 +11,51 @@ interface IProps {
 
 }
 
-const fileFormat = '*'
+const fileFormat = 'image/png'
 
-export const ResearchPaperAnalysisView = (props: IProps) => {
+export const DataCellAnalysisView = (props: IProps) => {
 
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
-  const [isProcessingPaper, setIsProcessingPaper] = useState(false)
+  const [isProcessingDataCell, setIsProcessingDataCell] = useState(false)
 
-  const handleSubmit = async (researchPaper: File): Promise<void> => {
-    analyzePaper(researchPaper)
+  const handleSubmit = async (dataCell: File): Promise<void> => {
+    analyzeDataCell(dataCell)
   }
 
-  const analyzePaper = async (researchPaper: File): Promise<void> => {
-    setIsProcessingPaper(true)
+  const analyzeDataCell = async (dataCell: File): Promise<void> => {
+    setIsProcessingDataCell(true)
     const fetchedDataset = await fetchDataset()
-    setIsProcessingPaper(false)
+    setIsProcessingDataCell(false)
     setAnalyzedDataset(fetchedDataset)
   }
 
   const fetchDataset = (): Promise<IDatasetModel> => {
-    //todo make an actual API call providing a research paper and then resolve with an actual parsed dataset
+    //todo make an actual API call providing a data cell 
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(exampleExportDatasetModel)
       }, 2000)
     })
   }
-
-  const validateUploadedFile = (file: File) => {
-    return file && true //True because we are always accepting all file formats
+  const validatePNG = (file: File) => {
+    /// console.log(file + " -------- ") [object file]
+    /// console.log(file.type) image/png
+    return file && file.type === fileFormat
   }
-
   const theme = useTheme()
 
-  const paperUploadSection = (): any => {
+  const dataCellUploadSection = (): any => {
     return (
       <>
         <Box pt={5}>
-          <Typography>Page description pretty much</Typography>
+          <Typography>Data Cell Analysis Upload Page</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            validateFile={validateUploadedFile}
+            validateFile={validatePNG}
             acceptFileFormat={fileFormat}
           />
         </Box>
+        <image >test </image>
       </>
     )
   }
@@ -62,15 +63,15 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
   return (
     <>
       {!analyzedDataset ?
-        paperUploadSection() :
+        dataCellUploadSection() :
         <DatasetUploadView initialDataset={analyzedDataset} />
       }
       <Loader
         type='Bars'
-        color={theme.palette.primary.main}
+        color={theme.palette.secondary.main}
         height={100}
         width={100}
-        visible={isProcessingPaper}
+        visible={isProcessingDataCell}
       />
     </>
   )
