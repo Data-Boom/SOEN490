@@ -24,8 +24,7 @@ export const signupValidationSchema = Yup.object().shape({
 export const loginValidationSchema = Yup.object().shape({
     email: Yup.string()
         .email()
-        .required("Required"),
+        .required(requiredMessage("Email Address")),
     password: Yup.string()
-        .required("Required")
-        .min(8, "Password is short, should be 8 characters minimum")
+        .required(requiredMessage("Password"))
 })

@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { FastField, Form, Formik } from 'formik';
 import { signupValidationSchema } from './AuthenticationValidationSchema';
-import { IPasswordSettings, ISignUpUser } from '../Models/Profile/IProfileModel';
+import { ISignUpUser } from '../Models/Profile/IProfileModel';
 import { MuiTextFieldFormik } from '../Components/Forms/FormikFields';
 
 function Copyright() {
