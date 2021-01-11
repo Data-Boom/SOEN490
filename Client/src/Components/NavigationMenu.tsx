@@ -4,10 +4,13 @@
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemIcon, Toolbar, Typography, makeStyles } from "@material-ui/core"
 import {
   HashRouter,
+  Link,
   NavLink,
   Route
 } from "react-router-dom"
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute } from '../Consts/Routes'
+
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute} from '../Consts/Routes'
+
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -31,6 +34,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
 import clsx from "clsx"
 import universitylogo from './universitylogo.png'
+import PersonIcon from '@material-ui/icons/Person';
+import SignIn from "../Authentication/SignIn"
+import SignUp from "../Authentication/SignUp"
 
 const drawerWidth = 240
 
@@ -60,6 +66,7 @@ export default function NavigationMenu(): any {
   }
 
   const handleSignIn = (): void => {
+
   }
 
   const drawer = (): any => {
@@ -84,6 +91,7 @@ export default function NavigationMenu(): any {
             {renderNavLink(profileRoute, "Profile", <AccountBoxIcon />)}
             {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
             {renderNavLink(aboutRoute, "About Databoom", <InfoIcon />)}
+            {renderNavLink(signInRoute, "Sign in", <PersonIcon />)}
           </List>
         </ Drawer>
       </>
@@ -110,7 +118,7 @@ export default function NavigationMenu(): any {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                <Button id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+                <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
               </Grid>
             </Grid>
           </Toolbar>
@@ -126,6 +134,8 @@ export default function NavigationMenu(): any {
           <Route path={datasetUploadRoute} component={DatasetUploadView} />
           <Route path={aboutRoute} component={AboutView} />
           <Route path={profileRoute} component={ProfileView} />
+          <Route path={signInRoute} component={SignIn} />
+          <Route path={signUpRoute} component={SignUp} />
         </Box>
       </HashRouter >
     </>

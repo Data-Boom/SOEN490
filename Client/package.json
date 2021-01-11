@@ -13,10 +13,12 @@
     "@types/jest": "^26.0.19",
     "@types/material-ui": "^0.21.8",
     "@types/react": "^17.0.0",
+    "awesome-typescript-loader": "^5.2.1",
     "clsx": "^1.1.1",
     "cors": "^2.8.5",
     "cross-fetch": "^3.0.6",
     "d3": "^5.5.0",
+    "email-validator": "^2.0.4",
     "enzyme-matchers": "^7.1.2",
     "formik": "^2.2.6",
     "immutable": "^4.0.0-rc.12",
@@ -32,6 +34,7 @@
     "react-test-renderer": "^17.0.1",
     "save-svg-as-png": "^1.4.17",
     "selenium-webdriver": "^4.0.0-alpha.7",
+    "source-map-loader": "^2.0.0",
     "yup": "^0.32.8"
   },
   "scripts": {
