@@ -31,8 +31,8 @@ import SearchView from "./Search/SearchView"
 import clsx from "clsx"
 import universitylogo from './universitylogo.png'
 import PersonIcon from '@material-ui/icons/Person';
-import SignIn from "../Views/SignIn"
-import SignUp from "../Views/SignUp"
+import SignIn from "../Authentication/SignIn"
+import SignUp from "../Authentication/SignUp"
 
 const drawerWidth = 240
 
@@ -61,9 +61,8 @@ export default function NavigationMenu(): any {
     )
   }
 
-  const handleSignIn = (): void => 
-  {
-    
+  const handleSignIn = (): void => {
+
   }
 
   const drawer = (): any => {
@@ -114,7 +113,7 @@ export default function NavigationMenu(): any {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                <Button component = {Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+                <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
               </Grid>
             </Grid>
           </Toolbar>
