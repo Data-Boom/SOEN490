@@ -2,8 +2,7 @@ import React, { Fragment, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -15,6 +14,7 @@ import { FastField, Form, Formik } from 'formik';
 import { signupValidationSchema } from './AuthenticationValidationSchema';
 import { ISignUpUser } from '../Models/Profile/IProfileModel';
 import { MuiTextFieldFormik } from '../Components/Forms/FormikFields';
+import { DatePicker } from 'material-ui';
 
 function Copyright() {
   return (
@@ -133,14 +133,27 @@ export default function SignUp() {
                       </Grid>
                       <Grid item xs={12}>
                         <FastField
-                          variant="outlined"
-                          required
-                          fullWidth
                           component={MuiTextFieldFormik}
+                          variant="outlined"
+                          fullWidth
+                          required
+                          id="dateOfBirth"
+                          name="dateOfBirth"
+                          type="date"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          variant="outlined"
+                          fullWidth
                           id="organization"
                           label="Organization"
                           name="organization"
-                          autoComplete="organization" />
+                          autoComplete="organization"
+                        />
                       </Grid>
                       <Grid item xs={12}>
                         <FastField
@@ -165,11 +178,6 @@ export default function SignUp() {
                           type="password"
                           id="confirmPassword"
                           autoComplete="confirm-password" />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FormControlLabel
-                          control={<Checkbox value="allowExtraEmails" color="primary" />}
-                          label="I want to receive inspiration, marketing promotions and updates via email." />
                       </Grid>
                     </Grid>
                     <Button
