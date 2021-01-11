@@ -1,0 +1,2 @@
+#Equivalence Ratio, Critical Energy (J)
+1.0, 3.0

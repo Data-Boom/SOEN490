@@ -1,0 +1,4 @@
+#Equivalence Ratio, Cell Width (mm)
+0.847, 217.865
+1.0504, 93.4533
+2.0496, 127.66

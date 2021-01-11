@@ -1,0 +1,6 @@
+#Initial Pressure (kPa), Cell Width (mm)
+26.5, 11.8
+49.4, 6.5
+50.9, 5.8
+57.2, 6.5
+101.5, 4.3
