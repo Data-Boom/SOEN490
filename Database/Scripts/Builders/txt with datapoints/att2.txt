@@ -1,0 +1,2 @@
+#Initial Pressure (kPa), Critical Tube Diameter (mm)
+106.66, 32.0

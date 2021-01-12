@@ -1,18 +1,29 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, searchRoute } from '../Consts/Routes'
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Consts/Routes'
 
+import { AboutView } from "./Home/AboutView"
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
-import FileUploadView from "../Views/FileUploadView"
-import GraphView from "../Views/GraphView"
+import DonutSmallIcon from '@material-ui/icons/DonutSmall'
+import FileUploadView from "./DataCell/FileUploadView"
+import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
-import HomeView from '../Views/HomeView'
+import HomeView from "./Home/HomeView"
+import ImageSearchIcon from '@material-ui/icons/ImageSearch'
+import InfoIcon from '@material-ui/icons/Info'
+import PersonIcon from '@material-ui/icons/Person'
+import { ProfileView } from "../Views/ProfileView"
 import React from 'react'
+import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "../Views/SearchView"
+import SearchView from "./Search/SearchView"
+import SignIn from "../Authentication/SignIn"
+import SignUp from "../Authentication/SignUp"
 
 interface IProps {
   icon?: React.ReactElement;
@@ -60,6 +71,11 @@ export const ListRouter = () => {
           <ListItemLink to={searchRoute} primary="Search" icon={<SearchIcon />} />
           <ListItemLink to={fileUploadRoute} primary="File Upload" icon={<CloudUploadIcon />} />
           <ListItemLink to={datasetUploadRoute} primary="Dataset Upload" icon={<CloudUploadIcon />} />
+          <ListItemLink to={dataCellAnalysisRoute} primary="Data Cell Analysis" icon={<DonutSmallIcon />} />
+          <ListItemLink to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
+          <ListItemLink to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
+          <ListItemLink to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
+          <ListItemLink to={signInRoute} primary="Sign in" icon={<PersonIcon />} />
         </List>
       </Paper>
     </div>
@@ -74,6 +90,12 @@ export const getRoutedViews = () => {
       <Route path={fileUploadRoute} component={FileUploadView} />
       <Route path={searchRoute} component={SearchView} />
       <Route path={datasetUploadRoute} component={DatasetUploadView} />
+      <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
+      <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
+      <Route path={aboutRoute} component={AboutView} />
+      <Route path={profileRoute} component={ProfileView} />
+      <Route path={signInRoute} component={SignIn} />
+      <Route path={signUpRoute} component={SignUp} />
     </>
   )
 }

@@ -1,14 +1,15 @@
 /* eslint-disable react/display-name */
 
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
+import { HashRouter, Link } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import { HashRouter } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
+import { signInRoute } from "../Consts/Routes"
 import universitylogo from './universitylogo.png'
 
 const drawerWidth = linkWidth
@@ -28,7 +29,7 @@ export default function NavigationMenu() {
   const handleSignIn = () => {
   }
 
-  const drawer = () => {
+  const drawer = (): any => {
     return (
       <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
         <div className={classes.drawerHeader}>
@@ -62,7 +63,7 @@ export default function NavigationMenu() {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                <Button id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+                <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
               </Grid>
             </Grid>
           </Toolbar>
