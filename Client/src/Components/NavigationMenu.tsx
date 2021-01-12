@@ -29,6 +29,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
 import clsx from "clsx"
 import universitylogo from './universitylogo.png'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const drawerWidth = 240
 
@@ -93,11 +94,13 @@ export default function NavigationMenu(): any {
         <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
-              <Grid item>
-                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
+              <ClickAwayListener onClickAway={handleDrawerClose}>
+                <Grid item>
+                  <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+              </ClickAwayListener>
               <Grid item>
                 <img src={universitylogo} />
               </Grid>
