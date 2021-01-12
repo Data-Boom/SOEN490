@@ -1,0 +1,4 @@
+#Initial Pressure (atm), Initial Pressure (kPa), Critical Tube Diameter (mm)
+0.3652, 36.99476, 59.4127
+0.6526, 66.10838, 32.3274
+1.1244, 113.90172, 18.5707

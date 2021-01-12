@@ -1,0 +1,3 @@
+#Percent N2, Cell Width (mm)
+57.1, 42.8
+62.5, 71.0

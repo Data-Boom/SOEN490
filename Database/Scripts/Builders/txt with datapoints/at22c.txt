@@ -1,0 +1,3 @@
+#Equivalence Ratio, Critical Tube Diameter (mm)
+0.7679, 882.692
+1.0, 449.166

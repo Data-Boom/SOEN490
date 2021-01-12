@@ -1,0 +1,3 @@
+#Initial Pressure (bar), Initial Pressure (kPa), Critical Energy (J)
+0.5006, 50.06, 32.0469
+0.8005, 80.05, 10.7837

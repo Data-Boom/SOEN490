@@ -1,27 +1,6 @@
 version: "3"
 
 services:
-  db:
-    build:
-      context: ./Database
-      dockerfile: Dockerfile
-    container_name: db
-    volumes:
-      - ./Database/my-db:/var/lib/mysql
-      - ./Database:/docker-entrypoint-initdb.d/
-    environment:
-      MYSQL_DATABASE: 'databoom_DB'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
-    restart: unless-stopped
-    ports:
-      - '3300:3306'
-    expose:
-      - '3306'
-    networks:
-      - databoomNetwork
-
   back-end:
     build:
       context: ./Server
@@ -34,13 +13,9 @@ services:
     ports:
       - "4000:4000"
     restart: on-failure
-    links:
-      - db
-    depends_on:
-      - db
     networks:
       - databoomNetwork
-    command: bash -c "/home/node/app/wait-for-it.sh --timeout=25 db:3306 && npm run dev"
+    command: npm run dev
 
   front-end:
     build:
@@ -62,12 +37,7 @@ services:
       - back-end
     tty: true
     command: npm run start
-  
-volumes:
-  my-db:
-    driver: local
 
 networks:
   databoomNetwork:
     driver: bridge
-  

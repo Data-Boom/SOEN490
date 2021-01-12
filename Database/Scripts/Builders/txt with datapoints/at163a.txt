@@ -1,0 +1,4 @@
+#Dilution Ratio, Percent Diluent, Critical Tube Diameter (mm)
+5.0074, 78.75, 882.1819
+4.0842, 75.15, 505.967
+2.9991, 68.95, 260.182

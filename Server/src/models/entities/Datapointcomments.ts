@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, EntityManager } from "typeorm";
 import { Dataset } from "./Dataset";
 
 
@@ -23,7 +23,7 @@ export class Datapointcomments {
     dataset?: Dataset
 
     @Column({ type: "json" })
-    comments: String[]
+    comments: string[]
 
     @CreateDateColumn()
     created: Date
@@ -31,3 +31,11 @@ export class Datapointcomments {
     @UpdateDateColumn()
     updated: Date
 }
+
+export const selectDataPointCommentsQuery = (manager: EntityManager, dataset: number) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('datapointcomments.comments', 'datapointcomments_comments')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Datapointcomments, 'datapointcomments', 'datapointcomments.datasetId = dataset.id')
+        .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawMany();

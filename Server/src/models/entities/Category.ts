@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, EntityManager } from "typeorm";
 
 
 /**
@@ -11,10 +11,11 @@ export class Category {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({unique: true})
-    name: String
+    //Readd { unique: true } later if desired. For now, potential source of crash in remote DB
+    @Column()
+    name: string
 
-    @CreateDateColumn()  
+    @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()

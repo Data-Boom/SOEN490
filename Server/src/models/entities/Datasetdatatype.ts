@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 
 /**
@@ -11,9 +11,9 @@ export class Datasetdatatype {
     id: number
 
     @Column()
-    name: String
+    name: string
 
-    @CreateDateColumn()  
+    @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()

@@ -1,0 +1,6 @@
+#Initial Pressure (atm), Initial Pressure (kPa), Cylindrical Critical Energy (J/cm)
+0.06502, 6.588, 0.22233
+0.13338, 13.515, 0.11133
+0.19762, 20.024, 0.078252
+0.26344, 26.693, 0.058275
+0.38726, 39.239, 0.043498

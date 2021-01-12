@@ -1,5 +1,6 @@
 import { Publications } from './Publications';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, EntityManager } from "typeorm";
+import { Dataset } from './Dataset';
 
 
 /**
@@ -13,13 +14,13 @@ export class Authors {
     id: number
 
     @Column()
-    firstName: String
+    firstName: string
 
     @Column()
-    lastName: String
+    lastName: string
 
     @Column({ nullable: true })
-    middleName: String
+    middleName: string
 
     @CreateDateColumn()
     created: Date
@@ -37,3 +38,14 @@ export class Authors {
     @ManyToMany(type => Publications, publication => publication.authors)
     publications: Publications[];
 }
+
+export const selectAuthorsQuery = (manager: EntityManager, dataset: number) =>
+    manager.createQueryBuilder(Dataset, 'dataset')
+        .select('author.firstName', 'author_firstName')
+        .addSelect('author.lastName', 'author_lastName')
+        .addSelect('author.middleName', 'author_middleName')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('publication.authors', 'author')
+        .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawMany();

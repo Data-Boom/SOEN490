@@ -1,10 +1,16 @@
 import 'dotenv/config';
-const loadStartupProcess =  require('./loaders/loadStartupProcess');
-
+import { loadStartupProcess } from './loaders/loadStartupProcess'
 
 /**
- * App.ts should be kept to a minimal, only items required by the whole application should reside here. Startup
- * processes were  moved as they only require a one-time call
+ * This class contains complete startup procedure of the application. These settings are loaded only once and used
+ * to initialize the application. The initial connection to the database is also created here.
  */
-const expressLoader = new loadStartupProcess();
+
+let startup = new loadStartupProcess();
+
+let port = startup.getPort();
+startup.getApp().listen(port, () => {
+    console.log(`This Server is running on http://localhost:${process.env.PORT}`);
+});
+
 
