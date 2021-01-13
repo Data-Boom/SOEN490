@@ -14,13 +14,10 @@ export class JWTAuthenticator {
 
     static async verifyJWT(request: Request, response: Response, next: NextFunction): Promise<Response> {
 
-        const authHeader = request.headers.authorization;
-        console.log(authHeader);
-        console.log(request);
-        if (!authHeader) {
-            return response.status(401).json({ error: "Missing JWT token from the 'Authorization' header" });
+        const token = request.cookies.token;
+        if (!token) {
+            return response.status(401).json({ error: "Missing JWT token" });
         }
-        const token = authHeader.split(' ')[1];
         jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err: Error) => {
             if (err) {
                 console.log(err);

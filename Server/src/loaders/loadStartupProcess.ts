@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import 'cookie-parser'
 
 import { authenticationRouter } from '../routes/authenticationRouter';
 import bodyParser from 'body-parser';
@@ -8,6 +9,8 @@ import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { getDataRouter } from '../routes/getDatasetRouter';
+
+const cookieParser = require('cookie-parser');
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
@@ -23,6 +26,8 @@ export class loadStartupProcess {
 
     // Create a new express application instance
     this.app = express();
+
+    this.app.use(cookieParser());
 
     this.app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
 
