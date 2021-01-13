@@ -26,19 +26,4 @@
         "source.fixAll.eslint": true
     },
     "todo-tree.regex.regexCaseSensitive": false,
-    "sqltools.connections": [
-        {
-            "mysqlOptions": {
-                "authProtocol": "default"
-            },
-            "previewLimit": 50,
-            "server": "databoomserver.mysql.database.azure.com",
-            "port": 3306,
-            "driver": "MySQL",
-            "name": "databoom_db_develop",
-            "database": "databoom_db_develop",
-            "username": "databoomuser@databoomserver",
-            "password": "Passw0rd"
-        }
-    ]
 }
