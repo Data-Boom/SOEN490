@@ -37,7 +37,7 @@ export class AuthenticationController {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
         }
         else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let loginInfo: ILoginInformation = requestParams;
             let res: any = await this.callServiceForLogin(loginInfo, response, next);
             return res;
@@ -55,7 +55,7 @@ export class AuthenticationController {
     }
 
     private validateLoginRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password')) {
+        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password')) {
             return false;
         }
         else {
@@ -103,6 +103,7 @@ export class AuthenticationController {
     private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse;
+        console.log(serviceResponse);
         try {
             serviceResponse = await this.authenticationService.processSignUp(signUpInfo);
             return response.status(serviceResponse.statusCode).json(serviceResponse.message);

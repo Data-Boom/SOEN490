@@ -33,10 +33,10 @@
             },
             "previewLimit": 50,
             "server": "databoomserver.mysql.database.azure.com",
-            "port": 4000,
+            "port": 3306,
             "driver": "MySQL",
-            "name": "development",
-            "database": "databoom_db_test",
+            "name": "databoom_db_develop",
+            "database": "databoom_db_develop",
             "username": "databoomuser@databoomserver",
             "password": "Passw0rd"
         }

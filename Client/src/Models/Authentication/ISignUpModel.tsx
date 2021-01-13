@@ -7,6 +7,7 @@ export interface ISignUpUserModel {
   firstName: string,
   lastName: string,
   email: string,
+  dateOfBirth: string,
   organizationName: string,
   password: string,
   confirmPassword: string
@@ -17,8 +18,9 @@ export interface ISignUpUserModel {
 export const defaultSignUpUserModel: ISignUpUserModel = {
   firstName: "asd",
   lastName: "asd",
-  organizationName: "asd123",
   email: "test@email.com",
+  dateOfBirth: "asd",
+  organizationName: "asd123",
   password: "12312312",
   confirmPassword: "1231231221"
 }
