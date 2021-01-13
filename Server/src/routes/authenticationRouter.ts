@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
+
 import { AuthenticationController } from '../controllers/authenticationController'
 import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 

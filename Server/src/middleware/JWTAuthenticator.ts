@@ -1,6 +1,8 @@
-import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import { Request, Response, NextFunction } from 'express';
+
+import * as jwt from 'jsonwebtoken';
+
+import { NextFunction, Request, Response } from 'express';
 
 //https://stackabuse.com/authentication-and-authorization-with-jwts-in-express-js/
 
@@ -13,7 +15,8 @@ export class JWTAuthenticator {
     static async verifyJWT(request: Request, response: Response, next: NextFunction): Promise<Response> {
 
         const authHeader = request.headers.authorization;
-
+        console.log(authHeader);
+        console.log(request);
         if (!authHeader) {
             return response.status(401).json({ error: "Missing JWT token from the 'Authorization' header" });
         }

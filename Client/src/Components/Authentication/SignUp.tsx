@@ -1,5 +1,5 @@
 import { FastField, Form, Formik } from 'formik'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
-import { ISignUpUser } from '../../Models/Profile/IProfileModel'
+import { ISignUpUserModel } from '../../Models/Profile/IProfileModel'
 import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
@@ -52,9 +52,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles()
 
-  const [email, setEmail] = useState("")
-
-  const user: ISignUpUser = {
+  const user: ISignUpUserModel = {
     firstName: "",
     lastName: "",
     organization: "",
@@ -63,7 +61,7 @@ export default function SignUp() {
     confirmPassword: ""
   }
 
-  const handleSignUpSubmit = (user: ISignUpUser): void => {
+  const handleSignUpSubmit = (user: ISignUpUserModel): void => {
     console.log(JSON.stringify(user))
     // TODO: hook up to the backend
   }
@@ -84,122 +82,111 @@ export default function SignUp() {
             validationSchema={signupValidationSchema}
             onSubmit={handleSignUpSubmit}
           >
-            {props => {
-              const {
-                values,
-                touched,
-                errors,
-                isSubmitting,
-                handleChange,
-                handleBlur,
-                handleSubmit
-              } = props
-              return (
-                <>
-                  <Form className={classes.form} noValidate>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                        <FastField
-                          autoComplete="fname"
-                          name="firstName"
-                          label="First Name"
-                          required
-                          component={MuiTextFieldFormik}
-                          id="firstName"
-                          variant="outlined"
-                          fullWidth />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <FastField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          component={MuiTextFieldFormik}
-                          id="lastName"
-                          label="Last Name"
-                          name="lastName"
-                          autoComplete="lname" />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FastField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          component={MuiTextFieldFormik}
-                          id="email"
-                          label="Email Address"
-                          name="email"
-                          autoComplete="email" />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FastField
-                          component={MuiTextFieldFormik}
-                          variant="outlined"
-                          fullWidth
-                          required
-                          id="dateOfBirth"
-                          name="dateOfBirth"
-                          type="date"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          variant="outlined"
-                          fullWidth
-                          id="organization"
-                          label="Organization"
-                          name="organization"
-                          autoComplete="organization"
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FastField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          component={MuiTextFieldFormik}
-                          name="password"
-                          label="Password"
-                          type="password"
-                          id="password"
-                          autoComplete="current-password" />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FastField
-                          variant="outlined"
-                          required
-                          fullWidth
-                          component={MuiTextFieldFormik}
-                          name="confirmPassword"
-                          label="Confirm Password"
-                          type="password"
-                          id="confirmPassword"
-                          autoComplete="confirm-password" />
-                      </Grid>
-                    </Grid>
-                    <Button
-                      type="submit"
+            return (
+            <>
+              <Form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <FastField
+                      autoComplete="fname"
+                      name="firstName"
+                      label="First Name"
+                      required
+                      component={MuiTextFieldFormik}
+                      id="firstName"
+                      variant="outlined"
+                      fullWidth />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FastField
+                      variant="outlined"
+                      required
                       fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                    >
-                      Sign Up
-                    </Button>
-                    <Grid container justify="flex-end">
-                      <Grid item>
-                        <Link href="#sign-in" variant="body2">
-                          Already have an account? Sign in
-                        </Link>
-                      </Grid>
-                    </Grid>
-                  </Form>
-                </>
+                      component={MuiTextFieldFormik}
+                      id="lastName"
+                      label="Last Name"
+                      name="lastName"
+                      autoComplete="lname" />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FastField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      component={MuiTextFieldFormik}
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email" />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FastField
+                      component={MuiTextFieldFormik}
+                      variant="outlined"
+                      fullWidth
+                      required
+                      id="dateOfBirth"
+                      name="dateOfBirth"
+                      type="date"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      id="organization"
+                      label="Organization"
+                      name="organization"
+                      autoComplete="organization"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FastField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      component={MuiTextFieldFormik}
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password" />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FastField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      component={MuiTextFieldFormik}
+                      name="confirmPassword"
+                      label="Confirm Password"
+                      type="password"
+                      id="confirmPassword"
+                      autoComplete="confirm-password" />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign Up
+                </Button>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link href="#sign-in" variant="body2">
+                      Already have an account? Sign in
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Form>
+            </>
               )
-            }}
           </Formik>
         </div>
         <Box mt={5}>
