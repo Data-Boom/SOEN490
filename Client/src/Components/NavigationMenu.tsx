@@ -8,9 +8,7 @@ import {
   NavLink,
   Route
 } from "react-router-dom"
-
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute} from '../Consts/Routes'
-
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -27,16 +25,16 @@ import HomeView from './Home/HomeView'
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
+import PersonIcon from '@material-ui/icons/Person'
 import { ProfileView } from "../Views/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
+import SignIn from "./Authentication/SignInView"
+import SignUp from "./Authentication/SignUpView"
 import clsx from "clsx"
 import universitylogo from './universitylogo.png'
-import PersonIcon from '@material-ui/icons/Person';
-import SignIn from "../Authentication/SignIn"
-import SignUp from "../Authentication/SignUp"
 
 const drawerWidth = 240
 

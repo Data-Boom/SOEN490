@@ -8,7 +8,7 @@ import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
-import { ISignInUser } from '../../Models/Profile/IProfileModel'
+import { ISignInUserModel } from '../../Models/Authentication/ISignUpModel'
 import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
@@ -53,12 +53,12 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles()
 
-  const user: ISignInUser = {
+  const user: ISignInUserModel = {
     email: "",
     password: ""
   }
 
-  const handleSignInSubmit = (user: ISignInUser): void => {
+  const handleSignInSubmit = (user: ISignInUserModel): void => {
     console.log(JSON.stringify(user))
     // TODO: Hooking up with the backend
   }

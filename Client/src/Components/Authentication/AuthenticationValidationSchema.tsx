@@ -11,16 +11,14 @@ export const signupValidationSchema = Yup.object().shape({
     .required(requiredMessage('Last Name')),
   email: Yup.string()
     .email().required(requiredMessage("Email Address")),
-  organization: Yup.string()
+  organizationName: Yup.string()
     .required(requiredMessage('Organization')),
   password: Yup.string()
     .required(requiredMessage("Password"))
     .min(8, "Password is short, should be 8 characters minimum"),
   confirmPassword: Yup.string()
     .required(requiredMessage("Confirm Password"))
-    .min(8, "Password is short, should be 8 characters minimum"),
-  dateOfBirth: Yup.date()
-    .required(requiredMessage("Date of Birth")),
+    .min(8, "Password is short, should be 8 characters minimum")
 })
 
 export const loginValidationSchema = Yup.object().shape({

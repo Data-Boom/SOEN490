@@ -1,4 +1,4 @@
-import { ISignUpModel } from "../../Models/Authentication/ISignUpModel"
+import { ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
 import { post } from "../RemoteHelper"
 
 const signupRoute = '/signup'
@@ -7,7 +7,7 @@ const resetPasswordRoute = '/resetPassword'
 const updateUserInfoRoute = '/updateUserInfo'
 const userDetailsRoute = '/userDetails'
 
-export const signUpCall = async (signUpInfo: ISignUpModel) => {
+export const callSignUp = async (signUpInfo: ISignUpUserModel) => {
   /// call backend here and return something
   const response = await post(signUpInfo, signupRoute)
   console.log(response)
