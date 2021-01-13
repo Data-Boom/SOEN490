@@ -13,14 +13,8 @@ export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => 
 }
 
 export const callLogIn = async (signInUser: ISignInUserModel): Promise<any> => {
-  /// call backend here and return something
+  //server sets a browser cookie in http only mode
   const response = await post(signInUser, loginRoute)
   console.log(response)
-  const token = response.token
-  setJWT(token)
-}
-
-const setJWT = (token: string) => {
-  //todo set token
-
+  //todo response has user
 }

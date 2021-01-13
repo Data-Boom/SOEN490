@@ -34,7 +34,6 @@ const fetchRemote = async (url: string, method: string, token: string, data: any
   setData(request, data)
 
   try {
-
     return fetch(url, request)
   }
   catch (error) {
