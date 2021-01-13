@@ -1,6 +1,7 @@
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 import { NextFunction, Request, Response } from 'express';
 
+import { AuthenticationModel } from '../models/AuthenticationModel'
 import { AuthenticationService } from '../services/authenticationService';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
@@ -32,8 +33,6 @@ export class AuthenticationController {
     }
 
     async createLoginRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
-        console.log(request.cookies);
-        console.log(request.headers);
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
@@ -124,7 +123,8 @@ export class AuthenticationController {
         try {
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
             response.cookie('token', serviceResponse.message, { httpOnly: true })
-            return response.status(serviceResponse.statusCode).json(serviceResponse.message);
+            const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);
+            return response.status(serviceResponse.statusCode).json(user);
         } catch (error) {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);

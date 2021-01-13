@@ -17,7 +17,6 @@ router.post('/signup', (request: Request, response: Response, next: NextFunction
 });
 
 router.post('/login', (request: Request, response: Response, next: NextFunction) => {
-
     authenticationController.createLoginRequest(request, response, next);
 });
 
