@@ -1,11 +1,12 @@
 import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import { connectDB } from '../database';
-import { fileUploadRouter } from '../routes/fileUploadRouter';
+
 import { authenticationRouter } from '../routes/authenticationRouter';
 import bodyParser from 'body-parser';
+import { connectDB } from '../database';
+import cors from 'cors';
+import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
+import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { getDataRouter } from '../routes/getDatasetRouter';
 
 /**
@@ -57,7 +58,6 @@ export class loadStartupProcess {
     this.app.use('/', authenticationRouter)
     this.app.use('/', getDataRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
-
 
     this.config = {
       "type": process.env.DB_TYPE,
