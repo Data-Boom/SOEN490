@@ -1,12 +1,11 @@
-import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
-import { Request, Response, NextFunction } from 'express';
-import { AuthenticationService } from '../services/authenticationService';
+import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { NextFunction, Request, Response } from 'express';
 
+import { AuthenticationService } from '../services/authenticationService';
+import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
-import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
-
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
 
 /**
  * This controller is responsible for verifying the user request has correct parameters input.
@@ -25,7 +24,7 @@ export class AuthenticationController {
             return response.status(400).json("Request is invalid. Missing attributes")
         }
         else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let signUpInfo: ISignUpInformation = requestParams;
             let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
             return res;
@@ -46,9 +45,8 @@ export class AuthenticationController {
     }
 
     private validateSignUpRequest(request: Request): boolean {
-
-        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password') && request.query.hasOwnProperty('firstName')
-            && request.query.hasOwnProperty('lastName') && request.query.hasOwnProperty('organizationName')) {
+        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password') && request.body.hasOwnProperty('firstName')
+            && request.body.hasOwnProperty('lastName') && request.body.hasOwnProperty('organizationName')) {
             return false;
         }
         else {

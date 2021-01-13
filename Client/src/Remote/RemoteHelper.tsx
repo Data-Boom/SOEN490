@@ -1,6 +1,6 @@
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
-const serviceUrl = 'https://localhost:4000'
+const serviceUrl = 'http://localhost:4000'
 
 const requestBase: RequestInit = {
   mode: 'cors', // no-cors, *cors, same-origin
@@ -33,9 +33,10 @@ const fetchRemote = async (url: string, method: string, token: string, data: any
   const request: RequestInit = { ...requestBase }
   setAuthToken(request, token)
   setMethod(request, method)
-  setData(data)
+  setData(request, data)
 
   try {
+
     return fetch(url, request)
   }
   catch (error) {
