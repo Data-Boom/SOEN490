@@ -1,4 +1,5 @@
 import { FastField, Form, Formik } from 'formik'
+import { ISignInUserModel, defaultSignInUserModel } from '../../Models/Authentication/ISignUpModel'
 
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
@@ -8,12 +9,12 @@ import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
-import { ISignInUserModel } from '../../Models/Authentication/ISignUpModel'
 import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
+import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -53,14 +54,9 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles()
 
-  const user: ISignInUserModel = {
-    email: "",
-    password: ""
-  }
-
   const handleSignInSubmit = (user: ISignInUserModel): void => {
     console.log(JSON.stringify(user))
-    // TODO: Hooking up with the backend
+    callLogIn(user)
   }
 
   return (
@@ -74,75 +70,60 @@ export default function SignIn() {
           Sign in
         </Typography>
         <Formik
-          initialValues={user}
+          initialValues={defaultSignInUserModel}
           validationSchema={loginValidationSchema}
           onSubmit={handleSignInSubmit}
         >
-          {props => {
-            const {
-              values,
-              touched,
-              errors,
-              isSubmitting,
-              handleChange,
-              handleBlur,
-              handleSubmit
-            } = props
-            return (
-              <>
-                <Form className={classes.form} noValidate>
-                  <FastField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    component={MuiTextFieldFormik}
-                  />
-                  <FastField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    component={MuiTextFieldFormik}
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Sign In
-                  </Button>
-                  <Grid container>
-                    <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <Link href="#/sign-up" variant="body2">
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </Form>
-              </>
-            )
-          }}
+          <Form className={classes.form} noValidate>
+            <FastField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              component={MuiTextFieldFormik}
+            />
+            <FastField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              component={MuiTextFieldFormik}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#/sign-up" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Form>
         </Formik>
       </div>
       <Box mt={8}>

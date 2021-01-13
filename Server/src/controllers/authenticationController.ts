@@ -32,6 +32,8 @@ export class AuthenticationController {
     }
 
     async createLoginRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+        console.log(request.cookies);
+        console.log(request.headers);
         this.invalidResponse = this.validateLoginRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
@@ -121,7 +123,7 @@ export class AuthenticationController {
         let serviceResponse: IResponse
         try {
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-            response.setHeader('Set-Cookie', serviceResponse.message);
+            response.cookie('token', serviceResponse.message, { httpOnly: true })
             return response.status(serviceResponse.statusCode).json(serviceResponse.message);
         } catch (error) {
             if (error instanceof BadRequest)

@@ -16,11 +16,16 @@ export interface ISignUpUserModel {
 //todo revert to an actual empty/default model
 //todo password should match
 export const defaultSignUpUserModel: ISignUpUserModel = {
-  firstName: "asd",
-  lastName: "asd",
-  email: "test@email.com",
-  dateOfBirth: "asd",
-  organizationName: "asd123",
-  password: "12312312",
-  confirmPassword: "1231231221"
+  firstName: '',
+  lastName: '',
+  email: '',
+  dateOfBirth: '',
+  organizationName: '',
+  password: '',
+  confirmPassword: ''
+}
+
+export const defaultSignInUserModel: ISignInUserModel = {
+  email: '',
+  password: ''
 }

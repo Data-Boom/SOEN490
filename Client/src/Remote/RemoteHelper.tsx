@@ -1,7 +1,5 @@
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
-const serviceUrl = 'http://localhost:4000'
-
 const requestBase: RequestInit = {
   mode: 'cors', // no-cors, *cors, same-origin
   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -14,7 +12,7 @@ const requestBase: RequestInit = {
 }
 
 export const post = async (data: any, route: string): Promise<any> => {
-  const url = serviceUrl + route
+  const url = route
   const token = 'test' //todo how to get token
 
   const response = await fetchRemote(url, 'POST', token, data)
@@ -22,7 +20,7 @@ export const post = async (data: any, route: string): Promise<any> => {
 }
 
 export const get = async (route: string): Promise<any> => {
-  const url = serviceUrl + route
+  const url = route
   const token = 'test' //todo how to get token
 
   const response = await fetchRemote(url, 'GET', token)
