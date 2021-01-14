@@ -19,10 +19,6 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 
-    // Adding in uploader Foreign Key to Dataset table
-    await queryRunner.query('ALTER TABLE dataset ADD COLUMN uploaderId int(11) NULL');
-    await queryRunner.query('ALTER TABLE dataset ADD CONSTRAINT FK_26457c71143806e88e157a54b05 FOREIGN KEY (uploaderId) REFERENCES accounts(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
@@ -315,7 +311,6 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query('ALTER TABLE dataset DROP FOREIGN KEY `FK_26457c71143806e88e157a54b05`');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
     await queryRunner.query('DELETE FROM accounts_datasets_dataset');
@@ -335,7 +330,6 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
-    await queryRunner.query('ALTER TABLE dataset DROP COLUMN uploaderId');
   }
 
 }
