@@ -3,10 +3,11 @@
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
 import { HashRouter, Link } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
+import React, { useContext, useState } from 'react'
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
-import React from 'react'
+import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import { signInRoute } from "../Common/Consts/Routes"
@@ -15,7 +16,8 @@ import universitylogo from './universitylogo.png'
 const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-  const [open, setOpen] = React.useState(false)
+  const { user, setUser } = useContext(UserContext)
+  const [open, setOpen] = useState(false)
   const classes = useStyles()
 
   const handleDrawerOpen = () => {
@@ -29,6 +31,7 @@ export default function NavigationMenu() {
   const handleSignIn = () => {
   }
 
+
   const drawer = (): any => {
     return (
       <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
@@ -41,6 +44,16 @@ export default function NavigationMenu() {
         {ListRouter()}
       </ Drawer>
     )
+  }
+
+  const renderGreeting = () => {
+    return user && user.firstName ? (
+      <Typography>
+        Hello, {user.firstName} {user.lastName}
+      </Typography>
+    ) : (
+        <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+      )
   }
 
   return (
@@ -63,7 +76,7 @@ export default function NavigationMenu() {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+                {renderGreeting()}
               </Grid>
             </Grid>
           </Toolbar>

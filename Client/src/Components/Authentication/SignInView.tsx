@@ -62,11 +62,12 @@ export default function SignIn() {
   const handleSignInSubmit = async (signInUserInfo: ISignInUserModel): Promise<void> => {
     const userAccount: IUserAccountModel = await callLogIn(signInUserInfo)
     putUserInStorage(userAccount)
-
+    setUser(userAccount)
   }
 
   return (
     <Container component="main" maxWidth="xs">
+      {}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
