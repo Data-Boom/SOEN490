@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
-import { signInRoute } from "../Consts/Routes"
+import { signInRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
 
 const drawerWidth = linkWidth

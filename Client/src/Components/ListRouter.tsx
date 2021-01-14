@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Consts/Routes'
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -22,11 +22,11 @@ import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaper
 import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
-import SignIn from "../Authentication/SignIn"
-import SignUp from "../Authentication/SignUp"
+import SignIn from "../Components/Authentication/SignInView"
+import SignUp from "../Components/Authentication/SignUpView"
 
 interface IProps {
-  icon?: React.ReactElement;
+  icon: React.ReactElement;
   primary: string;
   to: string;
 }
