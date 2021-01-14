@@ -69,7 +69,7 @@ export default function SignInView() {
 
   return (
     <>
-      {user ?
+      {user && user.firstName ?
         <Redirect to={homeRoute} /> :
         <Container component="main" maxWidth="xs">
           <CssBaseline />

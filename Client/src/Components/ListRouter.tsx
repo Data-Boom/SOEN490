@@ -15,7 +15,6 @@ import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "./Home/HomeView"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
-import PersonIcon from '@material-ui/icons/Person'
 import { ProfileView } from "../Views/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
@@ -74,7 +73,6 @@ export const ListRouter = () => {
           <ListItemLink to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
           <ListItemLink to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
           <ListItemLink to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
-          <ListItemLink to={signInRoute} primary="Sign in" icon={<PersonIcon />} />
         </List>
       </Paper>
     </div>

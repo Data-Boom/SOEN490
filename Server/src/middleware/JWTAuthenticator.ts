@@ -14,7 +14,7 @@ export class JWTAuthenticator {
 
     static async verifyJWT(request: Request, response: Response, next: NextFunction): Promise<Response> {
 
-        const token = request.cookies.token;
+        const token = request.cookies && request.cookies.token;
         if (!token) {
             return response.status(401).json({ error: "Missing JWT token" });
         }

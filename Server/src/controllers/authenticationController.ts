@@ -40,8 +40,13 @@ export class AuthenticationController {
         else {
             let requestParams: any = { ...request.body };
             let loginInfo: ILoginInformation = requestParams;
-            let res: any = await this.callServiceForLogin(loginInfo, response, next);
-            return res;
+            try {
+                let res: any = await this.callServiceForLogin(loginInfo, response, next);
+                return res;
+            }
+            catch (error) {
+            }
+
         }
     }
 
@@ -65,7 +70,7 @@ export class AuthenticationController {
     }
 
     private validateUserDetailRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('password') || request.query.hasOwnProperty('organization')) {
+        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organization')) {
             return true;
         } else
             return false;
@@ -77,7 +82,7 @@ export class AuthenticationController {
         if (!this.invalidResponse) {
             return response.status(400).json("Request is invalid")
         } else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let updateUserDetail: IUpdateUserDetail = requestParams;
             try {
                 let res: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
@@ -124,6 +129,8 @@ export class AuthenticationController {
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
             response.cookie('token', serviceResponse.message, { httpOnly: true })
             const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);
+            console.error('here')
+            console.error(user)
             return response.status(serviceResponse.statusCode).json(user);
         } catch (error) {
             if (error instanceof BadRequest)
@@ -137,7 +144,7 @@ export class AuthenticationController {
     async createFetchUserDetailsRequest(request, response): Promise<Response> {
         let serviceResponse: IResponse;
         try {
-            let userEmail: any = request.query.email;
+            let userEmail: any = request.body.email;
             this.authenticationService = new AuthenticationService();
             serviceResponse = await this.authenticationService.loadUserDetails(userEmail);
             return response.status(serviceResponse.statusCode).json(JSON.parse(serviceResponse.message));

@@ -41,6 +41,7 @@ describe('Authorization Middleware', () => {
         };
         mockRequest = {
             headers: {
+                cookie: 
             }
         }
         await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction as NextFunction);
