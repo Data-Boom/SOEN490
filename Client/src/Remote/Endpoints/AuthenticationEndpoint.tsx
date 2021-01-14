@@ -2,6 +2,7 @@ import { ISignInUserModel, ISignUpUserModel } from "../../Models/Authentication/
 import { IUserAccountRemoteModel, toLocalUserAccountModel } from "../Models/IUserAccountModel"
 
 import { post } from "../RemoteHelper"
+import { putUserInStorage } from "../../Common/LocalStorage"
 
 const signupRoute = '/signup'
 const loginRoute = '/login'
@@ -19,5 +20,5 @@ export const callLogIn = async (signInUser: ISignInUserModel): Promise<any> => {
 
   //set this user in Local storage
   //todo set the guy in sessionStorage.setItem() if rememberMe == false
-  localStorage.setItem('user', JSON.stringify(toLocalUserAccountModel(response)))
+  putUserInStorage(toLocalUserAccountModel(response))
 }
