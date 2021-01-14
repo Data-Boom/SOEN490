@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SignIn() {
+export default function SignInView() {
 
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()

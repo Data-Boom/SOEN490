@@ -22,8 +22,8 @@ import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaper
 import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
-import SignIn from "../Components/Authentication/SignInView"
-import SignUp from "../Components/Authentication/SignUpView"
+import SignInView from "../Components/Authentication/SignInView"
+import SignUpView from "../Components/Authentication/SignUpView"
 
 interface IProps {
   icon: React.ReactElement;
@@ -38,7 +38,6 @@ export const ListItemLink = (props: IProps) => {
 
   const renderLink = React.useMemo(
     () =>
-      // eslint-disable-next-line react/display-name
       React.forwardRef<any, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
         <RouterLink to={to} ref={ref} {...itemProps} />
       )),
@@ -94,8 +93,8 @@ export const getRoutedViews = () => {
       <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
       <Route path={aboutRoute} component={AboutView} />
       <Route path={profileRoute} component={ProfileView} />
-      <Route path={signInRoute} component={SignIn} />
-      <Route path={signUpRoute} component={SignUp} />
+      <Route path={signInRoute} component={SignInView} />
+      <Route path={signUpRoute} component={SignUpView} />
     </>
   )
 }
