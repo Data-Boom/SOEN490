@@ -53,7 +53,6 @@ export default function SignUp() {
   const classes = useStyles()
 
   const handleSignUpSubmit = (user: ISignUpUserModel): void => {
-    console.log(JSON.stringify(user))
     callSignUp(user)
   }
 

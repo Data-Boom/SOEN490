@@ -1,8 +1,7 @@
 import { ISignInUserModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
-import { IUserAccountRemoteModel, toLocalUserAccountModel } from "../Models/IUserAccountModel"
+import { IUserAccountModel, IUserAccountRemoteModel, toLocalUserAccountModel } from "../Models/IUserAccountModel"
 
 import { post } from "../RemoteHelper"
-import { putUserInStorage } from "../../Common/LocalStorage"
 
 const signupRoute = '/signup'
 const loginRoute = '/login'
@@ -14,11 +13,8 @@ export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => 
   return post(signUpInfo, signupRoute)
 }
 
-export const callLogIn = async (signInUser: ISignInUserModel): Promise<any> => {
+export const callLogIn = async (signInUser: ISignInUserModel): Promise<IUserAccountModel> => {
   //server sets a token in browser cookie in http only mode
-  const response: IUserAccountRemoteModel = await post(signInUser, loginRoute)
-
-  //set this user in Local storage
-  //todo set the guy in sessionStorage.setItem() if rememberMe == false
-  putUserInStorage(toLocalUserAccountModel(response))
+  const remoteUser: IUserAccountRemoteModel = await post(signInUser, loginRoute)
+  return toLocalUserAccountModel(remoteUser)
 }

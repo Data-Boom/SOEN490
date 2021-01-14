@@ -1,5 +1,6 @@
 import { FastField, Form, Formik } from 'formik'
 import { ISignInUserModel, defaultSignInUserModel } from '../../Models/Authentication/ISignUpModel'
+import React, { useContext } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
@@ -9,14 +10,16 @@ import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
+import { IUserAccountModel } from '../../Remote/Models/IUserAccountModel'
 import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
-import React from 'react'
 import Typography from '@material-ui/core/Typography'
+import { UserContext } from '../../App'
 import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { putUserInStorage } from '../../Common/LocalStorage'
 
 function Copyright() {
   return (
@@ -52,11 +55,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SignIn() {
+
+  const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
 
-  const handleSignInSubmit = (user: ISignInUserModel): void => {
-    console.log(JSON.stringify(user))
-    callLogIn(user)
+  const handleSignInSubmit = async (signInUserInfo: ISignInUserModel): Promise<void> => {
+    const userAccount: IUserAccountModel = await callLogIn(signInUserInfo)
+    putUserInStorage(userAccount)
+
   }
 
   return (
