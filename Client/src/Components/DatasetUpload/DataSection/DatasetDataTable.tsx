@@ -82,7 +82,6 @@ export const DatasetDataTable = (props: IProps): any => {
     const columns = props.data.variables.map((variable, index) => {
       return (
         {
-          // eslint-disable-next-line react/display-name
           key: `${index}`, name: variable.name, editable: true, editor: TextEditor, headerRenderer: (): any => <EditVariableHeader
             variable={variable}
             index={index}
