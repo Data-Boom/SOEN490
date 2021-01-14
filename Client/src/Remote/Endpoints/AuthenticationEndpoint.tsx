@@ -1,4 +1,5 @@
 import { ISignInUserModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
+import { IUserAccountRemoteModel, toLocalUserAccountModel } from "../Models/IUserAccountModel"
 
 import { post } from "../RemoteHelper"
 
@@ -13,8 +14,10 @@ export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => 
 }
 
 export const callLogIn = async (signInUser: ISignInUserModel): Promise<any> => {
-  //server sets a browser cookie in http only mode
-  const response = await post(signInUser, loginRoute)
-  console.log(response)
-  //todo response has user
+  //server sets a token in browser cookie in http only mode
+  const response: IUserAccountRemoteModel = await post(signInUser, loginRoute)
+
+  //set this user in Local storage
+  //todo set the guy in sessionStorage.setItem() if rememberMe == false
+  localStorage.setItem('user', JSON.stringify(toLocalUserAccountModel(response)))
 }

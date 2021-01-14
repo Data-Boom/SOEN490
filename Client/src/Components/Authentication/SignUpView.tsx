@@ -54,7 +54,6 @@ export default function SignUp() {
 
   const handleSignUpSubmit = (user: ISignUpUserModel): void => {
     console.log(JSON.stringify(user))
-
     callSignUp(user)
   }
 

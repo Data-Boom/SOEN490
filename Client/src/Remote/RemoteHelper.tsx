@@ -13,23 +13,20 @@ const requestBase: RequestInit = {
 
 export const post = async (data: any, route: string): Promise<any> => {
   const url = route
-  const token = 'test' //todo how to get token
 
-  const response = await fetchRemote(url, 'POST', token, data)
+  const response = await fetchRemote(url, 'POST', data)
   return response.json()
 }
 
 export const get = async (route: string): Promise<any> => {
   const url = route
-  const token = 'test' //todo how to get token
 
-  const response = await fetchRemote(url, 'GET', token)
+  const response = await fetchRemote(url, 'GET')
   return response.json()
 }
 
-const fetchRemote = async (url: string, method: string, token: string, data: any = {}): Promise<Response> => {
+const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
   const request: RequestInit = { ...requestBase }
-  setAuthToken(request, token)
   setMethod(request, method)
   setData(request, data)
 
@@ -41,10 +38,6 @@ const fetchRemote = async (url: string, method: string, token: string, data: any
     console.error(error)
     return Promise.resolve(null)
   }
-}
-
-const setAuthToken = (request: RequestInit, token: string) => {
-  request.headers['X-Access-Token'] = token
 }
 
 const setMethod = (request: RequestInit, method: string) => {
