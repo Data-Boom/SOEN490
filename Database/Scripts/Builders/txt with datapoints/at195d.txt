@@ -1,0 +1,6 @@
+#Equivalence Ratio, Cylindrical Critical Energy (J/cm)
+0.7733, 101.065
+1.0, 53.7913
+1.108, 48.2483
+1.2034, 54.7121
+1.3351, 91.1051

@@ -1,0 +1,3 @@
+#H2S Mole Fraction, Cell Width (mm)
+0.95, 357.5
+0.21, 359.5

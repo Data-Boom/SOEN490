@@ -1,0 +1,5 @@
+#Minimum Tube Diameter (mm), Percent Diluent
+3.6178, 81.4921
+5.7452, 85.0231
+9.8726, 87.8222
+15.5869, 89.652

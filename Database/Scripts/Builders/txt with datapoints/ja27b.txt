@@ -1,0 +1,4 @@
+#Initial Temperature (K), Cell Width (mm)
+278.0, 190.0
+324.0, 139.0
+370.0, 129.0

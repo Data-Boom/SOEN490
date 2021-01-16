@@ -1,0 +1,2 @@
+#Percent H2, Equivalence Ratio, Critical Tube Diameter (mm)
+29.7, 1.01, 198.0
