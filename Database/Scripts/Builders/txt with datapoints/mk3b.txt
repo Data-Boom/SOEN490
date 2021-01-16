@@ -1,0 +1,4 @@
+#Cell Length (mm), Initial Pressure (bar), Initial Pressure (kPa)
+7.64, 8.6, 860.013
+13.9, 3.02, 302.274
+43.77, 1.58, 157.795

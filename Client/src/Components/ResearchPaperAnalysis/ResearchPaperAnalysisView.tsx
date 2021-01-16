@@ -38,6 +38,10 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     })
   }
 
+  const validateUploadedFile = (file: File) => {
+    return file && true //True because we are always accepting all file formats
+  }
+
   const theme = useTheme()
 
   const paperUploadSection = (): any => {
@@ -47,6 +51,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
           <Typography>Page description pretty much</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
+            validateFile={validateUploadedFile}
             acceptFileFormat={fileFormat}
           />
         </Box>

@@ -1,0 +1,4 @@
+#Percent Additive, Critical Energy (J)
+1.0023, 9.5155
+1.999, 10.4752
+4.0025, 10.9808
