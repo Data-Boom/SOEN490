@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 
 import { Button } from "@material-ui/core"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
+import StarBorderIcon from '@material-ui/icons/StarBorder'
 
 interface IProps {
   outerHeight: number,
@@ -43,6 +44,9 @@ export default function Graph(props: IProps) {
     setYToggle(!isYLog)
   }
 
+  const handleSaveGraphClick = () => {
+
+  }
   let active = [null, null, null, null]
 
   const ref = React.useRef(null)
@@ -233,6 +237,9 @@ export default function Graph(props: IProps) {
 
   return (
     <>
+      <div style={{ float: 'left', padding: 10, margin: 10 }}>
+        <Button id='saveGraph' onClick={handleSaveGraphClick}> <StarBorderIcon /></Button>
+      </div>
       <svg
         ref={ref}
         width={outerWidth}
