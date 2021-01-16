@@ -1,8 +1,8 @@
 import * as d3 from "d3"
 
+import { Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
-import { Button } from "@material-ui/core"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
 
 interface IProps {
@@ -34,16 +34,64 @@ export default function Graph(props: IProps) {
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
+  const [xUpperBound, setXUpperBound] = useState(10)
+  const [xLowerBound, setXLowerBound] = useState(0)
+  const [yUpperBound, setYUpperBound] = useState(10)
+  const [yLowerBound, setYLowerBound] = useState(0)
 
   const handleXScaleClick = () => {
+    if (xLowerBound <= 0 && !isXLog) {
+      setXLowerBound(1)
+    }
     setXToggle(!isXLog)
   }
 
   const handleYScaleClick = () => {
+    if (yLowerBound <= 0 && !isYLog) {
+      setYLowerBound(1)
+    }
     setYToggle(!isYLog)
   }
 
-  let active = [null, null, null, null]
+  const handleXUpperBoundChange = (event) => {
+    const { value } = event.target
+    if (value <= xLowerBound) {
+      return
+    }
+    else {
+      setXUpperBound(value)
+    }
+  }
+  const handleXLowerBoundChange = (event) => {
+    const { value } = event.target
+    if ((value <= 0 && isXLog) || (value >= xUpperBound)) {
+      return
+    }
+    else {
+      setXLowerBound(value)
+    }
+  }
+
+  const handleYUpperBoundChange = (event) => {
+    const { value } = event.target
+    if (value <= yLowerBound) {
+      return
+    }
+    else {
+      setYUpperBound(value)
+    }
+  }
+  const handleYLowerBoundChange = (event) => {
+    const { value } = event.target
+    if ((value <= 0 && isYLog) || (value >= yUpperBound)) {
+      return
+    }
+    else {
+      setYLowerBound(value)
+    }
+  }
+
+  const active = [null, null, null, null]
 
   const ref = React.useRef(null)
 
@@ -62,7 +110,7 @@ export default function Graph(props: IProps) {
     //cleans up all the points from the graph
     d3.select(ref.current).selectAll("*").remove()
     //This part creates the canvas for our graph
-    let svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
+    const svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
       .append("svg")
       .attr("width", outerWidth)
       .attr("height", outerHeight)
@@ -71,8 +119,9 @@ export default function Graph(props: IProps) {
 
     //This part creates the axis/scales used for the data.
     const xScale = getScale(isXLog, width, 0)
+    xScale.domain([xLowerBound, xUpperBound])
     const yScale = getScale(isYLog, 0, height)
-
+    yScale.domain([yLowerBound, yUpperBound])
     //Calls the function to create the axis
     const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -103,7 +152,7 @@ export default function Graph(props: IProps) {
       .call(zoom)
 
     //This is the part that creates the points
-    let scatter = svg.append("g")
+    const scatter = svg.append("g")
       .attr("clip-path", "url(#clip)")
 
     scatter
@@ -229,7 +278,7 @@ export default function Graph(props: IProps) {
         .selectAll("circle")
         .attr('cy', function (d) { return (newYScale(d["y"])) })
     }
-  }, [props, isXLog, isYLog])
+  }, [props, isXLog, isYLog, xUpperBound, xLowerBound, yUpperBound, yLowerBound])
 
   return (
     <>
@@ -242,8 +291,26 @@ export default function Graph(props: IProps) {
         id='graph'
       />
       <div>
-        <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-        <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+          </Grid>
+          <Grid item xs={4}>
+            <TextField id="xLowerBound" variant="outlined" value={xLowerBound} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField id="xUpperBound" variant="outlined" value={xUpperBound} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
+          </Grid>
+          <Grid item xs={4}>
+            <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+          </Grid>
+          <Grid item xs={4}>
+            <TextField id="yLowerBound" variant="outlined" value={yLowerBound} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField id="yUpperBound" variant="outlined" value={yUpperBound} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+          </Grid>
+        </Grid>
       </div>
     </>
   )
