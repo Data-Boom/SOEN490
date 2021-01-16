@@ -52,7 +52,7 @@ export const FileUploadForm = (props: IProps) => {
 
       <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
         <Alert onClose={() => setAlertSuccess(false)} severity="success">
-          File Successfully updated!! ^_^
+          File Successfully updated!!
         </Alert>
       </Snackbar>
 
