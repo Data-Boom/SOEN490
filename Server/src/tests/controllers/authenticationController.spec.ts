@@ -16,6 +16,7 @@ describe('Authentication Controller', () => {
         mockRequest = {};
         mockResponse = {
             status: jest.fn(() => mockResponse),
+            cookie: jest.fn(),
             json: jest.fn(),
             setHeader: jest.fn()
         }

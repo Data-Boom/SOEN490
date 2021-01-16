@@ -14,7 +14,7 @@
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
     "start": "nodemon .",
-    "test": "npm run migrate && jest --coverage --config ./jest.config.js && npm run revert",
+    "test": "npm run revert && npm run migrate && jest --coverage --config ./jest.config.js && npm run revert",
     "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
