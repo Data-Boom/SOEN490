@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Consts/Routes'
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -15,18 +15,17 @@ import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "./Home/HomeView"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
-import PersonIcon from '@material-ui/icons/Person'
 import { ProfileView } from "../Views/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
-import SignIn from "../Authentication/SignIn"
-import SignUp from "../Authentication/SignUp"
+import SignInView from "../Components/Authentication/SignInView"
+import SignUpView from "../Components/Authentication/SignUpView"
 
 interface IProps {
-  icon?: React.ReactElement;
+  icon: React.ReactElement;
   primary: string;
   to: string;
 }
@@ -38,7 +37,6 @@ export const ListItemLink = (props: IProps) => {
 
   const renderLink = React.useMemo(
     () =>
-      // eslint-disable-next-line react/display-name
       React.forwardRef<any, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
         <RouterLink to={to} ref={ref} {...itemProps} />
       )),
@@ -75,7 +73,6 @@ export const ListRouter = () => {
           <ListItemLink to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
           <ListItemLink to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
           <ListItemLink to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
-          <ListItemLink to={signInRoute} primary="Sign in" icon={<PersonIcon />} />
         </List>
       </Paper>
     </div>
@@ -94,8 +91,8 @@ export const getRoutedViews = () => {
       <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
       <Route path={aboutRoute} component={AboutView} />
       <Route path={profileRoute} component={ProfileView} />
-      <Route path={signInRoute} component={SignIn} />
-      <Route path={signUpRoute} component={SignUp} />
+      <Route path={signInRoute} component={SignInView} />
+      <Route path={signUpRoute} component={SignUpView} />
     </>
   )
 }

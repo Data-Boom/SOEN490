@@ -1,12 +1,12 @@
-import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
-import { Request, Response, NextFunction } from 'express';
-import { AuthenticationService } from '../services/authenticationService';
+import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { NextFunction, Request, Response } from 'express';
 
+import { AuthenticationModel } from '../models/AuthenticationModel'
+import { AuthenticationService } from '../services/authenticationService';
+import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
-import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
-
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
 
 /**
  * This controller is responsible for verifying the user request has correct parameters input.
@@ -25,7 +25,7 @@ export class AuthenticationController {
             return response.status(400).json("Request is invalid. Missing attributes")
         }
         else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let signUpInfo: ISignUpInformation = requestParams;
             let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
             return res;
@@ -38,17 +38,21 @@ export class AuthenticationController {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
         }
         else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let loginInfo: ILoginInformation = requestParams;
-            let res: any = await this.callServiceForLogin(loginInfo, response, next);
-            return res;
+            try {
+                let res: any = await this.callServiceForLogin(loginInfo, response, next);
+                return res;
+            }
+            catch (error) {
+            }
+
         }
     }
 
     private validateSignUpRequest(request: Request): boolean {
-
-        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password') && request.query.hasOwnProperty('firstName')
-            && request.query.hasOwnProperty('lastName') && request.query.hasOwnProperty('organizationName')) {
+        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password') && request.body.hasOwnProperty('firstName')
+            && request.body.hasOwnProperty('lastName') && request.body.hasOwnProperty('organizationName')) {
             return false;
         }
         else {
@@ -57,7 +61,7 @@ export class AuthenticationController {
     }
 
     private validateLoginRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password')) {
+        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password')) {
             return false;
         }
         else {
@@ -66,7 +70,7 @@ export class AuthenticationController {
     }
 
     private validateUserDetailRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('password') || request.query.hasOwnProperty('organization')) {
+        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organization')) {
             return true;
         } else
             return false;
@@ -78,7 +82,7 @@ export class AuthenticationController {
         if (!this.invalidResponse) {
             return response.status(400).json("Request is invalid")
         } else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let updateUserDetail: IUpdateUserDetail = requestParams;
             try {
                 let res: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
@@ -105,6 +109,7 @@ export class AuthenticationController {
     private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse;
+        console.log(serviceResponse);
         try {
             serviceResponse = await this.authenticationService.processSignUp(signUpInfo);
             return response.status(serviceResponse.statusCode).json(serviceResponse.message);
@@ -121,9 +126,13 @@ export class AuthenticationController {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse
         try {
+
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-            response.setHeader('Set-Cookie', serviceResponse.message);
-            return response.status(serviceResponse.statusCode).json(serviceResponse.message);
+            response && response.cookie('token', serviceResponse.message, { httpOnly: true, secure: true, sameSite: "lax" })
+
+            const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);
+
+            return response.status(serviceResponse.statusCode).json(user);
         } catch (error) {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);
@@ -136,7 +145,7 @@ export class AuthenticationController {
     async createFetchUserDetailsRequest(request, response): Promise<Response> {
         let serviceResponse: IResponse;
         try {
-            let userEmail: any = request.query.email;
+            let userEmail: any = request.body.email;
             this.authenticationService = new AuthenticationService();
             serviceResponse = await this.authenticationService.loadUserDetails(userEmail);
             return response.status(serviceResponse.statusCode).json(JSON.parse(serviceResponse.message));
