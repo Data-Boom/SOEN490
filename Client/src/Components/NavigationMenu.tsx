@@ -9,7 +9,7 @@ import {
   Route
 } from "react-router-dom"
 
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute} from '../Consts/Routes'
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Consts/Routes'
 
 
 import { AboutView } from "./Home/AboutView"
@@ -67,6 +67,7 @@ export default function NavigationMenu(): any {
 
   const handleSignIn = (): void => {
 
+    console.log("handle sign in");
   }
 
   const drawer = (): any => {
