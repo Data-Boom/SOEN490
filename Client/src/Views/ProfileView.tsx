@@ -117,7 +117,6 @@ function parseIdArray(id) {
   } else { return id }
 }
 
-// eslint-disable-next-line no-undef
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props
   const [open, setOpen] = React.useState(false)
@@ -174,7 +173,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   )
 }
 
-// eslint-disable-next-line no-undef
 function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) {
   const { rowsOfUploads } = props
   const [open, setOpen] = React.useState(false)
