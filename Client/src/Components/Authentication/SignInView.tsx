@@ -21,7 +21,7 @@ import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import { putUserInStorage } from '../../Common/LocalStorage'
+import { putUserInStorage } from '../../Common/Storage'
 
 function Copyright() {
   return (

@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 import { IUserAccountModel } from './Remote/Models/IUserAccountModel'
 import NavigationMenu from './Components/NavigationMenu'
 import { ThemeProvider } from '@material-ui/core'
-import { getUserFromStorage } from './Common/LocalStorage'
+import { getUserFromStorage } from './Common/Storage'
 import { theme } from './appTheme'
 
 interface IUserContextProps {
