@@ -2,16 +2,16 @@ import { AppBar, Box, Button, Collapse, Grid, IconButton, Paper, Tab, Table, Tab
 import React, { useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
-import DataboomTestGraph from './DataboomTestGraph.png'
-import { IPasswordSettings } from '../Models/Profile/IProfileModel'
-import { IUser } from '../Models/Profile/IProfileModel'
+import DataboomTestGraph from '../../Common/Assets/DataboomTestGraph.png'
+import { IPasswordSettings } from '../../Models/Profile/IProfileModel'
+import { IUser } from '../../Models/Profile/IProfileModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
-import PasswordForm from '../Components/Profile/PasswordForm'
-import ProfileForm from '../Components/Profile/ProfileForm'
-import UserDetails from '../Components/Profile/UserDetailSection/UserDetails'
-import { exampleDatasets } from '../Models/Datasets/ICompleteDatasetEntity'
+import PasswordForm from './PasswordForm'
+import ProfileForm from './ProfileForm'
+import UserDetails from './UserDetailSection/UserDetails'
+import { exampleDatasets } from '../../Models/Datasets/ICompleteDatasetEntity'
 
 const renderGraphRow = (row) => {
   return (<Table size="small" aria-label="purchases">
@@ -25,6 +25,7 @@ const renderGraphRow = (row) => {
     <TableBody>
       <TableRow >
         <TableCell component="th" scope="row">
+          {/* todo refactor */}
           <img src={DataboomTestGraph} width="200" height="200" />
         </TableCell>
         <TableCell>{row.graphdatasets}</TableCell>
@@ -299,7 +300,7 @@ export function ProfileView() {
             </Grid>
             {editProfile &&
               <Grid item xs={12}>
-                < ProfileForm
+                <ProfileForm
                   user={user}
                   onSubmit={handleSubmit}
                 />

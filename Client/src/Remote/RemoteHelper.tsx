@@ -18,8 +18,8 @@ export const post = async (data: any, route: string): Promise<any> => {
   return response.json()
 }
 
-export const get = async (route: string): Promise<any> => {
-  const url = route
+export const get = async (route: string, query: any = {}): Promise<any> => {
+  const url = `${route}?${query}`
 
   const response = await fetchRemote(url, 'GET')
   return response.json()
@@ -28,7 +28,10 @@ export const get = async (route: string): Promise<any> => {
 const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
   const request: RequestInit = { ...requestBase }
   setMethod(request, method)
-  setData(request, data)
+
+  if (method !== 'GET' && method !== 'HEAD') {
+    setData(request, data)
+  }
 
   try {
     return fetch(url, request)

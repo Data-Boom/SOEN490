@@ -27,7 +27,6 @@ export default function NavigationMenu() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
   const handleSignIn = () => {
   }
 

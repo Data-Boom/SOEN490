@@ -1,13 +1,10 @@
 import { ISignInUserModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
-import { IUserAccountModel, IUserAccountRemoteModel, toLocalUserAccountModel } from "../Models/IUserAccountModel"
+import { IUserAccountModel, IUserAccountRemoteModel, toLocalUserAccountModel } from "../../Models/Authentication/IUserAccountModel"
 
 import { post } from "../RemoteHelper"
 
 const signupRoute = '/signup'
 const loginRoute = '/login'
-const resetPasswordRoute = '/resetPassword'
-const updateUserInfoRoute = '/updateUserInfo'
-const userDetailsRoute = '/userDetails'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
   return post(signUpInfo, signupRoute)

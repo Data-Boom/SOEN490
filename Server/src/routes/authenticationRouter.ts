@@ -31,9 +31,11 @@ router.post('/updateUserInfo', JWTAuthenticator.verifyJWT, async (request: Reque
 });
 
 router.get('/userDetails', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
-
+    console.log('email is');
+    console.log(request.query);
     authenticationController.createFetchUserDetailsRequest(request, response);
 });
 
 
 export { router as authenticationRouter }
+

@@ -15,7 +15,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "./Home/HomeView"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
-import { ProfileView } from "../Views/ProfileView"
+import { ProfileView } from "./Profile/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
 import { Route } from 'react-router'

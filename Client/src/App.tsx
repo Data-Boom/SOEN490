@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 
-import { IUserAccountModel } from './Remote/Models/IUserAccountModel'
+import { IUserAccountModel } from './Models/Authentication/IUserAccountModel'
 import NavigationMenu from './Components/NavigationMenu'
 import { ThemeProvider } from '@material-ui/core'
 import { getUserFromStorage } from './Common/Storage'

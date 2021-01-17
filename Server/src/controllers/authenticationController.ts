@@ -45,6 +45,7 @@ export class AuthenticationController {
                 return res;
             }
             catch (error) {
+
             }
 
         }
@@ -128,7 +129,7 @@ export class AuthenticationController {
         try {
 
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-            response && response.cookie('token', serviceResponse.message, { httpOnly: true, secure: true, sameSite: "lax" })
+            response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
 
             const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);
 
@@ -145,7 +146,7 @@ export class AuthenticationController {
     async createFetchUserDetailsRequest(request, response): Promise<Response> {
         let serviceResponse: IResponse;
         try {
-            let userEmail: any = request.body.email;
+            let userEmail: any = request.query.email;
             this.authenticationService = new AuthenticationService();
             serviceResponse = await this.authenticationService.loadUserDetails(userEmail);
             return response.status(serviceResponse.statusCode).json(JSON.parse(serviceResponse.message));
