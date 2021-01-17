@@ -8,9 +8,9 @@ import { IUser } from '../../Models/Profile/IProfileModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
-import PasswordForm from './PasswordForm'
+import PasswordForm from './PasswordSection/PasswordForm'
 import ProfileForm from './ProfileForm'
-import UserDetails from './UserDetailSection/UserDetails'
+import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { exampleDatasets } from '../../Models/Datasets/ICompleteDatasetEntity'
 
 const renderGraphRow = (row) => {
@@ -290,7 +290,7 @@ export function ProfileView() {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <UserDetails
+              <UserDetailsTab
                 user={user}
               />
             </Grid>

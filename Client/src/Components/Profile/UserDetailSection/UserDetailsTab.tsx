@@ -7,7 +7,7 @@ import { classStyles } from '../../../appTheme'
 interface IProps {
   user: IUser
 }
-export default function UserDetails(props: IProps) {
+export default function UserDetailsTab(props: IProps) {
 
   const { user } = props
 

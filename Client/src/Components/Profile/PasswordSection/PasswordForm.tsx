@@ -3,8 +3,8 @@ import * as Yup from 'yup'
 import { Button, Container } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 
-import { EditPassword } from './PasswordSection/EditPassword'
-import { IPasswordSettings } from '../../Models/Profile/IProfileModel'
+import { EditPassword } from './EditPassword'
+import { IPasswordSettings } from '../../../Models/Profile/IProfileModel'
 import React from 'react'
 
 interface IProps {
