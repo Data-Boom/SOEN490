@@ -27,8 +27,8 @@ export default function Graph(props: IProps) {
     bottom: 50,
     left: 70
   }
-  const outerWidth = props && props.outerWidth || 768
-  const outerHeight = props && props.outerHeight || 500
+  const outerWidth = (props && props.outerWidth) || 768
+  const outerHeight = (props && props.outerHeight) || 500
   const width = outerWidth - margin.left - margin.right
   const height = outerHeight - margin.top - margin.bottom
 
@@ -145,7 +145,7 @@ export default function Graph(props: IProps) {
       // This allows us to change the opacity of a dot on click.
       .on("click", function () {
         const opacity = d3.select(this).style('opacity')
-        if (opacity == '0.5') {
+        if (opacity === '0.5') {
           d3.select(this).style('opacity', 1)
         }
         else {
@@ -187,7 +187,7 @@ export default function Graph(props: IProps) {
         svg
           .selectAll("#legenddotid" + IDList[x])
           .attr("xlink:href", function () {
-            if (active[x] == 0) {
+            if (active[x] === 0) {
               return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU"
             }
             else {
