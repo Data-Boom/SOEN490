@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { AuthenticationController } from '../../controllers/authenticationController';
+import { NextFunction, Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
+
+import { AuthenticationController } from '../../controllers/authenticationController';
 
 describe('Authentication Controller', () => {
     let mockRequest;
@@ -15,6 +16,7 @@ describe('Authentication Controller', () => {
         mockRequest = {};
         mockResponse = {
             status: jest.fn(() => mockResponse),
+            cookie: jest.fn(),
             json: jest.fn(),
             setHeader: jest.fn()
         }
@@ -28,7 +30,7 @@ describe('Authentication Controller', () => {
     test('Valid SignUp Request', async () => {
         const expectedResponse = "Success";
         mockRequest = {
-            query: {
+            body: {
                 email: 'j.comkj23r23r23r23r2',
                 password: '123',
                 isAdmin: 'false',
@@ -46,7 +48,7 @@ describe('Authentication Controller', () => {
     test('Invalid SignUp Request due to missing parameters - Error 400', async () => {
         const expectedResponse = "Request is invalid. Missing attributes";
         mockRequest = {
-            query: {
+            body: {
                 email: 'g@123'
             }
         }
@@ -59,7 +61,7 @@ describe('Authentication Controller', () => {
     test('Invalid Sign Up with Duplicate Email in System - Error 400', async () => {
         const expectedResponse = "Email already exists! Please enter a different email address";
         mockRequest = {
-            query: {
+            body: {
                 email: 'j.comkj',
                 password: '123',
                 isAdmin: 'false',
@@ -78,7 +80,7 @@ describe('Authentication Controller', () => {
     test('Invalid Logic Request due to missing parameters - Error 400', async () => {
         const expectedResponse = "Request is invalid. Email or Password attribute missing";
         mockRequest = {
-            query: {
+            body: {
                 email: 'g@123'
             }
         }
@@ -91,7 +93,7 @@ describe('Authentication Controller', () => {
     test('Login with unregistered Email - Error 400', async () => {
         const expectedResponse = "Email is not in the System or its mispelled. Check Again";
         mockRequest = {
-            query: {
+            body: {
                 email: 'j.comkwgwegwegwegw',
                 password: '123',
             }
@@ -112,7 +114,7 @@ describe('Authentication Controller', () => {
             "account_organizationName": "Mugiwara"
         }
         mockRequest = {
-            query: {
+            body: {
                 email: 'j.comkj',
             }
         }
@@ -124,7 +126,7 @@ describe('Authentication Controller', () => {
     test('Invalid Request to get UserDetails - Bad Email Error 400', async () => {
         const expectedResponse = "Cannot fetch details for this email";
         mockRequest = {
-            query: {
+            body: {
                 email: 'j.comksefsfsj',
             }
         }
@@ -133,9 +135,10 @@ describe('Authentication Controller', () => {
         expect(mockResponse.status).toBeCalledWith(400);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
+
     test('Valid Login Request', async () => {
         mockRequest = {
-            query: {
+            body: {
                 email: 'tester@123.com',
                 password: '123'
             }
@@ -152,7 +155,7 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Success";
 
         mockRequest = {
-            query: {
+            body: {
                 email: 'test@t.com',
                 password: '456',
                 organizationName: 'soen490'
@@ -167,7 +170,7 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Email cannot be found. Request declined";
 
         mockRequest = {
-            query: {
+            body: {
                 email: '',
                 password: '456',
                 organizationName: 'soen490'
@@ -182,7 +185,7 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Request is invalid";
 
         mockRequest = {
-            query: {
+            body: {
                 email: 'test@t.com',
 
             }
