@@ -69,21 +69,21 @@ export class DataUploadModel {
         return allAuthors;
     }
 
-    async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: any[]): Promise<number> {
+    async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceDatePublished: Date, referenceDateAccessed: Date, referenceAuthors: any[]): Promise<number> {
 
         const connection = getConnection();
 
         let publication = new Publications();
         publication.id;
         publication.name = referenceTitle;
-        publication.doi;
+        publication.doi = referenceDOI;
         publication.pages = referencePages;
         publication.publicationtypeId = preferenceTypeID;
         publication.publisherId = publisherNameId;
         publication.year = referenceYear;
         publication.volume = referenceVolume;
-        publication.datePublished;
-        publication.dateAccessed;
+        publication.datePublished = referenceDatePublished;
+        publication.dateAccessed = referenceDateAccessed;
         publication.authors = referenceAuthors;
         await connection.manager.save(publication);
         console.log("publication saved.");

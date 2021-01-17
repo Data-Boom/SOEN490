@@ -38,11 +38,14 @@ export class fileUploadService {
     let referenceType: string = '';
     let referencePublisher: string = '';
     let referenceTitle: string = '';
+    let referenceDOI: string = '';
     let referenceAuthors: IAuthors[] = [];
     let referenceYear: number;
     let referencePages: number;
     let referenceVolume: number;
     let referenceTypeID: number;
+    let referenceDatePublished: Date;
+    let referenceDateAccessed: Date;
     let publisherNameId: number;
     let publicationID: number;
     let dataSetDataTypeID: number;
@@ -112,6 +115,12 @@ export class fileUploadService {
     if (referenceTitleValidation === false)
       return referenceTitleValidation + " reference title should be a string";
 
+    referenceDOI = jsonObj.reference.doi;
+    //check and validates if reference DOI is a string
+    let referenceDOIValidation = this.stringValidation(referenceDOI);
+    if (referenceDOIValidation === false)
+      return referenceTitleValidation + " reference DOI should be a string";
+
     referencePages = jsonObj.reference.pages;
     //check and validates if reference pages is a number 
     let referencePagesValidation = this.numberValidation(referencePages);
@@ -130,8 +139,11 @@ export class fileUploadService {
     if (referenceVolumeVlidation === false)
       return referenceVolumeVlidation + " reference volume should be a number";
 
+    referenceDatePublished = jsonObj.reference.datePublished;
+    referenceDateAccessed = jsonObj.reference.dateAccessed;
+
     try {
-      publicationID = await this.uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, allAuthors);
+      publicationID = await this.uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
       console.log('received publicationID ' + publicationID);
     }
     catch (err) {
