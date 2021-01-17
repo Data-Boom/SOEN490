@@ -1,9 +1,10 @@
 const fileSystem = require('fs');
-import { DataUploadModel } from '../models/DataUploadModel'
-import { IMaterials } from '../models/interfaces/MaterialsInterface';
-import { IAuthors } from '../models/interfaces/AuthorsInterface';
-import { validationSchema } from './validationSchema';
+
 import { BadRequest } from '@tsed/exceptions';
+import { DataUploadModel } from '../models/DataUploadModel'
+import { IAuthors } from '../models/interfaces/AuthorsInterface';
+import { IMaterials } from '../models/interfaces/MaterialsInterface';
+import { validationSchema } from './validationSchema';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -161,11 +162,18 @@ export class fileUploadService {
 
     let dataPointsForVariable = [];
     let dataSetComments = [];
+    //Variable to use in if statement below to check if all the points have the same length as the first point in contents field
+    let pointsMaxLength = dataContentArray[0].point[0].length;
 
     for (let i = 0; i < dataContentArray.length; i++) {
-      dataPointsForVariable.push(dataContentArray[i].point[index]);
-      dataSetComments.push(dataContentArray[i].comments);
+      if (dataContentArray[i].point[index] === pointsMaxLength) {
+        dataPointsForVariable.push(dataContentArray[i].point[index]);
+        dataSetComments.push(dataContentArray[i].comments);
+      } else {
+        console.log("Points lengths are not the same")
+      }
     }
+
     //to check if the two helper arrays are empty or not
     for (let j = 0; j < dataPointsForVariable.length; j++) {
       if ((dataPointsForVariable == null || dataPointsForVariable[j] == '') ||
