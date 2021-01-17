@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
+
 import { AuthenticationController } from '../controllers/authenticationController'
 import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 
@@ -16,7 +17,6 @@ router.post('/signup', (request: Request, response: Response, next: NextFunction
 });
 
 router.post('/login', (request: Request, response: Response, next: NextFunction) => {
-
     authenticationController.createLoginRequest(request, response, next);
 });
 
