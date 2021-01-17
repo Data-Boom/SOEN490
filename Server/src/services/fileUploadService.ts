@@ -44,8 +44,8 @@ export class fileUploadService {
     let referencePages: number;
     let referenceVolume: number;
     let referenceTypeID: number;
-    let referenceDatePublished: Date;
-    let referenceDateAccessed: Date;
+    let referenceDatePublished: Date = null;
+    let referenceDateAccessed: Date = null;
     let publisherNameId: number;
     let publicationID: number;
     let dataSetDataTypeID: number;
@@ -139,8 +139,10 @@ export class fileUploadService {
     if (referenceVolumeVlidation === false)
       return referenceVolumeVlidation + " reference volume should be a number";
 
-    referenceDatePublished = jsonObj.reference.datePublished;
-    referenceDateAccessed = jsonObj.reference.dateAccessed;
+    if (jsonObj.reference.datePublished !== undefined)
+      referenceDatePublished = jsonObj.reference.datePublished;
+    if (jsonObj.reference.dateAccessed !== undefined)
+      referenceDateAccessed = jsonObj.reference.dateAccessed;
 
     try {
       publicationID = await this.uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
@@ -212,7 +214,6 @@ export class fileUploadService {
     this.arrTypeValidationCheck(individualDataSetComments, 'string');
 
     await this.uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
-
     return "Upload was successful!";
   }
 

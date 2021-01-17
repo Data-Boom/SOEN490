@@ -1,4 +1,4 @@
-import { getConnection } from "typeorm";
+import { Connection, getConnection } from "typeorm";
 
 import { Authors } from './entities/Authors';
 import { Publications } from './entities/Publications';
@@ -24,55 +24,147 @@ import { IAuthors } from './interfaces/AuthorsInterface';
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
  */
 export class DataUploadModel {
+    private connection: Connection;
     constructor() {
+        this.connection = getConnection();
     }
 
-    async insertReferenceType(preferenceType: string): Promise<number> {
+    private selectReferenceTypeIdQuery = (publicationTypeReceived: string) =>
+        this.connection.createQueryBuilder(Publicationtype, 'publicationType')
+            .select('publicationType.id', 'id')
+            .where('LOWER(publicationType.name) = LOWER(:publicationTypeRef)', { publicationTypeRef: publicationTypeReceived })
+            .getRawOne();
 
-        const connection = getConnection();
-
-        let book = new Publicationtype();
-        book.id;
-        book.name = preferenceType;
-        await connection.manager.save(book);
-        return book.id;
+    private async fetchReferenceTypeId(publicationTypeReceived: string): Promise<any> {
+        let publicationTypeExists = await this.selectReferenceTypeIdQuery(publicationTypeReceived)
+        if (publicationTypeExists == undefined) {
+            publicationTypeExists = false;
+        }
+        return publicationTypeExists;
     }
 
-    async insertPublisher(publisher: string): Promise<number> {
+    async insertReferenceType(publicationTypeReceived: string): Promise<number> {
+        let publicationType = new Publicationtype();
+        publicationType.id;
+        publicationType.name = publicationTypeReceived;
+        let publicationTypeExists: any;
+        publicationTypeExists = await this.fetchReferenceTypeId(publicationTypeReceived);
+        if (publicationTypeExists != false) {
+            publicationType.id = publicationTypeExists.id;
+        }
+        else {
+            await this.connection.manager.save(publicationType);
+        }
+        return publicationType.id;
+    }
 
-        const connection = getConnection();
+    private selectPublisherIdQuery = (publisherReceived: string) =>
+        this.connection.createQueryBuilder(Publisher, 'publisher')
+            .select('publisher.id', 'id')
+            .where('LOWER(publisher.name) = LOWER(:publisherRef)', { publisherRef: publisherReceived })
+            .getRawOne();
 
-        let publisherName = new Publisher();
-        publisherName.id;
-        publisherName.name = publisher;
-        await connection.manager.save(publisherName);
-        return publisherName.id;
+    private async fetchPublisherId(publisherReceived: string): Promise<any> {
+        let publisherExists = await this.selectPublisherIdQuery(publisherReceived)
+        if (publisherExists == undefined) {
+            publisherExists = false;
+        }
+        return publisherExists;
+    }
+
+    async insertPublisher(publisherReceived: string): Promise<number> {
+        let publisher = new Publisher();
+        publisher.id;
+        publisher.name = publisherReceived;
+        let publisherExists: any;
+        publisherExists = await this.fetchPublisherId(publisherReceived);
+        if (publisherExists != false) {
+            publisher.id = publisherExists.id;
+        }
+        else {
+            await this.connection.manager.save(publisher);
+        }
+        return publisher.id;
+    }
+
+    private selectAuthorIdQuery = (firstname: string, lastname: string) =>
+        this.connection.createQueryBuilder(Authors, 'author')
+            .select('author.id', 'id')
+            .where('LOWER(author.firstName) = LOWER(:firstName)', { firstName: firstname })
+            .andWhere('LOWER(author.lastName) = LOWER(:lastName)', { lastName: lastname })
+
+    private async getAuthorIdHasMiddleName(author: IAuthors): Promise<any> {
+        let authorExists =
+            await this.selectAuthorIdQuery(author.firstname, author.lastname)
+                .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middlename })
+                .getRawOne();
+        if (authorExists == undefined) {
+            authorExists = false;
+        }
+        return authorExists;
+    }
+
+    private async getAuthorIdNoMiddleName(author: IAuthors): Promise<any> {
+        let authorExists =
+            await this.selectAuthorIdQuery(author.firstname, author.lastname)
+                .getRawOne();
+        if (authorExists == undefined) {
+            authorExists = false;
+        }
+        return authorExists;
+    }
+
+    private async insertIndividualAuthor(authorReceived: IAuthors): Promise<any> {
+        let author = new Authors();
+        author.id;
+        author.firstName = authorReceived.firstname;
+        author.lastName = authorReceived.lastname;
+        author.middleName = authorReceived.middlename;
+        let authorExists: any;
+        if (authorReceived.middlename != null) {
+            authorExists = await this.getAuthorIdHasMiddleName(authorReceived);
+        }
+        else {
+            authorExists = await this.getAuthorIdNoMiddleName(authorReceived);
+        }
+        if (authorExists != false) {
+            author.id = authorExists.id;
+        }
+        else {
+            await this.connection.manager.save(author);
+        }
+        return author;
     }
 
     async insertAuthors(storeAuthors: IAuthors[]): Promise<any[]> {
-
-        const connection = getConnection();
-
-        console.log(storeAuthors);
         let allAuthors: any[] = [];
-
         for (let i = 0; i < storeAuthors.length; i++) {
-            console.log(storeAuthors[i].firstname);
-            let author = new Authors();
-            author.id;
-            author.firstName = storeAuthors[i].firstname;
-            author.lastName = storeAuthors[i].lastname;
-            author.middleName = storeAuthors[i].middlename;
-            await connection.manager.save(author);
+            let author = await this.insertIndividualAuthor(storeAuthors[i]);
             allAuthors.push(author);
         }
         return allAuthors;
     }
+    private selectPublicationIdQuery = (publicationName: string, publicationDOI: string, publicationPages: number, publicationYear: number, publicationDatePublished: Date, publicationAccessed: Date) =>
+        this.connection.createQueryBuilder(Publications, 'publication')
+            .select('publication.id', 'id')
+            .where("LOWER(publication.name) = LOWER(:publicationNameRef)")
+            .andWhere("LOWER(publication.doi) = LOWER(:publicationDOIRef)")
+            .andWhere("publication.pages = :publicationPagesRef OR publication.pages IS NULL")
+            .andWhere("publication.year = :publicationYearRef")
+            .andWhere("publication.datePublished = :publicationDatePublishedRef OR publication.datePublished IS NULL")
+            .andWhere("publication.dateAccessed = :publicationAccessedRef OR publication.dateAccessed IS NULL")
+            .setParameters({ publicationNameRef: publicationName, publicationDOIRef: publicationDOI, publicationPagesRef: publicationPages, publicationYearRef: publicationYear, publicationDatePublishedRef: publicationDatePublished, publicationAccessedRef: publicationAccessed })
+            .getRawOne();
+
+    private async fetchPublicationId(publicationName: string, publicationDOI: string, publicationPages: number, publicationYear: number, publicationDatePublished: Date, publicationAccessed: Date): Promise<any> {
+        let publicationExists = await this.selectPublicationIdQuery(publicationName, publicationDOI, publicationPages, publicationYear, publicationDatePublished, publicationAccessed);
+        if (publicationExists == undefined) {
+            publicationExists = false;
+        }
+        return publicationExists;
+    }
 
     async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceDatePublished: Date, referenceDateAccessed: Date, referenceAuthors: any[]): Promise<number> {
-
-        const connection = getConnection();
-
         let publication = new Publications();
         publication.id;
         publication.name = referenceTitle;
@@ -85,67 +177,185 @@ export class DataUploadModel {
         publication.datePublished = referenceDatePublished;
         publication.dateAccessed = referenceDateAccessed;
         publication.authors = referenceAuthors;
-        await connection.manager.save(publication);
+        let publicationExists: any;
+        publicationExists = await this.fetchPublicationId(referenceTitle, referenceDOI, referencePages, referenceVolume, referenceYear, referenceDatePublished, referenceDateAccessed);
+        if (publicationExists != false) {
+            publication.id = publicationExists.id;
+        }
+        else {
+            await this.connection.manager.save(publication);
+        }
         console.log("publication saved.");
         return publication.id;
     }
 
+    private selectCompositionIdQuery = (compositionReceived: string) =>
+        this.connection.createQueryBuilder(Composition, 'composition')
+            .select('composition.id', 'id')
+            .where('LOWER(composition.composition) = LOWER(:compositionRef)', { compositionRef: compositionReceived })
+            .getRawOne();
+
+    private async fetchCompositionId(compositionReceived: string): Promise<any> {
+        let compositionExists = await this.selectCompositionIdQuery(compositionReceived)
+        if (compositionExists == undefined) {
+            compositionExists = false;
+        }
+        return compositionExists;
+    }
+
+    private async insertIndividualComposition(compositionReceived: string): Promise<number> {
+        let composition = new Composition();
+        composition.id;
+        composition.composition = compositionReceived;
+        let compositionExists: any;
+        compositionExists = await this.fetchCompositionId(compositionReceived);
+        if (compositionExists != false) {
+            composition.id = compositionExists.id;
+        }
+        else {
+            await this.connection.manager.save(composition);
+        }
+        return composition.id;
+    }
+
+    private selectMaterialIdQuery = (materialReceived: string, compositionId: number) =>
+        this.connection.createQueryBuilder(Material, 'material')
+            .select('material.id', 'id')
+            .where('LOWER(material.details) = LOWER(:materialRef)', { materialRef: materialReceived })
+            .andWhere('material.composition = :compositionIdRef', { compositionIdRef: compositionId })
+            .getRawOne();
+
+    private async fetchMaterialId(materialReceived: string, compositionId: number): Promise<any> {
+        let materialExists = await this.selectMaterialIdQuery(materialReceived, compositionId)
+        if (materialExists == undefined) {
+            materialExists = false;
+        }
+        return materialExists;
+    }
+
+    private async insertIndividualMaterial(materialReceived: string, compositionId: number): Promise<Material> {
+        let material = new Material();
+        material.id;
+        material.compositionId = compositionId;
+        material.details = materialReceived;
+        let materialExists: any;
+        materialExists = await this.fetchMaterialId(materialReceived, compositionId);
+        if (materialExists != false) {
+            material.id = materialExists.id;
+        }
+        else {
+            await this.connection.manager.save(material);
+        }
+        return material;
+    }
+
     async insertMaterial(material: IMaterials[]): Promise<any[]> {
-
-        const connection = getConnection();
         let allMaterials: any[] = [];
-
         for (var i = 0; i < material.length; i++) {
-            let composition = new Composition();
-            composition.id;
-            composition.composition = material[i].composition;
-            await connection.manager.save(composition);
-
-            let someMaterial = new Material();
-            someMaterial.id;
-            someMaterial.compositionId = composition.id;
-            someMaterial.details = material[i].details;
-            await connection.manager.save(someMaterial);
+            let compositionId = await this.insertIndividualComposition(material[i].composition);
+            let someMaterial = await this.insertIndividualMaterial(material[i].details, compositionId);
             allMaterials.push(someMaterial);
         }
         return allMaterials;
     }
 
-    async insertCategories(category: string, subCategory: string): Promise<number[]> {
+    private selectCategoryIdQuery = (categoryReceived: string) =>
+        this.connection.createQueryBuilder(Category, 'category')
+            .select('category.id', 'id')
+            .where('LOWER(category.name) = LOWER(:categoryRef)', { categoryRef: categoryReceived })
+            .getRawOne();
 
-        const connection = getConnection();
-        let categoryIDs = [];
+    private async fetchCategoryId(categoryReceived: string): Promise<any> {
+        let categoryExists = await this.selectCategoryIdQuery(categoryReceived)
+        if (categoryExists == undefined) {
+            categoryExists = false;
+        }
+        return categoryExists;
+    }
 
+    private async insertIndividualCategory(category: string): Promise<number> {
         let someCategory = new Category();
         someCategory.id;
         someCategory.name = category;
-        await connection.manager.save(someCategory);
-
-        let someSubCategory = new Subcategory();
-        someSubCategory.id;
-        someSubCategory.name = subCategory;
-        await connection.manager.save(someSubCategory);
-        categoryIDs.push(someCategory.id, someSubCategory.id);
-        return categoryIDs;
+        let categoryExists: any;
+        categoryExists = await this.fetchCategoryId(category);
+        if (categoryExists != false) {
+            someCategory.id = categoryExists.id;
+        }
+        else {
+            await this.connection.manager.save(someCategory);
+        }
+        return someCategory.id
     }
 
-    async insertDataSetDataType(datasetdatatypeValue: string): Promise<number> {
+    private selectSubcategoryIdQuery = (subcategoryReceived: string) =>
+        this.connection.createQueryBuilder(Subcategory, 'subcategory')
+            .select('subcategory.id', 'id')
+            .where('LOWER(subcategory.name) = LOWER(:subcategoryRef)', { subcategoryRef: subcategoryReceived })
+            .getRawOne();
 
-        const connection = getConnection();
+    private async fetchSubcategoryId(subcategoryReceived: string): Promise<any> {
+        let subcategoryExists = await this.selectSubcategoryIdQuery(subcategoryReceived)
+        if (subcategoryExists == undefined) {
+            subcategoryExists = false;
+        }
+        return subcategoryExists;
+    }
 
+    private async insertIndividualSubcategory(subcategory: string): Promise<number> {
+        let someSubcategory = new Subcategory();
+        someSubcategory.id;
+        someSubcategory.name = subcategory;
+        let subcategoryExists: any;
+        subcategoryExists = await this.fetchSubcategoryId(subcategory);
+        if (subcategoryExists != false) {
+            someSubcategory.id = subcategoryExists.id;
+        }
+        else {
+            await this.connection.manager.save(someSubcategory);
+        }
+        return someSubcategory.id
+    }
+
+    async insertCategories(category: string, subcategory: string): Promise<number[]> {
+        let categoryId = await this.insertIndividualCategory(category);
+        let subcategoryId = await this.insertIndividualSubcategory(subcategory);
+        let allCategoryIDs = [categoryId, subcategoryId];
+        return allCategoryIDs;
+    }
+
+    private selectDataSetDataTypeIdQuery = (datasetdatatypeReceived: string) =>
+        this.connection.createQueryBuilder(Datasetdatatype, 'datasetdatatype')
+            .select('datasetdatatype.id', 'id')
+            .where('LOWER(datasetdatatype.name) = LOWER(:datasetdatatypeRef)', { datasetdatatypeRef: datasetdatatypeReceived })
+            .getRawOne();
+
+    private async fetchDataSetDataTypeId(datasetdatatypeReceived: string): Promise<any> {
+        let datasetdatatypeExists = await this.selectDataSetDataTypeIdQuery(datasetdatatypeReceived)
+        if (datasetdatatypeExists == undefined) {
+            datasetdatatypeExists = false;
+        }
+        return datasetdatatypeExists;
+    }
+
+    async insertDataSetDataType(datasetdatatypeReceived: string): Promise<number> {
         let datasetdatatype = new Datasetdatatype();
         datasetdatatype.id;
-        datasetdatatype.name = datasetdatatypeValue;
-        await connection.manager.save(datasetdatatype);
-        console.log("datasetdatatypeValue saved.");
+        datasetdatatype.name = datasetdatatypeReceived;
+        let datasetdatatypeExists: any;
+        datasetdatatypeExists = await this.fetchDataSetDataTypeId(datasetdatatypeReceived);
+        if (datasetdatatypeExists != false) {
+            datasetdatatype.id = datasetdatatypeExists.id;
+        }
+        else {
+            await this.connection.manager.save(datasetdatatype);
+        }
+        console.log("datasetdatatype saved.");
         return datasetdatatype.id;
     }
 
 
     async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any[], dataSetComments: string): Promise<number> {
-
-        const connection = getConnection();
-
         let dataset = new Dataset();
         dataset.id;
         dataset.name = dataSetName;
@@ -155,38 +365,71 @@ export class DataUploadModel {
         dataset.subcategoryId = categoryIDs[1];
         dataset.materials = allMaterials;
         dataset.comments = dataSetComments;
-        await connection.manager.save(dataset);
+        await this.connection.manager.save(dataset);
         console.log("Dataset saved.");
         return dataset.id;
     }
 
-    async insertUnits(someUnit: string): Promise<number> {
+    private selectUnitsIdQuery = (unitsReceived: string) =>
+        this.connection.createQueryBuilder(Units, 'units')
+            .select('units.id', 'id')
+            .where('LOWER(units.name) = LOWER(:unitsRef)', { unitsRef: unitsReceived })
+            .getRawOne();
 
-        const connection = getConnection();
+    private async fetchUnitsId(unitsReceived: string): Promise<any> {
+        let unitsExists = await this.selectUnitsIdQuery(unitsReceived)
+        if (unitsExists == undefined) {
+            unitsExists = false;
+        }
+        return unitsExists;
+    }
 
+    async insertUnits(unitReceived: string): Promise<number> {
         let units = new Units();
         units.id;
-        units.name = someUnit;
-        units.units = someUnit;
-        await connection.manager.save(units);
+        units.name = unitReceived;
+        units.units = unitReceived;
+        let unitsExists: any;
+        unitsExists = await this.fetchUnitsId(unitReceived);
+        if (unitsExists != false) {
+            units.id = unitsExists.id;
+        }
+        else {
+            await this.connection.manager.save(units);
+        }
         return units.id;
     }
 
+    private selectRepresentationIdQuery = (reprReceived: string) =>
+        this.connection.createQueryBuilder(Representations, 'repr')
+            .select('repr.id', 'id')
+            .where('LOWER(repr.repr) = LOWER(:reprRef)', { reprRef: reprReceived })
+            .getRawOne();
+
+    private async fetchRepresentationId(reprReceived: string): Promise<any> {
+        let reprExists = await this.selectRepresentationIdQuery(reprReceived)
+        if (reprExists == undefined) {
+            reprExists = false;
+        }
+        return reprExists;
+    }
+
     async insertRepresentation(representationUnit: string): Promise<number> {
-
-        const connection = getConnection();
-
         let repr = new Representations();
         repr.id;
         repr.repr = representationUnit;
-        await connection.manager.save(repr);
+        let reprExists: any;
+        reprExists = await this.fetchRepresentationId(representationUnit);
+        if (reprExists != false) {
+            repr.id = reprExists.id;
+        }
+        else {
+            await this.connection.manager.save(repr);
+        }
         return repr.id;
     }
 
     async insertDataPointsOfSet(dataSetID: number, dataVariableName: string, dataPointValues: number[], unitsID: number, reprID: number) {
-
-        const connection = getConnection();
-
         let datapoint = new Datapoints();
         datapoint.id;
         datapoint.datasetId = dataSetID;
@@ -194,18 +437,14 @@ export class DataUploadModel {
         datapoint.values = dataPointValues;
         datapoint.unitsId = unitsID;
         datapoint.representationsId = reprID;
-        await connection.manager.save(datapoint);
+        await this.connection.manager.save(datapoint);
     }
 
     async insertDataPointsOfSetComments(dataSetID: number, comments: string[]) {
-
-        const connection = getConnection();
-
         let datapointcomments = new Datapointcomments();
         datapointcomments.id;
         datapointcomments.datasetId = dataSetID;
         datapointcomments.comments = comments;
-        await connection.manager.save(datapointcomments);
+        await this.connection.manager.save(datapointcomments);
     }
 }
-
