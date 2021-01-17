@@ -3,6 +3,7 @@ import { DataUploadModel } from '../models/DataUploadModel'
 import { IMaterials } from '../models/interfaces/MaterialsInterface';
 import { IAuthors } from '../models/interfaces/AuthorsInterface';
 import { validationSchema } from './validationSchema';
+import { BadRequest } from '@tsed/exceptions';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -45,23 +46,16 @@ export class fileUploadService {
     let datasetID: number;
     let unitsID: number;
     let reprID: number;
-    let response: any;
-
 
     let jsonObj: any = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
 
-    console.log("-----------------------------------Validating--------------------------");
-
     try {
-      validationSchema.validate(jsonObj)
+      await validationSchema.validate(jsonObj)
     }
     catch (err) {
-      return "error status: " + err.status + ". Message: " + err.message;
+      throw new BadRequest(err.message);
     }
 
-
-
-    console.log("====================end of validation===================");
 
     // Create this object after the parsing passes
     this.uploadModel = new DataUploadModel();
