@@ -2,11 +2,7 @@ const fileSystem = require('fs');
 import { DataUploadModel } from '../models/DataUploadModel'
 import { IMaterials } from '../models/interfaces/MaterialsInterface';
 import { IAuthors } from '../models/interfaces/AuthorsInterface';
-import { schemaValidator } from '../services/validationSchema';
-
-//------------start of ouline validation----//
-const Validator = require('jsonschema').Validator;
-const v = new Validator();
+import { validationSchema } from './validationSchema';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -49,22 +45,23 @@ export class fileUploadService {
     let datasetID: number;
     let unitsID: number;
     let reprID: number;
+    let response: any;
 
-    let schema = schemaValidator.baseSchema;
-    //to run validation of the json file outline
-    v.addSchema(schemaValidator.referenceValidationSchema, '/referenceSchema');
-    v.addSchema(schemaValidator.materialValidationSchema, '/materialSchema');
-    v.addSchema(schemaValidator.materialDetailsValidationSchema, '/m2schema');
-    v.addSchema(schemaValidator.dataValidationSchema, '/dataSchema');
-    v.addSchema(schemaValidator.variableValidationSchema, '/variableSchema');
-    v.addSchema(schemaValidator.variableDetailsValidationSchema, '/v2Schema');
-    v.addSchema(schemaValidator.contentsValidationSchema, '/contentsSchema');
-    v.addSchema(schemaValidator.contentsDetailsValidationSchema, '/c2Schema');
-
-    //to check validation schema
-    console.log(v.validate((fileSystem.readFileSync(filePathOfJson)), schema));
 
     let jsonObj: any = (JSON.parse(fileSystem.readFileSync(filePathOfJson)));
+
+    console.log("-----------------------------------Validating--------------------------");
+
+    try {
+      validationSchema.validate(jsonObj)
+    }
+    catch (err) {
+      return "error status: " + err.status + ". Message: " + err.message;
+    }
+
+
+
+    console.log("====================end of validation===================");
 
     // Create this object after the parsing passes
     this.uploadModel = new DataUploadModel();
@@ -99,6 +96,7 @@ export class fileUploadService {
     referenceAuthors = jsonObj.reference.authors;
 
     this.arrTypeValidationCheck(referenceAuthors, 'string');
+
     try {
       await this.uploadModel.insertAuthors(referenceAuthors);
       console.log('reference authors: ' + referenceAuthors);

@@ -1,123 +1,65 @@
-export const schemaValidator = {
-    'baseSchema': {
-        "id": "/baseSchema",
-        "type": "object",
-        "properties": {
-            "reference": {
-                "$ref": "/referenceValidationSchema"
-            },
-            "datasetName": { "type": "string" },
-            "material": {
-                "$ref": "/materialValidationSchema"
-            },
-            "category": { "type": "string" },
-            "subcategory": { "type": "string" },
-            "data": {
-                "$ref": "/dataValidationSchema"
-            }
-        },
-        "required": ["reference", "datasetName", "material", "data"]
-    },
+import * as Yup from 'yup';
 
-
-    'referenceValidationSchema': {
-        "id": "/referenceValidationSchema",
-        "type": "object",
-        "properties": {
-            "type": { "type": "string" },
-            "publisher": { "type": "string" },
-            "authors": {
-                "$ref": "/authorsValidationSchema"
-            },
-            "title": { "type": "string" },
-            "volume": { "type": "integer" },
-            "pages": { "type": "integer" },
-            "year": { "type": "integer" }
-        },
-        "required": ["authors"]
-    },
-
-    'authorsValidationSchema': {
-        "id": "/authorsValidationSchema",
-        "type": "object",
-        "properties": {
-            "firstname": { "type": "string" },
-            "middlename": { "type": "string" },
-            "lasttname": { "type": "string" }
-        },
-        "required": ["firstname", "lastname"]
-    },
-
-    'materialValidationSchema': {
-        "id": "/materialValidationSchema",
-        "type": "array",
-        "items": {
-            "$ref": "/materialDetailsValidationSchema"
-        }
-    },
-
-    'materialDetailsValidationSchema': {
-        "id": "/materialDetailsValidationSchema",
-        "type": "object",
-        "properties": {
-            "composition": { "type": "string" },
-            "details": { "type": "string" }
-        },
-        "required": ["composition", "details"]
-    },
-
-    'dataValidationSchema': {
-        "id": "/dataValidationSchema",
-        "type": "object",
-        "properties": {
-            "variables": {
-                "$ref": "/variableValidationSchema"
-            },
-            "contents": {
-                "$ref": "/contentsValidationSchema"
-            },
-            "comments": { "type": "string" }
-        }
-    },
-
-    'variableValidationSchema': {
-        "id": "/variableValidationSchema",
-        "type": "array",
-        "properties": {
-            "$ref": "/variableDetailsValidationSchema"
-        }
-    },
-
-    'variableDetailsValidationSchema': {
-        "id": "/variableDetailsValidationSchema",
-        "type": "object",
-        "properties": {
-            "name": { "type": "string" },
-            "repr": { "type": "string" },
-            "units": { "type": "string" }
-        },
-        "required": ["name", "repr", "units"]
-    },
-
-    'contentsValidationSchema': {
-        "id": "/contentsValidationSchema",
-        "type": "array",
-        "properties": {
-            "$ref": "/contentsDetailsValidationSchema"
-        }
-    },
-
-    'contentsDetailsValidationSchema': {
-        "id": "/contentsDetailsValidationSchema",
-        "type": "object",
-        "properties": {
-            "points": {
-                "type": "array",
-                "items": { "type": "number" },
-            },
-            "comments": { "type": "string" }
-        },
-        "required": ["points"]
-    },
-
+const integerMessage = (fieldName: string): string => {
+    return `${fieldName} should be an integer`
 }
+
+
+const requiredMessage = (fieldName: string): string => {
+    return `${fieldName} is a required field`
+}
+
+const referenceValidationSchema = Yup.object().shape({
+    type: Yup.string().trim().strict().required(requiredMessage('Type')),
+    publisher: Yup.string().trim().strict().required(requiredMessage('Publisher')),
+    authors: Yup.array().of(
+        Yup.object().shape(
+            {
+                firstname: Yup.string().trim().strict().required('First Name is a required field'),
+                middlename: Yup.string().strict(),
+                lastname: Yup.string().trim().strict().required('Last Name is a required field')
+            }
+        )
+    ),
+    title: Yup.string().trim().strict().required(requiredMessage('Title')),
+    volume: Yup.number().integer(integerMessage('Volume')).required(requiredMessage('Volume')),
+    pages: Yup.number().integer(integerMessage('Pages')).required(requiredMessage('Pages')),
+    year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
+})
+
+export const variableValidationSchema = Yup.object().shape(
+    {
+        name: Yup.string().trim().strict().required(requiredMessage('Name')),
+        repr: Yup.string().trim().strict().required(requiredMessage('Representation')),
+        units: Yup.string().trim().strict().required(requiredMessage('Units'))
+    }
+)
+
+const dataValidationSchema = Yup.object().shape({
+    variables: Yup.array().of(variableValidationSchema),
+    contents: Yup.array().of(
+        Yup.object().shape(
+            {
+                point: Yup.array().of(Yup.number()),
+                comments: Yup.string().strict()
+            }
+        )
+    ),
+    comments: Yup.string()
+})
+
+const referenceMaterialSchema =
+    Yup.object().shape({
+        composition: Yup.string().strict().trim().required('Composition is required field'),
+        details: Yup.string().trim().strict().required('Composition is required field')
+    })
+
+export const validationSchema = Yup.object().shape({
+    reference: referenceValidationSchema,
+    ["dataset name"]: Yup.string().strict().required(requiredMessage('Dataset Name')),
+    material: Yup.array().of(referenceMaterialSchema),
+    ["data type"]: Yup.string().strict().required(requiredMessage('Dataset Type')),
+    data: dataValidationSchema,
+    category: Yup.string().strict(),
+    subcategory: Yup.string().strict()
+})
