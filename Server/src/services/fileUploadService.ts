@@ -97,10 +97,10 @@ export class fileUploadService {
 
     //checks and validates if ref authors are strings and handles error--
     referenceAuthors = jsonObj.reference.authors;
-
     this.arrTypeValidationCheck(referenceAuthors, 'string');
+    let allAuthors: any[];
     try {
-      await this.uploadModel.insertAuthors(referenceAuthors);
+      allAuthors = await this.uploadModel.insertAuthors(referenceAuthors);
       console.log('reference authors: ' + referenceAuthors);
     } catch (err) {
       console.log('reference authors not found....request rejected');
@@ -131,7 +131,7 @@ export class fileUploadService {
       return referenceVolumeVlidation + " reference volume should be a number";
 
     try {
-      publicationID = await this.uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
+      publicationID = await this.uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, allAuthors);
       console.log('received publicationID ' + publicationID);
     }
     catch (err) {
@@ -141,11 +141,12 @@ export class fileUploadService {
     //check and validates if material array index contents are of string
     material = jsonObj.material;
     this.arrTypeValidationCheck(material, 'string');
+    let allMaterials: any[];
     try {
-      await this.uploadModel.insertMaterial(material);
-      console.log('received material' + material);
+      allMaterials = await this.uploadModel.insertMaterial(material);
+      console.log('received material(s)' + material);
     } catch (err) {
-      console.log('material not found');
+      console.log('material(s) not found');
     }
 
     category = jsonObj.category;
@@ -163,7 +164,7 @@ export class fileUploadService {
     dataSetName = jsonObj["dataset name"];
     dataSetComments = jsonObj.data.comments;
     try {
-      datasetID = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, material, dataSetComments)
+      datasetID = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments)
       console.log('DatasetID received: ' + datasetID);
     } catch (err) {
       console.log('error receiving datasetID....request rejected');

@@ -49,11 +49,12 @@ export class DataUploadModel {
         return publisherName.id;
     }
 
-    async insertAuthors(storeAuthors: IAuthors[]) {
+    async insertAuthors(storeAuthors: IAuthors[]): Promise<any[]> {
 
         const connection = getConnection();
 
         console.log(storeAuthors);
+        let allAuthors: any[] = [];
 
         for (let i = 0; i < storeAuthors.length; i++) {
             console.log(storeAuthors[i].firstname);
@@ -63,7 +64,9 @@ export class DataUploadModel {
             author.lastName = storeAuthors[i].lastname;
             author.middleName = storeAuthors[i].middlename;
             await connection.manager.save(author);
+            allAuthors.push(author);
         }
+        return allAuthors;
     }
 
     async insertPublication(referenceTitle: string, referencePages: number, preferenceTypeID: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: any[]): Promise<number> {
@@ -87,9 +90,10 @@ export class DataUploadModel {
         return publication.id;
     }
 
-    async insertMaterial(material: IMaterials[]) {
+    async insertMaterial(material: IMaterials[]): Promise<any[]> {
 
         const connection = getConnection();
+        let allMaterials: any[] = [];
 
         for (var i = 0; i < material.length; i++) {
             let composition = new Composition();
@@ -102,7 +106,9 @@ export class DataUploadModel {
             someMaterial.compositionId = composition.id;
             someMaterial.details = material[i].details;
             await connection.manager.save(someMaterial);
+            allMaterials.push(someMaterial);
         }
+        return allMaterials;
     }
 
     async insertCategories(category: string, subCategory: string): Promise<number[]> {
@@ -136,7 +142,7 @@ export class DataUploadModel {
     }
 
 
-    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], material: any[], dataSetComments: string): Promise<number> {
+    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any[], dataSetComments: string): Promise<number> {
 
         const connection = getConnection();
 
@@ -147,10 +153,10 @@ export class DataUploadModel {
         dataset.publicationId = publicationID;
         dataset.categoryId = categoryIDs[0];
         dataset.subcategoryId = categoryIDs[1];
-        dataset.materials = material;
+        dataset.materials = allMaterials;
         dataset.comments = dataSetComments;
         await connection.manager.save(dataset);
-        console.log("First dataset saved.");
+        console.log("Dataset saved.");
         return dataset.id;
     }
 
