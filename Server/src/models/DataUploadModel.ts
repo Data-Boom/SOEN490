@@ -144,20 +144,18 @@ export class DataUploadModel {
         }
         return allAuthors;
     }
-    private selectPublicationIdQuery = (publicationName: string, publicationDOI: string, publicationPages: number, publicationYear: number, publicationDatePublished: Date, publicationAccessed: Date) =>
+    private selectPublicationIdQuery = (publicationName: string, publicationDOI: string, publicationPages: number, publicationVolume: number, publicationYear: number) =>
         this.connection.createQueryBuilder(Publications, 'publication')
             .select('publication.id', 'id')
-            .where("LOWER(publication.name) = LOWER(:publicationNameRef)")
-            .andWhere("LOWER(publication.doi) = LOWER(:publicationDOIRef)")
-            .andWhere("publication.pages = :publicationPagesRef OR publication.pages IS NULL")
-            .andWhere("publication.year = :publicationYearRef")
-            .andWhere("publication.datePublished = :publicationDatePublishedRef OR publication.datePublished IS NULL")
-            .andWhere("publication.dateAccessed = :publicationAccessedRef OR publication.dateAccessed IS NULL")
-            .setParameters({ publicationNameRef: publicationName, publicationDOIRef: publicationDOI, publicationPagesRef: publicationPages, publicationYearRef: publicationYear, publicationDatePublishedRef: publicationDatePublished, publicationAccessedRef: publicationAccessed })
+            .where('LOWER(publication.name) = LOWER(:publicationNameRef)', { publicationNameRef: publicationName })
+            .andWhere('LOWER(publication.doi) = LOWER(:publicationDOIRef)', { publicationDOIRef: publicationDOI })
+            .andWhere('publication.pages = :publicationPagesRef', { publicationPagesRef: publicationPages })
+            .andWhere('publication.volume = :publicationVolumeRef', { publicationVolumeRef: publicationVolume })
+            .andWhere('publication.year = :publicationYearRef', { publicationYearRef: publicationYear })
             .getRawOne();
 
-    private async fetchPublicationId(publicationName: string, publicationDOI: string, publicationPages: number, publicationYear: number, publicationDatePublished: Date, publicationAccessed: Date): Promise<any> {
-        let publicationExists = await this.selectPublicationIdQuery(publicationName, publicationDOI, publicationPages, publicationYear, publicationDatePublished, publicationAccessed);
+    private async fetchPublicationId(publicationName: string, publicationDOI: string, publicationPages: number, publicationVolume: number, publicationYear: number): Promise<any> {
+        let publicationExists = await this.selectPublicationIdQuery(publicationName, publicationDOI, publicationPages, publicationVolume, publicationYear);
         if (publicationExists == undefined) {
             publicationExists = false;
         }
@@ -178,7 +176,7 @@ export class DataUploadModel {
         publication.dateAccessed = referenceDateAccessed;
         publication.authors = referenceAuthors;
         let publicationExists: any;
-        publicationExists = await this.fetchPublicationId(referenceTitle, referenceDOI, referencePages, referenceVolume, referenceYear, referenceDatePublished, referenceDateAccessed);
+        publicationExists = await this.fetchPublicationId(referenceTitle, referenceDOI, referencePages, referenceVolume, referenceYear);
         if (publicationExists != false) {
             publication.id = publicationExists.id;
         }

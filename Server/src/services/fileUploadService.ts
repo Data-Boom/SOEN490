@@ -122,11 +122,7 @@ export class fileUploadService {
       return referenceTitleValidation + " reference DOI should be a string";
 
     referencePages = jsonObj.reference.pages;
-    //check and validates if reference pages is a number 
-    let referencePagesValidation = this.numberValidation(referencePages);
-    if (referencePagesValidation === false) {
-      return referencePagesValidation + " reference pages should be a number";
-    }
+
     referenceYear = jsonObj.reference.year;
     //check and validates if reference year is a number 
     let referenceYearVlidation = this.numberValidation(referenceYear);
@@ -134,10 +130,6 @@ export class fileUploadService {
       return referenceYearVlidation + " reference year should be a number";
 
     referenceVolume = jsonObj.reference.volume;
-    //check and validates if reference volume is a number 
-    let referenceVolumeVlidation = this.numberValidation(referenceVolume);
-    if (referenceVolumeVlidation === false)
-      return referenceVolumeVlidation + " reference volume should be a number";
 
     if (jsonObj.reference.datePublished !== undefined)
       referenceDatePublished = jsonObj.reference.datePublished;
@@ -168,11 +160,15 @@ export class fileUploadService {
     let categoryIDs = await this.uploadModel.insertCategories(category, subcategory);
 
     dataType = jsonObj["data type"];
-    try {
-      dataSetDataTypeID = await this.uploadModel.insertDataSetDataType(dataType)
-      console.log('Received datasetTypeID: ' + dataSetDataTypeID);
-    } catch (err) {
-      console.log('error receiving datasetTypeID....request rejected');
+    if (dataType == undefined)
+      dataSetDataTypeID = 1;
+    else {
+      try {
+        dataSetDataTypeID = await this.uploadModel.insertDataSetDataType(dataType)
+        console.log('Received datasetTypeID: ' + dataSetDataTypeID);
+      } catch (err) {
+        console.log('error receiving datasetTypeID....request rejected');
+      }
     }
 
     dataSetName = jsonObj["dataset name"];
@@ -200,9 +196,17 @@ export class fileUploadService {
       let repr = jsonObj.data.variables[i].repr;
 
       try {
-        unitsID = await this.uploadModel.insertUnits(units);
+        if (units == undefined)
+          unitsID = 1;
+        else {
+          unitsID = await this.uploadModel.insertUnits(units);
+        }
         console.log('added units id: ' + unitsID);
-        reprID = await this.uploadModel.insertRepresentation(repr);
+        if (repr == undefined)
+          reprID = 1;
+        else {
+          reprID = await this.uploadModel.insertRepresentation(repr);
+        }
         console.log('added rep id: ' + reprID);
       } catch (err) {
         console.log('could not find units and representation ID....request rejected');
