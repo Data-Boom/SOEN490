@@ -14,9 +14,9 @@ export default function DataCell() {
     const [open, setOpen] = useState(false)
 
     /**
-                                                                         * Upon submission, the JSON file is extracted from the event and must be appended to formData
-                                                                         * to be sent with API request.
-                                                                         */
+    * Upon submission, the JSON file is extracted from the event and must be appended to formData
+    * to be sent with API request.
+    */
     const handleSubmit = async (e) => {
         e.preventDefault()
         
@@ -66,7 +66,7 @@ export default function DataCell() {
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error">
                     Failed to parse file
-        </Alert>
+                </Alert>
             </Snackbar>
 
             <Container>
@@ -77,7 +77,14 @@ export default function DataCell() {
                             <input type="file" id="jsonFile" accept="application/json" />
                             <Button type="submit" variant="contained"> Upload this file! </Button>
                         </div>
+
                     </form>
+                </Box>
+
+                <Box  p={4}>
+                    <div>
+                        <Button type="submit" variant="contained">Download Sample JSON file </Button>
+                    </div>
                 </Box>
             </Container>
         </>
