@@ -22,16 +22,19 @@ const referenceValidationSchema = Yup.object().shape({
         )
     ),
     title: Yup.string().trim().strict().required(requiredMessage('Title')),
-    volume: Yup.number().integer(integerMessage('Volume')).required(requiredMessage('Volume')),
-    pages: Yup.number().integer(integerMessage('Pages')).required(requiredMessage('Pages')),
+    doi: Yup.string().trim().strict().required(requiredMessage('DOI')),
+    volume: Yup.number().integer(integerMessage('Volume')),
+    pages: Yup.number().integer(integerMessage('Pages')),
     year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
+    datePublished: Yup.date(),
+    dateAccessed: Yup.date()
 })
 
 export const variableValidationSchema = Yup.object().shape(
     {
         name: Yup.string().trim().strict().required(requiredMessage('Name')),
-        repr: Yup.string().trim().strict().required(requiredMessage('Representation')),
-        units: Yup.string().trim().strict().required(requiredMessage('Units'))
+        repr: Yup.string().trim().strict(),
+        units: Yup.string().trim().strict()
     }
 )
 
@@ -51,7 +54,7 @@ const dataValidationSchema = Yup.object().shape({
 const referenceMaterialSchema =
     Yup.object().shape({
         composition: Yup.string().strict().trim().required('Composition is required field'),
-        details: Yup.string().trim().strict().required('Composition is required field')
+        details: Yup.string().trim().strict()
     })
 
 export const validationSchema = Yup.object().shape({

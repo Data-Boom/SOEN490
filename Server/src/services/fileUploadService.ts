@@ -56,29 +56,18 @@ export class fileUploadService {
       throw new BadRequest(err.message);
     }
 
-
     // Create this object after the parsing passes
     this.uploadModel = new DataUploadModel();
 
-    //checks and validates if reference type is a string and handles error--
-    referenceType = this.checkReferenceType(jsonObj.reference.type);
-
-    let referenceTypeValidation = this.stringValidation(referenceType);
-    if (referenceTypeValidation === false)
-      return referenceTypeValidation + " reference type should be a string";
-
+    referenceType = jsonObj.reference.type;
     try {
-      referenceTypeID = await this.uploadModel.insertReferenceType(referenceType); console.log('Received reference ID' + referenceTypeID);
+      referenceTypeID = await this.uploadModel.insertReferenceType(referenceType);
+      console.log('Received reference ID' + referenceTypeID);
     } catch (err) {
       console.log('rejected request for referenceTypeID');
     }
 
-    //checks and validates if reference publisher is a string and handles error--
     referencePublisher = jsonObj.reference.publisher;
-
-    let referencePublisherValidation = this.stringValidation(referencePublisher);
-    if (referencePublisherValidation === false)
-      return referencePublisherValidation + " reference publisher should be a string";
     try {
       publisherNameId = await this.uploadModel.insertPublisher(referencePublisher);
       console.log('Received publisher name ID' + publisherNameId);
@@ -86,11 +75,7 @@ export class fileUploadService {
       console.log('rejected request for inserting publisherNameId')
     }
 
-    //checks and validates if ref authors are strings and handles error--
     referenceAuthors = jsonObj.reference.authors;
-
-    this.arrTypeValidationCheck(referenceAuthors, 'string');
-
     try {
       await this.uploadModel.insertAuthors(referenceAuthors);
       console.log('reference authors: ' + referenceAuthors);
@@ -99,28 +84,9 @@ export class fileUploadService {
     }
 
     referenceTitle = jsonObj.reference.title;
-    //check and validates if reference title is a string
-    let referenceTitleValidation = this.stringValidation(referenceTitle);
-    if (referenceTitleValidation === false)
-      return referenceTitleValidation + " reference title should be a string";
-
     referencePages = jsonObj.reference.pages;
-    //check and validates if reference pages is a number 
-    let referencePagesValidation = this.numberValidation(referencePages);
-    if (referencePagesValidation === false) {
-      return referencePagesValidation + " reference pages should be a number";
-    }
     referenceYear = jsonObj.reference.year;
-    //check and validates if reference year is a number 
-    let referenceYearVlidation = this.numberValidation(referenceYear);
-    if (referenceYearVlidation === false)
-      return referenceYearVlidation + " reference year should be a number";
-
     referenceVolume = jsonObj.reference.volume;
-    //check and validates if reference volume is a number 
-    let referenceVolumeVlidation = this.numberValidation(referenceVolume);
-    if (referenceVolumeVlidation === false)
-      return referenceVolumeVlidation + " reference volume should be a number";
 
     try {
       publicationID = await this.uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
@@ -130,9 +96,7 @@ export class fileUploadService {
       console.log('publicationID was not received......rejecting request');
     }
 
-    //check and validates if material array index contents are of string
     material = jsonObj.material;
-    this.arrTypeValidationCheck(material, 'string');
     try {
       await this.uploadModel.insertMaterial(material);
       console.log('received material' + material);
@@ -187,8 +151,6 @@ export class fileUploadService {
       await this.uploadModel.insertDataPointsOfSet(datasetID, dataVariableName, dataPointValues[0], unitsID, reprID)
       individualDataSetComments = dataPointValues[1];
     }
-    //check and validate the individual data set comments array content are strings
-    this.arrTypeValidationCheck(individualDataSetComments, 'string');
 
     await this.uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
 
@@ -215,52 +177,6 @@ export class fileUploadService {
     }
     let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
     return contentsArrayInfo;
-  }
-
-  private checkReferenceType = (someRefType) => {
-    let refType = '';
-    if (someRefType == "book") {
-      refType = "book";
-      return refType;
-    }
-    else if (someRefType == "magazine") {
-      refType = "magazine";
-      return refType;
-    }
-    else if (someRefType == "report") {
-      refType = "report";
-      return refType;
-    }
-  }
-
-
-
-  private stringValidation = (reference) => {
-    //basic if-else validation for checking referenceType input
-    if (typeof reference === 'string' && typeof reference != null) { //to check if the type is valid and not null
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-  private numberValidation = (reference) => {
-    //basic if-else validation for checking referenceType input
-    if (typeof reference === 'number' && typeof reference != null) { //to check if the type is valid and not null
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  //Function to check the types of array objects
-  private arrTypeValidationCheck = (x, type) => {
-    if (x.every(i => typeof (i) === type)) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
 }
