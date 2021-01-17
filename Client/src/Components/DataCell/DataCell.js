@@ -30,7 +30,9 @@ export default function DataCell() {
             setOpen(true)
             return
         }
+        
         setAlertSuccess(true)
+        
 
         const formData = new FormData()
         formData.append('file', json)
@@ -73,7 +75,7 @@ export default function DataCell() {
 
            <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
                 <Alert onClose={() => setAlertSuccess(false)} severity="success">
-                    File Successfully updated!! ^_^
+                    File Successfully uploaded!! 
                 </Alert>
             </Snackbar>
           
