@@ -19,6 +19,7 @@ export const signupValidationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required(requiredMessage("Confirm Password"))
     .min(8, "Password is short, should be 8 characters minimum")
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
 })
 
 export const loginValidationSchema = Yup.object().shape({
