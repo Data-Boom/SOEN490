@@ -78,17 +78,10 @@
       "targets": [],
       "value": ""
     }, {
-      "id": "80c4406c-f849-48e1-ab54-cc555c55bf2b",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1296x1400",
-      "targets": [],
-      "value": ""
-    }, {
       "id": "48b5d9c9-ad14-41d4-92a7-1530a5f0a0d9",
       "comment": "",
       "command": "click",
-      "target": "css=.makeStyles-menuButton-4 .MuiSvgIcon-root",
+      "target": "id=burger-menu",
       "targets": [
         ["css=.makeStyles-menuButton-4 .MuiSvgIcon-root", "css:finder"]
       ],
@@ -97,7 +90,7 @@
       "id": "8db005bd-48ae-43cc-a360-2ed8182a209a",
       "comment": "",
       "command": "click",
-      "target": "id=graph-id",
+      "target": "id=graph-menu",
       "targets": [
         ["id=graph-id", "id"],
         ["linkText=Graph", "linkText"],
@@ -113,46 +106,15 @@
     }, {
       "id": "c8b7e006-d662-4626-ab41-02c42637ed96",
       "comment": "",
-      "command": "mouseOver",
-      "target": "css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root",
-      "targets": [
-        ["css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "617ecd0a-601a-46da-a7e9-d8dda05f318b",
-      "comment": "",
       "command": "click",
-      "target": "css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root",
-      "targets": [
-        ["css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "86ab573e-033d-46cf-8117-3bbb051a8794",
-      "comment": "",
-      "command": "mouseOut",
-      "target": "css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root",
-      "targets": [
-        ["css=.makeStyles-drawerHeader-8 .MuiSvgIcon-root", "css:finder"]
-      ],
-      "value": ""
-    }, {
-      "id": "2b88402f-2cec-4943-b541-a10074b48e97",
-      "comment": "",
-      "command": "mouseOver",
-      "target": "css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label",
-      "targets": [
-        ["css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[2]/button/span", "xpath:idRelative"],
-        ["xpath=//div[2]/button/span", "xpath:position"]
-      ],
+      "target": "id=Close",
+      "targets": [],
       "value": ""
     }, {
       "id": "3d2b30fa-f343-4ea8-a64e-368b87267467",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label",
+      "target": "id=add-graph",
       "targets": [
         ["css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label", "css:finder"],
         ["xpath=//div[@id='root']/div/div[2]/button/span", "xpath:idRelative"],
@@ -162,19 +124,15 @@
     }, {
       "id": "aee0c1fe-2e23-404c-a190-528cf9269d4d",
       "comment": "",
-      "command": "mouseOut",
-      "target": "css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label",
-      "targets": [
-        ["css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[2]/button/span", "xpath:idRelative"],
-        ["xpath=//div[2]/button/span", "xpath:position"]
-      ],
+      "command": "click",
+      "target": "id=search-database",
+      "targets": [],
       "value": ""
     }, {
       "id": "171713d7-db9a-4eda-b656-5491fa87a36b",
       "comment": "",
       "command": "click",
-      "target": "id=options",
+      "target": "css=input[aria-label=\"Select All Rows checkbox\"]",
       "targets": [
         ["id=options", "id"],
         ["css=#options", "css:finder"],
@@ -187,7 +145,7 @@
       "id": "72f4de70-2f23-42d0-ace5-687ee2fdd16c",
       "comment": "",
       "command": "click",
-      "target": "id=datasets",
+      "target": "id=add-datasets",
       "targets": [
         ["id=datasets", "id"],
         ["name=dataset", "name"],
@@ -195,84 +153,6 @@
         ["xpath=//select[@id='datasets']", "xpath:attributes"],
         ["xpath=//div[@id='options']/select", "xpath:idRelative"],
         ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "f1e6fdde-e886-44f7-b32f-27d6c96fcebf",
-      "comment": "",
-      "command": "select",
-      "target": "id=datasets",
-      "targets": [],
-      "value": "label=Dataset2"
-    }, {
-      "id": "aa452b45-8aa7-42dc-ae43-aceebd6cd0c9",
-      "comment": "",
-      "command": "click",
-      "target": "id=datasets",
-      "targets": [
-        ["id=datasets", "id"],
-        ["name=dataset", "name"],
-        ["css=#datasets", "css:finder"],
-        ["xpath=//select[@id='datasets']", "xpath:attributes"],
-        ["xpath=//div[@id='options']/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "77225102-c556-4e47-8453-7ffd018edb5a",
-      "comment": "",
-      "command": "click",
-      "target": "id=delete-dataset-btn",
-      "targets": [
-        ["css=.MuiBox-root-28 > .MuiButtonBase-root > .MuiButton-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[2]/div/button/span", "xpath:idRelative"],
-        ["xpath=//div[2]/div/button/span", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "5309f737-def9-4208-8b71-075309ad0613",
-      "comment": "",
-      "command": "click",
-      "target": "id=datasets",
-      "targets": [
-        ["id=datasets", "id"],
-        ["name=dataset", "name"],
-        ["css=#datasets", "css:finder"],
-        ["xpath=//select[@id='datasets']", "xpath:attributes"],
-        ["xpath=//div[@id='options']/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "6cf641c2-3f62-4ce6-bfab-8afdd584d880",
-      "comment": "",
-      "command": "select",
-      "target": "id=datasets",
-      "targets": [],
-      "value": "label=Dataset3"
-    }, {
-      "id": "7d142226-2cf1-450c-9ff0-3933c661cd9a",
-      "comment": "",
-      "command": "click",
-      "target": "id=datasets",
-      "targets": [
-        ["id=datasets", "id"],
-        ["name=dataset", "name"],
-        ["css=#datasets", "css:finder"],
-        ["xpath=//select[@id='datasets']", "xpath:attributes"],
-        ["xpath=//div[@id='options']/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "5a797e90-3fbb-4624-8f34-045b84a470a7",
-      "comment": "",
-      "command": "click",
-      "target": "id=delete-dataset-btn",
-      "targets": [
-        ["css=.MuiBox-root-28 > .MuiButtonBase-root > .MuiButton-label", "css:finder"],
-        ["xpath=//div[@id='root']/div/div[2]/div/button/span", "xpath:idRelative"],
-        ["xpath=//div[2]/div/button/span", "xpath:position"]
       ],
       "value": ""
     }]
