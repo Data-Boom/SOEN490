@@ -34,10 +34,32 @@ export default function Graph(props: IProps) {
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
+  const [minX, setMinX] = useState(9999)
+  const [maxX, setMaxX] = useState(0)
+  const [minY, setMinY] = useState(9999)
+  const [maxY, setMaxY] = useState(0)
   const [xUpperBound, setXUpperBound] = useState(10)
   const [xLowerBound, setXLowerBound] = useState(0)
   const [yUpperBound, setYUpperBound] = useState(10)
   const [yLowerBound, setYLowerBound] = useState(0)
+
+  // This loops through the selected arrays to find the min/max for both x and y.
+  datalist.forEach(dataset => {
+    dataset.forEach(point => {
+      if (point.x > maxX) {
+        setMaxX(point.x)
+      }
+      if (point.x < minX) {
+        setMinX(point.x)
+      }
+      if (point.y > maxY) {
+        setMaxY(point.y)
+      }
+      if (point.y < minY) {
+        setMinY(point.y)
+      }
+    })
+  })
 
   const handleXScaleClick = () => {
     if (xLowerBound <= 0 && !isXLog) {
@@ -55,7 +77,7 @@ export default function Graph(props: IProps) {
 
   const handleXUpperBoundChange = (event) => {
     const { value } = event.target
-    if (value <= xLowerBound) {
+    if (value <= xLowerBound || (value < maxX)) {
       return
     }
     else {
@@ -64,7 +86,7 @@ export default function Graph(props: IProps) {
   }
   const handleXLowerBoundChange = (event) => {
     const { value } = event.target
-    if ((value <= 0 && isXLog) || (value >= xUpperBound)) {
+    if ((value <= 0 && isXLog) || (value >= xUpperBound) || (value > minX)) {
       return
     }
     else {
@@ -74,7 +96,7 @@ export default function Graph(props: IProps) {
 
   const handleYUpperBoundChange = (event) => {
     const { value } = event.target
-    if (value <= yLowerBound) {
+    if (value <= yLowerBound || (value < maxY)) {
       return
     }
     else {
@@ -83,7 +105,7 @@ export default function Graph(props: IProps) {
   }
   const handleYLowerBoundChange = (event) => {
     const { value } = event.target
-    if ((value <= 0 && isYLog) || (value >= yUpperBound)) {
+    if ((value <= 0 && isYLog) || (value >= yUpperBound) || (value > minY)) {
       return
     }
     else {
