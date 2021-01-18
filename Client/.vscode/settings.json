@@ -25,5 +25,5 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
-    "todo-tree.regex.regexCaseSensitive": false
+    "todo-tree.regex.regexCaseSensitive": false,
 }

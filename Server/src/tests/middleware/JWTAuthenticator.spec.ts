@@ -1,11 +1,10 @@
-import { Request, Response, NextFunction, response } from 'express';
+import { NextFunction, Request, Response, response } from 'express';
+import { createConnection, getConnection } from 'typeorm';
+
 import { AuthenticationController } from '../../controllers/authenticationController';
 import { JWTAuthenticator } from '../../middleware/JWTAuthenticator';
-import { createConnection, getConnection } from 'typeorm';
-import request from 'supertest';
 import { loadStartupProcess } from '../../loaders/loadStartupProcess';
-
-
+import request from 'supertest';
 
 describe('Authorization Middleware', () => {
     let mockRequest;
@@ -37,10 +36,11 @@ describe('Authorization Middleware', () => {
 
     test('Request Without Auth Headers - Return error 401', async () => {
         const expectedResponse = {
-            "error": "Missing JWT token from the 'Authorization' header"
+            "error": "Missing JWT token"
         };
         mockRequest = {
-            headers: {
+            cookies: {
+                token: ''
             }
         }
         await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction as NextFunction);
@@ -54,8 +54,8 @@ describe('Authorization Middleware', () => {
             "error": "JWT Token provided is incorrect"
         }
         mockRequest = {
-            headers: {
-                'authorization': 'Bearer abc'
+            cookies: {
+                token: 'avc'
             }
         }
         await JWTAuthenticator.verifyJWT(mockRequest as Request, mockResponse as Response, nextFunction as NextFunction);
@@ -73,14 +73,14 @@ describe('Authorization Middleware', () => {
     // token = await request.agent(startup.getApp())
     //     .post('/login')
     //     .send({
-    //         query: {
+    //         body: {
     //             email: 'test@t.com',
     //             password: '123'
     //         }
     //     });
     // console.log(token);
     //     mockRequest = {
-    //         query: {
+    //         body: {
     //             email: 'test@t.com',
     //             password: '123'
     //         }
@@ -88,9 +88,9 @@ describe('Authorization Middleware', () => {
     //     let authenticationController = new AuthenticationController();
     //     await authenticationController.createLoginRequest(mockRequest as Request, anotherResponse as Response, nextFunction as NextFunction);
     //     newRequest = {
-    //         headers: {
-    //             'authorization': `${anotherResponse.json}`
-    //         }
+    //          cookies: {
+    //              token: `${anotherResponse.json}`
+    //          }
     //     }
     //     // expect(anotherResponse.json).toBeCalledWith(200);
     //     await JWTAuthenticator.verifyJWT(newRequest as Request, mockResponse as Response, nextFunction as NextFunction);
