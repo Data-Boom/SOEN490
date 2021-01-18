@@ -1,5 +1,6 @@
 const fileSystem = require('fs');
 import { DataUploadModel } from '../models/DataUploadModel'
+import { Authors } from '../models/entities/Authors';
 import { IMaterials } from '../models/interfaces/MaterialsInterface';
 import { IAuthors } from '../models/interfaces/AuthorsInterface';
 import { schemaValidator } from '../services/validationSchema';
@@ -38,11 +39,14 @@ export class fileUploadService {
     let referenceType: string = '';
     let referencePublisher: string = '';
     let referenceTitle: string = '';
+    let referenceDOI: string = '';
     let referenceAuthors: IAuthors[] = [];
     let referenceYear: number;
     let referencePages: number;
     let referenceVolume: number;
     let referenceTypeID: number;
+    let referenceDatePublished: Date = null;
+    let referenceDateAccessed: Date = null;
     let publisherNameId: number;
     let publicationID: number;
     let dataSetDataTypeID: number;
@@ -97,10 +101,10 @@ export class fileUploadService {
 
     //checks and validates if ref authors are strings and handles error--
     referenceAuthors = jsonObj.reference.authors;
-
     this.arrTypeValidationCheck(referenceAuthors, 'string');
+    let allAuthors: Authors[];
     try {
-      await this.uploadModel.insertAuthors(referenceAuthors);
+      allAuthors = await this.uploadModel.insertAuthors(referenceAuthors);
       console.log('reference authors: ' + referenceAuthors);
     } catch (err) {
       console.log('reference authors not found....request rejected');
@@ -112,12 +116,14 @@ export class fileUploadService {
     if (referenceTitleValidation === false)
       return referenceTitleValidation + " reference title should be a string";
 
+    referenceDOI = jsonObj.reference.doi;
+    //check and validates if reference DOI is a string
+    let referenceDOIValidation = this.stringValidation(referenceDOI);
+    if (referenceDOIValidation === false)
+      return referenceTitleValidation + " reference DOI should be a string";
+
     referencePages = jsonObj.reference.pages;
-    //check and validates if reference pages is a number 
-    let referencePagesValidation = this.numberValidation(referencePages);
-    if (referencePagesValidation === false) {
-      return referencePagesValidation + " reference pages should be a number";
-    }
+
     referenceYear = jsonObj.reference.year;
     //check and validates if reference year is a number 
     let referenceYearVlidation = this.numberValidation(referenceYear);
@@ -125,13 +131,14 @@ export class fileUploadService {
       return referenceYearVlidation + " reference year should be a number";
 
     referenceVolume = jsonObj.reference.volume;
-    //check and validates if reference volume is a number 
-    let referenceVolumeVlidation = this.numberValidation(referenceVolume);
-    if (referenceVolumeVlidation === false)
-      return referenceVolumeVlidation + " reference volume should be a number";
+
+    if (jsonObj.reference.datePublished !== undefined)
+      referenceDatePublished = jsonObj.reference.datePublished;
+    if (jsonObj.reference.dateAccessed !== undefined)
+      referenceDateAccessed = jsonObj.reference.dateAccessed;
 
     try {
-      publicationID = await this.uploadModel.insertPublication(referenceTitle, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceAuthors);
+      publicationID = await this.uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
       console.log('received publicationID ' + publicationID);
     }
     catch (err) {
@@ -141,11 +148,12 @@ export class fileUploadService {
     //check and validates if material array index contents are of string
     material = jsonObj.material;
     this.arrTypeValidationCheck(material, 'string');
+    let allMaterials: any[];
     try {
-      await this.uploadModel.insertMaterial(material);
-      console.log('received material' + material);
+      allMaterials = await this.uploadModel.insertMaterial(material);
+      console.log('received material(s)' + material);
     } catch (err) {
-      console.log('material not found');
+      console.log('material(s) not found');
     }
 
     category = jsonObj.category;
@@ -153,17 +161,21 @@ export class fileUploadService {
     let categoryIDs = await this.uploadModel.insertCategories(category, subcategory);
 
     dataType = jsonObj["data type"];
-    try {
-      dataSetDataTypeID = await this.uploadModel.insertDataSetDataType(dataType)
-      console.log('Received datasetTypeID: ' + dataSetDataTypeID);
-    } catch (err) {
-      console.log('error receiving datasetTypeID....request rejected');
+    if (dataType == undefined)
+      dataSetDataTypeID = 1;
+    else {
+      try {
+        dataSetDataTypeID = await this.uploadModel.insertDataSetDataType(dataType)
+        console.log('Received datasetTypeID: ' + dataSetDataTypeID);
+      } catch (err) {
+        console.log('error receiving datasetTypeID....request rejected');
+      }
     }
 
     dataSetName = jsonObj["dataset name"];
     dataSetComments = jsonObj.data.comments;
     try {
-      datasetID = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, material, dataSetComments)
+      datasetID = await this.uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments)
       console.log('DatasetID received: ' + datasetID);
     } catch (err) {
       console.log('error receiving datasetID....request rejected');
@@ -185,9 +197,17 @@ export class fileUploadService {
       let repr = jsonObj.data.variables[i].repr;
 
       try {
-        unitsID = await this.uploadModel.insertUnits(units);
+        if (units == undefined)
+          unitsID = 1;
+        else {
+          unitsID = await this.uploadModel.insertUnits(units);
+        }
         console.log('added units id: ' + unitsID);
-        reprID = await this.uploadModel.insertRepresentation(repr);
+        if (repr == undefined)
+          reprID = 1;
+        else {
+          reprID = await this.uploadModel.insertRepresentation(repr);
+        }
         console.log('added rep id: ' + reprID);
       } catch (err) {
         console.log('could not find units and representation ID....request rejected');
@@ -199,7 +219,6 @@ export class fileUploadService {
     this.arrTypeValidationCheck(individualDataSetComments, 'string');
 
     await this.uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
-
     return "Upload was successful!";
   }
 
