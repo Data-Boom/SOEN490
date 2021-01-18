@@ -7,11 +7,11 @@ const signupRoute = '/signup'
 const loginRoute = '/login'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
-  return post(signUpInfo, signupRoute)
+  return post(signupRoute, signUpInfo)
 }
 
 export const callLogIn = async (signInUser: ISignInUserModel): Promise<IUserAccountModel> => {
   //server sets a token in browser cookie in http only mode
-  const remoteUser: IUserAccountRemoteModel = await post(signInUser, loginRoute)
+  const remoteUser: IUserAccountRemoteModel = await post(loginRoute, signInUser)
   return toLocalUserAccountModel(remoteUser)
 }

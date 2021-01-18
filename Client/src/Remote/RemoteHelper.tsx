@@ -11,7 +11,7 @@ const requestBase: RequestInit = {
   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 }
 
-export const post = async (data: any, route: string): Promise<any> => {
+export const post = async (route: string, data: any): Promise<any> => {
   const url = route
 
   const response = await fetchRemote(url, 'POST', data)

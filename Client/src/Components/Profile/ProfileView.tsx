@@ -1,15 +1,12 @@
-import { AppBar, Box, Button, Collapse, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Button, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
 import DataboomTestGraph from '../../Common/Assets/DataboomTestGraph.png'
-import { IPasswordSettings } from '../../Models/Profile/IProfileModel'
-import { IUser } from '../../Models/Profile/IProfileModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
-import PasswordForm from './PasswordSection/PasswordForm'
-import ProfileForm from './ProfileForm'
+import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { exampleDatasets } from '../../Models/Datasets/ICompleteDatasetEntity'
 
@@ -227,45 +224,14 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 
 export function ProfileView() {
 
-  const [editProfile, setEditProfile] = useState(false)
   const [editPassword, setEditPassword] = useState(false)
-  const [user, setUser] = useState<IUser>(
-    {
-      name: "John Doe",
-      email: "j_doe@live.concordia.ca",
-      dateOfBirth: "1984-04-13",
-      organization: "Concordia University",
-      password: "test"
-    }
-  )
 
-  const password: IPasswordSettings = {
-    password: "password",
-    passwordConfirmation: "password"
-
-  }
-
-  const handleSubmit = (user: IUser): void => {
-    console.log(JSON.stringify(user, null, 4))
-    setUser(user)
-    setEditProfile(false)
-    // TODO: Implement endpoint for user details and password.
-  }
-
-  const handlePasswordChange = (password: IPasswordSettings): void => {
-    console.log(JSON.stringify(password, null, 4))
-    setEditPassword(false)
-  }
-
-  const handleEditProfile = () => {
-    setEditProfile(!editProfile)
-    setEditPassword(false)
-  }
+  const { user } = React.useContext(UserContext)
 
   const handleEditPassword = () => {
     setEditPassword(!editPassword)
-    setEditProfile(false)
   }
+
   const classes = useStyles()
   const [tab, setTab] = React.useState(0)
 
@@ -282,75 +248,55 @@ export function ProfileView() {
             <Tab label="View Uploads" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={tab} index={0}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h2">
-                Profile
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <UserDetailsTab
-                user={user}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button variant="contained" color="primary" onClick={handleEditProfile} className={classes.button}>Edit Profile</Button>
-              <Button variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
-            </Grid>
-            {editProfile &&
+        <Container>
+          <TabPanel value={tab} index={0}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
-                <ProfileForm
+                <UserDetailsTab
                   user={user}
-                  onSubmit={handleSubmit}
                 />
               </Grid>
-            }
-            {editPassword &&
               <Grid item xs={12}>
-                < PasswordForm
-                  password={password}
-                  onSubmit={handlePasswordChange}
-                />
+                <Button variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
               </Grid>
-            }
-          </Grid>
-        </TabPanel>
-        <TabPanel value={tab} index={1}>
-          <TableContainer component={Paper} style={{ width: "50%" }}>
-            <Table aria-label="collapsible table" >
-              <TableHead> Favourites
-                <TableRow>
-                  <TableCell />
-                  <TableCell>Name</TableCell>
-                  <TableCell align="right">Title</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <Row key={row.title} row={row} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </TabPanel>
-        <TabPanel value={tab} index={2}>
-          <TableContainer component={Paper} style={{ width: "50%" }}>
-            <Table aria-label="collapsible table" >
-              <TableHead>Uploads
-                <TableRow>
-                  <TableCell />
-                  <TableCell>Name</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rowsOfUploads.map((rowsOfUpload) => (
-                  <RowsOfUploads key={rowsOfUpload.title} rowsOfUploads={rowsOfUpload} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </TabPanel>
+            </Grid>
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <TableContainer component={Paper} style={{ width: "50%" }}>
+              <Table aria-label="collapsible table" >
+                <TableHead> Favourites
+                  <TableRow>
+                    <TableCell />
+                    <TableCell>Name</TableCell>
+                    <TableCell align="right">Title</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row) => (
+                    <Row key={row.title} row={row} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <TableContainer component={Paper} style={{ width: "50%" }}>
+              <Table aria-label="collapsible table" >
+                <TableHead>Uploads
+                  <TableRow>
+                    <TableCell />
+                    <TableCell>Name</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rowsOfUploads.map((rowsOfUpload) => (
+                    <RowsOfUploads key={rowsOfUpload.title} rowsOfUploads={rowsOfUpload} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </TabPanel>
+        </Container>
       </div>
     </>
   )

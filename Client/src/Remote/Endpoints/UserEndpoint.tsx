@@ -1,6 +1,6 @@
 import { IUserAccountModel, toLocalUserAccountModel } from "../../Models/Authentication/IUserAccountModel"
+import { get, post } from "../RemoteHelper"
 
-import { get } from "../RemoteHelper"
 import { stringify } from 'query-string'
 
 const resetPasswordRoute = '/resetPassword'
@@ -11,8 +11,10 @@ interface IUserDetailsQuery {
   email: string
 }
 
-export const updateUserDetails = async (userInfo: IUserAccountModel): Promise<any> => {
-
+export const updateUserDetails = async (userProfile: IUserAccountModel): Promise<IUserAccountModel> => {
+  const remoteUser = await post(updateUserInfoRoute, userProfile)
+  console.log(remoteUser)
+  return remoteUser
 }
 
 export const getUserDetails = async (userDetailsQuery: IUserDetailsQuery): Promise<IUserAccountModel> => {
