@@ -14,7 +14,7 @@
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
     "start": "nodemon .",
-    "test": "npm run migrate && jest --coverage --config ./jest.config.js && npm run revert",
+    "test": "npm run revert && npm run migrate && jest --coverage --config ./jest.config.js && npm run revert",
     "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
@@ -36,6 +36,7 @@
     "@tsed/exceptions": "^6.17.1",
     "@types/cors": "^2.8.5",
     "argon2": "^0.27.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "csv-parse": "^4.12.0",
     "dotenv": "^8.2.0",

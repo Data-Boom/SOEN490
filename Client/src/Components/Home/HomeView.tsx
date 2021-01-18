@@ -1,30 +1,14 @@
 import './../../App.css'
 
-import React, { useEffect, useState } from "react"
-
 import Blurb from './Blurb/Blurb'
+import React from "react"
 import Splash from './Splash/Splash'
-import fetch from "node-fetch"
 
 export default function HomeView(): any {
-
-  const [apiResponse, setApiResponse] = useState('')
-
-  function callAPI(): void {
-    fetch('http://localhost:4000/note')
-      .then(res => res.json())
-      .then(data => setApiResponse(data))
-  }
-
-  useEffect(() => {
-    callAPI()
-  }, [])
-
   return (
     <>
       <Splash />
       <Blurb />
-      <p>{apiResponse}</p>
     </>
   )
 }
