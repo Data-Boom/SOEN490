@@ -32,23 +32,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false.
-     * 
-     * @param publicationTypeReceived 
-     * Publication Type: string
-     */
-    private async fetchReferenceTypeId(publicationTypeReceived: string): Promise<any> {
-        let publicationTypeExists = await this.selectReferenceTypeIdQuery(publicationTypeReceived)
-        if (publicationTypeExists == undefined) {
-            publicationTypeExists = false;
-        }
-        return publicationTypeExists;
-    }
-
-    /**
      * This method will create a Publicationtype object and return it's ID. It will check if 
-     * a duplicate Publicationtype exists via @fetchReferenceTypeId and if it exists will set 
+     * a duplicate Publicationtype exists via a query and if it exists will set 
      * the Publicationtype object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Publicationtype table.
      *
@@ -60,8 +45,8 @@ export class DataUploadModel {
         publicationType.id;
         publicationType.name = publicationTypeReceived;
         let publicationTypeExists: any;
-        publicationTypeExists = await this.fetchReferenceTypeId(publicationTypeReceived);
-        if (publicationTypeExists != false) {
+        publicationTypeExists = await this.selectReferenceTypeIdQuery(publicationTypeReceived);
+        if (publicationTypeExists != undefined) {
             publicationType.id = publicationTypeExists.id;
         }
         else {
@@ -77,23 +62,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false.
-     * 
-     * @param publisherReceived 
-     * Publisher name: string
-     */
-    private async fetchPublisherId(publisherReceived: string): Promise<any> {
-        let publisherExists = await this.selectPublisherIdQuery(publisherReceived)
-        if (publisherExists == undefined) {
-            publisherExists = false;
-        }
-        return publisherExists;
-    }
-
-    /**
      * This method will create a Publisher object and return it's ID. It will check if a  
-     * duplicate Publisher exists via @fetchPublisherId and if it exists will set the
+     * duplicate Publisher exists via a query and if it exists will set the
      * Publisher object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Publisher table.
      *
@@ -105,8 +75,8 @@ export class DataUploadModel {
         publisher.id;
         publisher.name = publisherReceived;
         let publisherExists: any;
-        publisherExists = await this.fetchPublisherId(publisherReceived);
-        if (publisherExists != false) {
+        publisherExists = await this.selectPublisherIdQuery(publisherReceived);
+        if (publisherExists != undefined) {
             publisher.id = publisherExists.id;
         }
         else {
@@ -134,9 +104,6 @@ export class DataUploadModel {
             await this.selectAuthorIdQuery(author.firstname, author.lastname)
                 .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middlename })
                 .getRawOne();
-        if (authorExists == undefined) {
-            authorExists = false;
-        }
         return authorExists;
     }
 
@@ -152,9 +119,6 @@ export class DataUploadModel {
         let authorExists =
             await this.selectAuthorIdQuery(author.firstname, author.lastname)
                 .getRawOne();
-        if (authorExists == undefined) {
-            authorExists = false;
-        }
         return authorExists;
     }
 
@@ -180,7 +144,7 @@ export class DataUploadModel {
         else {
             authorExists = await this.fetchAuthorIdNoMiddleName(authorReceived);
         }
-        if (authorExists != false) {
+        if (authorExists != undefined) {
             author.id = authorExists.id;
         }
         else {
@@ -218,31 +182,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     * 
-     * @param publicationName 
-     * Publication name: string
-     * @param publicationDOI 
-     * DOI: string
-     * @param publicationPages 
-     * Pages of the reference: number
-     * @param publicationVolume 
-     * Publication volume: number
-     * @param publicationYear 
-     * Publication year: number
-     */
-    private async fetchPublicationId(publicationName: string, publicationDOI: string, publicationPages: number, publicationVolume: number, publicationYear: number): Promise<any> {
-        let publicationExists = await this.selectPublicationIdQuery(publicationName, publicationDOI, publicationPages, publicationVolume, publicationYear);
-        if (publicationExists == undefined) {
-            publicationExists = false;
-        }
-        return publicationExists;
-    }
-
-    /**
-     * This method will create a Publications object and return it's ID. It will check if a duplicate 
-     * Publications exists via @fetchPublicationId and if it exists will set the
+     * This method will create a Publications object and return it's ID. It will check if a  
+     * duplicate Publications exists via a query and if it exists will set the
      * Publications object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Publications table.
      *
@@ -281,8 +222,8 @@ export class DataUploadModel {
         publication.dateAccessed = referenceDateAccessed;
         publication.authors = referenceAuthors;
         let publicationExists: any;
-        publicationExists = await this.fetchPublicationId(referenceTitle, referenceDOI, referencePages, referenceVolume, referenceYear);
-        if (publicationExists != false) {
+        publicationExists = await this.selectPublicationIdQuery(referenceTitle, referenceDOI, referencePages, referenceVolume, referenceYear);
+        if (publicationExists != undefined) {
             publication.id = publicationExists.id;
         }
         else {
@@ -298,22 +239,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     *
-     * @param compositionReceived 
-     * Composition: string
-     */
-    private async fetchCompositionId(compositionReceived: string): Promise<any> {
-        let compositionExists = await this.selectCompositionIdQuery(compositionReceived)
-        if (compositionExists == undefined) {
-            compositionExists = false;
-        }
-        return compositionExists;
-    }
-    /**
      * This method will create and return a Composition object and return it's ID. It will  
-     * check if a duplicate Composition exists via @fetchCompositionId and if it exists will set 
+     * check if a duplicate Composition exists via a query and if it exists will set 
      * the Composition object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Composition table.
      *
@@ -325,8 +252,8 @@ export class DataUploadModel {
         composition.id;
         composition.composition = compositionReceived;
         let compositionExists: any;
-        compositionExists = await this.fetchCompositionId(compositionReceived);
-        if (compositionExists != false) {
+        compositionExists = await this.selectCompositionIdQuery(compositionReceived);
+        if (compositionExists != undefined) {
             composition.id = compositionExists.id;
         }
         else {
@@ -343,25 +270,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     *
-     * @param materialReceived 
-     * Material details: string
-     * @param compositionId 
-     * ID of a Composition entry: number
-     */
-    private async fetchMaterialId(materialReceived: string, compositionId: number): Promise<any> {
-        let materialExists = await this.selectMaterialIdQuery(materialReceived, compositionId)
-        if (materialExists == undefined) {
-            materialExists = false;
-        }
-        return materialExists;
-    }
-
-    /**
      * This method will create and return a Material object and return it's ID. It will  
-     * check if a duplicate Material exists via @fetchMaterialId and if it exists will set 
+     * check if a duplicate Material exists via a query and if it exists will set 
      * the Material object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Material table.
      *
@@ -376,8 +286,8 @@ export class DataUploadModel {
         material.compositionId = compositionId;
         material.details = materialReceived;
         let materialExists: any;
-        materialExists = await this.fetchMaterialId(materialReceived, compositionId);
-        if (materialExists != false) {
+        materialExists = await this.selectMaterialIdQuery(materialReceived, compositionId);
+        if (materialExists != undefined) {
             material.id = materialExists.id;
         }
         else {
@@ -414,23 +324,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     *
-     * @param categoryReceived 
-     * Category: string
-     */
-    private async fetchCategoryId(categoryReceived: string): Promise<any> {
-        let categoryExists = await this.selectCategoryIdQuery(categoryReceived)
-        if (categoryExists == undefined) {
-            categoryExists = false;
-        }
-        return categoryExists;
-    }
-
-    /**
-     * This method will create a Category object and return it's ID. It will check if a duplicate 
-     * Category exists via @fetchCategoryId and if it exists will set the
+     * This method will create a Category object and return it's ID. It will check if a  
+     * duplicate Category exists via a query and if it exists will set the
      * Category object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Category table.
      *
@@ -442,8 +337,8 @@ export class DataUploadModel {
         someCategory.id;
         someCategory.name = category;
         let categoryExists: any;
-        categoryExists = await this.fetchCategoryId(category);
-        if (categoryExists != false) {
+        categoryExists = await this.selectCategoryIdQuery(category);
+        if (categoryExists != undefined) {
             someCategory.id = categoryExists.id;
         }
         else {
@@ -459,23 +354,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     *
-     * @param subcategoryReceived 
-     * Subcategory: string
-     */
-    private async fetchSubcategoryId(subcategoryReceived: string): Promise<any> {
-        let subcategoryExists = await this.selectSubcategoryIdQuery(subcategoryReceived)
-        if (subcategoryExists == undefined) {
-            subcategoryExists = false;
-        }
-        return subcategoryExists;
-    }
-
-    /**
-     * This method will create a Subcategory object and return it's ID. It will check if a duplicate 
-     * Subcategory exists via @fetchCategoryId and if it exists will set the
+     * This method will create a Subcategory object and return it's ID. It will check if a  
+     * duplicate Subcategory exists via a query and if it exists will set the
      * Subcategory object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Subcategory table.
      *
@@ -487,8 +367,8 @@ export class DataUploadModel {
         someSubcategory.id;
         someSubcategory.name = subcategory;
         let subcategoryExists: any;
-        subcategoryExists = await this.fetchSubcategoryId(subcategory);
-        if (subcategoryExists != false) {
+        subcategoryExists = await this.selectSubcategoryIdQuery(subcategory);
+        if (subcategoryExists != undefined) {
             someSubcategory.id = subcategoryExists.id;
         }
         else {
@@ -521,23 +401,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     *
-     * @param datasetdatatypeReceived 
-     * Data set data type: string
-     */
-    private async fetchDataSetDataTypeId(datasetdatatypeReceived: string): Promise<any> {
-        let datasetdatatypeExists = await this.selectDataSetDataTypeIdQuery(datasetdatatypeReceived)
-        if (datasetdatatypeExists == undefined) {
-            datasetdatatypeExists = false;
-        }
-        return datasetdatatypeExists;
-    }
-
-    /**
-     * This method will create a Datasetdatatype object and return it's ID. It will check if a  
-     * duplicate Datasetdatatype exists via @fetchDataSetDataTypeId and if it exists will set 
+     * This method will create a Datasetdatatype object and return it's ID. It will check if  
+     * a duplicate Datasetdatatype exists via a query and if it exists will set 
      * the Datasetdatatype object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Datasetdatatype table.
      *
@@ -549,8 +414,8 @@ export class DataUploadModel {
         datasetdatatype.id;
         datasetdatatype.name = datasetdatatypeReceived;
         let datasetdatatypeExists: any;
-        datasetdatatypeExists = await this.fetchDataSetDataTypeId(datasetdatatypeReceived);
-        if (datasetdatatypeExists != false) {
+        datasetdatatypeExists = await this.selectDataSetDataTypeIdQuery(datasetdatatypeReceived);
+        if (datasetdatatypeExists != undefined) {
             datasetdatatype.id = datasetdatatypeExists.id;
         }
         else {
@@ -580,23 +445,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     *
-     * @param unitsReceived 
-     * Units: string
-     */
-    private async fetchUnitsId(unitsReceived: string): Promise<any> {
-        let unitsExists = await this.selectUnitsIdQuery(unitsReceived)
-        if (unitsExists == undefined) {
-            unitsExists = false;
-        }
-        return unitsExists;
-    }
-
-    /**
-     * This method will create a Units object and return it's ID. It will check if a duplicate 
-     * Units exists via @fetchUnitsId and if it exists will set the
+     * This method will create a Units object and return it's ID. It will check if a  
+     * duplicate Units exists via a query and if it exists will set the
      * Units object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Units table.
      *
@@ -609,8 +459,8 @@ export class DataUploadModel {
         units.name = unitReceived;
         units.units = unitReceived;
         let unitsExists: any;
-        unitsExists = await this.fetchUnitsId(unitReceived);
-        if (unitsExists != false) {
+        unitsExists = await this.selectUnitsIdQuery(unitReceived);
+        if (unitsExists != undefined) {
             units.id = unitsExists.id;
         }
         else {
@@ -626,23 +476,8 @@ export class DataUploadModel {
             .getRawOne();
 
     /**
-     * This method will query the DB to see if there is an existing entry, and if so return this
-     * entry. If an entry does not exist, it will return false. 
-     *
-     * @param reprReceived 
-     * Representation: string
-     */
-    private async fetchRepresentationId(reprReceived: string): Promise<any> {
-        let reprExists = await this.selectRepresentationIdQuery(reprReceived)
-        if (reprExists == undefined) {
-            reprExists = false;
-        }
-        return reprExists;
-    }
-
-    /**
      * This method will create a Representations object and return it's ID. It will check if a  
-     * Rduplicate epresentations exists via @fetchRepresentationId and if it exists will set 
+     * Rduplicate epresentations exists via a query and if it exists will set 
      * the Representations object to have the same ID as the existing entry. If there is no
      * existing entry, than the method will add a new entry to the Representations table.
      *
@@ -654,8 +489,8 @@ export class DataUploadModel {
         repr.id;
         repr.repr = representationUnit;
         let reprExists: any;
-        reprExists = await this.fetchRepresentationId(representationUnit);
-        if (reprExists != false) {
+        reprExists = await this.selectRepresentationIdQuery(representationUnit);
+        if (reprExists != undefined) {
             repr.id = reprExists.id;
         }
         else {
