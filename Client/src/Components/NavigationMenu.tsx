@@ -50,7 +50,7 @@ export default function NavigationMenu() {
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
               <Grid item>
-                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                <IconButton id='burger-menu' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
                   <MenuIcon />
                 </IconButton>
               </Grid>

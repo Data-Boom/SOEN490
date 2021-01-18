@@ -68,7 +68,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
         </Grid>
 
         <Grid item sm={2}>
-          <Button variant="contained" color="primary" onClick={() => props.handleSubmit(formValues)}> Search Database </Button>
+          <Button id="search-database" variant="contained" color="primary" onClick={() => props.handleSubmit(formValues)}> Search Database </Button>
         </Grid>
       </Grid>
 

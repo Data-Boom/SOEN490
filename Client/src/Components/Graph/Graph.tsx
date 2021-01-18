@@ -242,8 +242,8 @@ export default function Graph(props: IProps) {
         id='graph'
       />
       <div>
-        <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-        <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+        <Button id='xscale' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+        <Button id='yscale' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
       </div>
     </>
   )
