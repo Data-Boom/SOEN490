@@ -1,5 +1,6 @@
 const fileSystem = require('fs');
 import { DataUploadModel } from '../models/DataUploadModel'
+import { Authors } from '../models/entities/Authors';
 import { IMaterials } from '../models/interfaces/MaterialsInterface';
 import { IAuthors } from '../models/interfaces/AuthorsInterface';
 import { schemaValidator } from '../services/validationSchema';
@@ -101,7 +102,7 @@ export class fileUploadService {
     //checks and validates if ref authors are strings and handles error--
     referenceAuthors = jsonObj.reference.authors;
     this.arrTypeValidationCheck(referenceAuthors, 'string');
-    let allAuthors: any[];
+    let allAuthors: Authors[];
     try {
       allAuthors = await this.uploadModel.insertAuthors(referenceAuthors);
       console.log('reference authors: ' + referenceAuthors);

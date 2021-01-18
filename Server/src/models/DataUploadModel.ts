@@ -267,7 +267,7 @@ export class DataUploadModel {
      * @param referenceAuthors 
      * Array of all Authors table entries to be linked to this publication: any[]
      */
-    async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: number, referenceTypeId: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceDatePublished: Date, referenceDateAccessed: Date, referenceAuthors: any[]): Promise<number> {
+    async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: number, referenceTypeId: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceDatePublished: Date, referenceDateAccessed: Date, referenceAuthors: Authors[]): Promise<number> {
         let publication = new Publications();
         publication.id;
         publication.name = referenceTitle;
