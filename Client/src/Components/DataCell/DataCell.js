@@ -7,7 +7,7 @@ import { Container } from '@material-ui/core'
 import { Snackbar } from '@material-ui/core'
 
 import Download from '@axetroy/react-download'
-import sample from "../../Assets/sample"
+import emptySample from "../../Assets/sample"
 
 /**
  * This component handles receiving the json locally then sending the file for processing
@@ -88,7 +88,7 @@ export default function DataCell() {
                 <Box  p={4}>
                     <div>
                         
-                         <Download file= "sampleJason.json" content= {sample}>
+                         <Download file= "sampleJason.json" content= {emptySample}>
                             <Button type="submit" variant="contained" onClick={console.log('success fully json downloaded')} >Download Sample JSON file </Button>
                          </Download>
                                         
