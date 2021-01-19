@@ -92,9 +92,9 @@ export default function UserDetailsTab(props: IProps) {
                 </Form>
               }
             </Formik>
-            {/* <PasswordChangeForm
+            <PasswordChangeForm
               onSubmit={handleSubmit}
-            /> */}
+            />
           </Box>
         ) : (<Redirect to={signInRoute} />)
       }

@@ -2,11 +2,11 @@ import * as Yup from 'yup'
 
 import { Box, Button, Container, Grid, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
-import { IPasswordFormModel, defaultPasswordFormModel } from '../../../Models/Profile/IProfileModel'
+import { IPasswordFormModel, defaultPasswordFormModel } from '../../../../Models/Profile/IProfileModel'
 
-import { MuiTextFieldFormik } from '../../Forms/FormikFields'
+import { MuiTextFieldFormik } from '../../../Forms/FormikFields'
 import React from 'react'
-import { classStyles } from '../../../appTheme'
+import { classStyles } from '../../../../appTheme'
 
 interface IProps {
   onSubmit: (newPassword: string) => void
