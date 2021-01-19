@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 
 import { IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
 interface IProps {
   outerHeight: number,
@@ -303,7 +305,9 @@ export default function Graph(props: IProps) {
       <div>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">Settings</Button>
+            <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">Settings
+              {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </Button>
           </Grid>
           {showSettings &&
             <>
