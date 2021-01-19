@@ -1,3 +1,5 @@
+import SnackbarUtils from '../Components/SnackbarUtils'
+
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
 const requestBase: RequestInit = {
@@ -15,7 +17,13 @@ export const post = async (data: any, route: string): Promise<any> => {
   const url = route
 
   const response = await fetchRemote(url, 'POST', data)
-  return response.json()
+  const result = await response.json()
+
+  if (response.status !== 200 && response.status !== 201) {
+    SnackbarUtils.error(result)
+  }
+
+  return result
 }
 
 export const get = async (route: string): Promise<any> => {
@@ -35,7 +43,7 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
   }
   catch (error) {
     //todo no logs should be on the site should pop up an alert instead
-    console.error(error)
+    SnackbarUtils.error(error)
     return Promise.resolve(null)
   }
 }
