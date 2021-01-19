@@ -2,6 +2,8 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 
 import { IUserAccountModel } from './Models/Authentication/IUserAccountModel'
 import NavigationMenu from './Components/NavigationMenu'
+import { SnackbarProvider } from 'notistack'
+import { SnackbarUtilsConfigurator } from './Components/SnackbarUtils'
 import { ThemeProvider } from '@material-ui/core'
 import { getUserFromStorage } from './Common/Storage'
 import { theme } from './appTheme'
@@ -20,7 +22,10 @@ export const App = () => {
     <div className="App">
       <ThemeProvider theme={theme}>
         <UserContext.Provider value={{ user, setUser }}>
-          <NavigationMenu />
+          <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}>
+            <SnackbarUtilsConfigurator />
+            <NavigationMenu />
+          </SnackbarProvider>
         </UserContext.Provider>
       </ThemeProvider>
     </div>

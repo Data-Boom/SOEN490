@@ -129,6 +129,8 @@ export class AuthenticationController {
         try {
 
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
+
+            //todo put secure: true when we go https.
             response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
 
             const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);

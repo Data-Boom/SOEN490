@@ -1,3 +1,5 @@
+import SnackbarUtils from '../Components/SnackbarUtils'
+
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
 const requestBase: RequestInit = {
@@ -14,15 +16,13 @@ const requestBase: RequestInit = {
 export const post = async (route: string, data: any): Promise<any> => {
   const url = route
 
-  const response = await fetchRemote(url, 'POST', data)
-  return response.json()
+  return fetchRemote(url, 'POST', data)
 }
 
 export const get = async (route: string, query: any = {}): Promise<any> => {
   const url = `${route}?${query}`
 
-  const response = await fetchRemote(url, 'GET')
-  return response.json()
+  return fetchRemote(url, 'GET')
 }
 
 const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
@@ -34,11 +34,25 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
   }
 
   try {
-    return fetch(url, request)
+    const response = await fetch(url, request)
+
+    if (response.status.toString().charAt(0) == '5' && !response.body) {
+      SnackbarUtils.error('Server Unavailable')
+      Promise.resolve(null)
+    }
+
+    const message = await response.json()
+    if (response.status.toString().charAt(0) == '2') {
+      return message
+    }
+
+    if (response.status.toString().charAt(0) == '4') {
+      SnackbarUtils.warning(message)
+      Promise.resolve(null)
+    }
   }
   catch (error) {
-    //todo no logs should be on the site should pop up an alert instead
-    console.error(error)
+    SnackbarUtils.error('Server Unavailable')
     return Promise.resolve(null)
   }
 }
