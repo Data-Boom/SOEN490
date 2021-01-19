@@ -37,6 +37,7 @@ export default function Graph(props: IProps) {
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
+  const [showSettings, setSettingsToggle] = useState(false)
   const [xUpperBound, setXUpperBound] = useState(extremeBoundaries.maxX)
   const [xLowerBound, setXLowerBound] = useState(extremeBoundaries.minX)
   const [yUpperBound, setYUpperBound] = useState(extremeBoundaries.maxY)
@@ -55,6 +56,10 @@ export default function Graph(props: IProps) {
       setYLowerBound(1)
     }
     setYToggle(!isYLog)
+  }
+
+  const handleSettingsClick = () => {
+    setSettingsToggle(!showSettings)
   }
 
   const handleXUpperBoundChange = (event) => {
@@ -296,25 +301,32 @@ export default function Graph(props: IProps) {
         id='graph'
       />
       <div>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">Settings</Button>
           </Grid>
-          <Grid item xs={4}>
-            <TextField id="xLowerBound" variant="outlined" value={xLowerBound} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField id="xUpperBound" variant="outlined" value={xUpperBound} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
-          </Grid>
-          <Grid item xs={4}>
-            <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
-          </Grid>
-          <Grid item xs={4}>
-            <TextField id="yLowerBound" variant="outlined" value={yLowerBound} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField id="yUpperBound" variant="outlined" value={yUpperBound} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
-          </Grid>
+          {showSettings &&
+            <>
+              <Grid item xs={4}>
+                <Button size="small" id='btn1' variant="contained" onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="xLowerBound" variant="outlined" value={xLowerBound} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="xUpperBound" variant="outlined" value={xUpperBound} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
+              </Grid>
+              <Grid item xs={4}>
+                <Button size="small" id='btn2' variant="contained" onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="yLowerBound" variant="outlined" value={yLowerBound} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="yUpperBound" variant="outlined" value={yUpperBound} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+              </Grid>
+            </>
+          }
         </Grid>
       </div>
     </>
