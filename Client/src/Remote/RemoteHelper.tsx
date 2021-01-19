@@ -35,21 +35,22 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
 
     if (response.status.toString().charAt(0) == '5' && !response.body) {
       SnackbarUtils.error('Server Unavailable')
-      Promise.resolve(null)
+      return Promise.resolve(null)
     }
 
     const message = await response.json()
+    SnackbarUtils.warning('parsed fine')
     if (response.status.toString().charAt(0) == '2') {
       return message
     }
 
     if (response.status.toString().charAt(0) == '4') {
       SnackbarUtils.warning(message)
-      Promise.resolve(null)
+      return Promise.resolve(null)
     }
   }
   catch (error) {
-    SnackbarUtils.error('Server Unavailable')
+    SnackbarUtils.error('Exception occurred please do not punish developers')
     return Promise.resolve(null)
   }
 }
