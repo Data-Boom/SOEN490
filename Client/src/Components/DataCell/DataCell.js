@@ -5,9 +5,8 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { Container } from '@material-ui/core'
 import { Snackbar } from '@material-ui/core'
-
 import Download from '@axetroy/react-download'
-import emptySample from "../../Assets/sample"
+import emptyJSFile from "../../Assets/emptyJSFile.json"
 
 /**
  * This component handles receiving the json locally then sending the file for processing
@@ -87,11 +86,10 @@ export default function DataCell() {
 
                 <Box  p={4}>
                     <div>
-                        
-                         <Download file= "sampleJason.json" content= {emptySample}>
+                        {/**for downloading sample empty json file*/}
+                         <Download file= "emptyJason.json" content= {JSON.stringify(emptyJSFile,null,2)}>
                             <Button type="submit" variant="contained" onClick={console.log('success fully json downloaded')} >Download Sample JSON file </Button>
-                         </Download>
-                                        
+                         </Download>                                        
                     </div>
                 </Box>
             </Container>
