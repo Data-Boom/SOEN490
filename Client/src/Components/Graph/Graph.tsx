@@ -78,7 +78,7 @@ export default function Graph(props: IProps) {
   const handleXUpperBoundChange = (event) => {
     const { value } = event.target
     if ((value < maxX)) {
-      return
+      setXUpperBound(Math.ceil(maxX))
     }
     else {
       setXUpperBound(value)
@@ -87,7 +87,7 @@ export default function Graph(props: IProps) {
   const handleXLowerBoundChange = (event) => {
     const { value } = event.target
     if ((value <= 0 && isXLog) || (value > minX)) {
-      return
+      setXLowerBound(Math.floor(minX))
     }
     else {
       setXLowerBound(value)
@@ -97,7 +97,7 @@ export default function Graph(props: IProps) {
   const handleYUpperBoundChange = (event) => {
     const { value } = event.target
     if ((value < maxY)) {
-      return
+      setYUpperBound(Math.ceil(maxY))
     }
     else {
       setYUpperBound(value)
@@ -106,7 +106,7 @@ export default function Graph(props: IProps) {
   const handleYLowerBoundChange = (event) => {
     const { value } = event.target
     if ((value <= 0 && isYLog) || (value > minY)) {
-      return
+      setYLowerBound(Math.floor(minY))
     }
     else {
       setYLowerBound(value)
