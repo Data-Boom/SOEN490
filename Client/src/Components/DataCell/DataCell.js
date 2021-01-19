@@ -7,7 +7,7 @@ import { Container } from '@material-ui/core'
 import { Snackbar } from '@material-ui/core'
 
 import Download from '@axetroy/react-download'
-import {sampleJson} from "../../Assets/sampleJson.json"
+import sample from "../../Assets/sample"
 
 /**
  * This component handles receiving the json locally then sending the file for processing
@@ -63,6 +63,7 @@ export default function DataCell() {
         const i = filename.lastIndexOf('.')
         return (i < 0) ? '' : filename.substr(i)
     }
+
     //Snackbar is used to show an error on the screen when a wrong file type is selected for uploading
     return (
         <>
@@ -86,10 +87,11 @@ export default function DataCell() {
 
                 <Box  p={4}>
                     <div>
-                        <Download file= "sampleJason.json" content= {sampleJson}>
-                            <Button type="submit" variant="contained">Download Sample JSON file </Button>
-                        </Download>
                         
+                         <Download file= "sampleJason.json" content= {sample}>
+                            <Button type="submit" variant="contained" onClick={console.log('success fully json downloaded')} >Download Sample JSON file </Button>
+                         </Download>
+                                        
                     </div>
                 </Box>
             </Container>
