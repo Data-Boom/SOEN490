@@ -77,7 +77,7 @@ export default function Graph(props: IProps) {
 
   const handleXUpperBoundChange = (event) => {
     const { value } = event.target
-    if (value <= xLowerBound || (value < maxX)) {
+    if ((value < maxX)) {
       return
     }
     else {
@@ -86,7 +86,7 @@ export default function Graph(props: IProps) {
   }
   const handleXLowerBoundChange = (event) => {
     const { value } = event.target
-    if ((value <= 0 && isXLog) || (value >= xUpperBound) || (value > minX)) {
+    if ((value <= 0 && isXLog) || (value > minX)) {
       return
     }
     else {
@@ -96,7 +96,7 @@ export default function Graph(props: IProps) {
 
   const handleYUpperBoundChange = (event) => {
     const { value } = event.target
-    if (value <= yLowerBound || (value < maxY)) {
+    if ((value < maxY)) {
       return
     }
     else {
@@ -105,7 +105,7 @@ export default function Graph(props: IProps) {
   }
   const handleYLowerBoundChange = (event) => {
     const { value } = event.target
-    if ((value <= 0 && isYLog) || (value >= yUpperBound) || (value > minY)) {
+    if ((value <= 0 && isYLog) || (value > minY)) {
       return
     }
     else {
@@ -162,8 +162,9 @@ export default function Graph(props: IProps) {
 
     //This allows the user to zoom in/out onto the graph.
     const zoom = d3.zoom()
-      .scaleExtent([1, 20])
+      .scaleExtent([1, 10])
       .extent([[0, 0], [width, height]])
+      .translateExtent([[0, 0], [width, height]])
       .on("zoom", updateGraph)
     //This rectangle is the area in which the user can zoom into.
     svg.append("rect")
