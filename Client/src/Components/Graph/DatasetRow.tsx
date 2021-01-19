@@ -5,6 +5,7 @@ import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEn
 import React from 'react'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import StarIcon from '@material-ui/icons/Star'
+import Tooltip from "@material-ui/core/Tooltip"
 import { classStyles } from "../../appTheme"
 
 interface IProps {
@@ -21,8 +22,10 @@ export const DatasetRow = (props: IProps) => {
             {props.dataset.name}
           </Typography>
           <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>
+            <Tooltip title={"Click to save Dataset"}>
+              <StarBorderIcon />
+            </Tooltip>
             <StarIcon />
-            <StarBorderIcon />
           </IconButton>
           <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>
             <DeleteIcon color='primary' />

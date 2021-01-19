@@ -7,6 +7,7 @@ import { ListRouter, getRoutedViews } from "./ListRouter"
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
 import React from 'react'
+import Tooltip from "@material-ui/core/Tooltip"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import { signInRoute } from "../Consts/Routes"
@@ -33,9 +34,11 @@ export default function NavigationMenu() {
     return (
       <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
         <div className={classes.drawerHeader}>
-          <IconButton id='Close' onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Tooltip title={"Close side menu"}>
+            <IconButton id='Close' onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Tooltip>
         </div>
         <Divider />
         {ListRouter()}
@@ -50,9 +53,11 @@ export default function NavigationMenu() {
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
               <Grid item>
-                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                  <MenuIcon />
-                </IconButton>
+                <Tooltip title={"Open side menu"}>
+                  <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                    <MenuIcon />
+                  </IconButton>
+                </Tooltip>
               </Grid>
               <Grid item>
                 <img src={universitylogo} />
@@ -63,7 +68,9 @@ export default function NavigationMenu() {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+                <Tooltip title={"Click to sign in / sign up"}>
+                  <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+                </Tooltip>
               </Grid>
             </Grid>
           </Toolbar>

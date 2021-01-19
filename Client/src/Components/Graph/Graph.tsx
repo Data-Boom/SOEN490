@@ -1,10 +1,13 @@
 import * as d3 from "d3"
 
+import { Button, Icon } from "@material-ui/core"
 import React, { useState } from 'react'
 
-import { Button } from "@material-ui/core"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
+import { IconButton } from "material-ui"
 import StarBorderIcon from '@material-ui/icons/StarBorder'
+import Tooltip from "@material-ui/core/Tooltip"
+import VisibilityIcon from '@material-ui/icons/Visibility'
 
 interface IProps {
   outerHeight: number,
@@ -237,8 +240,11 @@ export default function Graph(props: IProps) {
 
   return (
     <>
+
       <div style={{ float: 'left', padding: 10, margin: 10 }}>
-        <Button id='saveGraph' onClick={handleSaveGraphClick}> <StarBorderIcon /></Button>
+        <Tooltip title={"Click to save Graph"}>
+          <Button id='saveGraph' onClick={handleSaveGraphClick}> <StarBorderIcon /></Button>
+        </Tooltip>
       </div>
       <svg
         ref={ref}

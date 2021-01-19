@@ -8,6 +8,7 @@ import Graph from './Graph'
 import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import { IGraphDatasetModel } from '../../Models/Datasets/IGraphDatasetModel'
 import SearchView from '../Search/SearchView'
+import Tooltip from "@material-ui/core/Tooltip"
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
@@ -128,13 +129,19 @@ export default function GraphView() {
               <Grid container direction='column'>
                 <Grid item container spacing={3}>
                   <Grid item>
-                    <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+                    <Tooltip title={"Open search menu to add datasets to graph"}>
+                      <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+                    </Tooltip>
                   </Grid>
                   <Grid item>
-                    <Button onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
+                    <Tooltip title={"Download the current graph information as json file"}>
+                      <Button onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
+                    </Tooltip>
                   </Grid>
                   <Grid item>
-                    <Button onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                    <Tooltip title={"Download the current graph information as Image"}>
+                      <Button onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                    </Tooltip>
                   </Grid>
                 </Grid>
                 <Grid item>
