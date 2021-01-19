@@ -3,12 +3,14 @@ import * as d3 from "d3"
 import { Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
+import { IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
 
 interface IProps {
   outerHeight: number,
   outerWidth: number,
-  datasets: IGraphDatasetModel[]
+  datasets: IGraphDatasetModel[],
+  extremeBoundaries: IDataPointExtremes
 }
 
 export default function Graph(props: IProps) {
@@ -31,35 +33,15 @@ export default function Graph(props: IProps) {
   const outerHeight = props && props.outerHeight || 500
   const width = outerWidth - margin.left - margin.right
   const height = outerHeight - margin.top - margin.bottom
+  const extremeBoundaries = props.extremeBoundaries
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
-  const [minX, setMinX] = useState(9999)
-  const [maxX, setMaxX] = useState(0)
-  const [minY, setMinY] = useState(9999)
-  const [maxY, setMaxY] = useState(0)
-  const [xUpperBound, setXUpperBound] = useState(10)
-  const [xLowerBound, setXLowerBound] = useState(0)
-  const [yUpperBound, setYUpperBound] = useState(10)
-  const [yLowerBound, setYLowerBound] = useState(0)
-
+  const [xUpperBound, setXUpperBound] = useState(extremeBoundaries.maxX)
+  const [xLowerBound, setXLowerBound] = useState(extremeBoundaries.minX)
+  const [yUpperBound, setYUpperBound] = useState(extremeBoundaries.maxY)
+  const [yLowerBound, setYLowerBound] = useState(extremeBoundaries.minY)
   // This loops through the selected arrays to find the min/max for both x and y.
-  datalist.forEach(dataset => {
-    dataset.forEach(point => {
-      if (point.x > maxX) {
-        setMaxX(point.x)
-      }
-      if (point.x < minX) {
-        setMinX(point.x)
-      }
-      if (point.y > maxY) {
-        setMaxY(point.y)
-      }
-      if (point.y < minY) {
-        setMinY(point.y)
-      }
-    })
-  })
 
   const handleXScaleClick = () => {
     if (xLowerBound <= 0 && !isXLog) {
@@ -77,8 +59,8 @@ export default function Graph(props: IProps) {
 
   const handleXUpperBoundChange = (event) => {
     const { value } = event.target
-    if ((value < maxX)) {
-      setXUpperBound(Math.ceil(maxX))
+    if ((value < extremeBoundaries.maxX)) {
+      setXUpperBound(Math.ceil(extremeBoundaries.maxX))
     }
     else {
       setXUpperBound(value)
@@ -86,8 +68,8 @@ export default function Graph(props: IProps) {
   }
   const handleXLowerBoundChange = (event) => {
     const { value } = event.target
-    if ((value <= 0 && isXLog) || (value > minX)) {
-      setXLowerBound(Math.floor(minX))
+    if ((value <= 0 && isXLog) || (value > extremeBoundaries.minX)) {
+      setXLowerBound(Math.floor(extremeBoundaries.minX))
     }
     else {
       setXLowerBound(value)
@@ -96,8 +78,8 @@ export default function Graph(props: IProps) {
 
   const handleYUpperBoundChange = (event) => {
     const { value } = event.target
-    if ((value < maxY)) {
-      setYUpperBound(Math.ceil(maxY))
+    if ((value < extremeBoundaries.maxY)) {
+      setYUpperBound(Math.ceil(extremeBoundaries.maxY))
     }
     else {
       setYUpperBound(value)
@@ -105,8 +87,8 @@ export default function Graph(props: IProps) {
   }
   const handleYLowerBoundChange = (event) => {
     const { value } = event.target
-    if ((value <= 0 && isYLog) || (value > minY)) {
-      setYLowerBound(Math.floor(minY))
+    if ((value <= 0 && isYLog) || (value > extremeBoundaries.minY)) {
+      setYLowerBound(Math.floor(extremeBoundaries.minY))
     }
     else {
       setYLowerBound(value)
