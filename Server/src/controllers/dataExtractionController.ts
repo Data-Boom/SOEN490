@@ -1,47 +1,43 @@
 import { Request, Response } from 'express';
-import { dataProcessService } from '../services/dataProcess/dataProcessService'
+import { DataProcessService } from '../services/dataProcess/dataProcessService'
 
 /**
- * The fileUploadController is resposible for providing instructions to the application if a request comes in
- * to the /dataupload api. This controller will call the Service for appropriate processing of the input. The
- * controller is resposible for providing a response back to the Client on success. The fileUploadController 
- * creates a request for the fileUploadService to process, only passing the path of the file.
+ * The dataExtractionController is responsible for preparing a request and extracting key information
+ * from the request. The controller also finds the extension of the input file as processing is done based on it
  */
 
 export class dataExtractionController {
   private filePathOfUpload: string;
+  private fileExtension: string
 
-  constructor(filePath: string) {
+  constructor(filePath: string, fileExtension: string) {
     this.filePathOfUpload = filePath;
+    this.fileExtension = fileExtension
   }
 
-  createRequest(request: Request, response: Response /**nextFunction: NextFunction */) {
-    //TODO: Custom validations here 
+  createRequest(request: Request, response: Response) {
     if (!request.body) {
       response.status(400).send({
-        message: "Nothing to process"
+        message: "Request Body is empty."
       });
     }
     else {
-      try {
-        let fileName: any = request.file.originalname as any;
-        let extension = fileName.split('.').pop();
-        this.callDataExtractorService(this.filePathOfUpload, extension, response);
-      } catch (error) {
-        console.error(error)
-      }
+      //let fileName: any = request.file.originalname as any;
+      let extension = this.fileExtension.split('.').pop();
+      let requestResponse: any = this.callDataProcessService(this.filePathOfUpload, extension, response);
+      return requestResponse
     }
   };
 
-  private async callDataExtractorService(filePath: string, extension: string, response: Response) {
+
+  private async callDataProcessService(filePath: string, extension: string, response: Response): Promise<Response> {
     let command = 'Extract'
-    let dataService = new dataProcessService(extension, command, null, filePath);
+    let dataService = new DataProcessService(extension, command, null, filePath);
     try {
       let extractDataResponse: any = await dataService.extractData();
-      response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
+      return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
     } catch (error) {
-      console.log(error)
-      response.status(error.status).json(error.message);
+      return response.status(error.status).json(error.message);
     };
   }
 

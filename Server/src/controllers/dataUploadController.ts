@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { dataProcessService } from '../services/dataProcess/dataProcessService'
+import { DataProcessService } from '../services/dataProcess/dataProcessService'
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -8,33 +8,28 @@ import { dataProcessService } from '../services/dataProcess/dataProcessService'
  * creates a request for the fileUploadService to process, only passing the path of the file.
  */
 
-export class dataUploadController {
+export class DataUploadController {
+    private dataService: DataProcessService
 
     constructor() {
     }
 
-    createRequest(request: Request, response: Response) {
+    async createRequest(request: Request, response: Response): Promise<Response> {
         if (!request.body) {
             response.status(400).send({
-                message: "No Json Body Received"
+                message: "No Json to Upload Received"
             });
         }
         else {
-            console.log(request.body)
-            this.callDataProcessService(request.body, response);
+            let command = 'Upload'
+            let dataType = 'json'
+            this.dataService = new DataProcessService(dataType, command, request.body);
+            try {
+                let extractDataResponse: any = await this.dataService.extractData();
+                return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
+            } catch (error) {
+                return response.status(error.status).json(error.message);
+            };
         }
     };
-
-    private async callDataProcessService(jsonData: any, response: Response) {
-        let command = 'Upload'
-        let dataType = 'json'
-        let dataService = new dataProcessService(dataType, command, jsonData);
-        try {
-            let extractDataResponse: any = await dataService.extractData();
-            response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
-        } catch (error) {
-            response.status(error.status).json(error.message);
-        };
-    }
-
 }
