@@ -97,7 +97,7 @@ export default function DataCell() {
                 <Box  p={4}>
                     <div>
                         {/**for downloading sample empty json file*/}
-                         <Download file= "emptyJason.json" content= {JSON.stringify(emptyJSFile,null,2)}>
+                         <Download file= "emptyJsonDataset.json" content= {JSON.stringify(emptyJSFile,null,2)}>
                             <Button type="submit" variant="contained" onClick={console.log('successfully json downloaded')}> Download Sample JSON file </Button>
                          </Download>                                                               
                     </div>
