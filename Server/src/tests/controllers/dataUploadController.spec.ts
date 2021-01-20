@@ -45,7 +45,4 @@ describe('Data Upload Controller', () => {
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
         expect(mockResponse.status).toBeCalledWith(400)
     })
-
-
-
 })

@@ -10,6 +10,7 @@ import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesM
 import { dataExtractionRouter } from '../routes/dataExtractionRouter'
 import { dataUploadRouter } from '../routes/dataUploadRouter'
 import { getDataRouter } from '../routes/getDatasetRouter';
+import { getConnectionManager } from 'typeorm';
 
 const cookieParser = require('cookie-parser');
 
@@ -17,7 +18,7 @@ const cookieParser = require('cookie-parser');
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
  * to initialize the application. The initial connection to the database is also created here.
  */
-export class loadStartupProcess {
+export class LoadStartupProcess {
   private app: express.Application;
   private config: any;
   private server: any;
@@ -95,6 +96,11 @@ export class loadStartupProcess {
       try {
         await connectDB(this.config);
       } catch (error) {
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (error.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = getConnectionManager().get("default");
+          return existentConn;
+        }
         console.log("caught error while connecting to db:")
         console.log(error)
       }
