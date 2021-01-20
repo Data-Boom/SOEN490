@@ -4,8 +4,8 @@ import { Authors } from '../../models/entities/Authors';
 import { IMaterials } from '../../models/interfaces/MaterialsInterface';
 import { IAuthors } from '../../models/interfaces/AuthorsInterface';
 import { BadRequest } from '@tsed/exceptions';
-import { IResponse } from '../../genericInterfaces/ResponsesInterface';
 import { validationSchema } from '../helpers/validationSchema';
+import { IJsonDatasetModel } from '../../genericInterfaces/DataProcessInterfaces'
 const fileSystem = require('fs');
 
 
@@ -18,16 +18,16 @@ export class JsonFileFactory extends FileHandlerFactory {
 
 export class JsonFileHandler extends AbstractFileHandler {
 
-    async parseFile(): Promise<any> {
+    async parseFile(): Promise<IJsonDatasetModel> {
         try {
-            this.jsonData = await JSON.parse(fileSystem.readFileSync(this.filePath))
-            return this.jsonData
+            this.parsedData = await JSON.parse(fileSystem.readFileSync(this.filePath))
+            return this.parsedData
         } catch (err) {
             throw new BadRequest("Cannot parse your file. Something is wrong with it");
         }
     }
 
-    async validateExtractedData(jsonData: any): Promise<any> {
+    async validateExtractedData(jsonData: any): Promise<JSON> {
         try {
             await validationSchema.validate(jsonData)
             return jsonData;
@@ -186,7 +186,7 @@ export class JsonFileHandler extends AbstractFileHandler {
         return "Upload to Database was successful!"
     }
 
-    private getDataInformationFromContentsArray = (dataContentArray, index) => {
+    private getDataInformationFromContentsArray(dataContentArray: any, index: number) {
 
         let dataPointsForVariable = [];
         let dataSetComments = [];

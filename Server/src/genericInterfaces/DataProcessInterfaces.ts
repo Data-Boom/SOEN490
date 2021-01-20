@@ -53,7 +53,7 @@ export interface IData {
     comments: string;
 }
 
-export interface IDatasetModel {
+export interface IJsonDatasetModel {
     reference: IReference;
     dataset_name: string;
     material: IMaterial[];
