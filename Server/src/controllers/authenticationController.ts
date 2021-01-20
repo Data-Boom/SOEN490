@@ -1,4 +1,4 @@
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { BadRequest } from "@tsed/exceptions";
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'

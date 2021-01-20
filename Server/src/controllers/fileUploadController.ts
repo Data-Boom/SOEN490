@@ -30,7 +30,7 @@ export class fileUploadController {
         console.error(error)
       }
     }
-  };
+  }
 
   private async callFileUploadService(filePath: string, response: Response) {
     let fileService = new fileUploadService(filePath);
@@ -39,7 +39,7 @@ export class fileUploadController {
       response.status(200).json(fileServiceResponse);
     } catch (error) {
       response.status(error.status).json(error.message);
-    };
+    }
   }
 
 }
