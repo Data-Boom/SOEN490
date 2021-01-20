@@ -1,7 +1,6 @@
-import { IDatasetModel, IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
-
-import { DataQueryModel } from "../models/DatasetQueryModel";
+import { IDatasetIDModel, IClientDatasetModel } from "../models/interfaces/DatasetModelInterface";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { DataQueryModel } from "../models/DatasetQueryModel";
 
 export class retrieveData {
     private dataQuery: DataQueryModel;
@@ -83,7 +82,6 @@ export class retrieveData {
         let rawData;
         let paramsEntered = 0;
         let rawDatasetIds = [];
-        console.log(lastNameReceived, 'ln');
 
         if (materialReceived != undefined) {
             for (let i = 0; i < materialReceived.length; i++) {
@@ -176,7 +174,7 @@ export class retrieveData {
      * This is an array containing the data set IDs that we wish to get the full data set of: any[]
      */
     private async getDataFromDatasetIds(selectedDatasetIds: any[]) {
-        let setOfData: Array<IDatasetResponseModel> = [];
+        let setOfData: Array<IClientDatasetModel> = [];
         for (let i = 0; i < selectedDatasetIds.length; i++) {
             setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
         }
@@ -212,15 +210,15 @@ export class retrieveData {
     }
 
     /**
-     * This method accepts an array of IDatasetModel models where each object has a data set ID that we wish to acquire
+     * This method accepts an array of IDatasetIDModel models where each object has a data set ID that we wish to acquire
      * the full data set of. It sends this information to the createDatasetIdArray method to acquire an array containing
      * the aforementioned data set IDs. After it will then send this array of data set IDs to getDataFromDatasetIds 
      * to get all of the data sets matching those data set IDs.
      * 
      * @param rawData 
-     * Array of IDatasetModel objects: IDatasetModel[]
+     * Array of IDatasetIDModel objects: IDatasetIDModel[]
      */
-    private async getDatasetsFromRawData(rawData: IDatasetModel[]) {
+    private async getDatasetsFromRawData(rawData: IDatasetIDModel[]) {
         let selectedDatasetIds = await this.createDatasetIdArray(rawData);
         let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds);
         return setOfData;

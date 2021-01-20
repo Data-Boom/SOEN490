@@ -38,4 +38,4 @@ export const selectDataPointCommentsQuery = (manager: EntityManager, dataset: nu
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Datapointcomments, 'datapointcomments', 'datapointcomments.datasetId = dataset.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
-        .getRawMany();
+        .getRawOne();

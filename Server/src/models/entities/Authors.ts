@@ -44,7 +44,6 @@ export const selectAuthorsQuery = (manager: EntityManager, dataset: number) =>
         .select('author.firstName', 'author_firstName')
         .addSelect('author.lastName', 'author_lastName')
         .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .where('dataset.id = :datasetId', { datasetId: dataset })

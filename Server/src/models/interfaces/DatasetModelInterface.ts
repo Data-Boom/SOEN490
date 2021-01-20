@@ -1,3 +1,7 @@
+export interface IDatasetIDModel {
+    dataset_id: number
+}
+
 export interface IPublicationModel {
     publication_name: string
     publication_doi: string
@@ -6,20 +10,18 @@ export interface IPublicationModel {
     publication_year: number
     publication_datePublished: Date
     publication_dateAccessed: Date
-    dataset_id: number
     publisher_name: string
     publicationtype_name: string
+    authors: IAuthorModel[]
 }
 
 export interface IAuthorModel {
     author_firstName: string
     author_lastName: string
     author_middleName: string
-    dataset_id: number
 }
 
-export interface IDatasetModel {
-    dataset_id: number
+export interface IDatasetInfoModel {
     dataset_name: string
     dataset_comments: string
     datasetdatatype_name: string
@@ -30,7 +32,6 @@ export interface IDatasetModel {
 export interface IMaterialModel {
     material_details: string
     composition_name: string
-    dataset_id: number
 }
 
 export interface IDataPointModel {
@@ -41,16 +42,11 @@ export interface IDataPointModel {
     dataset_id: number
 }
 
-export interface IDataPointCommentModel {
-    datapointcomments_comments: string[]
+export interface IClientDatasetModel {
+    publication: IPublicationModel
     dataset_id: number
-}
-
-export interface IDatasetResponseModel {
-    publications: IPublicationModel[]
-    authors: IAuthorModel[]
-    dataset: IDatasetModel[]
+    dataset_info: IDatasetInfoModel
     materials: IMaterialModel[]
     dataPoints: IDataPointModel[]
-    dataPointComments: IDataPointCommentModel[]
+    dataPointComments: string[]
 }
