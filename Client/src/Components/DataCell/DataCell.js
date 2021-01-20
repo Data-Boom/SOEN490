@@ -62,7 +62,9 @@ export default function DataCell() {
         const i = filename.lastIndexOf('.')
         return (i < 0) ? '' : filename.substr(i)
     }
-
+    const readme= "To properly upload a JSON file based on the provided empty sample, \nthe user must fill up the following fields: \n"
+    const fields="-reference \n-type \n-publisher \n-author \n-title \n-year \n-dataset/materials \n-variables/points \n"
+    const info= "In order to enter the point array values, there should be a minimum of one value per variable: ie. \n[density, temp, pressure, init velocity, shock velocity, particle, velocity, compression, etc.]"
     //Snackbar is used to show an error on the screen when a wrong file type is selected for uploading
     return (
         <>
@@ -88,8 +90,14 @@ export default function DataCell() {
                     <div>
                         {/**for downloading sample empty json file*/}
                          <Download file= "emptyJason.json" content= {JSON.stringify(emptyJSFile,null,2)}>
-                            <Button type="submit" variant="contained" onClick={console.log('success fully json downloaded')} >Download Sample JSON file </Button>
-                         </Download>                                        
+                            <Button type="submit" variant="contained" onClick={console.log('success fully json downloaded')}> Download Sample JSON file </Button>
+                         </Download>                                                               
+                    </div>
+                    {/**for downnloading instructions readMe for users */}
+                    <div>
+                        <Download file="readMe.txt" content = {readme + fields + info}>
+                             <a href= "http://localhost:3000/#/uploadFile"> ReadME </a>  
+                        </Download>
                     </div>
                 </Box>
             </Container>
