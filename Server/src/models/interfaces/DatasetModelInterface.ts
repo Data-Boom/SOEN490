@@ -4,7 +4,7 @@ export interface IDatasetIDModel {
 
 export interface IPublicationModel {
     name: string
-    doi: string
+    DOI: string
     pages: number
     volume: number
     year: number
