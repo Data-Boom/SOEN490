@@ -171,21 +171,8 @@ export class DataUploadModel {
         return allAuthors;
     }
 
-    private selectPublicationIdQuery = (publicationName: string, publicationDOI: string, publicationPages: number, publicationVolume: number, publicationYear: number) =>
-        this.connection.createQueryBuilder(Publications, 'publication')
-            .select('publication.id', 'id')
-            .where('LOWER(publication.name) = LOWER(:publicationNameRef)', { publicationNameRef: publicationName })
-            .andWhere('LOWER(publication.doi) = LOWER(:publicationDOIRef)', { publicationDOIRef: publicationDOI })
-            .andWhere('publication.pages = :publicationPagesRef', { publicationPagesRef: publicationPages })
-            .andWhere('publication.volume = :publicationVolumeRef', { publicationVolumeRef: publicationVolume })
-            .andWhere('publication.year = :publicationYearRef', { publicationYearRef: publicationYear })
-            .getRawOne();
-
     /**
-     * This method will create a Publications object and return it's ID. It will check if a  
-     * duplicate Publications exists via a query and if it exists will set the
-     * Publications object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Publications table.
+     * This method will create a Publications object and return it's ID. 
      *
      * @param referenceTitle 
      * Publication title: string
@@ -221,14 +208,7 @@ export class DataUploadModel {
         publication.datePublished = referenceDatePublished;
         publication.dateAccessed = referenceDateAccessed;
         publication.authors = referenceAuthors;
-        let publicationExists: any;
-        publicationExists = await this.selectPublicationIdQuery(referenceTitle, referenceDOI, referencePages, referenceVolume, referenceYear);
-        if (publicationExists != undefined) {
-            publication.id = publicationExists.id;
-        }
-        else {
-            await this.connection.manager.save(publication);
-        }
+        await this.connection.manager.save(publication);
         return publication.id;
     }
 

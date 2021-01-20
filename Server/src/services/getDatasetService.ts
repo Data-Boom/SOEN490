@@ -223,4 +223,15 @@ export class retrieveData {
         let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds);
         return setOfData;
     }
+
+    /**
+     * This method is used to get an array of all unapproved data set IDs. 
+     * It will call a query to get a raw data packet which contains all of the unapproved data set IDs, 
+     * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
+     */
+    async getUnapprovedDatasets() {
+        let rawData = await this.dataQuery.getUnapprovedDatasetID();
+        let setOfData = await this.getDatasetsFromRawData(rawData);
+        return setOfData;
+    }
 }

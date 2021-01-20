@@ -5,7 +5,7 @@ import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
 import { selectDataPointCommentsQuery } from "./entities/Datapointcomments";
 import { selectDataPointsQuery } from "./entities/Datapoints";
-import { selectDatasetsQuery, selectDatasetIdsQuery } from "./entities/Dataset";
+import { selectDatasetsQuery, selectDatasetIdsQuery, selectDatasetIdsBasedOnApprovalQuery } from "./entities/Dataset";
 import { selectMaterialQuery } from "./entities/Material";
 import { selectPublicationsQuery, Publications } from "./entities/Publications";
 import { Subcategory } from "./entities/Subcategory";
@@ -188,5 +188,14 @@ export class DataQueryModel {
             dataPointComments: datapointComments
         }
         return allData;
+    }
+
+    /**
+     * This method will run a query find all the data set IDs of all unapproved data sets and 
+     * return a raw data packet containing that information. 
+     */
+    async getUnapprovedDatasetID(): Promise<IDatasetModel[]> {
+        let unapprovedDatasetData: IDatasetModel[] = await selectDatasetIdsBasedOnApprovalQuery(this.connection, 0)
+        return unapprovedDatasetData;
     }
 }

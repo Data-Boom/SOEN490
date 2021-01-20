@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
+import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
@@ -97,6 +97,13 @@ export class Dataset {
     @JoinColumn()
     uploader?: Accounts
 
+    // This comment is used during the approval process for admins to request changes
+    @Column({ nullable: true })
+    statusComment: string
+
+    @Column({ default: 0 })
+    isApproved: boolean
+
     @CreateDateColumn()
     created: Date
 
@@ -120,4 +127,10 @@ export const selectDatasetsQuery = (manager: EntityManager, dataset: number) =>
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawMany();
+
+export const selectDatasetIdsBasedOnApprovalQuery = (connection: Connection, isApproved: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.id', 'dataset_id')
+        .where('dataset.isApproved = :isApproved', { isApproved: isApproved })
         .getRawMany();
