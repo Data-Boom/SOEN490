@@ -50,7 +50,7 @@
       "id": "3d2b30fa-f343-4ea8-a64e-368b87267467",
       "comment": "",
       "command": "click",
-      "target": "id=add-graph",
+      "target": "id=add-dataset",
       "targets": [
         ["css=.MuiButton-textPrimary:nth-child(3) > .MuiButton-label", "css:finder"],
         ["xpath=//div[@id='root']/div/div[2]/button/span", "xpath:idRelative"],
@@ -81,7 +81,7 @@
       "id": "72f4de70-2f23-42d0-ace5-687ee2fdd16c",
       "comment": "",
       "command": "click",
-      "target": "id=add-datasets",
+      "target": "id=add-graph",
       "targets": [
         ["id=datasets", "id"],
         ["name=dataset", "name"],
@@ -89,6 +89,16 @@
         ["xpath=//select[@id='datasets']", "xpath:attributes"],
         ["xpath=//div[@id='options']/select", "xpath:idRelative"],
         ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d1809e0-937c-4c63-abb2-ad5d8eca74cd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.makeStyles-modal-55 > div:nth-child(1)",
+      "targets": [
+        ["css=.makeStyles-modal-55 > div:nth-child(1)", "css:finder"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
       ],
       "value": ""
     }]
@@ -350,6 +360,13 @@
       ],
       "value": ""
     }, {
+      "id": "25846457-2792-4aa6-b214-cbd4c7cf9b5f",
+      "comment": "",
+      "command": "click",
+      "target": "id=graph-menu",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "cbc19981-4c34-424e-adce-b5f9a60aec76",
       "comment": "",
       "command": "click",
@@ -432,7 +449,7 @@
       "id": "3264beaa-5cc0-4e8d-a91c-f9b0c8a2c08e",
       "comment": "",
       "command": "type",
-      "target": "id=diluent",
+      "target": "name=diluent",
       "targets": [],
       "value": "10"
     }, {
@@ -2128,7 +2145,7 @@
       "id": "a96ba6e0-e6f3-4ae5-92b6-fb4411ab5514",
       "comment": "",
       "command": "click",
-      "target": "id=add-graph",
+      "target": "id=add-dataset",
       "targets": [],
       "value": ""
     }, {
@@ -2149,8 +2166,18 @@
       "id": "dfe50862-d328-4823-a6e0-a445c9132091",
       "comment": "",
       "command": "click",
-      "target": "id=add-datasets",
+      "target": "id=add-graph",
       "targets": [],
+      "value": ""
+    }, {
+      "id": "7d659fe2-e736-494f-9fea-46bc0d937472",
+      "comment": "",
+      "command": "click",
+      "target": "css=.makeStyles-modal-55 > div:nth-child(1)",
+      "targets": [
+        ["css=.makeStyles-modal-55 > div:nth-child(1)", "css:finder"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
       "value": ""
     }]
   }, {
@@ -2241,7 +2268,7 @@
       "id": "3118e24c-79ab-426d-8bae-89c0895d48d7",
       "comment": "",
       "command": "click",
-      "target": "id=profile",
+      "target": "id=profile-menu",
       "targets": [],
       "value": ""
     }, {
