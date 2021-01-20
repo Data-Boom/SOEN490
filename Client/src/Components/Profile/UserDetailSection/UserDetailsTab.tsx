@@ -68,8 +68,10 @@ export default function UserDetailsTab(props: IProps) {
             <Typography variant='h6' align="left">{`Profile of ${user.firstName} ${user.lastName}`}</Typography>
             <Formik
               initialValues={user}
-              onSubmit={(user: IUserAccountModel) => {
-                updateUserDetails({ ...user })
+              enableReinitialize={true}
+              onSubmit={async (user: IUserAccountModel) => {
+                await updateUserDetails({ ...user })
+                window.location.reload()
               }}
             >
               {formProps =>
