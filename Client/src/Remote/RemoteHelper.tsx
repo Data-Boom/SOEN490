@@ -47,7 +47,6 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
     }
 
     if (response.status.toString().charAt(0) == '4') {
-      console.log(message)
       SnackbarUtils.warning(JSON.stringify(message))
       return Promise.resolve(null)
     }
