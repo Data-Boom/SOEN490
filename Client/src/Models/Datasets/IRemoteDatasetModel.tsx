@@ -1,3 +1,5 @@
+import { IDatasetModel } from "./IDatasetModel"
+
 export interface IPublicationModel {
   publication_name: string,
   publication_doi: string,
@@ -18,7 +20,7 @@ export interface IAuthorModel {
   dataset_id: number
 }
 
-export interface IDatasetModel {
+export interface IRemoteDatasetModel {
   dataset_id: number,
   dataset_name: string,
   dataset_comments: string,
@@ -49,19 +51,24 @@ export interface IDataPointCommentModel {
 export interface IDatasetResponseModel {
   publications: IPublicationModel[],
   authors: IAuthorModel[],
-  dataset: IDatasetModel[],
+  dataset: IRemoteDatasetModel[],
   materials: IMaterialModel[],
   dataPoints: IDataPointModel[],
   dataPointComments: IDataPointCommentModel[]
 }
 
-export const toLocalDatasetModel = (response: IDatasetResponseModel): IDatasetModel => {
-  if (!response) {
-    return null
-  }
-  const localDataset: IDatasetModel = {
+export const datasetResponseToDatasetArray = (response: IDatasetResponseModel): IDatasetModel[] => {
+  const datasets: IDatasetModel[] = []
+  // for (let i = 0; i < response.dataset.length; i++) {
+  //   datasets.push({
+  //     category: response.dataset[i].category_name,
+  //     subcategory: response.dataset[i].subcategory_name,
+  //     data: {
+  //       comments: response.dataPointComments[i],
+  //       variables: response.dataPoints[i].
+  //     }
+  //   })
+  // }
 
-  }
-
-  return localDataset
+  return []
 }
