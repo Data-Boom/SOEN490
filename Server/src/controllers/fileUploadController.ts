@@ -25,7 +25,7 @@ export class fileUploadController {
     }
     else {
       try {
-        this.callFileUploadService(this.filePathOfUpload, response);
+        this.callFileUploadService(this.filePathOfUpload, response).catch(e => console.log("Failed to run callFileUploadService", e));
       } catch (error) {
         console.error(error)
       }
