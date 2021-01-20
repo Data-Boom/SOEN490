@@ -1,14 +1,16 @@
-import { AppBar, Box, Button, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
-import React, { useState } from 'react'
+import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
+import React, { useContext, useEffect } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
 import DataboomTestGraph from '../../Common/Assets/DataboomTestGraph.png'
+import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { exampleDatasets } from '../../Models/Datasets/ICompleteDatasetEntity'
+import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 
 const renderGraphRow = (row) => {
   return (<Table size="small" aria-label="purchases">
@@ -224,13 +226,16 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 
 export function ProfileView() {
 
-  const [editPassword, setEditPassword] = useState(false)
+  const { user, setUser } = useContext(UserContext)
 
-  const { user } = React.useContext(UserContext)
+  useEffect(() => {
+    const fetchUser = async () => {
+      const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
+      setUser(newUser)
+    }
 
-  const handleEditPassword = () => {
-    setEditPassword(!editPassword)
-  }
+    fetchUser()
+  }, [])
 
   const classes = useStyles()
   const [tab, setTab] = React.useState(0)
@@ -255,9 +260,6 @@ export function ProfileView() {
                 <UserDetailsTab
                   user={user}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <Button variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
               </Grid>
             </Grid>
           </TabPanel>

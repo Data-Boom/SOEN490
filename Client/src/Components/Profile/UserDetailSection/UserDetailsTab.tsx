@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 
 import { IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
+import PasswordChangeForm from './PasswordSection/PasswordChangeForm'
 import { Redirect } from 'react-router-dom'
 import { classStyles } from '../../../appTheme'
 import { signInRoute } from '../../../Common/Consts/Routes'
@@ -34,11 +35,6 @@ export default function UserDetailsTab(props: IProps) {
       props.handleReset()
     }
 
-    // const handlePasswordChange = () => {
-    //   const newUser: IUserAccountModel = { ...user }
-    //   props.handleSubmit
-    // }
-
     return (
       <Grid container spacing={4}>
         {readOnly ?
@@ -60,10 +56,14 @@ export default function UserDetailsTab(props: IProps) {
     )
   }
 
+  const handlePasswordChange = (newPassword: string) => {
+    updateUserDetails({ ...user, password: newPassword })
+  }
+
   return (
     <>
       { user && user.firstName ?
-        (
+        (<>
           <Box className={classStyles().defaultBorder}>
             <Typography variant='h6' align="left">{`Profile of ${user.firstName} ${user.lastName}`}</Typography>
             <Formik
@@ -92,10 +92,11 @@ export default function UserDetailsTab(props: IProps) {
                 </Form>
               }
             </Formik>
-            {/* <PasswordChangeForm
-              onSubmit={handleSubmit}
-            /> */}
           </Box>
+          <PasswordChangeForm
+            onSubmit={handlePasswordChange}
+          />
+        </>
         ) : (<Redirect to={signInRoute} />)
       }
     </>

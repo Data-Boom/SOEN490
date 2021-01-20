@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-import { Box, Button, Container, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
 import { IPasswordFormModel, defaultPasswordFormModel } from '../../../../Models/Profile/IProfileModel'
 
@@ -27,27 +27,25 @@ export default function PasswordChangeForm(props: IProps) {
   }
 
   return (
-    <Container>
-      <Formik
-        initialValues={defaultPasswordFormModel}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form>
-          <Box className={classStyles().defaultBorder}>
-            <Typography variant='h6' align="left">Change Password</Typography>
-            <Grid container spacing={4}>
-              <Grid item sm={6}>
-                <FastField name="password" label='Password' type="password" component={MuiTextFieldFormik} />
-              </Grid>
-              <Grid item sm={6}>
-                <FastField name="passwordConfirmation" label='Confirm Password' type="password" component={MuiTextFieldFormik} />
-              </Grid>
+    <Formik
+      initialValues={defaultPasswordFormModel}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form>
+        <Box className={classStyles().defaultBorder}>
+          <Typography variant='h6' align="left">Change Password</Typography>
+          <Grid container spacing={4}>
+            <Grid item sm={6}>
+              <FastField name="password" label='New password' type="password" component={MuiTextFieldFormik} />
             </Grid>
-          </Box>
-          <Button variant="contained" color="primary" type="submit">Confirm Password</Button>
-        </Form>
-      </Formik>
-    </Container>
+            <Grid item sm={6}>
+              <FastField name="passwordConfirmation" label='Confirm password' type="password" component={MuiTextFieldFormik} />
+            </Grid>
+          </Grid>
+        </Box>
+        <Button variant="contained" color="primary" type="submit">Confirm Password</Button>
+      </Form>
+    </Formik>
   )
 }
