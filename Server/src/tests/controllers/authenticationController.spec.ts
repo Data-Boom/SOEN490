@@ -114,7 +114,7 @@ describe('Authentication Controller', () => {
             "account_organizationName": "Mugiwara"
         }
         mockRequest = {
-            body: {
+            query: {
                 email: 'j.comkj',
             }
         }
@@ -126,7 +126,7 @@ describe('Authentication Controller', () => {
     test('Invalid Request to get UserDetails - Bad Email Error 400', async () => {
         const expectedResponse = "Cannot fetch details for this email";
         mockRequest = {
-            body: {
+            query: {
                 email: 'j.comksefsfsj',
             }
         }

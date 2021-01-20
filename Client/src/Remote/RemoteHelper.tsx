@@ -13,14 +13,14 @@ const requestBase: RequestInit = {
   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 }
 
-export const post = async (data: any, route: string): Promise<any> => {
+export const post = async (route: string, data: any): Promise<any> => {
   const url = route
 
   return fetchRemote(url, 'POST', data)
 }
 
-export const get = async (route: string): Promise<any> => {
-  const url = route
+export const get = async (route: string, query: any = {}): Promise<any> => {
+  const url = `${route}?${query}`
 
   return fetchRemote(url, 'GET')
 }
@@ -28,7 +28,10 @@ export const get = async (route: string): Promise<any> => {
 const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
   const request: RequestInit = { ...requestBase }
   setMethod(request, method)
-  setData(request, data)
+
+  if (method !== 'GET' && method !== 'HEAD') {
+    setData(request, data)
+  }
 
   try {
     const response = await fetch(url, request)
@@ -39,13 +42,12 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
     }
 
     const message = await response.json()
-    SnackbarUtils.warning('parsed fine')
     if (response.status.toString().charAt(0) == '2') {
       return message
     }
 
     if (response.status.toString().charAt(0) == '4') {
-      SnackbarUtils.warning(message)
+      SnackbarUtils.warning(JSON.stringify(message))
       return Promise.resolve(null)
     }
   }

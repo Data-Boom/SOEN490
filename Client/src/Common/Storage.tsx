@@ -1,4 +1,4 @@
-import { IUserAccountModel } from "../Remote/Models/IUserAccountModel"
+import { IUserAccountModel } from "../Models/Authentication/IUserAccountModel"
 
 //todo implement 'remember me' by putting the user into local storage
 export const putUserInStorage = (user: IUserAccountModel) => {

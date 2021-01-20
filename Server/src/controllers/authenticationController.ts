@@ -45,6 +45,7 @@ export class AuthenticationController {
                 return res;
             }
             catch (error) {
+
             }
 
         }
@@ -70,7 +71,7 @@ export class AuthenticationController {
     }
 
     private validateUserDetailRequest(request: Request): boolean {
-        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organization')) {
+        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organizationName')) {
             return true;
         } else
             return false;
@@ -132,9 +133,7 @@ export class AuthenticationController {
             //todo put secure: true when we go https.
             response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
 
-            const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);
-
-            return response.status(serviceResponse.statusCode).json(user);
+            return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);
@@ -147,7 +146,7 @@ export class AuthenticationController {
     async createFetchUserDetailsRequest(request, response): Promise<Response> {
         let serviceResponse: IResponse;
         try {
-            let userEmail: any = request.body.email;
+            let userEmail: any = request.query.email;
             this.authenticationService = new AuthenticationService();
             serviceResponse = await this.authenticationService.loadUserDetails(userEmail);
             return response.status(serviceResponse.statusCode).json(JSON.parse(serviceResponse.message));
