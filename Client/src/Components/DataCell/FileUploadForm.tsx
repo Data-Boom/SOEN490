@@ -22,6 +22,8 @@ export const FileUploadForm = (props: IProps) => {
   const { onSubmit, validateFile, acceptFileFormat } = props
 
   const [alertOpen, setAlertOpen] = useState(false)
+  const [alertSuccess, setAlertSuccess] = useState(false)
+
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement, Event>) => {
     const input: HTMLInputElement = event.target[fileInputId]
@@ -31,6 +33,8 @@ export const FileUploadForm = (props: IProps) => {
     console.log("vF is " + validateFile + "  and vF() is " + validateFile(file))
     if (isValidFile) {
       onSubmit(file)
+      console.log('File successfully uploaded')
+      setAlertSuccess(true)
     }
     else {
       setAlertOpen(true)
@@ -43,6 +47,12 @@ export const FileUploadForm = (props: IProps) => {
       <Snackbar open={alertOpen} autoHideDuration={3000} onClose={() => setAlertOpen(false)}>
         <Alert onClose={() => setAlertOpen(false)} severity="error">
           Failed to parse file
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
+        <Alert onClose={() => setAlertSuccess(false)} severity="success">
+          File Successfully updated!!
         </Alert>
       </Snackbar>
 

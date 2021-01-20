@@ -34,7 +34,12 @@ export class fileUploadController {
 
   private async callFileUploadService(filePath: string, response: Response) {
     let fileService = new fileUploadService(filePath);
-    let fileServiceResponse = await fileService.processUpload();
-    response.status(200).json(fileServiceResponse);
-  };
+    try {
+      let fileServiceResponse = await fileService.processUpload();
+      response.status(200).json(fileServiceResponse);
+    } catch (error) {
+      response.status(error.status).json(error.message);
+    };
+  }
+
 }

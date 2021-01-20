@@ -1,0 +1,59 @@
+{
+    "reference": {
+        "type": "",
+        "publisher": "",
+        "authors": [
+            {
+                "firstname": "",
+                "middlename": "",
+                "lastname": ""
+            },
+            {
+                "firstname": "",
+                "middlename": "",
+                "lastname": ""
+            }
+        ],
+        "title": "",
+        "doi": "",
+        "volume": 0,
+        "pages": 0,
+        "year": 0,
+        "datePublished": "",
+        "dateAccessed": ""
+    },
+    "dataset name": "",
+    "material": [
+        {
+            "composition": "",
+            "details": ""
+        },
+        {
+            "composition": "",
+            "details": ""
+        }
+    ],
+    "category": "",
+    "subcategory": "",
+    "data type": "",
+    "data": {
+        "variables": [
+            {
+                "name": "",
+                "repr": "",
+                "units": ""
+            }
+        ],
+        "contents": [
+            {
+                "point": [],
+                "comments": ""
+            },
+            {
+                "point": [],
+                "comments": ""
+            }
+        ],
+        "comments": ""
+    }
+}

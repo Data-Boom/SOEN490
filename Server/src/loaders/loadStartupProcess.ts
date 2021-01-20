@@ -71,9 +71,8 @@ export class loadStartupProcess {
       "username": process.env.USER_NAME,
       "password": process.env.PASSWORD,
       "database": process.env.DB_NAME,
-      "synchronize": true,
+      "synchronize": false,
       "logging": true,
-      "migrationsRun": true,
       "entities": [
         "src/models/entities/**/*.ts",
         "dist/entities/**/*.js"

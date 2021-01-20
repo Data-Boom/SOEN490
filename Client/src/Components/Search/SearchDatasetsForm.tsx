@@ -68,7 +68,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
         </Grid>
 
         <Grid item sm={2}>
-          <Button variant="contained" color="primary" onClick={() => props.handleSubmit(formValues)}> Search Database </Button>
+          <Button id="search-database" variant="contained" color="primary" onClick={() => props.handleSubmit(formValues)}> Search Database </Button>
         </Grid>
       </Grid>
 
@@ -88,7 +88,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
         </Grid>
 
         <Grid item sm={3}>
-          <TextField label="Diluent" variant="outlined" fullWidth name="dilutent" value={formValues.dilutent} onChange={handleInputChange} />
+          <TextField label="Diluent" variant="outlined" fullWidth name="diluent" value={formValues.diluent} onChange={handleInputChange} />
         </Grid>
       </Grid>
 

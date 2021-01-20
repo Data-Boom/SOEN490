@@ -16,7 +16,7 @@ describe('Graph Component', () => {
         const spy = jest.spyOn(console, 'log');
         const wrapper = shallow(<Graph />);
 
-        const button = wrapper.find('#btn1');
+        const button = wrapper.find('#xscale');
         expect(button.exists()).toEqual(true);
         button.simulate('click');
         expect(spy).toBeCalledWith('Changed X: false');
@@ -26,7 +26,7 @@ describe('Graph Component', () => {
         const spy = jest.spyOn(console, 'log');
         const wrapper = shallow(<Graph />);
 
-        const button = wrapper.find('#btn2');
+        const button = wrapper.find('#yscale');
         expect(button.exists()).toEqual(true);
         button.simulate('click');
         expect(spy).toBeCalledWith('Changed Y: false');

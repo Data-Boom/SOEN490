@@ -14,7 +14,7 @@ export const EditPassword = () => {
           <FastField name="password" label='Password' type="password" component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={6}>
-          <FastField name="passwordConfirmation" label='Confirm Password' type="password" component={MuiTextFieldFormik} />
+          <FastField id="confirm-password" name="passwordConfirmation" label='Confirm Password' type="password" component={MuiTextFieldFormik} />
         </Grid>
       </Grid>
     </Box>

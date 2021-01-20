@@ -5,6 +5,9 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { Container } from '@material-ui/core'
 import { Snackbar } from '@material-ui/core'
+import Download from '@axetroy/react-download'
+import emptyJSFile from "../../Assets/emptyJSFile.json"
+import { rm } from "../../Assets/readMeMessage.tsx";
 
 /**
  * This component handles receiving the json locally then sending the file for processing
@@ -12,11 +15,12 @@ import { Snackbar } from '@material-ui/core'
  */
 export default function DataCell() {
     const [open, setOpen] = useState(false)
+    const [alertSuccess, setAlertSuccess] = useState(false)
 
     /**
-                                                                         * Upon submission, the JSON file is extracted from the event and must be appended to formData
-                                                                         * to be sent with API request.
-                                                                         */
+    * Upon submission, the JSON file is extracted from the event and must be appended to formData
+    * to be sent with API request.
+    */
     const handleSubmit = async (e) => {
         e.preventDefault()
         
@@ -29,6 +33,9 @@ export default function DataCell() {
             setOpen(true)
             return
         }
+        
+        setAlertSuccess(true)
+        
 
         const formData = new FormData()
         formData.append('file', json)
@@ -42,7 +49,7 @@ export default function DataCell() {
             await fetch('http://localhost:4000/dataupload', options)
                 .then(resp => resp.json())
                 .then(result => {
-                    console.log(result[0])
+                    console.log(result)
                 })
         }
         catch (err) {
@@ -66,9 +73,15 @@ export default function DataCell() {
             <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error">
                     Failed to parse file
-        </Alert>
+                </Alert>
             </Snackbar>
 
+           <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
+                <Alert onClose={() => setAlertSuccess(false)} severity="success">
+                    File Successfully uploaded!! 
+                </Alert>
+            </Snackbar>
+          
             <Container>
                 <Box border={30} p={4} borderColor="primary">
                     <form onSubmit={handleSubmit}>
@@ -77,7 +90,23 @@ export default function DataCell() {
                             <input type="file" id="jsonFile" accept="application/json" />
                             <Button type="submit" variant="contained"> Upload this file! </Button>
                         </div>
+
                     </form>
+                </Box>
+
+                <Box  p={4}>
+                    <div>
+                        {/**for downloading sample empty json file*/}
+                         <Download file= "emptyJsonDataset.json" content= {JSON.stringify(emptyJSFile,null,2)}>
+                            <Button type="submit" variant="contained" onClick={console.log('successfully json downloaded')}> Download Sample JSON file </Button>
+                         </Download>                                                               
+                    </div>
+                    {/**for downnloading instructions readMe for users */}
+                    <div>
+                        <Download file="readMe.txt" content = {rm}>
+                             <a href= "http://localhost:3000/#/uploadFile" onClick={console.log('text file download complete!')}> Download JSON file submission instructions </a>  
+                        </Download>
+                    </div>
                 </Box>
             </Container>
         </>
