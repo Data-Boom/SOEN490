@@ -22,7 +22,6 @@ import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import { putUserInStorage } from '../../Common/Storage'
 
 function Copyright() {
   return (
@@ -66,8 +65,6 @@ export default function SignInView() {
     //sets JWT in cookies
     await callLogIn(signInUserInfo)
     const userAccount: IUserAccountModel = await getUserDetails({ email: signInUserInfo.email })
-    console.log(userAccount)
-    putUserInStorage(userAccount)
     setUser(userAccount)
   }
 

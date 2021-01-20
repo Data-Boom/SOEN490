@@ -12,7 +12,7 @@ interface IDatasetQuery {
   lastName: string,
   categoryId: number
 }
-
+//todo for the search story
 const getDatasets = async (query: IDatasetQuery) => {
   const remoteDatasets = await get(datasetRoute, stringify(query))
   console.log(remoteDatasets)
