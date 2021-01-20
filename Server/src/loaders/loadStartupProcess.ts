@@ -2,12 +2,12 @@ import 'dotenv/config';
 import 'cookie-parser'
 
 import { authenticationRouter } from '../routes/authenticationRouter';
-import bodyParser from 'body-parser';
+import bodyParser from 'body-parser'
 import { connectDB } from '../database';
 import cors from 'cors';
 import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
-import { fileUploadRouter } from '../routes/fileUploadRouter';
+import { dataExtractionRouter } from '../routes/dataExtractionRouter'
 import { getDataRouter } from '../routes/getDatasetRouter';
 
 const cookieParser = require('cookie-parser');
@@ -59,7 +59,7 @@ export class loadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    this.app.use('/', fileUploadRouter)
+    this.app.use('/', dataExtractionRouter)
     this.app.use('/', authenticationRouter)
     this.app.use('/', getDataRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
