@@ -12,7 +12,6 @@ let authenticationController = new AuthenticationController();
  */
 
 router.post('/signup', (request: Request, response: Response, next: NextFunction) => {
-
     authenticationController.createSignUpRequest(request, response, next);
 });
 

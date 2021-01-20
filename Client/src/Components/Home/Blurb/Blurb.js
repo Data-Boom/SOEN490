@@ -20,7 +20,7 @@ export default function Blurb() {
       </Box>
       <Box display="flex" flexDirection="column">
         <h1 className="Header2">Search and Discover</h1>
-        <p className="Paragraph">Need to find a dataset? Search with filters, by gas, DOI, author, category, fuel, oxidizer, dilutent, temperature, and more!</p>
+        <p className="Paragraph">Need to find a dataset? Search with filters, by gas, DOI, author, category, fuel, oxidizer, diluent, temperature, and more!</p>
       </Box>
       <Box display="flex" flexDirection="column">
         <h1 className="Header">Data Cell Analysis</h1>

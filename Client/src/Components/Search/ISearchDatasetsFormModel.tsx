@@ -6,7 +6,7 @@ export interface ISearchDatasetsFormModel {
   subcategories: string,
   fuel: string,
   author: string,
-  dilutent: string,
+  diluent: string,
 }
 
 export const defaultSearchDatasetsModel: ISearchDatasetsFormModel = {
@@ -17,5 +17,5 @@ export const defaultSearchDatasetsModel: ISearchDatasetsFormModel = {
   subcategories: '',
   fuel: '',
   author: '',
-  dilutent: '',
+  diluent: '',
 }
