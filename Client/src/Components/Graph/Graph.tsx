@@ -40,22 +40,27 @@ export default function Graph(props: IProps) {
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
   const [showSettings, setSettingsToggle] = useState(false)
-  const [xUpperBound, setXUpperBound] = useState(extremeBoundaries.maxX)
-  const [xLowerBound, setXLowerBound] = useState(extremeBoundaries.minX)
-  const [yUpperBound, setYUpperBound] = useState(extremeBoundaries.maxY)
-  const [yLowerBound, setYLowerBound] = useState(extremeBoundaries.minY)
+  const [boundaries, setBoundaries] = useState<IDataPointExtremes>(
+    extremeBoundaries
+  )
   // This loops through the selected arrays to find the min/max for both x and y.
 
   const handleXScaleClick = () => {
-    if (xLowerBound <= 0 && !isXLog) {
-      setXLowerBound(1)
+    if (boundaries.minX <= 0 && !isXLog) {
+      setBoundaries({
+        ...boundaries,
+        minX: 1
+      })
     }
     setXToggle(!isXLog)
   }
 
   const handleYScaleClick = () => {
-    if (yLowerBound <= 0 && !isYLog) {
-      setYLowerBound(1)
+    if (boundaries.minY <= 0 && !isYLog) {
+      setBoundaries({
+        ...boundaries,
+        minY: 1
+      })
     }
     setYToggle(!isYLog)
   }
@@ -67,38 +72,62 @@ export default function Graph(props: IProps) {
   const handleXUpperBoundChange = (event) => {
     const { value } = event.target
     if ((value < extremeBoundaries.maxX)) {
-      setXUpperBound(Math.ceil(extremeBoundaries.maxX))
+      setBoundaries({
+        ...boundaries,
+        maxX: (Math.ceil(extremeBoundaries.maxX))
+      })
     }
     else {
-      setXUpperBound(value)
+      setBoundaries({
+        ...boundaries,
+        maxX: value
+      })
     }
   }
   const handleXLowerBoundChange = (event) => {
     const { value } = event.target
     if ((value <= 0 && isXLog) || (value > extremeBoundaries.minX)) {
-      setXLowerBound(Math.floor(extremeBoundaries.minX))
+      setBoundaries({
+        ...boundaries,
+        minX: (Math.floor(extremeBoundaries.minX))
+      })
     }
     else {
-      setXLowerBound(value)
+      setBoundaries({
+        ...boundaries,
+        minX: value
+      })
     }
   }
 
   const handleYUpperBoundChange = (event) => {
     const { value } = event.target
     if ((value < extremeBoundaries.maxY)) {
-      setYUpperBound(Math.ceil(extremeBoundaries.maxY))
+      setBoundaries({
+        ...boundaries,
+        maxY: (Math.ceil(extremeBoundaries.maxY))
+      })
     }
     else {
-      setYUpperBound(value)
+      setBoundaries({
+        ...boundaries,
+        maxY: value
+      })
     }
   }
   const handleYLowerBoundChange = (event) => {
     const { value } = event.target
     if ((value <= 0 && isYLog) || (value > extremeBoundaries.minY)) {
-      setYLowerBound(Math.floor(extremeBoundaries.minY))
+      setBoundaries({
+        ...boundaries,
+        minY: (Math.floor(extremeBoundaries.minY))
+      })
     }
     else {
-      setYLowerBound(value)
+      setBoundaries({
+        ...boundaries,
+        minY: value
+      })
     }
   }
 
@@ -130,9 +159,9 @@ export default function Graph(props: IProps) {
 
     //This part creates the axis/scales used for the data.
     const xScale = getScale(isXLog, width, 0)
-    xScale.domain([xLowerBound, xUpperBound])
+    xScale.domain([boundaries.minX, boundaries.maxX])
     const yScale = getScale(isYLog, 0, height)
-    yScale.domain([yLowerBound, yUpperBound])
+    yScale.domain([boundaries.minY, boundaries.maxY])
     //Calls the function to create the axis
     const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -290,7 +319,7 @@ export default function Graph(props: IProps) {
         .selectAll("circle")
         .attr('cy', function (d) { return (newYScale(d["y"])) })
     }
-  }, [props, isXLog, isYLog, xUpperBound, xLowerBound, yUpperBound, yLowerBound])
+  }, [props, isXLog, isYLog, boundaries])
 
   return (
     <>
@@ -315,19 +344,19 @@ export default function Graph(props: IProps) {
                 <Button size="small" id='btn1' variant="contained" onClick={handleXScaleClick} color="primary">Change X Scale</Button>
               </Grid>
               <Grid item xs={4}>
-                <TextField size="small" id="xLowerBound" variant="outlined" value={xLowerBound} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
+                <TextField size="small" id="xLowerBound" variant="outlined" value={boundaries.minX} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
               </Grid>
               <Grid item xs={4}>
-                <TextField size="small" id="xUpperBound" variant="outlined" value={xUpperBound} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
+                <TextField size="small" id="xUpperBound" variant="outlined" value={boundaries.maxX} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
               </Grid>
               <Grid item xs={4}>
                 <Button size="small" id='btn2' variant="contained" onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
               </Grid>
               <Grid item xs={4}>
-                <TextField size="small" id="yLowerBound" variant="outlined" value={yLowerBound} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
+                <TextField size="small" id="yLowerBound" variant="outlined" value={boundaries.minY} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
               </Grid>
               <Grid item xs={4}>
-                <TextField size="small" id="yUpperBound" variant="outlined" value={yUpperBound} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+                <TextField size="small" id="yUpperBound" variant="outlined" value={boundaries.maxY} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
               </Grid>
             </>
           }
