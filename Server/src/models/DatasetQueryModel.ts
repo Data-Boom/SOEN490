@@ -38,7 +38,7 @@ export class DataQueryModel {
             compositionId = compositionIdRaw[0].id;
         };
 
-        let materialDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let materialDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin('dataset.materials', 'material')
             .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
             .setParameters({ compositionRef: compositionId, materialDetails: material })
@@ -54,7 +54,7 @@ export class DataQueryModel {
      * Publication year: number
      */
     async getDatasetIDFromYear(year: number): Promise<IDatasetIDModel[]> {
-        let yearDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let yearDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .where('publication.year = :yearRef', { yearRef: year })
             .getRawMany();
@@ -73,7 +73,7 @@ export class DataQueryModel {
      * The last name of an author: string
      */
     async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetIDModel[]> {
-        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
@@ -91,7 +91,7 @@ export class DataQueryModel {
      * The last name of an author: string
      */
     async getDatasetIDFromAuthorLastName(lastName: string): Promise<IDatasetIDModel[]> {
-        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
@@ -107,7 +107,7 @@ export class DataQueryModel {
      * A category ID: number
      */
     async getDatasetIDFromCategory(category: number): Promise<IDatasetIDModel[]> {
-        let categoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let categoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .where('category.id = :categoryId', { categoryId: category })
             .getRawMany();
@@ -124,7 +124,7 @@ export class DataQueryModel {
      * A subcategory ID: number
      */
     async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetIDModel[]> {
-        let subcategoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let subcategoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
             .where('category.id = :categoryId', { categoryId: category })
@@ -141,7 +141,7 @@ export class DataQueryModel {
      * Account ID: number
      */
     async getUploadedDatasetIDOfUser(id: number): Promise<IDatasetIDModel[]> {
-        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
             .where('account.id = :idRef', { idRef: id })
             .getRawMany();
@@ -157,7 +157,7 @@ export class DataQueryModel {
      */
     async getSavedDatasetIDOfUser(id: number): Promise<IDatasetIDModel[]> {
 
-        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin('dataset.accounts', 'account')
             .where('account.id = :idRef', { idRef: id })
             .getRawMany();
@@ -173,10 +173,10 @@ export class DataQueryModel {
      * A data set ID: number
      */
     async getAllData(id: number): Promise<IClientDatasetModel> {
-        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection.manager, id)
-        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection.manager, id)
+        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id)
+        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection, id)
         publicationData.authors = authorData
-        let completeDatasetData = await selectDatasetsQuery(this.connection.manager, id)
+        let completeDatasetData = await selectDatasetsQuery(this.connection, id)
         let datasetInfo: IDatasetInfoModel = {
             dataset_name: completeDatasetData[0].dataset_name,
             dataset_comments: completeDatasetData[0].dataset_comments,
@@ -184,9 +184,9 @@ export class DataQueryModel {
             category_name: completeDatasetData[0].category_name,
             subcategory_name: completeDatasetData[0].subcategory_name
         }
-        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection.manager, id)
-        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection.manager, id)
-        let datapointComments = await selectDataPointCommentsQuery(this.connection.manager, id)
+        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection, id)
+        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection, id)
+        let datapointComments = await selectDataPointCommentsQuery(this.connection, id)
         if (datapointComments == undefined)
             datapointComments = []
         let allData: IClientDatasetModel = {

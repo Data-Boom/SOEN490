@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, EntityManager } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection } from "typeorm";
 import { Dataset } from "./Dataset";
 
 
@@ -32,8 +32,8 @@ export class Datapointcomments {
     updated: Date
 }
 
-export const selectDataPointCommentsQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
+export const selectDataPointCommentsQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
         .select('datapointcomments.comments', 'datapointcomments_comments')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Datapointcomments, 'datapointcomments', 'datapointcomments.datasetId = dataset.id')

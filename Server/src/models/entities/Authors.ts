@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, EntityManager } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, Connection } from "typeorm";
 import { Dataset } from './Dataset';
 
 
@@ -39,8 +39,8 @@ export class Authors {
     publications: Publications[];
 }
 
-export const selectAuthorsQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
+export const selectAuthorsQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
         .select('author.firstName', 'author_firstName')
         .addSelect('author.lastName', 'author_lastName')
         .addSelect('author.middleName', 'author_middleName')

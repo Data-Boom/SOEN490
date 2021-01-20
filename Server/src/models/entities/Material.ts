@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, EntityManager } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, Connection } from "typeorm";
 import { Composition } from "./Composition";
 import { Dataset } from "./Dataset";
 
@@ -45,8 +45,8 @@ export class Material {
     updated: Date
 }
 
-export const selectMaterialQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
+export const selectMaterialQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
         .select('composition.composition', 'composition_name')
         .addSelect('material.details', 'material_details')
         .innerJoin('dataset.materials', 'material')

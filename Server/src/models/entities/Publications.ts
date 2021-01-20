@@ -1,7 +1,7 @@
 import { Authors } from './Authors';
 import { Publicationtype } from './Publicationtype';
 import { Publisher } from './Publisher';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, Connection } from "typeorm";
 import { Dataset } from './Dataset';
 
 
@@ -79,8 +79,8 @@ export class Publications {
     authors: Authors[];
 }
 
-export const selectPublicationsQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
+export const selectPublicationsQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
         .select('publication.name', 'publication_name')
         .addSelect('publication.doi', 'publication_doi')
         .addSelect('publication.pages', 'publication_pages')
