@@ -14,6 +14,10 @@ export interface IUserAccountModel {
   organizationName: string,
 }
 
+// export interface IUserDetailsModel extends IUserAccountModel {
+//   password: string
+// }
+
 export const toLocalUserAccountModel = (remoteAccount: IUserAccountRemoteModel): IUserAccountModel => {
   const localAccountModel: IUserAccountModel = {
     dateOfBirth: remoteAccount.account_dateOfBirth,

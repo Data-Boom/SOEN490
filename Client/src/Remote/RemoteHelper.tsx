@@ -42,13 +42,13 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
     }
 
     const message = await response.json()
-    SnackbarUtils.warning('parsed fine')
     if (response.status.toString().charAt(0) == '2') {
       return message
     }
 
     if (response.status.toString().charAt(0) == '4') {
-      SnackbarUtils.warning(message)
+      console.log(message)
+      SnackbarUtils.warning(JSON.stringify(message))
       return Promise.resolve(null)
     }
   }

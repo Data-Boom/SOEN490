@@ -69,7 +69,7 @@ export default function UserDetailsTab(props: IProps) {
             <Formik
               initialValues={user}
               onSubmit={(user: IUserAccountModel) => {
-                updateUserDetails(user)
+                updateUserDetails({ ...user })
               }}
             >
               {formProps =>
@@ -92,9 +92,9 @@ export default function UserDetailsTab(props: IProps) {
                 </Form>
               }
             </Formik>
-            <PasswordChangeForm
+            {/* <PasswordChangeForm
               onSubmit={handleSubmit}
-            />
+            /> */}
           </Box>
         ) : (<Redirect to={signInRoute} />)
       }

@@ -1,8 +1,7 @@
-import { getConnection } from 'typeorm';
-
 import { Accounts } from './entities/Accounts'
-import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
 import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
+import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
+import { getConnection } from 'typeorm';
 
 /**
  * This model contains all methods required for obtaining data from the Accounts
@@ -142,14 +141,14 @@ export class AuthenticationModel {
         return true
     }
     //for organization Name
-    static async updateUserOrganizationDetail(email: string, organization: string): Promise<boolean> {
+    static async updateUserOrganizationDetail(email: string, organizationName: string): Promise<boolean> {
 
         let connection = getConnection();
 
         await connection.manager
             .createQueryBuilder(Accounts, 'accounts')
             .update('accounts')
-            .set({ organizationName: organization })
+            .set({ organizationName: organizationName })
             .where('accounts.email = :emailRef', { emailRef: email })
             .execute()
 

@@ -71,7 +71,7 @@ export class AuthenticationController {
     }
 
     private validateUserDetailRequest(request: Request): boolean {
-        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organization')) {
+        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organizationName')) {
             return true;
         } else
             return false;

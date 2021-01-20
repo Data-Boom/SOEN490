@@ -21,7 +21,7 @@ export interface IJwtParams {
 export interface IUpdateUserDetail {
     email: string,
     password?: string,
-    organization?: string
+    organizationName?: string
 }
 
 export interface IFetchUserDetail {

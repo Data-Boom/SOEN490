@@ -12,8 +12,10 @@ interface IUserDetailsQuery {
 }
 
 export const updateUserDetails = async (userProfile: IUserAccountModel): Promise<IUserAccountModel> => {
+  console.log(userProfile)
   const remoteUser = await post(updateUserInfoRoute, userProfile)
   console.log(remoteUser)
+  console.log('got here')
   return remoteUser
 }
 
