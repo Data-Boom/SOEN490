@@ -83,33 +83,37 @@ export class retrieveData {
         let rawData;
         let paramsEntered = 0;
         let rawDatasetIds = [];
-        console.log(lastNameReceived, 'ln');
 
-        if (materialReceived != undefined) {
+        if (materialReceived) {
             for (let i = 0; i < materialReceived.length; i++) {
                 paramsEntered++
                 rawData = await this.dataQuery.getDatasetIDFromMaterial(materialReceived[i]);
                 rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
             }
         }
-        if (yearReceived != undefined) {
+        if (yearReceived) {
             paramsEntered++
             rawData = await this.dataQuery.getDatasetIDFromYear(yearReceived);
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
-        if (lastNameReceived != undefined) {
+        if (lastNameReceived) {
+
             paramsEntered++
-            if (firstNameReceived != undefined) {
+            if (firstNameReceived) {
+                console.log(lastNameReceived, 'ln');
+
                 rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
             }
             else {
+                console.log(lastNameReceived, 'fn');
+
                 rawData = await this.dataQuery.getDatasetIDFromAuthorLastName(lastNameReceived);
             }
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
-        if (categoryReceived != undefined) {
+        if (categoryReceived) {
             paramsEntered++
-            if (subcategoryReceived != undefined) {
+            if (subcategoryReceived) {
                 rawData = await this.dataQuery.getDatasetIDFromSubcategory(categoryReceived, subcategoryReceived);
             }
             else {

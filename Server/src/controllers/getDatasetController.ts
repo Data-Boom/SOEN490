@@ -26,7 +26,6 @@ export class getDataController {
         }
         else {
             let requestParams: any = { ...request.query };
-            console.log(requestParams, 'requestParams');
             this.processedRequest = requestParams;
             try {
                 const retrieveDataObject = new retrieveData();
