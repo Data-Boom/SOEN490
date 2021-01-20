@@ -41,9 +41,9 @@ export class Authors {
 
 export const selectAuthorsQuery = (connection: Connection, dataset: number) =>
     connection.createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
+        .select('author.firstName', 'firstName')
+        .addSelect('author.lastName', 'lastName')
+        .addSelect('author.middleName', 'middleName')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .where('dataset.id = :datasetId', { datasetId: dataset })

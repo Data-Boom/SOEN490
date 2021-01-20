@@ -178,11 +178,11 @@ export class DataQueryModel {
         publicationData.authors = authorData
         let completeDatasetData = await selectDatasetsQuery(this.connection, id)
         let datasetInfo: IDatasetInfoModel = {
-            dataset_name: completeDatasetData[0].dataset_name,
-            dataset_comments: completeDatasetData[0].dataset_comments,
-            datasetdatatype_name: completeDatasetData[0].datasetdatatype_name,
-            category_name: completeDatasetData[0].category_name,
-            subcategory_name: completeDatasetData[0].subcategory_name
+            name: completeDatasetData[0].name,
+            comments: completeDatasetData[0].comments,
+            datasetDataType: completeDatasetData[0].datasetdatatype,
+            category: completeDatasetData[0].category,
+            subcategory: completeDatasetData[0].subcategory
         }
         let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection, id)
         let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection, id)
@@ -195,7 +195,7 @@ export class DataQueryModel {
             dataset_info: datasetInfo,
             materials: materialData,
             dataPoints: datapointData,
-            dataPointComments: datapointComments.datapointcomments_comments
+            dataPointComments: datapointComments.datapointcomments
         }
         return allData;
     }

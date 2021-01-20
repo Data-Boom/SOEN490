@@ -110,12 +110,12 @@ export const selectDatasetIdsQuery = (connection: Connection) =>
 
 export const selectDatasetsQuery = (connection: Connection, dataset: number) =>
     connection.createQueryBuilder(Dataset, 'dataset')
-        .select('dataset.name', 'dataset_name')
+        .select('dataset.name', 'name')
         .addSelect('dataset.id', 'dataset_id')
-        .addSelect('datasetdatatype.name', 'datasetdatatype_name')
-        .addSelect('category.name', 'category_name')
-        .addSelect('subcategory.name', 'subcategory_name')
-        .addSelect('dataset.comments', 'dataset_comments')
+        .addSelect('datasetdatatype.name', 'datasetdatatype')
+        .addSelect('category.name', 'category')
+        .addSelect('subcategory.name', 'subcategory')
+        .addSelect('dataset.comments', 'comments')
         .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')

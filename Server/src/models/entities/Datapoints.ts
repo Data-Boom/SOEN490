@@ -63,10 +63,10 @@ export class Datapoints {
 
 export const selectDataPointsQuery = (connection: Connection, dataset: number) =>
     connection.createQueryBuilder(Dataset, 'dataset')
-        .select('datapoints.name', 'datapoints_name')
-        .addSelect('datapoints.values', 'datapoints_values')
-        .addSelect('units.units', 'units_units')
-        .addSelect('representations.repr', 'representations_repr')
+        .select('datapoints.name', 'name')
+        .addSelect('datapoints.values', 'values')
+        .addSelect('units.units', 'units')
+        .addSelect('representations.repr', 'representation')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Datapoints, 'datapoints', 'datapoints.datasetId = dataset.id')
         .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')

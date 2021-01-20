@@ -3,42 +3,42 @@ export interface IDatasetIDModel {
 }
 
 export interface IPublicationModel {
-    publication_name: string
-    publication_doi: string
-    publication_pages: number
-    publication_volume: number
-    publication_year: number
-    publication_datePublished: Date
-    publication_dateAccessed: Date
-    publisher_name: string
-    publicationtype_name: string
+    name: string
+    doi: string
+    pages: number
+    volume: number
+    year: number
+    datePublished: Date
+    dateAccessed: Date
+    publisher: string
+    publicationType: string
     authors: IAuthorModel[]
 }
 
 export interface IAuthorModel {
-    author_firstName: string
-    author_lastName: string
-    author_middleName: string
+    firstName: string
+    lastName: string
+    middleName: string
 }
 
 export interface IDatasetInfoModel {
-    dataset_name: string
-    dataset_comments: string
-    datasetdatatype_name: string
-    category_name: string
-    subcategory_name: string
+    name: string
+    comments: string
+    datasetDataType: string
+    category: string
+    subcategory: string
 }
 
 export interface IMaterialModel {
-    material_details: string
-    composition_name: string
+    details: string
+    composition: string
 }
 
 export interface IDataPointModel {
-    datapoints_name: string
-    datapoints_values: number[]
-    units_units: string
-    representations_repr: string
+    type: string
+    values: number[]
+    units: string
+    representation: string
     dataset_id: number
 }
 
