@@ -8,7 +8,7 @@ interface MulterRequest extends Request {
   file: any;
 }
 
-let upload = multer({ dest: 'tmp/upload/', limits: { fileSize: 8000000 } });
+let upload = multer({ dest: 'upload', limits: { fileSize: 8000000 } });
 let router = Router();
 
 /**
@@ -17,8 +17,14 @@ let router = Router();
  * the service.
  */
 router.post('/api/v1/dataExtract',/**  [JWTAuthenticator.verifyJWT, **/upload.single('file'), (request: MulterRequest, response: Response, next: NextFunction) => {
-  let dataExtract = new dataExtractionController(request.file.path, request.file.originalname);
-  dataExtract.createRequest(request, response);
+  try {
+    let dataExtract = new dataExtractionController(request.file.path, request.file.originalname);
+    dataExtract.createRequest(request, response);
+  } catch (error) {
+    if (!request.file) {
+      return response.send('Please select a file to upload');
+    }
+  }
 });
 
 export { router as dataExtractionRouter };
