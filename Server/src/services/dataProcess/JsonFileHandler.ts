@@ -11,8 +11,11 @@ const fileSystem = require('fs');
 
 export class JsonFileFactory extends FileHandlerFactory {
 
-    generateFileHandler(filePath: string): AbstractFileHandler {
-        return new JsonFileHandler(filePath)
+    generateFileHandler(filePath?: string): AbstractFileHandler {
+        if (filePath)
+            return new JsonFileHandler(filePath)
+        else
+            return new JsonFileHandler()
     }
 }
 
@@ -32,11 +35,11 @@ export class JsonFileHandler extends AbstractFileHandler {
             await validationSchema.validate(jsonData)
             return jsonData;
         } catch (err) {
-            throw new BadRequest("Error validating your file. Check that JSON attributes are properly filled");
+            throw new BadRequest(err.message);
         }
     }
 
-    async uploadData(): Promise<IResponse> {
+    async uploadData(jsonData: any): Promise<IResponse> {
 
         let requestResponse: IResponse = {} as any;
         let category: string = '';
@@ -63,6 +66,8 @@ export class JsonFileHandler extends AbstractFileHandler {
         let datasetID: number;
         let unitsID: number;
         let reprID: number;
+
+        this.jsonData = jsonData
 
         // Create this object after the parsing passes
         let uploadModel = new DataUploadModel();
@@ -181,7 +186,7 @@ export class JsonFileHandler extends AbstractFileHandler {
 
         await uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
 
-        requestResponse.message = "Upload was successful!"
+        requestResponse.message = "Upload to Database was successful!"
         requestResponse.statusCode = 200
         return requestResponse
     }

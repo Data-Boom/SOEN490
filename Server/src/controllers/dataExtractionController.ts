@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { dataProcessService } from '../services/dataExtract/dataProcessService'
-import { FileUploadExtension } from '../genericInterfaces/DataProcessInterfaces';
+import { dataProcessService } from '../services/dataProcess/dataProcessService'
 
 /**
  * The fileUploadController is resposible for providing instructions to the application if a request comes in
@@ -35,11 +34,10 @@ export class dataExtractionController {
   };
 
   private async callDataExtractorService(filePath: string, extension: string, response: Response) {
-    let commmand = 'extract'
-    let dataService = new dataProcessService(filePath, extension, commmand);
+    let command = 'Extract'
+    let dataService = new dataProcessService(extension, command, null, filePath);
     try {
       let extractDataResponse: any = await dataService.extractData();
-      console.log(extractDataResponse)
       response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
     } catch (error) {
       console.log(error)
