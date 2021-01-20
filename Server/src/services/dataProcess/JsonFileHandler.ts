@@ -38,7 +38,6 @@ export class JsonFileHandler extends AbstractFileHandler {
 
     async uploadData(jsonData: any): Promise<string> {
 
-        let requestResponse: IResponse = {} as any;
         let category: string = '';
         let subcategory: string = '';
         let dataSetName: string = '';
@@ -195,15 +194,6 @@ export class JsonFileHandler extends AbstractFileHandler {
         for (let i = 0; i < dataContentArray.length; i++) {
             dataPointsForVariable.push(dataContentArray[i].point[index]);
             dataSetComments.push(dataContentArray[i].comments);
-        }
-        //to check if the two helper arrays are empty or not
-        for (let j = 0; j < dataPointsForVariable.length; j++) {
-            if ((dataPointsForVariable == null || dataPointsForVariable[j] == '') ||
-                (dataSetComments == null || dataSetComments[j] == '')) {
-                console.log('dataset points are empty');
-            } else {
-                continue;
-            }
         }
         let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
         return contentsArrayInfo;
