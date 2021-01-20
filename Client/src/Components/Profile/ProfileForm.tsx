@@ -30,7 +30,7 @@ export default function ProfileForm(props: IProps) {
       >
         <Form>
           <UserForm />
-          <Button variant="contained" color="primary" type="submit">Update User</Button>
+          <Button id="update-user" variant="contained" color="primary" type="submit">Update User</Button>
         </Form>
       </Formik>
     </Container>

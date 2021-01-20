@@ -128,13 +128,13 @@ export default function GraphView() {
               <Grid container direction='column'>
                 <Grid item container spacing={3}>
                   <Grid item>
-                    <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+                    <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
                   </Grid>
                   <Grid item>
-                    <Button onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
+                    <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
                   </Grid>
                   <Grid item>
-                    <Button onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                    <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
                   </Grid>
                 </Grid>
                 <Grid item>

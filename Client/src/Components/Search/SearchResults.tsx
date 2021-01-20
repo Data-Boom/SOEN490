@@ -19,7 +19,7 @@ export const SearchResults = (props: IProps) => {
     { field: 'category', headerName: 'Category' },
     { field: 'subcategory', headerName: 'SubCategory' },
     { field: 'fuel', headerName: 'Fuel' },
-    { field: 'diluent', headerName: 'Dilutent' },
+    { field: 'diluent', headerName: 'Diluent' },
     { field: 'author', headerName: 'Author' },
     { field: 'year', headerName: 'Year' },
     { field: 'outputFormat', headerName: 'Output format' },
