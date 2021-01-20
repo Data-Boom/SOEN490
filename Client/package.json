@@ -25,6 +25,7 @@
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.20",
     "mocha": "^8.2.1",
+    "notistack": "^1.0.3",
     "query-string": "^4.3.4",
     "react": "^16.13.1",
     "react-data-grid": "^7.0.0-canary.30",
@@ -40,7 +41,7 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start": "PORT=4500 react-scripts start",
+    "start": "react-scripts start",
     "ui": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

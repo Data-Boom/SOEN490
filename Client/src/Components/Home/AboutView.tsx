@@ -2,7 +2,7 @@ import { Box, Container, Grid } from '@material-ui/core'
 
 import React from 'react'
 import { classStyles } from '../../appTheme'
-import profPic from '../../Assets/universitylogo.png'
+import profPic from '../../Common/Assets/universitylogo.png'
 
 export const AboutView = () => {
   return (

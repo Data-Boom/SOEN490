@@ -14,6 +14,7 @@ import emptyJSFile from "../../Assets/emptyJSFile.json"
  */
 export default function DataCell() {
     const [open, setOpen] = useState(false)
+    const [alertSuccess, setAlertSuccess] = useState(false)
 
     /**
     * Upon submission, the JSON file is extracted from the event and must be appended to formData
@@ -31,6 +32,9 @@ export default function DataCell() {
             setOpen(true)
             return
         }
+        
+        setAlertSuccess(true)
+        
 
         const formData = new FormData()
         formData.append('file', json)
@@ -44,7 +48,7 @@ export default function DataCell() {
             await fetch('http://localhost:4000/dataupload', options)
                 .then(resp => resp.json())
                 .then(result => {
-                    console.log(result[0])
+                    console.log(result)
                 })
         }
         catch (err) {
@@ -62,9 +66,11 @@ export default function DataCell() {
         const i = filename.lastIndexOf('.')
         return (i < 0) ? '' : filename.substr(i)
     }
+    //to do: refactor into proper txt file
     const readme= "To properly upload a JSON file based on the provided empty sample, \nthe user must fill up the following fields: \n"
     const fields="-reference \n-type \n-publisher \n-author \n-title \n-year \n-dataset/materials \n-variables/points \n"
     const info= "In order to enter the point array values, there should be a minimum of one value per variable: ie. \n[density, temp, pressure, init velocity, shock velocity, particle, velocity, compression, etc.]"
+    
     //Snackbar is used to show an error on the screen when a wrong file type is selected for uploading
     return (
         <>
@@ -74,6 +80,12 @@ export default function DataCell() {
                 </Alert>
             </Snackbar>
 
+           <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
+                <Alert onClose={() => setAlertSuccess(false)} severity="success">
+                    File Successfully uploaded!! 
+                </Alert>
+            </Snackbar>
+          
             <Container>
                 <Box border={30} p={4} borderColor="primary">
                     <form onSubmit={handleSubmit}>
