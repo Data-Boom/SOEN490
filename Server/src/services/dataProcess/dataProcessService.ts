@@ -1,16 +1,14 @@
 import { JsonFileFactory } from './JsonFileHandler';
 import { IResponse } from '../../genericInterfaces/ResponsesInterface';
-import { BadRequest, InternalServerError } from '@tsed/exceptions';
-
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
  * then stored into its appropriate table in the database. 
  */
-export class dataProcessService {
+export class DataProcessService {
 
-  private filePath: string
   private dataType: string
+  private filePath: string
   private factory: any
   private outputData: any
   private command?: string
@@ -30,12 +28,13 @@ export class dataProcessService {
       case 'json': {
         this.factory = new JsonFileFactory()
         this.outputData = await this.dataHandlerTemplate()
-        //if(!this.outputData.status)
         break;
       }
       //TODO: Implement when building new file modules
       // case 'pdf:
-      // return new PdfParser(filePathOfJson)
+      // this.factory = new PdfFileFactory()
+      // this.outputData = await this.dataHandlerTemplate()
+      // break;
     }
     requestResponse.statusCode = 200;
     requestResponse.message = this.outputData;
@@ -44,31 +43,15 @@ export class dataProcessService {
 
   async dataHandlerTemplate(): Promise<IResponse> {
     let fileHandler: any
+    fileHandler = await this.factory.getFileHandler(this.filePath)
     if (this.command == 'Extract') {
-      try {
-        fileHandler = await this.factory.generateFileHandler(this.filePath)
-        let parsedData = await fileHandler.parseFile()
-        return parsedData
-      } catch (error) {
-        if (error instanceof BadRequest) {
-          throw new BadRequest(error.message)
-        }
-      }
+      let parsedData = await fileHandler.parseFile()
+      return parsedData
     }
     else if (this.command == 'Upload') {
-      try {
-        fileHandler = await this.factory.generateFileHandler()
-        await fileHandler.validateExtractedData(this.jsonBody)
-        let uploadResponse: any = await fileHandler.uploadData(this.jsonBody)
-        return uploadResponse
-      } catch (error) {
-        if (error instanceof BadRequest) {
-          throw new BadRequest(error.message)
-        }
-        else if (error instanceof InternalServerError) {
-          throw new InternalServerError(error.message)
-        }
-      }
+      await fileHandler.validateExtractedData(this.jsonBody)
+      let uploadResponse: any = await fileHandler.uploadData(this.jsonBody)
+      return uploadResponse
     }
   }
 }

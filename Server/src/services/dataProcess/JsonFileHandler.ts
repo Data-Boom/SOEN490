@@ -11,11 +11,8 @@ const fileSystem = require('fs');
 
 export class JsonFileFactory extends FileHandlerFactory {
 
-    generateFileHandler(filePath?: string): AbstractFileHandler {
-        if (filePath)
-            return new JsonFileHandler(filePath)
-        else
-            return new JsonFileHandler()
+    getFileHandler(filePath: string): AbstractFileHandler {
+        return new JsonFileHandler(filePath)
     }
 }
 
@@ -39,7 +36,7 @@ export class JsonFileHandler extends AbstractFileHandler {
         }
     }
 
-    async uploadData(jsonData: any): Promise<IResponse> {
+    async uploadData(jsonData: any): Promise<string> {
 
         let requestResponse: IResponse = {} as any;
         let category: string = '';
@@ -71,6 +68,7 @@ export class JsonFileHandler extends AbstractFileHandler {
 
         // Create this object after the parsing passes
         let uploadModel = new DataUploadModel();
+
         try {
             referenceTypeID = await uploadModel.insertReferenceType(referenceType); console.log('Received reference ID' + referenceTypeID);
         } catch (err) {
@@ -186,9 +184,7 @@ export class JsonFileHandler extends AbstractFileHandler {
 
         await uploadModel.insertDataPointsOfSetComments(datasetID, individualDataSetComments)
 
-        requestResponse.message = "Upload to Database was successful!"
-        requestResponse.statusCode = 200
-        return requestResponse
+        return "Upload to Database was successful!"
     }
 
     private getDataInformationFromContentsArray = (dataContentArray, index) => {

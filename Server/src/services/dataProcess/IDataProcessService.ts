@@ -1,15 +1,14 @@
 export abstract class FileHandlerFactory {
-    abstract generateFileHandler(filePath?: string): AbstractFileHandler
+
+    abstract getFileHandler(filePath?: string): AbstractFileHandler
 }
 
 export abstract class AbstractFileHandler {
-    filePath?: string
+    filePath: string
     jsonData: any
 
-    constructor(filePath?: string) {
-        if (filePath) {
-            this.filePath = filePath
-        }
+    constructor(filePath: string) {
+        this.filePath = filePath
     }
     protected abstract parseFile()
 
