@@ -16,13 +16,9 @@ let router = Router();
  * and the file is stored in a temporary directory called tmp/json. This route is referred for processing by 
  * the service.
  */
-router.post('/api/v1/dataExtract', /**[JWTAuthenticator.verifyJWT, **/ upload.single('file'), (request: MulterRequest, response: Response, next: NextFunction) => {
-  try {
-    let dataExtract = new dataExtractionController(request.file.path);
-    dataExtract.createRequest(request, response);
-  } catch (e) {
-    response.status(400).send(e.message);
-  }
+router.post('/api/v1/dataExtract', [JWTAuthenticator.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
+  let dataExtract = new dataExtractionController(request.file.path);
+  dataExtract.createRequest(request, response);
 });
 
 export { router as dataExtractionRouter };

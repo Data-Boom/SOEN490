@@ -8,6 +8,7 @@ import cors from 'cors';
 import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
 import { dataExtractionRouter } from '../routes/dataExtractionRouter'
+import { dataUploadRouter } from '../routes/dataUploadRouter'
 import { getDataRouter } from '../routes/getDatasetRouter';
 
 const cookieParser = require('cookie-parser');
@@ -63,6 +64,7 @@ export class loadStartupProcess {
     this.app.use('/', authenticationRouter)
     this.app.use('/', getDataRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
+    this.app.use('/', dataUploadRouter)
 
     this.config = {
       "type": process.env.DB_TYPE,

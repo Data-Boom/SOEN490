@@ -12,8 +12,8 @@ let router = Router();
  * the service.
  */
 router.post('/api/v1/dataUpload', /**[JWTAuthenticator.verifyJWT, **/(request: Request, response: Response) => {
-    let dataExtract = new dataUploadController();
-    dataExtract.createRequest(request, response);
+    let dataUpload = new dataUploadController();
+    dataUpload.createRequest(request, response);
 });
 
 export { router as dataUploadRouter };
