@@ -25,7 +25,8 @@ import SignInView from "../Components/Authentication/SignInView"
 import SignUpView from "../Components/Authentication/SignUpView"
 
 interface IProps {
-  icon: React.ReactElement;
+  id: string;
+  icon?: React.ReactElement;
   primary: string;
   to: string;
 }
@@ -33,7 +34,7 @@ interface IProps {
 export const linkWidth: number = 240
 
 export const ListItemLink = (props: IProps) => {
-  const { icon, primary, to } = props
+  const { id, icon, primary, to } = props
 
   const renderLink = React.useMemo(
     () =>
@@ -44,7 +45,7 @@ export const ListItemLink = (props: IProps) => {
   )
 
   return (
-    <ListItem button component={renderLink}>
+    <ListItem id={id} button component={renderLink}>
       {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
       <ListItemText primary={primary} />
     </ListItem>
@@ -64,15 +65,15 @@ export const ListRouter = () => {
     <div className={classes.root}>
       <Paper elevation={0}>
         <List aria-label="main mailbox folders">
-          <ListItemLink to={homeRoute} primary="Home" icon={<HomeIcon />} />
-          <ListItemLink to={graphRoute} primary="Graph" icon={<BarChartIcon />} />
-          <ListItemLink to={searchRoute} primary="Search" icon={<SearchIcon />} />
-          <ListItemLink to={fileUploadRoute} primary="File Upload" icon={<CloudUploadIcon />} />
-          <ListItemLink to={datasetUploadRoute} primary="Dataset Upload" icon={<CloudUploadIcon />} />
-          <ListItemLink to={dataCellAnalysisRoute} primary="Data Cell Analysis" icon={<DonutSmallIcon />} />
-          <ListItemLink to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
-          <ListItemLink to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
-          <ListItemLink to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
+          <ListItemLink id="home-menu" to={homeRoute} primary="Home" icon={<HomeIcon />} />
+          <ListItemLink id="graph-menu" to={graphRoute} primary="Graph" icon={<BarChartIcon />} />
+          <ListItemLink id="search-menu" to={searchRoute} primary="Search" icon={<SearchIcon />} />
+          <ListItemLink id="fileupload-menu" to={fileUploadRoute} primary="File Upload" icon={<CloudUploadIcon />} />
+          <ListItemLink id="dataset-menu" to={datasetUploadRoute} primary="Dataset Upload" icon={<CloudUploadIcon />} />
+          <ListItemLink id="cellanalysis-menu" to={dataCellAnalysisRoute} primary="Data Cell Analysis" icon={<DonutSmallIcon />} />
+          <ListItemLink id="research-menu" to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
+          <ListItemLink id="profile-menu" to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
+          <ListItemLink id="about-menu" to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
         </List>
       </Paper>
     </div>
