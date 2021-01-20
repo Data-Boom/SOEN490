@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { retrieveData } from '../services/getDatasetService';
+
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { retrieveData } from '../services/getDatasetService';
 
 export class getDataController {
     private processedRequest: IDataRequestModel;
@@ -25,6 +26,7 @@ export class getDataController {
         }
         else {
             let requestParams: any = { ...request.query };
+            console.log(requestParams, 'requestParams');
             this.processedRequest = requestParams;
             try {
                 const retrieveDataObject = new retrieveData();

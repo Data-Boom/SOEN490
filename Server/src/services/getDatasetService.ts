@@ -1,6 +1,7 @@
 import { IDatasetModel, IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
-import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+
 import { DataQueryModel } from "../models/DatasetQueryModel";
+import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
 export class retrieveData {
     private dataQuery: DataQueryModel;
@@ -82,6 +83,7 @@ export class retrieveData {
         let rawData;
         let paramsEntered = 0;
         let rawDatasetIds = [];
+        console.log(lastNameReceived, 'ln');
 
         if (materialReceived != undefined) {
             for (let i = 0; i < materialReceived.length; i++) {
