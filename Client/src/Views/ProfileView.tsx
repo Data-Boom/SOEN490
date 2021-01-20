@@ -276,9 +276,9 @@ export function ProfileView() {
       <div className={classes.root}>
         <AppBar position="static">
           <Tabs value={tab} onChange={handleChange}>
-            <Tab label="View Profile" {...a11yProps(0)} />
-            <Tab label="View Favourites" {...a11yProps(1)} />
-            <Tab label="View Uploads" {...a11yProps(2)} />
+            <Tab id="view-profile" label="View Profile" {...a11yProps(0)} />
+            <Tab id="view-favourites" label="View Favourites" {...a11yProps(1)} />
+            <Tab id="view-uploads" label="View Uploads" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <TabPanel value={tab} index={0}>
@@ -294,8 +294,8 @@ export function ProfileView() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button variant="contained" color="primary" onClick={handleEditProfile} className={classes.button}>Edit Profile</Button>
-              <Button variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
+              <Button id="edit-profile" variant="contained" color="primary" onClick={handleEditProfile} className={classes.button}>Edit Profile</Button>
+              <Button id="change-password" variant="contained" color="primary" onClick={handleEditPassword}>Change Password</Button>
             </Grid>
             {editProfile &&
               <Grid item xs={12}>
