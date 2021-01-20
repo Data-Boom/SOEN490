@@ -133,9 +133,7 @@ export class AuthenticationController {
             //todo put secure: true when we go https.
             response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
 
-            const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);
-
-            return response.status(serviceResponse.statusCode).json(user);
+            return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);
