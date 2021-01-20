@@ -8,7 +8,7 @@ import { IDatasetResponseModel } from "./interfaces/DatasetResponseModelInterfac
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
  */
-export class DataUploadModel {
+export class DatasetUpdateModel {
     private connection: Connection;
     constructor() {
         this.connection = getConnection();
@@ -74,4 +74,5 @@ export class DataUploadModel {
         comments = comments.concat(" " + commentsAddition)
         await this.updateDatasetApprovalQuery(id, status, comments, statusComment)
     }
+
 }
