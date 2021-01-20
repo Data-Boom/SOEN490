@@ -16,7 +16,7 @@ let router = Router();
  * and the file is stored in a temporary directory called tmp/json. This route is referred for processing by 
  * the service.
  */
-router.post('/dataupload', [JWTAuthenticator.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
+router.post('/dataupload', upload.single('file'), (request: MulterRequest, response: Response, next: NextFunction) => {
   try {
     let fileUpload = new fileUploadController(request.file.path);
     fileUpload.createRequest(request, response);
