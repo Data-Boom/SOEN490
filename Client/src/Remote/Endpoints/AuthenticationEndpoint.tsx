@@ -4,6 +4,7 @@ import { post } from "../RemoteHelper"
 
 const signupRoute = '/signup'
 const loginRoute = '/login'
+const resetPasswordRoute = '/resetPassword'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
   return post(signupRoute, signUpInfo)

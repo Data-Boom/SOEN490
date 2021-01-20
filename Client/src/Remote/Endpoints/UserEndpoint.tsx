@@ -3,7 +3,6 @@ import { get, post } from "../RemoteHelper"
 
 import { stringify } from 'query-string'
 
-const resetPasswordRoute = '/resetPassword'
 const updateUserInfoRoute = '/updateUserInfo'
 const userDetailsRoute = '/userDetails'
 
