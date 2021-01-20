@@ -50,8 +50,11 @@ export default function NavigationMenu() {
     return user && user.firstName ? (
       <Typography>
         Hello, {user.firstName} {user.lastName}
+        <Button variant="contained">Sign out</Button>
       </Typography>
-    ) : (
+
+    )
+      : (
         <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
       )
   }
