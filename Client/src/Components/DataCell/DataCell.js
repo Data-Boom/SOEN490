@@ -5,6 +5,9 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { Container } from '@material-ui/core'
 import { Snackbar } from '@material-ui/core'
+import Download from '@axetroy/react-download'
+import emptyJSFile from "../../Assets/emptyJSFile.json"
+import { rm } from "../../Assets/readMeMessage.tsx";
 
 /**
  * This component handles receiving the json locally then sending the file for processing
@@ -15,7 +18,7 @@ export default function DataCell() {
     const [alertSuccess, setAlertSuccess] = useState(false)
 
     /**
-     * Upon submission, the JSON file is extracted from the event and must be appended to formData
+    * Upon submission, the JSON file is extracted from the event and must be appended to formData
     * to be sent with API request.
     */
     const handleSubmit = async (e) => {
@@ -87,7 +90,23 @@ export default function DataCell() {
                             <input type="file" id="jsonFile" accept="application/json" />
                             <Button type="submit" variant="contained"> Upload this file! </Button>
                         </div>
+
                     </form>
+                </Box>
+
+                <Box  p={4}>
+                    <div>
+                        {/**for downloading sample empty json file*/}
+                         <Download file= "emptyJsonDataset.json" content= {JSON.stringify(emptyJSFile,null,2)}>
+                            <Button type="submit" variant="contained" onClick={console.log('successfully json downloaded')}> Download Sample JSON file </Button>
+                         </Download>                                                               
+                    </div>
+                    {/**for downnloading instructions readMe for users */}
+                    <div>
+                        <Download file="readMe.txt" content = {rm}>
+                             <a href= "http://localhost:3000/#/uploadFile" onClick={console.log('text file download complete!')}> Download JSON file submission instructions </a>  
+                        </Download>
+                    </div>
                 </Box>
             </Container>
         </>
