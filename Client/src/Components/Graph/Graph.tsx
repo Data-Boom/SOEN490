@@ -1,14 +1,18 @@
 import * as d3 from "d3"
 
+import { Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
-import { Button } from "@material-ui/core"
+import { IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
 interface IProps {
   outerHeight: number,
   outerWidth: number,
-  datasets: IGraphDatasetModel[]
+  datasets: IGraphDatasetModel[],
+  extremeBoundaries: IDataPointExtremes
 }
 
 export default function Graph(props: IProps) {
@@ -31,19 +35,103 @@ export default function Graph(props: IProps) {
   const outerHeight = props && props.outerHeight || 500
   const width = outerWidth - margin.left - margin.right
   const height = outerHeight - margin.top - margin.bottom
+  const extremeBoundaries = props.extremeBoundaries
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
+  const [showSettings, setSettingsToggle] = useState(false)
+  const [boundaries, setBoundaries] = useState<IDataPointExtremes>(
+    extremeBoundaries
+  )
+  // This loops through the selected arrays to find the min/max for both x and y.
 
   const handleXScaleClick = () => {
+    if (boundaries.minX <= 0 && !isXLog) {
+      setBoundaries({
+        ...boundaries,
+        minX: 1
+      })
+    }
     setXToggle(!isXLog)
   }
 
   const handleYScaleClick = () => {
+    if (boundaries.minY <= 0 && !isYLog) {
+      setBoundaries({
+        ...boundaries,
+        minY: 1
+      })
+    }
     setYToggle(!isYLog)
   }
 
-  let active = [null, null, null, null]
+  const handleSettingsClick = () => {
+    setSettingsToggle(!showSettings)
+  }
+
+  const handleXUpperBoundChange = (event) => {
+    const { value } = event.target
+    if ((value < extremeBoundaries.maxX)) {
+      setBoundaries({
+        ...boundaries,
+        maxX: (Math.ceil(extremeBoundaries.maxX))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        maxX: value
+      })
+    }
+  }
+  const handleXLowerBoundChange = (event) => {
+    const { value } = event.target
+    if ((value <= 0 && isXLog) || (value > extremeBoundaries.minX)) {
+      setBoundaries({
+        ...boundaries,
+        minX: (Math.floor(extremeBoundaries.minX))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        minX: value
+      })
+    }
+  }
+
+  const handleYUpperBoundChange = (event) => {
+    const { value } = event.target
+    if ((value < extremeBoundaries.maxY)) {
+      setBoundaries({
+        ...boundaries,
+        maxY: (Math.ceil(extremeBoundaries.maxY))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        maxY: value
+      })
+    }
+  }
+  const handleYLowerBoundChange = (event) => {
+    const { value } = event.target
+    if ((value <= 0 && isYLog) || (value > extremeBoundaries.minY)) {
+      setBoundaries({
+        ...boundaries,
+        minY: (Math.floor(extremeBoundaries.minY))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        minY: value
+      })
+    }
+  }
+
+  const active = [null, null, null, null]
 
   const ref = React.useRef(null)
 
@@ -62,7 +150,7 @@ export default function Graph(props: IProps) {
     //cleans up all the points from the graph
     d3.select(ref.current).selectAll("*").remove()
     //This part creates the canvas for our graph
-    let svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
+    const svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
       .append("svg")
       .attr("width", outerWidth)
       .attr("height", outerHeight)
@@ -71,8 +159,9 @@ export default function Graph(props: IProps) {
 
     //This part creates the axis/scales used for the data.
     const xScale = getScale(isXLog, width, 0)
+    xScale.domain([boundaries.minX, boundaries.maxX])
     const yScale = getScale(isYLog, 0, height)
-
+    yScale.domain([boundaries.minY, boundaries.maxY])
     //Calls the function to create the axis
     const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -91,8 +180,9 @@ export default function Graph(props: IProps) {
 
     //This allows the user to zoom in/out onto the graph.
     const zoom = d3.zoom()
-      .scaleExtent([1, 20])
+      .scaleExtent([1, 10])
       .extent([[0, 0], [width, height]])
+      .translateExtent([[0, 0], [width, height]])
       .on("zoom", updateGraph)
     //This rectangle is the area in which the user can zoom into.
     svg.append("rect")
@@ -103,7 +193,7 @@ export default function Graph(props: IProps) {
       .call(zoom)
 
     //This is the part that creates the points
-    let scatter = svg.append("g")
+    const scatter = svg.append("g")
       .attr("clip-path", "url(#clip)")
 
     scatter
@@ -229,7 +319,7 @@ export default function Graph(props: IProps) {
         .selectAll("circle")
         .attr('cy', function (d) { return (newYScale(d["y"])) })
     }
-  }, [props, isXLog, isYLog])
+  }, [props, isXLog, isYLog, boundaries])
 
   return (
     <>
@@ -242,8 +332,35 @@ export default function Graph(props: IProps) {
         id='graph'
       />
       <div>
-        <Button id='xscale' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-        <Button id='yscale' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">Settings
+              {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </Button>
+          </Grid>
+          {showSettings &&
+            <>
+              <Grid item xs={4}>
+                <Button size="small" id='btn1' variant="contained" onClick={handleXScaleClick} color="primary">Change X Scale</Button>
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="xLowerBound" variant="outlined" value={boundaries.minX} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="xUpperBound" variant="outlined" value={boundaries.maxX} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
+              </Grid>
+              <Grid item xs={4}>
+                <Button size="small" id='btn2' variant="contained" onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="yLowerBound" variant="outlined" value={boundaries.minY} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField size="small" id="yUpperBound" variant="outlined" value={boundaries.maxY} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+              </Grid>
+            </>
+          }
+        </Grid>
       </div>
     </>
   )
