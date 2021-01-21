@@ -25,16 +25,21 @@ export class fileUploadController {
     }
     else {
       try {
-        this.callFileUploadService(this.filePathOfUpload, response);
+        this.callFileUploadService(this.filePathOfUpload, response).catch(e => console.log("Failed to run callFileUploadService", e));
       } catch (error) {
         console.error(error)
       }
     }
-  };
+  }
 
   private async callFileUploadService(filePath: string, response: Response) {
     let fileService = new fileUploadService(filePath);
-    let fileServiceResponse = await fileService.processUpload();
-    response.status(200).json(fileServiceResponse);
-  };
+    try {
+      let fileServiceResponse = await fileService.processUpload();
+      response.status(200).json(fileServiceResponse);
+    } catch (error) {
+      response.status(error.status).json(error.message);
+    }
+  }
+
 }

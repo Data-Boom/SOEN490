@@ -1,19 +1,17 @@
-import * as jwt from 'jsonwebtoken';
-import * as argon2 from 'argon2';
 import 'dotenv/config';
 
-import { AuthenticationModel } from '../models/AuthenticationModel'
-
-import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
-import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
-import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
-import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
-import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
+import * as argon2 from 'argon2';
+import * as jwt from 'jsonwebtoken';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
+import { AuthenticationModel } from '../models/AuthenticationModel'
+import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
+import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
+import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
-
+import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
 
 /**
  * This class services authentication or User related requests and handles
@@ -45,7 +43,7 @@ export class AuthenticationService {
                 await AuthenticationModel.insertSignUpInformation(signUpInformation);
             }
             catch (error) {
-                new InternalServerError("Internal Server Issue. Please try again later", error.message);
+                throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
             }
         }
         this.requestResponse.message = "Success";
@@ -123,7 +121,7 @@ export class AuthenticationService {
     async validateUserDetails(userDetailUpdater: IUpdateUserDetail): Promise<IResponse> {
         let email = userDetailUpdater.email
         let password = userDetailUpdater.password
-        let organization = userDetailUpdater.organization
+        let organizationName = userDetailUpdater.organizationName
 
         if (await AuthenticationModel.verifyIfEmailExists(email)) {
             try {
@@ -131,8 +129,8 @@ export class AuthenticationService {
                     password = await this.hashPassword(password)
                     await AuthenticationModel.updateUserPasswordDetail(email, password);
                 }
-                if (organization != undefined) {
-                    await AuthenticationModel.updateUserOrganizationDetail(email, organization);
+                if (organizationName != undefined) {
+                    await AuthenticationModel.updateUserOrganizationDetail(email, organizationName);
                 }
             } catch (error) {
                 throw new InternalServerError("Internal server problem...try again!");

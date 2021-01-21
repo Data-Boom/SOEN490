@@ -19,7 +19,6 @@ const materialToString = (material: IMaterial) => {
 
 export const MaterialSelectChipArray = (props: IProps) => {
   const { value, options, fieldArrayHelpers } = props
-  console.log(value);
   const handleDelete = (materialToDelete: IMaterial) => {
     const indexToRemove = value.findIndex(material => materialToString(material) == materialToString(materialToDelete))
     fieldArrayHelpers.remove(indexToRemove)

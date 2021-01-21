@@ -38,8 +38,6 @@ export const DataCellAnalysisView = (props: IProps) => {
     })
   }
   const validatePNG = (file: File) => {
-    /// console.log(file + " -------- ") [object file]
-    /// console.log(file.type) image/png
     return file && file.type === fileFormat
   }
   const theme = useTheme()

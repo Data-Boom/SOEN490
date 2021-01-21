@@ -20,7 +20,7 @@ export const DatasetsList = (props: IProps) => {
   return (
     <>
       <Grid item container direction='column' spacing={3}>
-        <Box >
+        <Box className="result-checkbox" >
           {renderDatasetRows()}
         </Box>
       </Grid>

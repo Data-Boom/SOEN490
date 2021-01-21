@@ -28,7 +28,6 @@ export default function NavigationMenu() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
   const handleSignIn = () => {
   }
 
@@ -70,6 +69,11 @@ export default function NavigationMenu() {
                   </IconButton>
                 </Grid>
               </ClickAwayListener>
+              <Grid item>
+                <IconButton id='burger-menu' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
               <Grid item>
                 <img src={universitylogo} />
               </Grid>
