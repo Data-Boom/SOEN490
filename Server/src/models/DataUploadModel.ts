@@ -537,7 +537,7 @@ export class DataUploadModel {
      * @param comments 
      * Array of comments: string[]
      */
-    async insertDataPointsOfSetComments(dataSetID: number, comments: string[]) {
+    async insertCommentsForDataSet(dataSetID: number, comments: string[]) {
         let datapointcomments = new Datapointcomments();
         datapointcomments.id;
         datapointcomments.datasetId = dataSetID;
