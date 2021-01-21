@@ -1,4 +1,4 @@
-import { JsonFileFactory } from './JsonFileHandler';
+import { JsonFileHandlerFactory } from './JsonFileHandlerFactory';
 import { IResponse } from '../../genericInterfaces/ResponsesInterface';
 
 /**
@@ -26,7 +26,7 @@ export class DataProcessService {
     let requestResponse: IResponse = {} as any
     switch (this.dataType) {
       case 'json': {
-        this.factory = new JsonFileFactory()
+        this.factory = new JsonFileHandlerFactory()
         this.outputData = await this.dataHandlerTemplate()
         break;
       }
