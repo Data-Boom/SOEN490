@@ -8,11 +8,13 @@ import { DataProcessService } from '../services/dataProcess/dataProcessService'
 
 export class dataExtractionController {
   private filePathOfUpload: string;
+  private fileName: string
   private fileExtension: string
 
-  constructor(filePath: string, fileExtension: string) {
+  constructor(filePath: string, fileName: string) {
     this.filePathOfUpload = filePath;
-    this.fileExtension = fileExtension
+    this.fileName = fileName
+    this.fileExtension = this.fileName.split('.').pop();
   }
 
   createRequest(request: Request, response: Response) {
@@ -22,9 +24,7 @@ export class dataExtractionController {
       });
     }
     else {
-      //let fileName: any = request.file.originalname as any;
-      let extension = this.fileExtension.split('.').pop();
-      let requestResponse: any = this.callDataProcessService(this.filePathOfUpload, extension, response);
+      let requestResponse: any = this.callDataProcessService(this.filePathOfUpload, this.fileExtension, response);
       return requestResponse
     }
   };
