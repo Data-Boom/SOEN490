@@ -85,7 +85,7 @@ export default function NavigationMenu() {
           </Toolbar>
         </AppBar>
         {drawer()}
-        <Box pt={16}>
+        <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
       </HashRouter>
