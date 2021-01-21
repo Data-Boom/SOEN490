@@ -38,7 +38,7 @@ export default function SearchView(props: IProps) {
     props.handleDatasetsSelected(selectedDatasets)
   }
 
-  const addToGraphButton = <Button variant='contained' color='primary' onClick={handleSubmitSelection}>Add to graph</Button>
+  const addToGraphButton = <Button id="add-graph" variant='contained' color='primary' onClick={handleSubmitSelection}>Add to graph</Button>
 
   return (
     <Container>

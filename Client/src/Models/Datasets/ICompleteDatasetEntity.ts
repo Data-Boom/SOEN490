@@ -3,6 +3,13 @@ export interface IDataPoint {
   y: number
 }
 
+export interface IDataPointExtremes {
+  minX: number,
+  maxX: number,
+  minY: number,
+  maxY: number
+}
+
 export interface ICompleteDatasetEntity {
   points: IDataPoint[],
   id: number,

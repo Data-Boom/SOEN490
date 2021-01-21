@@ -1,11 +1,11 @@
 import * as svg from 'save-svg-as-png'
 
 import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
+import { ICompleteDatasetEntity, IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React, { useState } from "react"
 
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
-import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import { IGraphDatasetModel } from '../../Models/Datasets/IGraphDatasetModel'
 import SearchView from '../Search/SearchView'
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
@@ -32,6 +32,9 @@ export default function GraphView() {
   //Datalist is the list fed to the graphCreation
   const [completeDatasets, setCompleteDatasets] = useState<ICompleteDatasetEntity[]>([])
   const [openModal, setOpenModal] = useState(false)
+  const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
+    { minX: 0, maxX: 10, minY: 0, maxY: 10 }
+  )
 
   const handleOpen = () => {
     setOpenModal(true)
@@ -60,11 +63,9 @@ export default function GraphView() {
     return graphDataset
   }
 
-
-
   //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
   function download(filename: string, text: string) {
-    let element = document.createElement('a')
+    const element = document.createElement('a')
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
     element.setAttribute('download', filename)
 
@@ -77,22 +78,50 @@ export default function GraphView() {
   }
 
   const onRemoveDataset = (datasetId: number) => {
-    setCompleteDatasets(completeDatasets.filter(dataset => dataset.id !== datasetId))
+    const filteredDataset = completeDatasets.filter(dataset => dataset.id !== datasetId)
+    setCompleteDatasets(filteredDataset)
+    calculateExtremeBoundaries(filteredDataset)
   }
 
   const handleDatasetsSelected = (selectedDatasets: ICompleteDatasetEntity[]) => {
-    let notYetSelectedDatasets: ICompleteDatasetEntity[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
+    const notYetSelectedDatasets: ICompleteDatasetEntity[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
-    let mergedDatasets: ICompleteDatasetEntity[] = [...completeDatasets]
+    const mergedDatasets: ICompleteDatasetEntity[] = [...completeDatasets]
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
 
     setCompleteDatasets(mergedDatasets)
+    calculateExtremeBoundaries(mergedDatasets)
   }
 
   const isInStateAlready = (dataset: ICompleteDatasetEntity) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
+  }
+
+  function calculateExtremeBoundaries(datasets: ICompleteDatasetEntity[]) {
+    let minX = 9000, maxX = 0, minY = 9000, maxY = 0
+
+    const datalist: any[] = []
+    datasets.forEach(dataset => datalist.push(dataset.points))
+    datalist.forEach(dataset => {
+      dataset.forEach(point => {
+        if (point.x > maxX) {
+          maxX = point.x
+        }
+        if (point.x < minX) {
+          minX = point.x
+        }
+        if (point.y > maxY) {
+          maxY = point.y
+        }
+        if (point.y < minY) {
+          minY = point.y
+        }
+      })
+    })
+    const extremeBoundaries: IDataPointExtremes = { minX: minX, maxX: maxX, minY: minY, maxY: maxY }
+    setDatasetBoundaries(extremeBoundaries)
   }
 
   return (
@@ -120,6 +149,7 @@ export default function GraphView() {
                 outerHeight={500}
                 outerWidth={768}
                 datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
+                extremeBoundaries={datasetBoundaries}
               />
             </Paper>
           </Grid>
@@ -128,13 +158,13 @@ export default function GraphView() {
               <Grid container direction='column'>
                 <Grid item container spacing={3}>
                   <Grid item>
-                    <Button onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+                    <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
                   </Grid>
                   <Grid item>
-                    <Button onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
+                    <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
                   </Grid>
                   <Grid item>
-                    <Button onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                    <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
                   </Grid>
                 </Grid>
                 <Grid item>

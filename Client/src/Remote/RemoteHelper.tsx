@@ -1,3 +1,5 @@
+import SnackbarUtils from '../Components/SnackbarUtils'
+
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
 const requestBase: RequestInit = {
@@ -11,31 +13,46 @@ const requestBase: RequestInit = {
   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 }
 
-export const post = async (data: any, route: string): Promise<any> => {
+export const post = async (route: string, data: any): Promise<any> => {
   const url = route
 
-  const response = await fetchRemote(url, 'POST', data)
-  return response.json()
+  return fetchRemote(url, 'POST', data)
 }
 
-export const get = async (route: string): Promise<any> => {
-  const url = route
+export const get = async (route: string, query: any = {}): Promise<any> => {
+  const url = `${route}?${query}`
 
-  const response = await fetchRemote(url, 'GET')
-  return response.json()
+  return fetchRemote(url, 'GET')
 }
 
 const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
   const request: RequestInit = { ...requestBase }
   setMethod(request, method)
-  setData(request, data)
+
+  if (method !== 'GET' && method !== 'HEAD') {
+    setData(request, data)
+  }
 
   try {
-    return fetch(url, request)
+    const response = await fetch(url, request)
+
+    if (response.status.toString().charAt(0) == '5') {
+      SnackbarUtils.error('Server Unavailable')
+      return Promise.resolve(null)
+    }
+
+    const message = await response.json()
+    if (response.status.toString().charAt(0) == '2') {
+      return message
+    }
+
+    if (response.status.toString().charAt(0) == '4') {
+      SnackbarUtils.warning(JSON.stringify(message))
+      return Promise.resolve(null)
+    }
   }
   catch (error) {
-    //todo no logs should be on the site should pop up an alert instead
-    console.error(error)
+    SnackbarUtils.error('Exception occurred please do not punish developers')
     return Promise.resolve(null)
   }
 }
