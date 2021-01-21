@@ -1,14 +1,14 @@
 
 export interface IAuthor {
-  firstname: string;
-  middlename: string;
-  lastname: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
 }
 
 export const defaultAuthor: IAuthor = {
-  firstname: '',
-  lastname: '',
-  middlename: ''
+  firstName: '',
+  lastName: '',
+  middleName: ''
 }
 
 export interface IReference {
@@ -24,7 +24,7 @@ export interface IReference {
 export interface IMaterial {
   composition: string,
   details: string,
-  id: number
+  id?: number
 }
 
 export interface IVariable {
@@ -298,14 +298,14 @@ export const exampleExportDatasetModel: IDatasetModel = {
     "publisher": "University of California Press",
     "authors": [
       {
-        "firstname": "Stanley",
-        "middlename": "P.",
-        "lastname": "Marsh"
+        "firstName": "Stanley",
+        "middleName": "P.",
+        "lastName": "Marsh"
       },
       {
-        "firstname": "John",
-        "middlename": "L.",
-        "lastname": "Mclain"
+        "firstName": "John",
+        "middleName": "L.",
+        "lastName": "Mclain"
       }
     ],
     "title": "LASL shock Hugoniot data",

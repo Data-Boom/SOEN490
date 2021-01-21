@@ -1,74 +1,101 @@
-import { IDatasetModel } from "./IDatasetModel"
+import { IContent, IData, IDatasetModel, IVariable } from "./IDatasetModel"
 
-export interface IPublicationModel {
-  publication_name: string,
-  publication_doi: string,
-  publication_pages: number,
-  publication_volume: number,
-  publication_year: number,
-  publication_datePublished: Date,
-  publication_dateAccessed: Date,
-  dataset_id: number,
-  publisher_name: string,
-  publicationtype_name: string
+interface IRemotePublicationModel {
+  name: string,
+  DOI: string,
+  pages: number,
+  volume: number,
+  year: number,
+  datePublished: Date,
+  dateAccessed: Date,
+  publisher: string,
+  publicationType: string,
+  authors: IRemoteAuthorModel[],
 }
 
-export interface IAuthorModel {
-  author_firstName: string,
-  author_lastName: string,
-  author_middleName: string,
-  dataset_id: number
+interface IRemoteAuthorModel {
+  firstName: string,
+  lastName: string,
+  middleName: string
+}
+
+interface IRemoteDatasetInfoModel {
+  name: string,
+  comments: string,
+  datasetDataType: string,
+  category: string,
+  subcategory: string,
+}
+
+interface IRemoteMaterialModel {
+  details: string,
+  composition: string,
+}
+
+interface IRemoteDataPointModel {
+  type: string,
+  values: number[],
+  units: string,
+  representation: string,
+  dataset_id: number,
 }
 
 export interface IRemoteDatasetModel {
+  publication: IRemotePublicationModel,
   dataset_id: number,
-  dataset_name: string,
-  dataset_comments: string,
-  datasetdatatype_name: string,
-  category_name: string,
-  subcategory_name: string
+  dataset_info: IRemoteDatasetInfoModel,
+  materials: IRemoteMaterialModel[],
+  dataPoints: IRemoteDataPointModel[],
+  dataPointComments: string[],
 }
 
-export interface IMaterialModel {
-  material_details: string,
-  composition_name: string,
-  dataset_id: number
+export const toLocalDatasets = (remoteDatasets: IRemoteDatasetModel[]): IDatasetModel[] => {
+  return remoteDatasets.map(remoteDataset => toLocalDatasetModel(remoteDataset))
 }
 
-export interface IDataPointModel {
-  datapoints_name: string,
-  datapoints_values: number[],
-  units_units: string,
-  representations_repr: string,
-  dataset_id: number
+export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatasetModel => {
+  if (!remoteDataset) {
+    return null
+  }
+
+  const dataset: IDatasetModel = {
+    category: remoteDataset.dataset_info.category,
+    subcategory: remoteDataset.dataset_info.subcategory,
+    data: toLocalDataPoints(remoteDataset.dataPoints, remoteDataset.dataPointComments),
+    data_type: remoteDataset.dataset_info.datasetDataType,
+    dataset_name: remoteDataset.dataset_info.name,
+    material: remoteDataset.materials,
+    reference: {
+      authors: remoteDataset.publication.authors,
+      pages: remoteDataset.publication.pages,
+      publisher: remoteDataset.publication.publisher,
+      title: remoteDataset.publication.name,
+      type: remoteDataset.publication.publicationType,
+      volume: remoteDataset.publication.volume,
+      year: remoteDataset.publication.year,
+    }
+  }
+
+  return dataset
 }
 
-export interface IDataPointCommentModel {
-  datapointcomments_comments: string[],
-  dataset_id: number
+const toLocalDataPoints = (remotePoints: IRemoteDataPointModel[], dataComments: string[]): IData => {
+  const data: IData = {} as any
+  data.variables = remotePoints.map((remotePoint) => toVariable(remotePoint))
+  data.contents = toContents(remotePoints, dataComments)
+  return data
 }
 
-export interface IDatasetResponseModel {
-  publications: IPublicationModel[],
-  authors: IAuthorModel[],
-  dataset: IRemoteDatasetModel[],
-  materials: IMaterialModel[],
-  dataPoints: IDataPointModel[],
-  dataPointComments: IDataPointCommentModel[]
+const toVariable = (remotePoint: IRemoteDataPointModel): IVariable => {
+  return { name: remotePoint.type, units: remotePoint.units, repr: remotePoint.representation }
 }
 
-export const datasetResponseToDatasetArray = (response: IDatasetResponseModel): IDatasetModel[] => {
-  const datasets: IDatasetModel[] = []
-  // for (let i = 0; i < response.dataset.length; i++) {
-  //   datasets.push({
-  //     category: response.dataset[i].category_name,
-  //     subcategory: response.dataset[i].subcategory_name,
-  //     data: {
-  //       comments: response.dataPointComments[i],
-  //       variables: response.dataPoints[i].
-  //     }
-  //   })
-  // }
+const toContents = (remotePoint: IRemoteDataPointModel[], dataComments: string[]): IContent[] => {
+  const contents: IContent[] = []
 
-  return []
+  for (let i = 0; i < remotePoint.length; i++) {
+    contents.push({ point: remotePoint[i].values, comments: dataComments[i] })
+  }
+
+  return contents
 }
