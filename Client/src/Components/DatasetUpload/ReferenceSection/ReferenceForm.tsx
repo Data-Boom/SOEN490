@@ -1,5 +1,3 @@
-import * as Yup from 'yup'
-
 import { Box, Grid, Typography } from '@material-ui/core'
 import { FastField, FieldArray } from 'formik'
 
