@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DataExtractionService } from '../services/dataProcess/DataExtractionService'
+import { DataExtractionService } from '../services/dataExtraction/DataExtractionService'
 
 /**
  * The dataExtractionController is responsible for preparing a request and extracting key information
@@ -29,8 +29,8 @@ export class dataExtractionController {
 
 
   private async callDataExtractionService(filePath: string, extension: string, response: Response): Promise<Response> {
-    let command = 'Extract'
-    let dataService = new DataExtractionService(extension, command, null, filePath);
+
+    let dataService = new DataExtractionService(extension, filePath);
     try {
       let extractDataResponse: any = await dataService.extractData();
       return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);

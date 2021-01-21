@@ -2,27 +2,28 @@ import { DataUploadModel } from "../models/DataUploadModel"
 import { Authors } from "../models/entities/Authors";
 import { validationSchema } from "./helpers/validationSchema";
 import { BadRequest } from '@tsed/exceptions';
+import { IResponse } from "../genericInterfaces/ResponsesInterface";
 
 export class DataUploadService {
     private uploadModel: DataUploadModel
     private parsedFileData: any
 
-    constructor() {
+    constructor(parsedFileData: any) {
+        this.parsedFileData = parsedFileData
         this.uploadModel = new DataUploadModel()
     }
 
-    async validateExtractedData(jsonData: any): Promise<JSON> {
+    async validateExtractedData() {
         try {
-            await validationSchema.validate(jsonData)
-            return jsonData;
+            await validationSchema.validate(this.parsedFileData)
         } catch (err) {
             throw new BadRequest(err.message);
         }
     }
 
-    async uploadData(jsonData: any): Promise<string> {
+    async uploadData(): Promise<IResponse> {
 
-        this.parsedFileData = jsonData
+        let requestResponse: IResponse = {} as any
 
         let referenceType: string = ''
         let referenceTypeID: number = await this.insertReferenceTypeData(this.uploadModel, referenceType)
@@ -79,7 +80,9 @@ export class DataUploadService {
 
         await this.uploadModel.insertCommentsForDataSet(dataSetID, individualDataSetComments)
 
-        return "Upload to Database was successful!"
+        requestResponse.message = "Upload to Database was successful!"
+        requestResponse.statusCode = 200;
+        return requestResponse;
     }
 
     private getDataInformationFromContentsArray(dataContentArray: any, index: number) {
@@ -90,9 +93,10 @@ export class DataUploadService {
         for (let i = 0; i < dataContentArray.length; i++) {
             dataPointsForVariable.push(dataContentArray[i].point[index]);
             dataSetComments.push(dataContentArray[i].comments);
+
+            let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
+            return contentsArrayInfo;
         }
-        let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
-        return contentsArrayInfo;
     }
 
     private async insertUnitsData(uploadModel, units) {

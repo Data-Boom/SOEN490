@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DataProcessService } from '../services/dataProcess/DataProcessService'
+import { DataUploadService } from '../services/DataUploadService'
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -9,27 +9,26 @@ import { DataProcessService } from '../services/dataProcess/DataProcessService'
  */
 
 export class DataUploadController {
-    private dataService: DataProcessService
+    private dataService: DataUploadService
 
     constructor() {
     }
 
     async createRequest(request: Request, response: Response): Promise<Response> {
         if (!request.body) {
-            response.status(400).send({
+            response.status(400).json({
                 message: "No Json to Upload Received"
-            });
+            })
         }
         else {
-            let command = 'Upload'
-            let dataType = 'json'
-            this.dataService = new DataProcessService(dataType, command, request.body);
+            this.dataService = new DataUploadService(request.body);
             try {
-                let extractDataResponse: any = await this.dataService.extractData();
+                await this.dataService.validateExtractedData();
+                let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
             } catch (error) {
                 return response.status(error.status).json(error.message);
-            };
+            }
         }
-    };
+    }
 }
