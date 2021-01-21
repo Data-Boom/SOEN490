@@ -31,26 +31,16 @@ export default function Graph(props: IProps) {
   const outerHeight = (props && props.outerHeight) || 500
   const width = outerWidth - margin.left - margin.right
   const height = outerHeight - margin.top - margin.bottom
-  let ytext = "Ln"
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
 
   const handleXScaleClick = () => {
     setXToggle(!isXLog)
-
   }
 
   const handleYScaleClick = () => {
     setYToggle(!isYLog)
-    console.log(isYLog)
-    if (isYLog) {
-      ytext = 'Log'
-    }
-    else {
-      ytext = 'Ln'
-    }
-    console.log(ytext)
   }
 
   let active = [null, null, null, null]
