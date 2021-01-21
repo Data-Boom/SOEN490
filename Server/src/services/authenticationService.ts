@@ -43,7 +43,7 @@ export class AuthenticationService {
                 await AuthenticationModel.insertSignUpInformation(signUpInformation);
             }
             catch (error) {
-                new InternalServerError("Internal Server Issue. Please try again later", error.message);
+                throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
             }
         }
         this.requestResponse.message = "Success";

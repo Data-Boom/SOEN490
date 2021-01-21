@@ -36,7 +36,7 @@ export class DataQueryModel {
         let compositionId = -1; // fallback value if material details were entered
         if (compositionIdRaw[0] != null) {
             compositionId = compositionIdRaw[0].id;
-        };
+        }
 
         let materialDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin('dataset.materials', 'material')
