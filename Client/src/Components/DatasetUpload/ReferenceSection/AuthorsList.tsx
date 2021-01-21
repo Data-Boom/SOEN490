@@ -1,7 +1,7 @@
-import { ArrayHelpers, FormikProps } from "formik"
+import { ArrayHelpers } from "formik"
 import { Grid, IconButton, Typography } from "@material-ui/core"
 import { IAuthor, defaultAuthor } from "../../../Models/Datasets/IDatasetModel"
-import React, { useState } from 'react'
+import React from 'react'
 
 import AddIcon from '@material-ui/icons/Add'
 import { AuthorRow } from "./AuthorRow"

@@ -1,5 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
-import { createConnection, getConnection, TableForeignKey } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 import { AuthenticationService } from '../../services/authenticationService'
 
 
