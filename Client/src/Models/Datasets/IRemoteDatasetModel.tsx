@@ -73,7 +73,8 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
       type: remoteDataset.publication.publicationType,
       volume: remoteDataset.publication.volume,
       year: remoteDataset.publication.year,
-    }
+    },
+    dataset_id: remoteDataset.dataset_id
   }
 
   return dataset
@@ -94,11 +95,7 @@ const toContents = (remotePoint: IRemoteDataPointModel[], dataComments: string[]
   const contents: IContent[] = []
 
   for (let i = 0; i < remotePoint.length; i++) {
-    console.log(remotePoint[i]);
-    console.log(dataComments[i]);
     contents.push({ point: remotePoint[i].values, comments: dataComments[i] })
   }
-  console.log(contents);
-
   return contents
 }

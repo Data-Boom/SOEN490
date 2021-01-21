@@ -1,11 +1,11 @@
 import { ColDef, DataGrid, SelectionChangeParams } from '@material-ui/data-grid'
 
 import { Grid } from '@material-ui/core'
-import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
 interface IProps {
-  datasetResults: ICompleteDatasetEntity[],
+  datasetResults: IDatasetModel[],
   handleSelectionChanged: (selection: SelectionChangeParams) => void,
   button?: any,
 }

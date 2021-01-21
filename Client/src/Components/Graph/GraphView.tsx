@@ -1,11 +1,12 @@
 import * as svg from 'save-svg-as-png'
 
 import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
-import { ICompleteDatasetEntity, IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React, { useState } from "react"
 
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
+import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
+import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel } from '../../Models/Datasets/IGraphDatasetModel'
 import SearchView from '../Search/SearchView'
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
@@ -30,7 +31,7 @@ export default function GraphView() {
 
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
-  const [completeDatasets, setCompleteDatasets] = useState<ICompleteDatasetEntity[]>([])
+  const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [openModal, setOpenModal] = useState(false)
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
@@ -52,7 +53,7 @@ export default function GraphView() {
     download("datasets.json", JSON.stringify(exampleExportDatasetModel, null, 4))
   }
 
-  const toGraphDataset = (completeDataset: ICompleteDatasetEntity, color: string): IGraphDatasetModel => {
+  const toGraphDataset = (completeDataset: IDatasetModel, color: string): IGraphDatasetModel => {
     const graphDataset: IGraphDatasetModel = {
       color: color,
       id: completeDataset.id,
@@ -83,10 +84,10 @@ export default function GraphView() {
     calculateExtremeBoundaries(filteredDataset)
   }
 
-  const handleDatasetsSelected = (selectedDatasets: ICompleteDatasetEntity[]) => {
-    const notYetSelectedDatasets: ICompleteDatasetEntity[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
+  const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
+    const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
-    const mergedDatasets: ICompleteDatasetEntity[] = [...completeDatasets]
+    const mergedDatasets: IDatasetModel[] = [...completeDatasets]
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
@@ -95,11 +96,11 @@ export default function GraphView() {
     calculateExtremeBoundaries(mergedDatasets)
   }
 
-  const isInStateAlready = (dataset: ICompleteDatasetEntity) => {
+  const isInStateAlready = (dataset: IDatasetModel) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
-  function calculateExtremeBoundaries(datasets: ICompleteDatasetEntity[]) {
+  function calculateExtremeBoundaries(datasets: IDatasetModel[]) {
     let minX = 9000, maxX = 0, minY = 9000, maxY = 0
 
     const datalist: any[] = []

@@ -1,8 +1,8 @@
 
 export interface IAuthor {
-  firstName: string;
-  middleName: string;
-  lastName: string;
+  firstName: string,
+  middleName: string,
+  lastName: string,
 }
 
 export const defaultAuthor: IAuthor = {
@@ -12,13 +12,13 @@ export const defaultAuthor: IAuthor = {
 }
 
 export interface IReference {
-  type: string;
-  publisher: string;
-  authors: IAuthor[];
-  title: string;
-  volume: number;
-  pages: number;
-  year: number;
+  type: string,
+  publisher: string,
+  authors: IAuthor[],
+  title: string,
+  volume: number,
+  pages: number,
+  year: number,
 }
 
 export interface IMaterial {
@@ -28,9 +28,9 @@ export interface IMaterial {
 }
 
 export interface IVariable {
-  name: string;
-  repr: string;
-  units: string;
+  name: string,
+  repr: string,
+  units: string,
 }
 
 export const defaultVariable: IVariable = {
@@ -40,24 +40,25 @@ export const defaultVariable: IVariable = {
 }
 
 export interface IContent {
-  point: number[];
-  comments: string;
+  point: number[],
+  comments: string,
 }
 
 export interface IData {
-  variables: IVariable[];
-  contents: IContent[];
-  comments: string;
+  variables: IVariable[],
+  contents: IContent[],
+  comments: string,
 }
 
 export interface IDatasetModel {
-  reference: IReference;
-  dataset_name: string;
-  material: IMaterial[];
-  category: string;
-  subcategory: string;
-  data_type: string;
-  data: IData;
+  reference: IReference,
+  dataset_name: string,
+  material: IMaterial[],
+  category: string,
+  subcategory: string,
+  data_type: string,
+  data: IData,
+  dataset_id?: number
 }
 
 // will build a type that is IDatasetModel without reference and data
