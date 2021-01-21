@@ -1,3 +1,4 @@
+import { raw } from "express";
 import { Connection, getConnection } from "typeorm";
 import { selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
@@ -14,6 +15,13 @@ export class FetchSavedGraphsModel {
         let sortedDatasetData: IDisplayedDatasetModel[] = []
         let oneAxisData: IAxisModel
         let sortedAxesData: IAxisModel[] = []
+        rawGraphData.datasetIds = typeof rawGraphData.datasetIds === 'string' ? JSON.parse(rawGraphData.datasetIds) : []
+        rawGraphData.datasetColors = typeof rawGraphData.datasetColors === 'string' ? JSON.parse(rawGraphData.datasetColors) : []
+        rawGraphData.datasetShapes = typeof rawGraphData.datasetShapes === 'string' ? JSON.parse(rawGraphData.datasetShapes) : []
+        rawGraphData.datasetHiddenStatus = typeof rawGraphData.datasetHiddenStatus === 'string' ? JSON.parse(rawGraphData.datasetHiddenStatus) : []
+        rawGraphData.axisVariable = typeof rawGraphData.axisVariable === 'string' ? JSON.parse(rawGraphData.axisVariable) : []
+        rawGraphData.axisMode = typeof rawGraphData.axisMode === 'string' ? JSON.parse(rawGraphData.axisMode) : []
+        rawGraphData.axisZoom = typeof rawGraphData.axisZoom === 'string' ? JSON.parse(rawGraphData.axisZoom) : []
         for (let j = 0; j < rawGraphData.datasetIds.length; j++) {
             oneDatasetsData = {
                 id: rawGraphData.datasetIds[j],
@@ -57,6 +65,7 @@ export class FetchSavedGraphsModel {
      */
     async getSavedGraphsOfUser(userId: number): Promise<IGraphStateModel[]> {
         let rawGraphData = await selectSavedGraphsOfUserQuery(this.connection, userId)
+        console.log(rawGraphData)
         let singleGraphData: IGraphStateModel
         let sortedGraphData: IGraphStateModel[] = []
         for (let index = 0; index < rawGraphData.length; index++) {
