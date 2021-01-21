@@ -5,7 +5,7 @@ export abstract class FileHandlerFactory {
 
 export abstract class AbstractFileHandler {
     filePath: string
-    jsonData: any
+    parsedFileData: any
 
     constructor(filePath: string) {
         this.filePath = filePath

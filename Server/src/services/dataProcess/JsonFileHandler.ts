@@ -20,8 +20,8 @@ export class JsonFileHandler extends AbstractFileHandler {
 
     async parseFile(): Promise<IJsonDatasetModel> {
         try {
-            this.parsedData = await JSON.parse(fileSystem.readFileSync(this.filePath))
-            return this.parsedData
+            this.parsedFileData = await JSON.parse(fileSystem.readFileSync(this.filePath))
+            return this.parsedFileData
         } catch (err) {
             throw new BadRequest("Cannot parse your file. Something is wrong with it");
         }
@@ -63,7 +63,7 @@ export class JsonFileHandler extends AbstractFileHandler {
         let unitsID: number;
         let reprID: number;
 
-        this.jsonData = jsonData
+        this.parsedFileData = jsonData
 
         // Create this object after the parsing passes
         let uploadModel = new DataUploadModel();
@@ -74,7 +74,7 @@ export class JsonFileHandler extends AbstractFileHandler {
             console.log('rejected request for referenceTypeID');
         }
 
-        referencePublisher = this.jsonData.reference.publisher;
+        referencePublisher = this.parsedFileData.reference.publisher;
         try {
             publisherNameId = await uploadModel.insertPublisher(referencePublisher);
             console.log('Received publisher name ID' + publisherNameId);
@@ -83,7 +83,7 @@ export class JsonFileHandler extends AbstractFileHandler {
         }
 
 
-        referenceAuthors = this.jsonData.reference.authors;
+        referenceAuthors = this.parsedFileData.reference.authors;
         let allAuthors: Authors[];
         try {
             allAuthors = await uploadModel.insertAuthors(referenceAuthors);
@@ -92,16 +92,16 @@ export class JsonFileHandler extends AbstractFileHandler {
             console.log('reference authors not found....request rejected');
         }
 
-        referenceTitle = this.jsonData.reference.title;
-        referenceDOI = this.jsonData.reference.doi;
-        referencePages = this.jsonData.reference.pages;
-        referenceYear = this.jsonData.reference.year;
-        referenceVolume = this.jsonData.reference.volume;
+        referenceTitle = this.parsedFileData.reference.title;
+        referenceDOI = this.parsedFileData.reference.doi;
+        referencePages = this.parsedFileData.reference.pages;
+        referenceYear = this.parsedFileData.reference.year;
+        referenceVolume = this.parsedFileData.reference.volume;
 
-        if (this.jsonData.reference.datePublished !== undefined)
-            referenceDatePublished = this.jsonData.reference.datePublished;
-        if (this.jsonData.reference.dateAccessed !== undefined)
-            referenceDateAccessed = this.jsonData.reference.dateAccessed;
+        if (this.parsedFileData.reference.datePublished !== undefined)
+            referenceDatePublished = this.parsedFileData.reference.datePublished;
+        if (this.parsedFileData.reference.dateAccessed !== undefined)
+            referenceDateAccessed = this.parsedFileData.reference.dateAccessed;
 
         try {
             publicationID = await uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
@@ -111,8 +111,7 @@ export class JsonFileHandler extends AbstractFileHandler {
             console.log('publicationID was not received......rejecting request');
         }
 
-        //check and validates if material array index contents are of string
-        material = this.jsonData.material;
+        material = this.parsedFileData.material;
         let allMaterials: any[];
         try {
             allMaterials = await uploadModel.insertMaterial(material);
@@ -121,11 +120,11 @@ export class JsonFileHandler extends AbstractFileHandler {
             console.log('material(s) not found');
         }
 
-        category = this.jsonData.category;
-        subcategory = this.jsonData.subcategory;
+        category = this.parsedFileData.category;
+        subcategory = this.parsedFileData.subcategory;
         let categoryIDs = await uploadModel.insertCategories(category, subcategory);
 
-        dataType = this.jsonData["data type"];
+        dataType = this.parsedFileData["data type"];
         if (dataType == undefined)
             dataSetDataTypeID = 1;
         else {
@@ -137,8 +136,8 @@ export class JsonFileHandler extends AbstractFileHandler {
             }
         }
 
-        dataSetName = this.jsonData["dataset name"];
-        dataSetComments = this.jsonData.data.comments;
+        dataSetName = this.parsedFileData["dataset name"];
+        dataSetComments = this.parsedFileData.data.comments;
         try {
             datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments)
             console.log('DatasetID received: ' + datasetID);
@@ -147,19 +146,19 @@ export class JsonFileHandler extends AbstractFileHandler {
         }
 
         //run check on variable vs contents length to see if they're equal
-        if (this.jsonData.data.variables.length == this.jsonData.data.contents[0].point.length) {
+        if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
             console.log("variable and content lengths are equal....proceed")
         } else {
             console.error('variable and content lengths dont match');
         }
 
-        for (let i = 0; i < this.jsonData.data.variables.length; i++) {
+        for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
 
-            let dataPointValues = this.getDataInformationFromContentsArray(this.jsonData.data.contents, i);
+            let dataPointValues = this.getDataInformationFromContentsArray(this.parsedFileData.data.contents, i);
 
-            let dataVariableName = this.jsonData.data.variables[i].name;
-            let units = this.jsonData.data.variables[i].units;
-            let repr = this.jsonData.data.variables[i].repr;
+            let dataVariableName = this.parsedFileData.data.variables[i].name;
+            let units = this.parsedFileData.data.variables[i].units;
+            let repr = this.parsedFileData.data.variables[i].repr;
 
             try {
                 if (units == undefined)
