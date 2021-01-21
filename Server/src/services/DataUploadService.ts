@@ -3,8 +3,6 @@ import { Authors } from "../models/entities/Authors";
 import { validationSchema } from "./helpers/validationSchema";
 import { BadRequest } from '@tsed/exceptions';
 
-
-
 export class DataUploadService {
     private uploadModel: DataUploadModel
     private parsedFileData: any
@@ -25,9 +23,6 @@ export class DataUploadService {
     async uploadData(jsonData: any): Promise<string> {
 
         this.parsedFileData = jsonData
-
-        // Create this object after the parsing passes
-        let uploadModel = this.uploadModel
 
         let referenceType: string = ''
         let referenceTypeID: number = await this.insertReferenceTypeData(this.uploadModel, referenceType)
@@ -204,5 +199,5 @@ export class DataUploadService {
         } catch (err) {
             console.log('error receiving datasetID....request rejected');
         }
-
     }
+}
