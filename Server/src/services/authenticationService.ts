@@ -6,7 +6,7 @@ import * as jwt from 'jsonwebtoken';
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
-import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
+import { IFetchUserDetail, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
@@ -89,6 +89,19 @@ export class AuthenticationService {
         }
         return this.requestResponse;
     }
+
+    async resetPassword(resetPasswordInformation: IPasswordResetInformation): Promise<Response> {
+        let verifiedEmail: boolean;
+
+        verifiedEmail = await AuthenticationModel.verifyIfEmailExists(resetPasswordInformation.email);
+        if (!verifiedEmail) {
+            throw new BadRequest("If a user with such email address exists, you would receive an email");
+        }
+        else {
+
+        }
+    }
+
     /**
      * Resposible for hashing the user input password
      * @param password - user password
