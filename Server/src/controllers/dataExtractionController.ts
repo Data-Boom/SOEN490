@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DataProcessService } from '../services/dataProcess/dataProcessService'
+import { DataProcessService } from '../services/dataProcess/DataProcessService'
 
 /**
  * The dataExtractionController is responsible for preparing a request and extracting key information
