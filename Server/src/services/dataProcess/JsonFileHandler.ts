@@ -1,4 +1,4 @@
-import { AbstractFileHandler, FileHandlerFactory } from './IDataProcessService';
+import { AbstractFileHandler, FileHandlerFactory } from './FileHandlerFactory';
 import { DataUploadModel } from '../../models/DataUploadModel'
 import { Authors } from '../../models/entities/Authors';
 import { IMaterials } from '../../models/interfaces/MaterialsInterface';
@@ -36,29 +36,86 @@ export class JsonFileHandler extends AbstractFileHandler {
         }
     }
 
+    private async insertReferenceType(uploadModel, referenceType): Promise<number> {
+        try {
+            let referenceTypeID = await uploadModel.insertReferenceType(referenceType);
+            console.log('Received reference ID' + referenceTypeID);
+            return referenceTypeID
+        } catch (err) {
+            console.log('rejected request for referenceTypeID');
+        }
+    }
+
+    private async insertPublisher(uploadModel, referencePublisher): Promise<number> {
+        try {
+            let publisherNameId = await uploadModel.insertPublisher(referencePublisher);
+            console.log('Received publisher name ID' + publisherNameId);
+            return publisherNameId
+        } catch (err) {
+            console.log('rejected request for inserting publisherNameId')
+        }
+    }
+
+    private async insertAuthors(uploadModel, referenceAuthors): Promise<Authors[]> {
+        let allAuthors: Authors[];
+        try {
+            allAuthors = await uploadModel.insertAuthors(referenceAuthors);
+            console.log('reference authors: ' + referenceAuthors);
+            return allAuthors
+        } catch (err) {
+            console.log('reference authors not found....request rejected');
+        }
+    }
+
+    private async insertMaterials(uploadModel, material): Promise<any[]> {
+        try {
+            let allMaterials = await uploadModel.insertMaterial(material);
+            console.log('received material(s)' + material);
+            return allMaterials
+        } catch (err) {
+            console.log('material(s) not found');
+        }
+    }
+
+    private async insertPublication(uploadModel, referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors): Promise<number> {
+        try {
+            let publicationID = await uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
+            console.log('received publicationID ' + publicationID);
+            return publicationID
+        } catch (err) {
+            console.log('publicationID was not received......rejecting request');
+        }
+    }
+
+    private async insertDataSetDataType(uploadModel, dataType): Promise<number> {
+        let dataSetDataTypeID: number
+        if (this.parsedFileData["data type"] == undefined)
+            dataSetDataTypeID = 1;
+        else {
+            try {
+                dataSetDataTypeID = await uploadModel.insertDataSetDataType(dataType)
+                console.log('Received datasetTypeID: ' + dataSetDataTypeID);
+            } catch (err) {
+                console.log('error receiving datasetTypeID....request rejected');
+            }
+        }
+        return dataSetDataTypeID
+    }
+
     async uploadData(jsonData: any): Promise<string> {
 
-        let category: string = '';
-        let subcategory: string = '';
         let dataSetName: string = '';
         let dataType: string = '';
         let dataSetComments: string = '';
         let individualDataSetComments: string[] = [];
-        let material: IMaterials[] = [];
         let referenceType: string = '';
-        let referencePublisher: string = '';
         let referenceTitle: string = '';
         let referenceDOI: string = '';
-        let referenceAuthors: IAuthors[] = [];
         let referenceYear: number;
         let referencePages: number;
         let referenceVolume: number;
-        let referenceTypeID: number;
         let referenceDatePublished: Date = null;
         let referenceDateAccessed: Date = null;
-        let publisherNameId: number;
-        let publicationID: number;
-        let dataSetDataTypeID: number;
         let datasetID: number;
         let unitsID: number;
         let reprID: number;
@@ -68,29 +125,11 @@ export class JsonFileHandler extends AbstractFileHandler {
         // Create this object after the parsing passes
         let uploadModel = new DataUploadModel();
 
-        try {
-            referenceTypeID = await uploadModel.insertReferenceType(referenceType); console.log('Received reference ID' + referenceTypeID);
-        } catch (err) {
-            console.log('rejected request for referenceTypeID');
-        }
+        let referenceTypeID: number = await this.insertReferenceType(uploadModel, referenceType)
 
-        referencePublisher = this.parsedFileData.reference.publisher;
-        try {
-            publisherNameId = await uploadModel.insertPublisher(referencePublisher);
-            console.log('Received publisher name ID' + publisherNameId);
-        } catch (err) {
-            console.log('rejected request for inserting publisherNameId')
-        }
+        let publisherNameId: number = await this.insertPublisher(uploadModel, this.parsedFileData.reference.publisher)
 
-
-        referenceAuthors = this.parsedFileData.reference.authors;
-        let allAuthors: Authors[];
-        try {
-            allAuthors = await uploadModel.insertAuthors(referenceAuthors);
-            console.log('reference authors: ' + referenceAuthors);
-        } catch (err) {
-            console.log('reference authors not found....request rejected');
-        }
+        let allAuthors: Authors[] = await this.insertAuthors(uploadModel, this.parsedFileData.reference.authors)
 
         referenceTitle = this.parsedFileData.reference.title;
         referenceDOI = this.parsedFileData.reference.doi;
@@ -103,38 +142,13 @@ export class JsonFileHandler extends AbstractFileHandler {
         if (this.parsedFileData.reference.dateAccessed !== undefined)
             referenceDateAccessed = this.parsedFileData.reference.dateAccessed;
 
-        try {
-            publicationID = await uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
-            console.log('received publicationID ' + publicationID);
-        }
-        catch (err) {
-            console.log('publicationID was not received......rejecting request');
-        }
+        let publicationID: number = await this.insertPublication(uploadModel, referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
 
-        material = this.parsedFileData.material;
-        let allMaterials: any[];
-        try {
-            allMaterials = await uploadModel.insertMaterial(material);
-            console.log('received material(s)' + material);
-        } catch (err) {
-            console.log('material(s) not found');
-        }
+        let allMaterials: any[] = await this.insertMaterials(uploadModel, this.parsedFileData.material)
 
-        category = this.parsedFileData.category;
-        subcategory = this.parsedFileData.subcategory;
-        let categoryIDs = await uploadModel.insertCategories(category, subcategory);
+        let categoryIDs = await uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
 
-        dataType = this.parsedFileData["data type"];
-        if (dataType == undefined)
-            dataSetDataTypeID = 1;
-        else {
-            try {
-                dataSetDataTypeID = await uploadModel.insertDataSetDataType(dataType)
-                console.log('Received datasetTypeID: ' + dataSetDataTypeID);
-            } catch (err) {
-                console.log('error receiving datasetTypeID....request rejected');
-            }
-        }
+        let dataSetDataTypeID: number = await this.insertDataSetDataType(uploadModel, this.parsedFileData["data type"])
 
         dataSetName = this.parsedFileData["dataset name"];
         dataSetComments = this.parsedFileData.data.comments;
