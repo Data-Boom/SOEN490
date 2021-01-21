@@ -18,6 +18,10 @@ router.get('/dataset/userSavedDatsets/:userSavedDatsets', (request: Request, res
     getDataControllerObject.createRequestForUserSavedDatsets(request, response);
 });
 
+router.get('/dataset/fetchUnapprovedDatasets$', (request: Request, response: Response) => {
+    getDataControllerObject.createRequestForUnapprovedDatsets(request, response);
+});
+
 router.get('/dataset*', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForData(request, response);
 });

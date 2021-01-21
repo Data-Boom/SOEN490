@@ -101,8 +101,8 @@ export class Dataset {
     @Column({ nullable: true })
     statusComment: string
 
-    @Column({ default: 0 })
-    isApproved: boolean
+    @Column({ type: 'integer', default: 0 })
+    isApproved: number
 
     @CreateDateColumn()
     created: Date
@@ -129,7 +129,7 @@ export const selectDatasetsQuery = (manager: EntityManager, dataset: number) =>
         .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
 
-export const selectDatasetIdsBasedOnApprovalQuery = (connection: Connection, isApproved: number) =>
+export const selectDatasetIdsBasedOnApprovalStatusQuery = (connection: Connection, isApproved: number) =>
     connection.createQueryBuilder(Dataset, 'dataset')
         .select('dataset.id', 'dataset_id')
         .where('dataset.isApproved = :isApproved', { isApproved: isApproved })

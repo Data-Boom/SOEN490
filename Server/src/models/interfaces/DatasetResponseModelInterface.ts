@@ -1,23 +1,3 @@
-export interface IPublicationModel {
-    publication_name: string
-    publication_doi: string
-    publication_pages: number
-    publication_volume: number
-    publication_year: number
-    publication_datePublished: Date
-    publication_dateAccessed: Date
-    dataset_id: number
-    publisher_name: string
-    publicationtype_name: string
-}
-
-export interface IAuthorModel {
-    author_firstName: string
-    author_lastName: string
-    author_middleName: string
-    dataset_id: number
-}
-
 export interface IDatasetModel {
     dataset_id: number
     dataset_name: string
@@ -25,20 +5,6 @@ export interface IDatasetModel {
     datasetdatatype_name: string
     category_name: string
     subcategory_name: string
-}
-
-export interface IMaterialModel {
-    material_details: string
-    composition_name: string
-    dataset_id: number
-}
-
-export interface IDataPointModel {
-    datapoints_name: string
-    datapoints_values: number[]
-    units_units: string
-    representations_repr: string
-    dataset_id: number
 }
 
 export interface IDataPointCommentModel {
@@ -54,3 +20,57 @@ export interface IDatasetResponseModel {
     dataPoints: IDataPointModel[]
     dataPointComments: IDataPointCommentModel[]
 }
+
+export interface IDatasetIDModel {
+    dataset_id: number
+}
+
+export interface IPublicationModel {
+    name: string
+    DOI: string
+    pages: number
+    volume: number
+    year: number
+    datePublished: Date
+    dateAccessed: Date
+    publisher: string
+    publicationType: string
+    authors: IAuthorModel[]
+}
+
+export interface IAuthorModel {
+    firstName: string
+    lastName: string
+    middleName: string
+}
+
+export interface IDatasetInfoModel {
+    name: string
+    comments: string
+    datasetDataType: string
+    category: string
+    subcategory: string
+}
+
+export interface IMaterialModel {
+    details: string
+    composition: string
+}
+
+export interface IDataPointModel {
+    type: string
+    values: number[]
+    units: string
+    representation: string
+    dataset_id: number
+}
+
+export interface IClientDatasetModel {
+    publication: IPublicationModel
+    dataset_id: number
+    dataset_info: IDatasetInfoModel
+    materials: IMaterialModel[]
+    dataPoints: IDataPointModel[]
+    dataPointComments: string[]
+}
+

@@ -3,7 +3,6 @@ import { Publications } from './entities/Publications';
 import { Dataset } from './entities/Dataset';
 import { Datapoints } from './entities/Datapoints';
 import { Datapointcomments } from './entities/Datapointcomments';
-import { IDatasetResponseModel } from "./interfaces/DatasetResponseModelInterface";
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
@@ -62,17 +61,16 @@ export class DatasetUpdateModel {
             .where('dataset.id = :id', { id: id })
             .getRawOne();
 
-    private updateDatasetApprovalQuery = (id: number, status: boolean, regularComments: string, statusComment: string) =>
+    private updateDatasetApprovalQuery = (id: number, status: number, regularComments: string, statusComment: string) =>
         this.connection.createQueryBuilder()
             .update(Dataset)
             .set({ isApproved: status, comments: regularComments, statusComment: statusComment })
             .where("id = :id", { id: id })
             .execute();
 
-    async updateDatasetApproval(id: number, status: boolean, commentsAddition: string, statusComment: string) {
+    async updateDatasetApproval(id: number, status: number, commentsAddition: string, statusComment: string) {
         let comments = await this.selectDatasetCommentQuery(id);
         comments = comments.concat(" " + commentsAddition)
         await this.updateDatasetApprovalQuery(id, status, comments, statusComment)
     }
-
 }

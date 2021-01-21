@@ -93,6 +93,25 @@ export class getDataController {
     }
 
     /**
+     * This controller will take a request, send it to the getDataService to acquire an array 
+     * containing the unapproved, but not flagged, data sets in the database
+     * 
+     * @param request
+     * An object containing the request information and parameters: Request 
+     * @param response 
+     * An object containing a response: Response
+     */
+    async createRequestForUnapprovedDatsets(request: Request, response: Response) {
+        try {
+            const retrieveDataObject = new retrieveData();
+            let arrayOfData = await retrieveDataObject.getUnapprovedDatasets()
+            return response.status(200).send(arrayOfData);
+        } catch (err) {
+            response.status(500).send(err);
+        }
+    }
+
+    /**
      * This method verifies that a request has at least one valid search parameter and returns true if so
      * and false if not.
      * 
