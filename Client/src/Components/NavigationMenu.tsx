@@ -4,18 +4,21 @@ import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typogr
 import { HashRouter, Link, Redirect, useHistory } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
 import React, { Component, useContext, useState } from 'react'
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
 import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
-import { homeRoute, signInRoute } from "../Common/Consts/Routes"
+import { homeRoute, signInRoute, signOutRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
 import { IUserAccountModel } from '../Remote/Models/IUserAccountModel'
 import { removeUserInStorage } from '../Common/Storage'
 import { callLogIn } from "../Remote/Endpoints/AuthenticationEndpoint";
 import { ISignInUserModel } from "../Models/Authentication/ISignUpModel";
+import Logout from "./SignOut";
+
+//import Logout from "./SignOut";
 
 const drawerWidth = linkWidth
 
@@ -35,13 +38,16 @@ export default function NavigationMenu() {
   const handleSignIn = () => {
   }
 
-
   const history = useHistory();
-  function logout() {
-    sessionStorage.clear();
 
-    //return <Redirect to='/' />
+  function logout() {
+
+    sessionStorage.clear();
+    //props.history.push("/sign-in");
+
+
   }
+
 
 
   /*const handleSignOut = async (signInUserInfo: ISignInUserModel): Promise<void> => {
@@ -77,7 +83,7 @@ export default function NavigationMenu() {
     return user && user.firstName ? (
       <Typography>
         Hello, {user.firstName} {user.lastName}
-        <Button variant="contained" component={Link} to={signInRoute} onClick={logout}>Sign out</Button>
+        <Button variant="contained" onClick={Logout}>Sign out</Button>
       </Typography>
 
     )
