@@ -2,7 +2,7 @@ import { Connection, getConnection } from "typeorm";
 import { selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
-export class DataQueryModel {
+export class FetchSavedGraphsModel {
     private connection: Connection;
     constructor() {
         this.connection = getConnection();

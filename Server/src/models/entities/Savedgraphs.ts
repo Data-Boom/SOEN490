@@ -67,7 +67,7 @@ export const selectSavedGraphsOfUserQuery = (connection: Connection, user: numbe
         .addSelect('graphs.axisVariable', 'axisVariable')
         .addSelect('graphs.axisMode', 'axisMode')
         .addSelect('graphs.axisZoom', 'axisZoom')
-        .innerJoin(Accounts, 'accounts', 'accounts.accountId = accounts.id')
+        .innerJoin(Accounts, 'accounts', 'graphs.accountId = accounts.id')
         .where('accounts.id = :user', { user: user })
         .getRawMany();
 

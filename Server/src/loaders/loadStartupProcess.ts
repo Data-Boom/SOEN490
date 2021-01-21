@@ -9,6 +9,7 @@ import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
 import { getDataRouter } from '../routes/getDatasetRouter';
+import { fetchSavedGraphsRouter } from '../routes/fetchSavedGraphsRouter';
 
 const cookieParser = require('cookie-parser');
 
@@ -63,6 +64,7 @@ export class loadStartupProcess {
     this.app.use('/', authenticationRouter)
     this.app.use('/', getDataRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
+    this.app.use('/', fetchSavedGraphsRouter)
 
     this.config = {
       "type": process.env.DB_TYPE,
