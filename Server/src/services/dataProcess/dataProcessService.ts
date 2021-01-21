@@ -46,12 +46,14 @@ export class DataProcessService {
     fileHandler = await this.factory.getFileHandler(this.filePath)
     if (this.command == 'Extract') {
       let parsedData = await fileHandler.parseFile()
+      await fileHandler.validateExtractedData(parsedData)
       return parsedData
     }
-    else if (this.command == 'Upload') {
+    if (this.command == 'Upload') {
       await fileHandler.validateExtractedData(this.jsonBody)
       let uploadResponse: any = await fileHandler.uploadData(this.jsonBody)
       return uploadResponse
     }
+
   }
 }
