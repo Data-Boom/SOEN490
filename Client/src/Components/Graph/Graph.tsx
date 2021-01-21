@@ -317,10 +317,6 @@ export default function Graph(props: IProps) {
         preserveAspectRatio="xMidYMid meet"
         id='graph'
       />
-      <div>
-        <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-        <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
-      </div>
     </>
   )
 }
