@@ -1,7 +1,3 @@
-export enum FileUploadExtension {
-    json, pdf, png, txt, csv
-}
-
 export interface IAuthor {
     firstname: string;
     middlename: string;
