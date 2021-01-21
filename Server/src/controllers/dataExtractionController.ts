@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DataProcessService } from '../services/dataProcess/DataProcessService'
+import { DataExtractionService } from '../services/dataProcess/DataExtractionService'
 
 /**
  * The dataExtractionController is responsible for preparing a request and extracting key information
@@ -22,15 +22,15 @@ export class dataExtractionController {
       response.status(400).json("Request Body is empty.");
     }
     else {
-      let requestResponse: any = this.callDataProcessService(this.filePathOfUpload, this.fileExtension, response);
+      let requestResponse: any = this.callDataExtractionService(this.filePathOfUpload, this.fileExtension, response);
       return requestResponse
     }
   };
 
 
-  private async callDataProcessService(filePath: string, extension: string, response: Response): Promise<Response> {
+  private async callDataExtractionService(filePath: string, extension: string, response: Response): Promise<Response> {
     let command = 'Extract'
-    let dataService = new DataProcessService(extension, command, null, filePath);
+    let dataService = new DataExtractionService(extension, command, null, filePath);
     try {
       let extractDataResponse: any = await dataService.extractData();
       return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);

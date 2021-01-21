@@ -1,11 +1,11 @@
-import { JsonFileHandlerFactory } from './JsonFileHandlerFactory';
+import { JsonFileExtractorFactory } from './JsonFileHandlerFactory';
 import { IResponse } from '../../genericInterfaces/ResponsesInterface';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
  * then stored into its appropriate table in the database. 
  */
-export class DataProcessService {
+export class DataExtractionService {
 
     private dataType: string
     private filePath: string
@@ -26,18 +26,19 @@ export class DataProcessService {
         let requestResponse: IResponse = {} as any
         switch (this.dataType) {
             case 'json': {
-                this.factory = new JsonFileHandlerFactory()
-                this.outputData = await this.dataHandlerTemplate()
-                break;
+                this.factory = new JsonFileExtractorFactory()
+                let fileHandler: any = await this.factory.getFileHandler(this.filePath)
+                let parsedData = await fileHandler.parseFile()
+                requestResponse.message = parsedData
             }
             //TODO: Implement when building new file modules
-            // case 'pdf:
-            // this.factory = new PdfFileFactory()
-            // this.outputData = await this.dataHandlerTemplate()
-            // break;
+            case 'pdf':
+                this.factory = new PDFFileExtractorFactory()
+                let fileHandler: any = await this.factory.getFileHandler(this.filePath)
+                let parsedData = await fileHandler.parseFile()
+                requestResponse.message = parsedData
         }
         requestResponse.statusCode = 200;
-        requestResponse.message = this.outputData;
         return requestResponse;
     }
 
@@ -53,6 +54,5 @@ export class DataProcessService {
             let uploadResponse: any = await fileHandler.uploadData(this.jsonBody)
             return uploadResponse
         }
-
     }
 }

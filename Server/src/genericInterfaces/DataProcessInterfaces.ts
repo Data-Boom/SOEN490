@@ -49,7 +49,7 @@ export interface IData {
     comments: string;
 }
 
-export interface IJsonDatasetModel {
+export interface IDataSetModel {
     reference: IReference;
     dataset_name: string;
     material: IMaterial[];

@@ -1,6 +1,6 @@
-import { AbstractFileHandler, FileHandlerFactory } from './FileHandlerFactory';
+import { AbstractFileExtractor, FileExtractorFactory } from './FileHandlerFactory';
 import { BadRequest } from '@tsed/exceptions';
-import { IJsonDatasetModel } from '../../genericInterfaces/DataProcessInterfaces'
+import { IDataSetModel } from '../../genericInterfaces/DataProcessInterfaces'
 const fileSystem = require('fs');
 
 
@@ -13,10 +13,10 @@ export class JsonFileExtractorFactory extends FileExtractorFactory {
 
 export class JsonFileExtractor extends AbstractFileExtractor {
 
-    async parseFile(): Promise<IDatasetModel> {
+    parseFile(): Partial<IDataSetModel> {
         try {
-            this.parsedFileData = await JSON.parse(fileSystem.readFileSync(this.filePath))
-            return this.parsedFileData
+            let parsedFileData: Partial<IDataSetModel> = JSON.parse(fileSystem.readFileSync(this.filePath))
+            return parsedFileData
         } catch (err) {
             throw new BadRequest("Cannot parse your file. Something is wrong with it");
         }
