@@ -36,17 +36,12 @@ export class JsonFileHandler extends AbstractFileHandler {
 
     async uploadData(jsonData: any): Promise<string> {
 
-        let individualDataSetComments: string[] = [];
-        let referenceType: string = '';
-
-        let referenceDatePublished: Date = null;
-        let referenceDateAccessed: Date = null;
-
         this.parsedFileData = jsonData
 
         // Create this object after the parsing passes
         let uploadModel = new DataUploadModel();
 
+        let referenceType: string = ''
         let referenceTypeID: number = await this.insertReferenceType(uploadModel, referenceType)
 
         let publisherNameId: number = await this.insertPublisher(uploadModel, this.parsedFileData.reference.publisher)
@@ -58,6 +53,9 @@ export class JsonFileHandler extends AbstractFileHandler {
         let referencePages: number = this.parsedFileData.reference.pages;
         let referenceYear: number = this.parsedFileData.reference.year;
         let referenceVolume: number = this.parsedFileData.reference.volume;
+
+        let referenceDatePublished: Date = null;
+        let referenceDateAccessed: Date = null;
 
         if (this.parsedFileData.reference.datePublished !== undefined)
             referenceDatePublished = this.parsedFileData.reference.datePublished;
@@ -81,6 +79,7 @@ export class JsonFileHandler extends AbstractFileHandler {
             console.error('variable and content lengths dont match');
         }
 
+        let individualDataSetComments: string[] = [];
         for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
 
             let dataPointValues = this.getDataInformationFromContentsArray(this.parsedFileData.data.contents, i);
