@@ -13,6 +13,9 @@ export const defaultAuthor: IAuthor = {
 
 export interface IReference {
   type: string,
+  doi?: string,
+  dateAccessed?: Date,
+  datePublished?: Date,
   publisher: string,
   authors: IAuthor[],
   title: string,

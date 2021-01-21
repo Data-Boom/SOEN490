@@ -56,9 +56,10 @@ export default function GraphView() {
   const toGraphDataset = (completeDataset: IDatasetModel, color: string): IGraphDatasetModel => {
     const graphDataset: IGraphDatasetModel = {
       color: color,
-      id: completeDataset.id,
-      name: completeDataset.name,
-      points: completeDataset.points
+      id: completeDataset.dataset_id,
+      name: completeDataset.dataset_name,
+      //todo provide points properly from data
+      points: completeDataset.data.contents.values
     }
 
     return graphDataset
@@ -79,7 +80,7 @@ export default function GraphView() {
   }
 
   const onRemoveDataset = (datasetId: number) => {
-    const filteredDataset = completeDatasets.filter(dataset => dataset.id !== datasetId)
+    const filteredDataset = completeDatasets.filter(dataset => dataset.dataset_id !== datasetId)
     setCompleteDatasets(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
   }
@@ -97,7 +98,7 @@ export default function GraphView() {
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
-    return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
+    return completeDatasets.findIndex(existingDataset => existingDataset.dataset_id === dataset.dataset_id) != -1
   }
 
   function calculateExtremeBoundaries(datasets: IDatasetModel[]) {

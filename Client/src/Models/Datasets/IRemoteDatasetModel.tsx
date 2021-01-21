@@ -57,6 +57,7 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
   if (!remoteDataset) {
     return null
   }
+  //todo add comments on the dataset upload form
 
   const dataset: IDatasetModel = {
     category: remoteDataset.dataset_info.category,
