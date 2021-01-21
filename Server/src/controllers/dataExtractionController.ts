@@ -19,9 +19,7 @@ export class dataExtractionController {
 
   createRequest(request: Request, response: Response) {
     if (!request.body) {
-      response.status(400).send({
-        message: "Request Body is empty."
-      });
+      response.status(400).json("Request Body is empty.");
     }
     else {
       let requestResponse: any = this.callDataProcessService(this.filePathOfUpload, this.fileExtension, response);
