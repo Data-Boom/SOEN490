@@ -12,7 +12,10 @@ import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import { homeRoute, signInRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
-//import { withAuthenticator } from 'aws-amplify-react-native'
+import { IUserAccountModel } from '../Remote/Models/IUserAccountModel'
+import { removeUserInStorage } from '../Common/Storage'
+import { callLogIn } from "../Remote/Endpoints/AuthenticationEndpoint";
+import { ISignInUserModel } from "../Models/Authentication/ISignUpModel";
 
 const drawerWidth = linkWidth
 
@@ -32,22 +35,20 @@ export default function NavigationMenu() {
   const handleSignIn = () => {
   }
 
-  //sign out
-
-  /*const logout = () => {
-    localStorage.clear();
-   
-    
-  }*/
 
   const history = useHistory();
   function logout() {
-    localStorage.clear();
-    history.push('/');
+    sessionStorage.clear();
+
+    //return <Redirect to='/' />
   }
 
 
-
+  /*const handleSignOut = async (signInUserInfo: ISignInUserModel): Promise<void> => {
+    const userAccount: IUserAccountModel = await callLogIn(signInUserInfo)
+    removeUserInStorage(userAccount)
+    
+  }*/
 
 
 
@@ -76,7 +77,7 @@ export default function NavigationMenu() {
     return user && user.firstName ? (
       <Typography>
         Hello, {user.firstName} {user.lastName}
-        <Button variant="contained" onClick={logout} >Sign out</Button>
+        <Button variant="contained" component={Link} to={signInRoute} onClick={logout}>Sign out</Button>
       </Typography>
 
     )
