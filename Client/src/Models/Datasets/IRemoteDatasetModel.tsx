@@ -96,7 +96,7 @@ const toContents = (remotePoint: IRemoteDataPointModel[], dataComments: string[]
   for (let i = 0; i < remotePoint.length; i++) {
     console.log(remotePoint[i]);
     console.log(dataComments[i]);
-    contents.push({ point: JSON.parse(remotePoint[i].values.toString()), comments: dataComments[i] })
+    contents.push({ point: remotePoint[i].values, comments: dataComments[i] })
   }
   console.log(contents);
 

@@ -1,6 +1,7 @@
-import { IDatasetIDModel, IClientDatasetModel } from "../models/interfaces/DatasetModelInterface";
-import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { IClientDatasetModel, IDatasetIDModel } from "../models/interfaces/DatasetModelInterface";
+
 import { DataQueryModel } from "../models/DatasetQueryModel";
+import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
 export class retrieveData {
     private dataQuery: DataQueryModel;
@@ -179,11 +180,15 @@ export class retrieveData {
      * This is an array containing the data set IDs that we wish to get the full data set of: any[]
      */
     private async getDataFromDatasetIds(selectedDatasetIds: any[]) {
-        let setOfData: Array<IClientDatasetModel> = [];
-        for (let i = 0; i < selectedDatasetIds.length; i++) {
-            setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
+        try {
+            let setOfData: Array<IClientDatasetModel> = [];
+            for (let i = 0; i < selectedDatasetIds.length; i++) {
+                setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
+            }
+            return setOfData
+        } catch (error) {
+            console.error(error);
         }
-        return setOfData
     }
 
     /**
