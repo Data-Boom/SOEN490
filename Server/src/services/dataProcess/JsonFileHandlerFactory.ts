@@ -1,15 +1,13 @@
 import { AbstractFileHandler, FileHandlerFactory } from './FileHandlerFactory';
 import { DataUploadModel } from '../../models/DataUploadModel'
 import { Authors } from '../../models/entities/Authors';
-import { IMaterials } from '../../models/interfaces/MaterialsInterface';
-import { IAuthors } from '../../models/interfaces/AuthorsInterface';
 import { BadRequest } from '@tsed/exceptions';
 import { validationSchema } from '../helpers/validationSchema';
 import { IJsonDatasetModel } from '../../genericInterfaces/DataProcessInterfaces'
 const fileSystem = require('fs');
 
 
-export class JsonFileFactory extends FileHandlerFactory {
+export class JsonFileHandlerFactory extends FileHandlerFactory {
 
     getFileHandler(filePath: string): AbstractFileHandler {
         return new JsonFileHandler(filePath)
