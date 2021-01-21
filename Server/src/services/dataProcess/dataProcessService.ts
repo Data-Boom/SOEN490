@@ -11,8 +11,8 @@ export class DataProcessService {
   private filePath: string
   private factory: any
   private outputData: any
-  private command?: string
-  private jsonBody?: any
+  private command: string
+  private jsonBody: JSON
 
   constructor(dataType: any, command: string, jsonBody: any = {}, filePath?: string) {
     this.dataType = dataType
