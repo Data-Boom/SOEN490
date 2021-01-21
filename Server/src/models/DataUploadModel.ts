@@ -363,18 +363,21 @@ export class DataUploadModel {
      * Subcategory: string
      */
     private async insertIndividualSubcategory(subcategory: string): Promise<number> {
-        let someSubcategory = new Subcategory();
-        someSubcategory.id;
-        someSubcategory.name = subcategory;
-        let subcategoryExists: any;
-        subcategoryExists = await this.selectSubcategoryIdQuery(subcategory);
-        if (subcategoryExists != undefined) {
-            someSubcategory.id = subcategoryExists.id;
-        }
+        if (subcategory == undefined) { return 1 }
         else {
-            await this.connection.manager.save(someSubcategory);
+            let someSubcategory = new Subcategory();
+            someSubcategory.id;
+            someSubcategory.name = subcategory;
+            let subcategoryExists: any;
+            subcategoryExists = await this.selectSubcategoryIdQuery(subcategory);
+            if (subcategoryExists != undefined) {
+                someSubcategory.id = subcategoryExists.id;
+            }
+            else {
+                await this.connection.manager.save(someSubcategory);
+            }
+            return someSubcategory.id
         }
-        return someSubcategory.id
     }
 
     /**
