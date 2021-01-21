@@ -70,11 +70,6 @@ export default function NavigationMenu() {
                 </Grid>
               </ClickAwayListener>
               <Grid item>
-                <IconButton id='burger-menu' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
-              <Grid item>
                 <img src={universitylogo} />
               </Grid>
               <Grid container item xs={4} justify="flex-end">

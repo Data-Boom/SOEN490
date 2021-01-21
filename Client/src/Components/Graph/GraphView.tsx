@@ -139,7 +139,6 @@ export default function GraphView() {
         <Box m={5} mb={10} width='100%'>
           <Grid item xs={12}>
             <Paper elevation={3}>
-              </Box>
               <Box m={0} p={2}>
                 <CancelIcon color="primary" className={classStyles().closeButton} width="2%" onClick={handleClose} />
                 <Grid container>
@@ -150,16 +149,18 @@ export default function GraphView() {
               </Box>
             </Paper>
           </Grid>
+        </Box>
+      </Modal>
       <Box ml={8} mr={8} maxWidth>
         <Grid container xs={12}>
           <Grid container xs={9}>
-            <Box m={2} maxWidth p={1} overflow="hidden">
+            <Box m={2} maxWidth mb={20} p={1} pb={10} overflow="hidden">
               <Paper elevation={3}>
                 <Graph
                   outerHeight={450}
                   outerWidth={800}
-                  datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))
-                extremeBoundaries={datasetBoundaries}
+                  datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
+                  extremeBoundaries={datasetBoundaries}
                 />
               </Paper>
             </Box>
@@ -168,13 +169,13 @@ export default function GraphView() {
             <Box ml={4} mt={2} maxWidth>
               <Grid item container justify="flex-start" spacing={3}>
                 <Grid item>
-                    <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset</Button>
+                  <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset</Button>
                 </Grid>
                 <Grid item>
                   <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
                 </Grid>
                 <Grid item>
-                    <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                  <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
                 </Grid>
               </Grid>
               <Grid item>

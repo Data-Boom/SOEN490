@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 
-import { Button, Grid, TextField } from "@material-ui/core"
+import { Box, Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
 import { IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
@@ -406,17 +406,29 @@ export default function Graph(props: IProps) {
           </Grid>
           {showSettings &&
             <>
-              <Grid item xs={4}>
-                <TextField size="small" id="xLowerBound" variant="outlined" value={boundaries.minX} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField size="small" id="xUpperBound" variant="outlined" value={boundaries.maxX} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField size="small" id="yLowerBound" variant="outlined" value={boundaries.minY} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField size="small" id="yUpperBound" variant="outlined" value={boundaries.maxY} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+              <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                <Box p={5} maxWidth>
+                  <Box p={2} maxWidth>
+                    <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="xLowerBound" variant="outlined" value={boundaries.minX} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
+                      </Grid>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="xUpperBound" variant="outlined" value={boundaries.maxX} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                  <Box p={2} maxWidth>
+                    <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="yLowerBound" variant="outlined" value={boundaries.minY} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
+                      </Grid>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="yUpperBound" variant="outlined" value={boundaries.maxY} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
               </Grid>
             </>
           }
