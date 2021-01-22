@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { listCategories, listMaterials } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
+import { listCategories, listSubcategories, listMaterials } from '../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void
@@ -14,6 +15,7 @@ interface IProps {
 export const SearchDatasetsForm = (props: IProps): any => {
   const [categories, setCategories] = useState([])
   const [materials, setMaterials] = useState([])
+  const [subcategories, setSubcategories] = useState([])
 
   const { handleSubmit } = { ...props }
 
@@ -37,6 +39,12 @@ export const SearchDatasetsForm = (props: IProps): any => {
 
     callListCategories()
     callListMaterials()
+    const getListSubcategory = async () => {
+      const subCategories = await listSubcategories()
+      setSubcategories(subCategories)
+    }
+
+    getListSubcategory()
   }, [])
 
   const getOptions = (categories: ICategory[]): any => {
@@ -87,6 +95,10 @@ export const SearchDatasetsForm = (props: IProps): any => {
             </Grid>
           </Grid>
           <Grid container spacing={4}>
+            <Grid item sm={2}>
+              <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
+            </Grid>
+
             <Grid item sm={2}>
               <Button id="search-database" variant="contained" color="primary" type="submit"> Search Database </Button>
             </Grid>
