@@ -78,7 +78,6 @@ export default function GraphView() {
       const point: IGraphPoint = { x: x, y: y }
       points.push(point)
     }
-    console.log(points, 'datasetPoints')
     return points
   }
 
