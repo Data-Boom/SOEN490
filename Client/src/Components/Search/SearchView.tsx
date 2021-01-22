@@ -1,36 +1,41 @@
 import { Box, Button, Container } from '@material-ui/core'
-import { ICompleteDatasetEntity, exampleDatasets } from '../../Models/Datasets/ICompleteDatasetEntity'
 import React, { useState } from 'react'
 
+import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { ISearchDatasetsFormModel } from './ISearchDatasetsFormModel'
 import { SearchDatasetsForm } from './SearchDatasetsForm'
 import { SearchResults } from './SearchResults'
 import { SelectionChangeParams } from '@material-ui/data-grid'
+import { getDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
-  handleDatasetsSelected: (datasets: ICompleteDatasetEntity[]) => void
+  handleDatasetsSelected?: (datasets: IDatasetModel[]) => void
 }
 
 export default function SearchView(props: IProps) {
+  const { handleDatasetsSelected } = { ...props }
 
-  const [foundDatasets, setFoundDatasets] = useState<ICompleteDatasetEntity[]>([])
+  const [foundDatasets, setFoundDatasets] = useState<IDatasetModel[]>([])
 
   // array of selected ids
   const [selection, setSelection] = useState<SelectionChangeParams>(null)
 
-  const handleSearchClick = () => {
-    setFoundDatasets(exampleDatasets)
+  const handleSearchClick = async (query: ISearchDatasetsFormModel) => {
+    const datasets = await getDatasets(query)
+    setFoundDatasets(datasets)
   }
 
   const handleSelectionChanged = (selection: SelectionChangeParams) => {
+    console.log(selection)
     setSelection(selection)
   }
 
   const handleSubmitSelection = () => {
-    let selectedDatasets: ICompleteDatasetEntity[] = []
+    const selectedDatasets: IDatasetModel[] = []
 
     //add all datasets from found datasets by index to selected datasets
     for (let i = 0; i < selection.rowIds.length; i++) {
-      selectedDatasets.push(foundDatasets[selection.rowIds[i]])
+      selectedDatasets.push(foundDatasets.find(dataset => dataset.id == selection.rowIds[i]))
     }
 
     // once all selected datasets were added, call the parent callback with the selected datasets, 
@@ -38,7 +43,9 @@ export default function SearchView(props: IProps) {
     props.handleDatasetsSelected(selectedDatasets)
   }
 
-  const addToGraphButton = <Button id="add-graph" variant='contained' color='primary' onClick={handleSubmitSelection}>Add to graph</Button>
+  const addToGraphButton = handleDatasetsSelected ?
+    <Button id="add-graph" variant='contained' color='primary' onClick={handleSubmitSelection}>Add to graph</Button> :
+    null
 
   return (
     <Container>

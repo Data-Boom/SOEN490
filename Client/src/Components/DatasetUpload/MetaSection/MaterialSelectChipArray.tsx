@@ -8,8 +8,8 @@ import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 
 interface IProps {
-  value: IMaterial[]
-  options: IMaterial[]
+  value: IMaterial[],
+  options: IMaterial[],
   fieldArrayHelpers: ArrayHelpers
 }
 
