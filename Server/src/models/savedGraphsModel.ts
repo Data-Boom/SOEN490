@@ -1,4 +1,5 @@
 import { Connection, getConnection } from "typeorm";
+import { selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
@@ -89,6 +90,45 @@ export class savedGraphsModel {
             sortedGraphData.push(singleGraphData)
         }
         return sortedGraphData;
+    }
+
+    async addSavedGraphModel(graph: IGraphStateModel, userEmail: string) {
+        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
+        if (userRawData == undefined)
+            return "Invalid user email provided"
+        else {
+            let datasetIds: number[] = []
+            let datasetColors: string[] = []
+            let datasetShapes: string[] = []
+            let datasetHiddenStatus: boolean[] = []
+            let axisVariable: string[] = []
+            let axisMode: string[] = []
+            let axisZoom: number[] = []
+            for (let j = 0; j < graph.datasets.length; j++) {
+                datasetIds.push(graph.datasets[j].id)
+                datasetColors.push(graph.datasets[j].color)
+                datasetShapes.push(graph.datasets[j].shape)
+                datasetHiddenStatus.push(graph.datasets[j].isHidden)
+            }
+            for (let k = 0; k < graph.axes.length; k++) {
+                axisVariable.push(graph.axes[k].variableName)
+                axisMode.push(graph.axes[k].mode)
+                axisZoom.push(graph.axes[k].zoom)
+            }
+            let newGraph = new Savedgraphs();
+            newGraph.id;
+            newGraph.accountId = userRawData.id;
+            newGraph.name = graph.name;
+            newGraph.datasetIds = datasetIds;
+            newGraph.datasetColors = datasetColors;
+            newGraph.datasetShapes = datasetShapes;
+            newGraph.datasetHiddenStatus = datasetHiddenStatus;
+            newGraph.axisVariable = axisVariable;
+            newGraph.axisMode = axisMode;
+            newGraph.axisZoom = axisZoom;
+            await this.connection.manager.save(newGraph);
+            return "Graph successfully saved"
+        }
     }
 
     private deleteSavedGraphQuery = (id: number) =>

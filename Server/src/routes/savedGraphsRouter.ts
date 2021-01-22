@@ -18,7 +18,12 @@ router.get('/api/v1/userSavedGraphs/:userSavedGraphs', (request: Request, respon
     savedGraphsControllerObject.createRequestForUserSavedGraphs(request, response);
 });
 
-router.get('/api/v1/deleteSavedGraph/:deleteSavedGraph', (request: Request, response: Response) => {
+router.post('/api/v1/addSavedGraph/', (request: Request, response: Response) => {
+    let savedGraphsControllerObject = new savedGraphsController();
+    savedGraphsControllerObject.createRequestForAddingSavedGraph(request, response);
+});
+
+router.delete('/api/v1/deleteSavedGraph/:deleteSavedGraph', (request: Request, response: Response) => {
     let savedGraphsControllerObject = new savedGraphsController();
     savedGraphsControllerObject.createRequestForDeletingSavedGraph(request, response);
 });

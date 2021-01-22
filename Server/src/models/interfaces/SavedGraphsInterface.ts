@@ -6,9 +6,9 @@ export interface IGraphStateModel {
 }
 
 export interface IDisplayedDatasetModel {
-    id: string,
+    id: number,
     color: string,
-    shape: string
+    shape: string,
     isHidden: boolean
 }
 

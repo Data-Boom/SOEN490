@@ -22,7 +22,7 @@ router.post('/api/v1/dataset/addSavedDatset/:userEmail/:datasetId', (request: Re
     getDataControllerObject.createRequestForAddingSavedDataset(request, response);
 });
 
-router.post('/api/v1/dataset/removeSavedDatset/:userEmail/:datasetId', (request: Request, response: Response) => {
+router.delete('/api/v1/dataset/removeSavedDatset/:userEmail/:datasetId', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForRemovingSavedDataset(request, response);
 });
 

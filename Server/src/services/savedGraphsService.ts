@@ -36,6 +36,17 @@ export class savedGraphsService {
      * @param graphId 
      * Graph ID: number
      */
+    async addSavedGraphService(graph: IGraphStateModel, userEmail: string) {
+        let status = await this.dataQuery.addSavedGraphModel(graph, userEmail)
+        return status;
+    }
+
+    /**
+     * This method will accept a graph ID and will request that this saved graph be deleted.
+     * 
+     * @param graphId 
+     * Graph ID: number
+     */
     async deleteSavedGraphService(graphId: number) {
         let status = await this.dataQuery.deleteSavedGraphModel(graphId)
         return status;
