@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 import * as argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken';
-import * as mailgun from 'mailgun-js';
+import mailgun from 'mailgun-js';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
@@ -14,7 +14,7 @@ import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
 
-let mg = mailgun({ apikey: process.env.MAILGUN_API_KEY, domain: process.env.DOMAIN_NAME });
+let mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.DOMAIN_NAME });
 
 /**
  * This class services authentication or User related requests and handles
