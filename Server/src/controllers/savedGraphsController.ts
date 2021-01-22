@@ -20,14 +20,14 @@ export class savedGraphsController {
         let requestParam = request.params.oneSavedGraph;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
-            response.status(400).send("Invalid graph ID entered");
+            response.status(400).json("Invalid graph ID entered");
         }
         else {
             try {
                 let oneGraph = await this.savedGraphsService.fetchOneSavedGraphService(graphId)
-                return response.status(200).send(oneGraph);
+                return response.status(200).json(oneGraph);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
