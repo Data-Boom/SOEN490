@@ -1,13 +1,14 @@
 import * as svg from 'save-svg-as-png'
 
-import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
-import { ICompleteDatasetEntity, IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, makeStyles } from "@material-ui/core"
+import { ICompleteDatasetEntity, IDataPoint, IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React, { useState } from "react"
 
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IGraphDatasetModel } from '../../Models/Datasets/IGraphDatasetModel'
 import SearchView from '../Search/SearchView'
+import { exampleDataset } from "../../Models/Datasets/ITemporaryModel"
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
@@ -35,7 +36,7 @@ export default function GraphView() {
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
   )
-
+  const [sampleData, setSampleData] = useState(exampleDataset)
   const handleOpen = () => {
     setOpenModal(true)
   }
@@ -99,7 +100,7 @@ export default function GraphView() {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
-  function calculateExtremeBoundaries(datasets: ICompleteDatasetEntity[]) {
+  const calculateExtremeBoundaries = (datasets: ICompleteDatasetEntity[]) => {
     let minX = 9000, maxX = 0, minY = 9000, maxY = 0
 
     const datalist: any[] = []
@@ -124,6 +125,61 @@ export default function GraphView() {
     setDatasetBoundaries(extremeBoundaries)
   }
 
+  const types = []
+
+  exampleDataset.dataPoints.forEach(variable => {
+    types.push(variable.type)
+  })
+  const uniqueTypes = Array.from(new Set(types))
+  const [xVariable, setXVariable] = useState(types[0])
+  const [yVariable, setYVariable] = useState(types[1])
+  const [dataPoints, setDataPoints] = useState<IDataPoint[]>([])
+
+  const assignDataPoints = (x: number[], y: number[]) => {
+    const points: IDataPoint[] = []
+    for (var i = 0; i < x.length; i++) {
+      points.push({ x: x[i], y: y[i] })
+    }
+    setDataPoints(points)
+    console.log(dataPoints)
+  }
+
+  const assignXandY = (xType: string, yType: string) => {
+    let x, y = []
+    exampleDataset.dataPoints.forEach(variable => {
+      if (variable.type == xType) {
+        x = variable.values
+      }
+      else if (variable.type == yType) {
+        y = variable.values
+      }
+    })
+    assignDataPoints(x, y)
+  }
+
+  const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    if (yVariable == (event.target.value as string)) {
+      const tempVariable = xVariable
+      setXVariable(event.target.value as string)
+      setYVariable(tempVariable)
+    }
+    else {
+      setXVariable(event.target.value as string)
+    }
+    assignXandY(xVariable, yVariable)
+
+  }
+  const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    if (xVariable == (event.target.value as string)) {
+      const tempVariable = yVariable
+      setYVariable(event.target.value as string)
+      setXVariable(tempVariable)
+    }
+    else {
+      setYVariable(event.target.value as string)
+    }
+    assignXandY(xVariable, yVariable)
+  }
   return (
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
@@ -167,14 +223,48 @@ export default function GraphView() {
                     <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
                   </Grid>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                   <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
                 </Grid>
               </Grid>
             </Box>
+            <Grid container direction='row'>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel id="xVariable">X Variable</InputLabel>
+                  <Select
+                    labelId="xVariable"
+                    id="xVariable"
+                    value={xVariable}
+                    autoWidth={true}
+                    onChange={handleXVariableChange}
+                  >
+                    {types.map(type => (
+                      <MenuItem value={type}>{type}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel id="yVariable">Y Variable</InputLabel>
+                  <Select
+                    labelId="yVariable"
+                    id="yVariable"
+                    value={yVariable}
+                    autoWidth={true}
+                    onChange={handleYVariableChange}
+                  >
+                    {types.map(type => (
+                      <MenuItem value={type}>{type}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </Box>
+      </Box >
     </>
   )
 }
