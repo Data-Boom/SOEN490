@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 import * as argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken';
+import * as mailgun from 'mailgun-js';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
@@ -12,6 +13,9 @@ import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
+import { response } from 'express';
+
+let mg = mailgun({ apikey: process.env.MAILGUN_API_KEY, domain: process.env.DOMAIN_NAME });
 
 /**
  * This class services authentication or User related requests and handles
@@ -90,16 +94,43 @@ export class AuthenticationService {
         return this.requestResponse;
     }
 
-    async resetPassword(resetPasswordInformation: IPasswordResetInformation): Promise<Response> {
+    async resetPassword(resetPasswordInformation: IPasswordResetInformation): Promise<IResponse> {
         let verifiedEmail: boolean;
+        let accessToken: string;
 
         verifiedEmail = await AuthenticationModel.verifyIfEmailExists(resetPasswordInformation.email);
         if (!verifiedEmail) {
             throw new BadRequest("If a user with such email address exists, you would receive an email");
         }
         else {
+            let jwtParams: IJwtParams;
+            try {
+                jwtParams = await AuthenticationModel.obtainJWTParams(resetPasswordInformation.email);
+                accessToken = await this.generateJwtToken(jwtParams);
+            } catch (error) {
+                throw new InternalServerError("Internal server error", error.message);
+            }
+            let data = {
+                from: "noreply@databoom.com",
+                to: resetPasswordInformation.email,
+                subject: 'Reset your password',
+                html: `
+                    <h2>To reset your password, please click on this link</h2>
+                    <p>${process.env.CLIENT_URL}/resetpassword/${accessToken}</p>
+                `
+            };
 
+            mg.message().send(data, function (error, body) {
+                if (error) {
+                    this.requestResponse.statusCode = 400;
+                    this.requestResponse.message = error.message;
+                } else {
+                    this.requestResponse.statusCode = 200;
+                    this.requestResponse.message = "Email has been sent";
+                }
+            });
         }
+        return this.requestResponse;
     }
 
     /**
