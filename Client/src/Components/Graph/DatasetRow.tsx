@@ -18,7 +18,7 @@ export const DatasetRow = (props: IProps) => {
           <Typography>
             {props.dataset.dataset_name}
           </Typography>
-          <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.dataset_id)}>
+          <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>
             <DeleteIcon color='primary' />
           </IconButton>
         </Grid>

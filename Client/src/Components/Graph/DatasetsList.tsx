@@ -13,7 +13,7 @@ export const DatasetsList = (props: IProps) => {
 
   const renderDatasetRows = () => {
     return props && props.datasets && props.datasets.map(dataset => {
-      return (<DatasetRow dataset={dataset} key={dataset.dataset_id} onRemoveDatasetClick={props.onRemoveDatasetClick} />)
+      return (<DatasetRow dataset={dataset} key={dataset.id} onRemoveDatasetClick={props.onRemoveDatasetClick} />)
     })
   }
 

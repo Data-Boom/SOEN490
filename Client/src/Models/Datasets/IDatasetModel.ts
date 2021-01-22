@@ -61,7 +61,7 @@ export interface IDatasetModel {
   subcategory: string,
   data_type: string,
   data: IData,
-  dataset_id?: number
+  id: number | undefined
 }
 
 // will build a type that is IDatasetModel without reference and data
@@ -86,7 +86,8 @@ export const defaultDatasetModel: IDatasetModel = {
     volume: 0,
     year: 0
   },
-  subcategory: ''
+  subcategory: '',
+  id: undefined
 }
 
 export const tempData: IData = {
@@ -317,6 +318,7 @@ export const exampleExportDatasetModel: IDatasetModel = {
     "pages": 19,
     "year": 1980
   },
+  "id": 1234,
   "dataset_name": "CARBON_graphite,pressed, Initial density = 2.13 g/cc",
   "material": [
     {

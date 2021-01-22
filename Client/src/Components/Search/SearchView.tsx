@@ -9,10 +9,11 @@ import { SelectionChangeParams } from '@material-ui/data-grid'
 import { getDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
-  handleDatasetsSelected: (datasets: IDatasetModel[]) => void
+  handleDatasetsSelected?: (datasets: IDatasetModel[]) => void
 }
 
 export default function SearchView(props: IProps) {
+  const { handleDatasetsSelected } = { ...props }
 
   const [foundDatasets, setFoundDatasets] = useState<IDatasetModel[]>([])
 
@@ -25,6 +26,7 @@ export default function SearchView(props: IProps) {
   }
 
   const handleSelectionChanged = (selection: SelectionChangeParams) => {
+    console.log(selection)
     setSelection(selection)
   }
 
@@ -32,7 +34,9 @@ export default function SearchView(props: IProps) {
     const selectedDatasets: IDatasetModel[] = []
 
     //add all datasets from found datasets by index to selected datasets
+    console.log(foundDatasets)
     for (let i = 0; i < selection.rowIds.length; i++) {
+      console.log(foundDatasets[selection.rowIds[i]], 'dataset at i')
       selectedDatasets.push(foundDatasets[selection.rowIds[i]])
     }
 
@@ -41,7 +45,9 @@ export default function SearchView(props: IProps) {
     props.handleDatasetsSelected(selectedDatasets)
   }
 
-  const addToGraphButton = <Button id="add-graph" variant='contained' color='primary' onClick={handleSubmitSelection}>Add to graph</Button>
+  const addToGraphButton = handleDatasetsSelected ?
+    <Button id="add-graph" variant='contained' color='primary' onClick={handleSubmitSelection}>Add to graph</Button> :
+    null
 
   return (
     <Container>

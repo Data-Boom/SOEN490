@@ -56,10 +56,10 @@ export default function GraphView() {
   const toGraphDataset = (completeDataset: IDatasetModel, color: string): IGraphDatasetModel => {
     const graphDataset: IGraphDatasetModel = {
       color: color,
-      id: completeDataset.dataset_id,
+      id: completeDataset.id,
       name: completeDataset.dataset_name,
-      //todo provide points properly from data
-      points: completeDataset.data.contents.values
+      //todo refactor graph to support displaying actual datasets not dummy data
+      // points: completeDataset.data.contents.values
     }
 
     return graphDataset
@@ -80,12 +80,13 @@ export default function GraphView() {
   }
 
   const onRemoveDataset = (datasetId: number) => {
-    const filteredDataset = completeDatasets.filter(dataset => dataset.dataset_id !== datasetId)
+    const filteredDataset = completeDatasets.filter(dataset => dataset.id !== datasetId)
     setCompleteDatasets(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
   }
 
   const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
+    console.log(selectedDatasets)
     const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
     const mergedDatasets: IDatasetModel[] = [...completeDatasets]
@@ -98,14 +99,15 @@ export default function GraphView() {
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
-    return completeDatasets.findIndex(existingDataset => existingDataset.dataset_id === dataset.dataset_id) != -1
+    return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
   function calculateExtremeBoundaries(datasets: IDatasetModel[]) {
     let minX = 9000, maxX = 0, minY = 9000, maxY = 0
 
     const datalist: any[] = []
-    datasets.forEach(dataset => datalist.push(dataset.points))
+    //todo refactor graph else this breaks
+    // datasets.forEach(dataset => datalist.push(dataset.points))
     datalist.forEach(dataset => {
       dataset.forEach(point => {
         if (point.x > maxX) {

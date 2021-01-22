@@ -4,7 +4,7 @@ export interface IDataPoint {
 }
 
 export interface IGraphDatasetModel {
-  points: IDataPoint[],
+  points?: IDataPoint[],
   id: number,
   color: string,
   name: string

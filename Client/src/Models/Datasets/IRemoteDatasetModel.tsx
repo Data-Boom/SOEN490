@@ -68,6 +68,9 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
     material: remoteDataset.materials,
     reference: {
       authors: remoteDataset.publication.authors,
+      doi: remoteDataset.publication.DOI,
+      dateAccessed: remoteDataset.publication.dateAccessed,
+      datePublished: remoteDataset.publication.datePublished,
       pages: remoteDataset.publication.pages,
       publisher: remoteDataset.publication.publisher,
       title: remoteDataset.publication.name,
@@ -75,7 +78,7 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
       volume: remoteDataset.publication.volume,
       year: remoteDataset.publication.year,
     },
-    dataset_id: remoteDataset.dataset_id
+    id: remoteDataset.dataset_id
   }
 
   return dataset
@@ -98,5 +101,6 @@ const toContents = (remotePoint: IRemoteDataPointModel[], dataComments: string[]
   for (let i = 0; i < remotePoint.length; i++) {
     contents.push({ point: remotePoint[i].values, comments: dataComments[i] })
   }
+
   return contents
 }
