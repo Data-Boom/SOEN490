@@ -27,7 +27,6 @@ export const MuiSelectFormik = ({ field, form: { touched, errors }, ...props }) 
           name="categories" value={[]}
         >
           <option aria-label="None" value="" />
-          {categories.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
         </Select>
       </FormControl>
     </>

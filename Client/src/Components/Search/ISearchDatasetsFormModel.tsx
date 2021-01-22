@@ -10,6 +10,11 @@ export interface ISearchDatasetsFormModel {
   subcategoryId?: number
 }
 
+export interface ICategory {
+  name: string,
+  id: number
+}
+
 export const defaultSearchDatasetsModel: ISearchDatasetsFormModel = {
   datasetId: [],
   material: [],

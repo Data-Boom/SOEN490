@@ -1,6 +1,6 @@
-import { Button, FormControl, Grid, InputLabel, Select, Typography } from '@material-ui/core'
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
-import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
+import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema, ICategory } from './ISearchDatasetsFormModel'
 import React, { useEffect, useState } from 'react'
 
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
@@ -26,6 +26,15 @@ export const SearchDatasetsForm = (props: IProps): any => {
     getListCategory()
   }, [])
 
+  const getOptions = (categories: ICategory[]): any => {
+    return (
+      <>
+        <option aria-label="None" value="" />
+        {categories.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+      </>
+    )
+  }
+
   return (
     <>
       <Formik
@@ -49,30 +58,8 @@ export const SearchDatasetsForm = (props: IProps): any => {
             </Grid>
 
             <Grid item sm={2}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-outFormat-native-simple"> Categories </InputLabel>
-                <Select
-                  native
-                  label="categories"
-                  name="categories"
-                >
-                  <option aria-label="None" value="" />
-                  {categories.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item sm={2}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-outFormat-native-simple"> SubCategories </InputLabel>
-                <Select
-                  native
-                  label="categories"
-                  name="categories" value={[]}
-                >
-                  <option aria-label="None" value="" />
-                  {categories.map(option => <option key={option.value} value={option.value}> {option.text} </option>)}
-                </Select>
-              </FormControl>
+              <Field name="categoryId" label='Category' component={MuiSelectFormik} options={ } />
+
             </Grid>
 
             <Grid item sm={2}>
