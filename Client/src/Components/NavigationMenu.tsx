@@ -12,11 +12,11 @@ import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import { homeRoute, signInRoute, signOutRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { IUserAccountModel } from '../Remote/Models/IUserAccountModel'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import { IUserAccountModel } from '../Models/Authentication/IUserAccountModel'
 import { removeUserInStorage } from '../Common/Storage'
 import { callLogIn } from "../Remote/Endpoints/AuthenticationEndpoint";
-import { ISignInUserModel } from "../Models/Authentication/ISignUpModel";
+import { ISignInUserModel } from "../Models/Authentication/ISignUpModel"
 
 const drawerWidth = linkWidth
 
