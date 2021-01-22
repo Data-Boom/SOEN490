@@ -65,6 +65,61 @@ export class getDataController {
     }
 
     /**
+     * This controller will take a request, grab the user email and data set ID, verify said ID is a number,
+     * and then send the service a request to add the user's saved data set preference to the database.
+     * 
+     * @param request
+     * An object containing the request information and parameters: Request 
+     * @param response 
+     * An object containing a response: Response
+     */
+    async createRequestForAddingSavedDataset(request: Request, response: Response) {
+        let userEmail = request.params.userEmail;
+        let requestParam = request.params.datasetId;
+        let datasetId: number = +requestParam;
+        if (isNaN(datasetId)) {
+            response.status(400).send("Invalid data set ID entered");
+        }
+        else {
+            try {
+                const retrieveDataObject = new retrieveData();
+                let executionStatus = await retrieveDataObject.addSavedDatasetService(userEmail, datasetId)
+                if (executionStatus[0]) { return response.status(200).send(executionStatus[1]); }
+                else { return response.status(400).send(executionStatus[1]); }
+            } catch (err) {
+                response.status(500).send(err);
+            }
+        }
+    }
+
+    /**
+     * This controller will take a request, grab the user email and data set ID, verify said ID is a number,
+     * and then send the service a request to remove the user's saved data set preference from the database.
+     * 
+     * @param request
+     * An object containing the request information and parameters: Request 
+     * @param response 
+     * An object containing a response: Response
+     */
+    async createRequestForRemovingSavedDataset(request: Request, response: Response) {
+        let userEmail = request.params.userEmail;
+        let requestParam = request.params.datasetId;
+        let datasetId: number = +requestParam;
+        if (isNaN(datasetId)) {
+            response.status(400).send("Invalid data set ID entered");
+        }
+        else {
+            try {
+                const retrieveDataObject = new retrieveData();
+                let executionStatus = await retrieveDataObject.removeSavedDatasetService(userEmail, datasetId)
+                return response.status(200).send(executionStatus);
+            } catch (err) {
+                response.status(500).send(err);
+            }
+        }
+    }
+
+    /**
      * This controller will take a request, grab the user ID, and if it a real number will then process the request,
      * send it to the getDataService to acquire an array of data sets that were saved by this user ID, and
      * then return a response with the array of data sets. If the request is invalid, or some other problem arrises, 

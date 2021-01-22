@@ -1,5 +1,5 @@
 import { Connection, getConnection } from "typeorm";
-import { Accounts } from "./entities/Accounts";
+import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { selectAuthorsQuery } from "./entities/Authors";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
@@ -162,6 +162,55 @@ export class DataQueryModel {
             .where('account.id = :idRef', { idRef: id })
             .getRawMany();
         return idDatasetData;
+    }
+
+    /**
+     * This method accepts a user's email and a data set ID, will get the user ID associated with
+     * the email and, if the email was valid, will save the user ID and data set ID relation in the 
+     * accounts_datasets_dataset table if the relation does not already exist. If the email address
+     * was invalid, it will return a message reporting such. If the relation already exists, it
+     * will return a message reporting such.
+     * 
+     * @param userEmail 
+     * User's email: string
+     * @param datasetId 
+     * Data Set ID: number
+     */
+    async addSavedDatasetModel(userEmail: string, datasetId: number) {
+        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
+        if (userRawData == undefined)
+            return [false, "Invalid user email provided"]
+        else {
+            let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userRawData.id, datasetId]);
+            if (duplicateCheck == undefined) {
+                await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userRawData.id, datasetId]);
+                return [true, "Data set successfully saved"];
+            }
+            else {
+                return [true, "Data set is already saved"];
+            }
+
+        }
+    }
+
+    /**
+     * This method accepts a user's email and a data set ID, will get the user ID associated with
+     * the email and, if the email was valid, will delete the user ID and data set ID relation in  
+     * the accounts_datasets_dataset table. 
+     * 
+     * @param userEmail 
+     * User's email: string
+     * @param datasetId 
+     * Data Set ID: number
+     */
+    async removeSavedDatasetModel(userEmail: string, datasetId: number) {
+        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
+        if (userRawData == undefined)
+            return [false, "Invalid user email provided"]
+        else {
+            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userRawData.id, datasetId]);
+            return "User favorite successfully removed";
+        }
     }
 
     /**

@@ -210,6 +210,34 @@ export class retrieveData {
     }
 
     /**
+     * This method is used to add a saved data set of a user. It will take a user's email and a data set ID
+     * and send this to the service for input.
+     * 
+     * @param userEmail
+     * User's Email: string
+     * @param datasetId
+     * Data Set ID: number
+     */
+    async addSavedDatasetService(userEmail: string, datasetId: number) {
+        let executionStatus = await this.dataQuery.addSavedDatasetModel(userEmail, datasetId);
+        return executionStatus;
+    }
+
+    /**
+     * This method is used to remove a saved data set from the user's favorites. It will take a user's email 
+     * and a data set ID and send this to the service for input.
+     * 
+     * @param userEmail
+     * User's Email: string
+     * @param datasetId
+     * Data Set ID: number
+     */
+    async removeSavedDatasetService(userEmail: string, datasetId: number) {
+        let executionStatus = await this.dataQuery.removeSavedDatasetModel(userEmail, datasetId);
+        return executionStatus;
+    }
+
+    /**
      * This method accepts an array of IDatasetModel models where each object has a data set ID that we wish to acquire
      * the full data set of. It sends this information to the createDatasetIdArray method to acquire an array containing
      * the aforementioned data set IDs. After it will then send this array of data set IDs to getDataFromDatasetIds 
