@@ -1,7 +1,10 @@
 import { Form, Formik } from 'formik'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
-import { listCategories, listMaterials, listSubcategories } from '../../Remote/Endpoints/DatasetEndpoint'
+import { listMaterials } from '../../Remote/Endpoints/materialEndpoint'
+import { listCategories } from '../../Remote/Endpoints/categoryEndpoint'
+import { listSubcategories } from '../../Remote/Endpoints/subcategoryEndpoint'
+
 
 import { Button } from '@material-ui/core'
 import { DataForm } from './DataSection/DataForm'
