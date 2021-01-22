@@ -35,7 +35,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(user1);
 
     let user2 = new Accounts();
-    user2.id;
+    user2.id = 2;
     user2.email = 'test@t.com';
     user2.password = await authenticationService.hashPassword('123') as any;
     user2.firstName = 'Tom';
@@ -313,15 +313,29 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     newGraph.id = 1;
     newGraph.accountId = 1;
     newGraph.name = "Test Graph";
-    newGraph.datasetIds = [1];
-    newGraph.datasetColors = ["red"];
-    newGraph.datasetShapes = ["square"];
-    newGraph.datasetHiddenStatus = [false];
-    newGraph.axisVariable = ["temperature"];
-    newGraph.axisMode = ["normal"];
-    newGraph.axisZoom = [100];
-    newGraph.axisUnits = ["C"];
+    newGraph.datasetIds = [1, 2];
+    newGraph.datasetColors = ["red", "green"];
+    newGraph.datasetShapes = ["square", "triangle"];
+    newGraph.datasetHiddenStatus = [false, true];
+    newGraph.axisVariable = ["temperature", "width"];
+    newGraph.axisMode = ["normal", "normal"];
+    newGraph.axisZoom = [100, 100];
+    newGraph.axisUnits = ["C", "mm"];
     await connection.manager.save(newGraph);
+
+    let newGraph2 = new Savedgraphs();
+    newGraph2.id = 2;
+    newGraph2.accountId = 2;
+    newGraph2.name = "Test Graph";
+    newGraph2.datasetIds = [1];
+    newGraph2.datasetColors = ["red"];
+    newGraph2.datasetShapes = ["square"];
+    newGraph2.datasetHiddenStatus = [false];
+    newGraph2.axisVariable = ["temperature"];
+    newGraph2.axisMode = ["normal"];
+    newGraph2.axisZoom = [100];
+    newGraph2.axisUnits = ["C"];
+    await connection.manager.save(newGraph2);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -31,6 +31,12 @@ describe('SavedGraphs Controller ', () => {
           "color": "red",
           "shape": "square",
           "isHidden": false
+        },
+        {
+          "color": "green",
+          "id": 2,
+          "isHidden": true,
+          "shape": "triangle",
         }
       ],
       "name": "Test Graph",
@@ -40,6 +46,12 @@ describe('SavedGraphs Controller ', () => {
           "mode": "normal",
           "zoom": 100,
           "units": "C"
+        },
+        {
+          "variableName": "width",
+          "mode": "normal",
+          "zoom": 100,
+          "units": "mm"
         }
       ],
       "id": 1
@@ -69,7 +81,7 @@ describe('SavedGraphs Controller ', () => {
   test('Non-existant GraphID Request', async () => {
     mockRequest = {
       params: {
-        oneSavedGraph: '2'
+        oneSavedGraph: '200000'
       }
     }
     await SavedGraphsController.createRequestForOneSavedGraph(mockRequest as Request, mockResponse as Response)
@@ -77,7 +89,50 @@ describe('SavedGraphs Controller ', () => {
     expect(mockResponse.status).toBeCalledWith(400);
   });
 
-  test('Valid User Saved Graphs Request', async () => {
+  test('Valid User Saved Graphs Request; multiple data sets on graph', async () => {
+    let expectedResponse = [{
+      "datasets": [
+        {
+          "id": 1,
+          "color": "red",
+          "shape": "square",
+          "isHidden": false
+        },
+        {
+          "color": "green",
+          "id": 2,
+          "isHidden": true,
+          "shape": "triangle",
+        }
+      ],
+      "name": "Test Graph",
+      "axes": [
+        {
+          "variableName": "temperature",
+          "mode": "normal",
+          "zoom": 100,
+          "units": "C"
+        },
+        {
+          "variableName": "width",
+          "mode": "normal",
+          "zoom": 100,
+          "units": "mm"
+        }
+      ],
+      "id": 1
+    }]
+    mockRequest = {
+      params: {
+        userSavedGraphs: "j.comkj"
+      }
+    }
+    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(200);
+  });
+
+  test('Valid User Saved Graphs Request; one data set on graph', async () => {
     let expectedResponse = [{
       "datasets": [
         {
@@ -96,11 +151,11 @@ describe('SavedGraphs Controller ', () => {
           "units": "C"
         }
       ],
-      "id": 1
+      "id": 2
     }]
     mockRequest = {
       params: {
-        userSavedGraphs: "j.comkj"
+        userSavedGraphs: "test@t.com"
       }
     }
     await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
