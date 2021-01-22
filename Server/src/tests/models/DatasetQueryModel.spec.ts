@@ -74,28 +74,28 @@ describe('data service test', () => {
         done()
     });
 
-    test('Feeds account ID of 1 and expects to see a data set ID of 1 returned', async done => {
-        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser(1)
-        expect(arrayOfData[0].dataset_id).toEqual(1);
+    test('Feeds the email of account ID of 1 and expects to see a data set ID of 1 returned', async done => {
+        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser("j.comkj")
+        expect(arrayOfData[1][0].dataset_id).toEqual(1);
         done()
     });
 
-    test('Feeds account ID of 1 and expects to see two data sets IDs returned, one being 1 and another being 2', async done => {
-        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser(1)
-        expect(arrayOfData[0].dataset_id).toEqual(2);
-        expect(arrayOfData[1].dataset_id).toEqual(1);
+    test('Feeds the email of account ID of 1 and expects to see two data sets IDs returned, one being 1 and another being 2', async done => {
+        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser("j.comkj")
+        expect(arrayOfData[1][0].dataset_id).toEqual(2);
+        expect(arrayOfData[1][1].dataset_id).toEqual(1);
         done()
     });
 
-    test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
-        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser(-1)
-        expect(arrayOfData).toEqual(expect.arrayContaining([]));
+    test('Feeds an invalid email and expects to see an error message', async done => {
+        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser("not valid")
+        expect(arrayOfData[1]).toEqual("Invalid user email provided");
         done()
     });
 
-    test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
-        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser(-1)
-        expect(arrayOfData).toEqual(expect.arrayContaining([]));
+    test('Feeds an invalid email and expects to see an error message', async done => {
+        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser("not valid")
+        expect(arrayOfData[1]).toEqual("Invalid user email provided");
         done()
     });
 })
