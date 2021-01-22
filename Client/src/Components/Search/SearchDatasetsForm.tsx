@@ -4,7 +4,7 @@ import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, search
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
 
-import { listCategories } from '../../Remote/Endpoints/DatasetEndpoint'
+import { listCategories, listSubcategories, listMaterials } from '../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void
@@ -12,7 +12,7 @@ interface IProps {
 
 export const SearchDatasetsForm = (props: IProps): any => {
   const [categories, setCategories] = useState([])
-
+  const [subcategories, setSubcategories] = useState([])
 
   const { handleSubmit } = { ...props }
 
@@ -23,7 +23,13 @@ export const SearchDatasetsForm = (props: IProps): any => {
       const categories = await listCategories()
       setCategories(categories)
     }
+    const getListSubcategory = async () => {
+      const subCategories = await listSubcategories()
+      setSubcategories(subCategories)
+    }
+
     getListCategory()
+    getListSubcategory()
   }, [])
 
   const getOptions = (categories: ICategory[]): any => {
@@ -59,6 +65,10 @@ export const SearchDatasetsForm = (props: IProps): any => {
 
             <Grid item sm={2}>
               <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
+            </Grid>
+
+            <Grid item sm={2}>
+              <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
             </Grid>
 
             <Grid item sm={2}>
