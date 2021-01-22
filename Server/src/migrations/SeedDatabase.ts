@@ -11,11 +11,12 @@ import { Publications } from "../models/entities/Publications";
 import { Publicationtype } from "../models/entities/Publicationtype";
 import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
+import { Savedgraphs } from "../models/entities/Savedgraphs";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
 import { AuthenticationService } from '../services/authenticationService';
 
-export class SeedDatabase1608609071666 implements MigrationInterface {
+export class SeedDatabase1611344612000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 
@@ -308,9 +309,24 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 1)');
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
+
+    let newGraph = new Savedgraphs();
+    newGraph.id = 1;
+    newGraph.accountId = 1;
+    newGraph.name = "Test Graph";
+    newGraph.datasetIds = [1];
+    newGraph.datasetColors = ["red"];
+    newGraph.datasetShapes = ["square"];
+    newGraph.datasetHiddenStatus = [false];
+    newGraph.axisVariable = ["temperature"];
+    newGraph.axisMode = ["normal"];
+    newGraph.axisZoom = [100];
+    newGraph.axisUnits = ["C"];
+    await connection.manager.save(newGraph);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query('DELETE FROM savedgraphs');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
     await queryRunner.query('DELETE FROM accounts_datasets_dataset');
