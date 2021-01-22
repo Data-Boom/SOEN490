@@ -203,4 +203,38 @@ describe('SavedGraphs Controller ', () => {
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
     expect(mockResponse.status).toBeCalledWith(400);
   });
+
+  //Do these deletion tests last
+  test('Delete Graph Request', async () => {
+    mockRequest = {
+      params: {
+        deleteSavedGraph: '1'
+      }
+    }
+    await SavedGraphsController.createRequestForDeletingSavedGraph(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith("Saved graph deletion was successful");
+    expect(mockResponse.status).toBeCalledWith(200);
+  });
+
+  test('Delete Non-existant Graph Request', async () => {
+    mockRequest = {
+      params: {
+        deleteSavedGraph: '1'
+      }
+    }
+    await SavedGraphsController.createRequestForDeletingSavedGraph(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith("Saved graph deletion was successful");
+    expect(mockResponse.status).toBeCalledWith(200);
+  });
+
+  test('Invalid Delete Graph Request', async () => {
+    mockRequest = {
+      params: {
+        deleteSavedGraph: "not a number"
+      }
+    }
+    await SavedGraphsController.createRequestForDeletingSavedGraph(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith("Invalid graph ID entered");
+    expect(mockResponse.status).toBeCalledWith(400);
+  });
 })
