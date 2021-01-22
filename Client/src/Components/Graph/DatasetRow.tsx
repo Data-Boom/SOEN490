@@ -1,12 +1,12 @@
 import { Box, Grid, IconButton, Typography } from "@material-ui/core"
 
 import DeleteIcon from '@material-ui/icons/Delete'
-import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
 import { classStyles } from "../../appTheme"
 
 interface IProps {
-  dataset: ICompleteDatasetEntity,
+  dataset: IDatasetModel,
   onRemoveDatasetClick: (datasetId: number) => void
 }
 
@@ -17,7 +17,7 @@ export const DatasetRow = (props: IProps) => {
         <Grid item container alignItems='center' justify='space-between'>
           <Grid container justify="flex-start" xs={9}>
             <Typography variant="body2" noWrap>
-              {props.dataset.name}
+              {props.dataset.dataset_name}
             </Typography>
           </Grid>
           <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>

@@ -45,6 +45,22 @@ export class AuthenticationModel {
         return userEmail !== undefined;
     }
 
+    /*
+     * Method to verify if the user with the token exists.
+     * @param email - User's email
+     * @param token - User's token from URL
+     */
+    static async verifyResetToken(email: string, token: string): Promise<boolean> {
+        let connection = getConnection();
+        let userEmail = await connection
+            .createQueryBuilder(Accounts, 'account')
+            .select('account.email', 'account_email')
+            .where('account.resetToken = :resetToken', { resetToken: token })
+            .getOne()
+
+        return userEmail.email === email;
+    }
+
     /**
      * Method used to verify Password of corresponding input email
      * @param email - User Email
@@ -58,6 +74,7 @@ export class AuthenticationModel {
             .addSelect('account.password', 'account_password')
             .where('account.email = :email', { email: email })
             .getRawMany();
+
         return userInfo[0].account_password;
     }
 
@@ -116,10 +133,23 @@ export class AuthenticationModel {
         return userInfo[0];
     }
 
-    //TODO: Implement when doing password reset 
-    static async resetPassword(email: string) {
+    /**
+     * This will change user's resetToken attribute
+     * @param email - User's email
+     * @param token - User's resetToken
+     */
+    static async resetPassword(email: string, token: string) {
 
         let connection = getConnection();
+
+        await connection.manager
+            .createQueryBuilder(Accounts, 'accounts')
+            .update('accounts')
+            .set({ resetToken: token })
+            .where('accounts.email = :email', { email: email })
+            .execute()
+
+        return true;
     }
 
     static async deleteAccounts(email: string) {

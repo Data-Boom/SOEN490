@@ -1,18 +1,22 @@
 /* eslint-disable react/display-name */
 
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import { HashRouter, Link } from 'react-router-dom'
+import { HashRouter, Link, Redirect, useHistory } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
-import React, { useContext, useState } from 'react'
-
+import React, { Component, useContext, useState } from 'react'
+import { withRouter } from 'react-router-dom';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
 import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
-import { signInRoute } from "../Common/Consts/Routes"
+import { homeRoute, signInRoute, signOutRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import { IUserAccountModel } from '../Remote/Models/IUserAccountModel'
+import { removeUserInStorage } from '../Common/Storage'
+import { callLogIn } from "../Remote/Endpoints/AuthenticationEndpoint";
+import { ISignInUserModel } from "../Models/Authentication/ISignUpModel";
 
 const drawerWidth = linkWidth
 
@@ -30,6 +34,17 @@ export default function NavigationMenu() {
   }
   const handleSignIn = () => {
   }
+
+  const history = useHistory();
+
+  function logout() {
+
+    removeUserInStorage();
+    window.location.replace("/");
+
+  }
+
+
 
 
   const drawer = (): any => {
@@ -50,8 +65,11 @@ export default function NavigationMenu() {
     return user && user.firstName ? (
       <Typography>
         Hello, {user.firstName} {user.lastName}
+        <Button variant="contained" onClick={logout}>Sign out</Button>
       </Typography>
-    ) : (
+
+    )
+      : (
         <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
       )
   }

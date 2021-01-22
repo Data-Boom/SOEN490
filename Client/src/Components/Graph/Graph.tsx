@@ -3,7 +3,7 @@ import * as d3 from "d3"
 import { Box, Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
-import { IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
