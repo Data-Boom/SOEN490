@@ -11,7 +11,6 @@ interface IProps {
 }
 
 export const SearchDatasetsForm = (props: IProps): any => {
-  const [isCaseSensitive, setIsCaseSensitive] = useState(false)
   const [categories, setCategories] = useState([])
 
 
@@ -22,7 +21,6 @@ export const SearchDatasetsForm = (props: IProps): any => {
     // todo create categories endpoint
     const getListCategory = async () => {
       const categories = await listCategories()
-      console.log(categories, 'categories')
       setCategories(categories)
     }
     getListCategory()
@@ -56,10 +54,10 @@ export const SearchDatasetsForm = (props: IProps): any => {
                 <Select
                   native
                   label="categories"
-                  name="categories" value={[]}
+                  name="categories"
                 >
                   <option aria-label="None" value="" />
-                  {categories.map(option => <option key={option.value} value={option.value}> {option.text} </option>)}
+                  {categories.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
                 </Select>
               </FormControl>
             </Grid>
