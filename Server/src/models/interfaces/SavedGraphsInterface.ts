@@ -15,5 +15,6 @@ export interface IDisplayedDatasetModel {
 export interface IAxisModel {
     variableName: string,
     mode: string,
-    zoom: number
+    zoom: number,
+    units: string
 }

@@ -31,6 +31,7 @@ export class savedGraphsModel {
         rawGraphData.axisVariable = typeof rawGraphData.axisVariable === 'string' ? JSON.parse(rawGraphData.axisVariable) : []
         rawGraphData.axisMode = typeof rawGraphData.axisMode === 'string' ? JSON.parse(rawGraphData.axisMode) : []
         rawGraphData.axisZoom = typeof rawGraphData.axisZoom === 'string' ? JSON.parse(rawGraphData.axisZoom) : []
+        rawGraphData.axisUnits = typeof rawGraphData.axisUnits === 'string' ? JSON.parse(rawGraphData.axisUnits) : []
         for (let j = 0; j < rawGraphData.datasetIds.length; j++) {
             oneDatasetsData = {
                 id: rawGraphData.datasetIds[j],
@@ -44,7 +45,8 @@ export class savedGraphsModel {
             oneAxisData = {
                 variableName: rawGraphData.axisVariable[k],
                 mode: rawGraphData.axisMode[k],
-                zoom: rawGraphData.axisZoom[k]
+                zoom: rawGraphData.axisZoom[k],
+                units: rawGraphData.axisUnits[k]
             }
             sortedAxesData.push(oneAxisData)
         }
@@ -92,6 +94,60 @@ export class savedGraphsModel {
         return sortedGraphData;
     }
 
+    /**
+     * This method will accept all the variables of a saved graph and add it to the Savedgraphs table.
+     * 
+     * @param accountId 
+     * Account ID: number
+     * @param name 
+     * Graph name: string
+     * @param datasetIds 
+     * Data Set ID array: number[]
+     * @param datasetColors 
+     * Colors of the Data Set lines: string[]
+     * @param datasetShapes 
+     * Shapes of the Data Set lines: string[]
+     * @param datasetHiddenStatus 
+     * Flag for if a Data Set is hidden: boolean[]
+     * @param axisVariable 
+     * Axis variables names: string[]
+     * @param axisMode 
+     * Axis mode: string[]
+     * @param axisZoom 
+     * Axis zoom index: number[]
+     * @param axisUnits 
+     * Axis unit types: string[]
+     */
+    private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[], datasetHiddenStatus: boolean[],
+        axisVariable: string[], axisMode: string[], axisZoom: number[], axisUnits: string[]) {
+        let newGraph = new Savedgraphs();
+        newGraph.id;
+        newGraph.accountId = accountId;
+        newGraph.name = name;
+        newGraph.datasetIds = datasetIds;
+        newGraph.datasetColors = datasetColors;
+        newGraph.datasetShapes = datasetShapes;
+        newGraph.datasetHiddenStatus = datasetHiddenStatus;
+        newGraph.axisVariable = axisVariable;
+        newGraph.axisMode = axisMode;
+        newGraph.axisZoom = axisZoom;
+        newGraph.axisUnits = axisUnits;
+        await this.connection.manager.save(newGraph);
+        return "Graph successfully saved"
+    }
+
+    /**
+     * This method will take a user's email and a IGraphStateModel object. It will first get the user's
+     * ID through a query, return an error if the email is invalid, and if not will proceed to parse
+     * through the IGraphStateModel object to format the encapsulated datasets and axes objects into
+     * arrays ready for insertion into the Savedgraphs table. After, it will send these arrays,
+     * the user's ID, and the name of the graph to @sendSavedGraphToDatabase for insertion into the table.
+     * 
+     * @param graph 
+     * Full graph information: IGraphStateModel
+     * @param userEmail 
+     * User email address: string
+     */
     async addSavedGraphModel(graph: IGraphStateModel, userEmail: string) {
         let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
         if (userRawData == undefined)
@@ -104,6 +160,7 @@ export class savedGraphsModel {
             let axisVariable: string[] = []
             let axisMode: string[] = []
             let axisZoom: number[] = []
+            let axisUnits: string[] = []
             for (let j = 0; j < graph.datasets.length; j++) {
                 datasetIds.push(graph.datasets[j].id)
                 datasetColors.push(graph.datasets[j].color)
@@ -114,20 +171,10 @@ export class savedGraphsModel {
                 axisVariable.push(graph.axes[k].variableName)
                 axisMode.push(graph.axes[k].mode)
                 axisZoom.push(graph.axes[k].zoom)
+                axisUnits.push(graph.axes[k].units)
             }
-            let newGraph = new Savedgraphs();
-            newGraph.id;
-            newGraph.accountId = userRawData.id;
-            newGraph.name = graph.name;
-            newGraph.datasetIds = datasetIds;
-            newGraph.datasetColors = datasetColors;
-            newGraph.datasetShapes = datasetShapes;
-            newGraph.datasetHiddenStatus = datasetHiddenStatus;
-            newGraph.axisVariable = axisVariable;
-            newGraph.axisMode = axisMode;
-            newGraph.axisZoom = axisZoom;
-            await this.connection.manager.save(newGraph);
-            return "Graph successfully saved"
+            let statusMessage = await this.sendSavedGraphToDatabase(userRawData.id, graph.name, datasetIds, datasetColors, datasetShapes, datasetHiddenStatus, axisVariable, axisMode, axisZoom, axisUnits)
+            return statusMessage
         }
     }
 

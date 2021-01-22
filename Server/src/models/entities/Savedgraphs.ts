@@ -49,6 +49,9 @@ export class Savedgraphs {
     @Column({ type: "json" })
     axisZoom: number[]
 
+    @Column({ type: "json" })
+    axisUnits: string[]
+
     @CreateDateColumn()
     created: Date
 
@@ -67,6 +70,7 @@ export const selectSavedGraphsOfUserQuery = (connection: Connection, user: numbe
         .addSelect('graphs.axisVariable', 'axisVariable')
         .addSelect('graphs.axisMode', 'axisMode')
         .addSelect('graphs.axisZoom', 'axisZoom')
+        .addSelect('graphs.axisUnits', 'axisUnits')
         .innerJoin(Accounts, 'accounts', 'graphs.accountId = accounts.id')
         .where('accounts.id = :user', { user: user })
         .getRawMany();
@@ -82,5 +86,6 @@ export const selectOneSavedGraphQuery = (connection: Connection, id: number) =>
         .addSelect('graphs.axisVariable', 'axisVariable')
         .addSelect('graphs.axisMode', 'axisMode')
         .addSelect('graphs.axisZoom', 'axisZoom')
+        .addSelect('graphs.axisUnits', 'axisUnits')
         .where('graphs.id = :id', { id: id })
         .getRawOne();
