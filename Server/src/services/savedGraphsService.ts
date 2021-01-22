@@ -1,10 +1,10 @@
-import { FetchSavedGraphsModel } from "../models/FetchSavedGraphsModel";
+import { savedGraphsModel } from "../models/savedGraphsModel";
 import { IGraphStateModel } from "../models/interfaces/SavedGraphsInterface";
 
-export class fetchSavedGraphsService {
-    private dataQuery: FetchSavedGraphsModel;
+export class savedGraphsService {
+    private dataQuery: savedGraphsModel;
     constructor() {
-        this.dataQuery = new FetchSavedGraphsModel();
+        this.dataQuery = new savedGraphsModel();
     }
 
     /**

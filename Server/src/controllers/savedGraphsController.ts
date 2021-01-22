@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import { fetchSavedGraphsService } from '../services/fetchSavedGraphsService';
+import { savedGraphsService } from '../services/savedGraphsService';
 
-export class fetchSavedGraphsController {
-    private fetchSavedGraphsService: fetchSavedGraphsService;
+export class savedGraphsController {
+    private savedGraphsService: savedGraphsService;
     constructor() {
-        this.fetchSavedGraphsService = new fetchSavedGraphsService();
+        this.savedGraphsService = new savedGraphsService();
     }
 
     /**
-     * This controller will take a request, send it to the fetchSavedGraphsService to acquire a 
+     * This controller will take a request, send it to the savedGraphsService to acquire a 
      * IGraphStateModel object containing a single saved graph.
      * 
      * @param request
@@ -24,7 +24,7 @@ export class fetchSavedGraphsController {
         }
         else {
             try {
-                let oneGraph = await this.fetchSavedGraphsService.fetchOneSavedGraphService(graphId)
+                let oneGraph = await this.savedGraphsService.fetchOneSavedGraphService(graphId)
                 return response.status(200).send(oneGraph);
             } catch (err) {
                 response.status(500).send(err);
@@ -33,7 +33,7 @@ export class fetchSavedGraphsController {
     }
 
     /**
-     * This controller will take a request, send it to the fetchSavedGraphsService to acquire an 
+     * This controller will take a request, send it to the savedGraphsService to acquire an 
      * array of IGraphStateModel objects where each object is a saved graph of the specified user.
      * 
      * @param request
@@ -49,7 +49,7 @@ export class fetchSavedGraphsController {
         }
         else {
             try {
-                let userSavedGraphs = await this.fetchSavedGraphsService.fetchUserSavedGraphsService(userId)
+                let userSavedGraphs = await this.savedGraphsService.fetchUserSavedGraphsService(userId)
                 return response.status(200).send(userSavedGraphs);
             } catch (err) {
                 response.status(500).send(err);
@@ -58,7 +58,7 @@ export class fetchSavedGraphsController {
     }
 
     /**
-     * This controller will take a request, send it to the fetchSavedGraphsService to acquire an 
+     * This controller will take a request, send it to the savedGraphsService to acquire an 
      * array of IGraphStateModel objects where each object is a saved graph of the specified user.
      * 
      * @param request
@@ -74,7 +74,7 @@ export class fetchSavedGraphsController {
         }
         else {
             try {
-                let executionResult = await this.fetchSavedGraphsService.deleteSavedGraphService(graphId)
+                let executionResult = await this.savedGraphsService.deleteSavedGraphService(graphId)
                 return response.status(200).send(executionResult);
             } catch (err) {
                 response.status(500).send(err);

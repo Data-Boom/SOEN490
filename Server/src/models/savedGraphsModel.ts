@@ -1,9 +1,8 @@
-import { raw } from "express";
 import { Connection, getConnection } from "typeorm";
 import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
-export class FetchSavedGraphsModel {
+export class savedGraphsModel {
     private connection: Connection;
     constructor() {
         this.connection = getConnection();
