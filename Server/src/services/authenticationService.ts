@@ -13,7 +13,6 @@ import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
-import { response } from 'express';
 
 let mg = mailgun({ apikey: process.env.MAILGUN_API_KEY, domain: process.env.DOMAIN_NAME });
 
@@ -97,6 +96,7 @@ export class AuthenticationService {
     async resetPassword(resetPasswordInformation: IPasswordResetInformation): Promise<IResponse> {
         let verifiedEmail: boolean;
         let accessToken: string;
+        let resetTokenChanged: boolean;
 
         verifiedEmail = await AuthenticationModel.verifyIfEmailExists(resetPasswordInformation.email);
         if (!verifiedEmail) {
@@ -107,9 +107,15 @@ export class AuthenticationService {
             try {
                 jwtParams = await AuthenticationModel.obtainJWTParams(resetPasswordInformation.email);
                 accessToken = await this.generateJwtToken(jwtParams);
+                resetTokenChanged = await AuthenticationModel.resetPassword(resetPasswordInformation.email, accessToken);
             } catch (error) {
                 throw new InternalServerError("Internal server error", error.message);
             }
+
+            if (!resetTokenChanged) {
+                throw new InternalServerError("Internal server error when executing set resetToken on user");
+            }
+
             let data = {
                 from: "noreply@databoom.com",
                 to: resetPasswordInformation.email,
