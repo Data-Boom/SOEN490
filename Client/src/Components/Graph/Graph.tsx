@@ -1,15 +1,19 @@
 import * as d3 from "d3"
 
+import { Box, Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
-import { Button } from "@material-ui/core"
+import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 
 interface IProps {
   outerHeight: number,
   outerWidth: number,
-  datasets: IGraphDatasetModel[]
+  datasets: IGraphDatasetModel[],
+  extremeBoundaries: IDataPointExtremes
 }
 
 export default function Graph(props: IProps) {
@@ -23,31 +27,112 @@ export default function Graph(props: IProps) {
   props.datasets.forEach(dataset => IDList.push(dataset.id))
 
   const margin = {
-    top: 50,
-    right: 70,
-    bottom: 50,
-    left: 70
+    top: 60,
+    right: 90,
+    bottom: 60,
+    left: 110
   }
-  const outerWidth = props && props.outerWidth || 768
-  const outerHeight = props && props.outerHeight || 500
+  const outerWidth = (props && props.outerWidth) || 768
+  const outerHeight = (props && props.outerHeight) || 500
   const width = outerWidth - margin.left - margin.right
   const height = outerHeight - margin.top - margin.bottom
+  const extremeBoundaries = props.extremeBoundaries
 
   const [isXLog, setXToggle] = useState(false)
   const [isYLog, setYToggle] = useState(false)
+  const [showSettings, setSettingsToggle] = useState(false)
+  const [boundaries, setBoundaries] = useState<IDataPointExtremes>(
+    extremeBoundaries
+  )
+  // This loops through the selected arrays to find the min/max for both x and y.
 
   const handleXScaleClick = () => {
+    if (boundaries.minX <= 0 && !isXLog) {
+      setBoundaries({
+        ...boundaries,
+        minX: 1
+      })
+    }
     setXToggle(!isXLog)
   }
 
   const handleYScaleClick = () => {
+    if (boundaries.minY <= 0 && !isYLog) {
+      setBoundaries({
+        ...boundaries,
+        minY: 1
+      })
+    }
     setYToggle(!isYLog)
   }
 
-  const handleSaveGraphClick = () => {
-
+  const handleSettingsClick = () => {
+    setSettingsToggle(!showSettings)
   }
-  let active = [null, null, null, null]
+
+  const handleXUpperBoundChange = (event) => {
+    const { value } = event.target
+    if ((value < extremeBoundaries.maxX)) {
+      setBoundaries({
+        ...boundaries,
+        maxX: (Math.ceil(extremeBoundaries.maxX))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        maxX: value
+      })
+    }
+  }
+  const handleXLowerBoundChange = (event) => {
+    const { value } = event.target
+    if ((value <= 0 && isXLog) || (value > extremeBoundaries.minX)) {
+      setBoundaries({
+        ...boundaries,
+        minX: (Math.floor(extremeBoundaries.minX))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        minX: value
+      })
+    }
+  }
+
+  const handleYUpperBoundChange = (event) => {
+    const { value } = event.target
+    if ((value < extremeBoundaries.maxY)) {
+      setBoundaries({
+        ...boundaries,
+        maxY: (Math.ceil(extremeBoundaries.maxY))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        maxY: value
+      })
+    }
+  }
+  const handleYLowerBoundChange = (event) => {
+    const { value } = event.target
+    if ((value <= 0 && isYLog) || (value > extremeBoundaries.minY)) {
+      setBoundaries({
+        ...boundaries,
+        minY: (Math.floor(extremeBoundaries.minY))
+      })
+    }
+    else {
+      setBoundaries({
+        ...boundaries,
+        minY: value
+      })
+    }
+  }
+
+  const active = [null, null, null, null]
 
   const ref = React.useRef(null)
 
@@ -66,7 +151,7 @@ export default function Graph(props: IProps) {
     //cleans up all the points from the graph
     d3.select(ref.current).selectAll("*").remove()
     //This part creates the canvas for our graph
-    let svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
+    const svg = d3.select(ref.current) // FIX WARNING "Warning: A string ref, "canvas", has been found within a strict mode tree. String refs are a source of potential bugs and should be avoided. We recommend using useRef() or createRef() instead. Learn more about using refs safely here: https://fb.me/react-strict-mode-string-ref"
       .append("svg")
       .attr("width", outerWidth)
       .attr("height", outerHeight)
@@ -75,8 +160,9 @@ export default function Graph(props: IProps) {
 
     //This part creates the axis/scales used for the data.
     const xScale = getScale(isXLog, width, 0)
+    xScale.domain([boundaries.minX, boundaries.maxX])
     const yScale = getScale(isYLog, 0, height)
-
+    yScale.domain([boundaries.minY, boundaries.maxY])
     //Calls the function to create the axis
     const xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -95,8 +181,9 @@ export default function Graph(props: IProps) {
 
     //This allows the user to zoom in/out onto the graph.
     const zoom = d3.zoom()
-      .scaleExtent([1, 20])
+      .scaleExtent([1, 10])
       .extent([[0, 0], [width, height]])
+      .translateExtent([[0, 0], [width, height]])
       .on("zoom", updateGraph)
     //This rectangle is the area in which the user can zoom into.
     svg.append("rect")
@@ -107,7 +194,7 @@ export default function Graph(props: IProps) {
       .call(zoom)
 
     //This is the part that creates the points
-    let scatter = svg.append("g")
+    const scatter = svg.append("g")
       .attr("clip-path", "url(#clip)")
 
     scatter
@@ -149,7 +236,7 @@ export default function Graph(props: IProps) {
       // This allows us to change the opacity of a dot on click.
       .on("click", function () {
         const opacity = d3.select(this).style('opacity')
-        if (opacity == '0.5') {
+        if (opacity === '0.5') {
           d3.select(this).style('opacity', 1)
         }
         else {
@@ -166,8 +253,8 @@ export default function Graph(props: IProps) {
       .attr('xlink:href', "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png")
       .attr('width', 20)
       .attr('height', 20)
-      .attr("x", 600)
-      .attr("y", function (d, i) { return 290 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("x", width - 60)
+      .attr("y", function (d, i) { return 0 + (i * 25) }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("r", 7)
       .attr("id", function (d) {
         const x = datalist.indexOf(d)
@@ -191,7 +278,7 @@ export default function Graph(props: IProps) {
         svg
           .selectAll("#legenddotid" + IDList[x])
           .attr("xlink:href", function () {
-            if (active[x] == 0) {
+            if (active[x] === 0) {
               return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU"
             }
             else {
@@ -200,13 +287,79 @@ export default function Graph(props: IProps) {
           })
       })
 
+    var yplacement = svg
+      .append('g')
+      .attr("transform", "translate(-50, -40)")
+
+    var ylnlgButton = yplacement
+      .append("rect")
+      .attr('width', 50)
+      .attr('height', 30)
+      .attr("rx", 6)
+      .attr("ry", 6)
+      .attr("fill", '#757ce8')
+      .on("click", function () {
+        handleYScaleClick();
+
+      })
+
+    yplacement
+      .append("text")
+      .style("fill", "black")
+      .attr("id", "yAxisText")
+      .attr("dx", "12")
+      .attr("dy", "20")
+      .text(function () {
+        if (isYLog) {
+          return "Lin";
+        }
+        else {
+          return "Log"
+        }
+      })
+      .on("click", function () {
+        handleYScaleClick();
+      })
+
+
+    var xplacement = svg
+      .append('g')
+      .attr("transform", "translate(" + (width + 20) + "," + height + ")")
+
+    var xlnlgButton = xplacement
+      .append('rect')
+      .attr('width', 50)
+      .attr('height', 30)
+      .attr("rx", 6)
+      .attr("ry", 6)
+      .attr("fill", '#757ce8')
+      .on("click", handleXScaleClick)
+
+    xplacement
+      .append("text")
+      .attr("id", "xAxisText")
+      .style("fill", "black")
+      .attr("dx", "12")
+      .attr("dy", "20")
+      .text(function () {
+        if (isXLog) {
+          return "Lin";
+        }
+        else {
+          return "Log"
+        }
+      })
+      .on("click", function (d) {
+        handleXScaleClick();
+      })
+
     //The name labels for the datasets mentioned in the legend
     svg.selectAll()
       .data(datalist)
       .enter()
       .append("text")
-      .attr("x", 625)
-      .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("x", width - 25)
+      .attr("y", function (d, i) { return 10 + (i * 25) }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("fill", function (d) {
         const x = datalist.indexOf(d)
         return colourslist[x]
@@ -233,7 +386,7 @@ export default function Graph(props: IProps) {
         .selectAll("circle")
         .attr('cy', function (d) { return (newYScale(d["y"])) })
     }
-  }, [props, isXLog, isYLog])
+  }, [props, isXLog, isYLog, boundaries])
 
   return (
     <>
@@ -249,8 +402,41 @@ export default function Graph(props: IProps) {
         id='graph'
       />
       <div>
-        <Button id='btn1' onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-        <Button id='btn2' onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">Settings
+              {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </Button>
+          </Grid>
+          {showSettings &&
+            <>
+              <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                <Box p={5} maxWidth>
+                  <Box p={2} maxWidth>
+                    <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="xLowerBound" variant="outlined" value={boundaries.minX} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
+                      </Grid>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="xUpperBound" variant="outlined" value={boundaries.maxX} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                  <Box p={2} maxWidth>
+                    <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="yLowerBound" variant="outlined" value={boundaries.minY} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
+                      </Grid>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="yUpperBound" variant="outlined" value={boundaries.maxY} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Grid>
+            </>
+          }
+        </Grid>
       </div>
     </>
   )

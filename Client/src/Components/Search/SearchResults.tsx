@@ -1,28 +1,43 @@
-import { ColDef, DataGrid, SelectionChangeParams } from '@material-ui/data-grid'
+import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
+import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { Grid } from '@material-ui/core'
-import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
 import React from 'react'
 
 interface IProps {
-  datasetResults: ICompleteDatasetEntity[],
+  datasetResults: IDatasetModel[],
   handleSelectionChanged: (selection: SelectionChangeParams) => void,
   button?: any,
 }
 
 export const SearchResults = (props: IProps) => {
+  const width = 160
+
+  const getTitle = (params: ValueGetterParams) => {
+    const reference = params.getValue('reference') as IReference
+    return `${reference.title}`
+  }
+
+  const getAuthor = (params: ValueGetterParams) => {
+    const reference = params.getValue('reference') as IReference
+    if (!reference.authors[0]) {
+      return 'N/A'
+    }
+    return `${reference.authors[0].firstName} ${reference.authors[0].lastName}`
+  }
+
+  const getYear = (params: ValueGetterParams) => {
+    const reference = params.getValue('reference') as IReference
+    return `${reference.year}`
+  }
 
   const columns: ColDef[] = [
-    { field: 'name', headerName: 'Name' },
-    { field: 'title', headerName: 'Title' },
-    { field: 'oxidizer', headerName: 'Oxidizer' },
-    { field: 'category', headerName: 'Category' },
-    { field: 'subcategory', headerName: 'SubCategory' },
-    { field: 'fuel', headerName: 'Fuel' },
-    { field: 'diluent', headerName: 'Dilutent' },
-    { field: 'author', headerName: 'Author' },
-    { field: 'year', headerName: 'Year' },
-    { field: 'outputFormat', headerName: 'Output format' },
+    { field: 'dataset_name', headerName: 'Name', width: width },
+    { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
+    { field: 'category', headerName: 'Category', width: width },
+    { field: 'subcategory', headerName: 'SubCategory', width: width },
+    { field: 'author', headerName: 'Author', width: width, valueGetter: getAuthor },
+    { field: 'year', headerName: 'Year', width: width, valueGetter: getYear },
   ]
 
   return (

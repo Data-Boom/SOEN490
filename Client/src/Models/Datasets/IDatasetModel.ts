@@ -1,36 +1,39 @@
 
 export interface IAuthor {
-  firstname: string;
-  middlename: string;
-  lastname: string;
+  firstName: string,
+  middleName: string,
+  lastName: string,
 }
 
 export const defaultAuthor: IAuthor = {
-  firstname: '',
-  lastname: '',
-  middlename: ''
+  firstName: '',
+  lastName: '',
+  middleName: ''
 }
 
 export interface IReference {
-  type: string;
-  publisher: string;
-  authors: IAuthor[];
-  title: string;
-  volume: number;
-  pages: number;
-  year: number;
+  type: string,
+  doi?: string,
+  dateAccessed?: Date,
+  datePublished?: Date,
+  publisher: string,
+  authors: IAuthor[],
+  title: string,
+  volume: number,
+  pages: number,
+  year: number,
 }
 
 export interface IMaterial {
   composition: string,
   details: string,
-  id: number
+  id?: number
 }
 
 export interface IVariable {
-  name: string;
-  repr: string;
-  units: string;
+  name: string,
+  repr: string,
+  units: string,
 }
 
 export const defaultVariable: IVariable = {
@@ -40,24 +43,25 @@ export const defaultVariable: IVariable = {
 }
 
 export interface IContent {
-  point: number[];
-  comments: string;
+  point: number[],
+  comments: string,
 }
 
 export interface IData {
-  variables: IVariable[];
-  contents: IContent[];
-  comments: string;
+  variables: IVariable[],
+  contents: IContent[],
+  comments: string,
 }
 
 export interface IDatasetModel {
-  reference: IReference;
-  dataset_name: string;
-  material: IMaterial[];
-  category: string;
-  subcategory: string;
-  data_type: string;
-  data: IData;
+  reference: IReference,
+  dataset_name: string,
+  material: IMaterial[],
+  category: string,
+  subcategory: string,
+  data_type: string,
+  data: IData,
+  id: number | undefined
 }
 
 // will build a type that is IDatasetModel without reference and data
@@ -82,7 +86,8 @@ export const defaultDatasetModel: IDatasetModel = {
     volume: 0,
     year: 0
   },
-  subcategory: ''
+  subcategory: '',
+  id: undefined
 }
 
 export const tempData: IData = {
@@ -298,14 +303,14 @@ export const exampleExportDatasetModel: IDatasetModel = {
     "publisher": "University of California Press",
     "authors": [
       {
-        "firstname": "Stanley",
-        "middlename": "P.",
-        "lastname": "Marsh"
+        "firstName": "Stanley",
+        "middleName": "P.",
+        "lastName": "Marsh"
       },
       {
-        "firstname": "John",
-        "middlename": "L.",
-        "lastname": "Mclain"
+        "firstName": "John",
+        "middleName": "L.",
+        "lastName": "Mclain"
       }
     ],
     "title": "LASL shock Hugoniot data",
@@ -313,6 +318,7 @@ export const exampleExportDatasetModel: IDatasetModel = {
     "pages": 19,
     "year": 1980
   },
+  "id": 1234,
   "dataset_name": "CARBON_graphite,pressed, Initial density = 2.13 g/cc",
   "material": [
     {

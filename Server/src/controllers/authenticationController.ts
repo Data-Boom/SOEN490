@@ -1,12 +1,12 @@
-import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
-import { Request, Response, NextFunction } from 'express';
-import { AuthenticationService } from '../services/authenticationService';
+import { BadRequest } from "@tsed/exceptions";
+import { NextFunction, Request, Response } from 'express';
 
+import { AuthenticationModel } from '../models/AuthenticationModel'
+import { AuthenticationService } from '../services/authenticationService';
+import { ILoginInformation, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
-import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
-
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
 
 /**
  * This controller is responsible for verifying the user request has correct parameters input.
@@ -25,7 +25,7 @@ export class AuthenticationController {
             return response.status(400).json("Request is invalid. Missing attributes")
         }
         else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let signUpInfo: ISignUpInformation = requestParams;
             let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
             return res;
@@ -38,17 +38,39 @@ export class AuthenticationController {
             return response.status(400).json("Request is invalid. Email or Password attribute missing")
         }
         else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let loginInfo: ILoginInformation = requestParams;
-            let res: any = await this.callServiceForLogin(loginInfo, response, next);
+            try {
+                let res: any = await this.callServiceForLogin(loginInfo, response, next);
+                return res;
+            }
+            catch (error) {
+
+            }
+
+        }
+    }
+
+    async createPasswordResetRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+        this.invalidResponse = this.validatePasswordResetRequest(request);
+        if (this.invalidResponse) {
+            return response.status(400).json("Request is invalid, Email attribute is missing");
+        }
+        else {
+            let requestParams: any = { ...request.body };
+            let passwordResetInfo: IPasswordResetInformation = requestParams;
+            let res: any = await this.callServiceForPasswordReset(passwordResetInfo, response, next);
             return res;
         }
     }
 
-    private validateSignUpRequest(request: Request): boolean {
+    private validatePasswordResetRequest(request: Request): boolean {
+        return !request.body.email;
+    }
 
-        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password') && request.query.hasOwnProperty('firstName')
-            && request.query.hasOwnProperty('lastName') && request.query.hasOwnProperty('organizationName')) {
+    private validateSignUpRequest(request: Request): boolean {
+        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password') && request.body.hasOwnProperty('firstName')
+            && request.body.hasOwnProperty('lastName') && request.body.hasOwnProperty('organizationName')) {
             return false;
         }
         else {
@@ -57,7 +79,7 @@ export class AuthenticationController {
     }
 
     private validateLoginRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('email') && request.query.hasOwnProperty('password')) {
+        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password')) {
             return false;
         }
         else {
@@ -66,7 +88,7 @@ export class AuthenticationController {
     }
 
     private validateUserDetailRequest(request: Request): boolean {
-        if (request.query.hasOwnProperty('password') || request.query.hasOwnProperty('organization')) {
+        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organizationName')) {
             return true;
         } else
             return false;
@@ -78,7 +100,7 @@ export class AuthenticationController {
         if (!this.invalidResponse) {
             return response.status(400).json("Request is invalid")
         } else {
-            let requestParams: any = { ...request.query };
+            let requestParams: any = { ...request.body };
             let updateUserDetail: IUpdateUserDetail = requestParams;
             try {
                 let res: any = await this.callServiceForUpdateUserDetails(updateUserDetail, response, next);
@@ -105,6 +127,7 @@ export class AuthenticationController {
     private async callServiceForSignUp(signUpInfo: ISignUpInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse;
+        console.log(serviceResponse);
         try {
             serviceResponse = await this.authenticationService.processSignUp(signUpInfo);
             return response.status(serviceResponse.statusCode).json(serviceResponse.message);
@@ -117,13 +140,28 @@ export class AuthenticationController {
         }
     }
 
+    private async callServiceForPasswordReset(passwordResetInfo: IPasswordResetInformation, response: Response, next: NextFunction): Promise<Response> {
+        this.authenticationService = new AuthenticationService();
+        let serviceResponse: IResponse
+        try {
+            serviceResponse = await this.authenticationService.resetPassword(passwordResetInfo);
+            return response.status(serviceResponse.statusCode).json('Success');
+        } catch (error) {
+            return response.status(error.status).json(error.message);
+        }
+    }
+
     private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse
         try {
+
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
-            response.setHeader('Set-Cookie', serviceResponse.message);
-            return response.status(serviceResponse.statusCode).json(serviceResponse.message);
+
+            //todo put secure: true when we go https.
+            response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
+
+            return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);

@@ -1,19 +1,17 @@
 .Paragraph{
     font-family: Georgia, sans-serif;
     font-style: italic;
-    float: center;
     line-height: 1.6;
+    vertical-align: top;
 }
 
 .Header{
     font-size: 36px;
     font-family: Georgia, sans-serif;
     font-weight: bold;
-    padding-bottom: 42px;
+    padding-bottom: 2px;
 }
 
-.Header2{
-    font-size: 36px;
-    font-family: Georgia, sans-serif;
-    font-weight: bold;
+a:link {
+    text-decoration: none;
 }

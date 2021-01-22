@@ -1,11 +1,11 @@
 import { Box, Grid } from "@material-ui/core"
 
 import { DatasetRow } from "./DatasetRow"
-import { ICompleteDatasetEntity } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
 interface IProps {
-  datasets: ICompleteDatasetEntity[],
+  datasets: IDatasetModel[],
   onRemoveDatasetClick: (datasetId: number) => void
 }
 
@@ -20,7 +20,7 @@ export const DatasetsList = (props: IProps) => {
   return (
     <>
       <Grid item container direction='column' spacing={3}>
-        <Box >
+        <Box className="result-checkbox" >
           {renderDatasetRows()}
         </Box>
       </Grid>

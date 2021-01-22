@@ -35,6 +35,9 @@ export class Accounts {
     @Column({ default: 0 })
     admin: boolean
 
+    @Column({ nullable: true })
+    resetToken: string;
+
     /*
     * This ManyToMany and JoinTable snippet is used to link the Accounts table and the
     * Dataset table together. This will generate a new third table that contains

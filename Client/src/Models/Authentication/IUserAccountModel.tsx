@@ -1,0 +1,34 @@
+export interface IUserAccountRemoteModel {
+  account_dateOfBirth: string,
+  account_email: string,
+  account_firstName: string,
+  account_lastName: string,
+  account_organizationName: string,
+}
+
+export interface IUserAccountModel {
+  dateOfBirth: string,
+  email: string,
+  firstName: string,
+  lastName: string,
+  organizationName: string,
+}
+
+export interface IUserDetailsModel extends IUserAccountModel {
+  password?: string
+}
+
+export const toLocalUserAccountModel = (remoteAccount: IUserAccountRemoteModel): IUserAccountModel => {
+  if (remoteAccount == null) {
+    return null
+  }
+  const localAccountModel: IUserAccountModel = {
+    dateOfBirth: remoteAccount.account_dateOfBirth,
+    email: remoteAccount.account_email,
+    firstName: remoteAccount.account_firstName,
+    lastName: remoteAccount.account_lastName,
+    organizationName: remoteAccount.account_organizationName
+  }
+
+  return localAccountModel
+}

@@ -7,7 +7,6 @@ async function siteLoad() {
   await driver.get('localhost:4500')
   await driver.getTitle().then(function (title) {
     setTimeout(function () {
-      console.log(title)
       driver.quit()
     }, 5000)
   })
@@ -23,7 +22,6 @@ async function redirectToGraph() {
         driver.findElement(By.className('MuiIconButton-root')).click().then(function () {
           driver.findElement(By.className('MuiButton-textPrimary')).click().then(function () {
             setTimeout(function () {
-              console.log("Graph loaded successfully")
               driver.quit()
             }, 5000)
           })

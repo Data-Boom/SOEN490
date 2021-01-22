@@ -36,19 +36,17 @@ export const DatasetUploadForm = (props: IProps): any => {
   }
 
   return (
-    <div>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form>
-          <MetaForm materials={materials} />
-          <ReferenceForm />
-          <DataForm />
-          <Button variant="contained" color="primary" type="submit">Save Dataset</Button>
-        </Form>
-      </Formik>
-    </div>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form>
+        <MetaForm materials={materials} />
+        <ReferenceForm />
+        <DataForm />
+        <Button variant="contained" color="primary" type="submit">Save Dataset</Button>
+      </Form>
+    </Formik>
   )
 }
