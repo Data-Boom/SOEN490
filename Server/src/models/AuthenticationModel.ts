@@ -91,6 +91,7 @@ export class AuthenticationModel {
         jwtParams = await connection.manager
             .createQueryBuilder(Accounts, 'account')
             .select('account.id', 'account_id')
+            .addSelect('account.email', 'account_email')
             .addSelect('account.firstName', 'account_firstName')
             .addSelect('account.admin', 'account_admin')
             .where('account.email = :email', { email: email })

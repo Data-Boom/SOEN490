@@ -18,15 +18,19 @@ router.get('/api/v1/dataset/userSavedDatsets/:userSavedDatsets', (request: Reque
     getDataControllerObject.createRequestForUserSavedDatsets(request, response);
 });
 
-router.get('api/v1//dataset/fetchUnapprovedDatasets$', (request: Request, response: Response) => {
+router.get('/api/v1/dataset/fetchUnapprovedDatasets$', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForUnapprovedDatsets(request, response);
 });
 
-router.get('api/v1//dataset*', (request: Request, response: Response) => {
+router.get('/api/v1/dataset*', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForData(request, response);
 });
 
-router.delete('api/v1//dataset/:dataSetId', (request: Request, response: Response) => {
+router.delete('/api/v1//dataset/:dataSetId', (request: Request, response: Response) => {
+    getDataControllerObject.createRequestToDeleteDataSet(request, response)
+})
+
+router.get('/dataset', (request: Request, response: Response) => {
     getDataControllerObject.createRequestToDeleteDataSet(request, response)
 })
 

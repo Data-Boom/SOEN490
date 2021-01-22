@@ -7,7 +7,6 @@ export class DataSetController {
     private dataSetService: DataSetService
 
     constructor() {
-        this.dataSetService = new DataSetService();
     }
 
     /**
@@ -27,6 +26,7 @@ export class DataSetController {
             response.status(400).send("Invalid search params entered");
         }
         else {
+            this.dataSetService = new DataSetService();
             let requestParams: any = { ...request.query };
             this.processedRequest = requestParams;
             try {
@@ -39,16 +39,29 @@ export class DataSetController {
     }
 
     async createRequestToDeleteDataSet(request: Request, response: Response) {
-        let validateData = this.validateInputData(request)
-        if (!validateData) {
-            response.status(400).send("Invalid search params entered");
+        let token = request.cookies.token
+        //console.log(token)
+        let base64Url = token
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const buff = new Buffer(base64, 'base64');
+        const payloadinit = buff.toString('ascii');
+        const payload = JSON.parse(payloadinit);
+        //console.log(payload)
+        //let arrayOfData = await this.dataSetService.deleteDataSet(dataSetIdToDelete)
+        return response.status(200).send(payload);
+        if (!request.query.hasOwnProperty('DataSetId')) {
+            response.status(400).send("Search ID Not Entered");
         }
         else {
             let requestParams: any = { ...request.query };
-            this.processedRequest = requestParams;
+            let dataSetIdToDelete = requestParams;
             try {
-                let arrayOfData = await this.dataSetService.getArrayOfDatasets(this.processedRequest)
-                return response.status(200).send(arrayOfData);
+                let token = request.cookies.token
+                let base64Url = token.split('.')[1];
+                let decodedValue = JSON.parse(window.atob(base64Url));
+                console.log(decodedValue)
+                //let arrayOfData = await this.dataSetService.deleteDataSet(dataSetIdToDelete)
+                return response.status(200).send(decodedValue);
             } catch (err) {
                 response.status(400).send(err);
             }

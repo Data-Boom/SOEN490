@@ -114,7 +114,7 @@ export class AuthenticationService {
         let jwtExpiry: number = 3000;
         const jwtAccessKey = process.env.ACCESS_SECRET_KEY;
 
-        token = await jwt.sign({ accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtAccessKey, {
+        token = await jwt.sign({ email: jwtParams.email, accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtAccessKey, {
             expiresIn: jwtExpiry
         })
         return token;
