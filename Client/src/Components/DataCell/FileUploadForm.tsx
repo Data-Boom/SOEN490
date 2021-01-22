@@ -44,13 +44,13 @@ export const FileUploadForm = (props: IProps) => {
       {/* Snackbar is used to show an error on the screen when a wrong file type is selected for uploading */}
       <Snackbar open={alertOpen} autoHideDuration={3000} onClose={() => setAlertOpen(false)}>
         <Alert onClose={() => setAlertOpen(false)} severity="error">
-          Failed to parse file
+          Failed to parse file.
         </Alert>
       </Snackbar>
 
       <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
         <Alert onClose={() => setAlertSuccess(false)} severity="success">
-          File Successfully updated!!
+          File successfully uploaded.
         </Alert>
       </Snackbar>
 
@@ -60,7 +60,7 @@ export const FileUploadForm = (props: IProps) => {
           <form onSubmit={handleSubmit}>
             <div>
               <input type="file" accept={acceptFileFormat} id={fileInputId} />
-              <Button variant="contained" type='submit' color='primary'> Upload this file! </Button>
+              <Button variant="contained" type='submit' color='primary'> Upload </Button>
             </div>
           </form>
         </Box>

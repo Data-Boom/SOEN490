@@ -13,11 +13,13 @@ interface IProps {
 export const DatasetRow = (props: IProps) => {
   return (
     <Grid item>
-      <Box className={classStyles().defaultBorder} mt={5}>
+      <Box className={classStyles().datasetBorder} p={1}>
         <Grid item container alignItems='center' justify='space-between'>
-          <Typography>
-            {props.dataset.dataset_name}
-          </Typography>
+          <Grid container justify="flex-start" xs={9}>
+            <Typography variant="body2" noWrap>
+              {props.dataset.dataset_name}
+            </Typography>
+          </Grid>
           <IconButton onClick={() => props.onRemoveDatasetClick(props.dataset.id)}>
             <DeleteIcon color='primary' />
           </IconButton>

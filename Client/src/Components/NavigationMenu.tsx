@@ -13,6 +13,8 @@ import { linkWidth } from './ListRouter'
 import { removeUserInStorage } from '../Common/Storage'
 import { signInRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+
 
 const drawerWidth = linkWidth
 
@@ -66,11 +68,13 @@ export default function NavigationMenu() {
         <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
-              <Grid item>
-                <IconButton id='burger-menu' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
+              <ClickAwayListener onClickAway={handleDrawerClose}>
+                <Grid item>
+                  <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+              </ClickAwayListener>
               <Grid item>
                 <img src={universitylogo} />
               </Grid>
@@ -86,7 +90,7 @@ export default function NavigationMenu() {
           </Toolbar>
         </AppBar>
         {drawer()}
-        <Box pt={16}>
+        <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
       </HashRouter>

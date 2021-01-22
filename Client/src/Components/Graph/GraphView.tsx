@@ -1,15 +1,17 @@
 import * as svg from 'save-svg-as-png'
 
+import { borders, sizing } from '@material-ui/system';
 import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
 import React, { useState } from "react"
-
+import CancelIcon from '@material-ui/icons/Cancel';
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import SearchView from '../Search/SearchView'
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { classStyles } from "../../appTheme"
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
@@ -20,7 +22,7 @@ export default function GraphView() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-    }
+    },
   }))
 
   const classes = useStyles()
@@ -115,6 +117,7 @@ export default function GraphView() {
 
     setCompleteDatasets(mergedDatasets)
     calculateExtremeBoundaries(mergedDatasets)
+    handleClose()
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
@@ -150,49 +153,56 @@ export default function GraphView() {
   return (
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-      <h2>GraphView</h2>
+      <h2>Graphs</h2>
       <Modal
         open={openModal}
         onClose={handleClose}
-        className={classes.modal}
+        className={classStyles().modalsearch}
       >
-        <Paper elevation={3}>
-          <Box m={5}>
-            <SearchView
-              handleDatasetsSelected={handleDatasetsSelected}
-            />
-          </Box>
-        </Paper>
-      </Modal>
-      <Box ml={8}>
-        <Grid container spacing={3}>
-          <Grid item container sm={5} >
+        <Box m={5} mb={10} width='100%'>
+          <Grid item xs={12}>
             <Paper elevation={3}>
-              <Graph
-                outerHeight={500}
-                outerWidth={768}
-                datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
-                extremeBoundaries={datasetBoundaries}
-              />
+              <Box m={0} p={2}>
+                <CancelIcon color="primary" className={classStyles().closeButton} width="2%" onClick={handleClose} />
+                <Grid container>
+                  <SearchView
+                    handleDatasetsSelected={handleDatasetsSelected}
+                  />
+                </Grid>
+              </Box>
             </Paper>
           </Grid>
-          <Grid item sm={7}>
-            <Box ml={5} mr={5} mt={5}>
-              <Grid container direction='column'>
-                <Grid item container spacing={3}>
-                  <Grid item>
-                    <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
-                  </Grid>
-                  <Grid item>
-                    <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
-                  </Grid>
-                  <Grid item>
-                    <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
-                  </Grid>
+        </Box>
+      </Modal>
+      <Box ml={8} mr={8} maxWidth>
+        <Grid container xs={12}>
+          <Grid container xs={9}>
+            <Box m={2} maxWidth mb={20} p={1} pb={10} overflow="hidden">
+              <Paper elevation={3}>
+                <Graph
+                  outerHeight={450}
+                  outerWidth={800}
+                  datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
+                  extremeBoundaries={datasetBoundaries}
+                />
+              </Paper>
+            </Box>
+          </Grid>
+          <Grid container justify="flex-start" xs={3}>
+            <Box ml={4} mt={2} maxWidth>
+              <Grid item container justify="flex-start" spacing={3}>
+                <Grid item>
+                  <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset</Button>
                 </Grid>
                 <Grid item>
-                  <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
+                  <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
                 </Grid>
+                <Grid item>
+                  <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
               </Grid>
             </Box>
           </Grid>
