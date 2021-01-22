@@ -1,4 +1,4 @@
-import { Button, FormControl, FormControlLabel, Grid, InputLabel, Select, Switch, Typography } from '@material-ui/core'
+import { Button, FormControl, Grid, InputLabel, Select, Typography } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
 import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import React, { useEffect, useState } from 'react'
@@ -76,24 +76,6 @@ export const SearchDatasetsForm = (props: IProps): any => {
 
             <Grid item sm={2}>
               <Button id="search-database" variant="contained" color="primary" type="submit"> Search Database </Button>
-            </Grid>
-          </Grid>
-
-          <Grid container spacing={4}>
-            <Grid item>
-              <FormControl>
-                <FormControlLabel
-                  label="Case Sensitive"
-                  labelPlacement="start"
-                  control={
-                    <Switch
-                      name="isCaseSensitive"
-                      checked={isCaseSensitive}
-                      onChange={toggleIsCaseSensitive}
-                    />
-                  }
-                />
-              </FormControl>
             </Grid>
           </Grid>
         </Form>

@@ -100,8 +100,6 @@ export class retrieveData {
 
             paramsEntered++
             if (firstNameReceived) {
-                console.log(lastNameReceived, 'ln');
-
                 rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
             }
             else {

@@ -3,6 +3,10 @@ export interface ILoginInformation {
     password: string
 }
 
+export interface IPasswordResetInformation {
+    email: string
+}
+
 export interface ISignUpInformation {
     email: string,
     password: string,

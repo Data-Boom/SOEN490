@@ -178,16 +178,16 @@ export class DataQueryModel {
      * A data set ID: number
      */
     async getAllData(id: number): Promise<IClientDatasetModel> {
-        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id)
+        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id) || {}
         let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection, id)
         publicationData.authors = authorData
         let completeDatasetData = await selectDatasetsQuery(this.connection, id)
         let datasetInfo: IDatasetInfoModel = {
-            name: completeDatasetData[0].name,
-            comments: completeDatasetData[0].comments,
-            datasetDataType: completeDatasetData[0].datasetdatatype,
-            category: completeDatasetData[0].category,
-            subcategory: completeDatasetData[0].subcategory
+            name: completeDatasetData[0]?.name,
+            comments: completeDatasetData[0]?.comments,
+            datasetDataType: completeDatasetData[0]?.datasetdatatype,
+            category: completeDatasetData[0]?.category,
+            subcategory: completeDatasetData[0]?.subcategory
         }
         let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection, id)
         this.valuesToArray(datapointData)
@@ -196,11 +196,11 @@ export class DataQueryModel {
         datapointComments.datapointcomments = typeof datapointComments.datapointcomments === 'string' ? JSON.parse(datapointComments.datapointcomments) : []
         let allData: IClientDatasetModel = {
             publication: publicationData,
-            dataset_id: completeDatasetData[0].dataset_id,
+            dataset_id: completeDatasetData[0]?.dataset_id,
             dataset_info: datasetInfo,
             materials: materialData,
             dataPoints: datapointData,
-            dataPointComments: datapointComments.datapointcomments
+            dataPointComments: datapointComments?.datapointcomments
         }
         return allData;
     }

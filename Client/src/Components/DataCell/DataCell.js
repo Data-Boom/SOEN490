@@ -23,7 +23,7 @@ export default function DataCell() {
     */
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
+
         const json = e.target.jsonFile.files[0]
 
         //so if this here is not proper json extension it will catch
@@ -33,9 +33,9 @@ export default function DataCell() {
             setOpen(true)
             return
         }
-        
+
         setAlertSuccess(true)
-        
+
 
         const formData = new FormData()
         formData.append('file', json)
@@ -46,7 +46,7 @@ export default function DataCell() {
         }
 
         try {
-            await fetch('http://localhost:4000/dataupload', options)
+            await fetch('http://localhost:4000/api/v1/dataExtract', options)
                 .then(resp => resp.json())
                 .then(result => {
                     console.log(result)
@@ -76,12 +76,12 @@ export default function DataCell() {
                 </Alert>
             </Snackbar>
 
-           <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
+            <Snackbar open={alertSuccess} autoHideDuration={3000} onClose={() => setAlertSuccess(false)}>
                 <Alert onClose={() => setAlertSuccess(false)} severity="success">
-                    File Successfully uploaded!! 
+                    File Successfully uploaded!!
                 </Alert>
             </Snackbar>
-          
+
             <Container>
                 <Box border={30} p={4} borderColor="primary">
                     <form onSubmit={handleSubmit}>
@@ -94,17 +94,17 @@ export default function DataCell() {
                     </form>
                 </Box>
 
-                <Box  p={4}>
+                <Box p={4}>
                     <div>
                         {/**for downloading sample empty json file*/}
-                         <Download file= "emptyJsonDataset.json" content= {JSON.stringify(emptyJSFile,null,2)}>
+                        <Download file="emptyJsonDataset.json" content={JSON.stringify(emptyJSFile, null, 2)}>
                             <Button type="submit" variant="contained" onClick={console.log('successfully json downloaded')}> Download Sample JSON file </Button>
-                         </Download>                                                               
+                        </Download>
                     </div>
                     {/**for downnloading instructions readMe for users */}
                     <div>
-                        <Download file="readMe.txt" content = {rm}>
-                             <a href= "http://localhost:3000/#/uploadFile" onClick={console.log('text file download complete!')}> Download JSON file submission instructions </a>  
+                        <Download file="readMe.txt" content={rm}>
+                            <a href="http://localhost:3000/#/uploadFile" onClick={console.log('text file download complete!')}> Download JSON file submission instructions </a>
                         </Download>
                     </div>
                 </Box>

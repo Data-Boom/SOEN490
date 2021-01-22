@@ -1,16 +1,5 @@
 import * as Yup from 'yup'
 
-// export interface ISearchDatasetsFormModel {
-//   oxidizer: string,
-//   year: string,
-//   outputFormat: string,
-//   categories: string,
-//   subcategories: string,
-//   fuel: string,
-//   author: string,
-//   diluent: string,
-// }
-
 export interface ISearchDatasetsFormModel {
   datasetId?: number[],
   material?: string[],

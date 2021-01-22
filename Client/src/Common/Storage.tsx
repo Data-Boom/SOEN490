@@ -8,3 +8,7 @@ export const putUserInStorage = (user: IUserAccountModel) => {
 export const getUserFromStorage = (): IUserAccountModel => {
   return JSON.parse(sessionStorage.getItem('user'))
 }
+
+export const removeUserInStorage = () => {
+  sessionStorage.removeItem('user');
+}
