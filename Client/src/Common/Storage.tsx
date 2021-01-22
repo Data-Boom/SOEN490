@@ -9,6 +9,6 @@ export const getUserFromStorage = (): IUserAccountModel => {
   return JSON.parse(sessionStorage.getItem('user'))
 }
 
-export const removeUserInStorage = (user: IUserAccountModel) => {
+export const removeUserInStorage = () => {
   sessionStorage.removeItem('user');
 }

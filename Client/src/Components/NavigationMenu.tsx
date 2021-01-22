@@ -39,10 +39,12 @@ export default function NavigationMenu() {
 
   function logout() {
 
-    sessionStorage.clear();
+    removeUserInStorage();
     window.location.replace("/");
 
   }
+
+
 
 
   const drawer = (): any => {
