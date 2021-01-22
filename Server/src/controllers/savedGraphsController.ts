@@ -71,11 +71,10 @@ export class savedGraphsController {
         let requestParams: any = { ...request.body };
         let processedRequest: IGraphStateModel = requestParams;
         let userEmail = request.body.email;
-        console.log(processedRequest)
-        console.log(userEmail)
         try {
-            let executionResult = await this.savedGraphsService.addSavedGraphService(processedRequest, userEmail)
-            return response.status(200).json(executionResult);
+            let executionStatus = await this.savedGraphsService.addSavedGraphService(processedRequest, userEmail)
+            if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
+            else { return response.status(400).json(executionStatus[1]); }
         } catch (err) {
             response.status(500).json(err);
         }

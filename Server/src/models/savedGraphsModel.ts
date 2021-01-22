@@ -119,7 +119,7 @@ export class savedGraphsModel {
      * Axis unit types: string[]
      */
     private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[], datasetHiddenStatus: boolean[],
-        axisVariable: string[], axisMode: string[], axisZoom: number[], axisUnits: string[]) {
+        axisVariable: string[], axisMode: string[], axisZoom: number[], axisUnits: string[]): Promise<string> {
         let newGraph = new Savedgraphs();
         newGraph.id;
         newGraph.accountId = accountId;
@@ -148,10 +148,10 @@ export class savedGraphsModel {
      * @param userEmail 
      * User email address: string
      */
-    async addSavedGraphModel(graph: IGraphStateModel, userEmail: string) {
+    async addSavedGraphModel(graph: IGraphStateModel, userEmail: string): Promise<any[]> {
         let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
         if (userRawData == undefined)
-            return "Invalid user email provided"
+            return [false, "Invalid user email provided"]
         else {
             let datasetIds: number[] = []
             let datasetColors: string[] = []
@@ -174,7 +174,7 @@ export class savedGraphsModel {
                 axisUnits.push(graph.axes[k].units)
             }
             let statusMessage = await this.sendSavedGraphToDatabase(userRawData.id, graph.name, datasetIds, datasetColors, datasetShapes, datasetHiddenStatus, axisVariable, axisMode, axisZoom, axisUnits)
-            return statusMessage
+            return [true, statusMessage]
         }
     }
 
@@ -191,7 +191,7 @@ export class savedGraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async deleteSavedGraphModel(graphId: number) {
+    async deleteSavedGraphModel(graphId: number): Promise<string> {
         await this.deleteSavedGraphQuery(graphId);
         return "Saved graph deletion was successful"
     }
