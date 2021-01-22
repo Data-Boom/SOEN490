@@ -6,9 +6,9 @@ import { Button } from '@material-ui/core'
 import { DataForm } from './DataSection/DataForm'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
-import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint2'
-import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint2'
-import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint2'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
+import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
 
 interface IProps {
   initialDataset: IDatasetModel,
