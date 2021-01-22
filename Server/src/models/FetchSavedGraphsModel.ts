@@ -1,6 +1,6 @@
 import { raw } from "express";
 import { Connection, getConnection } from "typeorm";
-import { selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
+import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
 export class FetchSavedGraphsModel {
@@ -9,6 +9,15 @@ export class FetchSavedGraphsModel {
         this.connection = getConnection();
     }
 
+    /**
+     * This method accepts a raw data packet containing all of a saved graph's data. It will first
+     * process the various arrays of the data packet to allow for proper processing. Secondly it
+     * will loop through the collection of dataset and axis arrays to process them. Lastly it will
+     * combine all this information into a IGraphStateModel object and return it. 
+     * 
+     * @param rawGraphData 
+     * Raw data packet: JSON object
+     */
     private async processSavedGraphData(rawGraphData: any): Promise<IGraphStateModel> {
         let singleGraphData: IGraphStateModel
         let oneDatasetsData: IDisplayedDatasetModel
@@ -48,22 +57,30 @@ export class FetchSavedGraphsModel {
         return singleGraphData
     }
 
-    async getOneSavedGraph(graphId: number): Promise<IGraphStateModel> {
+    /**
+     * This method will run query to find the raw graph data of a specific graph, feed this raw
+     * data to @processSavedGraphData to format it to fit the IGraphStateModel and then return
+     * this object.
+     * 
+     * @param graphId 
+     * Graph ID: number
+     */
+    async fetchOneSavedGraphModel(graphId: number): Promise<IGraphStateModel> {
         let rawGraphData = await selectOneSavedGraphQuery(this.connection, graphId)
         let singleGraphData: IGraphStateModel = await this.processSavedGraphData(rawGraphData)
         return singleGraphData;
     }
 
     /**
-     * This method will run a query find all the graphs favorited by a specific user ID
-     * and return an array of IGraphStateModel containing that information. 
-     * 
-     * NOTE explain the loops 
+     * This method will run a query find all the raw graph data favorited by a specific user ID,
+     * feed each individual graph's raw data to @processSavedGraphData to format it to fit the
+     * IGraphStateModel, push this IGraphStateModel object to an array of IGraphStateModel objects,
+     * and then return this array. 
      * 
      * @param id 
      * Account ID: number
      */
-    async getSavedGraphsOfUser(userId: number): Promise<IGraphStateModel[]> {
+    async fetchSavedGraphsOfUserModel(userId: number): Promise<IGraphStateModel[]> {
         let rawGraphData = await selectSavedGraphsOfUserQuery(this.connection, userId)
         console.log(rawGraphData)
         let singleGraphData: IGraphStateModel
@@ -74,4 +91,23 @@ export class FetchSavedGraphsModel {
         }
         return sortedGraphData;
     }
+
+    private deleteSavedGraphQuery = (id: number) =>
+        this.connection.createQueryBuilder()
+            .delete()
+            .from(Savedgraphs)
+            .where("id = :id", { id: id })
+            .execute();
+
+    /**
+     * This method will run a query to delete the specficied saved graph.
+     * 
+     * @param graphId 
+     * Graph ID: number
+     */
+    async deleteSavedGraphModel(graphId: number) {
+        await this.deleteSavedGraphQuery(graphId);
+        return "Saved graph deletion was successful"
+    }
+
 }
