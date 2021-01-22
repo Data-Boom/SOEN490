@@ -25,10 +25,6 @@ export default function GraphView() {
 
   const classes = useStyles()
 
-  //Testing the query parser using quer-string for future use if needed
-  //console.log(queryString.parse(useLocation().search))
-
-
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
@@ -86,7 +82,6 @@ export default function GraphView() {
   }
 
   const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
-    console.log(selectedDatasets)
     const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
     const mergedDatasets: IDatasetModel[] = [...completeDatasets]
