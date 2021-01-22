@@ -34,10 +34,8 @@ export default function SearchView(props: IProps) {
     const selectedDatasets: IDatasetModel[] = []
 
     //add all datasets from found datasets by index to selected datasets
-    console.log(foundDatasets)
     for (let i = 0; i < selection.rowIds.length; i++) {
-      console.log(foundDatasets[selection.rowIds[i]], 'dataset at i')
-      selectedDatasets.push(foundDatasets[selection.rowIds[i]])
+      selectedDatasets.push(foundDatasets.find(dataset => dataset.id == selection.rowIds[i]))
     }
 
     // once all selected datasets were added, call the parent callback with the selected datasets, 
