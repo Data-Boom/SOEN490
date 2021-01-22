@@ -1,14 +1,14 @@
-import { retrieveData } from "../../services/getDatasetService";
+import { DataSetService } from "../../services/DataSetService";
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 import { createConnection, getConnection } from 'typeorm';
 
 describe('data service test', () => {
-  let retrieveDataObject: retrieveData;
+  let retrieveDataObject: DataSetService;
   jest.setTimeout(60000)
 
   beforeAll(async () => {
     await createConnection();
-    retrieveDataObject = new retrieveData();
+    retrieveDataObject = new DataSetService();
   });
 
   afterAll(async () => {

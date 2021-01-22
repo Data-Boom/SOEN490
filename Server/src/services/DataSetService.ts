@@ -2,7 +2,7 @@ import { IDatasetModel, IDatasetResponseModel } from "../models/interfaces/Datas
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 import { DataQueryModel } from "../models/DatasetQueryModel";
 
-export class retrieveData {
+export class DataSetService {
     private dataQuery: DataQueryModel;
 
     constructor() {

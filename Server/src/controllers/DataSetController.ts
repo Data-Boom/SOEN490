@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
-import { retrieveData } from '../services/getDatasetService';
+import { DataSetService } from '../services/DataSetService';
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
-export class getDataController {
+export class DataSetController {
     private processedRequest: IDataRequestModel;
+    private dataSetService: DataSetService
+
     constructor() {
+        this.dataSetService = new DataSetService();
     }
 
     /**
@@ -27,8 +30,24 @@ export class getDataController {
             let requestParams: any = { ...request.query };
             this.processedRequest = requestParams;
             try {
-                const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getArrayOfDatasets(this.processedRequest)
+                let arrayOfData = await this.dataSetService.getArrayOfDatasets(this.processedRequest)
+                return response.status(200).send(arrayOfData);
+            } catch (err) {
+                response.status(400).send(err);
+            }
+        }
+    }
+
+    async createRequestToDeleteDataSet(request: Request, response: Response) {
+        let validateData = this.validateInputData(request)
+        if (!validateData) {
+            response.status(400).send("Invalid search params entered");
+        }
+        else {
+            let requestParams: any = { ...request.query };
+            this.processedRequest = requestParams;
+            try {
+                let arrayOfData = await this.dataSetService.getArrayOfDatasets(this.processedRequest)
                 return response.status(200).send(arrayOfData);
             } catch (err) {
                 response.status(400).send(err);
@@ -55,8 +74,7 @@ export class getDataController {
         }
         else {
             try {
-                const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(userId)
+                let arrayOfData = await this.dataSetService.getUserUploadedDatasets(userId)
                 return response.status(200).send(arrayOfData);
             } catch (err) {
                 response.status(500).send(err);
@@ -83,8 +101,7 @@ export class getDataController {
         }
         else {
             try {
-                const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getUserSavedDatasets(userId)
+                let arrayOfData = await this.dataSetService.getUserSavedDatasets(userId)
                 return response.status(200).send(arrayOfData);
             } catch (err) {
                 response.status(500).send(err);
@@ -103,8 +120,7 @@ export class getDataController {
      */
     async createRequestForUnapprovedDatsets(request: Request, response: Response) {
         try {
-            const retrieveDataObject = new retrieveData();
-            let arrayOfData = await retrieveDataObject.getUnapprovedDatasets()
+            let arrayOfData = await this.dataSetService.getUnapprovedDatasets()
             return response.status(200).send(arrayOfData);
         } catch (err) {
             response.status(500).send(err);

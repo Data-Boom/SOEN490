@@ -8,7 +8,7 @@ import cors from 'cors';
 import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
 import { fileUploadRouter } from '../routes/fileUploadRouter';
-import { getDataRouter } from '../routes/getDatasetRouter';
+import { DataSetRouter } from '../routes/DatasetRouter';
 
 const cookieParser = require('cookie-parser');
 
@@ -61,7 +61,7 @@ export class loadStartupProcess {
      */
     this.app.use('/', fileUploadRouter)
     this.app.use('/', authenticationRouter)
-    this.app.use('/', getDataRouter)
+    this.app.use('/', DataSetRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
 
     this.config = {
