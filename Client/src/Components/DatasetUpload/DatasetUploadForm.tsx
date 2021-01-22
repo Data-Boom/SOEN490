@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core'
 import { DataForm } from './DataSection/DataForm'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
+import { datasetValidationSchema } from './DatasetValidationSchema'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
@@ -57,13 +58,13 @@ export const DatasetUploadForm = (props: IProps): any => {
 
   const handleSubmit = (values: DatasetUploadFormValues) => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
-    console.log(dataset)
     onSubmit(dataset)
   }
 
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={datasetValidationSchema}
       onSubmit={handleSubmit}
     >
       <Form>
