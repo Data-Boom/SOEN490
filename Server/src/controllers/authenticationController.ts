@@ -51,8 +51,8 @@ export class AuthenticationController {
     }
 
     private validateSignUpRequest(request: Request): boolean {
-        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password') && request.body.hasOwnProperty('firstName')
-            && request.body.hasOwnProperty('lastName') && request.body.hasOwnProperty('organizationName')) {
+        if (request.body.email && request.body.password && request.body.firstName
+            && request.body.lastName && request.body.organizationName) {
             return false;
         }
         else {
@@ -61,7 +61,7 @@ export class AuthenticationController {
     }
 
     private validateLoginRequest(request: Request): boolean {
-        if (request.body.hasOwnProperty('email') && request.body.hasOwnProperty('password')) {
+        if (request.body.email && request.body.password) {
             return false;
         }
         else {
