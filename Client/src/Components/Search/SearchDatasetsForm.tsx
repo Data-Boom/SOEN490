@@ -3,12 +3,11 @@ import { Field, FieldArray, Form, Formik } from 'formik'
 import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
-import { listMaterials } from '../../Remote/Endpoints/materialEndpoint'
-import { listCategories } from '../../Remote/Endpoints/categoryEndpoint'
-import { listSubcategories } from '../../Remote/Endpoints/subcategoryEndpoint'
-
 
 import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint2'
+import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint2'
+import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint2'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void

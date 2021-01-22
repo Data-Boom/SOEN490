@@ -1,15 +1,14 @@
 import { Form, Formik } from 'formik'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
-import { listMaterials } from '../../Remote/Endpoints/materialEndpoint'
-import { listCategories } from '../../Remote/Endpoints/categoryEndpoint'
-import { listSubcategories } from '../../Remote/Endpoints/subcategoryEndpoint'
-
 
 import { Button } from '@material-ui/core'
 import { DataForm } from './DataSection/DataForm'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint2'
+import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint2'
+import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint2'
 
 interface IProps {
   initialDataset: IDatasetModel,
