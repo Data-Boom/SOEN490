@@ -1,6 +1,7 @@
-import { IDatasetModel, IDatasetResponseModel } from "../models/interfaces/DatasetResponseModelInterface";
-import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { IClientDatasetModel, IDatasetIDModel } from "../models/interfaces/DatasetModelInterface";
+
 import { DataQueryModel } from "../models/DatasetQueryModel";
+import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
 export class retrieveData {
     private dataQuery: DataQueryModel;
@@ -83,31 +84,34 @@ export class retrieveData {
         let paramsEntered = 0;
         let rawDatasetIds = [];
 
-        if (materialReceived != undefined) {
+        if (materialReceived) {
             for (let i = 0; i < materialReceived.length; i++) {
                 paramsEntered++
                 rawData = await this.dataQuery.getDatasetIDFromMaterial(materialReceived[i]);
                 rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
             }
         }
-        if (yearReceived != undefined) {
+        if (yearReceived) {
             paramsEntered++
             rawData = await this.dataQuery.getDatasetIDFromYear(yearReceived);
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
-        if (lastNameReceived != undefined) {
+        if (lastNameReceived) {
+
             paramsEntered++
-            if (firstNameReceived != undefined) {
+            if (firstNameReceived) {
                 rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
             }
             else {
+                console.log(lastNameReceived, 'fn');
+
                 rawData = await this.dataQuery.getDatasetIDFromAuthorLastName(lastNameReceived);
             }
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
-        if (categoryReceived != undefined) {
+        if (categoryReceived) {
             paramsEntered++
-            if (subcategoryReceived != undefined) {
+            if (subcategoryReceived) {
                 rawData = await this.dataQuery.getDatasetIDFromSubcategory(categoryReceived, subcategoryReceived);
             }
             else {
@@ -174,11 +178,15 @@ export class retrieveData {
      * This is an array containing the data set IDs that we wish to get the full data set of: any[]
      */
     private async getDataFromDatasetIds(selectedDatasetIds: any[]) {
-        let setOfData: Array<IDatasetResponseModel> = [];
-        for (let i = 0; i < selectedDatasetIds.length; i++) {
-            setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
+        try {
+            let setOfData: Array<IClientDatasetModel> = [];
+            for (let i = 0; i < selectedDatasetIds.length; i++) {
+                setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
+            }
+            return setOfData
+        } catch (error) {
+            console.error(error);
         }
-        return setOfData
     }
 
     /**
@@ -210,15 +218,15 @@ export class retrieveData {
     }
 
     /**
-     * This method accepts an array of IDatasetModel models where each object has a data set ID that we wish to acquire
+     * This method accepts an array of IDatasetIDModel models where each object has a data set ID that we wish to acquire
      * the full data set of. It sends this information to the createDatasetIdArray method to acquire an array containing
      * the aforementioned data set IDs. After it will then send this array of data set IDs to getDataFromDatasetIds 
      * to get all of the data sets matching those data set IDs.
      * 
      * @param rawData 
-     * Array of IDatasetModel objects: IDatasetModel[]
+     * Array of IDatasetIDModel objects: IDatasetIDModel[]
      */
-    private async getDatasetsFromRawData(rawData: IDatasetModel[]) {
+    private async getDatasetsFromRawData(rawData: IDatasetIDModel[]) {
         let selectedDatasetIds = await this.createDatasetIdArray(rawData);
         let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds);
         return setOfData;

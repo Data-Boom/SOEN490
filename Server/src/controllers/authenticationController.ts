@@ -1,9 +1,9 @@
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { BadRequest } from "@tsed/exceptions";
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
 import { AuthenticationService } from '../services/authenticationService';
-import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { ILoginInformation, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
@@ -49,6 +49,23 @@ export class AuthenticationController {
             }
 
         }
+    }
+
+    async createPasswordResetRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+        this.invalidResponse = this.validatePasswordResetRequest(request);
+        if (this.invalidResponse) {
+            return response.status(400).json("Request is invalid, Email attribute is missing");
+        }
+        else {
+            let requestParams: any = { ...request.body };
+            let passwordResetInfo: IPasswordResetInformation = requestParams;
+            let res: any = await this.callServiceForPasswordReset(passwordResetInfo, response, next);
+            return res;
+        }
+    }
+
+    private validatePasswordResetRequest(request: Request): boolean {
+        return !request.body.email;
     }
 
     private validateSignUpRequest(request: Request): boolean {
@@ -120,6 +137,17 @@ export class AuthenticationController {
             else {
                 return response.status(error.status).json("Something went Wrong");
             }
+        }
+    }
+
+    private async callServiceForPasswordReset(passwordResetInfo: IPasswordResetInformation, response: Response, next: NextFunction): Promise<Response> {
+        this.authenticationService = new AuthenticationService();
+        let serviceResponse: IResponse
+        try {
+            serviceResponse = await this.authenticationService.resetPassword(passwordResetInfo);
+            return response.status(serviceResponse.statusCode).json('Success');
+        } catch (error) {
+            return response.status(error.status).json(error.message);
         }
     }
 

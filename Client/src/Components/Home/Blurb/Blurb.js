@@ -1,32 +1,46 @@
 import './Blurb.css'
 
-import Box from '@material-ui/core/Box'
+import { Grid } from '@material-ui/core'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Blurb() {
   return (
-    <Box display="flex" flexDirection="row">
-      <Box display="flex" flexDirection="column">
-        <h1 className="Header">Graphs</h1>
-        <p className="Paragraph">Interactive Gaphs! Add/Delete data sets, change axis, zoom in and out, enjoy seeing the database in a whole new way!</p>
-      </Box>
-      <Box display="flex" flexDirection="column">
-        <h1 className="Header">Downloads</h1>
-        <p className="Paragraph">Downloads have never been so easy. Select the datasets you want, choose the format you need, preview for perfection and DOWNLOAD WITH A CLICK.</p>
-      </Box>
-      <Box display="flex" flexDirection="column">
-        <h1 className="Header2">Personalized Accounts</h1>
-        <p className="Paragraph">Get ready to have your own account, upload your own data set, save your preferences and collaborate with others on theirs.</p>
-      </Box>
-      <Box display="flex" flexDirection="column">
-        <h1 className="Header2">Search and Discover</h1>
-        <p className="Paragraph">Need to find a dataset? Search with filters, by gas, DOI, author, category, fuel, oxidizer, diluent, temperature, and more!</p>
-      </Box>
-      <Box display="flex" flexDirection="column">
-        <h1 className="Header">Data Cell Analysis</h1>
-        <p className="Paragraph">Welcome to the future! Bringing computer vision to data cells, upload an image of your experimental data cells and let magic do the rest! Data cell size
-                    in a minute!</p>
-      </Box>
-    </Box>
+    <>
+      <Grid container item direction="row" justify="space-evenly" alignItems="center">
+        <Grid item sm={2}>
+          <Link to={"graph"}><h1 className="Header">Graphs</h1></Link>
+        </Grid>
+        <Grid item sm={2}>
+          <Link to={"uploadDataset"}><h1 className="Header">Uploads</h1></Link>
+        </Grid>
+        <Grid item sm={2}>
+          <Link to={"sign-in"}><h1 className="Header">Accounts</h1></Link>
+        </Grid>
+        <Grid item sm={2}>
+          <Link to={"search"}><h1 className="Header">Discover</h1></Link>
+        </Grid>
+        <Grid item sm={2} >
+          <Link to={"dataCellAnalysis"}><h1 className="Header">Cell Size Analysis</h1></Link>
+        </Grid>
+      </Grid>
+      <Grid container item direction="row" justify="space-evenly" alignItems="top center">
+        <Grid item sm={2}>
+          <p className="Paragraph">Interactive Graphs! Add/delete datasets, switch between scales, zoom in and out for clarify, download personal snapshots, and save a graph to revist. Enjoy seeing the database without limits!</p>
+        </Grid>
+        <Grid item top={1} sm={2}>
+          <p className="Paragraph">Want to see a specific dataset in our database? Simple upload a dataset via JSON file, excel, or just filling out our easy to use form.</p>
+        </Grid>
+        <Grid item sm={2}>
+          <p className="Paragraph">Get ready to have your own account, ability to upload datasets, save your favourites, and review datasets of others.</p>
+        </Grid>
+        <Grid item sm={2}>
+          <p className="Paragraph">Need to find a dataset? Search with filters such as materials, authors, category, temperature, and more!</p>
+        </Grid>
+        <Grid item sm={2}>
+          <p className="Paragraph">Welcome to the future! Bringing computer vision to your cells, upload an image of your experimental cells and let magic do the rest!</p>
+        </Grid>
+      </Grid>
+    </>
   )
 }

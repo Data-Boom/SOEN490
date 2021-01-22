@@ -1,4 +1,5 @@
 import { createConnection, getConnection } from 'typeorm';
+
 import { DataQueryModel } from '../../models/DatasetQueryModel';
 
 describe('data service test', () => {
@@ -58,19 +59,19 @@ describe('data service test', () => {
 
     test('Input data set ID of 1, expect a data set with ID of 1 as part of the return', async done => {
         let id = await dataQueryModel.getAllData(1);
-        expect(id.dataset[0].dataset_id).toBe(1)
+        expect(id.dataset_id).toBe(1)
         done()
     });
 
     test('Input data set ID of -1, expect an empty return', async done => {
         let id = await dataQueryModel.getAllData(-1);
-        expect(id.dataset[0]).toBeUndefined()
+        expect(id.dataset_id).toBeUndefined()
         done()
     });
 
     test('Input data set ID of null, expect an empty return', async done => {
         let id = await dataQueryModel.getAllData(null);
-        expect(id.dataset[0]).toBeUndefined()
+        expect(id.dataset_id).toBeUndefined()
         done()
     });
 

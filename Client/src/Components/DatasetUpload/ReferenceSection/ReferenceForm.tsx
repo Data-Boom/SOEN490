@@ -1,5 +1,3 @@
-import * as Yup from 'yup'
-
 import { Box, Grid, Typography } from '@material-ui/core'
 import { FastField, FieldArray } from 'formik'
 
@@ -7,7 +5,7 @@ import { AuthorsList } from './AuthorsList'
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { get } from 'lodash';
+import { get } from 'lodash'
 
 export const ReferenceForm = () => {
   return (
