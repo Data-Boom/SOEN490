@@ -33,7 +33,7 @@ interface IRemoteMaterialModel {
 }
 
 interface IRemoteDataPointModel {
-  type: string,
+  name: string,
   values: number[],
   units: string,
   representation: string,
@@ -92,15 +92,17 @@ const toLocalDataPoints = (remotePoints: IRemoteDataPointModel[], dataComments: 
 }
 
 const toVariable = (remotePoint: IRemoteDataPointModel): IVariable => {
-  return { name: remotePoint.type, units: remotePoint.units, repr: remotePoint.representation }
+  return { name: remotePoint.name, units: remotePoint.units, repr: remotePoint.representation }
 }
 
 const toContents = (remotePoint: IRemoteDataPointModel[], dataComments: string[]): IContent[] => {
   const contents: IContent[] = []
 
   for (let i = 0; i < remotePoint.length; i++) {
+    console.log(remotePoint[i]);
     contents.push({ point: remotePoint[i].values, comments: dataComments[i] })
   }
-
+  //todo remove all the logs in the project
+  console.log(contents, 'contents');
   return contents
 }

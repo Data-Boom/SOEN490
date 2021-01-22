@@ -110,7 +110,6 @@ rows.push(createGraphData([1, 2, 3], 'Graph', 'graph name', ['Cell width', 'Cell
 
 function parseIdArray(id) {
   let stringTest = ""
-  console.log(id.length)
   if (id.length > 1) {
     stringTest = String(id).split(",").join("&datasetId[]=")
     return stringTest
