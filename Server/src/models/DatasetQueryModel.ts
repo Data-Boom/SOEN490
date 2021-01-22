@@ -204,7 +204,7 @@ export class DataQueryModel {
             return [false, "Invalid user email provided"]
         else {
             let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
-            if (duplicateCheck == undefined) {
+            if (duplicateCheck[0] == undefined) {
                 await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userID, datasetId]);
                 return [true, "Data set successfully saved"];
             }
