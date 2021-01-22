@@ -54,7 +54,6 @@ export const toLocalDatasets = (remoteDatasets: IRemoteDatasetModel[]): IDataset
 }
 
 export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatasetModel => {
-  console.log(remoteDataset.dataset_id);
   if (!remoteDataset) {
     return null
   }

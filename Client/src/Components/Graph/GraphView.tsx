@@ -65,9 +65,12 @@ export default function GraphView() {
   }
 
   const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVariableName: string): IGraphPoint[] => {
-    console.log(dataset.data)
     const xIndex = getVariableIndex(dataset.data.variables, xVariableName)
     const yIndex = getVariableIndex(dataset.data.variables, yVariableName)
+    //if either is -1 means at least one variable is not on the dataset and cannot be graphed
+    if (xIndex === -1 || yIndex === -1) {
+      return []
+    }
     const points: IGraphPoint[] = []
     for (let i = 0; i < dataset.data.contents.length; i++) {
       const x: number = dataset.data.contents[i].point[xIndex]
@@ -75,7 +78,7 @@ export default function GraphView() {
       const point: IGraphPoint = { x: x, y: y }
       points.push(point)
     }
-    console.log(points)
+    console.log(points, 'datasetPoints')
     return points
   }
 
