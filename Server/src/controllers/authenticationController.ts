@@ -65,7 +65,7 @@ export class AuthenticationController {
     }
 
     private validatePasswordResetRequest(request: Request): boolean {
-        return !request.body.hasOwnProperty('email');
+        return !request.body.email;
     }
 
     private validateSignUpRequest(request: Request): boolean {
@@ -145,9 +145,6 @@ export class AuthenticationController {
         let serviceResponse: IResponse
         try {
             serviceResponse = await this.authenticationService.resetPassword(passwordResetInfo);
-
-
-
             return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
             return response.status(error.status).json(error.message);
