@@ -3,7 +3,7 @@ import { createConnection, getConnection } from 'typeorm';
 
 import { AuthenticationController } from '../../controllers/authenticationController';
 import { JWTAuthenticator } from '../../middleware/JWTAuthenticator';
-import { loadStartupProcess } from '../../loaders/loadStartupProcess';
+import { LoadStartupProcess } from '../../loaders/loadStartupProcess';
 import request from 'supertest';
 
 describe('Authorization Middleware', () => {
