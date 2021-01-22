@@ -25,8 +25,8 @@ export class savedGraphsService {
      * @param userId 
      * User ID: number
      */
-    async fetchUserSavedGraphsService(userId: number) {
-        let userSavedGraphs: IGraphStateModel[] = await this.dataQuery.fetchSavedGraphsOfUserModel(userId)
+    async fetchUserSavedGraphsService(userEmail: string) {
+        let userSavedGraphs = await this.dataQuery.fetchSavedGraphsOfUserModel(userEmail)
         return userSavedGraphs;
     }
 

@@ -43,18 +43,13 @@ export class savedGraphsController {
      * An object containing a response: Response
      */
     async createRequestForUserSavedGraphs(request: Request, response: Response) {
-        let requestParam = request.params.userSavedGraphs;
-        let userId: number = +requestParam;
-        if (isNaN(userId)) {
-            response.status(400).json("Invalid user ID entered");
-        }
-        else {
-            try {
-                let userSavedGraphs = await this.savedGraphsService.fetchUserSavedGraphsService(userId)
-                return response.status(200).json(userSavedGraphs);
-            } catch (err) {
-                response.status(500).json(err);
-            }
+        let userEmail = request.params.userSavedGraphs;
+        try {
+            let userSavedGraphs = await this.savedGraphsService.fetchUserSavedGraphsService(userEmail)
+            if (userSavedGraphs[0]) { return response.status(200).json(userSavedGraphs[1]); }
+            else { return response.status(400).json(userSavedGraphs[1]); }
+        } catch (err) {
+            response.status(500).json(err);
         }
     }
 

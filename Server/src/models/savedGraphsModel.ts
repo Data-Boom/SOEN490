@@ -73,6 +73,14 @@ export class savedGraphsModel {
         return singleGraphData;
     }
 
+    private async fetchAccountIdFromEmail(userEmail: string) {
+        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
+        if (userRawData == undefined)
+            return false
+        else
+            return userRawData.id
+    }
+
     /**
      * This method will run a query find all the raw graph data favorited by a specific user ID,
      * feed each individual graph's raw data to @processSavedGraphData to format it to fit the
@@ -82,16 +90,20 @@ export class savedGraphsModel {
      * @param id 
      * Account ID: number
      */
-    async fetchSavedGraphsOfUserModel(userId: number): Promise<IGraphStateModel[]> {
-        let rawGraphData = await selectSavedGraphsOfUserQuery(this.connection, userId)
-        console.log(rawGraphData)
-        let singleGraphData: IGraphStateModel
-        let sortedGraphData: IGraphStateModel[] = []
-        for (let index = 0; index < rawGraphData.length; index++) {
-            singleGraphData = await this.processSavedGraphData(rawGraphData[index])
-            sortedGraphData.push(singleGraphData)
+    async fetchSavedGraphsOfUserModel(userEmail: string): Promise<any[]> {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let rawGraphData = await selectSavedGraphsOfUserQuery(this.connection, userID)
+            let singleGraphData: IGraphStateModel
+            let sortedGraphData: IGraphStateModel[] = []
+            for (let index = 0; index < rawGraphData.length; index++) {
+                singleGraphData = await this.processSavedGraphData(rawGraphData[index])
+                sortedGraphData.push(singleGraphData)
+            }
+            return [true, sortedGraphData];
         }
-        return sortedGraphData;
     }
 
     /**
