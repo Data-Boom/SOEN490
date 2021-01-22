@@ -307,7 +307,6 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
 
-    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 1)');
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
 
     let newGraph = new Savedgraphs();

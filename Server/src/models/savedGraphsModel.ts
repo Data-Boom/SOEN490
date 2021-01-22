@@ -67,10 +67,14 @@ export class savedGraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async fetchOneSavedGraphModel(graphId: number): Promise<IGraphStateModel> {
+    async fetchOneSavedGraphModel(graphId: number): Promise<any[]> {
         let rawGraphData = await selectOneSavedGraphQuery(this.connection, graphId)
-        let singleGraphData: IGraphStateModel = await this.processSavedGraphData(rawGraphData)
-        return singleGraphData;
+        if (rawGraphData == undefined)
+            return [false, "Graph does not exist"]
+        else {
+            let singleGraphData: IGraphStateModel = await this.processSavedGraphData(rawGraphData)
+            return [true, singleGraphData];
+        }
     }
 
     private async fetchAccountIdFromEmail(userEmail: string) {

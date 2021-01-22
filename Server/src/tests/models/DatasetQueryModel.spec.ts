@@ -81,10 +81,9 @@ describe('data service test', () => {
         done()
     });
 
-    test('Feeds the email of account ID of 1 and expects to see two data sets IDs returned, one being 1 and another being 2', async done => {
+    test('Feeds the email of account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
         let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser("j.comkj")
         expect(arrayOfData[1][0].dataset_id).toEqual(2);
-        expect(arrayOfData[1][1].dataset_id).toEqual(1);
         done()
     });
 

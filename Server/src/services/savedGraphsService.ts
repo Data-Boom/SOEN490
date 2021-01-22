@@ -14,7 +14,7 @@ export class savedGraphsService {
      * Graph ID: number
      */
     async fetchOneSavedGraphService(graphId: number) {
-        let oneGraph: IGraphStateModel = await this.dataQuery.fetchOneSavedGraphModel(graphId)
+        let oneGraph = await this.dataQuery.fetchOneSavedGraphModel(graphId)
         return oneGraph;
     }
 
