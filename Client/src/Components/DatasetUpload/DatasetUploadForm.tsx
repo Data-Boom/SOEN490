@@ -64,7 +64,6 @@ export const DatasetUploadForm = (props: IProps): any => {
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       <Form>
