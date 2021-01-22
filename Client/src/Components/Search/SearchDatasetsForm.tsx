@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 
+import { listCategories, listSubcategories, listMaterials } from '../../Remote/Endpoints/DatasetEndpoint'
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void
 }
@@ -13,12 +14,17 @@ export const SearchDatasetsForm = (props: IProps): any => {
   const [isCaseSensitive, setIsCaseSensitive] = useState(false)
   const [categories, setCategories] = useState([])
 
+
   const { handleSubmit } = { ...props }
 
   useEffect(() => {
     //useEffect with [] will run once component renders the first time ever. Now we are passing mocked values but we need to create endpoint to get those categories
     // todo create categories endpoint
-    setCategories([{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }, { value: 4, text: "new value" }])
+    const getListCategory = async () => {
+      const categories = await listCategories();
+      setCategories(categories)
+    }
+    getListCategory()
   }, [])
 
   const toggleIsCaseSensitive = () => {
