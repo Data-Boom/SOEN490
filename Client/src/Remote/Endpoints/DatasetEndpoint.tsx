@@ -10,10 +10,11 @@ const userSavedDatasetsRoute = '/dataset/userSavedDatsets/:userSavedDatsets'
 const datasetRoute = '/dataset*'
 
 export const getDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
-  const remoteDatasets: IRemoteDatasetModel[] = await get(datasetRoute, stringify(query))
+  const remoteDatasets: IRemoteDatasetModel[] = await get(datasetRoute, stringify(query, { arrayFormat: 'bracket' }))
   const localDatasets = toLocalDatasets(remoteDatasets)
   return localDatasets
 }
+
 interface ICategoryModel {
   id: number,
   name: string
