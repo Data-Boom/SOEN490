@@ -147,17 +147,15 @@ export default function GraphView() {
       </Modal>
       <Box ml={8}>
         <Grid container spacing={3}>
-          <Grid item container sm={5} >
-            <Paper elevation={3}>
-              <Graph
-                outerHeight={500}
-                outerWidth={768}
-                datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
-                extremeBoundaries={datasetBoundaries}
-              />
-            </Paper>
+          <Grid item container sm={7} >
+            <Graph
+              outerHeight={500}
+              outerWidth={768}
+              datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
+              extremeBoundaries={datasetBoundaries}
+            />
           </Grid>
-          <Grid item sm={7}>
+          <Grid item sm={5}>
             <Box ml={5} mr={5} mt={5}>
               <Grid container direction='column'>
                 <Grid item container spacing={3}>
