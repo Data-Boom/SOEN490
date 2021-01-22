@@ -16,7 +16,6 @@ describe('Data Upload Controller', () => {
         mockResponse = {
             status: jest.fn(() => mockResponse),
             json: jest.fn(),
-            send: jest.fn()
         }
 
     })

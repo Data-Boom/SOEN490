@@ -21,10 +21,9 @@ router.post('/api/v1/dataExtract', [JWTAuthenticator.verifyJWT, upload.single('f
     let dataExtract = new dataExtractionController(request.file.path, request.file.originalname);
     dataExtract.createRequest(request, response);
   } catch (error) {
-    if (!request.file) {
-      return response.send('Please select a file to upload');
-    }
+    if (!request.file)
+      return response.json('Please select a file to upload');
   }
-});
+})
 
 export { router as dataExtractionRouter };
