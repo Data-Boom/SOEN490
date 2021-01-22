@@ -26,8 +26,6 @@ export class savedGraphsController {
         else {
             try {
                 let executionStatus = await this.savedGraphsService.fetchOneSavedGraphService(graphId)
-                console.log("NaN boy")
-                console.log(executionStatus)
                 if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
                 else { return response.status(400).json(executionStatus[1]); }
             } catch (err) {
