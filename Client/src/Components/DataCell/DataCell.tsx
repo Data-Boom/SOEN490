@@ -25,11 +25,10 @@ export default function DataCell() {
       await fetch('http://localhost:4000/dataupload', options)
         .then(resp => resp.json())
         .then(result => {
-          console.log(result)
         })
     }
     catch (err) {
-      console.log('wrong file submitted, only json file accepted')
+      //todo add error handling
     }
   }
 

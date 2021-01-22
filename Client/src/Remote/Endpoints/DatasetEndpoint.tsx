@@ -1,3 +1,7 @@
+import { IRemoteDatasetModel, toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
+
+import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
+import { ISearchDatasetsFormModel } from "../../Components/Search/ISearchDatasetsFormModel"
 import { get } from "../RemoteHelper"
 import { stringify } from "query-string"
 
@@ -5,15 +9,8 @@ const userUploadedDatasetsRoute = '/dataset/userUploadedDatasets/:userUploadedDa
 const userSavedDatasetsRoute = '/dataset/userSavedDatsets/:userSavedDatsets'
 const datasetRoute = '/dataset*'
 
-interface IDatasetQuery {
-  datasetId: string,
-  year: string,
-  material: string,
-  lastName: string,
-  categoryId: number
-}
-//todo for the search story
-const getDatasets = async (query: IDatasetQuery) => {
-  const remoteDatasets = await get(datasetRoute, stringify(query))
-  console.log(remoteDatasets)
+export const getDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
+  const remoteDatasets: IRemoteDatasetModel[] = await get(datasetRoute, stringify(query))
+  const localDatasets = toLocalDatasets(remoteDatasets)
+  return localDatasets
 }

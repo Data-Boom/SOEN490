@@ -9,7 +9,6 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
-import { exampleDatasets } from '../../Models/Datasets/ICompleteDatasetEntity'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 
 const renderGraphRow = (row) => {
@@ -94,12 +93,13 @@ function createData(id: number[], type: string, name: string, oxidizer: string, 
 const rows = []
 const rowsOfUploads = []
 
-for (let i = 0; i < exampleDatasets.length; i++) {
-  rows.push(createData([exampleDatasets[i].id], 'Dataset', exampleDatasets[i].name, exampleDatasets[i].oxidizer, exampleDatasets[i].author,
-    ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
-  rowsOfUploads.push(createData([exampleDatasets[i].id], 'Dataset', exampleDatasets[i].name, exampleDatasets[i].oxidizer, exampleDatasets[i].author,
-    ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
-}
+//todo implement callilng endpoint for saved/uploaded datasets
+// for (let i = 0; i < exampleDatasets.length; i++) {
+//   rows.push(createData([exampleDatasets[i].id], 'Dataset', exampleDatasets[i].name, exampleDatasets[i].oxidizer, exampleDatasets[i].author,
+//     ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
+//   rowsOfUploads.push(createData([exampleDatasets[i].id], 'Dataset', exampleDatasets[i].name, exampleDatasets[i].oxidizer, exampleDatasets[i].author,
+//     ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'], 'Here is a sample comment'))
+// }
 
 function createGraphData(id: number[], type: string, name: string, graphdatasets: string[], comments: string) {
   return { id, type, name, graphdatasets, comments }
@@ -110,7 +110,6 @@ rows.push(createGraphData([1, 2, 3], 'Graph', 'graph name', ['Cell width', 'Cell
 
 function parseIdArray(id) {
   let stringTest = ""
-  console.log(id.length)
   if (id.length > 1) {
     stringTest = String(id).split(",").join("&datasetId[]=")
     return stringTest

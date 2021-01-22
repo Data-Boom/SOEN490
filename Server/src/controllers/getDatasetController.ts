@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { retrieveData } from '../services/getDatasetService';
+
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { retrieveData } from '../services/getDatasetService';
 
 export class getDataController {
     private processedRequest: IDataRequestModel;

@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
+import { removeUserInStorage } from '../Common/Storage'
 import { signInRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
 
@@ -27,9 +28,11 @@ export default function NavigationMenu() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-  const handleSignIn = () => {
-  }
 
+  function logout() {
+    removeUserInStorage()
+    window.location.replace("/")
+  }
 
   const drawer = (): any => {
     return (
@@ -46,12 +49,14 @@ export default function NavigationMenu() {
   }
 
   const renderGreeting = () => {
-    return user && user.firstName ? (
-      <Typography>
-        Hello, {user.firstName} {user.lastName}
-      </Typography>
-    ) : (
-        <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+    return user && user.firstName ?
+      (
+        <Typography>
+          Hello, {user.firstName} {user.lastName}
+          <Button variant="contained" onClick={logout}>Sign out</Button>
+        </Typography>
+      ) : (
+        <Button component={Link} to={signInRoute} id='btn1' variant="contained">Sign In</Button>
       )
   }
 
