@@ -65,6 +65,7 @@ export default function GraphView() {
   }
 
   const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVariableName: string): IGraphPoint[] => {
+    console.log(dataset.data)
     const xIndex = getVariableIndex(dataset.data.variables, xVariableName)
     const yIndex = getVariableIndex(dataset.data.variables, yVariableName)
     const points: IGraphPoint[] = []
@@ -74,6 +75,7 @@ export default function GraphView() {
       const point: IGraphPoint = { x: x, y: y }
       points.push(point)
     }
+    console.log(points)
     return points
   }
 

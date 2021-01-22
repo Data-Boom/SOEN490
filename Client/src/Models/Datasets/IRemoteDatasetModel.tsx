@@ -54,6 +54,7 @@ export const toLocalDatasets = (remoteDatasets: IRemoteDatasetModel[]): IDataset
 }
 
 export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatasetModel => {
+  console.log(remoteDataset.dataset_id);
   if (!remoteDataset) {
     return null
   }
@@ -95,14 +96,23 @@ const toVariable = (remotePoint: IRemoteDataPointModel): IVariable => {
   return { name: remotePoint.name, units: remotePoint.units, repr: remotePoint.representation }
 }
 
-const toContents = (remotePoint: IRemoteDataPointModel[], dataComments: string[]): IContent[] => {
+const toContents = (remotePoints: IRemoteDataPointModel[], dataComments: string[]): IContent[] => {
   const contents: IContent[] = []
 
-  for (let i = 0; i < remotePoint.length; i++) {
-    console.log(remotePoint[i]);
-    contents.push({ point: remotePoint[i].values, comments: dataComments[i] })
+  const totalContentAmount: number = remotePoints[0].values.length
+  for (let i = 0; i < totalContentAmount; i++) {
+    contents.push({ point: buildContent(remotePoints, i), comments: dataComments[i] })
   }
-  //todo remove all the logs in the project
-  console.log(contents, 'contents');
   return contents
+}
+
+const buildContent = (remotePoints: IRemoteDataPointModel[], rowIndex: number): number[] => {
+  const points: number[] = []
+  const variableCount: number = remotePoints.length
+  for (let i = 0; i < variableCount; i++) {
+    const contentPoint = remotePoints[i].values[rowIndex];
+    points.push(contentPoint)
+  }
+
+  return points
 }
