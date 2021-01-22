@@ -1,9 +1,11 @@
 import { Button, Grid, Typography } from '@material-ui/core'
-import { Field, Form, Formik } from 'formik'
+import { Field, FieldArray, Form, Formik } from 'formik'
 import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
 import { listCategories, listMaterials } from '../../Remote/Endpoints/DatasetEndpoint'
+
+import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void
@@ -66,8 +68,16 @@ export const SearchDatasetsForm = (props: IProps): any => {
               <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
             </Grid>
 
-            <Grid item sm={2}>
-              <Field name="material" label='Material' component={MuiSelectFormik} options={getOptions(materials)} />
+            <Grid item sm={12}>
+              <FieldArray name='material' >
+                {({ form, ...fieldArrayHelpers }) => {
+                  return (<MaterialSelectChipArray
+                    value={form.values.material}
+                    fieldArrayHelpers={fieldArrayHelpers}
+                    options={materials}
+                  />)
+                }}
+              </FieldArray>
             </Grid>
           </Grid>
           <Grid container spacing={4}>

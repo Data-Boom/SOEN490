@@ -28,6 +28,7 @@ export const DatasetUploadView = (props: IProps) => {
 
   const handleSubmitForm = (formDataset: IDatasetModel) => {
     // todo: call backend to save dataset here
+    console.log(formDataset.material)
   }
 
   return (

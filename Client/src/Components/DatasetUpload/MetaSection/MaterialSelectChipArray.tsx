@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const materialToString = (material: IMaterial) => {
-  return material && material.composition + ' ' + material.details
+  return material && material.composition + ', ' + material.details
 }
 
 export const MaterialSelectChipArray = (props: IProps) => {
