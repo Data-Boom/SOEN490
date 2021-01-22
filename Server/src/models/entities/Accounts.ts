@@ -35,7 +35,7 @@ export class Accounts {
     @Column({ default: 0 })
     admin: boolean
 
-    @Column()
+    @Column({ nullable: true })
     resetToken: string;
 
     /*
