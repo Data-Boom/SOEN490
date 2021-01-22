@@ -206,10 +206,10 @@ export class DataQueryModel {
             let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
             if (duplicateCheck[0] == undefined) {
                 await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userID, datasetId]);
-                return [true, "Data set successfully saved"];
+                return [true, "Favorite data set successfully saved"];
             }
             else {
-                return [true, "Data set is already saved"];
+                return [true, "Favorite data set is already saved"];
             }
 
         }

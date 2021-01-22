@@ -30,7 +30,7 @@ describe('SavedGraphs Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Data set successfully saved");
+        expect(mockResponse.json).toBeCalledWith("Favorite data set successfully saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
@@ -42,7 +42,7 @@ describe('SavedGraphs Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Data set is already saved");
+        expect(mockResponse.json).toBeCalledWith("Favorite data set is already saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
