@@ -15,18 +15,18 @@ export const MuiTextFieldFormik = ({ field, form: { touched, errors }, ...props 
 export const MuiSelectFormik = ({ field, form: { touched, errors }, ...props }) => {
   const error = get(touched, field.name) && !!get(errors, field.name)
   const helperText = get(touched, field.name) && get(errors, field.name)
-  const variant = props.variant || "outlined"
   return (
     <>
-      <TextField fullWidth variant={variant} {...field} {...props} error={error} helperText={helperText} />
       <FormControl variant="outlined" fullWidth>
         <InputLabel htmlFor="outlined-outFormat-native-simple"> Categories </InputLabel>
         <Select
           native
-          label="categories"
-          name="categories" value={[]}
+          {...field}
+          {...props}
+          error={error}
+          helperText={helperText}
         >
-          <option aria-label="None" value="" />
+          {props.options}
         </Select>
       </FormControl>
     </>

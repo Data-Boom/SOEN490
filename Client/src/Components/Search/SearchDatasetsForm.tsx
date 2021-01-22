@@ -1,9 +1,9 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@material-ui/core'
+import { Button, Grid, Typography } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
-import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema, ICategory } from './ISearchDatasetsFormModel'
+import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
+import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
 
-import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { listCategories } from '../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
@@ -58,8 +58,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
             </Grid>
 
             <Grid item sm={2}>
-              <Field name="categoryId" label='Category' component={MuiSelectFormik} options={ } />
-
+              <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
             </Grid>
 
             <Grid item sm={2}>
