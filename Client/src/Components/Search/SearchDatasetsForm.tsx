@@ -3,10 +3,9 @@ import { Field, FieldArray, Form, Formik } from 'formik'
 import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
-import { listCategories, listMaterials } from '../../Remote/Endpoints/DatasetEndpoint'
+import { listCategories, listMaterials, listSubcategories } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
-import { listCategories, listSubcategories, listMaterials } from '../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void
@@ -14,8 +13,8 @@ interface IProps {
 
 export const SearchDatasetsForm = (props: IProps): any => {
   const [categories, setCategories] = useState([])
-  const [materials, setMaterials] = useState([])
   const [subcategories, setSubcategories] = useState([])
+  const [materials, setMaterials] = useState([])
 
   const { handleSubmit } = { ...props }
 
@@ -37,21 +36,21 @@ export const SearchDatasetsForm = (props: IProps): any => {
       setMaterials(materials)
     }
 
-    callListCategories()
-    callListMaterials()
-    const getListSubcategory = async () => {
+    const callListSubcategory = async () => {
       const subCategories = await listSubcategories()
       setSubcategories(subCategories)
     }
 
-    getListSubcategory()
+    callListCategories()
+    callListSubcategory()
+    callListMaterials()
   }, [])
 
-  const getOptions = (categories: ICategory[]): any => {
+  const getOptions = (options: any[]): any => {
     return (
       <>
         <option aria-label="None" value="" />
-        {categories.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+        {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
       </>
     )
   }
@@ -82,6 +81,10 @@ export const SearchDatasetsForm = (props: IProps): any => {
               <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
             </Grid>
 
+            <Grid item sm={2}>
+              <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
+            </Grid>
+
             <Grid item sm={12}>
               <FieldArray name='material' >
                 {({ form, ...fieldArrayHelpers }) => {
@@ -95,10 +98,6 @@ export const SearchDatasetsForm = (props: IProps): any => {
             </Grid>
           </Grid>
           <Grid container spacing={4}>
-            <Grid item sm={2}>
-              <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
-            </Grid>
-
             <Grid item sm={2}>
               <Button id="search-database" variant="contained" color="primary" type="submit"> Search Database </Button>
             </Grid>
