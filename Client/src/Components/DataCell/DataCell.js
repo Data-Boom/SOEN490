@@ -46,7 +46,7 @@ export default function DataCell() {
         }
 
         try {
-            await fetch('http://localhost:4000/dataupload', options)
+            await fetch('http://localhost:4000/api/v1/dataExtract', options)
                 .then(resp => resp.json())
                 .then(result => {
                     console.log(result)
