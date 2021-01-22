@@ -52,8 +52,8 @@ export class AuthenticationModel {
      */
     static async verifyResetToken(email: string, token: string): Promise<boolean> {
         let connection = getConnection();
-        let userEmail = await connection.getRepository(Accounts)
-            .createQueryBuilder('accounts')
+        let userEmail = await connection
+            .createQueryBuilder(Accounts, 'account')
             .select('account.email', 'account_email')
             .where('account.resetToken = :resetToken', { resetToken: token })
             .getOne()
