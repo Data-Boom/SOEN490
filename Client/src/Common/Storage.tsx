@@ -10,5 +10,5 @@ export const getUserFromStorage = (): IUserAccountModel => {
 }
 
 export const removeUserInStorage = () => {
-  sessionStorage.removeItem('user');
+  sessionStorage.removeItem('user')
 }
