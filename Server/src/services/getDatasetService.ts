@@ -189,10 +189,15 @@ export class retrieveData {
      * @param userReceived
      * Account ID: number
      */
-    async getUserUploadedDatasets(userReceived: number) {
+    async getUserUploadedDatasets(userReceived: string) {
         let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
-        let setOfData = await this.getDatasetsFromRawData(rawData);
-        return setOfData;
+        if (rawData[0]) {
+            let setOfData = await this.getDatasetsFromRawData(rawData[1]);
+            return [true, setOfData];
+        }
+        else {
+            return rawData;
+        }
     }
 
     /**
@@ -203,10 +208,15 @@ export class retrieveData {
      * @param userReceived
      * Account ID: number
      */
-    async getUserSavedDatasets(userReceived: number) {
+    async getUserSavedDatasets(userReceived: string) {
         let rawData = await this.dataQuery.getSavedDatasetIDOfUser(userReceived);
-        let setOfData = await this.getDatasetsFromRawData(rawData);
-        return setOfData;
+        if (rawData[0]) {
+            let setOfData = await this.getDatasetsFromRawData(rawData[1]);
+            return [true, setOfData];
+        }
+        else {
+            return rawData;
+        }
     }
 
     /**

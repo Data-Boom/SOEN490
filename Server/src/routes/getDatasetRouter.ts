@@ -10,7 +10,7 @@ import { getDataController } from '../controllers/getDatasetController';
 let router = Router();
 let getDataControllerObject = new getDataController();
 
-router.get('/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
+router.get('/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForUserUploadedDatasets(request, response);
 });
 

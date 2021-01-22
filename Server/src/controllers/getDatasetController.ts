@@ -49,18 +49,13 @@ export class getDataController {
      */
     async createRequestForUserUploadedDatasets(request: Request, response: Response) {
         let requestParam = request.params.userUploadedDatasets;
-        let userId: number = +requestParam;
-        if (isNaN(userId)) {
-            response.status(400).json("Invalid search params entered");
-        }
-        else {
-            try {
-                const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(userId)
-                return response.status(200).json(arrayOfData);
-            } catch (err) {
-                response.status(500).json(err);
-            }
+        try {
+            const retrieveDataObject = new retrieveData();
+            let executionStatus = await retrieveDataObject.getUserUploadedDatasets(requestParam)
+            if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
+            else { return response.status(400).json(executionStatus[1]); }
+        } catch (err) {
+            response.status(500).json(err);
         }
     }
 
@@ -133,18 +128,13 @@ export class getDataController {
      */
     async createRequestForUserSavedDatsets(request: Request, response: Response) {
         let requestParam = request.params.userSavedDatsets;
-        let userId: number = +requestParam;
-        if (isNaN(userId)) {
-            response.status(400).json("Invalid search params entered");
-        }
-        else {
-            try {
-                const retrieveDataObject = new retrieveData();
-                let arrayOfData = await retrieveDataObject.getUserSavedDatasets(userId)
-                return response.status(200).json(arrayOfData);
-            } catch (err) {
-                response.status(500).json(err);
-            }
+        try {
+            const retrieveDataObject = new retrieveData();
+            let executionStatus = await retrieveDataObject.getUserSavedDatasets(requestParam)
+            if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
+            else { return response.status(400).json(executionStatus[1]); }
+        } catch (err) {
+            response.status(500).json(err);
         }
     }
 

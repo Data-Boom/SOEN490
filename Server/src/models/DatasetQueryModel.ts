@@ -140,28 +140,37 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getUploadedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
-        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
-            .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
-            .where('account.id = :idRef', { idRef: id })
-            .getRawMany();
-        return idDatasetData;
+    async getUploadedDatasetIDOfUser(userEmail: string): Promise<any[]> {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+                .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
+                .where('account.id = :idRef', { idRef: userID })
+                .getRawMany();
+            return [true, idDatasetData];
+        }
     }
 
     /**
-     * This method will run a query find all the data set IDs favorited by specific user ID
+     * This method will run a query find all the data set IDs favorited by a specific user
      * and return a raw data packet containing that information. 
      * 
      * @param id 
      * Account ID: number
      */
-    async getSavedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
-
-        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
-            .innerJoin('dataset.accounts', 'account')
-            .where('account.id = :idRef', { idRef: id })
-            .getRawMany();
-        return idDatasetData;
+    async getSavedDatasetIDOfUser(userEmail: string): Promise<any[]> {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+                .innerJoin('dataset.accounts', 'account')
+                .where('account.id = :idRef', { idRef: userID })
+                .getRawMany();
+            return [true, idDatasetData];
+        }
     }
 
     private async fetchAccountIdFromEmail(userEmail: string) {
