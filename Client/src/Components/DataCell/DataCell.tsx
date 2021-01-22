@@ -29,11 +29,10 @@ export default function DataCell() {
       await fetch('http://localhost:4000/api/v1/dataExtract', options)
         .then(resp => resp.json())
         .then(result => {
-          console.log(result)
         })
     }
     catch (err) {
-      console.log('Wrong file type submitted, only JSON files accepted.')
+      //todo add error handling
     }
   }
 
