@@ -15,8 +15,14 @@ export const SearchDatasetsForm = (props: IProps): any => {
   const [categories, setCategories] = useState([])
   const [materials, setMaterials] = useState([])
 
-
   const { handleSubmit } = { ...props }
+
+  const transformAndSubmit = (formValues: ISearchDatasetsFormModel) => {
+    let newMaterials = formValues.material as any[] || []
+    newMaterials = newMaterials?.map(material => material.composition)
+    formValues = { ...formValues, material: newMaterials }
+    handleSubmit(formValues)
+  }
 
   useEffect(() => {
     const callListCategories = async () => {
@@ -47,7 +53,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
       <Formik
         initialValues={defaultSearchDatasetsModel}
         validationSchema={searchDatasetsValidationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={transformAndSubmit}
       >
         <Form>
           <Typography variant='h4' align="left">Search</Typography>

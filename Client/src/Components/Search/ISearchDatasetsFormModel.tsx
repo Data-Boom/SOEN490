@@ -18,8 +18,8 @@ export interface ICategory {
 export const defaultSearchDatasetsModel: ISearchDatasetsFormModel = {
   datasetId: [],
   material: [],
-  firstName: '',
-  lastName: '',
+  firstName: undefined,
+  lastName: undefined,
   year: undefined,
   categoryId: undefined,
   subcategoryId: undefined
