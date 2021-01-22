@@ -1,13 +1,13 @@
 import * as svg from 'save-svg-as-png'
 
 import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
+import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
+import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
 import React, { useState } from "react"
 
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
-import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
-import { IGraphDatasetModel } from '../../Models/Datasets/IGraphDatasetModel'
 import SearchView from '../Search/SearchView'
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
@@ -29,6 +29,10 @@ export default function GraphView() {
   //Datalist is the list fed to the graphCreation
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [openModal, setOpenModal] = useState(false)
+  //todo unhardcode the variables
+  const [xVariableName, setXVariableName] = useState('initial pressure')
+  const [yVariableName, setYVariableName] = useState('cell width')
+
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
   )
@@ -49,16 +53,36 @@ export default function GraphView() {
     download("datasets.json", JSON.stringify(exampleExportDatasetModel, null, 4))
   }
 
-  const toGraphDataset = (completeDataset: IDatasetModel, color: string): IGraphDatasetModel => {
+  const toGraphDataset = (dataset: IDatasetModel, color: string): IGraphDatasetModel => {
     const graphDataset: IGraphDatasetModel = {
       color: color,
-      id: completeDataset.id,
-      name: completeDataset.dataset_name,
-      //todo refactor graph to support displaying actual datasets not dummy data
-      // points: completeDataset.data.contents.values
+      id: dataset.id,
+      name: dataset.dataset_name,
+      points: buildXYPoints(dataset, xVariableName, yVariableName)
     }
 
     return graphDataset
+  }
+
+  const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVariableName: string): IGraphPoint[] => {
+    const xIndex = getVariableIndex(dataset.data.variables, xVariableName)
+    const yIndex = getVariableIndex(dataset.data.variables, yVariableName)
+    //if either is -1 means at least one variable is not on the dataset and cannot be graphed
+    if (xIndex === -1 || yIndex === -1) {
+      return []
+    }
+    const points: IGraphPoint[] = []
+    for (let i = 0; i < dataset.data.contents.length; i++) {
+      const x: number = dataset.data.contents[i].point[xIndex]
+      const y: number = dataset.data.contents[i].point[yIndex]
+      const point: IGraphPoint = { x: x, y: y }
+      points.push(point)
+    }
+    return points
+  }
+
+  const getVariableIndex = (variables: IVariable[], varName: string): number => {
+    return variables.findIndex(variable => variable.name === varName)
   }
 
   //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server

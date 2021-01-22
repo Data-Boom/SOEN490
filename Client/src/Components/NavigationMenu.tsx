@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import { HashRouter, Link, useHistory } from 'react-router-dom'
+import { HashRouter, Link } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
 import React, { useContext, useState } from 'react'
 
@@ -28,18 +28,11 @@ export default function NavigationMenu() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-  const handleSignIn = () => {
-  }
-
-  const history = useHistory()
 
   function logout() {
     removeUserInStorage()
     window.location.replace("/")
   }
-
-
-
 
   const drawer = (): any => {
     return (
@@ -56,15 +49,14 @@ export default function NavigationMenu() {
   }
 
   const renderGreeting = () => {
-    return user && user.firstName ? (
-      <Typography>
-        Hello, {user.firstName} {user.lastName}
-        <Button variant="contained" onClick={logout}>Sign out</Button>
-      </Typography>
-
-    )
-      : (
-        <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+    return user && user.firstName ?
+      (
+        <Typography>
+          Hello, {user.firstName} {user.lastName}
+          <Button variant="contained" onClick={logout}>Sign out</Button>
+        </Typography>
+      ) : (
+        <Button component={Link} to={signInRoute} id='btn1' variant="contained">Sign In</Button>
       )
   }
 
