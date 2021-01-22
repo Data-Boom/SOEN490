@@ -16,9 +16,6 @@ import { IUserAccountModel } from '../Remote/Models/IUserAccountModel'
 import { removeUserInStorage } from '../Common/Storage'
 import { callLogIn } from "../Remote/Endpoints/AuthenticationEndpoint";
 import { ISignInUserModel } from "../Models/Authentication/ISignUpModel";
-import Logout from "./SignOut";
-
-//import Logout from "./SignOut";
 
 const drawerWidth = linkWidth
 
@@ -43,26 +40,9 @@ export default function NavigationMenu() {
   function logout() {
 
     sessionStorage.clear();
-    //props.history.push("/sign-in");
-
+    window.location.replace("/");
 
   }
-
-
-
-  /*const handleSignOut = async (signInUserInfo: ISignInUserModel): Promise<void> => {
-    const userAccount: IUserAccountModel = await callLogIn(signInUserInfo)
-    removeUserInStorage(userAccount)
-    
-  }*/
-
-
-
-
-
-
-
-
 
 
   const drawer = (): any => {
@@ -83,7 +63,7 @@ export default function NavigationMenu() {
     return user && user.firstName ? (
       <Typography>
         Hello, {user.firstName} {user.lastName}
-        <Button variant="contained" onClick={Logout}>Sign out</Button>
+        <Button variant="contained" onClick={logout}>Sign out</Button>
       </Typography>
 
     )
