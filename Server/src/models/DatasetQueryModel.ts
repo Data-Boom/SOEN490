@@ -178,7 +178,7 @@ export class DataQueryModel {
      * A data set ID: number
      */
     async getAllData(id: number): Promise<IClientDatasetModel> {
-        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id)
+        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id) || {}
         let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection, id)
         publicationData.authors = authorData
         let completeDatasetData = await selectDatasetsQuery(this.connection, id)

@@ -11,7 +11,6 @@ interface IProps {
 }
 
 export const SearchResults = (props: IProps) => {
-  console.log(props.datasetResults);
   const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
