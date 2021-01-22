@@ -164,6 +164,14 @@ export class DataQueryModel {
         return idDatasetData;
     }
 
+    private async fetchAccountIdFromEmail(userEmail: string) {
+        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
+        if (userRawData == undefined)
+            return false
+        else
+            return userRawData.id
+    }
+
     /**
      * This method accepts a user's email and a data set ID, will get the user ID associated with
      * the email and, if the email was valid, will save the user ID and data set ID relation in the 
@@ -177,13 +185,13 @@ export class DataQueryModel {
      * Data Set ID: number
      */
     async addSavedDatasetModel(userEmail: string, datasetId: number) {
-        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
-        if (userRawData == undefined)
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
             return [false, "Invalid user email provided"]
         else {
-            let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userRawData.id, datasetId]);
+            let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
             if (duplicateCheck == undefined) {
-                await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userRawData.id, datasetId]);
+                await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userID, datasetId]);
                 return [true, "Data set successfully saved"];
             }
             else {
@@ -204,12 +212,12 @@ export class DataQueryModel {
      * Data Set ID: number
      */
     async removeSavedDatasetModel(userEmail: string, datasetId: number) {
-        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
-        if (userRawData == undefined)
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
             return [false, "Invalid user email provided"]
         else {
-            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userRawData.id, datasetId]);
-            return "User favorite successfully removed";
+            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
+            return [true, "User favorite successfully removed"];
         }
     }
 

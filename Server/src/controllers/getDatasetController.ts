@@ -21,7 +21,7 @@ export class getDataController {
     async createRequestForData(request: Request, response: Response) {
         let validateData = this.validateInputData(request)
         if (!validateData) {
-            response.status(400).send("Invalid search params entered");
+            response.status(400).json("Invalid search params entered");
         }
         else {
             let requestParams: any = { ...request.query };
@@ -29,9 +29,9 @@ export class getDataController {
             try {
                 const retrieveDataObject = new retrieveData();
                 let arrayOfData = await retrieveDataObject.getArrayOfDatasets(this.processedRequest)
-                return response.status(200).send(arrayOfData);
+                return response.status(200).json(arrayOfData);
             } catch (err) {
-                response.status(400).send(err);
+                response.status(500).json(err);
             }
         }
     }
@@ -51,15 +51,15 @@ export class getDataController {
         let requestParam = request.params.userUploadedDatasets;
         let userId: number = +requestParam;
         if (isNaN(userId)) {
-            response.status(400).send("Invalid search params entered");
+            response.status(400).json("Invalid search params entered");
         }
         else {
             try {
                 const retrieveDataObject = new retrieveData();
                 let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(userId)
-                return response.status(200).send(arrayOfData);
+                return response.status(200).json(arrayOfData);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
@@ -78,16 +78,16 @@ export class getDataController {
         let requestParam = request.params.datasetId;
         let datasetId: number = +requestParam;
         if (isNaN(datasetId)) {
-            response.status(400).send("Invalid data set ID entered");
+            response.status(400).json("Invalid data set ID entered");
         }
         else {
             try {
                 const retrieveDataObject = new retrieveData();
                 let executionStatus = await retrieveDataObject.addSavedDatasetService(userEmail, datasetId)
-                if (executionStatus[0]) { return response.status(200).send(executionStatus[1]); }
-                else { return response.status(400).send(executionStatus[1]); }
+                if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
+                else { return response.status(400).json(executionStatus[1]); }
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
@@ -106,15 +106,16 @@ export class getDataController {
         let requestParam = request.params.datasetId;
         let datasetId: number = +requestParam;
         if (isNaN(datasetId)) {
-            response.status(400).send("Invalid data set ID entered");
+            response.status(400).json("Invalid data set ID entered");
         }
         else {
             try {
                 const retrieveDataObject = new retrieveData();
                 let executionStatus = await retrieveDataObject.removeSavedDatasetService(userEmail, datasetId)
-                return response.status(200).send(executionStatus);
+                if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
+                else { return response.status(400).json(executionStatus[1]); }
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
@@ -134,15 +135,15 @@ export class getDataController {
         let requestParam = request.params.userSavedDatsets;
         let userId: number = +requestParam;
         if (isNaN(userId)) {
-            response.status(500).send("Invalid search params entered");
+            response.status(400).json("Invalid search params entered");
         }
         else {
             try {
                 const retrieveDataObject = new retrieveData();
                 let arrayOfData = await retrieveDataObject.getUserSavedDatasets(userId)
-                return response.status(200).send(arrayOfData);
+                return response.status(200).json(arrayOfData);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }

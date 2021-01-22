@@ -46,14 +46,14 @@ export class savedGraphsController {
         let requestParam = request.params.userSavedGraphs;
         let userId: number = +requestParam;
         if (isNaN(userId)) {
-            response.status(400).send("Invalid user ID entered");
+            response.status(400).json("Invalid user ID entered");
         }
         else {
             try {
                 let userSavedGraphs = await this.savedGraphsService.fetchUserSavedGraphsService(userId)
-                return response.status(200).send(userSavedGraphs);
+                return response.status(200).json(userSavedGraphs);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
@@ -75,9 +75,9 @@ export class savedGraphsController {
         console.log(userEmail)
         try {
             let executionResult = await this.savedGraphsService.addSavedGraphService(processedRequest, userEmail)
-            return response.status(200).send(executionResult);
+            return response.status(200).json(executionResult);
         } catch (err) {
-            response.status(500).send(err);
+            response.status(500).json(err);
         }
     }
 
@@ -94,14 +94,14 @@ export class savedGraphsController {
         let requestParam = request.params.deleteSavedGraph;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
-            response.status(400).send("Invalid graph ID entered");
+            response.status(400).json("Invalid graph ID entered");
         }
         else {
             try {
                 let executionResult = await this.savedGraphsService.deleteSavedGraphService(graphId)
-                return response.status(200).send(executionResult);
+                return response.status(200).json(executionResult);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
