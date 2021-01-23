@@ -1,17 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 
-import { savedGraphsController } from '../../controllers/savedGraphsController';
+import { GraphsController } from '../../controllers/GraphsController';
 
 describe('SavedGraphs Controller ', () => {
   let mockRequest;
   let mockResponse;
-  let SavedGraphsController: savedGraphsController;
+  let SavedGraphsController: GraphsController;
 
   beforeEach(async () => {
     await createConnection();
     jest.setTimeout(60000)
-    SavedGraphsController = new savedGraphsController();
+    SavedGraphsController = new GraphsController();
     mockRequest = {};
     mockResponse = {
       status: jest.fn(() => mockResponse),

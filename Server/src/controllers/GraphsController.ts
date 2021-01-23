@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { IGraphStateModel } from '../models/interfaces/SavedGraphsInterface';
-import { savedGraphsService } from '../services/savedGraphsService';
+import { GraphsService } from '../services/GraphsService';
 
-export class savedGraphsController {
-    private savedGraphsService: savedGraphsService;
+export class GraphsController {
+    private savedGraphsService: GraphsService;
     constructor() {
-        this.savedGraphsService = new savedGraphsService();
     }
 
     /**
@@ -17,7 +16,7 @@ export class savedGraphsController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForOneSavedGraph(request: Request, response: Response) {
+    async createRequestForSingleSavedGraph(request: Request, response: Response) {
         let requestParam = request.params.oneSavedGraph;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
@@ -25,11 +24,16 @@ export class savedGraphsController {
         }
         else {
             try {
+                this.savedGraphsService = new GraphsService();
                 let executionStatus = await this.savedGraphsService.fetchOneSavedGraphService(graphId)
-                if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
-                else { return response.status(400).json(executionStatus[1]); }
-            } catch (err) {
-                response.status(500).json(err);
+                if (executionStatus[0]) {
+                    return response.status(200).json(executionStatus[1]);
+                }
+                else {
+                    return response.status(400).json(executionStatus[1]);
+                }
+            } catch (error) {
+                response.status(error.status).json(error.message);
             }
         }
     }
@@ -44,13 +48,18 @@ export class savedGraphsController {
      * An object containing a response: Response
      */
     async createRequestForUserSavedGraphs(request: Request, response: Response) {
-        let userEmail = request.params.userSavedGraphs;
+        let userId = request.body.user.account_id
         try {
-            let userSavedGraphs = await this.savedGraphsService.fetchUserSavedGraphsService(userEmail)
-            if (userSavedGraphs[0]) { return response.status(200).json(userSavedGraphs[1]); }
-            else { return response.status(400).json(userSavedGraphs[1]); }
-        } catch (err) {
-            response.status(500).json(err);
+            this.savedGraphsService = new GraphsService();
+            let userSavedGraphs = await this.savedGraphsService.fetchUserSavedGraphsService(userId)
+            if (userSavedGraphs[0]) {
+                return response.status(200).json(userSavedGraphs[1]);
+            }
+            else {
+                return response.status(400).json(userSavedGraphs[1]);
+            }
+        } catch (error) {
+            response.status(error.status).json(error.message);
         }
     }
 
@@ -66,13 +75,14 @@ export class savedGraphsController {
     async createRequestForAddingSavedGraph(request: Request, response: Response) {
         let requestParams: any = { ...request.body };
         let processedRequest: IGraphStateModel = requestParams;
-        let userEmail = request.body.email;
+        let userId = request.body.user.account_id
         try {
-            let executionStatus = await this.savedGraphsService.addSavedGraphService(processedRequest, userEmail)
+            this.savedGraphsService = new GraphsService();
+            let executionStatus = await this.savedGraphsService.addSavedGraphService(processedRequest, userId)
             if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
             else { return response.status(400).json(executionStatus[1]); }
-        } catch (err) {
-            response.status(500).json(err);
+        } catch (error) {
+            response.status(error.status).json(error.message);
         }
     }
 
@@ -93,10 +103,11 @@ export class savedGraphsController {
         }
         else {
             try {
+                this.savedGraphsService = new GraphsService();
                 let executionResult = await this.savedGraphsService.deleteSavedGraphService(graphId)
                 return response.status(200).json(executionResult);
-            } catch (err) {
-                response.status(500).json(err);
+            } catch (error) {
+                response.status(error.status).json(error.message);
             }
         }
     }

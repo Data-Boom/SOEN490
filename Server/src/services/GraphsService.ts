@@ -1,7 +1,7 @@
 import { savedGraphsModel } from "../models/savedGraphsModel";
 import { IGraphStateModel } from "../models/interfaces/SavedGraphsInterface";
 
-export class savedGraphsService {
+export class GraphsService {
     private dataQuery: savedGraphsModel;
     constructor() {
         this.dataQuery = new savedGraphsModel();
