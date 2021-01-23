@@ -19,9 +19,18 @@ export class JWTAuthenticator {
         if (!token) {
             return response.status(401).json({ error: "Missing JWT token" });
         }
-        jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err: Error) => {
+        jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err: Error, decoded: any) => {
             if (err) {
                 return response.status(403).json({ error: "JWT Token provided is incorrect" })
+            }
+            let requestBody = request.body
+            Object.assign(requestBody, {
+                user: decoded.jwtPayload
+            })
+
+            // Lets us protect admin only backend routes vs any user routes
+            if (request.body.user.account_admin !== 1) {
+                return response.status(403).json({ error: "You are not authorized to complete this action" })
             }
             next();
         });

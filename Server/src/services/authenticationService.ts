@@ -108,13 +108,13 @@ export class AuthenticationService {
      * each request will contain an access token and its signature will be verified
      * @param jwtParams Parameters used to build JWT Token
      */
-    private async generateJwtToken(jwtParams: IJwtParams): Promise<string> {
+    private async generateJwtToken(jwtPayload: IJwtParams): Promise<string> {
 
         let token: string;
         let jwtExpiry: number = 3000;
         const jwtAccessKey = process.env.ACCESS_SECRET_KEY;
 
-        token = await jwt.sign({ email: jwtParams.email, accountId: jwtParams.account_id, firstName: jwtParams.firstName }, jwtAccessKey, {
+        token = await jwt.sign({ jwtPayload }, jwtAccessKey, {
             expiresIn: jwtExpiry
         })
         return token;
