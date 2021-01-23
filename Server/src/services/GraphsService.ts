@@ -61,9 +61,15 @@ export class GraphsService {
      * @param graphId 
      * Graph ID: number
      */
-    async addSavedGraphService(graph: IGraphStateModel, userEmail: string) {
-        let status = await this.dataQuery.addSavedGraphModel(graph, userEmail)
-        return status;
+    async saveNewGraph(graph: IGraphStateModel, userId: number) {
+        try {
+            let status = await this.dataQuery.saveGraph(graph, userId)
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = status
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+        }
     }
 
     /**
@@ -72,8 +78,14 @@ export class GraphsService {
      * @param graphId 
      * Graph ID: number
      */
-    async deleteSavedGraphService(graphId: number) {
-        let status = await this.dataQuery.deleteSavedGraphModel(graphId)
-        return status;
+    async deleteSavedGraph(graphId: number) {
+        try {
+            let status = await this.dataQuery.deleteGraph(graphId)
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = status
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+        }
     }
 }

@@ -1,5 +1,4 @@
 import { Connection, getConnection } from "typeorm";
-import { selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
@@ -118,6 +117,7 @@ export class GraphsModel {
      * Axis unit types: string[]
      */
     private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[], datasetHiddenStatus: boolean[],
+
         axisVariable: string[], axisMode: string[], axisZoom: number[], axisUnits: string[]): Promise<string> {
         let newGraph = new Savedgraphs();
         newGraph.id;
@@ -147,34 +147,31 @@ export class GraphsModel {
      * @param userEmail 
      * User email address: string
      */
-    async addSavedGraphModel(graph: IGraphStateModel, userEmail: string): Promise<any[]> {
-        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
-        if (userRawData == undefined)
-            return [false, "Invalid user email provided"]
-        else {
-            let datasetIds: number[] = []
-            let datasetColors: string[] = []
-            let datasetShapes: string[] = []
-            let datasetHiddenStatus: boolean[] = []
-            let axisVariable: string[] = []
-            let axisMode: string[] = []
-            let axisZoom: number[] = []
-            let axisUnits: string[] = []
-            for (let j = 0; j < graph.datasets.length; j++) {
-                datasetIds.push(graph.datasets[j].id)
-                datasetColors.push(graph.datasets[j].color)
-                datasetShapes.push(graph.datasets[j].shape)
-                datasetHiddenStatus.push(graph.datasets[j].isHidden)
-            }
-            for (let k = 0; k < graph.axes.length; k++) {
-                axisVariable.push(graph.axes[k].variableName)
-                axisMode.push(graph.axes[k].mode)
-                axisZoom.push(graph.axes[k].zoom)
-                axisUnits.push(graph.axes[k].units)
-            }
-            let statusMessage = await this.sendSavedGraphToDatabase(userRawData.id, graph.name, datasetIds, datasetColors, datasetShapes, datasetHiddenStatus, axisVariable, axisMode, axisZoom, axisUnits)
-            return [true, statusMessage]
+    async saveGraph(graph: IGraphStateModel, userId: number): Promise<string> {
+
+        let datasetIds: number[] = []
+        let datasetColors: string[] = []
+        let datasetShapes: string[] = []
+        let datasetHiddenStatus: boolean[] = []
+        let axisVariable: string[] = []
+        let axisMode: string[] = []
+        let axisZoom: number[] = []
+        let axisUnits: string[] = []
+        for (let j = 0; j < graph.datasets.length; j++) {
+            datasetIds.push(graph.datasets[j].id)
+            datasetColors.push(graph.datasets[j].color)
+            datasetShapes.push(graph.datasets[j].shape)
+            datasetHiddenStatus.push(graph.datasets[j].isHidden)
         }
+        for (let k = 0; k < graph.axes.length; k++) {
+            axisVariable.push(graph.axes[k].variableName)
+            axisMode.push(graph.axes[k].mode)
+            axisZoom.push(graph.axes[k].zoom)
+            axisUnits.push(graph.axes[k].units)
+        }
+        let statusMessage = await this.sendSavedGraphToDatabase(userId, graph.name, datasetIds, datasetColors, datasetShapes, datasetHiddenStatus, axisVariable, axisMode, axisZoom, axisUnits)
+        return statusMessage
+
     }
 
     private deleteSavedGraphQuery = (id: number) =>
@@ -190,7 +187,7 @@ export class GraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async deleteSavedGraphModel(graphId: number): Promise<string> {
+    async deleteGraph(graphId: number): Promise<string> {
         await this.deleteSavedGraphQuery(graphId);
         return "Saved graph deletion was successful"
     }

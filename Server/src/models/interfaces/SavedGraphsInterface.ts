@@ -16,5 +16,5 @@ export interface IAxisModel {
     variableName: string,
     mode: string,
     zoom: number,
-    units: string
+    units: any
 }

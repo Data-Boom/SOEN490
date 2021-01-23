@@ -68,9 +68,8 @@ export class GraphsController {
         let userId = request.body.user.account_id
         try {
             this.savedGraphsService = new GraphsService();
-            let executionStatus = await this.savedGraphsService.addSavedGraphService(processedRequest, userId)
-            if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
-            else { return response.status(400).json(executionStatus[1]); }
+            let requestResponse = await this.savedGraphsService.saveNewGraph(processedRequest, userId)
+            response.status(requestResponse.statusCode).json(requestResponse.message)
         } catch (error) {
             response.status(error.status).json(error.message);
         }
@@ -94,8 +93,8 @@ export class GraphsController {
         else {
             try {
                 this.savedGraphsService = new GraphsService();
-                let executionResult = await this.savedGraphsService.deleteSavedGraphService(graphId)
-                return response.status(200).json(executionResult);
+                let requestResponse = await this.savedGraphsService.deleteSavedGraph(graphId)
+                response.status(requestResponse.statusCode).json(requestResponse.message)
             } catch (error) {
                 response.status(error.status).json(error.message);
             }
