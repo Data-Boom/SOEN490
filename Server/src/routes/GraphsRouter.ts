@@ -11,20 +11,20 @@ let router = Router();
 let savedGraphsControllerObject = new GraphsController();
 
 
-//[JWTAuthenticator.verifyAdmin,JWTAuthenticator.verifyAdmin]
-router.get('/api/v1/savedGraphs/oneSavedGraph/:oneSavedGraph', (request: Request, response: Response) => {
+//[JWTAuthenticator.verifyJWT,JWTAuthenticator.verifyAdmin]
+router.get('/api/v1/savedGraphs/oneSavedGraph/:oneSavedGraph', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForSingleSavedGraph(request, response);
 });
 
-router.get('/api/v1/userSavedGraphs/:userSavedGraphs', (request: Request, response: Response) => {
+router.get('/api/v1/userSavedGraphs/:userSavedGraphs', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForUserSavedGraphs(request, response);
 });
 
-router.post('/api/v1/addSavedGraph', (request: Request, response: Response) => {
+router.post('/api/v1/addSavedGraph', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForAddingSavedGraph(request, response);
 });
 
-router.delete('/api/v1/deleteSavedGraph/:deleteSavedGraph', (request: Request, response: Response) => {
+router.delete('/api/v1/deleteSavedGraph/:deleteSavedGraph', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForDeletingSavedGraph(request, response);
 });
 
