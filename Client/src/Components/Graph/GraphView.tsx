@@ -1,20 +1,19 @@
 import * as svg from 'save-svg-as-png'
 
-
-import { borders, sizing } from '@material-ui/system';
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper,  Select, makeStyles } from "@material-ui/core"
-import { ICompleteDatasetEntity, IDataPoint, IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, makeStyles } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
 import React, { useState } from "react"
+import { borders, sizing } from '@material-ui/system';
+
 import CancelIcon from '@material-ui/icons/Cancel';
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import SearchView from '../Search/SearchView'
+import { classStyles } from "../../appTheme"
 import { exampleDataset } from "../../Models/Datasets/ITemporaryModel"
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import { classStyles } from "../../appTheme"
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
@@ -128,7 +127,7 @@ export default function GraphView() {
   }
 
 
-  const calculateExtremeBoundaries(datasets: IDatasetModel[]) {
+  const calculateExtremeBoundaries = (datasets: IDatasetModel[]) => {
     let minX = 9000, maxX = 0, minY = 9000, maxY = 0
 
     const datalist: any[] = []
@@ -156,58 +155,26 @@ export default function GraphView() {
 
   const types = []
 
-  exampleDataset.dataPoints.forEach(variable => {
-    types.push(variable.type)
-  })
-  const uniqueTypes = Array.from(new Set(types))
-  const [xVariable, setXVariable] = useState(types[0])
-  const [yVariable, setYVariable] = useState(types[1])
-  const [dataPoints, setDataPoints] = useState<IDataPoint[]>([])
-
-  const assignDataPoints = (x: number[], y: number[]) => {
-    const points: IDataPoint[] = []
-    for (var i = 0; i < x.length; i++) {
-      points.push({ x: x[i], y: y[i] })
-    }
-    setDataPoints(points)
-    console.log(dataPoints)
-  }
-
-  const assignXandY = (xType: string, yType: string) => {
-    let x, y = []
-    exampleDataset.dataPoints.forEach(variable => {
-      if (variable.type == xType) {
-        x = variable.values
-      }
-      else if (variable.type == yType) {
-        y = variable.values
-      }
-    })
-    assignDataPoints(x, y)
-  }
-
   const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    if (yVariable == (event.target.value as string)) {
-      const tempVariable = xVariable
-      setXVariable(event.target.value as string)
-      setYVariable(tempVariable)
+    if (yVariableName == (event.target.value as string)) {
+      const tempVariable = xVariableName
+      setXVariableName(event.target.value as string)
+      setYVariableName(tempVariable)
     }
     else {
-      setXVariable(event.target.value as string)
+      setXVariableName(event.target.value as string)
     }
-    assignXandY(xVariable, yVariable)
 
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    if (xVariable == (event.target.value as string)) {
-      const tempVariable = yVariable
-      setYVariable(event.target.value as string)
-      setXVariable(tempVariable)
+    if (xVariableName == (event.target.value as string)) {
+      const tempVariable = yVariableName
+      setYVariableName(event.target.value as string)
+      setXVariableName(tempVariable)
     }
     else {
-      setYVariable(event.target.value as string)
+      setYVariableName(event.target.value as string)
     }
-    assignXandY(xVariable, yVariable)
   }
   return (
     <>
@@ -253,9 +220,6 @@ export default function GraphView() {
                 <Grid item>
                   <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset</Button>
                 </Grid>
-                <Grid item xs={12}>
-                  <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
-                </Grid>
                 <Grid item>
                   <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
                 </Grid>
@@ -274,7 +238,7 @@ export default function GraphView() {
                   <Select
                     labelId="xVariable"
                     id="xVariable"
-                    value={xVariable}
+                    value={xVariableName}
                     autoWidth={true}
                     onChange={handleXVariableChange}
                   >
@@ -290,7 +254,7 @@ export default function GraphView() {
                   <Select
                     labelId="yVariable"
                     id="yVariable"
-                    value={yVariable}
+                    value={yVariableName}
                     autoWidth={true}
                     onChange={handleYVariableChange}
                   >
