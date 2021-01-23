@@ -4,26 +4,24 @@ import * as am4core from "@amcharts/amcharts4/core"
 import React, { useEffect, useState } from 'react'
 
 import { Box } from "@material-ui/core"
-import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
-import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
+import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
+import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 import am4themes_material from "@amcharts/amcharts4/themes/animated"
 
 interface IProps {
-  outerHeight: number,
-  outerWidth: number,
   datasets: IGraphDatasetModel[],
-  extremeBoundaries: IDataPointExtremes
+  graphInitialState: IGraphStateModel
 }
 
 am4core.useTheme(am4themes_material)
 
 export default function Graph(props: IProps) {
-
-  const { datasets } = { ...props }
+  const { datasets, graphInitialState } = { ...props }
   const [chart, setChart] = useState<any>(null)
 
   useEffect(() => {
-    setUpGraph()
+    const chart = setUpGraph()
+    rebuildGraph(chart)
     return () => {
       // chart.dispose()
     }
@@ -34,16 +32,16 @@ export default function Graph(props: IProps) {
       return
     }
 
-    console.log('updating graph')
-    rebuildGraph()
-  }, [datasets])
+    rebuildGraph(chart)
+  }, [datasets.length])
 
-  const rebuildGraph = () => {
+  const rebuildGraph = (chart) => {
     chart.data = chart && buildDataForGraph(datasets)
-    addSeries()
+    addSeries(chart)
+    chart.exporting.menu = new am4core.ExportMenu()
   }
 
-  const addSeries = () => {
+  const addSeries = (chart) => {
     datasets.forEach(dataset => {
       const lineSeries = chart.series.push(new am4charts.CandlestickSeries())
       const bullet = lineSeries.bullets.push(new am4charts.CircleBullet())
@@ -52,10 +50,6 @@ export default function Graph(props: IProps) {
     })
   }
 
-  //at21a
-  //at35b
-  //at42b
-
   const buildDataForGraph = (datasets: IGraphDatasetModel[]): any[] => {
     const data = []
     for (let datasetIndex = 0; datasetIndex < datasets.length; datasetIndex++) {
@@ -63,7 +57,6 @@ export default function Graph(props: IProps) {
       mergeDatasetPoints(dataset, data)
     }
 
-    console.log(data)
     return data
   }
 
@@ -83,11 +76,11 @@ export default function Graph(props: IProps) {
     )
 
     const value1xisX = chart.xAxes.push(new am4charts.ValueAxis())
-    value1xisX.title.text = 'X 1xis'
+    value1xisX.title.text = `${graphInitialState.axes[0].variableName}, ${graphInitialState.axes[0].units}`
     value1xisX.renderer.minGridDistance = 40
 
     const value1xisY = chart.yAxes.push(new am4charts.ValueAxis())
-    value1xisY.title.text = 'Y 1xis'
+    value1xisY.title.text = `${graphInitialState.axes[1].variableName}, ${graphInitialState.axes[1].units}`
 
     // Scrollbars
     chart.scrollbarX = new am4core.Scrollbar()
@@ -106,6 +99,7 @@ export default function Graph(props: IProps) {
     }
 
     setChart(chart)
+    return chart
   }
 
   return (
