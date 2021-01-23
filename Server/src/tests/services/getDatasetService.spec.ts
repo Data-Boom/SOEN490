@@ -189,28 +189,27 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds account ID of 1 and expects to see a data set with ID of 1 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(1)
-    expect(arrayOfData[0].dataset_id).toEqual(1);
+  test('Feeds the email of account ID of 1 and expects to see a data set with ID of 1 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("j.comkj")
+    expect(arrayOfData[1][0].dataset_id).toEqual(1);
     done()
   });
 
-  test('Feeds account ID of 1 and expects to see two data sets returned, one with ID of 1 and another ID being 2', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(1)
-    expect(arrayOfData[0].dataset_id).toEqual(2);
-    expect(arrayOfData[1].dataset_id).toEqual(1);
+  test('Feeds the email of account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("j.comkj")
+    expect(arrayOfData[1][0].dataset_id).toEqual(2);
     done()
   });
 
-  test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(-1)
-    expect(arrayOfData).toEqual(expect.arrayContaining([]));
+  test('Feeds an invalid email and expects to see an error message', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("nothing")
+    expect(arrayOfData[1]).toEqual("Invalid user email provided");
     done()
   });
 
-  test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(-1)
-    expect(arrayOfData).toEqual(expect.arrayContaining([]));
+  test('Feeds an invalid email and expects to see an error message', async done => {
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("nothing")
+    expect(arrayOfData[1]).toEqual("Invalid user email provided");
     done()
   });
 })

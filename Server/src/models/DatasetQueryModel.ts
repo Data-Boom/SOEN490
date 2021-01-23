@@ -11,7 +11,7 @@ import {
 import { Publications, selectPublicationsQuery } from "./entities/Publications";
 import { selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
 
-import { Accounts } from "./entities/Accounts";
+import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
 import { Subcategory } from "./entities/Subcategory";
@@ -145,28 +145,94 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getUploadedDatasetIDOfUser(id: number): Promise<IDatasetIDModel[]> {
-        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-            .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
-            .where('account.id = :idRef', { idRef: id })
-            .getRawMany();
-        return idDatasetData;
+    async getUploadedDatasetIDOfUser(userEmail: string): Promise<any[]> {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+                .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
+                .where('account.id = :idRef', { idRef: userID })
+                .getRawMany();
+            return [true, idDatasetData];
+        }
     }
 
     /**
-     * This method will run a query find all the data set IDs favorited by specific user ID
+     * This method will run a query find all the data set IDs favorited by a specific user
      * and return a raw data packet containing that information. 
      * 
      * @param id 
      * Account ID: number
      */
-    async getSavedDatasetIDOfUser(id: number): Promise<IDatasetIDModel[]> {
+    async getSavedDatasetIDOfUser(userEmail: string): Promise<any[]> {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+                .innerJoin('dataset.accounts', 'account')
+                .where('account.id = :idRef', { idRef: userID })
+                .getRawMany();
+            return [true, idDatasetData];
+        }
+    }
 
-        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-            .innerJoin('dataset.accounts', 'account')
-            .where('account.id = :idRef', { idRef: id })
-            .getRawMany();
-        return idDatasetData;
+    private async fetchAccountIdFromEmail(userEmail: string) {
+        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
+        if (userRawData == undefined)
+            return false
+        else
+            return userRawData.id
+    }
+
+    /**
+     * This method accepts a user's email and a data set ID, will get the user ID associated with
+     * the email and, if the email was valid, will save the user ID and data set ID relation in the 
+     * accounts_datasets_dataset table if the relation does not already exist. If the email address
+     * was invalid, it will return a message reporting such. If the relation already exists, it
+     * will return a message reporting such.
+     * 
+     * @param userEmail 
+     * User's email: string
+     * @param datasetId 
+     * Data Set ID: number
+     */
+    async addSavedDatasetModel(userEmail: string, datasetId: number) {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
+            if (duplicateCheck[0] == undefined) {
+                await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userID, datasetId]);
+                return [true, "Favorite data set successfully saved"];
+            }
+            else {
+                return [true, "Favorite data set is already saved"];
+            }
+
+        }
+    }
+
+    /**
+     * This method accepts a user's email and a data set ID, will get the user ID associated with
+     * the email and, if the email was valid, will delete the user ID and data set ID relation in  
+     * the accounts_datasets_dataset table. 
+     * 
+     * @param userEmail 
+     * User's email: string
+     * @param datasetId 
+     * Data Set ID: number
+     */
+    async removeSavedDatasetModel(userEmail: string, datasetId: number) {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
+            return [true, "User favorite successfully removed"];
+        }
     }
 
     /**

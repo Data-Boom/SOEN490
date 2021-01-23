@@ -50,7 +50,7 @@ export interface IRemoteDatasetModel {
 }
 
 export const toLocalDatasets = (remoteDatasets: IRemoteDatasetModel[]): IDatasetModel[] => {
-  return remoteDatasets.map(remoteDataset => toLocalDatasetModel(remoteDataset))
+  return remoteDatasets && remoteDatasets.map(remoteDataset => toLocalDatasetModel(remoteDataset)) || []
 }
 
 export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatasetModel => {
