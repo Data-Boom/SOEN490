@@ -36,6 +36,7 @@ export default function GraphView() {
   //todo unhardcode the variables
   const [xVariableName, setXVariableName] = useState('initial pressure')
   const [yVariableName, setYVariableName] = useState('cell width')
+  const [variables, setVariables] = useState([])
 
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
@@ -106,6 +107,7 @@ export default function GraphView() {
   const onRemoveDataset = (datasetId: number) => {
     const filteredDataset = completeDatasets.filter(dataset => dataset.id !== datasetId)
     setCompleteDatasets(filteredDataset)
+    handleVariablesSelected(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
   }
 
@@ -118,8 +120,19 @@ export default function GraphView() {
     })
 
     setCompleteDatasets(mergedDatasets)
+    handleVariablesSelected(mergedDatasets)
     calculateExtremeBoundaries(mergedDatasets)
     handleClose()
+  }
+
+  const handleVariablesSelected = (selectedDatasets: IDatasetModel[]) => {
+    const variableNames = []
+    selectedDatasets.forEach(dataset => {
+      dataset.data.variables.forEach(variable => {
+        variableNames.push(variable.name)
+      })
+    })
+    setVariables(Array.from(new Set(variableNames)))
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
@@ -152,8 +165,6 @@ export default function GraphView() {
     const extremeBoundaries: IDataPointExtremes = { minX: minX, maxX: maxX, minY: minY, maxY: maxY }
     setDatasetBoundaries(extremeBoundaries)
   }
-
-  const types = []
 
   const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     if (yVariableName == (event.target.value as string)) {
@@ -242,7 +253,7 @@ export default function GraphView() {
                     autoWidth={true}
                     onChange={handleXVariableChange}
                   >
-                    {types.map(type => (
+                    {variables.map(type => (
                       <MenuItem value={type}>{type}</MenuItem>
                     ))}
                   </Select>
@@ -258,7 +269,7 @@ export default function GraphView() {
                     autoWidth={true}
                     onChange={handleYVariableChange}
                   >
-                    {types.map(type => (
+                    {variables.map(type => (
                       <MenuItem value={type}>{type}</MenuItem>
                     ))}
                   </Select>
