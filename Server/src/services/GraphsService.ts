@@ -21,7 +21,7 @@ export class GraphsService {
      */
     async fetchSingleSavedGraph(graphId: number) {
         try {
-            let graphData = await this.dataQuery.fetchOneSavedGraph(graphId)
+            let graphData = await this.dataQuery.fetchSingleSavedGraphFromDB(graphId)
             if (graphData == undefined) {
                 throw new BadRequest("Graph does not exist")
             }
@@ -41,9 +41,18 @@ export class GraphsService {
      * @param userId 
      * User ID: number
      */
-    async fetchUserSavedGraphsService(userID: number) {
-        let userSavedGraphs = await this.dataQuery.fetchSavedGraphsOfUserModel(userID)
-        return userSavedGraphs;
+    async fetchUserSavedGraphs(userID: number) {
+        try {
+            let graphData = await this.dataQuery.fetchSavedGraphs(userID)
+            if (graphData == undefined) {
+                throw new BadRequest("You don't have any saved graphs!")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = graphData as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+        }
     }
 
     /**

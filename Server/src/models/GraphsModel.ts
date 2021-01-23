@@ -67,17 +67,9 @@ export class GraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async fetchOneSavedGraph(graphId: number): Promise<any> {
+    async fetchSingleSavedGraphFromDB(graphId: number): Promise<any> {
         let rawGraphData = await selectOneSavedGraphQuery(this.connection, graphId)
         return rawGraphData
-    }
-
-    private async fetchAccountIdFromEmail(userEmail: string) {
-        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
-        if (userRawData == undefined)
-            return false
-        else
-            return userRawData.id
     }
 
     /**
@@ -89,21 +81,17 @@ export class GraphsModel {
      * @param id 
      * Account ID: number
      */
-    async fetchSavedGraphsOfUserModel(userEmail: string): Promise<any[]> {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            let rawGraphData = await selectSavedGraphsOfUserQuery(this.connection, userID)
-            let singleGraphData: IGraphStateModel
-            let sortedGraphData: IGraphStateModel[] = []
-            for (let index = 0; index < rawGraphData.length; index++) {
-                singleGraphData = await this.processSavedGraphData(rawGraphData[index])
-                sortedGraphData.push(singleGraphData)
-            }
-            return [true, sortedGraphData];
+    async fetchSavedGraphs(userId: number): Promise<any[]> {
+        let rawGraphData = await selectSavedGraphsOfUserQuery(this.connection, userId)
+        let singleGraphData: IGraphStateModel
+        let sortedGraphData: IGraphStateModel[] = []
+        for (let index = 0; index < rawGraphData.length; index++) {
+            singleGraphData = await this.processSavedGraphData(rawGraphData[index])
+            sortedGraphData.push(singleGraphData)
         }
+        return sortedGraphData
     }
+
 
     /**
      * This method will accept all the variables of a saved graph and add it to the Savedgraphs table.

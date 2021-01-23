@@ -46,13 +46,8 @@ export class GraphsController {
         let userId = request.body.user.account_id
         try {
             this.savedGraphsService = new GraphsService();
-            let userSavedGraphs = await this.savedGraphsService.fetchUserSavedGraphsService(userId)
-            if (userSavedGraphs[0]) {
-                return response.status(200).json(userSavedGraphs[1]);
-            }
-            else {
-                return response.status(400).json(userSavedGraphs[1]);
-            }
+            let requestResponse = await this.savedGraphsService.fetchUserSavedGraphs(userId)
+            response.status(requestResponse.statusCode).json(requestResponse.message)
         } catch (error) {
             response.status(error.status).json(error.message);
         }
