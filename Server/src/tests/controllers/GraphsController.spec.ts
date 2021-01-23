@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 
 import { GraphsController } from '../../controllers/GraphsController';
@@ -61,7 +61,7 @@ describe('SavedGraphs Controller ', () => {
         oneSavedGraph: '1'
       }
     }
-    await SavedGraphsController.createRequestForOneSavedGraph(mockRequest as Request, mockResponse as Response)
+    await SavedGraphsController.createRequestForSingleSavedGraph(mockRequest as Request, mockResponse as Response)
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
     expect(mockResponse.status).toBeCalledWith(200);
   });
@@ -73,7 +73,7 @@ describe('SavedGraphs Controller ', () => {
       }
 
     }
-    await SavedGraphsController.createRequestForOneSavedGraph(mockRequest as Request, mockResponse as Response)
+    await SavedGraphsController.createRequestForSingleSavedGraph(mockRequest as Request, mockResponse as Response)
     expect(mockResponse.json).toBeCalledWith("Invalid graph ID entered");
     expect(mockResponse.status).toBeCalledWith(400);
   });
@@ -84,7 +84,7 @@ describe('SavedGraphs Controller ', () => {
         oneSavedGraph: '200000'
       }
     }
-    await SavedGraphsController.createRequestForOneSavedGraph(mockRequest as Request, mockResponse as Response)
+    await SavedGraphsController.createRequestForSingleSavedGraph(mockRequest as Request, mockResponse as Response)
     expect(mockResponse.json).toBeCalledWith("Graph does not exist");
     expect(mockResponse.status).toBeCalledWith(400);
   });
