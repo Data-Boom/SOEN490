@@ -47,7 +47,7 @@ const dataValidationSchema = Yup.object().shape({
   comments: Yup.string()
 })
 
-export const validationSchema = Yup.object().shape({
+export const datasetValidationSchema = Yup.object().shape({
   reference: referenceValidationSchema,
   data: dataValidationSchema,
   dataset_name: Yup.string().required(requiredMessage('Dataset Name')),

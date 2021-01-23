@@ -1,28 +1,60 @@
-import { Button, FormControl, Grid, InputLabel, Select, Typography } from '@material-ui/core'
-import { Field, Form, Formik } from 'formik'
-import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
+import { Button, Grid, Typography } from '@material-ui/core'
+import { Field, FieldArray, Form, Formik } from 'formik'
+import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
+import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
 
-import { MuiTextFieldFormik } from '../Forms/FormikFields'
+import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
+import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void
 }
 
 export const SearchDatasetsForm = (props: IProps): any => {
-  const [isCaseSensitive, setIsCaseSensitive] = useState(false)
   const [categories, setCategories] = useState([])
+  const [subcategories, setSubcategories] = useState([])
+  const [materials, setMaterials] = useState([])
 
   const { handleSubmit } = { ...props }
 
+  const transformAndSubmit = (formValues: ISearchDatasetsFormModel) => {
+    let newMaterials = formValues.material as any[] || []
+    newMaterials = newMaterials?.map(material => material.composition)
+    formValues = { ...formValues, material: newMaterials }
+    handleSubmit(formValues)
+  }
+
   useEffect(() => {
-    //useEffect with [] will run once component renders the first time ever. Now we are passing mocked values but we need to create endpoint to get those categories
-    // todo create categories endpoint
-    setCategories([{ value: 1, text: "test1" }, { value: 2, text: "test2" }, { value: 3, text: "test3" }, { value: 4, text: "new value" }])
+    const callListCategories = async () => {
+      const categories = await listCategories()
+      setCategories(categories)
+    }
+
+    const callListMaterials = async () => {
+      const materials = await listMaterials()
+      setMaterials(materials)
+    }
+
+    const callListSubcategory = async () => {
+      const subCategories = await listSubcategories()
+      setSubcategories(subCategories)
+    }
+
+    callListCategories()
+    callListSubcategory()
+    callListMaterials()
   }, [])
 
-  const toggleIsCaseSensitive = () => {
-    setIsCaseSensitive(!isCaseSensitive)
+  const getOptions = (options: any[]): any => {
+    return (
+      <>
+        <option aria-label="None" value="" />
+        {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+      </>
+    )
   }
 
   return (
@@ -30,16 +62,12 @@ export const SearchDatasetsForm = (props: IProps): any => {
       <Formik
         initialValues={defaultSearchDatasetsModel}
         validationSchema={searchDatasetsValidationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={transformAndSubmit}
       >
         <Form>
           <Typography variant='h4' align="left">Search</Typography>
           <Grid container spacing={4}>
-            <Grid item sm={3}>
-              <Field name="year" label='Year' component={MuiTextFieldFormik} />
-            </Grid>
-
-            <Grid item sm={3}>
+            <Grid item sm={2}>
               <Field name="firstName" label='First Name' component={MuiTextFieldFormik} />
             </Grid>
 
@@ -48,32 +76,30 @@ export const SearchDatasetsForm = (props: IProps): any => {
             </Grid>
 
             <Grid item sm={2}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-outFormat-native-simple"> Categories </InputLabel>
-                <Select
-                  native
-                  label="categories"
-                  name="categories" value={[]}
-                >
-                  <option aria-label="None" value="" />
-                  {categories.map(option => <option key={option.value} value={option.value}> {option.text} </option>)}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item sm={2}>
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-outFormat-native-simple"> SubCategories </InputLabel>
-                <Select
-                  native
-                  label="categories"
-                  name="categories" value={[]}
-                >
-                  <option aria-label="None" value="" />
-                  {categories.map(option => <option key={option.value} value={option.value}> {option.text} </option>)}
-                </Select>
-              </FormControl>
+              <Field name="year" label='Year' component={MuiTextFieldFormik} />
             </Grid>
 
+            <Grid item sm={2}>
+              <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
+            </Grid>
+
+            <Grid item sm={2}>
+              <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
+            </Grid>
+
+            <Grid item sm={12}>
+              <FieldArray name='material' >
+                {({ form, ...fieldArrayHelpers }) => {
+                  return (<MaterialSelectChipArray
+                    value={form.values.material}
+                    fieldArrayHelpers={fieldArrayHelpers}
+                    options={materials}
+                  />)
+                }}
+              </FieldArray>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4}>
             <Grid item sm={2}>
               <Button id="search-database" variant="contained" color="primary" type="submit"> Search Database </Button>
             </Grid>
