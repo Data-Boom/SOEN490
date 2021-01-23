@@ -49,7 +49,6 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
 
     const message = await response.json()
 
-    //VATIKA
     if (response.status.toString().charAt(0) == '2' && window.location.href.indexOf("/sign-up") > -1) {
       console.log("sign up successful");
       SnackbarUtils.success('Sign up successful. Please sign in.')
