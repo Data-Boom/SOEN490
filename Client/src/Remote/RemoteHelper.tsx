@@ -4,15 +4,6 @@ import React from 'react'
 import { useState } from 'react'
 import SnackbarUtils from '../Components/SnackbarUtils'
 
-const [alertSuccess, setAlertSuccess] = useState(false)
-const handleClose = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-
-  setAlertSuccess(false);
-};
-
 
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
@@ -40,9 +31,6 @@ export const get = async (route: string, query: string = ''): Promise<any> => {
 }
 
 
-
-
-
 const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
   const request: RequestInit = { ...requestBase }
   setMethod(request, method)
@@ -62,19 +50,15 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
 
     const message = await response.json()
     if (response.status.toString().charAt(0) == '2') {
-      setAlertSuccess(true);
 
-      /*<Snackbar open={alertSuccess} autoHideDuration={6000} onClose={() => handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          This is a success message!
-        </Alert>
-      </Snackbar>*/
+      console.log(message);
+      console.log(response.status);
 
 
-
+      //SnackbarUtils.success('Sign up successful. Please sign in.')
       //window.location.replace("/#/sign-in")
 
-      //return message
+      return message
     }
 
     if (response.status.toString().charAt(0) == '4') {

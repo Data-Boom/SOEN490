@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography'
 import { callSignUp } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { makeStyles } from '@material-ui/core/styles'
 import { signupValidationSchema } from './AuthenticationValidationSchema'
+import SnackbarUtils from '../SnackbarUtils'
 
 function Copyright() {
   return (
@@ -54,7 +55,12 @@ export default function SignUpView() {
 
   const handleSignUpSubmit = (user: ISignUpUserModel): void => {
     callSignUp(user)
+
+    //SnackbarUtils.success('Sign up successful. Please sign in.')
+    //window.location.replace("/#/sign-in")
   }
+
+
 
   return (
     <Fragment>
@@ -163,6 +169,7 @@ export default function SignUpView() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+
               >
                 Sign Up
               </Button>
