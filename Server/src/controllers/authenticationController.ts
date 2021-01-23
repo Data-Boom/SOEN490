@@ -1,9 +1,9 @@
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { BadRequest } from "@tsed/exceptions";
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
 import { AuthenticationService } from '../services/authenticationService';
-import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { ILoginInformation, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
@@ -45,9 +45,26 @@ export class AuthenticationController {
                 return res;
             }
             catch (error) {
-            }
 
+            }
         }
+    }
+
+    async createPasswordResetRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+        this.invalidResponse = this.validatePasswordResetRequest(request);
+        if (this.invalidResponse) {
+            return response.status(400).json("Request is invalid, Email attribute is missing");
+        }
+        else {
+            let requestParams: any = { ...request.body };
+            let passwordResetInfo: IPasswordResetInformation = requestParams;
+            let res: any = await this.callServiceForPasswordReset(passwordResetInfo, response, next);
+            return res;
+        }
+    }
+
+    private validatePasswordResetRequest(request: Request): boolean {
+        return !request.body.email;
     }
 
     private validateSignUpRequest(request: Request): boolean {
@@ -70,7 +87,7 @@ export class AuthenticationController {
     }
 
     private validateUserDetailRequest(request: Request): boolean {
-        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organization')) {
+        if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organizationName')) {
             return true;
         } else
             return false;
@@ -122,6 +139,17 @@ export class AuthenticationController {
         }
     }
 
+    private async callServiceForPasswordReset(passwordResetInfo: IPasswordResetInformation, response: Response, next: NextFunction): Promise<Response> {
+        this.authenticationService = new AuthenticationService();
+        let serviceResponse: IResponse
+        try {
+            serviceResponse = await this.authenticationService.resetPassword(passwordResetInfo);
+            return response.status(serviceResponse.statusCode).json('Success');
+        } catch (error) {
+            return response.status(error.status).json(error.message);
+        }
+    }
+
     private async callServiceForLogin(LoginInfo: ILoginInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse
@@ -132,9 +160,7 @@ export class AuthenticationController {
             //todo put secure: true when we go https.
             response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
 
-            const user = await AuthenticationModel.fetchUserDetails(LoginInfo.email);
-
-            return response.status(serviceResponse.statusCode).json(user);
+            return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
             if (error instanceof BadRequest)
                 return response.status(error.status).json(error.message);
@@ -147,7 +173,7 @@ export class AuthenticationController {
     async createFetchUserDetailsRequest(request, response): Promise<Response> {
         let serviceResponse: IResponse;
         try {
-            let userEmail: any = request.body.email;
+            let userEmail: any = request.query.email;
             this.authenticationService = new AuthenticationService();
             serviceResponse = await this.authenticationService.loadUserDetails(userEmail);
             return response.status(serviceResponse.statusCode).json(JSON.parse(serviceResponse.message));

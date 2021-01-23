@@ -19,20 +19,18 @@ router.post('/login', (request: Request, response: Response, next: NextFunction)
     authenticationController.createLoginRequest(request, response, next);
 });
 
-//TODO: Implement when doing password reset 
-router.get('/resetPassword', (request: Request, response: Response, next: NextFunction) => {
-
+router.post('/api/v1/resetpassword', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
+    authenticationController.createPasswordResetRequest(request, response, next);
 });
 
 router.post('/updateUserInfo', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
-
     authenticationController.updateUserDetailRequest(request, response, next);
 });
 
 router.get('/userDetails', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
-
     authenticationController.createFetchUserDetailsRequest(request, response);
 });
 
 
 export { router as authenticationRouter }
+

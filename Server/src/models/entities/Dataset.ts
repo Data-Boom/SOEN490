@@ -111,18 +111,18 @@ export class Dataset {
     updated: Date
 }
 
-export const selectDatasetIdsQuery = (manager: EntityManager) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
+export const selectDatasetIdsQuery = (connection: Connection) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
         .select('dataset.id', 'dataset_id')
 
-export const selectDatasetsQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
-        .select('dataset.name', 'dataset_name')
+export const selectDatasetsQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.name', 'name')
         .addSelect('dataset.id', 'dataset_id')
-        .addSelect('datasetdatatype.name', 'datasetdatatype_name')
-        .addSelect('category.name', 'category_name')
-        .addSelect('subcategory.name', 'subcategory_name')
-        .addSelect('dataset.comments', 'dataset_comments')
+        .addSelect('datasetdatatype.name', 'datasetdatatype')
+        .addSelect('category.name', 'category')
+        .addSelect('subcategory.name', 'subcategory')
+        .addSelect('dataset.comments', 'comments')
         .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')

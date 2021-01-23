@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
-import { IUserAccountModel } from '../../Remote/Models/IUserAccountModel'
+import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
@@ -18,10 +18,10 @@ import { Redirect } from 'react-router'
 import Typography from '@material-ui/core/Typography'
 import { UserContext } from '../../App'
 import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
+import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import { putUserInStorage } from '../../Common/Storage'
 
 function Copyright() {
   return (
@@ -62,8 +62,9 @@ export default function SignInView() {
   const classes = useStyles()
 
   const handleSignInSubmit = async (signInUserInfo: ISignInUserModel): Promise<void> => {
-    const userAccount: IUserAccountModel = await callLogIn(signInUserInfo)
-    putUserInStorage(userAccount)
+    //sets JWT in cookies
+    await callLogIn(signInUserInfo)
+    const userAccount: IUserAccountModel = await getUserDetails({ email: signInUserInfo.email })
     setUser(userAccount)
   }
 

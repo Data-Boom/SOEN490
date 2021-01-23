@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+import * as Yup from 'yup'
 
 const integerMessage = (fieldName: string): string => {
     return `${fieldName} should be an integer`

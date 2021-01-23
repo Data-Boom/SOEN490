@@ -1,26 +1,3 @@
-export interface IDatasetModel {
-    dataset_id: number
-    dataset_name: string
-    dataset_comments: string
-    datasetdatatype_name: string
-    category_name: string
-    subcategory_name: string
-}
-
-export interface IDataPointCommentModel {
-    datapointcomments_comments: string[]
-    dataset_id: number
-}
-
-export interface IDatasetResponseModel {
-    publications: IPublicationModel[]
-    authors: IAuthorModel[]
-    dataset: IDatasetModel[]
-    materials: IMaterialModel[]
-    dataPoints: IDataPointModel[]
-    dataPointComments: IDataPointCommentModel[]
-}
-
 export interface IDatasetIDModel {
     dataset_id: number
 }
@@ -73,4 +50,3 @@ export interface IClientDatasetModel {
     dataPoints: IDataPointModel[]
     dataPointComments: string[]
 }
-

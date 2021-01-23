@@ -18,9 +18,9 @@ const referenceValidationSchema = Yup.object().shape({
   authors: Yup.array().of(
     Yup.object().shape(
       {
-        firstname: Yup.string().trim().required('First Name is a required field'),
-        middlename: Yup.string(),
-        lastname: Yup.string().trim().required('Last Name is a required field')
+        firstName: Yup.string().trim().required('First Name is a required field'),
+        middleName: Yup.string(),
+        lastName: Yup.string().trim().required('Last Name is a required field')
       }
     )
   ),
@@ -47,7 +47,7 @@ const dataValidationSchema = Yup.object().shape({
   comments: Yup.string()
 })
 
-export const validationSchema = Yup.object().shape({
+export const datasetValidationSchema = Yup.object().shape({
   reference: referenceValidationSchema,
   data: dataValidationSchema,
   dataset_name: Yup.string().required(requiredMessage('Dataset Name')),

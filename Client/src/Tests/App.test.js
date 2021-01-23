@@ -15,6 +15,6 @@ describe('App', () => {
   });
 
   it('should return a div', () => {
-    expect(wrapper.find('div').exists()).toEqual(true);;
+    expect(wrapper.find('div').exists()).toEqual(true);
   });
 });
