@@ -197,10 +197,15 @@ export class retrieveData {
      * @param userReceived
      * Account ID: number
      */
-    async getUserUploadedDatasets(userReceived: number) {
+    async getUserUploadedDatasets(userReceived: string) {
         let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
-        let setOfData = await this.getDatasetsFromRawData(rawData);
-        return setOfData;
+        if (rawData[0]) {
+            let setOfData = await this.getDatasetsFromRawData(rawData[1]);
+            return [true, setOfData];
+        }
+        else {
+            return rawData;
+        }
     }
 
     /**
@@ -211,10 +216,43 @@ export class retrieveData {
      * @param userReceived
      * Account ID: number
      */
-    async getUserSavedDatasets(userReceived: number) {
+    async getUserSavedDatasets(userReceived: string) {
         let rawData = await this.dataQuery.getSavedDatasetIDOfUser(userReceived);
-        let setOfData = await this.getDatasetsFromRawData(rawData);
-        return setOfData;
+        if (rawData[0]) {
+            let setOfData = await this.getDatasetsFromRawData(rawData[1]);
+            return [true, setOfData];
+        }
+        else {
+            return rawData;
+        }
+    }
+
+    /**
+     * This method is used to add a saved data set of a user. It will take a user's email and a data set ID
+     * and send this to the service for input.
+     * 
+     * @param userEmail
+     * User's Email: string
+     * @param datasetId
+     * Data Set ID: number
+     */
+    async addSavedDatasetService(userEmail: string, datasetId: number) {
+        let executionStatus = await this.dataQuery.addSavedDatasetModel(userEmail, datasetId);
+        return executionStatus;
+    }
+
+    /**
+     * This method is used to remove a saved data set from the user's favorites. It will take a user's email 
+     * and a data set ID and send this to the service for input.
+     * 
+     * @param userEmail
+     * User's Email: string
+     * @param datasetId
+     * Data Set ID: number
+     */
+    async removeSavedDatasetService(userEmail: string, datasetId: number) {
+        let executionStatus = await this.dataQuery.removeSavedDatasetModel(userEmail, datasetId);
+        return executionStatus;
     }
 
     /**
