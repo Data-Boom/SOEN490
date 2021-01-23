@@ -1,10 +1,11 @@
-import { savedGraphsModel } from "../models/savedGraphsModel";
+import { GraphsModel } from '../models/GraphModel';
 import { IGraphStateModel } from "../models/interfaces/SavedGraphsInterface";
+import { InternalServerError } from '@tsed/exceptions';
 
 export class GraphsService {
-    private dataQuery: savedGraphsModel;
+    private dataQuery: GraphsModel;
     constructor() {
-        this.dataQuery = new savedGraphsModel();
+        this.dataQuery = new GraphsModel();
     }
 
     /**
@@ -13,9 +14,13 @@ export class GraphsService {
      * @param graphId 
      * Graph ID: number
      */
-    async fetchOneSavedGraphService(graphId: number) {
-        let oneGraph = await this.dataQuery.fetchOneSavedGraphModel(graphId)
-        return oneGraph;
+    async fetchSingleSavedGraph(graphId: number) {
+        try {
+            let oneGraph = await this.dataQuery.fetchOneSavedGraph(graphId)
+            return oneGraph;
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+        }
     }
 
     /**
@@ -25,8 +30,8 @@ export class GraphsService {
      * @param userId 
      * User ID: number
      */
-    async fetchUserSavedGraphsService(userEmail: string) {
-        let userSavedGraphs = await this.dataQuery.fetchSavedGraphsOfUserModel(userEmail)
+    async fetchUserSavedGraphsService(userID: number) {
+        let userSavedGraphs = await this.dataQuery.fetchSavedGraphsOfUserModel(userID)
         return userSavedGraphs;
     }
 

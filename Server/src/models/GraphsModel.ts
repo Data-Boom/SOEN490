@@ -3,7 +3,7 @@ import { selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
-export class savedGraphsModel {
+export class GraphsModel {
     private connection: Connection;
     constructor() {
         this.connection = getConnection();
@@ -67,7 +67,7 @@ export class savedGraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async fetchOneSavedGraphModel(graphId: number): Promise<any[]> {
+    async fetchOneSavedGraph(graphId: number): Promise<any[]> {
         let rawGraphData = await selectOneSavedGraphQuery(this.connection, graphId)
         if (rawGraphData == undefined)
             return [false, "Graph does not exist"]
