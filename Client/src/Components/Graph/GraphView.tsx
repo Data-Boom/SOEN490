@@ -1,51 +1,52 @@
 import { Box, Button, Grid, Modal, Paper } from "@material-ui/core"
+import { IAxisStateModel, IDatasetRowModel, defaultDatasetRow } from "../../Models/Graph/IGraphStateModel"
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
-import { IGraphDatasetModel, IGraphPoint } from '../../Models/Graph/IGraphDatasetModel'
+import { IGraphDatasetModel, IGraphPoint, newGraphDataset } from '../../Models/Graph/IGraphDatasetModel'
 import React, { useState } from "react"
 
 import { DatasetsList } from "./DatasetsList"
+import { ExportDatasetsButton } from "./ExportDatasetsButton"
 import Graph from './Graph'
-import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 import SearchView from '../Search/SearchView'
 import { classStyles } from "../../appTheme"
-import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
-
-//todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
-const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
 
 export default function GraphView() {
 
-  const [datasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
-  const [openModal, setOpenModal] = useState(false)
+  const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
+  const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
+
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
 
   //todo unhardcode the variables
+  //todo refactor into storing one IVariable[] instead of two separate strings
   const [xVariableName, setXVariableName] = useState('initial pressure')
   const [yVariableName, setYVariableName] = useState('cell width')
-  const graphInitialState: IGraphStateModel = {
-    axes: [{
-      mode: 'linear',
-      units: 'mm',
-      variableName: xVariableName,
-    }]
-  }
-  const handleOpen = () => {
-    setOpenModal(true)
-  }
 
-  const handleClose = () => {
-    setOpenModal(false)
-  }
+  //todo on page load, check if graphId was provided, and if it was, request graphId with user email, and obtain full graph saved state
+  //todo after Leslie's story that allows to pick units and variable unhardcode units
+  const [graphAxes, setGraphAxes] = useState<IAxisStateModel[]>([{
+    logarithmic: false,
+    units: 'mm',
+    variableName: xVariableName,
+    zoomStartIndex: null,
+    zoomEndIndex: null,
+  },
+  {
+    logarithmic: false,
+    units: 'mm',
+    variableName: yVariableName,
+    zoomStartIndex: null,
+    zoomEndIndex: null,
+  }])
 
-  const handleExportJson = () => {
-    download("datasets.json", JSON.stringify(exampleExportDatasetModel, null, 4))
-  }
-
-  const toGraphDataset = (dataset: IDatasetModel, color: string): IGraphDatasetModel => {
+  const toGraphDataset = (dataset: IDatasetModel): IGraphDatasetModel => {
     const graphDataset: IGraphDatasetModel = {
-      color: color,
       id: dataset.id,
       name: dataset.dataset_name,
-      points: buildXYPoints(dataset, xVariableName, yVariableName)
+      points: buildXYPoints(dataset, xVariableName, yVariableName),
+      color: null,
+      shape: null,
+      isHidden: false
     }
 
     return graphDataset
@@ -72,47 +73,65 @@ export default function GraphView() {
     return variables.findIndex(variable => variable.name === varName)
   }
 
-  //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
-  function download(filename: string, text: string) {
-    const element = document.createElement('a')
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
-    element.setAttribute('download', filename)
-
-    element.style.display = 'none'
-    document.body.appendChild(element)
-
-    element.click()
-
-    document.body.removeChild(element)
+  const onRemoveDataset = (datasetId: number) => {
+    const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
+    setCompleteDatasets(filteredDatasets)
+    updateGraphDatasets(filteredDatasets, graphDatasets)
   }
 
-  const onRemoveDataset = (datasetId: number) => {
-    const filteredDataset = datasets.filter(dataset => dataset.id !== datasetId)
-    setCompleteDatasets(filteredDataset)
+  const onHideDatasetSwitch = (datasetId: number) => {
+    const graphDatasetsCopy = [...graphDatasets]
+    const indexToHide = graphDatasets.findIndex(dataset => dataset.id = datasetId)
+    graphDatasetsCopy[indexToHide].isHidden = !graphDatasetsCopy[indexToHide].isHidden
+    setGraphDatasets(graphDatasetsCopy)
   }
 
   const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
     const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
-    const mergedDatasets: IDatasetModel[] = [...datasets]
+    const mergedDatasets: IDatasetModel[] = [...completeDatasets]
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
 
     setCompleteDatasets(mergedDatasets)
-    handleClose()
+    updateGraphDatasets(mergedDatasets, graphDatasets)
+    setIsSearchModalOpen(false)
+  }
+
+  const updateGraphDatasets = (completeDatasets: IDatasetModel[], graphDatasets: IGraphDatasetModel[]) => {
+    const updatedGraphDatasets = []
+    completeDatasets.forEach(completeDataset => {
+      const existingGraphDatasetId = graphDatasets.findIndex(dataset => dataset.id == completeDataset.id)
+      let updatedGraphDataset: IGraphDatasetModel = {} as any
+      if (existingGraphDatasetId == -1) {
+        updatedGraphDataset = { ...newGraphDataset }
+        updatedGraphDataset.id = completeDataset.id
+        updatedGraphDataset.name = completeDataset.dataset_name
+        updatedGraphDataset.points = buildXYPoints(completeDataset, xVariableName, yVariableName)
+      } else {
+        updatedGraphDataset = { ...graphDatasets[existingGraphDatasetId] }
+      }
+      updatedGraphDatasets.push(updatedGraphDataset)
+    });
+    setGraphDatasets(updatedGraphDatasets)
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
-    return datasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
+    return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
+  }
+
+  const toDatasetRows = (datasets: IDatasetModel[]): IDatasetRowModel[] => {
+    return datasets.map(dataset => {
+      return { ...defaultDatasetRow, id: dataset.id, name: dataset.dataset_name }
+    })
   }
 
   return (
     <>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       <Modal
-        open={openModal}
-        onClose={handleClose}
+        open={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
         className={classStyles().modalsearch}
       >
         <Paper elevation={3}>
@@ -126,29 +145,32 @@ export default function GraphView() {
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={7} >
-            {
-              datasets && datasets[0] ? <Graph
-                datasets={datasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
-                graphInitialState={graphInitialState}
-              /> : null
-            }
+            {graphDatasets && graphDatasets[0] ?
+              <Graph
+                datasets={graphDatasets}
+                initialAxes={graphAxes}
+              /> : null}
           </Grid>
           <Grid item sm={5}>
             <Box ml={5} mr={5} mt={5}>
               <Grid container direction='column'>
                 <Grid item container spacing={3}>
                   <Grid item>
-                    <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
+                    <Button id="add-dataset" onClick={() => setIsSearchModalOpen(true)} color="primary" variant="contained">Add dataset To Graph</Button>
                   </Grid>
-                  {datasets && datasets[0] ?
+                  {completeDatasets && completeDatasets[0] ?
                     <Grid item>
-                      <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
+                      <ExportDatasetsButton datasets={completeDatasets} />
                     </Grid> : null
                   }
                 </Grid>
               </Grid>
               <Grid item>
-                <DatasetsList datasets={datasets} onRemoveDatasetClick={onRemoveDataset} />
+                <DatasetsList
+                  datasets={toDatasetRows(completeDatasets)}
+                  onRemoveDatasetClick={onRemoveDataset}
+                  onHideDatasetSwitch={onHideDatasetSwitch}
+                />
               </Grid>
             </Box>
           </Grid>

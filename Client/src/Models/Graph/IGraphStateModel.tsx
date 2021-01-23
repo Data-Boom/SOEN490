@@ -1,21 +1,37 @@
 export interface IGraphStateModel {
-  datasets: IDisplayedDatasetModel[],
+  datasets: IDisplayedDatasetStateModel[],
   name: string,
-  axes: IAxisModel[],
+  axes: IAxisStateModel[],
   id: string
 }
 
-export interface IDisplayedDatasetModel {
+export interface IDisplayedDatasetStateModel {
   id: number,
+  isHidden: boolean,
   color: string,
   shape: string,
-  isHidden: boolean
 }
 
-export interface IAxisModel {
+export interface IAxisStateModel {
   variableName: string,
-  mode: string,
+  logarithmic: boolean,
   zoomStartIndex: number,
   zoomEndIndex: number,
   units: string
+}
+
+export interface IDatasetRowModel {
+  id: number,
+  name: string,
+  isInitiallyHidden: boolean,
+  color: string,
+  shape: string,
+}
+
+export const defaultDatasetRow: IDatasetRowModel = {
+  id: null,
+  name: null,
+  isInitiallyHidden: false,
+  color: null,
+  shape: null
 }

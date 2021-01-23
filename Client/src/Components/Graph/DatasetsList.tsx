@@ -1,19 +1,28 @@
 import { Box, Grid } from "@material-ui/core"
 
 import { DatasetRow } from "./DatasetRow"
-import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
+import { IDatasetRowModel } from "../../Models/Graph/IGraphStateModel"
 import React from 'react'
 
 interface IProps {
-  datasets: IDatasetModel[],
-  onRemoveDatasetClick: (datasetId: number) => void
+  datasets: IDatasetRowModel[],
+  onRemoveDatasetClick: (datasetId: number) => void,
+  onHideDatasetSwitch: (datasetId: number) => void,
 }
 
 export const DatasetsList = (props: IProps) => {
+  const { datasets, onRemoveDatasetClick, onHideDatasetSwitch } = { ...props }
 
   const renderDatasetRows = () => {
-    return props && props.datasets && props.datasets.map(dataset => {
-      return (<DatasetRow dataset={dataset} key={dataset.id} onRemoveDatasetClick={props.onRemoveDatasetClick} />)
+    return datasets && datasets.map(dataset => {
+      return (
+        <DatasetRow
+          dataset={dataset}
+          key={dataset.id}
+          onRemoveDatasetClick={onRemoveDatasetClick}
+          onHideDatasetSwitch={onHideDatasetSwitch}
+        />
+      )
     })
   }
 

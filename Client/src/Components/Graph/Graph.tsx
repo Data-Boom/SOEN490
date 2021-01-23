@@ -4,19 +4,17 @@ import * as am4core from "@amcharts/amcharts4/core"
 import React, { useEffect, useState } from 'react'
 
 import { Box } from "@material-ui/core"
+import { IAxisStateModel } from "../../Models/Graph/IGraphStateModel"
 import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
-import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
-import am4themes_material from "@amcharts/amcharts4/themes/animated"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
-  graphInitialState: IGraphStateModel
+  initialAxes: IAxisStateModel[]
 }
 
-am4core.useTheme(am4themes_material)
 
 export default function Graph(props: IProps) {
-  const { datasets, graphInitialState } = { ...props }
+  const { datasets, initialAxes } = { ...props }
   const [chart, setChart] = useState<any>(null)
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export default function Graph(props: IProps) {
     }
 
     rebuildGraph(chart)
-  }, [datasets.length])
+  }, [datasets])
 
   const rebuildGraph = (chart) => {
     chart.data = chart && buildDataForGraph(datasets)
@@ -61,6 +59,9 @@ export default function Graph(props: IProps) {
   }
 
   const mergeDatasetPoints = (dataset: IGraphDatasetModel, data: any[]) => {
+    if (!dataset || dataset.isHidden) {
+      return
+    }
     //for all current dataset points:
     for (let pointIndex = 0; pointIndex < dataset.points.length; pointIndex++) {
       //create new point that has previous points info and this one's
@@ -70,17 +71,27 @@ export default function Graph(props: IProps) {
   }
 
   const setUpGraph = () => {
-    const chart = am4core.create(
-      "chartdiv",
-      am4charts.XYChart
-    )
+    const chart = am4core.create("chartdiv", am4charts.XYChart)
 
-    const value1xisX = chart.xAxes.push(new am4charts.ValueAxis())
-    value1xisX.title.text = `${graphInitialState.axes[0].variableName}, ${graphInitialState.axes[0].units}`
-    value1xisX.renderer.minGridDistance = 40
+    const xAxis = chart.xAxes.push(new am4charts.ValueAxis())
+    xAxis.title.text = `${initialAxes[0].variableName}, ${initialAxes[0].units}`
+    xAxis.logarithmic = initialAxes[0].logarithmic || false
+    xAxis.renderer.minGridDistance = 40
 
-    const value1xisY = chart.yAxes.push(new am4charts.ValueAxis())
-    value1xisY.title.text = `${graphInitialState.axes[1].variableName}, ${graphInitialState.axes[1].units}`
+    const yAxis = chart.yAxes.push(new am4charts.ValueAxis())
+    yAxis.logarithmic = initialAxes[1].logarithmic || false
+    yAxis.title.text = `${initialAxes[1].variableName}, ${initialAxes[1].units}`
+
+    chart.events.on("ready", function () {
+      //todo zoom to values or indeces?
+      initialAxes[0].zoomStartIndex &&
+        initialAxes[0].zoomEndIndex &&
+        xAxis.zoomToIndexes(initialAxes[0].zoomStartIndex, initialAxes[0].zoomEndIndex)
+
+      initialAxes[1].zoomStartIndex &&
+        initialAxes[1].zoomEndIndex &&
+        yAxis.zoomToIndexes(initialAxes[1].zoomStartIndex, initialAxes[1].zoomEndIndex)
+    })
 
     // Scrollbars
     chart.scrollbarX = new am4core.Scrollbar()
