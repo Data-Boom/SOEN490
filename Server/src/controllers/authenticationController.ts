@@ -1,7 +1,6 @@
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 import { NextFunction, Request, Response } from 'express';
 
-import { AuthenticationModel } from '../models/AuthenticationModel'
 import { AuthenticationService } from '../services/authenticationService';
 import { ILoginInformation, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
