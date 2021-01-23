@@ -35,14 +35,6 @@ export const initialDensity: IDataPointModel = {
   dataset_id: 2
 }
 
-export const initialDensity2: IDataPointModel = {
-  type: "Initial Density",
-  values: [3, 6, 9, 12, 15],
-  units: "g/cc",
-  representation: "Temporary",
-  dataset_id: 2
-}
-
 export const exampleDataset: IClientDatasetModel = {
   dataset_id: 1,
   dataPoints: [initalTemporature, initialDensity, cellWidth]

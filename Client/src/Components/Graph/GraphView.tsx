@@ -10,6 +10,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
+import { IVariableUnits } from '../../Models/Datasets/IVariableModel'
 import SearchView from '../Search/SearchView'
 import { classStyles } from "../../appTheme"
 import { exampleDataset } from "../../Models/Datasets/ITemporaryModel"
@@ -36,7 +37,11 @@ export default function GraphView() {
   //todo unhardcode the variables
   const [xVariableName, setXVariableName] = useState('initial pressure')
   const [yVariableName, setYVariableName] = useState('cell width')
+  const [xVariableUnits, setXVariableUnits] = useState('kPa')
+  const [yVariableUnits, setYVariableUnits] = useState('mm')
   const [variables, setVariables] = useState([])
+  const [xUnits, setXUnits] = useState([])
+  const [yUnits, setYUnits] = useState([])
 
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
@@ -171,22 +176,54 @@ export default function GraphView() {
       const tempVariable = xVariableName
       setXVariableName(event.target.value as string)
       setYVariableName(tempVariable)
+      setUnitType('x', event.target.value as string)
+      setUnitType('y', tempVariable)
     }
     else {
       setXVariableName(event.target.value as string)
+      setUnitType('x', event.target.value as string)
     }
-
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     if (xVariableName == (event.target.value as string)) {
       const tempVariable = yVariableName
       setYVariableName(event.target.value as string)
       setXVariableName(tempVariable)
+      setUnitType('y', event.target.value as string)
+      setUnitType('x', tempVariable)
     }
     else {
       setYVariableName(event.target.value as string)
+      setUnitType('y', event.target.value as string)
     }
   }
+  const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setXVariableUnits(event.target.value as string)
+  }
+  const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setYVariableUnits(event.target.value as string)
+  }
+
+  const setUnitType = (variable: string, type: string) => {
+    IVariableUnits.forEach(variables => {
+      const units = variables.units
+      variables.variableNames.forEach(name => {
+        if (type == name) {
+          if (variable == 'x') {
+            console.log(units)
+            setXUnits(units)
+            setXVariableUnits(units[0])
+          }
+          else if (variable == 'y') {
+            console.log(units)
+            setYUnits(units)
+            setYVariableUnits(units[0])
+          }
+        }
+      })
+    })
+  }
+
   return (
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
@@ -270,6 +307,38 @@ export default function GraphView() {
                     onChange={handleYVariableChange}
                   >
                     {variables.map(type => (
+                      <MenuItem value={type}>{type}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel id="xUnits">X Units</InputLabel>
+                  <Select
+                    labelId="xUnits"
+                    id="xUnits"
+                    value={xVariableUnits}
+                    autoWidth={true}
+                    onChange={handleXUnitChange}
+                  >
+                    {xUnits.map(type => (
+                      <MenuItem value={type}>{type}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl>
+                  <InputLabel id="yUnits">Y Units</InputLabel>
+                  <Select
+                    labelId="yUnits"
+                    id="yUnits"
+                    value={yVariableUnits}
+                    autoWidth={true}
+                    onChange={handleYUnitChange}
+                  >
+                    {yUnits.map(type => (
                       <MenuItem value={type}>{type}</MenuItem>
                     ))}
                   </Select>
