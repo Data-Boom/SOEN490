@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUpView() {
   const classes = useStyles()
 
-  const handleSignUpSubmit = async (user: ISignUpUserModel): Promise<void> => {
+  const handleSignUpSubmit = (user: ISignUpUserModel): void => {
     callSignUp(user)
   }
 
