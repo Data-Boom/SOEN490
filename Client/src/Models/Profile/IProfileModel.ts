@@ -1,3 +1,5 @@
+//todo remove there is a model in the authentication folder
+
 export interface IUser {
   name: string,
   email: string,
@@ -6,23 +8,12 @@ export interface IUser {
   password: string
 }
 
-export interface IPasswordSettings {
+export interface IPasswordFormModel {
   password: string,
   passwordConfirmation: string
 }
 
-export interface ISignInUser{
-  email: string,
-  password: string
-}
-
-export interface ISignUpUser
-{
-  firstName: string,
-  lastName: string,
-  email: string,
-  organization: string,
-  password: string,
-  confirmPassword: string
-  
+export const defaultPasswordFormModel: IPasswordFormModel = {
+  password: '',
+  passwordConfirmation: ''
 }

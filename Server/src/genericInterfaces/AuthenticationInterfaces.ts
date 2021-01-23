@@ -3,6 +3,10 @@ export interface ILoginInformation {
     password: string
 }
 
+export interface IPasswordResetInformation {
+    email: string
+}
+
 export interface ISignUpInformation {
     email: string,
     password: string,
@@ -21,7 +25,7 @@ export interface IJwtParams {
 export interface IUpdateUserDetail {
     email: string,
     password?: string,
-    organization?: string
+    organizationName?: string
 }
 
 export interface IFetchUserDetail {

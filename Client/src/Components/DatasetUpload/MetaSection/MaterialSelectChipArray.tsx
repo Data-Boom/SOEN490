@@ -8,18 +8,17 @@ import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 
 interface IProps {
-  value: IMaterial[]
-  options: IMaterial[]
+  value: IMaterial[],
+  options: IMaterial[],
   fieldArrayHelpers: ArrayHelpers
 }
 
 const materialToString = (material: IMaterial) => {
-  return material && material.composition + ' ' + material.details
+  return material && material.composition + ', ' + material.details
 }
 
 export const MaterialSelectChipArray = (props: IProps) => {
   const { value, options, fieldArrayHelpers } = props
-  console.log(value);
   const handleDelete = (materialToDelete: IMaterial) => {
     const indexToRemove = value.findIndex(material => materialToString(material) == materialToString(materialToDelete))
     fieldArrayHelpers.remove(indexToRemove)

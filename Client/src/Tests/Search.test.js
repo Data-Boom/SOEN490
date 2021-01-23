@@ -3,7 +3,6 @@ import renderer from "react-test-renderer";
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Search from '../Components/Search/Search'
-import TextField from '@material-ui/core';
 configure({ adapter: new Adapter() });
 
 describe('Search Component', () => {

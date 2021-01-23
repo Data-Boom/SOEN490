@@ -1,19 +1,30 @@
 import { Box, Grid, Typography } from '@material-ui/core'
-import { FastField, FieldArray } from 'formik'
+import { FastField, Field, FieldArray } from 'formik'
+import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
 
 import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
-import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 import { get } from 'lodash'
 
 interface IProps {
   materials: IMaterial[],
+  categories: any[],
+  subcategories: any[],
+}
+
+const getOptions = (options: any[]): any => {
+  return (
+    <>
+      <option aria-label="None" value="" />
+      {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+    </>
+  )
 }
 
 export const MetaForm = (props: IProps) => {
-  const { materials } = props
+  const { materials, categories, subcategories } = props
 
   return (
     <Box className={classStyles().defaultBorder}>
@@ -26,10 +37,10 @@ export const MetaForm = (props: IProps) => {
           <FastField name="meta.data_type" label='Data Type' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="meta.category" label='Category' component={MuiTextFieldFormik} />
+          <Field name="meta.category" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="meta.subcategory" label='Subcategory' component={MuiTextFieldFormik} />
+          <Field name="meta.subcategory" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
         </Grid>
         <Grid item sm={12}>
           <FieldArray name='meta.material' >

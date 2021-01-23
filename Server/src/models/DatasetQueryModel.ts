@@ -1,19 +1,24 @@
 import { Connection, getConnection } from "typeorm";
-import { Accounts } from "./entities/Accounts";
-import { selectAuthorsQuery } from "./entities/Authors";
+import {
+    IAuthorModel,
+    IClientDatasetModel,
+    IDataPointModel,
+    IDatasetIDModel,
+    IDatasetInfoModel,
+    IMaterialModel,
+    IPublicationModel
+} from "./interfaces/DatasetModelInterface";
+import { Publications, selectPublicationsQuery } from "./entities/Publications";
+import { selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
+
+import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
+import { Subcategory } from "./entities/Subcategory";
+import { selectAuthorsQuery } from "./entities/Authors";
 import { selectDataPointCommentsQuery } from "./entities/Datapointcomments";
 import { selectDataPointsQuery } from "./entities/Datapoints";
-import { selectDatasetsQuery, selectDatasetIdsQuery } from "./entities/Dataset";
 import { selectMaterialQuery } from "./entities/Material";
-import { selectPublicationsQuery, Publications } from "./entities/Publications";
-import { Subcategory } from "./entities/Subcategory";
-import {
-    IDatasetResponseModel, IAuthorModel, IPublicationModel, IDatasetModel,
-    IMaterialModel, IDataPointModel, IDataPointCommentModel
-} from "./interfaces/DatasetResponseModelInterface";
-
 
 export class DataQueryModel {
     private connection: Connection;
@@ -31,14 +36,14 @@ export class DataQueryModel {
      * @param material 
      * A string containing either a material's composition or details: string
      */
-    async getDatasetIDFromMaterial(material: string): Promise<IDatasetModel[]> {
+    async getDatasetIDFromMaterial(material: string): Promise<IDatasetIDModel[]> {
         let compositionIdRaw = await this.connection.manager.find(Composition, { composition: material });
         let compositionId = -1; // fallback value if material details were entered
         if (compositionIdRaw[0] != null) {
             compositionId = compositionIdRaw[0].id;
-        };
+        }
 
-        let materialDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+        let materialDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin('dataset.materials', 'material')
             .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
             .setParameters({ compositionRef: compositionId, materialDetails: material })
@@ -53,8 +58,8 @@ export class DataQueryModel {
      * @param year 
      * Publication year: number
      */
-    async getDatasetIDFromYear(year: number): Promise<IDatasetModel[]> {
-        let yearDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+    async getDatasetIDFromYear(year: number): Promise<IDatasetIDModel[]> {
+        let yearDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .where('publication.year = :yearRef', { yearRef: year })
             .getRawMany();
@@ -72,8 +77,8 @@ export class DataQueryModel {
      * @param lastName 
      * The last name of an author: string
      */
-    async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetModel[]> {
-        let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+    async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetIDModel[]> {
+        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
@@ -90,8 +95,8 @@ export class DataQueryModel {
      * @param lastName 
      * The last name of an author: string
      */
-    async getDatasetIDFromAuthorLastName(lastName: string): Promise<IDatasetModel[]> {
-        let authorDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+    async getDatasetIDFromAuthorLastName(lastName: string): Promise<IDatasetIDModel[]> {
+        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
@@ -106,8 +111,8 @@ export class DataQueryModel {
      * @param category
      * A category ID: number
      */
-    async getDatasetIDFromCategory(category: number): Promise<IDatasetModel[]> {
-        let categoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+    async getDatasetIDFromCategory(category: number): Promise<IDatasetIDModel[]> {
+        let categoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .where('category.id = :categoryId', { categoryId: category })
             .getRawMany();
@@ -123,8 +128,8 @@ export class DataQueryModel {
      * @param subcategory 
      * A subcategory ID: number
      */
-    async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetModel[]> {
-        let subcategoryDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
+    async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetIDModel[]> {
+        let subcategoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
             .where('category.id = :categoryId', { categoryId: category })
@@ -140,28 +145,94 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getUploadedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
-        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
-            .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
-            .where('account.id = :idRef', { idRef: id })
-            .getRawMany();
-        return idDatasetData;
+    async getUploadedDatasetIDOfUser(userEmail: string): Promise<any[]> {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+                .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
+                .where('account.id = :idRef', { idRef: userID })
+                .getRawMany();
+            return [true, idDatasetData];
+        }
     }
 
     /**
-     * This method will run a query find all the data set IDs favorited by specific user ID
+     * This method will run a query find all the data set IDs favorited by a specific user
      * and return a raw data packet containing that information. 
      * 
      * @param id 
      * Account ID: number
      */
-    async getSavedDatasetIDOfUser(id: number): Promise<IDatasetModel[]> {
+    async getSavedDatasetIDOfUser(userEmail: string): Promise<any[]> {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+                .innerJoin('dataset.accounts', 'account')
+                .where('account.id = :idRef', { idRef: userID })
+                .getRawMany();
+            return [true, idDatasetData];
+        }
+    }
 
-        let idDatasetData: IDatasetModel[] = await selectDatasetIdsQuery(this.connection.manager)
-            .innerJoin('dataset.accounts', 'account')
-            .where('account.id = :idRef', { idRef: id })
-            .getRawMany();
-        return idDatasetData;
+    private async fetchAccountIdFromEmail(userEmail: string) {
+        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
+        if (userRawData == undefined)
+            return false
+        else
+            return userRawData.id
+    }
+
+    /**
+     * This method accepts a user's email and a data set ID, will get the user ID associated with
+     * the email and, if the email was valid, will save the user ID and data set ID relation in the 
+     * accounts_datasets_dataset table if the relation does not already exist. If the email address
+     * was invalid, it will return a message reporting such. If the relation already exists, it
+     * will return a message reporting such.
+     * 
+     * @param userEmail 
+     * User's email: string
+     * @param datasetId 
+     * Data Set ID: number
+     */
+    async addSavedDatasetModel(userEmail: string, datasetId: number) {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
+            if (duplicateCheck[0] == undefined) {
+                await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userID, datasetId]);
+                return [true, "Favorite data set successfully saved"];
+            }
+            else {
+                return [true, "Favorite data set is already saved"];
+            }
+
+        }
+    }
+
+    /**
+     * This method accepts a user's email and a data set ID, will get the user ID associated with
+     * the email and, if the email was valid, will delete the user ID and data set ID relation in  
+     * the accounts_datasets_dataset table. 
+     * 
+     * @param userEmail 
+     * User's email: string
+     * @param datasetId 
+     * Data Set ID: number
+     */
+    async removeSavedDatasetModel(userEmail: string, datasetId: number) {
+        let userID = await this.fetchAccountIdFromEmail(userEmail)
+        if (userID == false)
+            return [false, "Invalid user email provided"]
+        else {
+            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
+            return [true, "User favorite successfully removed"];
+        }
     }
 
     /**
@@ -172,21 +243,37 @@ export class DataQueryModel {
      * @param id 
      * A data set ID: number
      */
-    async getAllData(id: number): Promise<IDatasetResponseModel> {
-        let publicationData: IPublicationModel[] = await selectPublicationsQuery(this.connection.manager, id)
-        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection.manager, id)
-        let datasetData: IDatasetModel[] = await selectDatasetsQuery(this.connection.manager, id)
-        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection.manager, id)
-        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection.manager, id)
-        let datapointComments: IDataPointCommentModel[] = await selectDataPointCommentsQuery(this.connection.manager, id)
-        const allData: IDatasetResponseModel = {
-            authors: authorData,
-            publications: publicationData,
-            dataPoints: datapointData,
-            dataset: datasetData,
+    async getAllData(id: number): Promise<IClientDatasetModel> {
+        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id) || {}
+        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection, id)
+        publicationData.authors = authorData
+        let completeDatasetData = await selectDatasetsQuery(this.connection, id)
+        let datasetInfo: IDatasetInfoModel = {
+            name: completeDatasetData[0]?.name,
+            comments: completeDatasetData[0]?.comments,
+            datasetDataType: completeDatasetData[0]?.datasetdatatype,
+            category: completeDatasetData[0]?.category,
+            subcategory: completeDatasetData[0]?.subcategory
+        }
+        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection, id)
+        this.valuesToArray(datapointData)
+        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection, id)
+        let datapointComments = await selectDataPointCommentsQuery(this.connection, id) || {}
+        datapointComments.datapointcomments = typeof datapointComments.datapointcomments === 'string' ? JSON.parse(datapointComments.datapointcomments) : []
+        let allData: IClientDatasetModel = {
+            publication: publicationData,
+            dataset_id: completeDatasetData[0]?.dataset_id,
+            dataset_info: datasetInfo,
             materials: materialData,
-            dataPointComments: datapointComments
+            dataPoints: datapointData,
+            dataPointComments: datapointComments?.datapointcomments
         }
         return allData;
+    }
+
+    private valuesToArray = (dataPoints: IDataPointModel[]): void => {
+        dataPoints.forEach(dataPoint => {
+            dataPoint.values = typeof dataPoint.values === 'string' ? JSON.parse(dataPoint.values) : []
+        });
     }
 }

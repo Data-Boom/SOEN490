@@ -15,7 +15,7 @@ describe('DataCell Component', () => {
 
     it('should render a file input field', () => {
         const wrapper = mount(<DataCell />)
-        expect(wrapper.find('input').exists()).toEqual(true);;
+        expect(wrapper.find('input').exists()).toEqual(true);
     });
 
     it('should render a way to submit the form.', () => {

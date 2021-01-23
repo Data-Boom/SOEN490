@@ -3,20 +3,24 @@
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
 import { HashRouter, Link } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
+import React, { useContext, useState } from 'react'
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
-import React from 'react'
-import Tooltip from "@material-ui/core/Tooltip"
+import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
-import { signInRoute } from "../Consts/Routes"
+import { removeUserInStorage } from '../Common/Storage'
+import { signInRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+
 
 const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-  const [open, setOpen] = React.useState(false)
+  const { user, setUser } = useContext(UserContext)
+  const [open, setOpen] = useState(false)
   const classes = useStyles()
 
   const handleDrawerOpen = () => {
@@ -27,7 +31,9 @@ export default function NavigationMenu() {
     setOpen(false)
   }
 
-  const handleSignIn = () => {
+  function logout() {
+    removeUserInStorage()
+    window.location.replace("/")
   }
 
   const drawer = (): any => {
@@ -46,19 +52,31 @@ export default function NavigationMenu() {
     )
   }
 
+  const renderGreeting = () => {
+    return user && user.firstName ?
+      (
+        <Typography>
+          Hello, {user.firstName} {user.lastName}
+          <Button variant="contained" onClick={logout}>Sign out</Button>
+        </Typography>
+      ) : (
+        <Button component={Link} to={signInRoute} id='btn1' variant="contained">Sign In</Button>
+      )
+  }
+
   return (
     <>
       <HashRouter>
         <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
-              <Grid item>
-                <Tooltip title={"Open side menu"}>
+              <ClickAwayListener onClickAway={handleDrawerClose}>
+                <Grid item>
                   <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
                     <MenuIcon />
                   </IconButton>
-                </Tooltip>
-              </Grid>
+                </Grid>
+              </ClickAwayListener>
               <Grid item>
                 <img src={universitylogo} />
               </Grid>
@@ -68,15 +86,13 @@ export default function NavigationMenu() {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                <Tooltip title={"Click to sign in / sign up"}>
-                  <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
-                </Tooltip>
+                {renderGreeting()}
               </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
         {drawer()}
-        <Box pt={16}>
+        <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
       </HashRouter>
