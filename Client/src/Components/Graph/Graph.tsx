@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 
-import { Button, Grid, TextField } from "@material-ui/core"
+import { Box, Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
@@ -26,13 +26,13 @@ export default function Graph(props: IProps) {
   props.datasets.forEach(dataset => IDList.push(dataset.id))
 
   const margin = {
-    top: 50,
-    right: 70,
-    bottom: 50,
-    left: 70
+    top: 60,
+    right: 90,
+    bottom: 60,
+    left: 110
   }
-  const outerWidth = props && props.outerWidth || 768
-  const outerHeight = props && props.outerHeight || 500
+  const outerWidth = (props && props.outerWidth) || 768
+  const outerHeight = (props && props.outerHeight) || 500
   const width = outerWidth - margin.left - margin.right
   const height = outerHeight - margin.top - margin.bottom
   const extremeBoundaries = props.extremeBoundaries
@@ -235,7 +235,7 @@ export default function Graph(props: IProps) {
       // This allows us to change the opacity of a dot on click.
       .on("click", function () {
         const opacity = d3.select(this).style('opacity')
-        if (opacity == '0.5') {
+        if (opacity === '0.5') {
           d3.select(this).style('opacity', 1)
         }
         else {
@@ -252,8 +252,8 @@ export default function Graph(props: IProps) {
       .attr('xlink:href', "https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-512.png")
       .attr('width', 20)
       .attr('height', 20)
-      .attr("x", 600)
-      .attr("y", function (d, i) { return 290 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("x", width - 60)
+      .attr("y", function (d, i) { return 0 + (i * 25) }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("r", 7)
       .attr("id", function (d) {
         const x = datalist.indexOf(d)
@@ -277,7 +277,7 @@ export default function Graph(props: IProps) {
         svg
           .selectAll("#legenddotid" + IDList[x])
           .attr("xlink:href", function () {
-            if (active[x] == 0) {
+            if (active[x] === 0) {
               return "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJ9809ku1l9OC6QM7kT2UimZhtywkCrB_0aQ&usqp=CAU"
             }
             else {
@@ -286,13 +286,79 @@ export default function Graph(props: IProps) {
           })
       })
 
+    var yplacement = svg
+      .append('g')
+      .attr("transform", "translate(-50, -40)")
+
+    var ylnlgButton = yplacement
+      .append("rect")
+      .attr('width', 50)
+      .attr('height', 30)
+      .attr("rx", 6)
+      .attr("ry", 6)
+      .attr("fill", '#757ce8')
+      .on("click", function () {
+        handleYScaleClick();
+
+      })
+
+    yplacement
+      .append("text")
+      .style("fill", "black")
+      .attr("id", "yAxisText")
+      .attr("dx", "12")
+      .attr("dy", "20")
+      .text(function () {
+        if (isYLog) {
+          return "Lin";
+        }
+        else {
+          return "Log"
+        }
+      })
+      .on("click", function () {
+        handleYScaleClick();
+      })
+
+
+    var xplacement = svg
+      .append('g')
+      .attr("transform", "translate(" + (width + 20) + "," + height + ")")
+
+    var xlnlgButton = xplacement
+      .append('rect')
+      .attr('width', 50)
+      .attr('height', 30)
+      .attr("rx", 6)
+      .attr("ry", 6)
+      .attr("fill", '#757ce8')
+      .on("click", handleXScaleClick)
+
+    xplacement
+      .append("text")
+      .attr("id", "xAxisText")
+      .style("fill", "black")
+      .attr("dx", "12")
+      .attr("dy", "20")
+      .text(function () {
+        if (isXLog) {
+          return "Lin";
+        }
+        else {
+          return "Log"
+        }
+      })
+      .on("click", function (d) {
+        handleXScaleClick();
+      })
+
     //The name labels for the datasets mentioned in the legend
     svg.selectAll()
       .data(datalist)
       .enter()
       .append("text")
-      .attr("x", 625)
-      .attr("y", function (d, i) { return 300 + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
+      .attr("x", width - 25)
+      .attr("y", function (d, i) { return 10 + (i * 25) }) // 100 is where the first dot appears. 25 is the distance between dots
       .attr("fill", function (d) {
         const x = datalist.indexOf(d)
         return colourslist[x]
@@ -340,23 +406,29 @@ export default function Graph(props: IProps) {
           </Grid>
           {showSettings &&
             <>
-              <Grid item xs={4}>
-                <Button size="small" id='btn1' variant="contained" onClick={handleXScaleClick} color="primary">Change X Scale</Button>
-              </Grid>
-              <Grid item xs={4}>
-                <TextField size="small" id="xLowerBound" variant="outlined" value={boundaries.minX} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField size="small" id="xUpperBound" variant="outlined" value={boundaries.maxX} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
-              </Grid>
-              <Grid item xs={4}>
-                <Button size="small" id='btn2' variant="contained" onClick={handleYScaleClick} color="primary">Change Y Scale</Button>
-              </Grid>
-              <Grid item xs={4}>
-                <TextField size="small" id="yLowerBound" variant="outlined" value={boundaries.minY} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField size="small" id="yUpperBound" variant="outlined" value={boundaries.maxY} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+              <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                <Box p={5} maxWidth>
+                  <Box p={2} maxWidth>
+                    <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="xLowerBound" variant="outlined" value={boundaries.minX} type="number" label="X Lower Bound" onChange={handleXLowerBoundChange} />
+                      </Grid>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="xUpperBound" variant="outlined" value={boundaries.maxX} type="number" label="X Upper Bound" onChange={handleXUpperBoundChange} />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                  <Box p={2} maxWidth>
+                    <Grid container xs={11} justify="flex-end" alignItems="center" spacing={1}>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="yLowerBound" variant="outlined" value={boundaries.minY} type="number" label="Y Lower Bound" onChange={handleYLowerBoundChange} />
+                      </Grid>
+                      <Grid item xs={5}>
+                        <TextField size="small" id="yUpperBound" variant="outlined" value={boundaries.maxY} type="number" label="Y Upper Bound" onChange={handleYUpperBoundChange} />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
               </Grid>
             </>
           }

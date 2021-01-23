@@ -26,7 +26,6 @@ export default function SearchView(props: IProps) {
   }
 
   const handleSelectionChanged = (selection: SelectionChangeParams) => {
-    console.log(selection)
     setSelection(selection)
   }
 
