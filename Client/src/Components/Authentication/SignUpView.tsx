@@ -53,13 +53,9 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUpView() {
   const classes = useStyles()
 
-  const handleSignUpSubmit = (user: ISignUpUserModel): void => {
+  const handleSignUpSubmit = async (user: ISignUpUserModel): Promise<void> => {
     callSignUp(user)
-
-    //SnackbarUtils.success('Sign up successful. Please sign in.')
-    //window.location.replace("/#/sign-in")
   }
-
 
 
   return (
