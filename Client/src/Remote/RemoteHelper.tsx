@@ -43,6 +43,7 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
 
     const message = await response.json()
     if (response.status.toString().charAt(0) == '2') {
+      window.location.replace("/#/sign-in")
       return message
     }
 
