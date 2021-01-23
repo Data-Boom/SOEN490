@@ -4,7 +4,7 @@ import { Box, Button, Grid, TextField } from "@material-ui/core"
 import React, { useState } from 'react'
 
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
-import { IGraphDatasetModel } from "../../Models/Datasets/IGraphDatasetModel"
+import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
@@ -286,11 +286,11 @@ export default function Graph(props: IProps) {
           })
       })
 
-    var yplacement = svg
+    const yplacement = svg
       .append('g')
       .attr("transform", "translate(-50, -40)")
 
-    var ylnlgButton = yplacement
+    const ylnlgButton = yplacement
       .append("rect")
       .attr('width', 50)
       .attr('height', 30)
@@ -298,7 +298,7 @@ export default function Graph(props: IProps) {
       .attr("ry", 6)
       .attr("fill", '#757ce8')
       .on("click", function () {
-        handleYScaleClick();
+        handleYScaleClick()
 
       })
 
@@ -310,22 +310,22 @@ export default function Graph(props: IProps) {
       .attr("dy", "20")
       .text(function () {
         if (isYLog) {
-          return "Lin";
+          return "Lin"
         }
         else {
           return "Log"
         }
       })
       .on("click", function () {
-        handleYScaleClick();
+        handleYScaleClick()
       })
 
 
-    var xplacement = svg
+    const xplacement = svg
       .append('g')
       .attr("transform", "translate(" + (width + 20) + "," + height + ")")
 
-    var xlnlgButton = xplacement
+    const xlnlgButton = xplacement
       .append('rect')
       .attr('width', 50)
       .attr('height', 30)
@@ -342,14 +342,14 @@ export default function Graph(props: IProps) {
       .attr("dy", "20")
       .text(function () {
         if (isXLog) {
-          return "Lin";
+          return "Lin"
         }
         else {
           return "Log"
         }
       })
       .on("click", function (d) {
-        handleXScaleClick();
+        handleXScaleClick()
       })
 
     //The name labels for the datasets mentioned in the legend

@@ -1,17 +1,17 @@
 import * as svg from 'save-svg-as-png'
 
-import { borders, sizing } from '@material-ui/system';
 import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
-import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
+import { IGraphDatasetModel, IGraphPoint } from '../../Models/Graph/IGraphDatasetModel'
 import React, { useState } from "react"
-import CancelIcon from '@material-ui/icons/Cancel';
+
+import CancelIcon from '@material-ui/icons/Cancel'
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import SearchView from '../Search/SearchView'
-import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { classStyles } from "../../appTheme"
+import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
