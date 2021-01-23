@@ -1,11 +1,16 @@
-import { GraphsModel } from '../models/GraphModel';
+import { GraphsModel } from '../models/GraphsModel';
 import { IGraphStateModel } from "../models/interfaces/SavedGraphsInterface";
-import { InternalServerError } from '@tsed/exceptions';
+import { BadRequest, InternalServerError } from '@tsed/exceptions';
+import { IResponse } from '../genericInterfaces/ResponsesInterface';
+
 
 export class GraphsService {
     private dataQuery: GraphsModel;
+    private requestResponse: IResponse
+
     constructor() {
         this.dataQuery = new GraphsModel();
+        this.requestResponse = {} as any
     }
 
     /**
@@ -16,8 +21,14 @@ export class GraphsService {
      */
     async fetchSingleSavedGraph(graphId: number) {
         try {
-            let oneGraph = await this.dataQuery.fetchOneSavedGraph(graphId)
-            return oneGraph;
+            let graphData = await this.dataQuery.fetchOneSavedGraph(graphId)
+            if (graphData == undefined) {
+                throw new BadRequest("Graph does not exist")
+            }
+            let singleGraphData: IGraphStateModel = await this.dataQuery.processSavedGraphData(graphData)
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = singleGraphData as any
+            return this.requestResponse
         } catch (error) {
             throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
         }

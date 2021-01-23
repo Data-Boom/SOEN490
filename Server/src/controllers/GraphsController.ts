@@ -25,13 +25,8 @@ export class GraphsController {
         else {
             try {
                 this.savedGraphsService = new GraphsService();
-                let executionStatus = await this.savedGraphsService.fetchSingleSavedGraph(graphId)
-                if (executionStatus[0]) {
-                    return response.status(200).json(executionStatus[1]);
-                }
-                else {
-                    return response.status(400).json(executionStatus[1]);
-                }
+                let requestResponse: any = await this.savedGraphsService.fetchSingleSavedGraph(graphId)
+                response.status(requestResponse.statusCode).json(requestResponse.message)
             } catch (error) {
                 response.status(error.status).json(error.message);
             }

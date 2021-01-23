@@ -18,7 +18,7 @@ export class GraphsModel {
      * @param rawGraphData 
      * Raw data packet: JSON object
      */
-    private async processSavedGraphData(rawGraphData: any): Promise<IGraphStateModel> {
+    async processSavedGraphData(rawGraphData: any): Promise<IGraphStateModel> {
         let singleGraphData: IGraphStateModel
         let oneDatasetsData: IDisplayedDatasetModel
         let sortedDatasetData: IDisplayedDatasetModel[] = []
@@ -67,14 +67,9 @@ export class GraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async fetchOneSavedGraph(graphId: number): Promise<any[]> {
+    async fetchOneSavedGraph(graphId: number): Promise<any> {
         let rawGraphData = await selectOneSavedGraphQuery(this.connection, graphId)
-        if (rawGraphData == undefined)
-            return [false, "Graph does not exist"]
-        else {
-            let singleGraphData: IGraphStateModel = await this.processSavedGraphData(rawGraphData)
-            return [true, singleGraphData];
-        }
+        return rawGraphData
     }
 
     private async fetchAccountIdFromEmail(userEmail: string) {
