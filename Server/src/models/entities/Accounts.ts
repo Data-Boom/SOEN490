@@ -51,3 +51,9 @@ export class Accounts {
     @JoinTable()
     datasets: Dataset[];
 }
+
+export const selectAccountIdFromEmailQuery = (connection: Connection, email: string) =>
+    connection.createQueryBuilder(Accounts, 'account')
+        .select('account.id', 'id')
+        .where('account.email = :email', { email: email })
+        .getRawOne();
