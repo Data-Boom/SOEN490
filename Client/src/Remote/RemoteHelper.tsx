@@ -1,4 +1,18 @@
+import { Alert } from '@material-ui/lab'
+import { Snackbar } from 'material-ui'
+import React from 'react'
+import { useState } from 'react'
 import SnackbarUtils from '../Components/SnackbarUtils'
+
+const [alertSuccess, setAlertSuccess] = useState(false)
+const handleClose = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  setAlertSuccess(false);
+};
+
 
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
@@ -25,9 +39,14 @@ export const get = async (route: string, query: any = {}): Promise<any> => {
   return fetchRemote(url, 'GET')
 }
 
+
+
+
+
 const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
   const request: RequestInit = { ...requestBase }
   setMethod(request, method)
+
 
   if (method !== 'GET' && method !== 'HEAD') {
     setData(request, data)
@@ -43,8 +62,19 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
 
     const message = await response.json()
     if (response.status.toString().charAt(0) == '2') {
-      window.location.replace("/#/sign-in")
-      return message
+      setAlertSuccess(true);
+
+      /*<Snackbar open={alertSuccess} autoHideDuration={6000} onClose={() => handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          This is a success message!
+        </Alert>
+      </Snackbar>*/
+
+
+
+      //window.location.replace("/#/sign-in")
+
+      //return message
     }
 
     if (response.status.toString().charAt(0) == '4') {
