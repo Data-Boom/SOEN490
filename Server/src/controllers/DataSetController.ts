@@ -39,16 +39,7 @@ export class DataSetController {
     }
 
     async createRequestToDeleteDataSet(request: Request, response: Response) {
-        let token = request.cookies.token
-        //console.log(token)
-        let base64Url = token
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const buff = new Buffer(base64, 'base64');
-        const payloadinit = buff.toString('ascii');
-        const payload = JSON.parse(payloadinit);
-        //console.log(payload)
-        //let arrayOfData = await this.dataSetService.deleteDataSet(dataSetIdToDelete)
-        return response.status(200).send(payload);
+
         if (!request.query.hasOwnProperty('DataSetId')) {
             response.status(400).send("Search ID Not Entered");
         }
@@ -56,14 +47,10 @@ export class DataSetController {
             let requestParams: any = { ...request.query };
             let dataSetIdToDelete = requestParams;
             try {
-                let token = request.cookies.token
-                let base64Url = token.split('.')[1];
-                let decodedValue = JSON.parse(window.atob(base64Url));
-                console.log(decodedValue)
-                //let arrayOfData = await this.dataSetService.deleteDataSet(dataSetIdToDelete)
-                return response.status(200).send(decodedValue);
+                let requestResponse = await this.dataSetService.deleteDataSet(dataSetIdToDelete)
+                return response.status(requestResponse.statusCode).send(requestResponse.message);
             } catch (err) {
-                response.status(400).send(err);
+                response.status(err.status).send(err.message);
             }
         }
     }

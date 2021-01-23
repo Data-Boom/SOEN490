@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { DataSetController } from '../controllers/DataSetController';
+import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 
 /**
  * This file contains the route for a call to query or obtain one or more data sets. 
@@ -8,30 +9,31 @@ import { DataSetController } from '../controllers/DataSetController';
  */
 
 let router = Router();
-let getDataControllerObject = new DataSetController();
+let dataSetController = new DataSetController();
 
+//Note to Self: Verify which of these routes are protected
 router.get('/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestForUserUploadedDatasets(request, response);
+    dataSetController.createRequestForUserUploadedDatasets(request, response);
 });
 
 router.get('/api/v1/dataset/userSavedDatsets/:userSavedDatsets', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestForUserSavedDatsets(request, response);
+    dataSetController.createRequestForUserSavedDatsets(request, response);
 });
 
 router.get('/api/v1/dataset/fetchUnapprovedDatasets$', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestForUnapprovedDatsets(request, response);
+    dataSetController.createRequestForUnapprovedDatsets(request, response);
 });
 
 router.get('/api/v1/dataset*', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestForData(request, response);
+    dataSetController.createRequestForData(request, response);
 });
 
 router.delete('/api/v1//dataset/:dataSetId', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestToDeleteDataSet(request, response)
+    dataSetController.createRequestToDeleteDataSet(request, response)
 })
 
-router.get('/dataset', (request: Request, response: Response) => {
-    getDataControllerObject.createRequestToDeleteDataSet(request, response)
+router.get('/dataset', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+    dataSetController.createRequestToDeleteDataSet(request, response)
 })
 
 export { router as DataSetRouter };
