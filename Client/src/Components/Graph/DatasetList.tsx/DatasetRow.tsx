@@ -26,9 +26,9 @@ export const DatasetRow = (props: IProps) => {
     <Grid item>
       <Box className={classStyles().datasetBorder}>
         <Grid container alignItems='center' justify='space-between'>
-          <Grid item xs={3}>
+          <Grid item container justify='flex-start' xs={3}>
             <Typography variant="body2" noWrap>
-              {dataset.name}{dataset.name}{dataset.name}{dataset.name}{dataset.name}{dataset.name}
+              {dataset.name}
             </Typography>
           </Grid>
           <Grid item xs={7}>
