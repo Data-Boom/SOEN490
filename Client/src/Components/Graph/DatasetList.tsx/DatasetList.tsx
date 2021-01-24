@@ -1,6 +1,6 @@
 import { DatasetRow } from "./DatasetRow"
 import { Grid } from "@material-ui/core"
-import { IDatasetRowModel } from "../../../Models/Graph/IGraphStateModel"
+import { IDatasetRowModel } from "../../../Models/Datasets/IDatasetRowModel"
 import React from 'react'
 
 interface IProps {

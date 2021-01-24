@@ -1,5 +1,5 @@
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
-import { IDatasetRowModel, newDatasetRow } from "../../Models/Graph/IGraphStateModel"
+import { IDatasetRowModel, newDatasetRow } from "../../Models/Datasets/IDatasetRowModel"
 import { IGraphDatasetModel, IGraphPoint, newGraphDataset } from "../../Models/Graph/IGraphDatasetModel"
 
 export const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVariableName: string): IGraphPoint[] => {

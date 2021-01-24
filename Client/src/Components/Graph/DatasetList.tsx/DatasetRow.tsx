@@ -2,7 +2,7 @@ import { Box, Grid, IconButton, Typography } from "@material-ui/core"
 import React, { useState } from 'react'
 
 import DeleteIcon from '@material-ui/icons/Delete'
-import { IDatasetRowModel } from "../../../Models/Graph/IGraphStateModel"
+import { IDatasetRowModel } from "../../../Models/Datasets/IDatasetRowModel"
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { classStyles } from "../../../appTheme"
