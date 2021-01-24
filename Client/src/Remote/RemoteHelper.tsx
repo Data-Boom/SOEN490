@@ -28,7 +28,6 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
   const request: RequestInit = { ...requestBase }
   setMethod(request, method)
 
-
   if (method !== 'GET' && method !== 'HEAD') {
     setData(request, data)
   }
