@@ -55,5 +55,4 @@ export const ISpecificVolumeModel: IVariableModel = {
     units: ['cc/g', 'm^3/kg']
 }
 
-
 export const IVariableUnits: IVariableModel[] = [IWidthModel, ITemperatureModel, IVelocityModel, IPressureModel, IDensityModel, IUnitlessModel, IPercentageModel, ISpecificVolumeModel]

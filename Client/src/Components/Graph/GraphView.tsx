@@ -39,6 +39,8 @@ export default function GraphView() {
   const [yVariableName, setYVariableName] = useState('cell width')
   const [xVariableUnits, setXVariableUnits] = useState('kPa')
   const [yVariableUnits, setYVariableUnits] = useState('mm')
+  const [xVariableMissing, setXVariableMissing] = useState([])
+  const [yVariableMissing, setYVariableMissing] = useState([])
   const [variables, setVariables] = useState([])
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
@@ -114,6 +116,7 @@ export default function GraphView() {
     setCompleteDatasets(filteredDataset)
     handleVariablesSelected(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
+    console.log(filteredDataset)
   }
 
   const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
@@ -127,6 +130,7 @@ export default function GraphView() {
     setCompleteDatasets(mergedDatasets)
     handleVariablesSelected(mergedDatasets)
     calculateExtremeBoundaries(mergedDatasets)
+    console.log(mergedDatasets)
     handleClose()
   }
 
@@ -137,7 +141,12 @@ export default function GraphView() {
         variableNames.push(variable.name)
       })
     })
-    setVariables(Array.from(new Set(variableNames)))
+    const uniqueVariables = Array.from(new Set(variableNames))
+    setVariables(uniqueVariables)
+    setXVariableName(uniqueVariables[0])
+    setYVariableName(uniqueVariables[1])
+    setUnitType('x', uniqueVariables[0])
+    setUnitType('y', uniqueVariables[1])
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
@@ -174,28 +183,24 @@ export default function GraphView() {
   const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     if (yVariableName == (event.target.value as string)) {
       const tempVariable = xVariableName
-      setXVariableName(event.target.value as string)
       setYVariableName(tempVariable)
-      setUnitType('x', event.target.value as string)
       setUnitType('y', tempVariable)
+      checkYVariablesExist(tempVariable)
     }
-    else {
-      setXVariableName(event.target.value as string)
-      setUnitType('x', event.target.value as string)
-    }
+    setXVariableName(event.target.value as string)
+    setUnitType('x', event.target.value as string)
+    checkXVariablesExist(event.target.value as string)
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     if (xVariableName == (event.target.value as string)) {
       const tempVariable = yVariableName
-      setYVariableName(event.target.value as string)
       setXVariableName(tempVariable)
-      setUnitType('y', event.target.value as string)
       setUnitType('x', tempVariable)
+      checkXVariablesExist(tempVariable)
     }
-    else {
-      setYVariableName(event.target.value as string)
-      setUnitType('y', event.target.value as string)
-    }
+    setYVariableName(event.target.value as string)
+    setUnitType('y', event.target.value as string)
+    checkYVariablesExist(event.target.value as string)
   }
   const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setXVariableUnits(event.target.value as string)
@@ -210,12 +215,10 @@ export default function GraphView() {
       variables.variableNames.forEach(name => {
         if (type == name) {
           if (variable == 'x') {
-            console.log(units)
             setXUnits(units)
             setXVariableUnits(units[0])
           }
           else if (variable == 'y') {
-            console.log(units)
             setYUnits(units)
             setYVariableUnits(units[0])
           }
@@ -223,6 +226,41 @@ export default function GraphView() {
       })
     })
   }
+
+  const checkXVariablesExist = (type: string) => {
+    const missingDatasets = []
+    completeDatasets.forEach(dataset => {
+      let exists = false
+      dataset.data.variables.forEach(variableName => {
+        if (variableName.name == type) {
+          exists = true
+        }
+      })
+      if (exists == false) {
+        missingDatasets.push(dataset.id)
+      }
+    })
+    console.log(missingDatasets)
+    setXVariableMissing(missingDatasets)
+  }
+
+  const checkYVariablesExist = (type: string) => {
+    const missingDatasets = []
+    completeDatasets.forEach(dataset => {
+      let exists = false
+      dataset.data.variables.forEach(variableName => {
+        if (variableName.name == type) {
+          exists = true
+        }
+      })
+      if (exists == false) {
+        missingDatasets.push(dataset.id)
+      }
+    })
+    console.log(missingDatasets)
+    setYVariableMissing(missingDatasets)
+  }
+
 
   return (
     <>
@@ -280,7 +318,7 @@ export default function GraphView() {
               </Grid>
             </Box>
             <Grid container direction='row'>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <FormControl>
                   <InputLabel id="xVariable">X Variable</InputLabel>
                   <Select
@@ -296,23 +334,7 @@ export default function GraphView() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
-                <FormControl>
-                  <InputLabel id="yVariable">Y Variable</InputLabel>
-                  <Select
-                    labelId="yVariable"
-                    id="yVariable"
-                    value={yVariableName}
-                    autoWidth={true}
-                    onChange={handleYVariableChange}
-                  >
-                    {variables.map(type => (
-                      <MenuItem value={type}>{type}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <FormControl>
                   <InputLabel id="xUnits">X Units</InputLabel>
                   <Select
@@ -328,7 +350,26 @@ export default function GraphView() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
+                Datasets Missing X: {xVariableMissing.toString()}
+              </Grid>
+              <Grid item xs={4}>
+                <FormControl>
+                  <InputLabel id="yVariable">Y Variable</InputLabel>
+                  <Select
+                    labelId="yVariable"
+                    id="yVariable"
+                    value={yVariableName}
+                    autoWidth={true}
+                    onChange={handleYVariableChange}
+                  >
+                    {variables.map(type => (
+                      <MenuItem value={type}>{type}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={4}>
                 <FormControl>
                   <InputLabel id="yUnits">Y Units</InputLabel>
                   <Select
@@ -343,6 +384,9 @@ export default function GraphView() {
                     ))}
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                Datasets Missing Y: {yVariableMissing.toString()}
               </Grid>
             </Grid>
           </Grid>
