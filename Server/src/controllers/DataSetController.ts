@@ -38,16 +38,16 @@ export class DataSetController {
         }
     }
 
-    async createRequestToDeleteDataSet(request: Request, response: Response) {
+    async createRequestToDeleteSavedDataSet(request: Request, response: Response) {
 
-        if (!request.query.hasOwnProperty('DataSetId')) {
+        if (!request.query.hasOwnProperty('datasetId')) {
             response.status(400).json("Search ID Not Entered");
         }
         else {
-            let requestParams: any = { ...request.query };
-            let dataSetIdToDelete = requestParams;
+            let datasetId: any = request.query.datasetId
+            let userId: number = request.body.user.account_id
             try {
-                let requestResponse = await this.dataSetService.deleteDataSet(dataSetIdToDelete)
+                let requestResponse = await this.dataSetService.removeSavedDatasetService(userId, datasetId)
                 return response.status(requestResponse.statusCode).send(requestResponse.message);
             } catch (err) {
                 response.status(err.status).send(err.message);
@@ -143,7 +143,19 @@ export class DataSetController {
         }
     }
 
-    async createRequestToFlagDataSet(dataSetID) {
-
+    async createRequestToFlagDataSet(request: Request, response: Response) {
+        if (!request.query && !request.query.datasetId) {
+            response.status(400).json("No datasetID provided to flag dataset");
+        }
+        else {
+            let datasetIdToFlag = request.body.datasetId
+            let flaggedComments = request.body.datasetComments
+            try {
+                let requestResponse = await this.dataSetService.flagNewDataset(datasetIdToFlag, flaggedComments)
+                return response.status(requestResponse.statusCode).json(requestResponse.message);
+            } catch (err) {
+                response.status(err.status).send(err.message);
+            }
+        }
     }
 }

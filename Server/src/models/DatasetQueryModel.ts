@@ -227,14 +227,10 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async removeSavedDatasetModel(userEmail: string, datasetId: number) {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
-            return [true, "User favorite successfully removed"];
-        }
+    async removeSavedDatasetModel(userId: number, datasetId: number) {
+        await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userId, datasetId]);
+        return [true, "User favorite successfully removed"];
+
     }
 
     /**

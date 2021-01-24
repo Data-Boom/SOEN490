@@ -29,11 +29,11 @@ router.get('/api/v1/dataset*', (request: Request, response: Response) => {
     dataSetController.createRequestForData(request, response);
 });
 
-router.delete('/api/v1//dataset/:dataSetId', (request: Request, response: Response) => {
+router.delete('/api/v1//dataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataSetController.createRequestToDeleteDataSet(request, response)
 })
 
-router.get('/api/v1/flagDataSet', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.put('/api/v1/flagDataSet/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
     dataSetController.createRequestToFlagDataSet(request, response)
 })
 

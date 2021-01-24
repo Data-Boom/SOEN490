@@ -8,10 +8,12 @@ import { DatasetUpdateModel } from '../models/DatasetUpdateModel';
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
+    private updateModel: DatasetUpdateModel
     private requestResponse: IResponse
 
     constructor() {
         this.dataQuery = new DataQueryModel();
+        this.updateModel = new DatasetUpdateModel()
         this.requestResponse = {} as any
     }
 
@@ -255,10 +257,20 @@ export class DataSetService {
      * @param datasetId
      * Data Set ID: number
      */
-    async removeSavedDatasetService(userEmail: string, datasetId: number) {
-        let executionStatus = await this.dataQuery.removeSavedDatasetModel(userEmail, datasetId);
-        return executionStatus;
+    async removeSavedDatasetService(userId: number, datasetId: number) {
+        try {
+            let response = await this.dataQuery.removeSavedDatasetModel(userId, datasetId);
+            if (response == undefined || response == null) {
+                throw new NotFound("Could not find your saved datasets")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong deleting your saved datasets. Try later")
+        }
     }
+
 
     /**
      * This method accepts an array of IDatasetIDModel models where each object has a data set ID that we wish to acquire
@@ -295,12 +307,10 @@ export class DataSetService {
     }
 
 
-    async rejectDataSet(dataSetID: number) {
-        let updateModel: DatasetUpdateModel
-        updateModel = new DatasetUpdateModel
+    async rejectDataSet(datasetId: number) {
         try {
-            let response = await updateModel.rejectDataset(dataSetID)
-            if (response == undefined) {
+            let response = await this.updateModel.rejectDataset(datasetId)
+            if (response == undefined || response == null) {
                 throw new BadRequest("No DataSet Exists under this ID")
             }
             this.requestResponse.statusCode = 200
@@ -308,6 +318,20 @@ export class DataSetService {
             return this.requestResponse
         } catch (error) {
             throw new InternalServerError("Something went wrong deleting this DataSet. Maybe its down")
+        }
+    }
+
+    async flagNewDataset(datasetId: number, flaggedComment?: string) {
+        try {
+            let response = await this.updateModel.flagDataSet(datasetId, flaggedComment)
+            if (response == undefined || response == null) {
+                throw new BadRequest("Could not flag this Dataset")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong with flagged this DataSet. Try later")
         }
     }
 }

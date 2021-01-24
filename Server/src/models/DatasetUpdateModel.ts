@@ -67,12 +67,13 @@ export class DatasetUpdateModel {
         return allFlaggedDatsets
     }
 
-    async flagDataSet(datasetId: number, flaggedComment: string) {
+    async flagDataSet(datasetId: number, flaggedComment?: string) {
         let newFlaggedSet = new Unapproveddatasets()
         newFlaggedSet.datasetId = datasetId
         newFlaggedSet.flaggedComment = flaggedComment
         newFlaggedSet.isFlagged = 1
         await this.connection.manager.save(newFlaggedSet)
+        return "Dataset Flagged"
     }
 
     async approvedDataSet(datasetId: number, datasetCommentsToAppend: string) {
