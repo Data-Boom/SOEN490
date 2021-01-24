@@ -1,7 +1,3 @@
-import { Alert } from '@material-ui/lab'
-import { Snackbar } from 'material-ui'
-import React from 'react'
-import { useState } from 'react'
 import SnackbarUtils from '../Components/SnackbarUtils'
 
 
@@ -25,7 +21,6 @@ export const post = async (route: string, data: any): Promise<any> => {
 
 export const get = async (route: string, query: string = ''): Promise<any> => {
   const url = `${route}?${query}`
-
   return fetchRemote(url, 'GET')
 }
 
@@ -49,11 +44,11 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
 
     const message = await response.json()
 
-    if (response.status.toString().charAt(0) == '2' && window.location.href.indexOf("/sign-up") > -1) {
-      SnackbarUtils.success('Sign up successful. Please sign in.')
-      window.location.replace("/#/sign-in")
-      return message
-    }
+    /* if (response.status.toString().charAt(0) == '2' && window.location.href.indexOf("/sign-up") > -1) {
+       SnackbarUtils.success('Sign up successful. Please sign in.')
+       window.location.replace("/#/sign-in")
+       return message
+     }*/
 
     if (response.status.toString().charAt(0) == '2') {
       return message
