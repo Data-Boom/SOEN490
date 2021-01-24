@@ -12,15 +12,16 @@ import { IGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
 import { SaveGraphStateControl } from "./SaveGraphStateControl"
 import { SearchViewModal } from "../Search/SearchViewModal"
 import { callCreateGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
+import { useParams } from "react-router"
 
 export default function GraphView() {
 
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
-  //todo after Leslie's story that allows to pick units and variable unhardcode units
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState })
-  console.log(graphState)
-  //todo on page load, check if graphId was provided, and if it was, request graphId with user email, and obtain full graph saved state
+
+  const { graphStateId } = useParams()
+  console.log(graphStateId)
   const onRemoveDataset = (datasetId: number) => {
     const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
     handleCompleteDatasetsUpdated(filteredDatasets)

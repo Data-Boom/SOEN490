@@ -1,4 +1,4 @@
-export const graphRoute = '/graph'
+export const graphRoute = '/graph/:graphStateId'
 export const homeRoute = '/'
 export const fileUploadRoute = '/uploadFile'
 export const searchRoute = '/search'

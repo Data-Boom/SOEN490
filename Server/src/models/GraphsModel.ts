@@ -121,7 +121,7 @@ export class GraphsModel {
      * Axis unit types: string[]
      */
     private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[], datasetHiddenStatus: boolean[],
-        axisVariable: string[], axisMode: string[], axisZoom: number[], axisUnits: string[]): Promise<string> {
+        axisVariable: string[], axisLog: boolean[], axisZoomStart: number[], axisZoomEnd: number[], axisUnits: string[]): Promise<string> {
 
         let newGraph = new Savedgraphs();
         newGraph.id;
