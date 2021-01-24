@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react"
 import { callCreateGraphState, callGetGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
 import { toDatasetRows, transformAndMergeGraphDatasets } from "./GraphFunctions"
 
+import { CustomLoader } from "../Utils/CustomLoader"
 import { DatasetList } from "./DatasetList.tsx/DatasetList"
 import { ExportDatasetsButton } from "./ExportDatasetsButton"
 import Graph from './Graph'
@@ -17,6 +18,8 @@ import { useParams } from "react-router"
 
 export default function GraphView() {
 
+  const [loadingDatasets, setIsLoadinDatasets] = useState(false)
+
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState })
@@ -24,11 +27,13 @@ export default function GraphView() {
 
   useEffect(() => {
     const getGraphState = async (id: number) => {
+      setIsLoadinDatasets(true)
       const graphState = await callGetGraphState(id)
       setGraphState(graphState)
 
       const datasets = await getDatasets({ datasetId: graphState.datasets.map(dataset => dataset.id) })
       handleDatasetsSelected(datasets)
+      setIsLoadinDatasets(false)
     }
 
     if (graphStateId) {
@@ -84,7 +89,9 @@ export default function GraphView() {
   }
 
   return (
-    <>
+    <>{loadingDatasets ? <CustomLoader
+      visible={loadingDatasets}
+    /> :
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={7} >
@@ -121,7 +128,7 @@ export default function GraphView() {
             </Box>
           </Grid>
         </Grid>
-      </Box>
+      </Box>}
     </>
   )
 }

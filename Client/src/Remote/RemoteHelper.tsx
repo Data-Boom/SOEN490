@@ -1,4 +1,4 @@
-import SnackbarUtils from '../Components/SnackbarUtils'
+import SnackbarUtils from '../Components/Utils/SnackbarUtils'
 
 // ideally this will come from some config and not hardcoded that will change if we run local vs live
 // serviceUrl = env.process.serviceUrl
