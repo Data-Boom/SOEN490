@@ -11,7 +11,7 @@ export const listGraphStates = async (): Promise<IGraphStateModel[]> => {
   return graphList
 }
 
-export const getGraphState = async (id: number): Promist<IGraphStateModel> => {
+export const getGraphState = async (id: number): Promise<IGraphStateModel> => {
   const graphState = await get(listGraphStatesRoute)
   return graphState
 }
