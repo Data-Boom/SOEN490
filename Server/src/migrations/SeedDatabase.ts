@@ -318,8 +318,9 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     newGraph.datasetShapes = ["square", "triangle"];
     newGraph.datasetHiddenStatus = [false, true];
     newGraph.axisVariable = ["temperature", "width"];
-    newGraph.axisMode = ["normal", "normal"];
-    newGraph.axisZoom = [100, 100];
+    newGraph.axisLog = [true, true];
+    newGraph.axisZoomStart = [100, 100];
+    newGraph.axisZoomEnd = [100, 100];
     newGraph.axisUnits = ["C", "mm"];
     await connection.manager.save(newGraph);
 
@@ -332,8 +333,9 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     newGraph2.datasetShapes = ["square"];
     newGraph2.datasetHiddenStatus = [false];
     newGraph2.axisVariable = ["temperature"];
-    newGraph2.axisMode = ["normal"];
-    newGraph2.axisZoom = [100];
+    newGraph2.axisLog = [true];
+    newGraph2.axisZoomStart = [100];
+    newGraph2.axisZoomEnd = [100];
     newGraph2.axisUnits = ["C"];
     await connection.manager.save(newGraph2);
   }
