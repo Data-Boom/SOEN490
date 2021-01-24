@@ -35,8 +35,6 @@ export default function Graph(props: IProps) {
 
   const rebuildGraph = (chart) => {
     chart.data = chart && buildDataForGraph(datasets)
-    addSeries(chart)
-    chart.exporting.menu = new am4core.ExportMenu()
   }
 
   const addSeries = (chart) => {
@@ -109,6 +107,8 @@ export default function Graph(props: IProps) {
       return dataItem
     }
 
+    chart.exporting.menu = new am4core.ExportMenu()
+    addSeries(chart)
     setChart(chart)
     return chart
   }

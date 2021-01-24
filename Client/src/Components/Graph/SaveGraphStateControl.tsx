@@ -1,34 +1,45 @@
+import { Box, Button, Grid } from "@material-ui/core"
 import { Field, Form, Formik } from "formik"
 
-import { Grid } from "@material-ui/core"
 import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
+import { MuiTextFieldFormik } from "../Forms/FormikFields"
 import React from 'react'
-import Typography from "material-ui/styles/typography"
+import { classStyles } from '../../appTheme'
 
 interface IProps {
   graphState: IGraphStateModel
 }
 
+interface IFormikProps {
+  name: string
+}
+
 export const SaveGraphStateControl = (props: IProps) => {
   const { graphState } = { ...props }
 
-  const saveGraphState = () => {
-
+  const saveGraphState = (form: IFormikProps) => {
+    graphState.name = form.name
+    //todo implement GraphStateEndpoint
+    //todo on successful save let user know that graph was saved
+    // callSaveGraphState(graphState)
   }
 
   return (
     <Formik
-      initialValues={defaultSearchDatasetsModel}
-      validationSchema={searchDatasetsValidationSchema}
-      onSubmit={transformAndSubmit}
+      initialValues={{ name: 'New Graph' }}
+      onSubmit={saveGraphState}
     >
       <Form>
-        <Typography variant='h4' align="left">Search</Typography>
-        <Grid container spacing={4}>
-          <Grid item sm={2}>
-            <Field name="firstName" label='First Name' component={MuiTextFieldFormik} />
+        <Box className={classStyles().defaultBorder}>
+          <Grid container spacing={4} alignItems="center">
+            <Grid item sm={4}>
+              <Field name="name" label='Graph Name' component={MuiTextFieldFormik} />
+            </Grid>
+            <Grid item sm={4}>
+              <Button type="submit" variant="contained" color="primary">Save Graph</Button>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
       </Form>
     </Formik >
   )
