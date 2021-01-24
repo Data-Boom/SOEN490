@@ -1,5 +1,5 @@
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
-import { IDatasetRowModel, defaultDatasetRow } from "../../Models/Graph/IGraphStateModel"
+import { IDatasetRowModel, newDatasetRow } from "../../Models/Graph/IGraphStateModel"
 import { IGraphDatasetModel, IGraphPoint, newGraphDataset } from "../../Models/Graph/IGraphDatasetModel"
 
 export const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVariableName: string): IGraphPoint[] => {
@@ -40,7 +40,7 @@ export const transformAndMergeGraphDatasets = (completeDatasets: IDatasetModel[]
 
 export const toDatasetRows = (datasets: IDatasetModel[]): IDatasetRowModel[] => {
   return datasets.map(dataset => {
-    return { ...defaultDatasetRow, id: dataset.id, name: dataset.dataset_name }
+    return { ...newDatasetRow, id: dataset.id, name: dataset.dataset_name }
   })
 }
 

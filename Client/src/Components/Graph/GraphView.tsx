@@ -43,7 +43,7 @@ export default function GraphView() {
   }
 
   const handleCompleteDatasetsUpdated = (updatedDatasets: IDatasetModel[]) => {
-    const mergedGraphDatasets = transformAndMergeGraphDatasets(updatedDatasets, graphDatasets, xVariableName, yVariableName)
+    const mergedGraphDatasets = transformAndMergeGraphDatasets(updatedDatasets, graphDatasets, graphState.axes[0].variableName, graphState.axes[1].variableName)
     setCompleteDatasets(updatedDatasets)
     setGraphDatasets(mergedGraphDatasets)
   }
