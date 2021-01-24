@@ -59,14 +59,6 @@ export class DatasetUpdateModel {
     }
 
 
-    async selectAllFlaggedDatasets(): Promise<any> {
-        let allFlaggedDatsets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
-            .select()
-            .where('unapproved_datasets.isFlagged = 1')
-            .getRawMany();
-        return allFlaggedDatsets
-    }
-
     async flagDataSet(datasetId: number, flaggedComment?: string) {
         let newFlaggedSet = new Unapproveddatasets()
         newFlaggedSet.datasetId = datasetId
@@ -76,7 +68,12 @@ export class DatasetUpdateModel {
         return "Dataset Flagged"
     }
 
-    async approvedDataSet(datasetId: number, datasetCommentsToAppend: string) {
+    async userApproveDataset(datasetId: number) {
+        await this.wipeEntryFromUnapprovedTable(datasetId)
+        return "Success"
+    }
+
+    async adminApprovedDataSet(datasetId: number, datasetCommentsToAppend: string) {
         await this.wipeEntryFromUnapprovedTable(datasetId)
         let oldComment = await this.selectDatasetCommentQuery(datasetId)
         let newComment = oldComment.concat(" " + datasetCommentsToAppend)

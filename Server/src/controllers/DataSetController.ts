@@ -68,7 +68,7 @@ export class DataSetController {
      */
     async createRequestForUserUploadedDatasets(request: Request, response: Response) {
         let requestParam = request.params.userUploadedDatasets;
-        let userId: number = +requestParam;
+        let userId: number = request.body.user.account_id
         if (isNaN(userId)) {
             response.status(400).send("Invalid search params entered");
         }
@@ -95,7 +95,7 @@ export class DataSetController {
      */
     async createRequestForUserSavedDatsets(request: Request, response: Response) {
         let requestParam = request.params.userSavedDatsets;
-        let userId: number = +requestParam;
+        let userId: number = request.body.user.account_id
         if (isNaN(userId)) {
             response.status(500).json("Invalid search params entered");
         }
@@ -120,10 +120,10 @@ export class DataSetController {
      */
     async createRequestForUnapprovedDatsets(request: Request, response: Response) {
         try {
-            let arrayOfData = await this.dataSetService.getUnapprovedDatasets()
-            return response.status(200).json(arrayOfData);
-        } catch (err) {
-            response.status(500).send(err);
+            let requestResponse = await this.dataSetService.getUnapprovedAllDatasets()
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
+        } catch (error) {
+            response.status(error.status).json(error.message);
         }
     }
 
@@ -143,19 +143,59 @@ export class DataSetController {
         }
     }
 
-    async createRequestToFlagDataSet(request: Request, response: Response) {
+    async createRequestToFlagDataset(request: Request, response: Response) {
         if (!request.query && !request.query.datasetId) {
             response.status(400).json("No datasetID provided to flag dataset");
         }
         else {
-            let datasetIdToFlag = request.body.datasetId
-            let flaggedComments = request.body.datasetComments
+            let datasetIdToFlag: any = request.query.datasetId
+            let flaggedComments: any = request.query.flaggedComments
             try {
                 let requestResponse = await this.dataSetService.flagNewDataset(datasetIdToFlag, flaggedComments)
                 return response.status(requestResponse.statusCode).json(requestResponse.message);
-            } catch (err) {
-                response.status(err.status).send(err.message);
+            } catch (error) {
+                response.status(error.status).json(error.message);
             }
         }
     }
+
+    async createRequestToRejectDataset(request: Request, response: Response) {
+        if (!request.query && !request.query.datasetId) {
+            response.status(400).json("No Dataset ID provided");
+        }
+        else {
+            let datasetIdToFlag: any = request.query.datasetId
+            try {
+                let requestResponse = await this.dataSetService.rejectDataSet(datasetIdToFlag)
+                return response.status(requestResponse.statusCode).json(requestResponse.message);
+            } catch (error) {
+                response.status(error.status).json(error.message);
+            }
+        }
+    }
+
+    async createRequestForUserFlaggedDatasets(request: Request, response: Response) {
+        let userId: number = request.body.user.account_id
+        try {
+            let requestResponse = await this.dataSetService.fetchFlaggedDatasets(userId)
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
+        } catch (error) {
+            response.status(error.status).json(error.message);
+        }
+    }
+
+    async createAdminApprovedDatasetRequest(request: Request, response: Response) {
+        if (!request.query && !request.query.datasetId) {
+            response.status(400).json("No datasetID provided to flag dataset");
+        }
+        let datasetIdToApprove: any = request.query.datasetId
+        let datasetComments: any = request.query.datasetComments
+        try {
+            let requestResponse = await this.dataSetService.adminApproveDataset(datasetIdToApprove, datasetComments)
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
+        } catch (error) {
+            response.status(error.status).json(error.message);
+        }
+    }
+
 }

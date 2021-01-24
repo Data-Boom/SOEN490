@@ -275,7 +275,7 @@ export class DataQueryModel {
         });
     }
 
-    async selectUploaderFlaggedDatasets(uploaderId: number): Promise<any> {
+    async selectUserFlaggedDatasets(uploaderId: number): Promise<any> {
         let userFlaggedDatasets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_Datasets')
             .select()
             .innerJoin(Dataset, 'dataset.id = unapproved_Datasets.datasetId')
@@ -285,10 +285,18 @@ export class DataQueryModel {
         return userFlaggedDatasets
     }
 
-    async getAllUnapprovedDatasets(): Promise<IDatasetModel[]> {
+    async getUnapprovedDatasets(): Promise<IDatasetModel[]> {
         let allUnapprovedDatasets: IDatasetModel[] = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
             .select('unapproved_datasets.datasetId', 'unapproved_datasets_datasetId')
             .getRawMany();
         return allUnapprovedDatasets
+    }
+
+    async selectAllFlaggedDatasets(): Promise<any> {
+        let allFlaggedDatsets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
+            .select()
+            .where('unapproved_datasets.isFlagged = 1')
+            .getRawMany();
+        return allFlaggedDatsets
     }
 }

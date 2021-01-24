@@ -292,9 +292,9 @@ export class DataSetService {
      * It will call a query to get a raw data packet which contains all of the unapproved data set IDs, 
      * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
      */
-    async getUnapprovedDatasets() {
+    async getUnapprovedAllDatasets() {
         try {
-            let response = await this.dataQuery.getAllUnapprovedDatasets();
+            let response = await this.dataQuery.getUnapprovedDatasets();
             if (response == undefined || response == null) {
                 throw new NotFound("No Unapproved Datasets in database")
             }
@@ -331,7 +331,35 @@ export class DataSetService {
             this.requestResponse.message = response
             return this.requestResponse
         } catch (error) {
-            throw new InternalServerError("Something went wrong with flagged this DataSet. Try later")
+            throw new InternalServerError("Something went wrong with flagging this dataset. Try again later")
+        }
+    }
+
+    async fetchFlaggedDatasets(userId: number) {
+        try {
+            let response = await this.dataQuery.selectUserFlaggedDatasets(userId)
+            if (response == undefined || response == null) {
+                throw new BadRequest("Could fetch user flagged datasets")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Internal server error fetching flagged datasets. Try again later")
+        }
+    }
+
+    async adminApproveDataset(datasetId: number, datasetCommentsToAppend: string) {
+        try {
+            let response = await this.updateModel.adminApprovedDataSet(datasetId, datasetCommentsToAppend)
+            if (response == undefined || response == null) {
+                throw new BadRequest("No dataset under this ID")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Internal server error approving this dataset. Try again later")
         }
     }
 }
