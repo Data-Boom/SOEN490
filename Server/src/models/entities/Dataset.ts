@@ -99,7 +99,7 @@ export class Dataset {
 
     // This comment is used during the approval process for admins to request changes
     @Column({ nullable: true })
-    statusComment: string
+    datasetAdminComment: string
 
     @Column({ type: 'integer', default: 0 })
     isApproved: number

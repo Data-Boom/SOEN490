@@ -3,7 +3,7 @@ import { IClientDatasetModel, IDatasetIDModel } from "../models/interfaces/Datas
 import { DataQueryModel } from "../models/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 import { IResponse } from "../genericInterfaces/ResponsesInterface";
-import { BadRequest, InternalServerError } from '@tsed/exceptions';
+import { BadRequest, InternalServerError, NotFound } from '@tsed/exceptions';
 import { DatasetUpdateModel } from '../models/DatasetUpdateModel';
 
 export class DataSetService {
@@ -281,17 +281,25 @@ export class DataSetService {
      * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
      */
     async getUnapprovedDatasets() {
-        let rawData = await this.dataQuery.getUnapprovedDatasetID();
-        let setOfData = await this.getDatasetsFromRawData(rawData);
-        return setOfData;
+        try {
+            let response = await this.dataQuery.getAllUnapprovedDatasets();
+            if (response == undefined || response == null) {
+                throw new NotFound("No Unapproved Datasets in database")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+        }
     }
 
 
-    async deleteDataSet(dataSetID: number) {
+    async rejectDataSet(dataSetID: number) {
         let updateModel: DatasetUpdateModel
         updateModel = new DatasetUpdateModel
         try {
-            let response = await updateModel.deleteDataset(dataSetID)
+            let response = await updateModel.rejectDataset(dataSetID)
             if (response == undefined) {
                 throw new BadRequest("No DataSet Exists under this ID")
             }
