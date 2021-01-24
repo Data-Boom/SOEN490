@@ -11,6 +11,8 @@ import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import { IVariableUnits } from '../../Models/Datasets/IVariableModel'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import SearchView from '../Search/SearchView'
 import { classStyles } from "../../appTheme"
 import { exampleDataset } from "../../Models/Datasets/ITemporaryModel"
@@ -35,6 +37,7 @@ export default function GraphView() {
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [openModal, setOpenModal] = useState(false)
   //todo unhardcode the variables
+  const [showSettings, setSettingsToggle] = useState(false)
   const [xVariableName, setXVariableName] = useState('initial pressure')
   const [yVariableName, setYVariableName] = useState('cell width')
   const [xVariableUnits, setXVariableUnits] = useState('kPa')
@@ -116,6 +119,8 @@ export default function GraphView() {
     setCompleteDatasets(filteredDataset)
     handleVariablesSelected(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
+    checkXVariablesExist(xVariableName, filteredDataset)
+    checkYVariablesExist(yVariableName, filteredDataset)
     console.log(filteredDataset)
   }
 
@@ -152,6 +157,9 @@ export default function GraphView() {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
+  const handleSettingsClick = () => {
+    setSettingsToggle(!showSettings)
+  }
 
   const calculateExtremeBoundaries = (datasets: IDatasetModel[]) => {
     let minX = 9000, maxX = 0, minY = 9000, maxY = 0
@@ -184,22 +192,22 @@ export default function GraphView() {
       const tempVariable = xVariableName
       setYVariableName(tempVariable)
       setUnitType('y', tempVariable)
-      checkYVariablesExist(tempVariable)
+      checkYVariablesExist(tempVariable, completeDatasets)
     }
     setXVariableName(event.target.value as string)
     setUnitType('x', event.target.value as string)
-    checkXVariablesExist(event.target.value as string)
+    checkXVariablesExist(event.target.value as string, completeDatasets)
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     if (xVariableName == (event.target.value as string)) {
       const tempVariable = yVariableName
       setXVariableName(tempVariable)
       setUnitType('x', tempVariable)
-      checkXVariablesExist(tempVariable)
+      checkXVariablesExist(tempVariable, completeDatasets)
     }
     setYVariableName(event.target.value as string)
     setUnitType('y', event.target.value as string)
-    checkYVariablesExist(event.target.value as string)
+    checkYVariablesExist(event.target.value as string, completeDatasets)
   }
   const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setXVariableUnits(event.target.value as string)
@@ -226,9 +234,9 @@ export default function GraphView() {
     })
   }
 
-  const checkXVariablesExist = (type: string) => {
+  const checkXVariablesExist = (type: string, datsets: IDatasetModel[]) => {
     const missingDatasets = []
-    completeDatasets.forEach(dataset => {
+    datsets.forEach(dataset => {
       let exists = false
       dataset.data.variables.forEach(variableName => {
         if (variableName.name == type) {
@@ -236,15 +244,15 @@ export default function GraphView() {
         }
       })
       if (exists == false) {
-        missingDatasets.push(dataset.id)
+        missingDatasets.push(dataset.dataset_name)
       }
     })
     setXVariableMissing(missingDatasets)
   }
 
-  const checkYVariablesExist = (type: string) => {
+  const checkYVariablesExist = (type: string, datsets: IDatasetModel[]) => {
     const missingDatasets = []
-    completeDatasets.forEach(dataset => {
+    datsets.forEach(dataset => {
       let exists = false
       dataset.data.variables.forEach(variableName => {
         if (variableName.name == type) {
@@ -252,7 +260,7 @@ export default function GraphView() {
         }
       })
       if (exists == false) {
-        missingDatasets.push(dataset.id)
+        missingDatasets.push(dataset.dataset_name)
       }
     })
     setYVariableMissing(missingDatasets)
@@ -314,80 +322,89 @@ export default function GraphView() {
               </Grid>
             </Box>
             <Grid container direction='row'>
-              <Grid item xs={4}>
-                <FormControl>
-                  <InputLabel id="xVariable">X Variable</InputLabel>
-                  <Select
-                    labelId="xVariable"
-                    id="xVariable"
-                    value={xVariableName}
-                    autoWidth={true}
-                    onChange={handleXVariableChange}
-                  >
-                    {variables.map(type => (
-                      <MenuItem value={type}>{type}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+              <Grid item xs={12}>
+                <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">Settings
+              {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                </Button>
               </Grid>
-              <Grid item xs={4}>
-                <FormControl>
-                  <InputLabel id="xUnits">X Units</InputLabel>
-                  <Select
-                    labelId="xUnits"
-                    id="xUnits"
-                    value={xVariableUnits}
-                    autoWidth={true}
-                    onChange={handleXUnitChange}
-                  >
-                    {xUnits.map(type => (
-                      <MenuItem value={type}>{type}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography align="center">
-                  Datasets Missing X: {xVariableMissing.toString()}
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <FormControl>
-                  <InputLabel id="yVariable">Y Variable</InputLabel>
-                  <Select
-                    labelId="yVariable"
-                    id="yVariable"
-                    value={yVariableName}
-                    autoWidth={true}
-                    onChange={handleYVariableChange}
-                  >
-                    {variables.map(type => (
-                      <MenuItem value={type}>{type}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={4}>
-                <FormControl>
-                  <InputLabel id="yUnits">Y Units</InputLabel>
-                  <Select
-                    labelId="yUnits"
-                    id="yUnits"
-                    value={yVariableUnits}
-                    autoWidth={true}
-                    onChange={handleYUnitChange}
-                  >
-                    {yUnits.map(type => (
-                      <MenuItem value={type}>{type}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography align="center">
-                  Datasets Missing Y: {yVariableMissing.toString()}
-                </Typography>
-              </Grid>
+              {showSettings &&
+                <>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="xVariable">X Variable</InputLabel>
+                      <Select
+                        labelId="xVariable"
+                        id="xVariable"
+                        value={xVariableName}
+                        autoWidth={true}
+                        onChange={handleXVariableChange}
+                      >
+                        {variables.map(type => (
+                          <MenuItem value={type}>{type}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="xUnits">X Units</InputLabel>
+                      <Select
+                        labelId="xUnits"
+                        id="xUnits"
+                        value={xVariableUnits}
+                        autoWidth={true}
+                        onChange={handleXUnitChange}
+                      >
+                        {xUnits.map(type => (
+                          <MenuItem value={type}>{type}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography align="center">
+                      Datasets Missing X: {xVariableMissing.toString()}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="yVariable">Y Variable</InputLabel>
+                      <Select
+                        labelId="yVariable"
+                        id="yVariable"
+                        value={yVariableName}
+                        autoWidth={true}
+                        onChange={handleYVariableChange}
+                      >
+                        {variables.map(type => (
+                          <MenuItem value={type}>{type}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="yUnits">Y Units</InputLabel>
+                      <Select
+                        labelId="yUnits"
+                        id="yUnits"
+                        value={yVariableUnits}
+                        autoWidth={true}
+                        onChange={handleYUnitChange}
+                      >
+                        {yUnits.map(type => (
+                          <MenuItem value={type}>{type}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography align="center">
+                      Datasets Missing Y: {yVariableMissing.toString()}
+                    </Typography>
+                  </Grid>
+                </>
+              }
             </Grid>
           </Grid>
         </Grid>
