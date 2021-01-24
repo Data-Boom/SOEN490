@@ -14,6 +14,7 @@ import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import Typography from '@material-ui/core/Typography'
 import { callSignUp } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { makeStyles } from '@material-ui/core/styles'
+import { signInRoute } from '../../Common/Consts/Routes'
 import { signupValidationSchema } from './AuthenticationValidationSchema'
 
 function Copyright() {
@@ -49,10 +50,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SignUpView() {
+export default function SignUpView(props: any) {
   const classes = useStyles()
   async function handleSignUpSubmit(user: ISignUpUserModel): Promise<void> {
     await callSignUp(user)
+    props.history.push(signInRoute)
   }
   return (
     <Fragment>
