@@ -44,10 +44,13 @@ export class Savedgraphs {
     axisVariable: string[]
 
     @Column({ type: "json" })
-    axisMode: string[]
+    axisLog: boolean[]
 
     @Column({ type: "json" })
-    axisZoom: number[]
+    axisZoomStart: number[]
+
+    @Column({ type: "json" })
+    axisZoomEnd: number[]
 
     @Column({ type: "json" })
     axisUnits: string[]
@@ -68,8 +71,9 @@ export const selectSavedGraphsOfUserQuery = (connection: Connection, user: numbe
         .addSelect('graphs.datasetShapes', 'datasetShapes')
         .addSelect('graphs.datasetHiddenStatus', 'datasetHiddenStatus')
         .addSelect('graphs.axisVariable', 'axisVariable')
-        .addSelect('graphs.axisMode', 'axisMode')
-        .addSelect('graphs.axisZoom', 'axisZoom')
+        .addSelect('graphs.axisLog', 'axisLog')
+        .addSelect('graphs.axisZoomStart', 'axisZoomStart')
+        .addSelect('graphs.axisZoomEnd', 'axisZoomEnd')
         .addSelect('graphs.axisUnits', 'axisUnits')
         .innerJoin(Accounts, 'accounts', 'graphs.accountId = accounts.id')
         .where('accounts.id = :user', { user: user })
@@ -84,8 +88,9 @@ export const selectOneSavedGraphQuery = (connection: Connection, id: number) =>
         .addSelect('graphs.datasetShapes', 'datasetShapes')
         .addSelect('graphs.datasetHiddenStatus', 'datasetHiddenStatus')
         .addSelect('graphs.axisVariable', 'axisVariable')
-        .addSelect('graphs.axisMode', 'axisMode')
-        .addSelect('graphs.axisZoom', 'axisZoom')
+        .addSelect('graphs.axisLog', 'axisLog')
+        .addSelect('graphs.axisZoomStart', 'axisZoomStart')
+        .addSelect('graphs.axisZoomEnd', 'axisZoomEnd')
         .addSelect('graphs.axisUnits', 'axisUnits')
         .where('graphs.id = :id', { id: id })
         .getRawOne();

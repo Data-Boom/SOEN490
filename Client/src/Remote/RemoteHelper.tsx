@@ -15,15 +15,14 @@ const requestBase: RequestInit = {
 
 export const post = async (route: string, data: any): Promise<any> => {
   const url = route
-
   return fetchRemote(url, 'POST', data)
 }
 
 export const get = async (route: string, query: string = ''): Promise<any> => {
   const url = `${route}?${query}`
-
   return fetchRemote(url, 'GET')
 }
+
 
 const fetchRemote = async (url: string, method: string, data: any = {}): Promise<Response> => {
   const request: RequestInit = { ...requestBase }
@@ -42,6 +41,7 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
     }
 
     const message = await response.json()
+
     if (response.status.toString().charAt(0) == '2') {
       return message
     }
