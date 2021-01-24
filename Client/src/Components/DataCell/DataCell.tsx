@@ -1,9 +1,9 @@
-import { FileUploadForm } from './FileUploadForm'
-import React from 'react'
-import Download from '@axetroy/react-download'
-import { rm } from "../../Assets/readMeMessage";
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
+import Download from '@axetroy/react-download'
+import { FileUploadForm } from './FileUploadForm'
+import React from 'react'
+import { rm } from "../../Assets/readMeMessage"
 
 const fileFormat = 'application/json'
 export default function DataCell() {
@@ -47,13 +47,13 @@ export default function DataCell() {
         <div>
           {/**for downloading sample empty json file*/}
           <Download file="emptyJsonDataset.json" content={JSON.stringify("../../Assets/emptyJSFile.json", null, 2)}>
-            <Button type="submit" variant="contained" onClick={() => console.log('Successfully downloaded JSON file.')}> Download Sample JSON file </Button>
+            <Button type="submit" variant="contained"> Download Sample JSON file </Button>
           </Download>
         </div>
         {/**for downnloading instructions readMe for users */}
         <div>
           <Download file="readMe.txt" content={rm}>
-            <a href="http://localhost:3000/#/uploadFile" onClick={() => console.log('Successfully downloaded ReadMe file.')}> Download JSON file submission instructions </a>
+            <a href="http://localhost:3000/#/uploadFile"> Download JSON file submission instructions </a>
           </Download>
         </div>
       </Box>
