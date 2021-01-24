@@ -18,6 +18,7 @@ export class GraphsController {
      */
     async createRequestForSingleSavedGraph(request: Request, response: Response) {
         let requestParam = request.params.oneSavedGraph;
+        console.log(request.body)
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");

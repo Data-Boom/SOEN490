@@ -1,5 +1,5 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
 import DataboomTestGraph from '../../Common/Assets/DataboomTestGraph.png'
@@ -11,21 +11,34 @@ import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 
+import { getDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
+import { listGraphStates, listSavedGraphStates, listDeletedGraphs } from '../../Remote/Endpoints/graphEndpoint'
+
+//1st try
+const [savedGraphState, setSavedGraphState] = useState([])
+
+useEffect(() => {
+
+  const callListSavedGraphStates = async () => {
+    const savedGraphStates = await listSavedGraphStates()
+    setSavedGraphState(savedGraphStates)
+  }
+
+  callListSavedGraphStates()
+}, [])
+
+//need to call endpoint to display the chosen saved graph datas in list view? 
+
 const renderGraphRow = (row) => {
   return (<Table size="small" aria-label="purchases">
     <TableHead>
       <TableRow>
-        <TableCell>Graph image</TableCell>
         <TableCell>Datasets in graph</TableCell>
         <TableCell>Comments</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
       <TableRow >
-        <TableCell component="th" scope="row">
-          {/* todo refactor */}
-          <img src={DataboomTestGraph} width="200" height="200" />
-        </TableCell>
         <TableCell>{row.graphdatasets}</TableCell>
         <TableCell>{row.comments}</TableCell>
       </TableRow>
@@ -104,7 +117,7 @@ const rowsOfUploads = []
 function createGraphData(id: number[], type: string, name: string, graphdatasets: string[], comments: string) {
   return { id, type, name, graphdatasets, comments }
 }
-
+//hard coded -> need actual saved data import
 rows.push(createGraphData([1, 2, 3], 'Graph', 'graph name', ['Cell width', 'Cell Height of O2 explosion', 'Critical energy after N2 intake'],
   'Here is a sample comment'))
 
@@ -262,6 +275,7 @@ export function ProfileView() {
               </Grid>
             </Grid>
           </TabPanel>
+
           <TabPanel value={tab} index={1}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
@@ -280,6 +294,7 @@ export function ProfileView() {
               </Table>
             </TableContainer>
           </TabPanel>
+
           <TabPanel value={tab} index={2}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
