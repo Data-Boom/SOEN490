@@ -308,6 +308,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(datapoint9);
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
+    await queryRunner.query('ALTER TABLE savedgraphs ADD COLUMN axisZoomEnd JSON NULL AFTER axisZoomStart, CHANGE COLUMN axisMode axisLog JSON NULL DEFAULT NULL, CHANGE COLUMN axisZoom axisZoomStart JSON NULL DEFAULT NULL');
 
     let newGraph = new Savedgraphs();
     newGraph.id = 1;
@@ -318,8 +319,9 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     newGraph.datasetShapes = ["square", "triangle"];
     newGraph.datasetHiddenStatus = [false, true];
     newGraph.axisVariable = ["temperature", "width"];
-    newGraph.axisMode = ["normal", "normal"];
-    newGraph.axisZoom = [100, 100];
+    newGraph.axisLog = [true, true];
+    newGraph.axisZoomStart = [100, 100];
+    newGraph.axisZoomEnd = [100, 100];
     newGraph.axisUnits = ["C", "mm"];
     await connection.manager.save(newGraph);
 
@@ -332,8 +334,9 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     newGraph2.datasetShapes = ["square"];
     newGraph2.datasetHiddenStatus = [false];
     newGraph2.axisVariable = ["temperature"];
-    newGraph2.axisMode = ["normal"];
-    newGraph2.axisZoom = [100];
+    newGraph2.axisLog = [true];
+    newGraph2.axisZoomStart = [100];
+    newGraph2.axisZoomEnd = [100];
     newGraph2.axisUnits = ["C"];
     await connection.manager.save(newGraph2);
   }
@@ -359,6 +362,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
+    await queryRunner.query('ALTER TABLE savedgraphs DROP COLUMN axisZoomEnd, CHANGE COLUMN axisLog axisMode JSON NULL DEFAULT NULL, CHANGE COLUMN axisZoomStart axisZoom JSON NULL DEFAULT NULL');
   }
 
 }
