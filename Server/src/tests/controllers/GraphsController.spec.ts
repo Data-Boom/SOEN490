@@ -43,14 +43,16 @@ describe('SavedGraphs Controller ', () => {
       "axes": [
         {
           "variableName": "temperature",
-          "mode": "normal",
-          "zoom": 100,
+          "logarithmic": true,
+          "zoomStartIndex": 100,
+          "zoomEndIndex": 100,
           "units": "C"
         },
         {
           "variableName": "width",
-          "mode": "normal",
-          "zoom": 100,
+          "logarithmic": true,
+          "zoomStartIndex": 100,
+          "zoomEndIndex": 100,
           "units": "mm"
         }
       ],

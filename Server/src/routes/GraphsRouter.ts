@@ -10,17 +10,15 @@ import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 let router = Router();
 let savedGraphsControllerObject = new GraphsController();
 
-
-//[JWTAuthenticator.verifyJWT,JWTAuthenticator.verifyAdmin]
-router.get('/api/v1/savedGraphs/oneSavedGraph/:oneSavedGraph', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+router.get('/api/v1/oneSavedGraph/:oneSavedGraph', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForSingleSavedGraph(request, response);
 });
 
-router.get('/api/v1/userSavedGraphs/:userSavedGraphs', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+router.get('/api/v1/userSavedGraphs$', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForUserSavedGraphs(request, response);
 });
 
-router.post('/api/v1/addSavedGraph', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+router.post('/api/v1/addSavedGraph$', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForAddingSavedGraph(request, response);
 });
 

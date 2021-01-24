@@ -23,13 +23,14 @@ export class GraphsModel {
         let sortedDatasetData: IDisplayedDatasetModel[] = []
         let oneAxisData: IAxisModel
         let sortedAxesData: IAxisModel[] = []
-        rawGraphData.datasetIds = typeof rawGraphData.datasetIds === 'string' ? JSON.parse(rawGraphData.datasetIds) : []
+        rawGraphData.datasetIds = typeof rawGraphData.datasetIds == 'string' ? JSON.parse(rawGraphData.datasetIds) : []
         rawGraphData.datasetColors = typeof rawGraphData.datasetColors === 'string' ? JSON.parse(rawGraphData.datasetColors) : []
         rawGraphData.datasetShapes = typeof rawGraphData.datasetShapes === 'string' ? JSON.parse(rawGraphData.datasetShapes) : []
         rawGraphData.datasetHiddenStatus = typeof rawGraphData.datasetHiddenStatus === 'string' ? JSON.parse(rawGraphData.datasetHiddenStatus) : []
         rawGraphData.axisVariable = typeof rawGraphData.axisVariable === 'string' ? JSON.parse(rawGraphData.axisVariable) : []
-        rawGraphData.axisMode = typeof rawGraphData.axisMode === 'string' ? JSON.parse(rawGraphData.axisMode) : []
-        rawGraphData.axisZoom = typeof rawGraphData.axisZoom === 'string' ? JSON.parse(rawGraphData.axisZoom) : []
+        rawGraphData.axisLog = typeof rawGraphData.axisLog === 'string' ? JSON.parse(rawGraphData.axisLog) : []
+        rawGraphData.axisZoomStart = typeof rawGraphData.axisZoomStart === 'string' ? JSON.parse(rawGraphData.axisZoomStart) : []
+        rawGraphData.axisZoomEnd = typeof rawGraphData.axisZoomEnd === 'string' ? JSON.parse(rawGraphData.axisZoomEnd) : []
         rawGraphData.axisUnits = typeof rawGraphData.axisUnits === 'string' ? JSON.parse(rawGraphData.axisUnits) : []
         for (let j = 0; j < rawGraphData.datasetIds.length; j++) {
             oneDatasetsData = {
@@ -43,8 +44,9 @@ export class GraphsModel {
         for (let k = 0; k < rawGraphData.axisVariable.length; k++) {
             oneAxisData = {
                 variableName: rawGraphData.axisVariable[k],
-                mode: rawGraphData.axisMode[k],
-                zoom: rawGraphData.axisZoom[k],
+                logarithmic: rawGraphData.axisLog[k],
+                zoomStartIndex: rawGraphData.axisZoomStart[k],
+                zoomEndIndex: rawGraphData.axisZoomEnd[k],
                 units: rawGraphData.axisUnits[k]
             }
             sortedAxesData.push(oneAxisData)
@@ -109,16 +111,17 @@ export class GraphsModel {
      * Flag for if a Data Set is hidden: boolean[]
      * @param axisVariable 
      * Axis variables names: string[]
-     * @param axisMode 
-     * Axis mode: string[]
-     * @param axisZoom 
-     * Axis zoom index: number[]
+     * @param axisLog 
+     * If axis is logarithmic: boolean[]
+     * @param axisZoomStart
+     * Axis zoom start index: number[]
+     * @param axisZoomEnd
+     * Axis zoom end index: number[]
      * @param axisUnits 
      * Axis unit types: string[]
      */
     private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[], datasetHiddenStatus: boolean[],
-
-        axisVariable: string[], axisMode: string[], axisZoom: number[], axisUnits: string[]): Promise<string> {
+        axisVariable: string[], axisLog: boolean[], axisZoomStart: number[], axisZoomEnd: number[], axisUnits: string[]): Promise<string> {
         let newGraph = new Savedgraphs();
         newGraph.id;
         newGraph.accountId = accountId;
@@ -128,8 +131,9 @@ export class GraphsModel {
         newGraph.datasetShapes = datasetShapes;
         newGraph.datasetHiddenStatus = datasetHiddenStatus;
         newGraph.axisVariable = axisVariable;
-        newGraph.axisMode = axisMode;
-        newGraph.axisZoom = axisZoom;
+        newGraph.axisLog = axisLog;
+        newGraph.axisZoomStart = axisZoomStart;
+        newGraph.axisZoomEnd = axisZoomEnd;
         newGraph.axisUnits = axisUnits;
         await this.connection.manager.save(newGraph);
         return "Graph successfully saved"
@@ -154,8 +158,9 @@ export class GraphsModel {
         let datasetShapes: string[] = []
         let datasetHiddenStatus: boolean[] = []
         let axisVariable: string[] = []
-        let axisMode: string[] = []
-        let axisZoom: number[] = []
+        let axisLog: boolean[] = []
+        let axisZoomStart: number[] = []
+        let axisZoomEnd: number[] = []
         let axisUnits: string[] = []
         for (let j = 0; j < graph.datasets.length; j++) {
             datasetIds.push(graph.datasets[j].id)
@@ -165,11 +170,12 @@ export class GraphsModel {
         }
         for (let k = 0; k < graph.axes.length; k++) {
             axisVariable.push(graph.axes[k].variableName)
-            axisMode.push(graph.axes[k].mode)
-            axisZoom.push(graph.axes[k].zoom)
+            axisLog.push(graph.axes[k].logarithmic)
+            axisZoomStart.push(graph.axes[k].zoomStartIndex)
+            axisZoomEnd.push(graph.axes[k].zoomEndIndex)
             axisUnits.push(graph.axes[k].units)
         }
-        let statusMessage = await this.sendSavedGraphToDatabase(userId, graph.name, datasetIds, datasetColors, datasetShapes, datasetHiddenStatus, axisVariable, axisMode, axisZoom, axisUnits)
+        let statusMessage = await this.sendSavedGraphToDatabase(userId, graph.name, datasetIds, datasetColors, datasetShapes, datasetHiddenStatus, axisVariable, axisLog, axisZoomStart, axisZoomEnd, axisUnits)
         return statusMessage
 
     }
