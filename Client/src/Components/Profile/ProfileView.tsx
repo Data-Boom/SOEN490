@@ -1,5 +1,5 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
-import React, { useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
@@ -9,6 +9,21 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
+import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
+import { ProfileGraphStateList } from './ProfileGraphList'
+
+export const ProfileGraph = () => {
+  const [savedGraphState, setSavedGraphState] = useState([])
+
+  useEffect(() => {
+
+    const callListSavedGraphStates = async () => {
+      const savedGraphState = await listGraphStates()
+      setSavedGraphState(savedGraphState)
+    }
+    callListSavedGraphStates()
+  }, [])
+}
 
 const renderGraphRow = (row) => {
   return (<Table size="small" aria-label="purchases">
@@ -233,6 +248,17 @@ export function ProfileView() {
     fetchUser()
   }, [])
 
+  const [savedGraphState, setSavedGraphState] = useState([])
+
+  useEffect(() => {
+
+    const callListSavedGraphStates = async () => {
+      const savedGraphState = await listGraphStates()
+      setSavedGraphState(savedGraphState)
+    }
+    callListSavedGraphStates()
+  }, [])
+
   const classes = useStyles()
   const [tab, setTab] = React.useState(0)
 
@@ -263,7 +289,7 @@ export function ProfileView() {
           <TabPanel value={tab} index={1}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
-                <TableHead> Favourites
+                <TableHead> Favourites (saved graphs)
                   <TableRow>
                     <TableCell />
                     <TableCell>Name</TableCell>
@@ -271,9 +297,12 @@ export function ProfileView() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
+                  {/* {rows.map((row) => (
                     <Row key={row.title} row={row} />
-                  ))}
+                  ))} */}
+                  <ProfileGraphStateList
+                    graphDataset={savedGraphState}
+                  />
                 </TableBody>
               </Table>
             </TableContainer>
