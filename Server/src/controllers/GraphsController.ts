@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { IGraphStateModel } from '../models/interfaces/SavedGraphsInterface';
+
 import { GraphsService } from '../services/GraphsService';
+import { IGraphStateModel } from '../models/interfaces/SavedGraphsInterface';
 
 export class GraphsController {
     private savedGraphsService: GraphsService;
@@ -18,7 +19,7 @@ export class GraphsController {
      */
     async createRequestForSingleSavedGraph(request: Request, response: Response) {
         let requestParam = request.params.oneSavedGraph;
-        console.log(request.body)
+        console.log(requestParam)
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");
