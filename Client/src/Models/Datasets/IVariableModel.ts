@@ -18,7 +18,7 @@ export const ITemperatureModel: IVariableModel = {
 
 export const IVelocityModel: IVariableModel = {
     type: 'velocity',
-    variableNames: ['velocity', 'shock veloctiy', 'particle velocity'],
+    variableNames: ['velocity', 'shock velocity', 'particle velocity'],
     units: ['km/s', 'mm/μs', 'm/s']
 }
 
@@ -29,7 +29,7 @@ export const IPressureModel: IVariableModel = {
 }
 
 export const IDensityModel: IVariableModel = {
-    type: 'pressure',
+    type: 'density',
     variableNames: ['density', 'initial density'],
     units: ['kg/m^3', 'g/cc']
 }
