@@ -2,12 +2,17 @@ import { IClientDatasetModel, IDatasetIDModel } from "../models/interfaces/Datas
 
 import { DataQueryModel } from "../models/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { IResponse } from "../genericInterfaces/ResponsesInterface";
+import { BadRequest, InternalServerError } from '@tsed/exceptions';
+import { DatasetUpdateModel } from '../models/DatasetUpdateModel';
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
+    private requestResponse: IResponse
 
     constructor() {
         this.dataQuery = new DataQueryModel();
+        this.requestResponse = {} as any
     }
 
     /**
@@ -279,5 +284,22 @@ export class DataSetService {
         let rawData = await this.dataQuery.getUnapprovedDatasetID();
         let setOfData = await this.getDatasetsFromRawData(rawData);
         return setOfData;
+    }
+
+
+    async deleteDataSet(dataSetID: number) {
+        let updateModel: DatasetUpdateModel
+        updateModel = new DatasetUpdateModel
+        try {
+            let response = await updateModel.deleteDataset(dataSetID)
+            if (response == undefined) {
+                throw new BadRequest("No DataSet Exists under this ID")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong deleting this DataSet. Maybe its down")
+        }
     }
 }

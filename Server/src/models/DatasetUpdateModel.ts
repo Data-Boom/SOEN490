@@ -53,6 +53,7 @@ export class DatasetUpdateModel {
         await this.deleteDatapointsQuery(id)
         await this.deleteDatasetQuery(id)
         await this.deletePublicationQuery(publicationId)
+        return "Success"
     }
 
     private selectDatasetCommentQuery = (id: number) =>

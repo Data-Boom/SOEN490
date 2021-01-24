@@ -23,7 +23,7 @@ export class DataSetController {
     async createRequestForData(request: Request, response: Response) {
         let validateData = this.validateInputData(request)
         if (!validateData) {
-            response.status(400).send("Invalid search params entered");
+            response.status(400).json("Invalid search params entered");
         }
         else {
             this.dataSetService = new DataSetService();
@@ -41,7 +41,7 @@ export class DataSetController {
     async createRequestToDeleteDataSet(request: Request, response: Response) {
 
         if (!request.query.hasOwnProperty('DataSetId')) {
-            response.status(400).send("Search ID Not Entered");
+            response.status(400).json("Search ID Not Entered");
         }
         else {
             let requestParams: any = { ...request.query };
@@ -75,7 +75,7 @@ export class DataSetController {
         else {
             try {
                 let arrayOfData = await this.dataSetService.getUserUploadedDatasets(userId)
-                return response.status(200).send(arrayOfData);
+                return response.status(200).json(arrayOfData);
             } catch (err) {
                 response.status(500).send(err);
             }
@@ -97,7 +97,7 @@ export class DataSetController {
         let requestParam = request.params.userSavedDatsets;
         let userId: number = +requestParam;
         if (isNaN(userId)) {
-            response.status(500).send("Invalid search params entered");
+            response.status(500).json("Invalid search params entered");
         }
         else {
             try {
@@ -121,7 +121,7 @@ export class DataSetController {
     async createRequestForUnapprovedDatsets(request: Request, response: Response) {
         try {
             let arrayOfData = await this.dataSetService.getUnapprovedDatasets()
-            return response.status(200).send(arrayOfData);
+            return response.status(200).json(arrayOfData);
         } catch (err) {
             response.status(500).send(err);
         }
@@ -141,5 +141,9 @@ export class DataSetController {
         else {
             return false
         }
+    }
+
+    async createRequestToFlagDataSet(dataSetID) {
+
     }
 }

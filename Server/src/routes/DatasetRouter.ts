@@ -11,7 +11,8 @@ import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 let router = Router();
 let dataSetController = new DataSetController();
 
-//Note to Self: Verify which of these routes are protected
+//Note to Self: Verify which of these routes are protected 
+// JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin
 router.get('/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
     dataSetController.createRequestForUserUploadedDatasets(request, response);
 });
@@ -32,8 +33,8 @@ router.delete('/api/v1//dataset/:dataSetId', (request: Request, response: Respon
     dataSetController.createRequestToDeleteDataSet(request, response)
 })
 
-router.get('/dataset', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
-    dataSetController.createRequestToDeleteDataSet(request, response)
+router.get('/api/v1/flagDataSet', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+    dataSetController.createRequestToFlagDataSet(request, response)
 })
 
 export { router as DataSetRouter };
