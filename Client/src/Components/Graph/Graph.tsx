@@ -6,12 +6,14 @@ import React, { useEffect, useState } from 'react'
 import { Box } from "@material-ui/core"
 import { IAxisStateModel } from "../../Models/Graph/IGraphStateModel"
 import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
+import am4themes_material from "@amcharts/amcharts4/themes/animated"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
   initialAxes: IAxisStateModel[]
 }
 
+am4core.useTheme(am4themes_material)
 
 export default function Graph(props: IProps) {
   const { datasets, initialAxes } = { ...props }
@@ -20,9 +22,6 @@ export default function Graph(props: IProps) {
   useEffect(() => {
     const chart = setUpGraph()
     rebuildGraph(chart)
-    return () => {
-      // chart.dispose()
-    }
   }, [])
 
   useEffect(() => {
@@ -41,6 +40,7 @@ export default function Graph(props: IProps) {
     datasets.forEach(dataset => {
       const lineSeries = chart.series.push(new am4charts.CandlestickSeries())
       const bullet = lineSeries.bullets.push(new am4charts.CircleBullet())
+      lineSeries.tooltipText = dataset.name
       lineSeries.dataFields.valueX = `${dataset.id}x`
       lineSeries.dataFields.valueY = `${dataset.id}y`
     })

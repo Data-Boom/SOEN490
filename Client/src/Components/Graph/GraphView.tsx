@@ -1,47 +1,24 @@
-import { Box, Button, Grid, Modal, Paper } from "@material-ui/core"
-import { IAxisStateModel, IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
+import { Box, Grid } from "@material-ui/core"
+import { IGraphStateModel, newGraphState } from "../../Models/Graph/IGraphStateModel"
 import React, { useState } from "react"
 import { toDatasetRows, transformAndMergeGraphDatasets } from "./GraphFunctions"
 
-import { DatasetsList } from "./DatasetsList"
+import { DatasetList } from "./DatasetList.tsx/DatasetList"
 import { ExportDatasetsButton } from "./ExportDatasetsButton"
 import Graph from './Graph'
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel } from '../../Models/Graph/IGraphDatasetModel'
 import { SaveGraphStateControl } from "./SaveGraphStateControl"
-import SearchView from '../Search/SearchView'
-import { classStyles } from "../../appTheme"
+import { SearchViewModal } from "../Search/SearchViewModal"
 
 export default function GraphView() {
 
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
-  const [graphState, setGraphState] = useState<IGraphStateModel>(null)
-
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
-
-  //todo unhardcode the variables
-  //todo refactor into storing one IVariable[] instead of two separate strings
-  const [xVariableName, setXVariableName] = useState('initial pressure')
-  const [yVariableName, setYVariableName] = useState('cell width')
+  //todo after Leslie's story that allows to pick units and variable unhardcode units
+  const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState })
 
   //todo on page load, check if graphId was provided, and if it was, request graphId with user email, and obtain full graph saved state
-  //todo after Leslie's story that allows to pick units and variable unhardcode units
-  const [graphAxes, setGraphAxes] = useState<IAxisStateModel[]>([{
-    logarithmic: false,
-    units: 'mm',
-    variableName: xVariableName,
-    zoomStartIndex: null,
-    zoomEndIndex: null,
-  },
-  {
-    logarithmic: false,
-    units: 'mm',
-    variableName: yVariableName,
-    zoomStartIndex: null,
-    zoomEndIndex: null,
-  }])
-
   const onRemoveDataset = (datasetId: number) => {
     const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
     handleCompleteDatasetsUpdated(filteredDatasets)
@@ -63,7 +40,6 @@ export default function GraphView() {
     })
 
     handleCompleteDatasetsUpdated(mergedDatasets)
-    setIsSearchModalOpen(false)
   }
 
   const handleCompleteDatasetsUpdated = (updatedDatasets: IDatasetModel[]) => {
@@ -78,35 +54,20 @@ export default function GraphView() {
 
   return (
     <>
-      <Modal
-        open={isSearchModalOpen}
-        onClose={() => setIsSearchModalOpen(false)}
-        className={classStyles().modalsearch}
-      >
-        <Paper elevation={3}>
-          <Box m={5}>
-            <SearchView
-              handleDatasetsSelected={handleDatasetsSelected}
-            />
-          </Box>
-        </Paper>
-      </Modal>
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={7} >
             {graphDatasets && graphDatasets[0] ?
               <Graph
                 datasets={graphDatasets}
-                initialAxes={graphAxes}
+                initialAxes={graphState.axes}
               /> : null}
           </Grid>
           <Grid item sm={5}>
             <Box ml={5} mr={5} mt={5}>
               <Grid container direction='column'>
                 <Grid item container spacing={3}>
-                  <Grid item>
-                    <Button id="add-dataset" onClick={() => setIsSearchModalOpen(true)} color="primary" variant="contained">Add dataset To Graph</Button>
-                  </Grid>
+                  <SearchViewModal onDatasetsSelected={handleDatasetsSelected} />
                   {completeDatasets && completeDatasets[0] ?
                     <Grid item>
                       <ExportDatasetsButton datasets={completeDatasets} />
@@ -115,7 +76,7 @@ export default function GraphView() {
                 </Grid>
               </Grid>
               <Grid item>
-                <DatasetsList
+                <DatasetList
                   datasets={toDatasetRows(completeDatasets)}
                   onRemoveDatasetClick={onRemoveDataset}
                   onHideDatasetSwitch={onHideDatasetSwitch}

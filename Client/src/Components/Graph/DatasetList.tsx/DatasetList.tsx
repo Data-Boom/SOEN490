@@ -1,7 +1,7 @@
 import { Box, Grid } from "@material-ui/core"
 
 import { DatasetRow } from "./DatasetRow"
-import { IDatasetRowModel } from "../../Models/Graph/IGraphStateModel"
+import { IDatasetRowModel } from "../../../Models/Graph/IGraphStateModel"
 import React from 'react'
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
   onHideDatasetSwitch: (datasetId: number) => void,
 }
 
-export const DatasetsList = (props: IProps) => {
+export const DatasetList = (props: IProps) => {
   const { datasets, onRemoveDatasetClick, onHideDatasetSwitch } = { ...props }
 
   const renderDatasetRows = () => {
