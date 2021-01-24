@@ -1,6 +1,6 @@
 import * as svg from 'save-svg-as-png'
 
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, makeStyles } from "@material-ui/core"
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, Typography, makeStyles } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
 import React, { useState } from "react"
@@ -130,7 +130,6 @@ export default function GraphView() {
     setCompleteDatasets(mergedDatasets)
     handleVariablesSelected(mergedDatasets)
     calculateExtremeBoundaries(mergedDatasets)
-    console.log(mergedDatasets)
     handleClose()
   }
 
@@ -240,7 +239,6 @@ export default function GraphView() {
         missingDatasets.push(dataset.id)
       }
     })
-    console.log(missingDatasets)
     setXVariableMissing(missingDatasets)
   }
 
@@ -257,10 +255,8 @@ export default function GraphView() {
         missingDatasets.push(dataset.id)
       }
     })
-    console.log(missingDatasets)
     setYVariableMissing(missingDatasets)
   }
-
 
   return (
     <>
@@ -351,7 +347,9 @@ export default function GraphView() {
                 </FormControl>
               </Grid>
               <Grid item xs={4}>
-                Datasets Missing X: {xVariableMissing.toString()}
+                <Typography align="center">
+                  Datasets Missing X: {xVariableMissing.toString()}
+                </Typography>
               </Grid>
               <Grid item xs={4}>
                 <FormControl>
@@ -386,7 +384,9 @@ export default function GraphView() {
                 </FormControl>
               </Grid>
               <Grid item xs={4}>
-                Datasets Missing Y: {yVariableMissing.toString()}
+                <Typography align="center">
+                  Datasets Missing Y: {yVariableMissing.toString()}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
