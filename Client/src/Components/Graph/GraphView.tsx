@@ -65,27 +65,27 @@ export default function GraphView() {
           </Grid>
           <Grid item sm={5}>
             <Box ml={5} mr={5} mt={5}>
-              <Grid container direction='column'>
-                <Grid item container spacing={3}>
+              <Grid container spacing={3}>
+                <Grid item>
                   <SearchViewModal onDatasetsSelected={handleDatasetsSelected} />
-                  {completeDatasets && completeDatasets[0] ?
-                    <Grid item>
-                      <ExportDatasetsButton datasets={completeDatasets} />
-                    </Grid> : null
-                  }
                 </Grid>
+                {completeDatasets && completeDatasets[0] ?
+                  <Grid item>
+                    <ExportDatasetsButton datasets={completeDatasets} />
+                  </Grid> : null
+                }
               </Grid>
-              <Grid item>
-                <DatasetList
-                  datasets={toDatasetRows(completeDatasets)}
-                  onRemoveDatasetClick={onRemoveDataset}
-                  onHideDatasetSwitch={onHideDatasetSwitch}
-                />
-              </Grid>
-              <Grid item>
-                <SaveGraphStateControl
-                  graphState={graphState}
-                />
+              <DatasetList
+                datasets={toDatasetRows(completeDatasets)}
+                onRemoveDatasetClick={onRemoveDataset}
+                onHideDatasetSwitch={onHideDatasetSwitch}
+              />
+              <Grid container>
+                <Grid item>
+                  <SaveGraphStateControl
+                    graphState={graphState}
+                  />
+                </Grid>
               </Grid>
             </Box>
           </Grid>

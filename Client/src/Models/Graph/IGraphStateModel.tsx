@@ -1,8 +1,8 @@
 export interface IGraphStateModel {
   datasets: IDisplayedDatasetStateModel[],
-  name: string,
   axes: IAxisStateModel[],
-  id: string | undefined
+  name: string,
+  id: string
 }
 
 export interface IDisplayedDatasetStateModel {
@@ -28,10 +28,6 @@ export interface IDatasetRowModel {
   shape: string,
 }
 
-export const newGraphState: IGraphStateModel = {
-  axes: [{ ...newAxisState, }]
-}
-
 export const newAxisState: IAxisStateModel = {
   logarithmic: false,
   units: 'mm',
@@ -46,4 +42,11 @@ export const newDatasetRow: IDatasetRowModel = {
   isInitiallyHidden: false,
   color: null,
   shape: null
+}
+
+export const newGraphState: IGraphStateModel = {
+  axes: [{ ...newAxisState }, { ...newAxisState }],
+  datasets: [],
+  id: null,
+  name: null
 }

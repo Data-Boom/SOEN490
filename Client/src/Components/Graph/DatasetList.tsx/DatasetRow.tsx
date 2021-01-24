@@ -24,19 +24,25 @@ export const DatasetRow = (props: IProps) => {
 
   return (
     <Grid item>
-      <Box className={classStyles().datasetBorder} p={1}>
-        <Grid item container alignItems='center' justify='space-between'>
-          <Grid container justify="flex-start" xs={9}>
+      <Box className={classStyles().datasetBorder}>
+        <Grid container alignItems='center' justify='space-between'>
+          <Grid item xs={3}>
             <Typography variant="body2" noWrap>
-              {dataset.name}
+              {dataset.name}{dataset.name}{dataset.name}{dataset.name}{dataset.name}{dataset.name}
             </Typography>
           </Grid>
-          <IconButton onClick={() => onRemoveDatasetClick(dataset.id)}>
-            <DeleteIcon color='primary' />
-          </IconButton>
-          <IconButton onClick={handleHiddenSwitch}>
-            {isHidden ? <VisibilityOffIcon color='primary' /> : <VisibilityIcon color='primary' />}
-          </IconButton>
+          <Grid item xs={7}>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton onClick={handleHiddenSwitch}>
+              {isHidden ? <VisibilityOffIcon color='primary' /> : <VisibilityIcon color='primary' />}
+            </IconButton>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton onClick={() => onRemoveDatasetClick(dataset.id)}>
+              <DeleteIcon color='primary' />
+            </IconButton>
+          </Grid>
         </Grid>
       </Box>
     </Grid>

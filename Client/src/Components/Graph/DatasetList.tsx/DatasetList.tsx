@@ -1,6 +1,5 @@
-import { Box, Grid } from "@material-ui/core"
-
 import { DatasetRow } from "./DatasetRow"
+import { Grid } from "@material-ui/core"
 import { IDatasetRowModel } from "../../../Models/Graph/IGraphStateModel"
 import React from 'react'
 
@@ -27,12 +26,8 @@ export const DatasetList = (props: IProps) => {
   }
 
   return (
-    <>
-      <Grid item container direction='column' spacing={3}>
-        <Box className="result-checkbox" >
-          {renderDatasetRows()}
-        </Box>
-      </Grid>
-    </>
+    <Grid container direction='column' spacing={1}>
+      {renderDatasetRows()}
+    </Grid>
   )
 }
