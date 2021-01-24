@@ -1,8 +1,9 @@
-import { Grid } from "@material-ui/core"
 import { Field, Form, Formik } from "formik"
-import Typography from "material-ui/styles/typography"
+
+import { Grid } from "@material-ui/core"
 import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 import React from 'react'
+import Typography from "material-ui/styles/typography"
 
 interface IProps {
   graphState: IGraphStateModel
@@ -10,6 +11,10 @@ interface IProps {
 
 export const SaveGraphStateControl = (props: IProps) => {
   const { graphState } = { ...props }
+
+  const saveGraphState = () => {
+
+  }
 
   return (
     <Formik
@@ -23,7 +28,6 @@ export const SaveGraphStateControl = (props: IProps) => {
           <Grid item sm={2}>
             <Field name="firstName" label='First Name' component={MuiTextFieldFormik} />
           </Grid>
-        </Grid>
         </Grid>
       </Form>
     </Formik >
