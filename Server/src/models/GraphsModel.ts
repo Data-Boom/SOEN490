@@ -23,15 +23,15 @@ export class GraphsModel {
         let sortedDatasetData: IDisplayedDatasetModel[] = []
         let oneAxisData: IAxisModel
         let sortedAxesData: IAxisModel[] = []
-        rawGraphData.datasetIds = JSON.parse(rawGraphData.datasetIds)
-        rawGraphData.datasetColors = JSON.parse(rawGraphData.datasetColors)
-        rawGraphData.datasetShapes = JSON.parse(rawGraphData.datasetShapes)
-        rawGraphData.datasetHiddenStatus = JSON.parse(rawGraphData.datasetHiddenStatus)
-        rawGraphData.axisVariable = JSON.parse(rawGraphData.axisVariable)
-        rawGraphData.axisLog = JSON.parse(rawGraphData.axisLog)
-        rawGraphData.axisZoomStart = JSON.parse(rawGraphData.axisZoomStart)
-        rawGraphData.axisZoomEnd = JSON.parse(rawGraphData.axisZoomEnd)
-        rawGraphData.axisUnits = JSON.parse(rawGraphData.axisUnits)
+        rawGraphData.datasetIds = typeof rawGraphData.datasetIds == 'string' ? JSON.parse(rawGraphData.datasetIds) : []
+        rawGraphData.datasetColors = typeof rawGraphData.datasetColors === 'string' ? JSON.parse(rawGraphData.datasetColors) : []
+        rawGraphData.datasetShapes = typeof rawGraphData.datasetShapes === 'string' ? JSON.parse(rawGraphData.datasetShapes) : []
+        rawGraphData.datasetHiddenStatus = typeof rawGraphData.datasetHiddenStatus === 'string' ? JSON.parse(rawGraphData.datasetHiddenStatus) : []
+        rawGraphData.axisVariable = typeof rawGraphData.axisVariable === 'string' ? JSON.parse(rawGraphData.axisVariable) : []
+        rawGraphData.axisLog = typeof rawGraphData.axisLog === 'string' ? JSON.parse(rawGraphData.axisLog) : []
+        rawGraphData.axisZoomStart = typeof rawGraphData.axisZoomStart === 'string' ? JSON.parse(rawGraphData.axisZoomStart) : []
+        rawGraphData.axisZoomEnd = typeof rawGraphData.axisZoomEnd === 'string' ? JSON.parse(rawGraphData.axisZoomEnd) : []
+        rawGraphData.axisUnits = typeof rawGraphData.axisUnits === 'string' ? JSON.parse(rawGraphData.axisUnits) : []
         for (let j = 0; j < rawGraphData.datasetIds.length; j++) {
             oneDatasetsData = {
                 id: rawGraphData.datasetIds[j],
