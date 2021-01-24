@@ -10,6 +10,7 @@ import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel } from '../../Models/Graph/IGraphDatasetModel'
 import { SaveGraphStateControl } from "./SaveGraphStateControl"
 import { SearchViewModal } from "../Search/SearchViewModal"
+import { callCreateGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
 
 export default function GraphView() {
 
@@ -48,6 +49,14 @@ export default function GraphView() {
     setGraphDatasets(mergedGraphDatasets)
   }
 
+  const onGraphStateSaved = async (name: string) => {
+    const graphStateCopy = { ...graphState }
+    graphStateCopy.name = name
+    const id: string = await callCreateGraphState(graphStateCopy)
+    graphStateCopy.id = id
+    setGraphState(graphStateCopy)
+  }
+
   const isInStateAlready = (dataset: IDatasetModel) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
@@ -83,7 +92,7 @@ export default function GraphView() {
               <Grid container>
                 <Grid item>
                   <SaveGraphStateControl
-                    graphState={graphState}
+                    onSaveClick={onGraphStateSaved}
                   />
                 </Grid>
               </Grid>

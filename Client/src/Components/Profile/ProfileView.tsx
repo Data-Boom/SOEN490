@@ -1,8 +1,7 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
-import DataboomTestGraph from '../../Common/Assets/DataboomTestGraph.png'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
@@ -10,13 +9,6 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
-import { ProfileGraph } from './profileGraph'
-
-import { getDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
-import { listSavedGraphStates } from '../../Remote/Endpoints/graphEndpoint'
-
-//need to call endpoint to display the chosen saved graph datas in list view? 
-
 
 const renderGraphRow = (row) => {
   return (<Table size="small" aria-label="purchases">

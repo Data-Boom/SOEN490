@@ -1,13 +1,12 @@
 import { Box, Button, Grid } from "@material-ui/core"
 import { Field, Form, Formik } from "formik"
 
-import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 import { MuiTextFieldFormik } from "../Forms/FormikFields"
 import React from 'react'
 import { classStyles } from '../../appTheme'
 
 interface IProps {
-  graphState: IGraphStateModel
+  onSaveClick: (name: string) => void
 }
 
 interface IFormikProps {
@@ -15,13 +14,10 @@ interface IFormikProps {
 }
 
 export const SaveGraphStateControl = (props: IProps) => {
-  const { graphState } = { ...props }
+  const { onSaveClick } = { ...props }
 
   const saveGraphState = (form: IFormikProps) => {
-    graphState.name = form.name
-    //todo implement GraphStateEndpoint
-    //todo on successful save let user know that graph was saved
-    // callSaveGraphState(graphState)
+    onSaveClick(form.name)
   }
 
   return (
