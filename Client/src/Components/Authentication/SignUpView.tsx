@@ -15,9 +15,6 @@ import Typography from '@material-ui/core/Typography'
 import { callSignUp } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { makeStyles } from '@material-ui/core/styles'
 import { signupValidationSchema } from './AuthenticationValidationSchema'
-import SnackbarUtils from '../SnackbarUtils'
-import { post } from '../../Remote/RemoteHelper'
-
 
 function Copyright() {
   return (
@@ -55,18 +52,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUpView() {
   const classes = useStyles()
   async function handleSignUpSubmit(user: ISignUpUserModel): Promise<void> {
-
-    callSignUp(user)
-    console.log(callSignUp(user));
-    console.log(post('/signup', user));
-    /*const response = fetch('/#/sign-in');
-    console.log((await response).status);
-    if ((await response).status.toString().charAt(0) == '2' && window.location.href.indexOf("/sign-up") > -1) {
-      SnackbarUtils.success('Sign up successful. Please sign in.')
-      window.location.replace("/#/sign-in")
-
-    }*/
-
+    await callSignUp(user)
   }
   return (
     <Fragment>
