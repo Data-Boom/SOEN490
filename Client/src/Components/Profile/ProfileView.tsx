@@ -10,24 +10,13 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
+import { ProfileGraph } from './profileGraph'
 
 import { getDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
-import { listGraphStates, listSavedGraphStates, listDeletedGraphs } from '../../Remote/Endpoints/graphEndpoint'
-
-//1st try
-const [savedGraphState, setSavedGraphState] = useState([])
-
-useEffect(() => {
-
-  const callListSavedGraphStates = async () => {
-    const savedGraphStates = await listSavedGraphStates()
-    setSavedGraphState(savedGraphStates)
-  }
-
-  callListSavedGraphStates()
-}, [])
+import { listSavedGraphStates } from '../../Remote/Endpoints/graphEndpoint'
 
 //need to call endpoint to display the chosen saved graph datas in list view? 
+
 
 const renderGraphRow = (row) => {
   return (<Table size="small" aria-label="purchases">
@@ -133,6 +122,9 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props
   const [open, setOpen] = React.useState(false)
   const classes = useRowStyles()
+
+  //WProfileGraph()
+
   return (
     < React.Fragment >
       <TableRow className={classes.root}>

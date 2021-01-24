@@ -16,7 +16,7 @@ router.get('/api/v1/savedGraphs/oneSavedGraph/:oneSavedGraph', JWTAuthenticator.
     savedGraphsControllerObject.createRequestForSingleSavedGraph(request, response);
 });
 
-router.get('/api/v1/userSavedGraphs/:userSavedGraphs', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+router.get('/api/v1/userSavedGraphs', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     savedGraphsControllerObject.createRequestForUserSavedGraphs(request, response);
 });
 
