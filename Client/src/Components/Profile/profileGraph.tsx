@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { listSavedGraphStates } from '../../Remote/Endpoints/graphEndpoint'
+import { useEffect, useState } from 'react'
+
+import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
 
 export const ProfileGraph = () => {
-    const [savedGraphState, setSavedGraphState] = useState([])
+  const [savedGraphState, setSavedGraphState] = useState([])
 
-    useEffect(() => {
+  useEffect(() => {
 
-        const callListSavedGraphStates = async () => {
-            const savedGraphState = await listSavedGraphStates()
-            setSavedGraphState(savedGraphState)
-        }
-        callListSavedGraphStates()
-    }, [])
+    const callListSavedGraphStates = async () => {
+      const savedGraphState = await listGraphStates()
+      setSavedGraphState(savedGraphState)
+    }
+    callListSavedGraphStates()
+  }, [])
 
 
 }
