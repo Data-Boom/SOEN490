@@ -29,12 +29,21 @@ router.get('/api/v1/dataset*', (request: Request, response: Response) => {
     dataSetController.createRequestForData(request, response);
 });
 
-router.delete('/api/v1//dataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
-    dataSetController.createRequestToDeleteDataSet(request, response)
+router.delete('/api/v1//dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+    dataSetController.createRequestToRejectDataset(request, response)
 })
 
 router.put('/api/v1/flagDataSet/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
-    dataSetController.createRequestToFlagDataSet(request, response)
+    dataSetController.createRequestToFlagDataset(request, response)
 })
+
+router.get('/api/v1/userFlaggedDatasets', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+    dataSetController.createRequestForUserFlaggedDatasets(request, response)
+})
+
+router.put('/api/v1/adminApproveDataset', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+    dataSetController.createAdminApprovedDatasetRequest(request, response)
+})
+
 
 export { router as DataSetRouter };
