@@ -1,6 +1,6 @@
 import { Connection, getConnection } from "typeorm";
-import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
+import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 
 export class GraphsModel {
     private connection: Connection;
@@ -117,8 +117,8 @@ export class GraphsModel {
      * Axis unit types: string[]
      */
     private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[], datasetHiddenStatus: boolean[],
-
         axisVariable: string[], axisMode: string[], axisZoom: number[], axisUnits: string[]): Promise<string> {
+
         let newGraph = new Savedgraphs();
         newGraph.id;
         newGraph.accountId = accountId;
@@ -132,7 +132,7 @@ export class GraphsModel {
         newGraph.axisZoom = axisZoom;
         newGraph.axisUnits = axisUnits;
         await this.connection.manager.save(newGraph);
-        return "Graph successfully saved"
+        return newGraph.id.toString()
     }
 
     /**

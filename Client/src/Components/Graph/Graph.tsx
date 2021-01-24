@@ -19,21 +19,13 @@ export default function Graph(props: IProps) {
   const { datasets, initialAxes } = { ...props }
   const [chart, setChart] = useState<any>(null)
 
-  useEffect(() => {
-    const chart = setUpGraph()
-    rebuildGraph(chart)
-  }, [])
+  useEffect(() => setUpGraph(), [])
+  useEffect(() => rebuildGraph(), [datasets])
 
-  useEffect(() => {
-    if (!chart) {
-      return
+  const rebuildGraph = () => {
+    if (chart) {
+      chart.data = buildDataForGraph(datasets)
     }
-
-    rebuildGraph(chart)
-  }, [datasets])
-
-  const rebuildGraph = (chart) => {
-    chart.data = chart && buildDataForGraph(datasets)
   }
 
   const addSeries = (chart) => {
@@ -70,6 +62,7 @@ export default function Graph(props: IProps) {
 
   const setUpGraph = () => {
     const chart = am4core.create("chartdiv", am4charts.XYChart)
+    chart.data = buildDataForGraph(datasets)
 
     const xAxis = chart.xAxes.push(new am4charts.ValueAxis())
     xAxis.title.text = `${initialAxes[0].variableName}, ${initialAxes[0].units}`
@@ -110,7 +103,7 @@ export default function Graph(props: IProps) {
     chart.exporting.menu = new am4core.ExportMenu()
     addSeries(chart)
     setChart(chart)
-    return chart
+    console.log(chart, 'set chart')
   }
 
   return (
