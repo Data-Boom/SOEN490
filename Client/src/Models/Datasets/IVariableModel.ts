@@ -18,7 +18,7 @@ export const ITemperatureModel: IVariableModel = {
 
 export const IVelocityModel: IVariableModel = {
     type: 'velocity',
-    variableNames: ['velocity'],
+    variableNames: ['velocity', 'shock veloctiy', 'particle velocity'],
     units: ['km/s', 'mm/μs', 'm/s']
 }
 
@@ -36,7 +36,7 @@ export const IDensityModel: IVariableModel = {
 
 export const IUnitlessModel: IVariableModel = {
     type: 'unitless',
-    variableNames: ['equivalence ratio', 'dilution ratio', 'mole fraction'],
+    variableNames: ['equivalence ratio', 'dilution ratio', 'mole fraction', 'compression ratio'],
     units: ['N/A']
 }
 
@@ -55,4 +55,17 @@ export const ISpecificVolumeModel: IVariableModel = {
     units: ['cc/g', 'm^3/kg']
 }
 
-export const IVariableUnits: IVariableModel[] = [IWidthModel, ITemperatureModel, IVelocityModel, IPressureModel, IDensityModel, IUnitlessModel, IPercentageModel, ISpecificVolumeModel]
+export const IEnergyModel: IVariableModel = {
+    type: 'energy',
+    variableNames: ['critical energy', 'cylindrical critical energy'],
+    units: ['j']
+}
+
+export const IChargeModel: IVariableModel = {
+    type: 'charge',
+    variableNames: ['critical charge'],
+    units: ['kg tetryl']
+}
+
+
+export const IVariableUnits: IVariableModel[] = [IWidthModel, ITemperatureModel, IVelocityModel, IPressureModel, IDensityModel, IUnitlessModel, IPercentageModel, ISpecificVolumeModel, IEnergyModel, IChargeModel]
