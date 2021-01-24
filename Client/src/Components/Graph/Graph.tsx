@@ -17,7 +17,7 @@ am4core.useTheme(am4themes_material)
 
 export default function Graph(props: IProps) {
   const { datasets, initialAxes } = { ...props }
-  const [chart, setChart] = useState<any>(null)
+  const [chart, setChart] = useState<am4charts.XYChart>(null)
 
   useEffect(() => setUpGraph(), [])
   useEffect(() => rebuildGraph(), [datasets])
@@ -60,6 +60,19 @@ export default function Graph(props: IProps) {
     }
   }
 
+  const subscribeToChartEvents = (chart: am4charts.XYChart, xAxis: am4charts.Axis, yAxis: am4charts.Axis) => {
+    chart.events.on("ready", function () {
+      //todo zoom to values or indeces?
+      initialAxes[0].zoomStartIndex &&
+        initialAxes[0].zoomEndIndex &&
+        xAxis.zoomToIndexes(initialAxes[0].zoomStartIndex, initialAxes[0].zoomEndIndex)
+
+      initialAxes[1].zoomStartIndex &&
+        initialAxes[1].zoomEndIndex &&
+        yAxis.zoomToIndexes(initialAxes[1].zoomStartIndex, initialAxes[1].zoomEndIndex)
+    })
+  }
+
   const setUpGraph = () => {
     const chart = am4core.create("chartdiv", am4charts.XYChart)
     chart.data = buildDataForGraph(datasets)
@@ -73,37 +86,13 @@ export default function Graph(props: IProps) {
     yAxis.logarithmic = initialAxes[1].logarithmic || false
     yAxis.title.text = `${initialAxes[1].variableName}, ${initialAxes[1].units}`
 
-    chart.events.on("ready", function () {
-      //todo zoom to values or indeces?
-      initialAxes[0].zoomStartIndex &&
-        initialAxes[0].zoomEndIndex &&
-        xAxis.zoomToIndexes(initialAxes[0].zoomStartIndex, initialAxes[0].zoomEndIndex)
-
-      initialAxes[1].zoomStartIndex &&
-        initialAxes[1].zoomEndIndex &&
-        yAxis.zoomToIndexes(initialAxes[1].zoomStartIndex, initialAxes[1].zoomEndIndex)
-    })
-
-    // Scrollbars
     chart.scrollbarX = new am4core.Scrollbar()
     chart.scrollbarY = new am4core.Scrollbar()
-
-    // Add cursor and series tooltip support
     chart.cursor = new am4charts.XYCursor()
-
-    am4charts.ValueAxis.prototype.getSeriesDataItem = function (series, position) {
-      const key = this.AxisFieldName + this.AxisLetter
-      const value = this.positionToValue(position)
-      const dataItem = series.dataItems.getIndex(series.dataItems.findClosestIndex(value, function (x) {
-        return x[key] ? x[key] : undefined
-      }, "any"))
-      return dataItem
-    }
-
     chart.exporting.menu = new am4core.ExportMenu()
     addSeries(chart)
     setChart(chart)
-    console.log(chart, 'set chart')
+    subscribeToChartEvents(chart, xAxis, yAxis)
   }
 
   return (
