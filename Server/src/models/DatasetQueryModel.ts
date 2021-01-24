@@ -9,7 +9,7 @@ import {
     IPublicationModel
 } from "./interfaces/DatasetModelInterface";
 import { Publications, selectPublicationsQuery } from "./entities/Publications";
-import { selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
+import { Dataset, selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
 
 import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Category } from "./entities/Category";
@@ -20,6 +20,7 @@ import { selectDataPointCommentsQuery } from "./entities/Datapointcomments";
 import { selectDataPointsQuery } from "./entities/Datapoints";
 import { selectMaterialQuery } from "./entities/Material";
 import { IDatasetModel } from "./interfaces/DatasetResponseModelInterface";
+import { Unapproveddatasets } from "./entities/Unapproveddatasets";
 
 export class DataQueryModel {
     private connection: Connection;
@@ -272,17 +273,26 @@ export class DataQueryModel {
         return allData;
     }
 
-    /**
-     * This method will run a query find all the data set IDs of all unapproved data sets and 
-     * return a raw data packet containing that information. 
-     */
-    async getUnapprovedDatasetID(): Promise<IDatasetModel[]> {
-        let unapprovedDatasetData: IDatasetModel[] = await selectDatasetIdsBasedOnApprovalStatusQuery(this.connection, 0)
-        return unapprovedDatasetData;
-    }
     private valuesToArray = (dataPoints: IDataPointModel[]): void => {
         dataPoints.forEach(dataPoint => {
             dataPoint.values = typeof dataPoint.values === 'string' ? JSON.parse(dataPoint.values) : []
         });
+    }
+
+    async selectUploaderFlaggedDatasets(uploaderId: number): Promise<any> {
+        let userFlaggedDatasets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_Datasets')
+            .select()
+            .innerJoin(Dataset, 'dataset.id = unapproved_Datasets.datasetId')
+            .where('unapproved_datasets.isFlagged = 1')
+            .andWhere('dataset.uploaderId = :uploaderId', { uploaderId: uploaderId })
+            .getRawMany();
+        return userFlaggedDatasets
+    }
+
+    async getAllUnapprovedDatasets(): Promise<IDatasetModel[]> {
+        let allUnapprovedDatasets: IDatasetModel[] = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
+            .select('unapproved_datasets.datasetId', 'unapproved_datasets_datasetId')
+            .getRawMany();
+        return allUnapprovedDatasets
     }
 }

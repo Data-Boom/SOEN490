@@ -3,6 +3,7 @@ import { Publications } from './entities/Publications';
 import { Dataset } from './entities/Dataset';
 import { Datapoints } from './entities/Datapoints';
 import { Datapointcomments } from './entities/Datapointcomments';
+import { Unapproveddatasets } from "./entities/Unapproveddatasets";
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
@@ -47,13 +48,52 @@ export class DatasetUpdateModel {
             .where("id = :id", { id: id })
             .execute();
 
-    async deleteDataset(id: number) {
+    async rejectDataset(id: number) {
         let publicationId = await this.selectLinkedPublicationIdQuery(id);
         await this.deleteDatapointCommentsQuery(id)
         await this.deleteDatapointsQuery(id)
         await this.deleteDatasetQuery(id)
         await this.deletePublicationQuery(publicationId)
+        await this.wipeEntryFromUnapprovedTable(id)
         return "Success"
+    }
+
+
+    async selectAllFlaggedDatasets(): Promise<any> {
+        let allFlaggedDatsets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
+            .select()
+            .where('unapproved_datasets.isFlagged = 1')
+            .getRawMany();
+        return allFlaggedDatsets
+    }
+
+    async flagDataSet(datasetId: number, flaggedComment: string) {
+        let newFlaggedSet = new Unapproveddatasets()
+        newFlaggedSet.datasetId = datasetId
+        newFlaggedSet.flaggedComment = flaggedComment
+        newFlaggedSet.isFlagged = 1
+        await this.connection.manager.save(newFlaggedSet)
+    }
+
+    async approvedDataSet(datasetId: number, datasetCommentsToAppend: string) {
+        await this.wipeEntryFromUnapprovedTable(datasetId)
+        let oldComment = await this.selectDatasetCommentQuery(datasetId)
+        let newComment = oldComment.concat(" " + datasetCommentsToAppend)
+        await this.connection.createQueryBuilder(Dataset, 'dataset')
+            .update('dataset')
+            .set({ comments: newComment, isApproved: 1 })
+            .where('dataset.id = :datasetId', { datasetId: datasetId })
+            .execute()
+
+        return "Success"
+    }
+
+    async wipeEntryFromUnapprovedTable(datasetId: number) {
+        await this.connection.createQueryBuilder()
+            .delete()
+            .from(Unapproveddatasets)
+            .where("datasetId = :id", { id: datasetId })
+            .execute();
     }
 
     private selectDatasetCommentQuery = (id: number) =>
@@ -62,16 +102,4 @@ export class DatasetUpdateModel {
             .where('dataset.id = :id', { id: id })
             .getRawOne();
 
-    private updateDatasetApprovalQuery = (id: number, status: number, regularComments: string, statusComment: string) =>
-        this.connection.createQueryBuilder()
-            .update(Dataset)
-            .set({ isApproved: status, comments: regularComments, statusComment: statusComment })
-            .where("id = :id", { id: id })
-            .execute();
-
-    async updateDatasetApproval(id: number, status: number, commentsAddition: string, statusComment: string) {
-        let comments = await this.selectDatasetCommentQuery(id);
-        comments = comments.concat(" " + commentsAddition)
-        await this.updateDatasetApprovalQuery(id, status, comments, statusComment)
-    }
 }
