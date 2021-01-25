@@ -1,13 +1,15 @@
-import { IClientDatasetModel, IDatasetIDModel } from "../models/interfaces/DatasetModelInterface";
+import { IApprovalDatasetModel, IAuthorModel, IClientDatasetModel, IDataPointModel, IDatasetIDModel, IDatasetInfoModel, IMaterialModel } from "../models/interfaces/DatasetModelInterface";
 
 import { DataQueryModel } from "../models/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 import { IResponse } from "../genericInterfaces/ResponsesInterface";
 import { BadRequest, InternalServerError, NotFound } from '@tsed/exceptions';
 import { DatasetUpdateModel } from '../models/DatasetUpdateModel';
+import { DatasetApprovalModel } from "../models/DatasetApprovalModel";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
+    private datasetApprovalModel: DatasetApprovalModel
     private updateModel: DatasetUpdateModel
     private requestResponse: IResponse
 
@@ -110,8 +112,6 @@ export class DataSetService {
                 rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
             }
             else {
-                console.log(lastNameReceived, 'fn');
-
                 rawData = await this.dataQuery.getDatasetIDFromAuthorLastName(lastNameReceived);
             }
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
@@ -137,7 +137,7 @@ export class DataSetService {
      * This is an array of raw data packets (aka. JSON objects): any[]
      */
     private async createDatasetIdArray(rawData: any[]) {
-        let datasetIdArray = [];
+        let datasetIdArray: number[] = [];
         for (let index = 0; index < rawData.length; index++) {
             datasetIdArray[index] = rawData[index].dataset_id;
         }
@@ -157,7 +157,7 @@ export class DataSetService {
      * An array formed from combining multiple data set IDs arrays together: any[]
      */
     private async selectDatasetIds(paramsEntered: number, rawDatasetIds: any[]) {
-        let selectedDatasetIds = []
+        let selectedDatasetIds: number[] = []
         let count: number
         for (let i = 0; i < rawDatasetIds.length; i++) {
             count = 1;
@@ -167,10 +167,84 @@ export class DataSetService {
                 }
             }
             if (count == paramsEntered) {
-                selectedDatasetIds.push(rawDatasetIds[i]);
+                selectedDatasetIds.push(Number(rawDatasetIds[i]));
             }
         }
         return selectedDatasetIds;
+    }
+
+    // allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
+
+    private async getDataFromDatasetIds2(selectedDatasetIds: number[]) {
+        try {
+            console.log("getting data")
+            let rawData = await this.dataQuery.getAllData2(selectedDatasetIds)
+            console.log(rawData[1])
+            let datasetInfo: IDatasetInfoModel
+            let singleAuthorData: IAuthorModel
+            let allAuthorData: IAuthorModel[] = []
+            let authorIndex = 0;
+            let singleMaterialData: IMaterialModel
+            let allMaterialData: IMaterialModel[]
+            let materialIndex = 0;
+            let singleDataPointData: IDataPointModel
+            let allDataPointData: IDataPointModel[]
+            let dataPointIndex = 0;
+            let singleDataSet: IClientDatasetModel
+            let allDataSets: Array<IClientDatasetModel> = [];
+            let currentDataset: number = 0
+            for (let index = 0; index < selectedDatasetIds.length; index++) {
+                currentDataset = rawData[2][index].dataset_id
+                datasetInfo = {
+                    name: rawData[2][index]?.name,
+                    comments: rawData[2][index]?.comments,
+                    datasetDataType: rawData[2][index]?.datasetdatatype,
+                    category: rawData[2][index]?.category,
+                    subcategory: rawData[2][index]?.subcategory
+                }
+                allAuthorData = []
+                for (authorIndex = 0; authorIndex < rawData[1].length; authorIndex++) {
+                    if (rawData[1][authorIndex].dataset_id == currentDataset) {
+                        singleAuthorData = {
+                            firstName: rawData[1][authorIndex].firstName,
+                            middleName: rawData[1][authorIndex].middleName,
+                            lastName: rawData[1][authorIndex].lastName
+                        }
+                    }
+                    allAuthorData.push(singleAuthorData)
+                }
+                rawData[0][index].authors = allAuthorData
+
+                //Sort through materials, then group them accordingly
+                allMaterialData = []
+                do {
+                    singleMaterialData = rawData[3][materialIndex]
+                    allMaterialData.push(singleMaterialData)
+                    materialIndex++;
+                } while (materialIndex < rawData[3].length && rawData[3][materialIndex].dataset_id == currentDataset);
+
+                //Sort through data points, then group them accordingly
+                allDataPointData = []
+                do {
+                    singleDataPointData = rawData[4][dataPointIndex]
+                    allDataPointData.push(singleDataPointData)
+                    dataPointIndex++;
+                } while (dataPointIndex < rawData[4].length && rawData[4][dataPointIndex].dataset_id == currentDataset);
+
+                singleDataSet = {
+                    publication: rawData[0][index],
+                    dataset_id: currentDataset,
+                    dataset_info: datasetInfo,
+                    materials: allMaterialData,
+                    dataPoints: allDataPointData,
+                    dataPointComments: rawData[5][index]?.datapointcomments
+                }
+                allDataSets.push(singleDataSet);
+            }
+            return allDataSets
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     /**
@@ -188,7 +262,19 @@ export class DataSetService {
         try {
             let setOfData: Array<IClientDatasetModel> = [];
             for (let i = 0; i < selectedDatasetIds.length; i++) {
-                setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
+                setOfData.push(await this.dataQuery.fetchRegularDataSet(selectedDatasetIds[i]));
+            }
+            return setOfData
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    private async getDataFromUnapprovedDatasetIds(selectedDatasetIds: any[]) {
+        try {
+            let setOfData: Array<IApprovalDatasetModel> = [];
+            for (let i = 0; i < selectedDatasetIds.length; i++) {
+                setOfData.push(await this.dataQuery.fetchUnapprovedDataSet(selectedDatasetIds[i]));
             }
             return setOfData
         } catch (error) {
@@ -287,6 +373,12 @@ export class DataSetService {
         return setOfData;
     }
 
+    private async getUnapprovedDatasetsFromRawData(rawData: IDatasetIDModel[]) {
+        let selectedDatasetIds = await this.createDatasetIdArray(rawData);
+        let setOfData = await this.getDataFromUnapprovedDatasetIds(selectedDatasetIds);
+        return setOfData;
+    }
+
     /**
      * This method is used to get an array of all unapproved data set IDs. 
      * It will call a query to get a raw data packet which contains all of the unapproved data set IDs, 
@@ -294,9 +386,13 @@ export class DataSetService {
      */
     async getUnapprovedAllDatasets() {
         try {
-            let response = await this.dataQuery.getUnapprovedDatasets();
-            if (response == undefined || response == null) {
+            let datasetIds = await this.datasetApprovalModel.getUnapprovedDatasets();
+            let response: IApprovalDatasetModel[];
+            if (datasetIds == undefined || datasetIds == null) {
                 throw new NotFound("No Unapproved Datasets in database")
+            }
+            else {
+                response = await this.getUnapprovedDatasetsFromRawData(datasetIds);
             }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response as any
@@ -306,6 +402,41 @@ export class DataSetService {
         }
     }
 
+    async getUserFlaggedDatasets(userId: number) {
+        try {
+            let datasetIds = await this.datasetApprovalModel.selectUserFlaggedDatasets(userId);
+            let response: IApprovalDatasetModel[];
+            if (datasetIds == undefined || datasetIds == null) {
+                throw new NotFound("No Unapproved Datasets in database")
+            }
+            else {
+                response = await this.getUnapprovedDatasetsFromRawData(datasetIds);
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+        }
+    }
+
+    async getAllFlaggedDatasets() {
+        try {
+            let datasetIds = await this.datasetApprovalModel.selectAllFlaggedDatasets();
+            let response: IApprovalDatasetModel[];
+            if (datasetIds == undefined || datasetIds == null) {
+                throw new NotFound("No Unapproved Datasets in database")
+            }
+            else {
+                response = await this.getUnapprovedDatasetsFromRawData(datasetIds);
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+        }
+    }
 
     async rejectDataSet(datasetId: number) {
         try {
@@ -337,7 +468,8 @@ export class DataSetService {
 
     async fetchFlaggedDatasets(userId: number) {
         try {
-            let response = await this.dataQuery.selectUserFlaggedDatasets(userId)
+            //let response = await this.dataQuery.selectUserFlaggedDatasets(userId)
+            let response = null
             if (response == undefined || response == null) {
                 throw new BadRequest("Could fetch user flagged datasets")
             }

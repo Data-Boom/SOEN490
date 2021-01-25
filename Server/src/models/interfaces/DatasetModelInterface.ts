@@ -50,3 +50,14 @@ export interface IClientDatasetModel {
     dataPoints: IDataPointModel[]
     dataPointComments: string[]
 }
+
+export interface IApprovalDatasetModel {
+    publication: IPublicationModel
+    dataset_id: number
+    dataset_info: IDatasetInfoModel
+    datasetIsFlagged: number
+    datasetFlaggedComment: string
+    materials: IMaterialModel[]
+    dataPoints: IDataPointModel[]
+    dataPointComments: string[]
+}
