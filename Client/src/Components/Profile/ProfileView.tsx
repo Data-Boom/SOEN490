@@ -289,16 +289,15 @@ export function ProfileView() {
           </TabPanel>
 
           <TabPanel value={tab} index={1}>
-            <TableContainer component={Paper} style={{ width: "50%" }}>
+            <TableContainer component={Paper} style={{ width: "100%" }}>
               <Table aria-label="collapsible table" >
-                <TableHead> Favourites (saved graphs)
+                <TableHead > Saved graphs
                   <TableRow>
-                    <TableCell />
-                    <TableCell align="left">Name</TableCell>
+                    <TableCell align="center">Name</TableCell>
                     <TableCell >Comments</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody >
                   <ProfileGraphStateList
                     graphDataset={savedGraphState}
                   />

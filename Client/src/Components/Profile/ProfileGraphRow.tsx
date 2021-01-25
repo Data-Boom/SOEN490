@@ -14,7 +14,7 @@ export const ProfileGraphRow = (props: IGraphModel) => {
     const { graphset } = { ...props }
 
     return (
-        <Grid item>
+        <Grid>
             <Box>
                 <Link to={'/graph/' + graphset.id} >
                     <Typography>
