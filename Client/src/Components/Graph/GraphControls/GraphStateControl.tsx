@@ -9,6 +9,7 @@ import { IGraphStateModel } from '../../../Models/Graph/IGraphStateModel'
 import { SaveGraphStateControl } from './SaveGraphStateControl'
 import { SearchViewModal } from '../../Search/SearchViewModal'
 import { getDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
+import { newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
 import { toDatasetRows } from '../GraphFunctions'
 
 interface IProps {
@@ -55,7 +56,7 @@ export const GraphStateControl = (props: IProps) => {
 
   const handleDatasetRemoved = (datasetId: number) => {
     const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
-    handleDatasetsUpdated(filteredDatasets)
+    handleCompleteDatasetsUpdated(filteredDatasets)
   }
 
   const handleDatasetsAdded = (selectedDatasets: IDatasetModel[]) => {
@@ -66,19 +67,28 @@ export const GraphStateControl = (props: IProps) => {
       mergedDatasets.push(dataset)
     })
 
-    handleDatasetsUpdated(mergedDatasets)
+    handleCompleteDatasetsUpdated(mergedDatasets)
   }
 
-  const handleDatasetsUpdated = (datasets: IDatasetModel[]) => {
+  const handleCompleteDatasetsUpdated = (datasets: IDatasetModel[]) => {
     setCompleteDatasets(datasets)
     const newGraphState = getUpdatedGraphState(datasets)
     onGraphStateChange(newGraphState, datasets)
   }
 
   const getUpdatedGraphState = (datasets: IDatasetModel[]): IGraphStateModel => {
-    const graphStateCopy = { ...graphState }
+    const graphDatasetStates = []
     //todo ensure all new datasets are in the state
-    return graphStateCopy
+    datasets.forEach(dataset => {
+      const graphDatasetIndex = graphState.datasets.findIndex(datasetState => datasetState.id == dataset.id)
+      if (graphDatasetIndex == -1) {
+        graphDatasetStates.push({ ...newGraphDatasetState, id: dataset.id })
+      }
+      else {
+        graphDatasetStates.push({ ...graphState.datasets[graphDatasetIndex], id: dataset.id })
+      }
+    })
+    return { ...graphState, datasets: graphDatasetStates }
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {

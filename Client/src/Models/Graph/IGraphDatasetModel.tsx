@@ -28,6 +28,13 @@ export const newGraphDataset: IGraphDatasetModel = {
   name: null
 }
 
+export const newGraphDatasetState: IGraphDatasetState = {
+  isHidden: false,
+  id: null,
+  color: null,
+  shape: null,
+}
+
 export const toGraphDatasetState = (dataset: IGraphDatasetModel): IGraphDatasetState => {
   return {
     color: dataset.color,

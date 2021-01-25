@@ -25,14 +25,13 @@ export const getGraphDatasets = (completeDatasets: IDatasetModel[], graphState: 
   const updatedGraphDatasets = []
   completeDatasets.forEach(completeDataset => {
     const existingGraphDatasetIndex = graphState.datasets.findIndex(dataset => dataset.id == completeDataset.id)
-    const updatedGraphDataset: IGraphDatasetModel = existingGraphDatasetIndex == -1 ? { ...newGraphDataset } : { ...graphState.datasets[existingGraphDatasetIndex] } as any
-    updatedGraphDataset.id = completeDataset.id
+    if (existingGraphDatasetIndex == -1) {
+      console.error(`failed to build graph datasets, index for ${completeDataset.id} was not found in the state`)
+    }
+    const updatedGraphDataset: IGraphDatasetModel = { ...graphState.datasets[existingGraphDatasetIndex] } as any
     updatedGraphDataset.name = completeDataset.dataset_name
     updatedGraphDataset.points = buildXYPoints(completeDataset, graphState.axes[0].variableName, graphState.axes[1].variableName)
     updatedGraphDatasets.push(updatedGraphDataset)
-    if (existingGraphDatasetIndex == -1) {
-
-    }
   })
 
   return updatedGraphDatasets
