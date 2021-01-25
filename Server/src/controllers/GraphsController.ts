@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { IGraphStateModel } from '../models/interfaces/SavedGraphsInterface';
+
 import { GraphsService } from '../services/GraphsService';
+import { IGraphStateModel } from '../models/interfaces/SavedGraphsInterface';
 
 export class GraphsController {
     private savedGraphsService: GraphsService;
@@ -16,8 +17,8 @@ export class GraphsController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForSingleSavedGraph(request: Request, response: Response) {
-        let requestParam = request.params.oneSavedGraph;
+    async createRequestForSingleGraph(request: Request, response: Response) {
+        let requestParam = request.params.graphStateId;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");
@@ -62,13 +63,26 @@ export class GraphsController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForAddingSavedGraph(request: Request, response: Response) {
+    async createRequestForAddingGraph(request: Request, response: Response) {
         let requestParams: any = { ...request.body };
         let processedRequest: IGraphStateModel = requestParams;
         let userId = request.body.user.account_id
         try {
             this.savedGraphsService = new GraphsService();
             let requestResponse = await this.savedGraphsService.saveNewGraph(processedRequest, userId)
+            response.status(requestResponse.statusCode).json(requestResponse.message)
+        } catch (error) {
+            response.status(error.status).json(error.message);
+        }
+    }
+
+    async createRequestForUpdatingGraph(request: Request, response: Response) {
+        let requestParams: any = { ...request.body };
+        let processedRequest: IGraphStateModel = requestParams;
+        let userId = request.body.user.account_id
+        try {
+            this.savedGraphsService = new GraphsService();
+            let requestResponse = await this.savedGraphsService.updateExistingGraph(processedRequest, userId)
             response.status(requestResponse.statusCode).json(requestResponse.message)
         } catch (error) {
             response.status(error.status).json(error.message);
@@ -84,8 +98,9 @@ export class GraphsController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForDeletingSavedGraph(request: Request, response: Response) {
-        let requestParam = request.params.deleteSavedGraph;
+    async createRequestForDeletingGraph(request: Request, response: Response) {
+        let userId = request.body.user.account_id
+        let requestParam = request.params.graphStateId;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");
@@ -93,7 +108,7 @@ export class GraphsController {
         else {
             try {
                 this.savedGraphsService = new GraphsService();
-                let requestResponse = await this.savedGraphsService.deleteSavedGraph(graphId)
+                let requestResponse = await this.savedGraphsService.deleteSavedGraph(graphId, userId)
                 response.status(requestResponse.statusCode).json(requestResponse.message)
             } catch (error) {
                 response.status(error.status).json(error.message);

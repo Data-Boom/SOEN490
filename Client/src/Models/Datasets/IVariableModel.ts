@@ -1,10 +1,4 @@
-export interface IVariableAndUnitModel {
-    xVariableName: string,
-    yVariableName: string,
-    xVariableUnits: string,
-    yVariableUnits: string
-}
-
+//todo review this when doing the units page
 export interface IVariableModel {
     type: string,
     variableNames: string[],
@@ -12,33 +6,33 @@ export interface IVariableModel {
 }
 
 export const IWidthModel: IVariableModel = {
-    type: 'width',
+    type: 'initial pressure',
     variableNames: ['cell length', 'cell width', 'critical tube diameter', 'minimum tube diameter'],
-    units: ['mm', 'cm', 'm']
+    units: ['kPa', 'cm', 'm']
 }
 
 export const ITemperatureModel: IVariableModel = {
-    type: 'temperature',
+    type: 'initial temperature',
     variableNames: ['initial temperature', 'temperature'],
     units: ['K', "°C"]
 }
 
 export const IVelocityModel: IVariableModel = {
-    type: 'velocity',
+    type: 'equivalence ratio',
     variableNames: ['velocity', 'shock velocity', 'particle velocity'],
-    units: ['km/s', 'mm/μs', 'm/s']
+    units: ['N/A', 'mm/μs', 'm/s']
 }
 
 export const IPressureModel: IVariableModel = {
-    type: 'pressure',
+    type: 'percent He',
     variableNames: ['pressure', 'initial pressure'],
-    units: ['kPa', 'MPa', 'GPa', 'bar', 'atm']
+    units: ['N/A', 'MPa', 'GPa', 'bar', 'atm']
 }
 
 export const IDensityModel: IVariableModel = {
-    type: 'density',
+    type: 'cell width',
     variableNames: ['density', 'initial density'],
-    units: ['kg/m^3', 'g/cc']
+    units: ['mm', 'g/cc']
 }
 
 export const IUnitlessModel: IVariableModel = {
