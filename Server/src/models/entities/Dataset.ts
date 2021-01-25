@@ -97,10 +97,6 @@ export class Dataset {
     @JoinColumn()
     uploader?: Accounts
 
-    // This comment is used during the approval process for admins to request changes
-    @Column({ nullable: true })
-    datasetAdminComment: string
-
     @Column({ type: 'integer', default: 0 })
     isApproved: number
 

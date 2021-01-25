@@ -11,7 +11,7 @@ export class Unapproveddatasets {
   flaggedComment: string
 
   @Column({ default: 0 })
-  isFlagged: boolean
+  isFlagged: number
 
   @OneToOne(type => Dataset)
   @JoinColumn()
