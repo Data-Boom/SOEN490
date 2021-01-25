@@ -45,7 +45,7 @@ export default function GraphView() {
             </Box>
           </Grid>
         </Grid>
-      </Box>
+      </Box >
     </>
   )
 }

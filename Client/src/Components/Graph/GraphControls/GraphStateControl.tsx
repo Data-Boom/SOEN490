@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { callCreateGraphState, callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
+import { AxesControl } from './AxesControl'
 import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetList } from '../DatasetList.tsx/DatasetList'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
@@ -47,6 +48,30 @@ export const GraphStateControl = (props: IProps) => {
       getGraphState(parseInt(graphState.id))
     }
   }, [])
+
+  //todo unhardcode the variables
+  const [axes, setAxes] = useState<IVariableAndUnitModel>({
+    xVariableName: 'initial pressure',
+    yVariableName: 'cell width',
+    xVariableUnits: 'kPa',
+    yVariableUnits: 'mm'
+  })
+  const [variables, setVariables] = useState([])
+
+  const handleVariablesSelected = (selectedDatasets: IDatasetModel[]) => {
+    const variableNames = []
+    selectedDatasets.forEach(dataset => {
+      dataset.data.variables.forEach(variable => {
+        variableNames.push(variable.name)
+      })
+    })
+    const uniqueVariables = Array.from(new Set(variableNames))
+    setVariables(uniqueVariables)
+  }
+
+  const changeAxes = (newAxes: IVariableAndUnitModel) => {
+    setAxes(newAxes)
+  }
 
   const onGraphStateSaved = async (name: string) => {
     const graphStateCopy = { ...graphState }
@@ -127,6 +152,9 @@ export const GraphStateControl = (props: IProps) => {
             onHideDatasetSwitch={onHideDatasetSwitch}
           />
           <Grid container>
+            <Grid item>
+              <AxesControl datasets={completeDatasets} variables={variables} axes={axes} onAxesChange={changeAxes} />
+            </Grid>
             <Grid item>
               <SaveGraphStateControl
                 onSaveClick={onGraphStateSaved}
