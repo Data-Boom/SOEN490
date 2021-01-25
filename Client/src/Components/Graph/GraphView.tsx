@@ -1,20 +1,23 @@
 import { Box, Grid } from "@material-ui/core"
-import { IGraphDatasetModel, toGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
 import { IGraphStateModel, newGraphState } from "../../Models/Graph/IGraphStateModel"
 import React, { useEffect, useState } from "react"
 import { callCreateGraphState, callGetGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
-import { toDatasetRows, transformAndMergeGraphDatasets } from "./GraphFunctions"
+import { toDatasetRows, getGraphDatasets } from "./GraphFunctions"
 
 import { CustomLoader } from "../Utils/CustomLoader"
 import { DatasetList } from "./DatasetList.tsx/DatasetList"
 import { ExportDatasetsButton } from "./ExportDatasetsButton"
 import Graph from './Graph'
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
-import { IGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
+import { IGraphDatasetModel } from '../../Models/Graph/IGraphDatasetModel'
 import { SaveGraphStateControl } from "./SaveGraphStateControl"
 import { SearchViewModal } from "../Search/SearchViewModal"
 import { getDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
 import { useParams } from "react-router"
+
+interface IGraphViewParams {
+  graphStateId: string
+}
 
 export default function GraphView() {
 
@@ -23,26 +26,31 @@ export default function GraphView() {
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState })
-  const { graphStateId } = useParams()
+  const { graphStateId } = useParams<IGraphViewParams>()
 
   useEffect(() => {
     const getGraphState = async (id: number) => {
       setIsLoadinDatasets(true)
+
       const graphState = await callGetGraphState(id)
       setGraphState(graphState)
 
       const datasets = await getDatasets({ datasetId: graphState.datasets.map(dataset => dataset.id) })
-      handleDatasetsSelected(datasets)
+      setCompleteDatasets(datasets)
+
+      const mergedGraphDatasets = getGraphDatasets(datasets, graphState.datasets, graphState.axes[0].variableName, graphState.axes[1].variableName)
+      setGraphDatasets(mergedGraphDatasets)
+      console.log(mergedGraphDatasets)
       setIsLoadinDatasets(false)
     }
 
     if (graphStateId) {
-      getGraphState(graphStateId)
+      getGraphState(parseInt(graphStateId))
     }
   }, [])
 
   const onRemoveDataset = (datasetId: number) => {
-    const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
+    const filteredDatasets = gr.filter(dataset => dataset.id !== datasetId)
     handleCompleteDatasetsUpdated(filteredDatasets)
   }
 
@@ -50,7 +58,30 @@ export default function GraphView() {
     const graphDatasetsCopy = [...graphDatasets]
     const indexToHide = graphDatasets.findIndex(dataset => dataset.id == datasetId)
     graphDatasetsCopy[indexToHide].isHidden = !graphDatasetsCopy[indexToHide].isHidden
-    updateGraphDatasetsState(graphDatasetsCopy)
+    setGraphDatasets(graphDatasetsCopy)
+  }
+
+  const unzipGraphState = (graphState: IGraphStateModel) => {
+    graphState.datasets.forEach(datasetState => {
+      const graphDatasetIndex = graphDatasets.findIndex(graphDataset => datasetState.id == graphDataset.id)
+      if graphDatasetIndex == 
+    })
+  }
+
+  const addToGraphState = () => {
+
+  }
+
+  const removeFromGraphState = () => {
+
+  }
+
+  const editGraphState = () => {
+
+  }
+
+  const updateGraphStateAxes = () => {
+
   }
 
   const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
@@ -65,15 +96,8 @@ export default function GraphView() {
   }
 
   const handleCompleteDatasetsUpdated = (updatedDatasets: IDatasetModel[]) => {
-    const mergedGraphDatasets = transformAndMergeGraphDatasets(updatedDatasets, graphDatasets, graphState.axes[0].variableName, graphState.axes[1].variableName)
-    setCompleteDatasets(updatedDatasets)
-    updateGraphDatasetsState(mergedGraphDatasets)
-  }
-
-  const updateGraphDatasetsState = (graphDatasets: IGraphDatasetModel[]) => {
-    setGraphDatasets(graphDatasets)
-    const datasetStates: IGraphDatasetState[] = graphDatasets.map(graphedDataset => toGraphDatasetState(graphedDataset))
-    setGraphState({ ...graphState, datasets: datasetStates })
+    const mergedGraphDatasets = getGraphDatasets(updatedDatasets, graphDatasets, graphState.axes[0].variableName, graphState.axes[1].variableName)
+    setGraphDatasets(mergedGraphDatasets)
   }
 
   const onGraphStateSaved = async (name: string) => {
@@ -114,7 +138,7 @@ export default function GraphView() {
                 }
               </Grid>
               <DatasetList
-                datasets={toDatasetRows(completeDatasets)}
+                datasets={toDatasetRows(completeDatasets, graphDatasets)}
                 onRemoveDatasetClick={onRemoveDataset}
                 onHideDatasetSwitch={onHideDatasetSwitch}
               />

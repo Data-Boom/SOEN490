@@ -1,6 +1,8 @@
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
-import { IDatasetRowModel, newDatasetRow } from "../../Models/Datasets/IDatasetRowModel"
-import { IGraphDatasetModel, IGraphPoint, newGraphDataset } from "../../Models/Graph/IGraphDatasetModel"
+import { IGraphDatasetModel, IGraphPoint, newGraphDataset, toGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
+
+import { IDatasetRowModel } from "../../Models/Datasets/IDatasetRowModel"
+import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 
 export const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVariableName: string): IGraphPoint[] => {
   const xIndex = getVariableIndex(dataset.data.variables, xVariableName)
@@ -19,29 +21,32 @@ export const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVa
   return points
 }
 
-export const transformAndMergeGraphDatasets = (completeDatasets: IDatasetModel[], graphDatasets: IGraphDatasetModel[], xVariableName: string, yVariableName: string): IGraphDatasetModel[] => {
+export const getGraphDatasets = (completeDatasets: IDatasetModel[], graphState: IGraphStateModel): IGraphDatasetModel[] => {
   const updatedGraphDatasets = []
   completeDatasets.forEach(completeDataset => {
-    const existingGraphDatasetId = graphDatasets.findIndex(dataset => dataset.id == completeDataset.id)
-    let updatedGraphDataset: IGraphDatasetModel = {} as any
-    if (existingGraphDatasetId == -1) {
-      updatedGraphDataset = { ...newGraphDataset }
-      updatedGraphDataset.id = completeDataset.id
-      updatedGraphDataset.name = completeDataset.dataset_name
-      updatedGraphDataset.points = buildXYPoints(completeDataset, xVariableName, yVariableName)
-    } else {
-      updatedGraphDataset = { ...graphDatasets[existingGraphDatasetId] }
-    }
+    const existingGraphDatasetIndex = graphState.datasets.findIndex(dataset => dataset.id == completeDataset.id)
+    const updatedGraphDataset: IGraphDatasetModel = existingGraphDatasetIndex == -1 ? { ...newGraphDataset } : { ...graphState.datasets[existingGraphDatasetIndex] } as any
+    updatedGraphDataset.id = completeDataset.id
+    updatedGraphDataset.name = completeDataset.dataset_name
+    updatedGraphDataset.points = buildXYPoints(completeDataset, graphState.axes[0].variableName, graphState.axes[1].variableName)
     updatedGraphDatasets.push(updatedGraphDataset)
-  });
+    if (existingGraphDatasetIndex == -1) {
+
+    }
+  })
 
   return updatedGraphDatasets
 }
 
-export const toDatasetRows = (datasets: IDatasetModel[]): IDatasetRowModel[] => {
-  return datasets.map(dataset => {
-    return { ...newDatasetRow, id: dataset.id, name: dataset.dataset_name }
-  })
+export const toDatasetRows = (datasets: IDatasetModel[], graphDatasets: IGraphDatasetModel[]): IDatasetRowModel[] => {
+  const datasetRows: IDatasetRowModel[] = []
+
+  for (let i = 0; i < datasets.length; i++) {
+    const datasetRow: IDatasetRowModel = { ...graphDatasets[i], id: datasets[0].id, name: datasets[0].dataset_name, isInitiallyHidden: graphDatasets[i].isHidden }
+    datasetRows.push(datasetRow)
+  }
+
+  return datasetRows
 }
 
 export const getVariableIndex = (variables: IVariable[], varName: string): number => {
