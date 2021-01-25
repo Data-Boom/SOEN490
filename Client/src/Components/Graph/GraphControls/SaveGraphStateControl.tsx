@@ -1,9 +1,9 @@
 import { Box, Button, Grid } from "@material-ui/core"
 import { Field, Form, Formik } from "formik"
 
-import { MuiTextFieldFormik } from "../Forms/FormikFields"
+import { MuiTextFieldFormik } from "../../Forms/FormikFields"
 import React from 'react'
-import { classStyles } from '../../appTheme'
+import { classStyles } from '../../../appTheme'
 
 interface IProps {
   onSaveClick: (name: string) => void

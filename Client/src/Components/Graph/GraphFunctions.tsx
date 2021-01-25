@@ -1,5 +1,5 @@
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
-import { IGraphDatasetModel, IGraphPoint, newGraphDataset, toGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
+import { IGraphDatasetModel, IGraphDatasetState, IGraphPoint, newGraphDataset, toGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
 
 import { IDatasetRowModel } from "../../Models/Datasets/IDatasetRowModel"
 import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
@@ -38,7 +38,7 @@ export const getGraphDatasets = (completeDatasets: IDatasetModel[], graphState: 
   return updatedGraphDatasets
 }
 
-export const toDatasetRows = (datasets: IDatasetModel[], graphDatasets: IGraphDatasetModel[]): IDatasetRowModel[] => {
+export const toDatasetRows = (datasets: IDatasetModel[], graphDatasets: IGraphDatasetState[]): IDatasetRowModel[] => {
   const datasetRows: IDatasetRowModel[] = []
 
   for (let i = 0; i < datasets.length; i++) {
