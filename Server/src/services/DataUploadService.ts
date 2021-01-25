@@ -80,8 +80,10 @@ export class DataUploadService {
 
         await this.uploadModel.insertCommentsForDataSet(dataSetID, individualDataSetComments)
 
+        await this.uploadModel.createEntryInUnapprovedDataSets(dataSetID)
+
         requestResponse.message = "Upload to Database was successful!"
-        requestResponse.statusCode = 200;
+        requestResponse.statusCode = 201;
         return requestResponse;
     }
 
