@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DataUploadService } from '../services/dataUpload/DataUploadService'
+import { DataUploadService } from '../services/DataUploadService'
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
