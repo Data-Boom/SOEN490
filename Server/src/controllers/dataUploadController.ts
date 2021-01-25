@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { DataUploadService } from '../services/DataUploadService'
+import { DataUploadService } from '../services/dataUpload/DataUploadService'
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -17,14 +17,31 @@ export class DataUploadController {
     async createRequest(request: Request, response: Response): Promise<Response> {
         if (!request.body) {
             response.status(400).json({
-                message: "No Json to Upload Received"
+                message: "No Data to Upload"
             })
         }
         else {
-            this.dataService = new DataUploadService(request.body);
             try {
                 await this.dataService.validateExtractedData();
                 let extractDataResponse: any = await this.dataService.uploadData();
+                return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
+            } catch (error) {
+                return response.status(error.status).json(error.message);
+            }
+        }
+    }
+
+    async createEditedUploadRequest(request: Request, response: Response): Promise<Response> {
+        let datasetId = Number(request.params.datasetId)
+        if (!request.body || !datasetId) {
+            response.status(400).json({
+                message: "No Dataset Received"
+            })
+        }
+        else {
+            try {
+                await this.dataService.validateExtractedData();
+                let extractDataResponse: any = await this.dataService.editedUploadedDataset(datasetId);
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
             } catch (error) {
                 return response.status(error.status).json(error.message);

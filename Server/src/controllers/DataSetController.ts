@@ -44,7 +44,7 @@ export class DataSetController {
             response.status(400).json("Search ID Not Entered");
         }
         else {
-            let datasetId: any = request.query.datasetId
+            let datasetId = Number(request.query.datasetId)
             let userId: number = request.body.user.account_id
             try {
                 let requestResponse = await this.dataSetService.removeSavedDatasetService(userId, datasetId)
@@ -93,7 +93,7 @@ export class DataSetController {
      * An object containing a response: Response
      */
     async createRequestForUserSavedDatsets(request: Request, response: Response) {
-        let userId: any = request.body.user.account_id
+        let userId = Number(request.body.user.account_id)
         if (isNaN(userId)) {
             response.status(500).json("Invalid search params entered");
         }
@@ -146,8 +146,8 @@ export class DataSetController {
             response.status(400).json("No datasetID provided to flag dataset");
         }
         else {
-            let datasetIdToFlag: any = request.query.datasetId
-            let flaggedComments: any = request.query.flaggedComments
+            let datasetIdToFlag = Number(request.query.datasetId)
+            let flaggedComments = String(request.query.flaggedComments)
             try {
                 let requestResponse = await this.dataSetService.flagNewDataset(datasetIdToFlag, flaggedComments)
                 return response.status(requestResponse.statusCode).json(requestResponse.message);
@@ -162,7 +162,7 @@ export class DataSetController {
             response.status(400).json("No Dataset ID provided");
         }
         else {
-            let datasetIdToFlag: any = request.query.datasetId
+            let datasetIdToFlag = Number(request.query.datasetId)
             try {
                 let requestResponse = await this.dataSetService.rejectDataSet(datasetIdToFlag)
                 return response.status(requestResponse.statusCode).json(requestResponse.message);
@@ -186,8 +186,8 @@ export class DataSetController {
         if (!request.query && !request.query.datasetId) {
             response.status(400).json("No datasetID provided to flag dataset");
         }
-        let datasetIdToApprove: any = request.query.datasetId
-        let datasetComments: any = request.query.datasetComments
+        let datasetIdToApprove = Number(request.query.datasetId)
+        let datasetComments = String(request.query.datasetComments)
         try {
             let requestResponse = await this.dataSetService.adminApprovedDataset(datasetIdToApprove, datasetComments)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
@@ -200,7 +200,7 @@ export class DataSetController {
         if (!request.query && !request.query.datasetId) {
             response.status(400).json("No datasetID provided to flag dataset");
         }
-        let datasetIdToApprove: any = request.query.datasetId
+        let datasetIdToApprove = Number(request.query.datasetId)
 
         try {
             let requestResponse = await this.dataSetService.userApprovedDataset(datasetIdToApprove)
