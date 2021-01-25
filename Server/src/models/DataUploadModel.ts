@@ -15,6 +15,7 @@ import { Datapointcomments } from './entities/Datapointcomments';
 import { Representations } from './entities/Representations';
 import { IMaterials } from './interfaces/MaterialsInterface';
 import { IAuthors } from './interfaces/AuthorsInterface';
+import { Unapproveddatasets } from "./entities/Unapproveddatasets";
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
@@ -523,5 +524,13 @@ export class DataUploadModel {
         datapointcomments.datasetId = dataSetID;
         datapointcomments.comments = comments;
         await this.connection.manager.save(datapointcomments);
+    }
+
+    async createEntryInUnapprovedDataSets(datasetId: number) {
+        let unapprovedDataset = new Unapproveddatasets()
+        unapprovedDataset.datasetId = datasetId
+        unapprovedDataset.flaggedComment
+        unapprovedDataset.isFlagged = 0
+        await this.connection.manager.save(unapprovedDataset)
     }
 }
