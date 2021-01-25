@@ -67,8 +67,7 @@ export class DataSetController {
      * An object containing a response: Response
      */
     async createRequestForUserUploadedDatasets(request: Request, response: Response) {
-        let requestParam = request.params.userUploadedDatasets;
-        let userId: number = request.body.user.account_id
+        let userId: any = request.body.user.account_id
         if (isNaN(userId)) {
             response.status(400).send("Invalid search params entered");
         }
@@ -94,8 +93,7 @@ export class DataSetController {
      * An object containing a response: Response
      */
     async createRequestForUserSavedDatsets(request: Request, response: Response) {
-        let requestParam = request.params.userSavedDatsets;
-        let userId: number = request.body.user.account_id
+        let userId: any = request.body.user.account_id
         if (isNaN(userId)) {
             response.status(500).json("Invalid search params entered");
         }
