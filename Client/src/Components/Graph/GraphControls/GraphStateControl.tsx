@@ -1,3 +1,4 @@
+import { IAxisStateModel, IGraphStateModel } from '../../../Models/Graph/IGraphStateModel'
 import React, { useEffect, useState } from 'react'
 import { callCreateGraphState, callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
@@ -7,7 +8,6 @@ import { DatasetList } from '../DatasetList.tsx/DatasetList'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
-import { IGraphStateModel } from '../../../Models/Graph/IGraphStateModel'
 import { SaveGraphStateControl } from './SaveGraphStateControl'
 import { SearchViewModal } from '../../Search/SearchViewModal'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
@@ -48,30 +48,6 @@ export const GraphStateControl = (props: IProps) => {
       getGraphState(parseInt(graphState.id))
     }
   }, [])
-
-  //todo unhardcode the variables
-  const [axes, setAxes] = useState<IVariableAndUnitModel>({
-    xVariableName: 'initial pressure',
-    yVariableName: 'cell width',
-    xVariableUnits: 'kPa',
-    yVariableUnits: 'mm'
-  })
-  const [variables, setVariables] = useState([])
-
-  const handleVariablesSelected = (selectedDatasets: IDatasetModel[]) => {
-    const variableNames = []
-    selectedDatasets.forEach(dataset => {
-      dataset.data.variables.forEach(variable => {
-        variableNames.push(variable.name)
-      })
-    })
-    const uniqueVariables = Array.from(new Set(variableNames))
-    setVariables(uniqueVariables)
-  }
-
-  const changeAxes = (newAxes: IVariableAndUnitModel) => {
-    setAxes(newAxes)
-  }
 
   const onGraphStateSaved = async (name: string) => {
     const graphStateCopy = { ...graphState }
@@ -129,6 +105,10 @@ export const GraphStateControl = (props: IProps) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
+  const handleAxesChanged = (axes: IAxisStateModel[]) => {
+
+  }
+
   return (
     <>{
       loadingDatasets ?
@@ -153,7 +133,7 @@ export const GraphStateControl = (props: IProps) => {
           />
           <Grid container>
             <Grid item>
-              <AxesControl datasets={completeDatasets} variables={variables} axes={axes} onAxesChange={changeAxes} />
+              <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
             </Grid>
             <Grid item>
               <SaveGraphStateControl

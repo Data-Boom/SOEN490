@@ -1,224 +1,228 @@
-import * as svg from 'save-svg-as-png'
-
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, Typography, makeStyles } from "@material-ui/core"
-import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
-import { IVariableAndUnitModel, IVariableUnits } from '../../../Models/Datasets/IVariableModel'
+import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography } from "@material-ui/core"
 import React, { useState } from "react"
 
+import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
+import { IDatasetModel } from "../../../Models/Datasets/IDatasetModel"
+import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import { classStyles } from '../../../appTheme'
 
 interface IProps {
-    datasets: IDatasetModel[],
-    variables: string[],
-    axes: IVariableAndUnitModel,
-    onAxesChange: (axes: IVariableAndUnitModel) => void
+  datasets: IDatasetModel[],
+  axes: IAxisStateModel[],
+  onAxesChange: (axes: IAxisStateModel[]) => void
 }
 
 export const AxesControl = (props: IProps) => {
+  const { datasets, axes, onAxesChange } = { ...props }
 
-    //const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>(props.datasets)
-    //todo unhardcode the variables
-    const [showSettings, setSettingsToggle] = useState(false)
-    //const [axes, setAxes] = useState<IVariableAndUnitModel>(props.axes)
+  //todo unhardcode the variables
+  const [showSettings, setSettingsToggle] = useState(false)
 
-    const [xVariableMissing, setXVariableMissing] = useState([])
-    const [yVariableMissing, setYVariableMissing] = useState([])
-    const [xUnits, setXUnits] = useState([])
-    const [yUnits, setYUnits] = useState([])
+  const [xVariableMissing, setXVariableMissing] = useState([])
+  const [yVariableMissing, setYVariableMissing] = useState([])
+  const [xUnits, setXUnits] = useState([])
+  const [yUnits, setYUnits] = useState([])
+  const [variables, setVariables] = useState(IVariableUnits.map(variable => variable.type))
 
-    const setUnitType = (variable: string, type: string): string => {
-        let measurement = ''
-        IVariableUnits.forEach(variables => {
-            const units = variables.units
-            variables.variableNames.forEach(name => {
-                if (type == name) {
-                    if (variable == 'x') {
-                        setXUnits(units)
-                        measurement = units[0]
-                    }
-                    else if (variable == 'y') {
-                        setYUnits(units)
-                        measurement = units[0]
-                    }
-                }
-            })
-        })
-        return measurement
-    }
+  const updateXAxis = (axis: IAxisStateModel) => {
+    onAxesChange([{ ...axis }, { ...axes[1] }])
+  }
 
-    const handleSettingsClick = () => {
-        setSettingsToggle(!showSettings)
-    }
+  const updateYAxis = (axis: IAxisStateModel) => {
+    onAxesChange([{ ...axes[0] }, { ...axis }])
+  }
 
-    const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
-        if (props.axes.yVariableName == (event.target.value as string)) {
-            tempVariable = props.axes.xVariableName
-            sameVariable = true
-            yUnit = setUnitType('y', tempVariable)
-            checkYVariablesExist(tempVariable, props.datasets)
+  const setUnitType = (variable: string, type: string): string => {
+    let measurement = ''
+    IVariableUnits.forEach(variables => {
+      const units = variables.units
+      variables.variableNames.forEach(name => {
+        if (type == name) {
+          if (variable == 'x') {
+            setXUnits(units)
+            measurement = units[0]
+          }
+          else if (variable == 'y') {
+            setYUnits(units)
+            measurement = units[0]
+          }
         }
-        xUnit = setUnitType('x', event.target.value as string)
-        checkXVariablesExist(event.target.value as string, props.datasets)
-        if (sameVariable == true) {
-            props.onAxesChange({ ...props.axes, xVariableName: event.target.value as string, yVariableName: tempVariable, xVariableUnits: xUnit, yVariableUnits: yUnit })
-        }
-        else {
-            props.onAxesChange({ ...props.axes, xVariableName: event.target.value as string, xVariableUnits: xUnit })
-        }
+      })
+    })
+    return measurement
+  }
+
+  const handleSettingsClick = () => {
+    setSettingsToggle(!showSettings)
+  }
+
+  //todo remove all the as strings and value: string should be, if works
+  const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
+    if (axes[1].variableName == (event.target.value as string)) {
+      tempVariable = axes[0].variableName
+      sameVariable = true
+      yUnit = setUnitType('y', tempVariable)
+      checkYVariablesExist(tempVariable, datasets)
     }
-    const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
-        if (props.axes.xVariableName == (event.target.value as string)) {
-            tempVariable = props.axes.yVariableName
-            sameVariable = true
-            xUnit = setUnitType('x', tempVariable)
-            checkXVariablesExist(tempVariable, props.datasets)
-        }
-        yUnit = setUnitType('y', event.target.value as string)
-        checkYVariablesExist(event.target.value as string, props.datasets)
-        if (sameVariable == true) {
-            props.onAxesChange({ ...props.axes, yVariableName: event.target.value as string, xVariableName: tempVariable, xVariableUnits: xUnit, yVariableUnits: yUnit })
-        }
-        else {
-            props.onAxesChange({ ...props.axes, yVariableName: event.target.value as string, yVariableUnits: yUnit })
-        }
-    }
-    const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        props.onAxesChange({ ...props.axes, xVariableUnits: event.target.value as string })
-    }
-    const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        props.onAxesChange({ ...props.axes, yVariableUnits: event.target.value as string })
+    xUnit = setUnitType('x', event.target.value as string)
+    checkXVariablesExist(event.target.value as string, datasets)
+    if (sameVariable == true) {
+      updateYAxis({ ...axes[1], variableName: tempVariable, units: yUnit })
     }
 
-    const checkXVariablesExist = (type: string, datasets: IDatasetModel[]) => {
-        const missingDatasets = []
-        datasets.forEach(dataset => {
-            let exists = false
-            dataset.data.variables.forEach(variableName => {
-                if (variableName.name == type) {
-                    exists = true
-                }
-            })
-            if (exists == false) {
-                missingDatasets.push(dataset.dataset_name)
-            }
-        })
-        setXVariableMissing(missingDatasets)
+    updateXAxis({ ...axes[0], variableName: event.target.value as string, units: xUnit })
+  }
+  const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
+    if (axes[0].variableName == (event.target.value as string)) {
+      tempVariable = axes[1].variableName
+      sameVariable = true
+      xUnit = setUnitType('x', tempVariable)
+      checkXVariablesExist(tempVariable, datasets)
+    }
+    yUnit = setUnitType('y', event.target.value as string)
+    checkYVariablesExist(event.target.value as string, datasets)
+    if (sameVariable == true) {
+      updateXAxis({ ...axes[1], variableName: tempVariable, units: xUnit })
     }
 
-    const checkYVariablesExist = (type: string, datasets: IDatasetModel[]) => {
-        const missingDatasets = []
-        console.log(type)
-        datasets.forEach(dataset => {
-            let exists = false
-            dataset.data.variables.forEach(variableName => {
-                if (variableName.name == type) {
-                    exists = true
-                }
-            })
-            if (exists == false) {
-                missingDatasets.push(dataset.dataset_name)
-            }
-        })
-        console.log(missingDatasets)
-        setYVariableMissing(missingDatasets)
-    }
+    updateYAxis({ ...axes[0], variableName: event.target.value as string, units: yUnit })
+  }
+  const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    updateXAxis({ ...axes[0], units: event.target.value as string })
+  }
+  const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    updateYAxis({ ...axes[1], units: event.target.value as string })
+  }
 
-    return (
-        <>
-            <Grid container direction='row'>
-                <Grid item xs={12}>
-                    <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">
-                        Settings
+  const checkXVariablesExist = (type: string, datasets: IDatasetModel[]) => {
+    const missingDatasets = []
+    datasets.forEach(dataset => {
+      let exists = false
+      dataset.data.variables.forEach(variableName => {
+        if (variableName.name == type) {
+          exists = true
+        }
+      })
+      if (exists == false) {
+        missingDatasets.push(dataset.dataset_name)
+      }
+    })
+    setXVariableMissing(missingDatasets)
+  }
+
+  const checkYVariablesExist = (type: string, datasets: IDatasetModel[]) => {
+    const missingDatasets = []
+    console.log(type)
+    datasets.forEach(dataset => {
+      let exists = false
+      dataset.data.variables.forEach(variableName => {
+        if (variableName.name == type) {
+          exists = true
+        }
+      })
+      if (exists == false) {
+        missingDatasets.push(dataset.dataset_name)
+      }
+    })
+    console.log(missingDatasets)
+    setYVariableMissing(missingDatasets)
+  }
+
+  return (
+    <>
+      <Grid container direction='row'>
+        <Grid item xs={12}>
+          <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">
+            Settings
               {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </Button>
+          </Button>
+        </Grid>
+        {showSettings &&
+          <>
+            <Paper elevation={10}>
+              <Grid container direction='row' spacing={4}>
+                <Grid item xs={4}>
+                  <FormControl>
+                    <InputLabel id="xVariable">X Variable</InputLabel>
+                    <Select
+                      labelId="xVariable"
+                      id="xVariable"
+                      value={axes[0].variableName}
+                      autoWidth={true}
+                      onChange={handleXVariableChange}
+                    >
+                      {variables.map(type => (
+                        <MenuItem value={type}>{type}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
-                {showSettings &&
-                    <>
-                        <Paper elevation={10}>
-                            <Grid container direction='row' spacing={4}>
-                                <Grid item xs={4}>
-                                    <FormControl>
-                                        <InputLabel id="xVariable">X Variable</InputLabel>
-                                        <Select
-                                            labelId="xVariable"
-                                            id="xVariable"
-                                            value={props.axes.xVariableName}
-                                            autoWidth={true}
-                                            onChange={handleXVariableChange}
-                                        >
-                                            {props.variables.map(type => (
-                                                <MenuItem value={type}>{type}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <FormControl>
-                                        <InputLabel id="xUnits">X Units</InputLabel>
-                                        <Select
-                                            labelId="xUnits"
-                                            id="xUnits"
-                                            value={props.axes.xVariableUnits}
-                                            autoWidth={true}
-                                            onChange={handleXUnitChange}
-                                        >
-                                            {xUnits.map(type => (
-                                                <MenuItem value={type}>{type}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography align="center">
-                                        Datasets Missing X: {xVariableMissing.toString()}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <FormControl>
-                                        <InputLabel id="yVariable">Y Variable</InputLabel>
-                                        <Select
-                                            labelId="yVariable"
-                                            id="yVariable"
-                                            value={props.axes.yVariableName}
-                                            autoWidth={true}
-                                            onChange={handleYVariableChange}
-                                        >
-                                            {props.variables.map(type => (
-                                                <MenuItem value={type}>{type}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <FormControl>
-                                        <InputLabel id="yUnits">Y Units</InputLabel>
-                                        <Select
-                                            labelId="yUnits"
-                                            id="yUnits"
-                                            value={props.axes.yVariableUnits}
-                                            autoWidth={true}
-                                            onChange={handleYUnitChange}
-                                        >
-                                            {yUnits.map(type => (
-                                                <MenuItem value={type}>{type}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Typography align="center">
-                                        Datasets Missing Y: {yVariableMissing.toString()}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </>
-                }
-            </Grid>
-        </>
-    )
+                <Grid item xs={4}>
+                  <FormControl>
+                    <InputLabel id="xUnits">X Units</InputLabel>
+                    <Select
+                      labelId="xUnits"
+                      id="xUnits"
+                      value={axes[0].units}
+                      autoWidth={true}
+                      onChange={handleXUnitChange}
+                    >
+                      {xUnits.map(type => (
+                        <MenuItem value={type}>{type}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography align="center">
+                    Datasets Missing X: {xVariableMissing.toString()}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <FormControl>
+                    <InputLabel id="yVariable">Y Variable</InputLabel>
+                    <Select
+                      labelId="yVariable"
+                      id="yVariable"
+                      value={axes[1].variableName}
+                      autoWidth={true}
+                      onChange={handleYVariableChange}
+                    >
+                      {variables.map(type => (
+                        <MenuItem value={type}>{type}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={4}>
+                  <FormControl>
+                    <InputLabel id="yUnits">Y Units</InputLabel>
+                    <Select
+                      labelId="yUnits"
+                      id="yUnits"
+                      value={axes[1].units}
+                      autoWidth={true}
+                      onChange={handleYUnitChange}
+                    >
+                      {yUnits.map(type => (
+                        <MenuItem value={type}>{type}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography align="center">
+                    Datasets Missing Y: {yVariableMissing.toString()}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          </>
+        }
+      </Grid>
+    </>
+  )
 }
