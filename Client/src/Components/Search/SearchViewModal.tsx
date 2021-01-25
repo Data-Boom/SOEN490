@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Modal, Paper } from "@material-ui/core"
 import React, { useState } from 'react'
 
+import CancelIcon from "@material-ui/icons/Cancel"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import SearchView from "./SearchView"
 import { classStyles } from "../../appTheme"
@@ -30,6 +31,11 @@ export const SearchViewModal = (props: IProps) => {
       >
         <Paper elevation={3}>
           <Box m={5}>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <CancelIcon color="primary" onClick={() => setOpen(false)} />
+              </Grid>
+            </Grid>
             <SearchView
               handleDatasetsSelected={handleDatasetsSelected}
             />

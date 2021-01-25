@@ -31,12 +31,11 @@ export const SaveGraphStateForm = (props: IProps) => {
       setIsNewGraphState(false)
       const createdId: string = await callCreateGraphState(graphStateCopy)
       setId(createdId)
-      SnackbarUtils.success('Graph successfully created')
     }
     else {
       await callUpdateGraphState(graphStateCopy)
-      SnackbarUtils.success('Graph successfully updated')
     }
+    SnackbarUtils.success('Graph Saved')
   }
 
   return (

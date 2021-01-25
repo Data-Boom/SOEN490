@@ -148,7 +148,6 @@ export const AxesControl = (props: IProps) => {
         missingDatasets.push(dataset.dataset_name)
       }
     })
-    console.log(missingDatasets)
     setYVariableMissing(missingDatasets)
   }
 
