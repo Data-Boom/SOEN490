@@ -55,7 +55,6 @@ export const GraphStateControl = (props: IProps) => {
   }
 
   const handleAxesChanged = (axes: IAxisStateModel[]) => {
-    console.log(axes, 'axes')
     onGraphStateChange({ ...graphState, axes: axes }, completeDatasets)
   }
 
