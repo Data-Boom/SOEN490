@@ -23,7 +23,7 @@ export interface IAxisModel {
 export interface IUploadGraphModel {
     id: number,
     name: string,
-    datasetIds: string[],
+    datasetIds: number[],
     datasetColors: string[],
     datasetShapes: string[],
     datasetHiddenStatus: boolean[],
