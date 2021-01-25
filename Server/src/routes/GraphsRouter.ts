@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+
 import { GraphsController } from '../controllers/GraphsController';
 import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 
@@ -23,6 +24,7 @@ router.put('/api/v1/graphStateAPI$', JWTAuthenticator.verifyJWT, (request: Reque
 });
 
 router.post('/api/v1/graphStateAPI$', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+    console.log(request);
     savedGraphsControllerObject.createRequestForAddingGraph(request, response);
 });
 

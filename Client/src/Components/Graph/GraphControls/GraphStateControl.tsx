@@ -1,7 +1,6 @@
 import { IAxisStateModel, IGraphStateModel } from '../../../Models/Graph/IGraphStateModel'
 import { IGraphDatasetState, newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
 import React, { useEffect, useState } from 'react'
-import { callCreateGraphState, callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
 import { AxesControl } from './AxesControl'
 import { CustomLoader } from '../../Utils/CustomLoader'
@@ -10,6 +9,7 @@ import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { SaveGraphStateControl } from './SaveGraphStateControl'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
+import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 import { getDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
@@ -39,19 +39,10 @@ export const GraphStateControl = (props: IProps) => {
       setIsLoadinDatasets(false)
     }
 
-
     if (graphState.id) {
       getGraphState(parseInt(graphState.id))
     }
   }, [])
-
-  const onGraphStateSaved = async (name: string) => {
-    const graphStateCopy = { ...graphState }
-    graphStateCopy.name = name
-    const id: string = await callCreateGraphState(graphStateCopy)
-    graphStateCopy.id = id
-    onGraphStateChange(graphStateCopy, completeDatasets)
-  }
 
   const handleCompleteDatasetsChange = (datasets: IDatasetModel[]) => {
     setCompleteDatasets(datasets)
@@ -90,22 +81,25 @@ export const GraphStateControl = (props: IProps) => {
           visible={loadingDatasets}
         /> :
         <>
+          {completeDatasets && completeDatasets[0] ?
+            <Grid container direction="column">
+              <Grid item>
+                <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
+              </Grid>
+              <Grid item>
+                <SaveGraphStateControl
+                  graphState={graphState}
+                />
+              </Grid>
+            </Grid> :
+            null
+          }
           <DatasetControl
             datasetStates={graphState.datasets}
             completeDatasets={completeDatasets}
             onDatasetStatesChange={handleDatasetStatesChange}
             onCompleteDatasetsChange={handleCompleteDatasetsChange}
           />
-          <Grid container>
-            <Grid item>
-              <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
-            </Grid>
-            <Grid item>
-              <SaveGraphStateControl
-                onSaveClick={onGraphStateSaved}
-              />
-            </Grid>
-          </Grid>
         </>
     }</>
   )

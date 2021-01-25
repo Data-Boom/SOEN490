@@ -1,12 +1,17 @@
+import * as Yup from 'yup'
+
 import { Box, Button, Grid } from "@material-ui/core"
 import { Field, Form, Formik } from "formik"
+import React, { useState } from 'react'
+import { callCreateGraphState, callUpdateGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
+import { IGraphStateModel } from "../../../Models/Graph/IGraphStateModel"
 import { MuiTextFieldFormik } from "../../Forms/FormikFields"
-import React from 'react'
+import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { classStyles } from '../../../appTheme'
 
 interface IProps {
-  onSaveClick: (name: string) => void
+  graphState: IGraphStateModel
 }
 
 interface IFormikProps {
@@ -14,15 +19,30 @@ interface IFormikProps {
 }
 
 export const SaveGraphStateControl = (props: IProps) => {
-  const { onSaveClick } = { ...props }
+  const { graphState } = { ...props }
+  const [id, setId] = useState(graphState.id)
+  const [isNewGraphState, setIsNewGraphState] = useState(!graphState.id)
 
-  const saveGraphState = (form: IFormikProps) => {
-    onSaveClick(form.name)
+  const saveGraphState = async (form: IFormikProps) => {
+    const graphStateCopy = { ...graphState }
+    graphStateCopy.name = form.name
+    graphStateCopy.id = id
+    if (isNewGraphState) {
+      setIsNewGraphState(false)
+      const createdId: string = await callCreateGraphState(graphStateCopy)
+      setId(createdId)
+      SnackbarUtils.success('Graph successfully created')
+    }
+    else {
+      await callUpdateGraphState(graphStateCopy)
+      SnackbarUtils.success('Graph successfully updated')
+    }
   }
 
   return (
     <Formik
-      initialValues={{ name: 'New Graph' }}
+      initialValues={{ name: graphState.name }}
+      validationSchema={Yup.object().shape({ name: Yup.string().required() })}
       onSubmit={saveGraphState}
     >
       <Form>

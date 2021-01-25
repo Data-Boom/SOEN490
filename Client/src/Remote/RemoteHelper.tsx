@@ -18,6 +18,11 @@ export const post = async (route: string, data: any): Promise<any> => {
   return fetchRemote(url, 'POST', data)
 }
 
+export const put = async (route: string, data: any): Promise<any> => {
+  const url = route
+  return fetchRemote(url, 'PUT', data)
+}
+
 export const get = async (route: string, query: string = ''): Promise<any> => {
   const url = `${route}?${query}`
   return fetchRemote(url, 'GET')

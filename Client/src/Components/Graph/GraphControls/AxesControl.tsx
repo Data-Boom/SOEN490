@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography } from "@material-ui/core"
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
 import React, { useEffect, useState } from "react"
 
@@ -6,6 +6,7 @@ import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
 import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import { classStyles } from "../../../appTheme"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -29,6 +30,7 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
 
 export const AxesControl = (props: IProps) => {
   const { datasets, axes, onAxesChange } = { ...props }
+  const classes = classStyles()
 
   //todo unhardcode the variables
   const [showSettings, setSettingsToggle] = useState(false)
@@ -37,7 +39,7 @@ export const AxesControl = (props: IProps) => {
   const [yVariableMissing, setYVariableMissing] = useState([])
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
-  const [variables, setVariables] = useState<IVariable[]>(buildVariableList(datasets))
+  const [variables, setVariables] = useState<IVariable[]>([])
 
   useEffect(() => {
     setVariables(buildVariableList(datasets))
@@ -153,7 +155,7 @@ export const AxesControl = (props: IProps) => {
 
   return (
     <>
-      <Grid container direction='row'>
+      <Grid container>
         <Grid item xs={12}>
           <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">
             Settings
@@ -162,86 +164,88 @@ export const AxesControl = (props: IProps) => {
         </Grid>
         {showSettings &&
           <>
-            <Paper elevation={10}>
-              <Grid container direction='row' spacing={4}>
-                <Grid item xs={4}>
-                  <FormControl>
-                    <InputLabel id="xVariable">X Variable</InputLabel>
-                    <Select
-                      labelId="xVariable"
-                      id="xVariable"
-                      value={axes[0].variableName}
-                      autoWidth={true}
-                      onChange={handleXVariableChange}
-                    >
-                      {variables.map(variable => (
-                        <MenuItem value={variable.name}>{variable.name}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+            <Grid item xs={12}>
+              <Box className={classes.defaultBorder}>
+                <Grid container spacing={4}>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="xVariable">X Variable</InputLabel>
+                      <Select
+                        labelId="xVariable"
+                        id="xVariable"
+                        value={axes[0].variableName}
+                        autoWidth={true}
+                        onChange={handleXVariableChange}
+                      >
+                        {variables.map(variable => (
+                          <MenuItem value={variable.name}>{variable.name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="xUnits">X Units</InputLabel>
+                      <Select
+                        labelId="xUnits"
+                        id="xUnits"
+                        value={axes[0].units}
+                        autoWidth={true}
+                        onChange={handleXUnitChange}
+                      >
+                        <MenuItem value={''}>{''}</MenuItem>
+                        {xUnits.map(type => (
+                          <MenuItem value={type}>{type}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography align="center">
+                      Datasets Missing X: {xVariableMissing.toString()}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="yVariable">Y Variable</InputLabel>
+                      <Select
+                        labelId="yVariable"
+                        id="yVariable"
+                        value={axes[1].variableName}
+                        autoWidth={true}
+                        onChange={handleYVariableChange}
+                      >
+                        {variables.map(variable => (
+                          <MenuItem value={variable.name}>{variable.name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControl>
+                      <InputLabel id="yUnits">Y Units</InputLabel>
+                      <Select
+                        labelId="yUnits"
+                        id="yUnits"
+                        value={axes[1].units}
+                        autoWidth={true}
+                        onChange={handleYUnitChange}
+                      >
+                        <MenuItem value={''}>{''}</MenuItem>
+                        {yUnits.map(type => (
+                          <MenuItem value={type}>{type}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography align="center">
+                      Datasets Missing Y: {yVariableMissing.toString()}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <FormControl>
-                    <InputLabel id="xUnits">X Units</InputLabel>
-                    <Select
-                      labelId="xUnits"
-                      id="xUnits"
-                      value={axes[0].units}
-                      autoWidth={true}
-                      onChange={handleXUnitChange}
-                    >
-                      <MenuItem value={''}>{''}</MenuItem>
-                      {xUnits.map(type => (
-                        <MenuItem value={type}>{type}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography align="center">
-                    Datasets Missing X: {xVariableMissing.toString()}
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <FormControl>
-                    <InputLabel id="yVariable">Y Variable</InputLabel>
-                    <Select
-                      labelId="yVariable"
-                      id="yVariable"
-                      value={axes[1].variableName}
-                      autoWidth={true}
-                      onChange={handleYVariableChange}
-                    >
-                      {variables.map(variable => (
-                        <MenuItem value={variable.name}>{variable.name}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={4}>
-                  <FormControl>
-                    <InputLabel id="yUnits">Y Units</InputLabel>
-                    <Select
-                      labelId="yUnits"
-                      id="yUnits"
-                      value={axes[1].units}
-                      autoWidth={true}
-                      onChange={handleYUnitChange}
-                    >
-                      <MenuItem value={''}>{''}</MenuItem>
-                      {yUnits.map(type => (
-                        <MenuItem value={type}>{type}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography align="center">
-                    Datasets Missing Y: {yVariableMissing.toString()}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Paper>
+              </Box>
+            </Grid>
           </>
         }
       </Grid>

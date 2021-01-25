@@ -27,5 +27,5 @@ export const newGraphState: IGraphStateModel = {
   axes: [{ ...newAxisState }, { ...newAxisState }],
   datasets: [],
   id: null,
-  name: null
+  name: ''
 }
