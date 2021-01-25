@@ -30,10 +30,8 @@ export default function GraphView() {
       setIsLoadinDatasets(true)
 
       const graphState = await callGetGraphState(id)
-      handleGraphStateChanged(graphState)
-
       const datasets = await getDatasets({ datasetId: graphState.datasets.map(dataset => dataset.id) })
-      setCompleteDatasets(datasets)
+      handleGraphStateChanged(graphState, datasets)
 
       setIsLoadinDatasets(false)
     }
@@ -43,30 +41,13 @@ export default function GraphView() {
     }
   }, [])
 
-  const handleGraphStateChanged = (graphState: IGraphStateModel) => {
-    //todo handle properly
-    setGraphState(graphState)
+  const handleGraphStateChanged = (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => {
     console.log(graphState, 'graphState')
-  }
 
-  const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
-    const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
-
-    const mergedDatasets: IDatasetModel[] = [...completeDatasets]
-    notYetSelectedDatasets.forEach(dataset => {
-      mergedDatasets.push(dataset)
-    })
-
-    handleCompleteDatasetsUpdated(mergedDatasets)
-  }
-
-  const handleCompleteDatasetsUpdated = (updatedDatasets: IDatasetModel[]) => {
-    const mergedGraphDatasets = getGraphDatasets(updatedDatasets, graphState)
-    setGraphDatasets(mergedGraphDatasets)
-  }
-
-  const isInStateAlready = (dataset: IDatasetModel) => {
-    return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
+    const graphDatasets = getGraphDatasets(completeDatasets, graphState)
+    setGraphState(graphState)
+    setCompleteDatasets(completeDatasets)
+    setGraphDatasets(graphDatasets)
   }
 
   return (
@@ -90,7 +71,6 @@ export default function GraphView() {
                   graphState={graphState}
                   completeDatasets={completeDatasets}
                   onGraphStateChange={handleGraphStateChanged}
-                  onCompleteDatasetsChange={handleDatasetsSelected}
                 />
               </Box>
             </Grid>

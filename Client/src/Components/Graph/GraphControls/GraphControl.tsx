@@ -12,38 +12,52 @@ import { toDatasetRows } from '../GraphFunctions'
 interface IProps {
   graphState: IGraphStateModel,
   completeDatasets: IDatasetModel[],
-  onGraphStateChange: (graphState: IGraphStateModel) => void,
-  onCompleteDatasetsChange: (newDatasets: IDatasetModel[]) => void
+  onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => void
 }
 
 export const GraphControl = (props: IProps) => {
-  const { graphState, completeDatasets, onGraphStateChange, onCompleteDatasetsChange } = { ...props }
+  const { graphState, completeDatasets, onGraphStateChange } = { ...props }
 
   const onGraphStateSaved = async (name: string) => {
     const graphStateCopy = { ...graphState }
     graphStateCopy.name = name
     const id: string = await callCreateGraphState(graphStateCopy)
     graphStateCopy.id = id
-    onGraphStateChange(graphStateCopy)
+    onGraphStateChange(graphStateCopy, completeDatasets)
   }
 
   const onRemoveDataset = (datasetId: number) => {
     const filteredDatasets = graphState.datasets.filter(dataset => dataset.id !== datasetId)
-    onGraphStateChange({ ...graphState, datasets: filteredDatasets })
+    onGraphStateChange({ ...graphState, datasets: filteredDatasets }, completeDatasets)
   }
 
   const onHideDatasetSwitch = (datasetId: number) => {
     const graphDatasetsCopy = [...graphState.datasets]
     const indexToHide = graphState.datasets.findIndex(dataset => dataset.id == datasetId)
     graphDatasetsCopy[indexToHide].isHidden = !graphDatasetsCopy[indexToHide].isHidden
-    onGraphStateChange({ ...graphState, datasets: graphDatasetsCopy })
+    onGraphStateChange({ ...graphState, datasets: graphDatasetsCopy }, completeDatasets)
+  }
+
+  const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
+    const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
+
+    const mergedDatasets: IDatasetModel[] = [...completeDatasets]
+    notYetSelectedDatasets.forEach(dataset => {
+      mergedDatasets.push(dataset)
+    })
+
+    handleCompleteDatasetsUpdated(mergedDatasets, completeDatasets)
+  }
+
+  const isInStateAlready = (dataset: IDatasetModel) => {
+    return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
   return (
     <>
       <Grid container spacing={3}>
         <Grid item>
-          <SearchViewModal onDatasetsSelected={onCompleteDatasetsChange} />
+          <SearchViewModal onDatasetsSelected={handleDatasetsSelected} />
         </Grid>
         {completeDatasets && completeDatasets[0] ?
           <Grid item>
