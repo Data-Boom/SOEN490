@@ -1,14 +1,12 @@
 import { Box, Grid } from "@material-ui/core"
 import { IGraphStateModel, newGraphState } from "../../Models/Graph/IGraphStateModel"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { CustomLoader } from "../Utils/CustomLoader"
 import Graph from './Graph'
-import { GraphControl } from "./GraphControls/GraphControl"
+import { GraphStateControl } from "./GraphControls/GraphStateControl"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel } from '../../Models/Graph/IGraphDatasetModel'
-import { callGetGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
-import { getDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
 import { getGraphDatasets } from "./GraphFunctions"
 import { useParams } from "react-router"
 
@@ -17,36 +15,17 @@ interface IGraphViewParams {
 }
 
 export default function GraphView() {
-
+  const { graphStateId } = useParams<IGraphViewParams>()
   const [loadingDatasets, setIsLoadinDatasets] = useState(false)
 
-  const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
-  const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState })
-  const { graphStateId } = useParams<IGraphViewParams>()
-
-  useEffect(() => {
-    const getGraphState = async (id: number) => {
-      setIsLoadinDatasets(true)
-
-      const graphState = await callGetGraphState(id)
-      const datasets = await getDatasets({ datasetId: graphState.datasets.map(dataset => dataset.id) })
-      handleGraphStateChanged(graphState, datasets)
-
-      setIsLoadinDatasets(false)
-    }
-
-    if (graphStateId) {
-      getGraphState(parseInt(graphStateId))
-    }
-  }, [])
+  const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState, id: graphStateId })
 
   const handleGraphStateChanged = (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => {
     console.log(graphState, 'graphState')
 
     const graphDatasets = getGraphDatasets(completeDatasets, graphState)
     setGraphState(graphState)
-    setCompleteDatasets(completeDatasets)
     setGraphDatasets(graphDatasets)
   }
 
@@ -67,10 +46,10 @@ export default function GraphView() {
             </Grid>
             <Grid item sm={5}>
               <Box ml={5} mr={5} mt={5}>
-                <GraphControl
+                <GraphStateControl
                   graphState={graphState}
-                  completeDatasets={completeDatasets}
                   onGraphStateChange={handleGraphStateChanged}
+                  onLoading={loading => setIsLoadinDatasets(loading)}
                 />
               </Box>
             </Grid>

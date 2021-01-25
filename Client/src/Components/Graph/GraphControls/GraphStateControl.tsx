@@ -1,22 +1,42 @@
+import React, { useEffect, useState } from 'react'
+import { callCreateGraphState, callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
+
 import { DatasetList } from '../DatasetList.tsx/DatasetList'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IGraphStateModel } from '../../../Models/Graph/IGraphStateModel'
-import React from 'react'
 import { SaveGraphStateControl } from './SaveGraphStateControl'
 import { SearchViewModal } from '../../Search/SearchViewModal'
-import { callCreateGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
+import { getDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 import { toDatasetRows } from '../GraphFunctions'
 
 interface IProps {
   graphState: IGraphStateModel,
-  completeDatasets: IDatasetModel[],
-  onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => void
+  onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => void,
+  onLoading: (loading: boolean) => void
 }
 
-export const GraphControl = (props: IProps) => {
-  const { graphState, completeDatasets, onGraphStateChange } = { ...props }
+export const GraphStateControl = (props: IProps) => {
+  const { graphState, onGraphStateChange, onLoading } = { ...props }
+  const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
+
+  useEffect(() => {
+    const getGraphState = async (id: number) => {
+      onLoading(true)
+
+      const graphState = await callGetGraphState(id)
+      const datasets = await getDatasets({ datasetId: graphState.datasets.map(dataset => dataset.id) })
+      setCompleteDatasets(datasets)
+      onGraphStateChange(graphState, datasets)
+
+      onLoading(false)
+    }
+
+    if (graphState.id) {
+      getGraphState(parseInt(graphState.id))
+    }
+  }, [])
 
   const onGraphStateSaved = async (name: string) => {
     const graphStateCopy = { ...graphState }
@@ -26,11 +46,6 @@ export const GraphControl = (props: IProps) => {
     onGraphStateChange(graphStateCopy, completeDatasets)
   }
 
-  const onRemoveDataset = (datasetId: number) => {
-    const filteredDatasets = graphState.datasets.filter(dataset => dataset.id !== datasetId)
-    onGraphStateChange({ ...graphState, datasets: filteredDatasets }, completeDatasets)
-  }
-
   const onHideDatasetSwitch = (datasetId: number) => {
     const graphDatasetsCopy = [...graphState.datasets]
     const indexToHide = graphState.datasets.findIndex(dataset => dataset.id == datasetId)
@@ -38,7 +53,12 @@ export const GraphControl = (props: IProps) => {
     onGraphStateChange({ ...graphState, datasets: graphDatasetsCopy }, completeDatasets)
   }
 
-  const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
+  const handleDatasetRemoved = (datasetId: number) => {
+    const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
+    handleDatasetsUpdated(filteredDatasets)
+  }
+
+  const handleDatasetsAdded = (selectedDatasets: IDatasetModel[]) => {
     const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
     const mergedDatasets: IDatasetModel[] = [...completeDatasets]
@@ -46,7 +66,19 @@ export const GraphControl = (props: IProps) => {
       mergedDatasets.push(dataset)
     })
 
-    handleCompleteDatasetsUpdated(mergedDatasets, completeDatasets)
+    handleDatasetsUpdated(mergedDatasets)
+  }
+
+  const handleDatasetsUpdated = (datasets: IDatasetModel[]) => {
+    setCompleteDatasets(datasets)
+    const newGraphState = getUpdatedGraphState(datasets)
+    onGraphStateChange(newGraphState, datasets)
+  }
+
+  const getUpdatedGraphState = (datasets: IDatasetModel[]): IGraphStateModel => {
+    const graphStateCopy = { ...graphState }
+    //todo ensure all new datasets are in the state
+    return graphStateCopy
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
@@ -57,7 +89,7 @@ export const GraphControl = (props: IProps) => {
     <>
       <Grid container spacing={3}>
         <Grid item>
-          <SearchViewModal onDatasetsSelected={handleDatasetsSelected} />
+          <SearchViewModal onDatasetsSelected={handleDatasetsAdded} />
         </Grid>
         {completeDatasets && completeDatasets[0] ?
           <Grid item>
@@ -67,7 +99,7 @@ export const GraphControl = (props: IProps) => {
       </Grid>
       <DatasetList
         datasets={toDatasetRows(completeDatasets, graphState.datasets)}
-        onRemoveDatasetClick={onRemoveDataset}
+        onRemoveDatasetClick={handleDatasetRemoved}
         onHideDatasetSwitch={onHideDatasetSwitch}
       />
       <Grid container>
