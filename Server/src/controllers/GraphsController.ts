@@ -16,7 +16,7 @@ export class GraphsController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForSingleSavedGraph(request: Request, response: Response) {
+    async createRequestForSingleGraph(request: Request, response: Response) {
         let requestParam = request.params.oneSavedGraph;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
@@ -62,13 +62,25 @@ export class GraphsController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForAddingSavedGraph(request: Request, response: Response) {
+    async createRequestForAddingGraph(request: Request, response: Response) {
         let requestParams: any = { ...request.body };
         let processedRequest: IGraphStateModel = requestParams;
         let userId = request.body.user.account_id
         try {
             this.savedGraphsService = new GraphsService();
             let requestResponse = await this.savedGraphsService.saveNewGraph(processedRequest, userId)
+            response.status(requestResponse.statusCode).json(requestResponse.message)
+        } catch (error) {
+            response.status(error.status).json(error.message);
+        }
+    }
+
+    async createRequestForUpdatingGraph(request: Request, response: Response) {
+        let requestParams: any = { ...request.body };
+        let processedRequest: IGraphStateModel = requestParams;
+        try {
+            this.savedGraphsService = new GraphsService();
+            let requestResponse = await this.savedGraphsService.updateExistingGraph(processedRequest)
             response.status(requestResponse.statusCode).json(requestResponse.message)
         } catch (error) {
             response.status(error.status).json(error.message);
@@ -84,7 +96,7 @@ export class GraphsController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForDeletingSavedGraph(request: Request, response: Response) {
+    async createRequestForDeletingGraph(request: Request, response: Response) {
         let requestParam = request.params.deleteSavedGraph;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {

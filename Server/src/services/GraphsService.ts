@@ -14,7 +14,9 @@ export class GraphsService {
     }
 
     /**
-     * This method will accept a graph ID and will request and then return a IGraphStateModel object.
+     * This method will accept a graph ID and will request a graphs's raw data and feed this raw
+     * data to @processSavedGraphData to format it to fit the IGraphStateModel and then return
+     * this object, if the graph exists. If the graph does not exist, it will throw an error.
      * 
      * @param graphId 
      * Graph ID: number
@@ -55,16 +57,30 @@ export class GraphsService {
         }
     }
 
+    async updateExistingGraph(graph: IGraphStateModel) {
+        try {
+            let status = await this.dataQuery.updateGraph(graph)
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = status
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+        }
+    }
+
     /**
-     * This method will accept a graph ID and will request that this saved graph be deleted.
+     * This method will accept a IGraphStateModel object and a userId and will request that this 
+     * graph state be saved
      * 
-     * @param graphId 
-     * Graph ID: number
+     * @param graph
+     * Graph: IGraphStateModel
+     * @param userId
+     * User's ID: number
      */
     async saveNewGraph(graph: IGraphStateModel, userId: number) {
         try {
             let status = await this.dataQuery.saveGraph(graph, userId)
-            this.requestResponse.statusCode = 200
+            this.requestResponse.statusCode = 201
             this.requestResponse.message = status
             return this.requestResponse
         } catch (error) {

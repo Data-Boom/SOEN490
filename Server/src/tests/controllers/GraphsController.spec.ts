@@ -63,7 +63,7 @@ describe('SavedGraphs Controller ', () => {
         oneSavedGraph: '1'
       }
     }
-    await SavedGraphsController.createRequestForSingleSavedGraph(mockRequest as Request, mockResponse as Response)
+    await SavedGraphsController.createRequestForSingleGraph(mockRequest as Request, mockResponse as Response)
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
     expect(mockResponse.status).toBeCalledWith(200);
   });

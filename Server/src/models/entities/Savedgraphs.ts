@@ -62,7 +62,7 @@ export class Savedgraphs {
     updated: Date
 }
 
-export const selectSavedGraphsOfUserQuery = (connection: Connection, user: number) =>
+export const selectGraphStateQuery = (connection: Connection) =>
     connection.createQueryBuilder(Savedgraphs, 'graphs')
         .select('graphs.name', 'name')
         .addSelect('graphs.id', 'id')
@@ -75,22 +75,3 @@ export const selectSavedGraphsOfUserQuery = (connection: Connection, user: numbe
         .addSelect('graphs.axisZoomStart', 'axisZoomStart')
         .addSelect('graphs.axisZoomEnd', 'axisZoomEnd')
         .addSelect('graphs.axisUnits', 'axisUnits')
-        .innerJoin(Accounts, 'accounts', 'graphs.accountId = accounts.id')
-        .where('accounts.id = :user', { user: user })
-        .getRawMany();
-
-export const selectOneSavedGraphQuery = (connection: Connection, id: number) =>
-    connection.createQueryBuilder(Savedgraphs, 'graphs')
-        .select('graphs.name', 'name')
-        .addSelect('graphs.id', 'id')
-        .addSelect('graphs.datasetIds', 'datasetIds')
-        .addSelect('graphs.datasetColors', 'datasetColors')
-        .addSelect('graphs.datasetShapes', 'datasetShapes')
-        .addSelect('graphs.datasetHiddenStatus', 'datasetHiddenStatus')
-        .addSelect('graphs.axisVariable', 'axisVariable')
-        .addSelect('graphs.axisLog', 'axisLog')
-        .addSelect('graphs.axisZoomStart', 'axisZoomStart')
-        .addSelect('graphs.axisZoomEnd', 'axisZoomEnd')
-        .addSelect('graphs.axisUnits', 'axisUnits')
-        .where('graphs.id = :id', { id: id })
-        .getRawOne();
