@@ -1,6 +1,6 @@
 import { GraphsModel } from '../models/GraphsModel';
-import { IGraphStateModel } from "../models/interfaces/SavedGraphsInterface";
-import { InternalServerError } from '@tsed/exceptions';
+import { IGraphStateModel } from "../models/interfaces/GraphStateInterface";
+import { BadRequest, InternalServerError } from '@tsed/exceptions';
 import { IResponse } from '../genericInterfaces/ResponsesInterface';
 
 
@@ -25,16 +25,19 @@ export class GraphsService {
         try {
             let graphData = await this.dataQuery.fetchSingleSavedGraphFromDB(graphId)
             if (graphData == undefined) {
-                this.requestResponse.statusCode = 400
-                this.requestResponse.message = "Graph does not exist"
-                return this.requestResponse
+                throw new BadRequest("Graph does not exist")
             }
             let singleGraphData: IGraphStateModel = await this.dataQuery.processSavedGraphData(graphData)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = singleGraphData as any
             return this.requestResponse
         } catch (error) {
-            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+            if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
+            }
+            else {
+                throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+            }
         }
     }
 
@@ -74,9 +77,7 @@ export class GraphsService {
             }
         }
         else {
-            this.requestResponse.statusCode = 400
-            this.requestResponse.message = ownerVerification
-            return this.requestResponse
+            throw new BadRequest(ownerVerification)
         }
     }
 
@@ -119,9 +120,7 @@ export class GraphsService {
             }
         }
         else {
-            this.requestResponse.statusCode = 400
-            this.requestResponse.message = ownerVerification
-            return this.requestResponse
+            throw new BadRequest(ownerVerification)
         }
     }
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IGraphStateModel } from '../models/interfaces/SavedGraphsInterface';
+import { IGraphStateModel } from '../models/interfaces/GraphStateInterface';
 import { GraphsService } from '../services/GraphsService';
 
 export class GraphsController {
