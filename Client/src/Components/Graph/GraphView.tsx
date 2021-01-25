@@ -1,7 +1,8 @@
 import { Box, Grid } from "@material-ui/core"
 import { IGraphDatasetModel, toGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
 import { IGraphStateModel, newGraphState } from "../../Models/Graph/IGraphStateModel"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { callCreateGraphState, callGetGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
 import { toDatasetRows, transformAndMergeGraphDatasets } from "./GraphFunctions"
 
 import { DatasetList } from "./DatasetList.tsx/DatasetList"
@@ -11,7 +12,7 @@ import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
 import { SaveGraphStateControl } from "./SaveGraphStateControl"
 import { SearchViewModal } from "../Search/SearchViewModal"
-import { callCreateGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
+import { getDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
 import { useParams } from "react-router"
 
 export default function GraphView() {
@@ -19,9 +20,22 @@ export default function GraphView() {
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState })
-
   const { graphStateId } = useParams()
-  console.log(graphStateId)
+
+  useEffect(() => {
+    const getGraphState = async (id: number) => {
+      const graphState = await callGetGraphState(id)
+      setGraphState(graphState)
+
+      const datasets = await getDatasets({ datasetId: graphState.datasets.map(dataset => dataset.id) })
+      handleDatasetsSelected(datasets)
+    }
+
+    if (graphStateId) {
+      getGraphState(graphStateId)
+    }
+  }, [])
+
   const onRemoveDataset = (datasetId: number) => {
     const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
     handleCompleteDatasetsUpdated(filteredDatasets)
