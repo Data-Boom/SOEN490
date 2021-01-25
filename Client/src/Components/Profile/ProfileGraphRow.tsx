@@ -1,10 +1,13 @@
-import React from 'react'
 import { Box, Grid, Typography } from "@material-ui/core"
+import { Link, Route } from 'react-router-dom'
 
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
+import React from 'react'
+import { graphRoute } from '../../Common/Consts/Routes'
 
 interface IGraphModel {
     graphset: IGraphStateModel,
+    id: string
 }
 
 export const ProfileGraphRow = (props: IGraphModel) => {
@@ -13,10 +16,12 @@ export const ProfileGraphRow = (props: IGraphModel) => {
     return (
         <Grid item>
             <Box>
-                <Typography>
-                    {graphset.name}
-                </Typography>
+                <Link to={'/graph/' + graphset.id} >
+                    <Typography>
+                        {graphset.name}
+                    </Typography>
+                </Link>
             </Box>
-        </Grid>
+        </Grid >
     )
 }

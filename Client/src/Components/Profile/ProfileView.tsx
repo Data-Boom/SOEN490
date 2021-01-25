@@ -299,12 +299,9 @@ export function ProfileView() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <Link to={"graph/"}>
-                    {console.log(savedGraphState)}
-                    <ProfileGraphStateList
-                      graphDataset={savedGraphState}
-                    />
-                  </Link>
+                  <ProfileGraphStateList
+                    graphDataset={savedGraphState}
+                  />
                 </TableBody>
               </Table>
             </TableContainer>
