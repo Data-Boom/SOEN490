@@ -98,6 +98,7 @@ export class GraphsController {
      * An object containing a response: Response
      */
     async createRequestForDeletingGraph(request: Request, response: Response) {
+        let userId = request.body.user.account_id
         let requestParam = request.params.graphStateId;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
@@ -106,7 +107,7 @@ export class GraphsController {
         else {
             try {
                 this.savedGraphsService = new GraphsService();
-                let requestResponse = await this.savedGraphsService.deleteSavedGraph(graphId)
+                let requestResponse = await this.savedGraphsService.deleteSavedGraph(graphId, userId)
                 response.status(requestResponse.statusCode).json(requestResponse.message)
             } catch (error) {
                 response.status(error.status).json(error.message);

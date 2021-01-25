@@ -209,9 +209,12 @@ export class GraphsModel {
     async updateGraph(graph: IGraphStateModel, userId: number): Promise<any[]> {
         let statusCode = 500
         let statusMessage = "Something went wrong fetching from DB. Maybe its down"
-        let graphOwner = await selectGraphStateAccountQuery(this.connection, graph.id)
-        console.log(graphOwner)
-        if (graphOwner.accountId !== userId) {
+        let graphOwner = await selectGraphStateAccountQuery(this.connection, Number(graph.id))
+        if (graphOwner == undefined) {
+            statusCode = 400
+            statusMessage = "Graph does not exist"
+        }
+        else if (graphOwner.accountId !== userId) {
             statusCode = 400
             statusMessage = "This is not your graph!"
         }
@@ -238,9 +241,24 @@ export class GraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async deleteGraph(graphId: number): Promise<string> {
-        await this.deleteGraphQuery(graphId);
-        return "Saved graph deletion was successful"
+    async deleteGraph(graphId: number, userId: number): Promise<any[]> {
+        let statusCode = 500
+        let statusMessage = "Something went wrong fetching from DB. Maybe its down"
+        let graphOwner = await selectGraphStateAccountQuery(this.connection, graphId)
+        if (graphOwner == undefined) {
+            statusCode = 400
+            statusMessage = "Graph does not exist"
+        }
+        else if (graphOwner.accountId !== userId) {
+            statusCode = 400
+            statusMessage = "This is not your graph!"
+        }
+        else {
+            await this.deleteGraphQuery(graphId);
+            statusCode = 200
+            statusMessage = "Saved graph deletion was successful"
+        }
+        return [statusCode, statusMessage]
     }
 
 }

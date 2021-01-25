@@ -94,11 +94,11 @@ export class GraphsService {
      * @param graphId 
      * Graph ID: number
      */
-    async deleteSavedGraph(graphId: number) {
+    async deleteSavedGraph(graphId: number, userId: number) {
         try {
-            let status = await this.dataQuery.deleteGraph(graphId)
-            this.requestResponse.statusCode = 200
-            this.requestResponse.message = status
+            let status = await this.dataQuery.deleteGraph(graphId, userId)
+            this.requestResponse.statusCode = status[0]
+            this.requestResponse.message = status[1]
             return this.requestResponse
         } catch (error) {
             throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
