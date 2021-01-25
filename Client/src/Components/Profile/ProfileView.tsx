@@ -1,16 +1,17 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
+import { ProfileGraphStateList } from './ProfileGraphList'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
-import { ProfileGraphStateList } from './ProfileGraphList'
+import { toGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
 
 export const ProfileGraph = () => {
   const [savedGraphState, setSavedGraphState] = useState([])
@@ -276,6 +277,7 @@ export function ProfileView() {
           </Tabs>
         </AppBar>
         <Container>
+
           <TabPanel value={tab} index={0}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -292,17 +294,17 @@ export function ProfileView() {
                 <TableHead> Favourites (saved graphs)
                   <TableRow>
                     <TableCell />
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Title</TableCell>
+                    <TableCell align="left">Name</TableCell>
+                    <TableCell >Comments</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {rows.map((row) => (
-                    <Row key={row.title} row={row} />
-                  ))} */}
-                  <ProfileGraphStateList
-                    graphDataset={savedGraphState}
-                  />
+                  <Link to={"graph/"}>
+                    {console.log(savedGraphState)}
+                    <ProfileGraphStateList
+                      graphDataset={savedGraphState}
+                    />
+                  </Link>
                 </TableBody>
               </Table>
             </TableContainer>
