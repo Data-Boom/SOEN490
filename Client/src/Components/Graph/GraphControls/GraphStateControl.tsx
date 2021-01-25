@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { callCreateGraphState, callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
+import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetList } from '../DatasetList.tsx/DatasetList'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
 import { Grid } from '@material-ui/core'
@@ -8,6 +9,7 @@ import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IGraphStateModel } from '../../../Models/Graph/IGraphStateModel'
 import { SaveGraphStateControl } from './SaveGraphStateControl'
 import { SearchViewModal } from '../../Search/SearchViewModal'
+import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { getDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 import { newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
 import { toDatasetRows } from '../GraphFunctions'
@@ -15,24 +17,31 @@ import { toDatasetRows } from '../GraphFunctions'
 interface IProps {
   graphState: IGraphStateModel,
   onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => void,
-  onLoading: (loading: boolean) => void
 }
 
 export const GraphStateControl = (props: IProps) => {
-  const { graphState, onGraphStateChange, onLoading } = { ...props }
+  const { graphState, onGraphStateChange } = { ...props }
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
+  const [loadingDatasets, setIsLoadinDatasets] = useState(false)
 
   useEffect(() => {
     const getGraphState = async (id: number) => {
-      onLoading(true)
+      setIsLoadinDatasets(true)
+      console.log(id)
+      const remoteGraphState = await callGetGraphState(id)
 
-      const graphState = await callGetGraphState(id)
-      const datasets = await getDatasets({ datasetId: graphState.datasets.map(dataset => dataset.id) })
-      setCompleteDatasets(datasets)
-      onGraphStateChange(graphState, datasets)
+      if (!remoteGraphState) {
+        SnackbarUtils.error('Failed to fetch graph state')
+      }
+      else {
+        const datasets = await getDatasets({ datasetId: remoteGraphState.datasets.map(dataset => dataset.id) })
+        setCompleteDatasets(datasets)
+        onGraphStateChange(remoteGraphState, datasets)
+      }
 
-      onLoading(false)
+      setIsLoadinDatasets(false)
     }
+
 
     if (graphState.id) {
       getGraphState(parseInt(graphState.id))
@@ -96,29 +105,35 @@ export const GraphStateControl = (props: IProps) => {
   }
 
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item>
-          <SearchViewModal onDatasetsSelected={handleDatasetsAdded} />
-        </Grid>
-        {completeDatasets && completeDatasets[0] ?
-          <Grid item>
-            <ExportDatasetsButton datasets={completeDatasets} />
-          </Grid> : null
-        }
-      </Grid>
-      <DatasetList
-        datasets={toDatasetRows(completeDatasets, graphState.datasets)}
-        onRemoveDatasetClick={handleDatasetRemoved}
-        onHideDatasetSwitch={onHideDatasetSwitch}
-      />
-      <Grid container>
-        <Grid item>
-          <SaveGraphStateControl
-            onSaveClick={onGraphStateSaved}
+    <>{
+      loadingDatasets ?
+        <CustomLoader
+          visible={loadingDatasets}
+        /> :
+        <>
+          <Grid container spacing={3}>
+            <Grid item>
+              <SearchViewModal onDatasetsSelected={handleDatasetsAdded} />
+            </Grid>
+            {completeDatasets && completeDatasets[0] ?
+              <Grid item>
+                <ExportDatasetsButton datasets={completeDatasets} />
+              </Grid> : null
+            }
+          </Grid>
+          <DatasetList
+            datasets={toDatasetRows(completeDatasets, graphState.datasets)}
+            onRemoveDatasetClick={handleDatasetRemoved}
+            onHideDatasetSwitch={onHideDatasetSwitch}
           />
-        </Grid>
-      </Grid>
-    </>
+          <Grid container>
+            <Grid item>
+              <SaveGraphStateControl
+                onSaveClick={onGraphStateSaved}
+              />
+            </Grid>
+          </Grid>
+        </>
+    }</>
   )
 }
