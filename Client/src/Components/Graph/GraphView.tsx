@@ -1,17 +1,20 @@
 import * as svg from 'save-svg-as-png'
 
-import { borders, sizing } from '@material-ui/system';
-import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, Typography, makeStyles } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
+import { IVariableAndUnitModel, IVariableUnits } from '../../Models/Datasets/IVariableModel'
 import React, { useState } from "react"
+import { borders, sizing } from '@material-ui/system';
+
+import { AxesControl } from './AxesControl'
 import CancelIcon from '@material-ui/icons/Cancel';
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import SearchView from '../Search/SearchView'
-import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { classStyles } from "../../appTheme"
+import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
 const defaultColors: string[] = ['#3632ff', '#f20b34', '#7af684', '#000000']
@@ -32,13 +35,17 @@ export default function GraphView() {
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [openModal, setOpenModal] = useState(false)
   //todo unhardcode the variables
-  const [xVariableName, setXVariableName] = useState('initial pressure')
-  const [yVariableName, setYVariableName] = useState('cell width')
+  const [axes, setAxes] = useState<IVariableAndUnitModel>({
+    xVariableName: 'initial pressure',
+    yVariableName: 'cell width',
+    xVariableUnits: 'kPa',
+    yVariableUnits: 'mm'
+  })
+  const [variables, setVariables] = useState([])
 
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
   )
-
   const handleOpen = () => {
     setOpenModal(true)
   }
@@ -60,7 +67,7 @@ export default function GraphView() {
       color: color,
       id: dataset.id,
       name: dataset.dataset_name,
-      points: buildXYPoints(dataset, xVariableName, yVariableName)
+      points: buildXYPoints(dataset, axes.xVariableName, axes.yVariableName)
     }
 
     return graphDataset
@@ -104,6 +111,7 @@ export default function GraphView() {
   const onRemoveDataset = (datasetId: number) => {
     const filteredDataset = completeDatasets.filter(dataset => dataset.id !== datasetId)
     setCompleteDatasets(filteredDataset)
+    handleVariablesSelected(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
   }
 
@@ -114,17 +122,32 @@ export default function GraphView() {
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
-
+    handleVariablesSelected(mergedDatasets)
     setCompleteDatasets(mergedDatasets)
     calculateExtremeBoundaries(mergedDatasets)
     handleClose()
+  }
+
+  const handleVariablesSelected = (selectedDatasets: IDatasetModel[]) => {
+    const variableNames = []
+    selectedDatasets.forEach(dataset => {
+      dataset.data.variables.forEach(variable => {
+        variableNames.push(variable.name)
+      })
+    })
+    const uniqueVariables = Array.from(new Set(variableNames))
+    setVariables(uniqueVariables)
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
-  function calculateExtremeBoundaries(datasets: IDatasetModel[]) {
+  const changeAxes = (newAxes: IVariableAndUnitModel) => {
+    setAxes(newAxes)
+  }
+
+  const calculateExtremeBoundaries = (datasets: IDatasetModel[]) => {
     let minX = 9000, maxX = 0, minY = 9000, maxY = 0
 
     const datalist: any[] = []
@@ -149,6 +172,7 @@ export default function GraphView() {
     const extremeBoundaries: IDataPointExtremes = { minX: minX, maxX: maxX, minY: minY, maxY: maxY }
     setDatasetBoundaries(extremeBoundaries)
   }
+
 
   return (
     <>
@@ -205,9 +229,10 @@ export default function GraphView() {
                 <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
               </Grid>
             </Box>
+            <AxesControl datasets={completeDatasets} variables={variables} axes={axes} onAxesChange={changeAxes} />
           </Grid>
         </Grid>
-      </Box>
+      </Box >
     </>
   )
 }
