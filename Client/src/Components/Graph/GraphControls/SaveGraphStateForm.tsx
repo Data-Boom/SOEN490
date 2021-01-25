@@ -18,7 +18,7 @@ interface IFormikProps {
   name: string
 }
 
-export const SaveGraphStateControl = (props: IProps) => {
+export const SaveGraphStateForm = (props: IProps) => {
   const { graphState } = { ...props }
   const [id, setId] = useState(graphState.id)
   const [isNewGraphState, setIsNewGraphState] = useState(!graphState.id)

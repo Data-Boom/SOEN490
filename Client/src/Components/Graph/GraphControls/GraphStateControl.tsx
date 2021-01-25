@@ -7,7 +7,7 @@ import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetControl } from './DatasetControl'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
-import { SaveGraphStateControl } from './SaveGraphStateControl'
+import { SaveGraphStateForm } from './SaveGraphStateForm'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 import { getDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
@@ -86,7 +86,7 @@ export const GraphStateControl = (props: IProps) => {
                 <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
               </Grid>
               <Grid item>
-                <SaveGraphStateControl
+                <SaveGraphStateForm
                   graphState={graphState}
                 />
               </Grid>
