@@ -1,6 +1,7 @@
-import { retrieveData } from "../../services/getDatasetService";
-import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 import { createConnection, getConnection } from 'typeorm';
+
+import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
+import { retrieveData } from "../../services/getDatasetService";
 
 describe('data service test', () => {
   let retrieveDataObject: retrieveData;
@@ -26,7 +27,7 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset[0].dataset_id).toEqual(1);
+    expect(arrayOfData[0].dataset_id).toEqual(1);
     done()
   });
 
@@ -41,7 +42,7 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publications[0].publication_year).toEqual(1980);
+    expect(arrayOfData[0].publication.year).toEqual(1980);
     done()
   });
 
@@ -57,9 +58,9 @@ describe('data service test', () => {
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].materials[1])
-      .toEqual(expect.objectContaining({ composition_name: "O2", material_details: "Oxygen" }));
+      .toEqual(expect.objectContaining({ composition: "O2", details: "Oxygen" }));
     expect(arrayOfData[0].materials[0])
-      .toEqual(expect.objectContaining({ composition_name: "C", material_details: "carbon, graphite, pressed graphite" }));
+      .toEqual(expect.objectContaining({ composition: "C", details: "carbon, graphite, pressed graphite" }));
     done()
   });
 
@@ -74,8 +75,8 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].authors[0])
-      .toEqual(expect.objectContaining({ author_firstName: "Stanley", author_lastName: "Marsh", author_middleName: "P." }));
+    expect(arrayOfData[0].publication.authors[0])
+      .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
 
@@ -90,8 +91,8 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].authors[0])
-      .toEqual(expect.objectContaining({ author_firstName: "Stanley", author_lastName: "Marsh", author_middleName: "P." }));
+    expect(arrayOfData[0].publication.authors[0])
+      .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
 
@@ -106,8 +107,8 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].authors[0])
-      .toEqual(expect.objectContaining({ author_firstName: "Stanley", author_lastName: "Marsh", author_middleName: "P." }));
+    expect(arrayOfData[0].publication.authors[0])
+      .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
 
@@ -122,7 +123,7 @@ describe('data service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset[0].category_name).toEqual("cell size");
+    expect(arrayOfData[0].dataset_info.category).toEqual("cell size");
     done()
   });
 
@@ -137,7 +138,7 @@ describe('data service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = 2;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset[0].subcategory_name).toEqual("width");
+    expect(arrayOfData[0].dataset_info.subcategory).toEqual("width");
     done()
   });
 
@@ -152,9 +153,9 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publications[0].publication_year).toEqual(1980);
+    expect(arrayOfData[0].publication.year).toEqual(1980);
     expect(arrayOfData[0].materials[0])
-      .toEqual(expect.objectContaining({ composition_name: "C" }));
+      .toEqual(expect.objectContaining({ composition: "C" }));
     done()
   });
 
@@ -188,28 +189,27 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds account ID of 1 and expects to see a data set with ID of 1 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(1)
-    expect(arrayOfData[0].dataset[0].dataset_id).toEqual(1);
+  test('Feeds the email of account ID of 1 and expects to see a data set with ID of 1 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("j.comkj")
+    expect(arrayOfData[1][0].dataset_id).toEqual(1);
     done()
   });
 
-  test('Feeds account ID of 1 and expects to see two data sets returned, one with ID of 1 and another ID being 2', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(1)
-    expect(arrayOfData[0].dataset[0].dataset_id).toEqual(2);
-    expect(arrayOfData[1].dataset[0].dataset_id).toEqual(1);
+  test('Feeds the email of account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("j.comkj")
+    expect(arrayOfData[1][0].dataset_id).toEqual(2);
     done()
   });
 
-  test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets(-1)
-    expect(arrayOfData).toEqual(expect.arrayContaining([]));
+  test('Feeds an invalid email and expects to see an error message', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("nothing")
+    expect(arrayOfData[1]).toEqual("Invalid user email provided");
     done()
   });
 
-  test('Feeds account ID of -1 and expects to see an empty array returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(-1)
-    expect(arrayOfData).toEqual(expect.arrayContaining([]));
+  test('Feeds an invalid email and expects to see an error message', async done => {
+    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("nothing")
+    expect(arrayOfData[1]).toEqual("Invalid user email provided");
     done()
   });
 })

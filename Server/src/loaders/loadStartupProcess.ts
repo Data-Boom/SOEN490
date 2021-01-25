@@ -2,13 +2,16 @@ import 'dotenv/config';
 import 'cookie-parser'
 
 import { authenticationRouter } from '../routes/authenticationRouter';
-import bodyParser from 'body-parser';
+import bodyParser from 'body-parser'
 import { connectDB } from '../database';
 import cors from 'cors';
 import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
-import { fileUploadRouter } from '../routes/fileUploadRouter';
+import { dataExtractionRouter } from '../routes/dataExtractionRouter'
+import { dataUploadRouter } from '../routes/dataUploadRouter'
 import { getDataRouter } from '../routes/getDatasetRouter';
+import { getConnectionManager } from 'typeorm';
+import { GraphsRouter } from '../routes/GraphsRouter';
 
 const cookieParser = require('cookie-parser');
 
@@ -16,7 +19,7 @@ const cookieParser = require('cookie-parser');
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
  * to initialize the application. The initial connection to the database is also created here.
  */
-export class loadStartupProcess {
+export class LoadStartupProcess {
   private app: express.Application;
   private config: any;
   private server: any;
@@ -59,10 +62,12 @@ export class loadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    this.app.use('/', fileUploadRouter)
+    this.app.use('/', dataExtractionRouter)
     this.app.use('/', authenticationRouter)
     this.app.use('/', getDataRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
+    this.app.use('/', dataUploadRouter)
+    this.app.use('/', GraphsRouter)
 
     this.config = {
       "type": process.env.DB_TYPE,
@@ -93,6 +98,11 @@ export class loadStartupProcess {
       try {
         await connectDB(this.config);
       } catch (error) {
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (error.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = getConnectionManager().get("default");
+          return existentConn;
+        }
         console.log("caught error while connecting to db:")
         console.log(error)
       }

@@ -1198,11 +1198,11 @@
       "id": "144a794f-6fb9-499a-8815-bc3410ec3b89",
       "comment": "",
       "command": "click",
-      "target": "name=reference.authors[0].firstname",
+      "target": "name=reference.authors[0].firstName",
       "targets": [
-        ["name=reference.authors[0].firstname", "name"],
+        ["name=reference.authors[0].firstName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].firstname']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].firstName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div/div/div/input", "xpath:position"]
       ],
@@ -1211,11 +1211,11 @@
       "id": "faf66566-313a-4a9f-af9a-c6b5df893e84",
       "comment": "",
       "command": "type",
-      "target": "name=reference.authors[0].firstname",
+      "target": "name=reference.authors[0].firstName",
       "targets": [
-        ["name=reference.authors[0].firstname", "name"],
+        ["name=reference.authors[0].firstName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].firstname']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].firstName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div/div/div/input", "xpath:position"]
       ],
@@ -1224,11 +1224,11 @@
       "id": "af2a12e9-66fe-468d-8a7d-b46d1cc5930e",
       "comment": "",
       "command": "type",
-      "target": "name=reference.authors[0].middlename",
+      "target": "name=reference.authors[0].middleName",
       "targets": [
-        ["name=reference.authors[0].middlename", "name"],
+        ["name=reference.authors[0].middleName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].middlename']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].middleName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
       ],
@@ -1237,11 +1237,11 @@
       "id": "440ab523-a02c-495f-9f6b-49bf2bd1426e",
       "comment": "",
       "command": "type",
-      "target": "name=reference.authors[0].lastname",
+      "target": "name=reference.authors[0].lastName",
       "targets": [
-        ["name=reference.authors[0].lastname", "name"],
+        ["name=reference.authors[0].lastName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].lastname']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].lastName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div[3]/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div[3]/div/div/input", "xpath:position"]
       ],
@@ -1829,11 +1829,11 @@
       "id": "37903b21-34ca-4397-8bbb-332a8979ccc8",
       "comment": "",
       "command": "click",
-      "target": "name=reference.authors[0].firstname",
+      "target": "name=reference.authors[0].firstName",
       "targets": [
-        ["name=reference.authors[0].firstname", "name"],
+        ["name=reference.authors[0].firstName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].firstname']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].firstName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div/div/div/input", "xpath:position"]
       ],
@@ -1842,11 +1842,11 @@
       "id": "dd1ab4b5-14ae-4faf-9d0d-6681ca8dddc8",
       "comment": "",
       "command": "type",
-      "target": "name=reference.authors[0].firstname",
+      "target": "name=reference.authors[0].firstName",
       "targets": [
-        ["name=reference.authors[0].firstname", "name"],
+        ["name=reference.authors[0].firstName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].firstname']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].firstName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div/div/div/input", "xpath:position"]
       ],
@@ -1855,11 +1855,11 @@
       "id": "74beaba2-fbfc-47a1-81e2-198a624712b9",
       "comment": "",
       "command": "type",
-      "target": "name=reference.authors[0].middlename",
+      "target": "name=reference.authors[0].middleName",
       "targets": [
-        ["name=reference.authors[0].middlename", "name"],
+        ["name=reference.authors[0].middleName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].middlename']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].middleName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
       ],
@@ -1879,11 +1879,11 @@
       "id": "edd41dc2-f75f-4d61-a418-4ea69d38207b",
       "comment": "",
       "command": "type",
-      "target": "name=reference.authors[0].lastname",
+      "target": "name=reference.authors[0].lastName",
       "targets": [
-        ["name=reference.authors[0].lastname", "name"],
+        ["name=reference.authors[0].lastName", "name"],
         ["css=.Mui-focused > .MuiInputBase-input", "css:finder"],
-        ["xpath=//input[@name='reference.authors[0].lastname']", "xpath:attributes"],
+        ["xpath=//input[@name='reference.authors[0].lastName']", "xpath:attributes"],
         ["xpath=//div[@id='root']/div/div[2]/div/div/div/form/div[2]/div[2]/div/div[2]/div/div/div[3]/div/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div[3]/div/div/input", "xpath:position"]
       ],

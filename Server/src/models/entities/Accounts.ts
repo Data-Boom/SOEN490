@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany, Connection } from "typeorm";
 import { Dataset } from "./Dataset";
 
 
@@ -35,7 +35,7 @@ export class Accounts {
     @Column({ default: 0 })
     admin: boolean
 
-    @Column()
+    @Column({ nullable: true })
     resetToken: string;
 
     /*
@@ -51,3 +51,9 @@ export class Accounts {
     @JoinTable()
     datasets: Dataset[];
 }
+
+export const selectAccountIdFromEmailQuery = (connection: Connection, email: string) =>
+    connection.createQueryBuilder(Accounts, 'account')
+        .select('account.id', 'id')
+        .where('account.email = :email', { email: email })
+        .getRawOne();

@@ -1,13 +1,19 @@
 import * as svg from 'save-svg-as-png'
 
-import { Box, Button, Grid, Modal, Paper, makeStyles } from "@material-ui/core"
-import { ICompleteDatasetEntity, IDataPointExtremes } from "../../Models/Datasets/ICompleteDatasetEntity"
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, Typography, makeStyles } from "@material-ui/core"
+import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
+import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
+import { IVariableAndUnitModel, IVariableUnits } from '../../Models/Datasets/IVariableModel'
 import React, { useState } from "react"
+import { borders, sizing } from '@material-ui/system';
 
+import { AxesControl } from './AxesControl'
+import CancelIcon from '@material-ui/icons/Cancel';
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
-import { IGraphDatasetModel } from '../../Models/Datasets/IGraphDatasetModel'
+import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
 import SearchView from '../Search/SearchView'
+import { classStyles } from "../../appTheme"
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
@@ -19,23 +25,27 @@ export default function GraphView() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-    }
+    },
   }))
 
   const classes = useStyles()
 
-  //Testing the query parser using quer-string for future use if needed
-  //console.log(queryString.parse(useLocation().search))
-
-
   //sample datasets to try, just needs to gather from the backend instead.
   //Datalist is the list fed to the graphCreation
-  const [completeDatasets, setCompleteDatasets] = useState<ICompleteDatasetEntity[]>([])
+  const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [openModal, setOpenModal] = useState(false)
+  //todo unhardcode the variables
+  const [axes, setAxes] = useState<IVariableAndUnitModel>({
+    xVariableName: 'initial pressure',
+    yVariableName: 'cell width',
+    xVariableUnits: 'kPa',
+    yVariableUnits: 'mm'
+  })
+  const [variables, setVariables] = useState([])
+
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
   )
-
   const handleOpen = () => {
     setOpenModal(true)
   }
@@ -52,15 +62,36 @@ export default function GraphView() {
     download("datasets.json", JSON.stringify(exampleExportDatasetModel, null, 4))
   }
 
-  const toGraphDataset = (completeDataset: ICompleteDatasetEntity, color: string): IGraphDatasetModel => {
+  const toGraphDataset = (dataset: IDatasetModel, color: string): IGraphDatasetModel => {
     const graphDataset: IGraphDatasetModel = {
       color: color,
-      id: completeDataset.id,
-      name: completeDataset.name,
-      points: completeDataset.points
+      id: dataset.id,
+      name: dataset.dataset_name,
+      points: buildXYPoints(dataset, axes.xVariableName, axes.yVariableName)
     }
 
     return graphDataset
+  }
+
+  const buildXYPoints = (dataset: IDatasetModel, xVariableName: string, yVariableName: string): IGraphPoint[] => {
+    const xIndex = getVariableIndex(dataset.data.variables, xVariableName)
+    const yIndex = getVariableIndex(dataset.data.variables, yVariableName)
+    //if either is -1 means at least one variable is not on the dataset and cannot be graphed
+    if (xIndex === -1 || yIndex === -1) {
+      return []
+    }
+    const points: IGraphPoint[] = []
+    for (let i = 0; i < dataset.data.contents.length; i++) {
+      const x: number = dataset.data.contents[i].point[xIndex]
+      const y: number = dataset.data.contents[i].point[yIndex]
+      const point: IGraphPoint = { x: x, y: y }
+      points.push(point)
+    }
+    return points
+  }
+
+  const getVariableIndex = (variables: IVariable[], varName: string): number => {
+    return variables.findIndex(variable => variable.name === varName)
   }
 
   //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
@@ -80,30 +111,48 @@ export default function GraphView() {
   const onRemoveDataset = (datasetId: number) => {
     const filteredDataset = completeDatasets.filter(dataset => dataset.id !== datasetId)
     setCompleteDatasets(filteredDataset)
+    handleVariablesSelected(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
   }
 
-  const handleDatasetsSelected = (selectedDatasets: ICompleteDatasetEntity[]) => {
-    const notYetSelectedDatasets: ICompleteDatasetEntity[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
+  const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
+    const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
 
-    const mergedDatasets: ICompleteDatasetEntity[] = [...completeDatasets]
+    const mergedDatasets: IDatasetModel[] = [...completeDatasets]
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
-
+    handleVariablesSelected(mergedDatasets)
     setCompleteDatasets(mergedDatasets)
     calculateExtremeBoundaries(mergedDatasets)
+    handleClose()
   }
 
-  const isInStateAlready = (dataset: ICompleteDatasetEntity) => {
+  const handleVariablesSelected = (selectedDatasets: IDatasetModel[]) => {
+    const variableNames = []
+    selectedDatasets.forEach(dataset => {
+      dataset.data.variables.forEach(variable => {
+        variableNames.push(variable.name)
+      })
+    })
+    const uniqueVariables = Array.from(new Set(variableNames))
+    setVariables(uniqueVariables)
+  }
+
+  const isInStateAlready = (dataset: IDatasetModel) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
-  function calculateExtremeBoundaries(datasets: ICompleteDatasetEntity[]) {
+  const changeAxes = (newAxes: IVariableAndUnitModel) => {
+    setAxes(newAxes)
+  }
+
+  const calculateExtremeBoundaries = (datasets: IDatasetModel[]) => {
     let minX = 9000, maxX = 0, minY = 9000, maxY = 0
 
     const datalist: any[] = []
-    datasets.forEach(dataset => datalist.push(dataset.points))
+    //todo refactor graph else this breaks
+    // datasets.forEach(dataset => datalist.push(dataset.points))
     datalist.forEach(dataset => {
       dataset.forEach(point => {
         if (point.x > maxX) {
@@ -124,57 +173,66 @@ export default function GraphView() {
     setDatasetBoundaries(extremeBoundaries)
   }
 
+
   return (
     <>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-      <h2>GraphView</h2>
+      <h2>Graphs</h2>
       <Modal
         open={openModal}
         onClose={handleClose}
-        className={classes.modal}
+        className={classStyles().modalsearch}
       >
-        <Paper elevation={3}>
-          <Box m={5}>
-            <SearchView
-              handleDatasetsSelected={handleDatasetsSelected}
-            />
-          </Box>
-        </Paper>
-      </Modal>
-      <Box ml={8}>
-        <Grid container spacing={3}>
-          <Grid item container sm={5} >
+        <Box m={5} mb={10} width='100%'>
+          <Grid item xs={12}>
             <Paper elevation={3}>
-              <Graph
-                outerHeight={500}
-                outerWidth={768}
-                datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
-                extremeBoundaries={datasetBoundaries}
-              />
+              <Box m={0} p={2}>
+                <CancelIcon color="primary" className={classStyles().closeButton} width="2%" onClick={handleClose} />
+                <Grid container>
+                  <SearchView
+                    handleDatasetsSelected={handleDatasetsSelected}
+                  />
+                </Grid>
+              </Box>
             </Paper>
           </Grid>
-          <Grid item sm={7}>
-            <Box ml={5} mr={5} mt={5}>
-              <Grid container direction='column'>
-                <Grid item container spacing={3}>
-                  <Grid item>
-                    <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset To Graph</Button>
-                  </Grid>
-                  <Grid item>
-                    <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
-                  </Grid>
-                  <Grid item>
-                    <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
-                </Grid>
-              </Grid>
+        </Box>
+      </Modal>
+      <Box ml={8} mr={8} maxWidth>
+        <Grid container xs={12}>
+          <Grid container xs={9}>
+            <Box m={2} maxWidth mb={20} p={1} pb={10} overflow="hidden">
+              <Paper elevation={3}>
+                <Graph
+                  outerHeight={450}
+                  outerWidth={800}
+                  datasets={completeDatasets.map((dataset, i) => toGraphDataset(dataset, defaultColors[i]))}
+                  extremeBoundaries={datasetBoundaries}
+                />
+              </Paper>
             </Box>
           </Grid>
+          <Grid container justify="flex-start" xs={3}>
+            <Box ml={4} mt={2} maxWidth>
+              <Grid item container justify="flex-start" spacing={3}>
+                <Grid item>
+                  <Button id="add-dataset" onClick={handleOpen} color="primary" variant="contained">Add dataset</Button>
+                </Grid>
+                <Grid item>
+                  <Button id="export-json" onClick={handleExportJson} color="primary" variant="contained">Export as json</Button>
+                </Grid>
+                <Grid item>
+                  <Button id="save-image" onClick={handleSaveGraphImage} color="primary" variant="contained">Save Graph Image</Button>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
+              </Grid>
+            </Box>
+            <AxesControl datasets={completeDatasets} variables={variables} axes={axes} onAxesChange={changeAxes} />
+          </Grid>
         </Grid>
-      </Box>
+      </Box >
     </>
   )
 }

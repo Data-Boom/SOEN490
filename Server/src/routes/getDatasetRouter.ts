@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+
 import { getDataController } from '../controllers/getDatasetController';
 
 /**
@@ -10,12 +11,20 @@ import { getDataController } from '../controllers/getDatasetController';
 let router = Router();
 let getDataControllerObject = new getDataController();
 
-router.get('/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
+router.get('/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForUserUploadedDatasets(request, response);
 });
 
-router.get('/dataset/userSavedDatsets/:userSavedDatsets', (request: Request, response: Response) => {
+router.get('/api/v1/dataset/userSavedDatsets/:userSavedDatsets', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForUserSavedDatsets(request, response);
+});
+
+router.post('/api/v1/dataset/addSavedDatset/:userEmail/:datasetId', (request: Request, response: Response) => {
+    getDataControllerObject.createRequestForAddingSavedDataset(request, response);
+});
+
+router.delete('/api/v1/dataset/removeSavedDatset/:userEmail/:datasetId', (request: Request, response: Response) => {
+    getDataControllerObject.createRequestForRemovingSavedDataset(request, response);
 });
 
 router.get('/dataset*', (request: Request, response: Response) => {

@@ -11,11 +11,12 @@ import { Publications } from "../models/entities/Publications";
 import { Publicationtype } from "../models/entities/Publicationtype";
 import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
+import { Savedgraphs } from "../models/entities/Savedgraphs";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
 import { AuthenticationService } from '../services/authenticationService';
 
-export class SeedDatabase1608609071666 implements MigrationInterface {
+export class SeedDatabase1611344612000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 
@@ -34,7 +35,7 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     await connection.manager.save(user1);
 
     let user2 = new Accounts();
-    user2.id;
+    user2.id = 2;
     user2.email = 'test@t.com';
     user2.password = await authenticationService.hashPassword('123') as any;
     user2.firstName = 'Tom';
@@ -306,11 +307,41 @@ export class SeedDatabase1608609071666 implements MigrationInterface {
     datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
 
-    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 1)');
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
+
+    let newGraph = new Savedgraphs();
+    newGraph.id = 1;
+    newGraph.accountId = 1;
+    newGraph.name = "Test Graph";
+    newGraph.datasetIds = [1, 2];
+    newGraph.datasetColors = ["red", "green"];
+    newGraph.datasetShapes = ["square", "triangle"];
+    newGraph.datasetHiddenStatus = [false, true];
+    newGraph.axisVariable = ["temperature", "width"];
+    newGraph.axisLog = [true, true];
+    newGraph.axisZoomStart = [100, 100];
+    newGraph.axisZoomEnd = [100, 100];
+    newGraph.axisUnits = ["C", "mm"];
+    await connection.manager.save(newGraph);
+
+    let newGraph2 = new Savedgraphs();
+    newGraph2.id = 2;
+    newGraph2.accountId = 2;
+    newGraph2.name = "Test Graph";
+    newGraph2.datasetIds = [1];
+    newGraph2.datasetColors = ["red"];
+    newGraph2.datasetShapes = ["square"];
+    newGraph2.datasetHiddenStatus = [false];
+    newGraph2.axisVariable = ["temperature"];
+    newGraph2.axisLog = [true];
+    newGraph2.axisZoomStart = [100];
+    newGraph2.axisZoomEnd = [100];
+    newGraph2.axisUnits = ["C"];
+    await connection.manager.save(newGraph2);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query('DELETE FROM savedgraphs');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
     await queryRunner.query('DELETE FROM accounts_datasets_dataset');

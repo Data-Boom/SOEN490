@@ -29,3 +29,9 @@ export const loginValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required(requiredMessage("Password"))
 })
+
+export const resetPasswordValidationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email()
+    .required(requiredMessage("Email Address"))
+})
