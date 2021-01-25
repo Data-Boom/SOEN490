@@ -11,8 +11,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
+import { loginRoute } from "../Common/Consts/Routes"
 import { removeUserInStorage } from '../Common/Storage'
-import { signInRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
 
 const drawerWidth = linkWidth
@@ -57,7 +57,7 @@ export default function NavigationMenu() {
           <Button variant="contained" onClick={logout}>Sign out</Button>
         </Typography>
       ) : (
-        <Button component={Link} to={signInRoute} id='btn1' variant="contained">Sign In</Button>
+        <Button component={Link} to={loginRoute} id='btn1' variant="contained">Log in</Button>
       )
   }
 
