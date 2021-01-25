@@ -25,7 +25,6 @@ export const GraphStateControl = (props: IProps) => {
   useEffect(() => {
     const getGraphState = async (id: number) => {
       setIsLoadinDatasets(true)
-      console.log(id)
       const remoteGraphState = await callGetGraphState(id)
 
       if (!remoteGraphState) {

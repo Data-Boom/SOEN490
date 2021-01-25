@@ -41,10 +41,9 @@ export const toDatasetRows = (datasets: IDatasetModel[], graphDatasets: IGraphDa
   const datasetRows: IDatasetRowModel[] = []
 
   for (let i = 0; i < datasets.length; i++) {
-    const datasetRow: IDatasetRowModel = { ...graphDatasets[i], id: datasets[0].id, name: datasets[0].dataset_name, isInitiallyHidden: graphDatasets[i].isHidden }
+    const datasetRow: IDatasetRowModel = { ...graphDatasets[i], id: datasets[i].id, name: datasets[i].dataset_name, isInitiallyHidden: graphDatasets[i].isHidden }
     datasetRows.push(datasetRow)
   }
-
   return datasetRows
 }
 
