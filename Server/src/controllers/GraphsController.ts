@@ -17,7 +17,7 @@ export class GraphsController {
      * An object containing a response: Response
      */
     async createRequestForSingleGraph(request: Request, response: Response) {
-        let requestParam = request.params.oneSavedGraph;
+        let requestParam = request.query.graphStateId;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");
@@ -97,7 +97,7 @@ export class GraphsController {
      * An object containing a response: Response
      */
     async createRequestForDeletingGraph(request: Request, response: Response) {
-        let requestParam = request.params.deleteSavedGraph;
+        let requestParam = request.query.graphStateId;
         let graphId: number = +requestParam;
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");

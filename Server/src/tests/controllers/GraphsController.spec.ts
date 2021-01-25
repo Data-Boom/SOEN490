@@ -59,8 +59,8 @@ describe('SavedGraphs Controller ', () => {
       "id": 1
     }
     mockRequest = {
-      params: {
-        oneSavedGraph: '1'
+      query: {
+        graphStateId: '1'
       }
     }
     await SavedGraphsController.createRequestForSingleGraph(mockRequest as Request, mockResponse as Response)
@@ -82,9 +82,9 @@ describe('SavedGraphs Controller ', () => {
 
   //   test('Non-existant GraphID Request', async () => {
   //     mockRequest = {
-  //       params: {
-  //         oneSavedGraph: '200000'
-  //       }
+  //    query: {
+  //      graphStateId: '100000000'
+  //    }
   //     }
   //     await SavedGraphsController.createRequestForSingleSavedGraph(mockRequest as Request, mockResponse as Response)
   //     expect(mockResponse.json).toBeCalledWith("Graph does not exist");
