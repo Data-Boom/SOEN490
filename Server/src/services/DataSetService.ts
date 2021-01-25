@@ -481,9 +481,25 @@ export class DataSetService {
         }
     }
 
-    async adminApproveDataset(datasetId: number, datasetCommentsToAppend: string) {
+    async adminApprovedDataset(datasetId: number, datasetCommentsToAppend: string) {
         try {
-            let response = await this.updateModel.adminApprovedDataSet(datasetId, datasetCommentsToAppend)
+            await this.updateModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
+            let response = await this.updateModel.approveDataset(datasetId)
+            if (response == undefined || response == null) {
+                throw new BadRequest("No dataset under this ID")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Internal server error approving this dataset. Try again later")
+        }
+    }
+
+
+    async userApprovedDataset(datasetId: number) {
+        try {
+            let response = await this.updateModel.approveDataset(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No dataset under this ID")
             }

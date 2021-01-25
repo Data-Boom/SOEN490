@@ -75,8 +75,7 @@ export class DatasetUpdateModel {
         return "Dataset Flagged!"
     }
 
-    async approveDataset(datasetId: number, datasetCommentsToAppend: string) {
-        await this.updateDatasetComments(datasetId, datasetCommentsToAppend)
+    async approveDataset(datasetId: number) {
         await this.updateApprovedStatus(datasetId)
         await this.wipeEntryFromUnapprovedTable(datasetId)
         return "Successfully approved new Dataset"
@@ -89,7 +88,7 @@ export class DatasetUpdateModel {
     //     return "Success"
     // }
 
-    private async updateDatasetComments(datasetId: number, datasetCommentsToAppend: string) {
+    async updateDatasetComments(datasetId: number, datasetCommentsToAppend?: string) {
         let oldComment = await this.selectDatasetCommentQuery(datasetId)
         let newComment = oldComment.concat(" " + datasetCommentsToAppend)
         await this.connection.createQueryBuilder(Dataset, 'dataset')
