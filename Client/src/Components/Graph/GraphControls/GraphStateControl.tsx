@@ -1,19 +1,16 @@
 import { IAxisStateModel, IGraphStateModel } from '../../../Models/Graph/IGraphStateModel'
+import { IGraphDatasetState, newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
 import React, { useEffect, useState } from 'react'
 import { callCreateGraphState, callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
 import { AxesControl } from './AxesControl'
 import { CustomLoader } from '../../Utils/CustomLoader'
-import { DatasetList } from '../DatasetList.tsx/DatasetList'
-import { ExportDatasetsButton } from './ExportDatasetsButton'
+import { DatasetControl } from './DatasetControl'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { SaveGraphStateControl } from './SaveGraphStateControl'
-import { SearchViewModal } from '../../Search/SearchViewModal'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { getDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
-import { newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
-import { toDatasetRows } from '../GraphFunctions'
 
 interface IProps {
   graphState: IGraphStateModel,
@@ -57,33 +54,18 @@ export const GraphStateControl = (props: IProps) => {
     onGraphStateChange(graphStateCopy, completeDatasets)
   }
 
-  const onHideDatasetSwitch = (datasetId: number) => {
-    const graphDatasetsCopy = [...graphState.datasets]
-    const indexToHide = graphState.datasets.findIndex(dataset => dataset.id == datasetId)
-    graphDatasetsCopy[indexToHide].isHidden = !graphDatasetsCopy[indexToHide].isHidden
-    onGraphStateChange({ ...graphState, datasets: graphDatasetsCopy }, completeDatasets)
-  }
-
-  const handleDatasetRemoved = (datasetId: number) => {
-    const filteredDatasets = completeDatasets.filter(dataset => dataset.id !== datasetId)
-    handleCompleteDatasetsUpdated(filteredDatasets)
-  }
-
-  const handleDatasetsAdded = (selectedDatasets: IDatasetModel[]) => {
-    const notYetSelectedDatasets: IDatasetModel[] = selectedDatasets.filter(selectedDataset => !isInStateAlready(selectedDataset))
-
-    const mergedDatasets: IDatasetModel[] = [...completeDatasets]
-    notYetSelectedDatasets.forEach(dataset => {
-      mergedDatasets.push(dataset)
-    })
-
-    handleCompleteDatasetsUpdated(mergedDatasets)
-  }
-
-  const handleCompleteDatasetsUpdated = (datasets: IDatasetModel[]) => {
+  const handleCompleteDatasetsChange = (datasets: IDatasetModel[]) => {
     setCompleteDatasets(datasets)
     const newGraphState = getUpdatedGraphState(datasets)
     onGraphStateChange(newGraphState, datasets)
+  }
+
+  const handleDatasetStatesChange = (datasetStates: IGraphDatasetState[]) => {
+    onGraphStateChange({ ...graphState, datasets: datasetStates }, completeDatasets)
+  }
+
+  const handleAxesChanged = (axes: IAxisStateModel[]) => {
+    onGraphStateChange({ ...graphState, axes: axes }, completeDatasets)
   }
 
   const getUpdatedGraphState = (datasets: IDatasetModel[]): IGraphStateModel => {
@@ -101,14 +83,6 @@ export const GraphStateControl = (props: IProps) => {
     return { ...graphState, datasets: graphDatasetStates }
   }
 
-  const isInStateAlready = (dataset: IDatasetModel) => {
-    return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
-  }
-
-  const handleAxesChanged = (axes: IAxisStateModel[]) => {
-    onGraphStateChange({ ...graphState, axes: axes }, completeDatasets)
-  }
-
   return (
     <>{
       loadingDatasets ?
@@ -116,20 +90,11 @@ export const GraphStateControl = (props: IProps) => {
           visible={loadingDatasets}
         /> :
         <>
-          <Grid container spacing={3}>
-            <Grid item>
-              <SearchViewModal onDatasetsSelected={handleDatasetsAdded} />
-            </Grid>
-            {completeDatasets && completeDatasets[0] ?
-              <Grid item>
-                <ExportDatasetsButton datasets={completeDatasets} />
-              </Grid> : null
-            }
-          </Grid>
-          <DatasetList
-            datasets={toDatasetRows(completeDatasets, graphState.datasets)}
-            onRemoveDatasetClick={handleDatasetRemoved}
-            onHideDatasetSwitch={onHideDatasetSwitch}
+          <DatasetControl
+            datasetStates={graphState.datasets}
+            completeDatasets={completeDatasets}
+            onDatasetStatesChange={handleDatasetStatesChange}
+            onCompleteDatasetsChange={handleCompleteDatasetsChange}
           />
           <Grid container>
             <Grid item>
