@@ -59,7 +59,7 @@ describe('SavedGraphs Controller ', () => {
       "id": 1
     }
     mockRequest = {
-      query: {
+      params: {
         graphStateId: '1'
       }
     }
@@ -71,7 +71,7 @@ describe('SavedGraphs Controller ', () => {
   //   test('Invalid GraphID Request', async () => {
   //     mockRequest = {
   //       params: {
-  //         oneSavedGraph: 'werwer'
+  //         graphStateId: 'werwer'
   //       }
 
   //     }
@@ -82,7 +82,7 @@ describe('SavedGraphs Controller ', () => {
 
   //   test('Non-existant GraphID Request', async () => {
   //     mockRequest = {
-  //    query: {
+  //    params: {
   //      graphStateId: '100000000'
   //    }
   //     }
