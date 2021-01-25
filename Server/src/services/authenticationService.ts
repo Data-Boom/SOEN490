@@ -122,7 +122,7 @@ export class AuthenticationService {
                 subject: 'Reset your password',
                 html: `
                     <h2>To reset your password, please click on this link</h2>
-                    <p>${process.env.CLIENT_URL}/resetpassword/${accessToken}</p>
+                    <p>${process.env.CLIENT_URL}/resetPassword/${accessToken}</p>
                 `
             };
 

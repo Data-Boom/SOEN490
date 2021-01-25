@@ -1,6 +1,6 @@
 import { FastField, Form, Formik } from 'formik'
-import { ISignInUserModel, defaultSignInUserModel } from '../../Models/Authentication/ISignUpModel'
-import React, { useContext } from 'react'
+import { ISignInUserModel, defaultSignInUserModel, IResetPasswordModel } from '../../Models/Authentication/ISignUpModel'
+import React, { useContext, useState } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
@@ -22,6 +22,11 @@ import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { Modal, Paper } from '@material-ui/core'
+import { classStyles } from "../../appTheme"
+import CancelIcon from '@material-ui/icons/Cancel';
+import ResetPasswordView from './ResetPasswordView'
+
 
 function Copyright() {
   return (
@@ -61,6 +66,21 @@ export default function SignInView() {
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
 
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleOpen = () => {
+    setOpenModal(true)
+  }
+
+  const handleClose = () => {
+    setOpenModal(false)
+  }
+
+  const handlePassworDReset = (resetPasswordInfo: IResetPasswordModel) => {
+
+    handleClose()
+  }
+
   const handleSignInSubmit = async (signInUserInfo: ISignInUserModel): Promise<void> => {
     //sets JWT in cookies
     await callLogIn(signInUserInfo)
@@ -73,6 +93,25 @@ export default function SignInView() {
       {user && user.firstName ?
         <Redirect to={homeRoute} /> :
         <Container component="main" maxWidth="xs">
+          <Modal
+            open={openModal}
+            onClose={handleClose}
+          >
+            <Box m={5} mb={10} width='100%'>
+              <Grid item xs={12}>
+                <Paper elevation={3}>
+                  <Box m={0} p={2}>
+                    <CancelIcon color="primary" className={classStyles().closeButton} width="2%" onClick={handleClose} />
+                    <Grid container>
+                      <ResetPasswordView
+
+                      />
+                    </Grid>
+                  </Box>
+                </Paper>
+              </Grid>
+            </Box>
+          </Modal>
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
@@ -125,7 +164,7 @@ export default function SignInView() {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link onClick={handleOpen} variant="body2">
                       Forgot password?
                     </Link>
                   </Grid>

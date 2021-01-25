@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signOutRoute, signUpRoute } from '../Common/Consts/Routes'
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, resetPasswordRoute, searchRoute, signInRoute, signOutRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -23,6 +23,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
 import SignInView from "../Components/Authentication/SignInView"
 import SignUpView from "../Components/Authentication/SignUpView"
+import ResetPasswordView from "./Authentication/ResetPasswordView"
 
 interface IProps {
   id: string;
@@ -94,6 +95,7 @@ export const getRoutedViews = () => {
       <Route path={profileRoute} component={ProfileView} />
       <Route path={signInRoute} component={SignInView} />
       <Route path={signUpRoute} component={SignUpView} />
+      <Route path={resetPasswordRoute} component={ResetPasswordView} />
     </>
   )
 }

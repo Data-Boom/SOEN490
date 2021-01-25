@@ -33,8 +33,10 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
   }
 
   try {
+    console.log("url is ", url, " method is ", method, "data is ", data, " request is ", request);
     const response = await fetch(url, request)
 
+    console.log("Response text is ", response.text())
     if (response.status.toString().charAt(0) == '5') {
       SnackbarUtils.error('Server Unavailable')
       return Promise.resolve(null)
@@ -53,6 +55,8 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
   }
   catch (error) {
     SnackbarUtils.error('Exception occurred please do not punish developers')
+    console.log(error);
+    console.log(url, method, data)
     return Promise.resolve(null)
   }
 }
