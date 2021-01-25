@@ -30,17 +30,17 @@ export const SearchDatasetsForm = (props: IProps): any => {
   useEffect(() => {
     const callListCategories = async () => {
       const categories = await listCategories()
-      setCategories(categories)
+      setCategories(categories || [])
     }
 
     const callListMaterials = async () => {
       const materials = await listMaterials()
-      setMaterials(materials)
+      setMaterials(materials || [])
     }
 
     const callListSubcategory = async () => {
       const subCategories = await listSubcategories()
-      setSubcategories(subCategories)
+      setSubcategories(subCategories || [])
     }
 
     callListCategories()

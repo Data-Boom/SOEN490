@@ -5,7 +5,7 @@ export interface IAuthor {
   lastName: string,
 }
 
-export const defaultAuthor: IAuthor = {
+export const newAuthor: IAuthor = {
   firstName: '',
   lastName: '',
   middleName: ''
@@ -36,7 +36,7 @@ export interface IVariable {
   units: string,
 }
 
-export const defaultVariable: IVariable = {
+export const newVariable: IVariable = {
   name: '',
   repr: '',
   units: '',
@@ -78,7 +78,7 @@ export const defaultDatasetModel: IDatasetModel = {
   dataset_name: '',
   material: [],
   reference: {
-    authors: [defaultAuthor],
+    authors: [newAuthor],
     pages: 0,
     publisher: '',
     title: '',

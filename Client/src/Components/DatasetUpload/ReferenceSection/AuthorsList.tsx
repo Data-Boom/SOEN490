@@ -1,10 +1,10 @@
-import { ArrayHelpers } from "formik"
 import { Grid, IconButton, Typography } from "@material-ui/core"
-import { IAuthor, defaultAuthor } from "../../../Models/Datasets/IDatasetModel"
-import React from 'react'
+import { IAuthor, newAuthor } from "../../../Models/Datasets/IDatasetModel"
 
 import AddIcon from '@material-ui/icons/Add'
+import { ArrayHelpers } from "formik"
 import { AuthorRow } from "./AuthorRow"
+import React from 'react'
 
 interface IProps {
   authors: IAuthor[],
@@ -37,7 +37,7 @@ export const AuthorsList = (props: IProps) => {
   }
 
   const handleAddAuthor = () => {
-    fieldArrayHelpers.push(defaultAuthor)
+    fieldArrayHelpers.push(newAuthor)
   }
 
   return (

@@ -180,7 +180,7 @@ export class GraphsModel {
         newGraph.axisZoomEnd = graph.axisZoomEnd;
         newGraph.axisUnits = graph.axisUnits;
         await this.connection.manager.save(newGraph);
-        return "Graph successfully saved"
+        return newGraph.id.toString()
     }
 
     /**
