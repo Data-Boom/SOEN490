@@ -1,3 +1,10 @@
+export interface IVariableAndUnitModel {
+    xVariableName: string,
+    yVariableName: string,
+    xVariableUnits: string,
+    yVariableUnits: string
+}
+
 export interface IVariableModel {
     type: string,
     variableNames: string[],

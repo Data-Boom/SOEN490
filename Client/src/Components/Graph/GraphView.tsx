@@ -3,19 +3,17 @@ import * as svg from 'save-svg-as-png'
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Paper, Select, Typography, makeStyles } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel, IGraphPoint } from '../../Models/Datasets/IGraphDatasetModel'
+import { IVariableAndUnitModel, IVariableUnits } from '../../Models/Datasets/IVariableModel'
 import React, { useState } from "react"
 import { borders, sizing } from '@material-ui/system';
 
+import { AxesControl } from './AxesControl'
 import CancelIcon from '@material-ui/icons/Cancel';
 import { DatasetsList } from "./DatasetsList"
 import Graph from './Graph'
 import { IDataPointExtremes } from "../../Models/Graph/IDataPointExtremes"
-import { IVariableUnits } from '../../Models/Datasets/IVariableModel'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import SearchView from '../Search/SearchView'
 import { classStyles } from "../../appTheme"
-import { exampleDataset } from "../../Models/Datasets/ITemporaryModel"
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 //todo this is poorly hardcoded, we need to let user set their own colors, as well as support more than just 4 colors.
@@ -37,21 +35,17 @@ export default function GraphView() {
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [openModal, setOpenModal] = useState(false)
   //todo unhardcode the variables
-  const [showSettings, setSettingsToggle] = useState(false)
-  const [xVariableName, setXVariableName] = useState('initial pressure')
-  const [yVariableName, setYVariableName] = useState('cell width')
-  const [xVariableUnits, setXVariableUnits] = useState('kPa')
-  const [yVariableUnits, setYVariableUnits] = useState('mm')
-  const [xVariableMissing, setXVariableMissing] = useState([])
-  const [yVariableMissing, setYVariableMissing] = useState([])
+  const [axes, setAxes] = useState<IVariableAndUnitModel>({
+    xVariableName: 'initial pressure',
+    yVariableName: 'cell width',
+    xVariableUnits: 'kPa',
+    yVariableUnits: 'mm'
+  })
   const [variables, setVariables] = useState([])
-  const [xUnits, setXUnits] = useState([])
-  const [yUnits, setYUnits] = useState([])
 
   const [datasetBoundaries, setDatasetBoundaries] = useState<IDataPointExtremes>(
     { minX: 0, maxX: 10, minY: 0, maxY: 10 }
   )
-  const [sampleData, setSampleData] = useState(exampleDataset)
   const handleOpen = () => {
     setOpenModal(true)
   }
@@ -73,7 +67,7 @@ export default function GraphView() {
       color: color,
       id: dataset.id,
       name: dataset.dataset_name,
-      points: buildXYPoints(dataset, xVariableName, yVariableName)
+      points: buildXYPoints(dataset, axes.xVariableName, axes.yVariableName)
     }
 
     return graphDataset
@@ -119,9 +113,6 @@ export default function GraphView() {
     setCompleteDatasets(filteredDataset)
     handleVariablesSelected(filteredDataset)
     calculateExtremeBoundaries(filteredDataset)
-    checkXVariablesExist(xVariableName, filteredDataset)
-    checkYVariablesExist(yVariableName, filteredDataset)
-    console.log(filteredDataset)
   }
 
   const handleDatasetsSelected = (selectedDatasets: IDatasetModel[]) => {
@@ -131,9 +122,8 @@ export default function GraphView() {
     notYetSelectedDatasets.forEach(dataset => {
       mergedDatasets.push(dataset)
     })
-
-    setCompleteDatasets(mergedDatasets)
     handleVariablesSelected(mergedDatasets)
+    setCompleteDatasets(mergedDatasets)
     calculateExtremeBoundaries(mergedDatasets)
     handleClose()
   }
@@ -147,18 +137,14 @@ export default function GraphView() {
     })
     const uniqueVariables = Array.from(new Set(variableNames))
     setVariables(uniqueVariables)
-    setXVariableName(uniqueVariables[0])
-    setYVariableName(uniqueVariables[1])
-    setUnitType('x', uniqueVariables[0])
-    setUnitType('y', uniqueVariables[1])
   }
 
   const isInStateAlready = (dataset: IDatasetModel) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
-  const handleSettingsClick = () => {
-    setSettingsToggle(!showSettings)
+  const changeAxes = (newAxes: IVariableAndUnitModel) => {
+    setAxes(newAxes)
   }
 
   const calculateExtremeBoundaries = (datasets: IDatasetModel[]) => {
@@ -187,84 +173,6 @@ export default function GraphView() {
     setDatasetBoundaries(extremeBoundaries)
   }
 
-  const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    if (yVariableName == (event.target.value as string)) {
-      const tempVariable = xVariableName
-      setYVariableName(tempVariable)
-      setUnitType('y', tempVariable)
-      checkYVariablesExist(tempVariable, completeDatasets)
-    }
-    setXVariableName(event.target.value as string)
-    setUnitType('x', event.target.value as string)
-    checkXVariablesExist(event.target.value as string, completeDatasets)
-  }
-  const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    if (xVariableName == (event.target.value as string)) {
-      const tempVariable = yVariableName
-      setXVariableName(tempVariable)
-      setUnitType('x', tempVariable)
-      checkXVariablesExist(tempVariable, completeDatasets)
-    }
-    setYVariableName(event.target.value as string)
-    setUnitType('y', event.target.value as string)
-    checkYVariablesExist(event.target.value as string, completeDatasets)
-  }
-  const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setXVariableUnits(event.target.value as string)
-  }
-  const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setYVariableUnits(event.target.value as string)
-  }
-
-  const setUnitType = (variable: string, type: string) => {
-    IVariableUnits.forEach(variables => {
-      const units = variables.units
-      variables.variableNames.forEach(name => {
-        if (type == name) {
-          if (variable == 'x') {
-            setXUnits(units)
-            setXVariableUnits(units[0])
-          }
-          else if (variable == 'y') {
-            setYUnits(units)
-            setYVariableUnits(units[0])
-          }
-        }
-      })
-    })
-  }
-
-  const checkXVariablesExist = (type: string, datsets: IDatasetModel[]) => {
-    const missingDatasets = []
-    datsets.forEach(dataset => {
-      let exists = false
-      dataset.data.variables.forEach(variableName => {
-        if (variableName.name == type) {
-          exists = true
-        }
-      })
-      if (exists == false) {
-        missingDatasets.push(dataset.dataset_name)
-      }
-    })
-    setXVariableMissing(missingDatasets)
-  }
-
-  const checkYVariablesExist = (type: string, datsets: IDatasetModel[]) => {
-    const missingDatasets = []
-    datsets.forEach(dataset => {
-      let exists = false
-      dataset.data.variables.forEach(variableName => {
-        if (variableName.name == type) {
-          exists = true
-        }
-      })
-      if (exists == false) {
-        missingDatasets.push(dataset.dataset_name)
-      }
-    })
-    setYVariableMissing(missingDatasets)
-  }
 
   return (
     <>
@@ -321,91 +229,7 @@ export default function GraphView() {
                 <DatasetsList datasets={completeDatasets} onRemoveDatasetClick={onRemoveDataset} />
               </Grid>
             </Box>
-            <Grid container direction='row'>
-              <Grid item xs={12}>
-                <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">Settings
-              {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                </Button>
-              </Grid>
-              {showSettings &&
-                <>
-                  <Grid item xs={4}>
-                    <FormControl>
-                      <InputLabel id="xVariable">X Variable</InputLabel>
-                      <Select
-                        labelId="xVariable"
-                        id="xVariable"
-                        value={xVariableName}
-                        autoWidth={true}
-                        onChange={handleXVariableChange}
-                      >
-                        {variables.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl>
-                      <InputLabel id="xUnits">X Units</InputLabel>
-                      <Select
-                        labelId="xUnits"
-                        id="xUnits"
-                        value={xVariableUnits}
-                        autoWidth={true}
-                        onChange={handleXUnitChange}
-                      >
-                        {xUnits.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography align="center">
-                      Datasets Missing X: {xVariableMissing.toString()}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl>
-                      <InputLabel id="yVariable">Y Variable</InputLabel>
-                      <Select
-                        labelId="yVariable"
-                        id="yVariable"
-                        value={yVariableName}
-                        autoWidth={true}
-                        onChange={handleYVariableChange}
-                      >
-                        {variables.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl>
-                      <InputLabel id="yUnits">Y Units</InputLabel>
-                      <Select
-                        labelId="yUnits"
-                        id="yUnits"
-                        value={yVariableUnits}
-                        autoWidth={true}
-                        onChange={handleYUnitChange}
-                      >
-                        {yUnits.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography align="center">
-                      Datasets Missing Y: {yVariableMissing.toString()}
-                    </Typography>
-                  </Grid>
-                </>
-              }
-            </Grid>
+            <AxesControl datasets={completeDatasets} variables={variables} axes={axes} onAxesChange={changeAxes} />
           </Grid>
         </Grid>
       </Box >
