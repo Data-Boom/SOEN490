@@ -69,6 +69,7 @@ export const AxesControl = (props: IProps) => {
     xUnit = setUnitType('x', event.target.value as string)
     checkXVariablesExist(event.target.value as string, datasets)
     if (sameVariable == true) {
+      //todo should not do magic updates
       updateYAxis({ ...axes[1], variableName: tempVariable, units: yUnit })
     }
 
@@ -84,6 +85,7 @@ export const AxesControl = (props: IProps) => {
     }
     yUnit = setUnitType('y', event.target.value as string)
     checkYVariablesExist(event.target.value as string, datasets)
+    //todo should not do magic updates
     if (sameVariable == true) {
       updateXAxis({ ...axes[1], variableName: tempVariable, units: xUnit })
     }
