@@ -58,34 +58,48 @@ export class DatasetUpdateModel {
         return "Success"
     }
 
+    async updateApprovedStatus(datasetId: number) {
+        await this.connection.createQueryBuilder(Dataset, 'dataset')
+            .update('dataset')
+            .set({ isApproved: 1 })
+            .where('dataset.id = :datasetId', { datasetId: datasetId })
+            .execute()
+    }
+
     async flagDataSet(datasetId: number, flaggedComment?: string) {
-        let newFlaggedSet = new Unapproveddatasets()
-        newFlaggedSet.datasetId = datasetId
-        newFlaggedSet.flaggedComment = flaggedComment
-        newFlaggedSet.isFlagged = 1
-        await this.connection.manager.save(newFlaggedSet)
-        return "Dataset Flagged"
+        await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
+            .update('unapproved_datasets')
+            .set({ flaggedComments: flaggedComment, isFlagged: 1 })
+            .where('unapproved_datasets.datasetId = :datasetId', { datasetId: datasetId })
+            .execute()
+        return "Dataset Flagged!"
     }
 
-    async userApproveDataset(datasetId: number) {
+    async approveDataset(datasetId: number, datasetCommentsToAppend: string) {
+        await this.updateDatasetComments(datasetId, datasetCommentsToAppend)
+        await this.updateApprovedStatus(datasetId)
         await this.wipeEntryFromUnapprovedTable(datasetId)
-        return "Success"
+        return "Successfully approved new Dataset"
     }
 
-    async adminApprovedDataSet(datasetId: number, datasetCommentsToAppend: string) {
-        await this.wipeEntryFromUnapprovedTable(datasetId)
+    // async adminApprovedDataSet(datasetId: number, datasetCommentsToAppend: string) {
+    //     await this.updateDatasetComments(datasetId, datasetCommentsToAppend)
+    //     await this.updateApprovedStatus(datasetId)
+    //     await this.wipeEntryFromUnapprovedTable(datasetId)
+    //     return "Success"
+    // }
+
+    private async updateDatasetComments(datasetId: number, datasetCommentsToAppend: string) {
         let oldComment = await this.selectDatasetCommentQuery(datasetId)
         let newComment = oldComment.concat(" " + datasetCommentsToAppend)
         await this.connection.createQueryBuilder(Dataset, 'dataset')
             .update('dataset')
-            .set({ comments: newComment, isApproved: 1 })
+            .set({ comments: newComment })
             .where('dataset.id = :datasetId', { datasetId: datasetId })
             .execute()
-
-        return "Success"
     }
 
-    async wipeEntryFromUnapprovedTable(datasetId: number) {
+    private async wipeEntryFromUnapprovedTable(datasetId: number) {
         await this.connection.createQueryBuilder()
             .delete()
             .from(Unapproveddatasets)
