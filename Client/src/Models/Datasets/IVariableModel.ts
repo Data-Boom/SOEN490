@@ -1,3 +1,4 @@
+//todo review this when doing the units page
 export interface IVariableModel {
     type: string,
     variableNames: string[],
