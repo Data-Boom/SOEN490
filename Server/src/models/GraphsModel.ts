@@ -1,7 +1,7 @@
 import { Connection, getConnection } from "typeorm";
 import { BadRequest } from '@tsed/exceptions';
 import { Accounts } from "./entities/Accounts";
-import { Graphstate, selectGraphStateAccountQuery, selectGraphStateQuery } from "./entities/Savedgraphs";
+import { Graphstate, selectGraphOwnerQuery, selectGraphStateQuery } from "./entities/Graphstate";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
 export class GraphsModel {
@@ -95,6 +95,8 @@ export class GraphsModel {
             singleGraphData = await this.processSavedGraphData(rawGraphData[index])
             sortedGraphData.push(singleGraphData)
         }
+        console.log(sortedGraphData)
+        console.log(sortedGraphData.length)
         return sortedGraphData
     }
 
@@ -206,26 +208,28 @@ export class GraphsModel {
             .where("id = :id", { id: graphId })
             .execute();
 
-    async updateGraph(graph: IGraphStateModel, userId: number): Promise<any[]> {
-        let statusCode = 500
-        let statusMessage = "Something went wrong fetching from DB. Maybe its down"
-        let graphOwner = await selectGraphStateAccountQuery(this.connection, Number(graph.id))
+    async verifyGraphOwner(graphId: number, userId: number): Promise<any> {
+        let graphOwner = await selectGraphOwnerQuery(this.connection, graphId)
         if (graphOwner == undefined) {
-            statusCode = 400
-            statusMessage = "Graph does not exist"
+            return "Graph does not exist"
         }
         else if (graphOwner.accountId !== userId) {
-            statusCode = 400
-            statusMessage = "This is not your graph!"
+            return "This is not your graph!"
         }
         else {
-            let processGraphInput = await this.processGraphInput(graph)
-            await this.updateGraphQuery(processGraphInput[0], processGraphInput[1], processGraphInput[2], processGraphInput[3], processGraphInput[4],
-                processGraphInput[5], processGraphInput[6], processGraphInput[7], processGraphInput[8], processGraphInput[9], processGraphInput[10])
-            statusCode = 200
-            statusMessage = "Graph successfully updated"
+            return true
         }
-        return [statusCode, statusMessage]
+    }
+
+    async updateGraph(graph: IGraphStateModel): Promise<string> {
+        let processGraphInput = await this.processGraphInput(graph)
+        await this.updateGraphQuery(processGraphInput[0],
+            processGraphInput[1], processGraphInput[2],
+            processGraphInput[3], processGraphInput[4],
+            processGraphInput[5], processGraphInput[6],
+            processGraphInput[7], processGraphInput[8],
+            processGraphInput[9], processGraphInput[10])
+        return "Graph successfully updated"
     }
 
     private deleteGraphQuery = (id: number) =>
@@ -241,24 +245,9 @@ export class GraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async deleteGraph(graphId: number, userId: number): Promise<any[]> {
-        let statusCode = 500
-        let statusMessage = "Something went wrong fetching from DB. Maybe its down"
-        let graphOwner = await selectGraphStateAccountQuery(this.connection, graphId)
-        if (graphOwner == undefined) {
-            statusCode = 400
-            statusMessage = "Graph does not exist"
-        }
-        else if (graphOwner.accountId !== userId) {
-            statusCode = 400
-            statusMessage = "This is not your graph!"
-        }
-        else {
-            await this.deleteGraphQuery(graphId);
-            statusCode = 200
-            statusMessage = "Saved graph deletion was successful"
-        }
-        return [statusCode, statusMessage]
+    async deleteGraph(graphId: number): Promise<string> {
+        await this.deleteGraphQuery(graphId);
+        return "Graph successfully deleted"
     }
 
 }

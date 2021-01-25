@@ -11,7 +11,7 @@ import { Publications } from "../models/entities/Publications";
 import { Publicationtype } from "../models/entities/Publicationtype";
 import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
-import { Graphstate } from "../models/entities/Savedgraphs";
+import { Graphstate } from "../models/entities/Graphstate";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
 import { AuthenticationService } from '../services/authenticationService';
@@ -309,7 +309,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
 
-    // Temporary line, will be removed on merge
+    // TODO Temporary line, will be removed on merge
     await queryRunner.query('ALTER TABLE savedgraphs RENAME TO graphstate');
 
     let newGraph = new Graphstate();
@@ -344,7 +344,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    // Temporary line, will be removed on merge
+    // TODO Temporary line, will be removed on merge
     await queryRunner.query('ALTER TABLE graphstate RENAME TO savedgraphs');
 
     await queryRunner.query('DELETE FROM savedgraphs');

@@ -1,6 +1,6 @@
 import { GraphsModel } from '../models/GraphsModel';
 import { IGraphStateModel } from "../models/interfaces/SavedGraphsInterface";
-import { BadRequest, InternalServerError } from '@tsed/exceptions';
+import { InternalServerError } from '@tsed/exceptions';
 import { IResponse } from '../genericInterfaces/ResponsesInterface';
 
 
@@ -25,7 +25,9 @@ export class GraphsService {
         try {
             let graphData = await this.dataQuery.fetchSingleSavedGraphFromDB(graphId)
             if (graphData == undefined) {
-                throw new BadRequest("Graph does not exist")
+                this.requestResponse.statusCode = 400
+                this.requestResponse.message = "Graph does not exist"
+                return this.requestResponse
             }
             let singleGraphData: IGraphStateModel = await this.dataQuery.processSavedGraphData(graphData)
             this.requestResponse.statusCode = 200
@@ -46,8 +48,10 @@ export class GraphsService {
     async fetchUserSavedGraphs(userID: number) {
         try {
             let graphData = await this.dataQuery.fetchSavedGraphs(userID)
-            if (graphData == undefined) {
-                throw new BadRequest("You don't have any saved graphs!")
+            if (graphData.length == 0) {
+                this.requestResponse.statusCode = 200
+                this.requestResponse.message = "You don't have any saved graphs!"
+                return this.requestResponse
             }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = graphData as any
@@ -58,13 +62,21 @@ export class GraphsService {
     }
 
     async updateExistingGraph(graph: IGraphStateModel, userId: number) {
-        try {
-            let status = await this.dataQuery.updateGraph(graph, userId)
-            this.requestResponse.statusCode = status[0]
-            this.requestResponse.message = status[1]
+        let ownerVerification = await this.dataQuery.verifyGraphOwner(Number(graph.id), userId)
+        if (ownerVerification == true) {
+            try {
+                let status = await this.dataQuery.updateGraph(graph)
+                this.requestResponse.statusCode = 200
+                this.requestResponse.message = status
+                return this.requestResponse
+            } catch (error) {
+                throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+            }
+        }
+        else {
+            this.requestResponse.statusCode = 400
+            this.requestResponse.message = ownerVerification
             return this.requestResponse
-        } catch (error) {
-            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
         }
     }
 
@@ -95,13 +107,21 @@ export class GraphsService {
      * Graph ID: number
      */
     async deleteSavedGraph(graphId: number, userId: number) {
-        try {
-            let status = await this.dataQuery.deleteGraph(graphId, userId)
-            this.requestResponse.statusCode = status[0]
-            this.requestResponse.message = status[1]
+        let ownerVerification = await this.dataQuery.verifyGraphOwner(graphId, userId)
+        if (ownerVerification == true) {
+            try {
+                let status = await this.dataQuery.deleteGraph(graphId)
+                this.requestResponse.statusCode = 200
+                this.requestResponse.message = status
+                return this.requestResponse
+            } catch (error) {
+                throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
+            }
+        }
+        else {
+            this.requestResponse.statusCode = 400
+            this.requestResponse.message = ownerVerification
             return this.requestResponse
-        } catch (error) {
-            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
         }
     }
 }
