@@ -189,7 +189,21 @@ export class DataSetController {
         let datasetIdToApprove: any = request.query.datasetId
         let datasetComments: any = request.query.datasetComments
         try {
-            let requestResponse = await this.dataSetService.adminApproveDataset(datasetIdToApprove, datasetComments)
+            let requestResponse = await this.dataSetService.adminApprovedDataset(datasetIdToApprove, datasetComments)
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
+        } catch (error) {
+            response.status(error.status).json(error.message);
+        }
+    }
+
+    async createUserApprovedDatasetRequest(request: Request, response: Response) {
+        if (!request.query && !request.query.datasetId) {
+            response.status(400).json("No datasetID provided to flag dataset");
+        }
+        let datasetIdToApprove: any = request.query.datasetId
+
+        try {
+            let requestResponse = await this.dataSetService.userApprovedDataset(datasetIdToApprove)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
             response.status(error.status).json(error.message);
