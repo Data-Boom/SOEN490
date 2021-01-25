@@ -1,4 +1,4 @@
-import { DatasetList } from '../DatasetList.tsx/DatasetList'
+import { DatasetList } from '../DatasetList/DatasetList'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
