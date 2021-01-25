@@ -17,8 +17,8 @@ export interface IAxisStateModel {
 
 export const newAxisState: IAxisStateModel = {
   logarithmic: false,
-  units: 'mm',
-  variableName: 'cell width',
+  units: '',
+  variableName: '',
   zoomStartIndex: null,
   zoomEndIndex: null,
 }
@@ -27,5 +27,5 @@ export const newGraphState: IGraphStateModel = {
   axes: [{ ...newAxisState }, { ...newAxisState }],
   datasets: [],
   id: null,
-  name: null
+  name: ''
 }

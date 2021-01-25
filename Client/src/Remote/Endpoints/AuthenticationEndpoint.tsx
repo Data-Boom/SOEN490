@@ -1,6 +1,6 @@
 import { ISignInUserModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
 
-import SnackbarUtils from "../../Components/SnackbarUtils"
+import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 import { post } from "../RemoteHelper"
 
 const signupRoute = '/signup'

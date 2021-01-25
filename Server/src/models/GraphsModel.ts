@@ -1,6 +1,8 @@
 import { Connection, getConnection } from "typeorm";
+import { BadRequest } from '@tsed/exceptions';
+import { Accounts } from "./entities/Accounts";
+import { Graphstate, selectGraphStateAccountQuery, selectGraphStateQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
-import { Savedgraphs, selectOneSavedGraphQuery, selectSavedGraphsOfUserQuery } from "./entities/Savedgraphs";
 
 export class GraphsModel {
     private connection: Connection;
@@ -61,15 +63,15 @@ export class GraphsModel {
     }
 
     /**
-     * This method will run query to find the raw graph data of a specific graph, feed this raw
-     * data to @processSavedGraphData to format it to fit the IGraphStateModel and then return
-     * this object.
+     * This method will run query to find and then return the raw graph data of a specific graph.
      * 
      * @param graphId 
      * Graph ID: number
      */
     async fetchSingleSavedGraphFromDB(graphId: number): Promise<any> {
-        let rawGraphData = await selectOneSavedGraphQuery(this.connection, graphId)
+        let rawGraphData = await selectGraphStateQuery(this.connection)
+            .where('graphs.id = :id', { id: graphId })
+            .getRawOne();
         return rawGraphData
     }
 
@@ -83,7 +85,10 @@ export class GraphsModel {
      * Account ID: number
      */
     async fetchSavedGraphs(userId: number): Promise<any[]> {
-        let rawGraphData = await selectSavedGraphsOfUserQuery(this.connection, userId)
+        let rawGraphData = await selectGraphStateQuery(this.connection)
+            .innerJoin(Accounts, 'accounts', 'graphs.accountId = accounts.id')
+            .where('accounts.id = :user', { user: userId })
+            .getRawMany();
         let singleGraphData: IGraphStateModel
         let sortedGraphData: IGraphStateModel[] = []
         for (let index = 0; index < rawGraphData.length; index++) {
@@ -93,6 +98,33 @@ export class GraphsModel {
         return sortedGraphData
     }
 
+    private async processGraphInput(graph: IGraphStateModel): Promise<any[]> {
+        let datasetIds: number[] = []
+        let datasetColors: string[] = []
+        let datasetShapes: string[] = []
+        let datasetHiddenStatus: boolean[] = []
+        let axisVariable: string[] = []
+        let axisLog: boolean[] = []
+        let axisZoomStart: number[] = []
+        let axisZoomEnd: number[] = []
+        let axisUnits: string[] = []
+        for (let j = 0; j < graph.datasets.length; j++) {
+            datasetIds.push(graph.datasets[j].id)
+            datasetColors.push(graph.datasets[j].color)
+            datasetShapes.push(graph.datasets[j].shape)
+            datasetHiddenStatus.push(graph.datasets[j].isHidden)
+        }
+        for (let k = 0; k < graph.axes.length; k++) {
+            axisVariable.push(graph.axes[k].variableName)
+            axisLog.push(graph.axes[k].logarithmic)
+            axisZoomStart.push(graph.axes[k].zoomStartIndex)
+            axisZoomEnd.push(graph.axes[k].zoomEndIndex)
+            axisUnits.push(graph.axes[k].units)
+        }
+        let processedData = [graph.id, graph.name, datasetIds, datasetColors, datasetShapes,
+            datasetHiddenStatus, axisVariable, axisLog, axisZoomStart, axisZoomEnd, axisUnits]
+        return processedData
+    }
 
     /**
      * This method will accept all the variables of a saved graph and add it to the Savedgraphs table.
@@ -120,10 +152,10 @@ export class GraphsModel {
      * @param axisUnits 
      * Axis unit types: string[]
      */
-    private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[], datasetHiddenStatus: boolean[],
-        axisVariable: string[], axisLog: boolean[], axisZoomStart: number[], axisZoomEnd: number[], axisUnits: string[]): Promise<string> {
-
-        let newGraph = new Savedgraphs();
+    private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[],
+        datasetHiddenStatus: boolean[], axisVariable: string[], axisLog: boolean[], axisZoomStart: number[], axisZoomEnd: number[],
+        axisUnits: string[]): Promise<string> {
+        let newGraph = new Graphstate();
         newGraph.id;
         newGraph.accountId = accountId;
         newGraph.name = name;
@@ -153,38 +185,53 @@ export class GraphsModel {
      * User email address: string
      */
     async saveGraph(graph: IGraphStateModel, userId: number): Promise<string> {
-
-        let datasetIds: number[] = []
-        let datasetColors: string[] = []
-        let datasetShapes: string[] = []
-        let datasetHiddenStatus: boolean[] = []
-        let axisVariable: string[] = []
-        let axisLog: boolean[] = []
-        let axisZoomStart: number[] = []
-        let axisZoomEnd: number[] = []
-        let axisUnits: string[] = []
-        for (let j = 0; j < graph.datasets.length; j++) {
-            datasetIds.push(graph.datasets[j].id)
-            datasetColors.push(graph.datasets[j].color)
-            datasetShapes.push(graph.datasets[j].shape)
-            datasetHiddenStatus.push(graph.datasets[j].isHidden)
-        }
-        for (let k = 0; k < graph.axes.length; k++) {
-            axisVariable.push(graph.axes[k].variableName)
-            axisLog.push(graph.axes[k].logarithmic)
-            axisZoomStart.push(graph.axes[k].zoomStartIndex)
-            axisZoomEnd.push(graph.axes[k].zoomEndIndex)
-            axisUnits.push(graph.axes[k].units)
-        }
-        let statusMessage = await this.sendSavedGraphToDatabase(userId, graph.name, datasetIds, datasetColors, datasetShapes, datasetHiddenStatus, axisVariable, axisLog, axisZoomStart, axisZoomEnd, axisUnits)
+        let processGraphInput = await this.processGraphInput(graph)
+        let statusMessage = await this.sendSavedGraphToDatabase(userId, processGraphInput[1], processGraphInput[2], processGraphInput[3], processGraphInput[4],
+            processGraphInput[5], processGraphInput[6], processGraphInput[7], processGraphInput[8], processGraphInput[9], processGraphInput[10])
         return statusMessage
-
     }
 
-    private deleteSavedGraphQuery = (id: number) =>
+    private updateGraphQuery = (graphId: number, graphName: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[],
+        datasetHiddenStatus: boolean[], axisVariable: string[], axisLog: boolean[], axisZoomStart: number[], axisZoomEnd: number[], axisUnits: string[]) =>
+        this.connection.createQueryBuilder()
+            .update(Graphstate)
+            .set({
+                name: graphName, datasetIds: datasetIds,
+                datasetColors: datasetColors, datasetShapes: datasetShapes,
+                datasetHiddenStatus: datasetHiddenStatus,
+                axisVariable: axisVariable, axisLog: axisLog,
+                axisZoomStart: axisZoomStart, axisZoomEnd: axisZoomEnd,
+                axisUnits: axisUnits
+            })
+            .where("id = :id", { id: graphId })
+            .execute();
+
+    async updateGraph(graph: IGraphStateModel, userId: number): Promise<any[]> {
+        let statusCode = 500
+        let statusMessage = "Something went wrong fetching from DB. Maybe its down"
+        let graphOwner = await selectGraphStateAccountQuery(this.connection, Number(graph.id))
+        if (graphOwner == undefined) {
+            statusCode = 400
+            statusMessage = "Graph does not exist"
+        }
+        else if (graphOwner.accountId !== userId) {
+            statusCode = 400
+            statusMessage = "This is not your graph!"
+        }
+        else {
+            let processGraphInput = await this.processGraphInput(graph)
+            await this.updateGraphQuery(processGraphInput[0], processGraphInput[1], processGraphInput[2], processGraphInput[3], processGraphInput[4],
+                processGraphInput[5], processGraphInput[6], processGraphInput[7], processGraphInput[8], processGraphInput[9], processGraphInput[10])
+            statusCode = 200
+            statusMessage = "Graph successfully updated"
+        }
+        return [statusCode, statusMessage]
+    }
+
+    private deleteGraphQuery = (id: number) =>
         this.connection.createQueryBuilder()
             .delete()
-            .from(Savedgraphs)
+            .from(Graphstate)
             .where("id = :id", { id: id })
             .execute();
 
@@ -194,9 +241,24 @@ export class GraphsModel {
      * @param graphId 
      * Graph ID: number
      */
-    async deleteGraph(graphId: number): Promise<string> {
-        await this.deleteSavedGraphQuery(graphId);
-        return "Saved graph deletion was successful"
+    async deleteGraph(graphId: number, userId: number): Promise<any[]> {
+        let statusCode = 500
+        let statusMessage = "Something went wrong fetching from DB. Maybe its down"
+        let graphOwner = await selectGraphStateAccountQuery(this.connection, graphId)
+        if (graphOwner == undefined) {
+            statusCode = 400
+            statusMessage = "Graph does not exist"
+        }
+        else if (graphOwner.accountId !== userId) {
+            statusCode = 400
+            statusMessage = "This is not your graph!"
+        }
+        else {
+            await this.deleteGraphQuery(graphId);
+            statusCode = 200
+            statusMessage = "Saved graph deletion was successful"
+        }
+        return [statusCode, statusMessage]
     }
 
 }

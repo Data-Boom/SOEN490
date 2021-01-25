@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signOutRoute, signUpRoute } from '../Common/Consts/Routes'
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -21,8 +21,8 @@ import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaper
 import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
-import SignInView from "../Components/Authentication/SignInView"
-import SignUpView from "../Components/Authentication/SignUpView"
+import SignInView from "./Authentication/SignInView"
+import SignUpView from "./Authentication/SignUpView"
 
 interface IProps {
   id: string;
@@ -66,7 +66,7 @@ export const ListRouter = () => {
       <Paper elevation={0}>
         <List aria-label="main mailbox folders">
           <ListItemLink id="home-menu" to={homeRoute} primary="Home" icon={<HomeIcon />} />
-          <ListItemLink id="graph-menu" to={graphRoute} primary="Graph" icon={<BarChartIcon />} />
+          <ListItemLink id="graph-menu" to={newGraphRoute} primary="Graph" icon={<BarChartIcon />} />
           <ListItemLink id="search-menu" to={searchRoute} primary="Search" icon={<SearchIcon />} />
           <ListItemLink id="fileupload-menu" to={fileUploadRoute} primary="File Upload" icon={<CloudUploadIcon />} />
           <ListItemLink id="dataset-menu" to={datasetUploadRoute} primary="Dataset Upload" icon={<CloudUploadIcon />} />

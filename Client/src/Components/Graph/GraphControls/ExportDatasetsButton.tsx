@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core'
-import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 
 interface IProps {

@@ -10,21 +10,25 @@ import am4themes_material from "@amcharts/amcharts4/themes/animated"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
-  initialAxes: IAxisStateModel[]
+  axes: IAxisStateModel[]
 }
 
 am4core.useTheme(am4themes_material)
 
 export default function Graph(props: IProps) {
-  const { datasets, initialAxes } = { ...props }
+  const { datasets, axes } = { ...props }
   const [chart, setChart] = useState<am4charts.XYChart>(null)
+  const [xAxis, setXAxis] = useState<am4charts.Axis>(null)
+  const [yAxis, setYAxis] = useState<am4charts.Axis>(null)
 
   useEffect(() => setUpGraph(), [])
   useEffect(() => rebuildGraph(), [datasets])
 
   const rebuildGraph = () => {
-    if (chart) {
+    //rebuild only if both variables are selected
+    if (chart && axes[0].variableName && axes[1].variableName && axes[0].units && axes[1].units) {
       chart.data = buildDataForGraph(datasets)
+      updateAxis(xAxis, yAxis)
     }
   }
 
@@ -32,6 +36,7 @@ export default function Graph(props: IProps) {
     datasets.forEach(dataset => {
       const lineSeries = chart.series.push(new am4charts.CandlestickSeries())
       const bullet = lineSeries.bullets.push(new am4charts.CircleBullet())
+      //todo make tooltip nice
       lineSeries.tooltipText = dataset.name
       lineSeries.dataFields.valueX = `${dataset.id}x`
       lineSeries.dataFields.valueY = `${dataset.id}y`
@@ -63,14 +68,23 @@ export default function Graph(props: IProps) {
   const subscribeToChartEvents = (chart: am4charts.XYChart, xAxis: am4charts.Axis, yAxis: am4charts.Axis) => {
     chart.events.on("ready", function () {
       //todo zoom to values or indeces?
-      initialAxes[0].zoomStartIndex &&
-        initialAxes[0].zoomEndIndex &&
-        xAxis.zoomToIndexes(initialAxes[0].zoomStartIndex, initialAxes[0].zoomEndIndex)
+      axes[0].zoomStartIndex &&
+        axes[0].zoomEndIndex &&
+        xAxis.zoomToIndexes(axes[0].zoomStartIndex, axes[0].zoomEndIndex)
 
-      initialAxes[1].zoomStartIndex &&
-        initialAxes[1].zoomEndIndex &&
-        yAxis.zoomToIndexes(initialAxes[1].zoomStartIndex, initialAxes[1].zoomEndIndex)
+      axes[1].zoomStartIndex &&
+        axes[1].zoomEndIndex &&
+        yAxis.zoomToIndexes(axes[1].zoomStartIndex, axes[1].zoomEndIndex)
     })
+  }
+
+  const updateAxis = (xAxis, yAxis) => {
+    xAxis.title.text = `${axes[0].variableName}, ${axes[0].units}`
+    xAxis.logarithmic = axes[0].logarithmic || false
+    xAxis.renderer.minGridDistance = 40
+
+    yAxis.logarithmic = axes[1].logarithmic || false
+    yAxis.title.text = `${axes[1].variableName}, ${axes[1].units}`
   }
 
   const setUpGraph = () => {
@@ -78,20 +92,18 @@ export default function Graph(props: IProps) {
     chart.data = buildDataForGraph(datasets)
 
     const xAxis = chart.xAxes.push(new am4charts.ValueAxis())
-    xAxis.title.text = `${initialAxes[0].variableName}, ${initialAxes[0].units}`
-    xAxis.logarithmic = initialAxes[0].logarithmic || false
-    xAxis.renderer.minGridDistance = 40
-
     const yAxis = chart.yAxes.push(new am4charts.ValueAxis())
-    yAxis.logarithmic = initialAxes[1].logarithmic || false
-    yAxis.title.text = `${initialAxes[1].variableName}, ${initialAxes[1].units}`
+    updateAxis(xAxis, yAxis)
 
     chart.scrollbarX = new am4core.Scrollbar()
     chart.scrollbarY = new am4core.Scrollbar()
     chart.cursor = new am4charts.XYCursor()
     chart.exporting.menu = new am4core.ExportMenu()
     addSeries(chart)
+
     setChart(chart)
+    setXAxis(xAxis)
+    setYAxis(yAxis)
     subscribeToChartEvents(chart, xAxis, yAxis)
   }
 
