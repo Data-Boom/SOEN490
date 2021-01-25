@@ -36,6 +36,7 @@ export default function Graph(props: IProps) {
     datasets.forEach(dataset => {
       const lineSeries = chart.series.push(new am4charts.CandlestickSeries())
       const bullet = lineSeries.bullets.push(new am4charts.CircleBullet())
+      //todo make tooltip nice
       lineSeries.tooltipText = dataset.name
       lineSeries.dataFields.valueX = `${dataset.id}x`
       lineSeries.dataFields.valueY = `${dataset.id}y`

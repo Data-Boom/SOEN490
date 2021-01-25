@@ -1,6 +1,6 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
 import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
@@ -38,6 +38,10 @@ export const AxesControl = (props: IProps) => {
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
   const [variables, setVariables] = useState<IVariable[]>(buildVariableList(datasets))
+
+  useEffect(() => {
+    setVariables(buildVariableList(datasets))
+  }, [datasets])
 
   const updateXAxis = (axis: IAxisStateModel) => {
     onAxesChange([{ ...axis }, { ...axes[1] }])
@@ -186,6 +190,7 @@ export const AxesControl = (props: IProps) => {
                       autoWidth={true}
                       onChange={handleXUnitChange}
                     >
+                      <MenuItem value={''}>{''}</MenuItem>
                       {xUnits.map(type => (
                         <MenuItem value={type}>{type}</MenuItem>
                       ))}
@@ -223,6 +228,7 @@ export const AxesControl = (props: IProps) => {
                       autoWidth={true}
                       onChange={handleYUnitChange}
                     >
+                      <MenuItem value={''}>{''}</MenuItem>
                       {yUnits.map(type => (
                         <MenuItem value={type}>{type}</MenuItem>
                       ))}
