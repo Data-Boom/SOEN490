@@ -41,8 +41,12 @@ router.get('/api/v1/userFlaggedDatasets', [JWTAuthenticator.verifyJWT, JWTAuthen
     dataSetController.createRequestForUserFlaggedDatasets(request, response)
 })
 
-router.put('/api/v1/adminApproveDataset', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.put('/api/v1/adminApprovedDataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
     dataSetController.createAdminApprovedDatasetRequest(request, response)
+})
+
+router.put('/api/v1/userApprovedDataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+    dataSetController.createRequestForUserFlaggedDatasets(request, response)
 })
 
 
