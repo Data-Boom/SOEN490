@@ -13,4 +13,9 @@ router.post('/api/v1/dataUpload', JWTAuthenticator.verifyJWT, (request: Request,
     dataUpload.createRequest(request, response);
 });
 
+router.post('/api/v1/editedUpload/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+    let dataUpload = new DataUploadController();
+    dataUpload.createEditedUploadRequest(request, response);
+});
+
 export { router as dataUploadRouter };
