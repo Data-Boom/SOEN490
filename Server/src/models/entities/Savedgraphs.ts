@@ -6,7 +6,7 @@ import { Accounts } from "./Accounts";
  * The entity annotation indicates that a table is being created
  */
 @Entity()
-export class Savedgraphs {
+export class Graphstate {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -63,7 +63,7 @@ export class Savedgraphs {
 }
 
 export const selectGraphStateQuery = (connection: Connection) =>
-    connection.createQueryBuilder(Savedgraphs, 'graphs')
+    connection.createQueryBuilder(Graphstate, 'graphs')
         .select('graphs.name', 'name')
         .addSelect('graphs.id', 'id')
         .addSelect('graphs.datasetIds', 'datasetIds')
@@ -77,7 +77,7 @@ export const selectGraphStateQuery = (connection: Connection) =>
         .addSelect('graphs.axisUnits', 'axisUnits')
 
 export const selectGraphStateAccountQuery = (connection: Connection, graphId: number) =>
-    connection.createQueryBuilder(Savedgraphs, 'graphs')
+    connection.createQueryBuilder(Graphstate, 'graphs')
         .select('graphs.accountId')
         .where('graphs.id = :id', { id: graphId })
         .getOne();

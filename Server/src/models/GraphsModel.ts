@@ -1,7 +1,7 @@
 import { Connection, getConnection } from "typeorm";
 import { BadRequest } from '@tsed/exceptions';
 import { Accounts } from "./entities/Accounts";
-import { Savedgraphs, selectGraphStateAccountQuery, selectGraphStateQuery } from "./entities/Savedgraphs";
+import { Graphstate, selectGraphStateAccountQuery, selectGraphStateQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
 export class GraphsModel {
@@ -155,7 +155,7 @@ export class GraphsModel {
     private async sendSavedGraphToDatabase(accountId: number, name: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[],
         datasetHiddenStatus: boolean[], axisVariable: string[], axisLog: boolean[], axisZoomStart: number[], axisZoomEnd: number[],
         axisUnits: string[]): Promise<string> {
-        let newGraph = new Savedgraphs();
+        let newGraph = new Graphstate();
         newGraph.id;
         newGraph.accountId = accountId;
         newGraph.name = name;
@@ -194,7 +194,7 @@ export class GraphsModel {
     private updateGraphQuery = (graphId: number, graphName: string, datasetIds: number[], datasetColors: string[], datasetShapes: string[],
         datasetHiddenStatus: boolean[], axisVariable: string[], axisLog: boolean[], axisZoomStart: number[], axisZoomEnd: number[], axisUnits: string[]) =>
         this.connection.createQueryBuilder()
-            .update(Savedgraphs)
+            .update(Graphstate)
             .set({
                 name: graphName, datasetIds: datasetIds,
                 datasetColors: datasetColors, datasetShapes: datasetShapes,
@@ -231,7 +231,7 @@ export class GraphsModel {
     private deleteGraphQuery = (id: number) =>
         this.connection.createQueryBuilder()
             .delete()
-            .from(Savedgraphs)
+            .from(Graphstate)
             .where("id = :id", { id: id })
             .execute();
 
