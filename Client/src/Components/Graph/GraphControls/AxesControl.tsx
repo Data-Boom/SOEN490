@@ -1,8 +1,8 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography } from "@material-ui/core"
+import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
 import React, { useState } from "react"
 
 import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
-import { IDatasetModel } from "../../../Models/Datasets/IDatasetModel"
 import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
@@ -11,6 +11,20 @@ interface IProps {
   datasets: IDatasetModel[],
   axes: IAxisStateModel[],
   onAxesChange: (axes: IAxisStateModel[]) => void
+}
+
+const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
+  const variables: IVariable[] = []
+
+  datasets.forEach(dataset => {
+    dataset.data.variables.forEach(datasetVariable => {
+      if (variables.findIndex(variable => variable.name == datasetVariable.name) == -1) {
+        variables.push(datasetVariable)
+      }
+    });
+  })
+
+  return variables
 }
 
 export const AxesControl = (props: IProps) => {
@@ -23,7 +37,7 @@ export const AxesControl = (props: IProps) => {
   const [yVariableMissing, setYVariableMissing] = useState([])
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
-  const [variables, setVariables] = useState(IVariableUnits.map(variable => variable.type))
+  const [variables, setVariables] = useState<IVariable[]>(buildVariableList(datasets))
 
   const updateXAxis = (axis: IAxisStateModel) => {
     onAxesChange([{ ...axis }, { ...axes[1] }])
@@ -156,8 +170,8 @@ export const AxesControl = (props: IProps) => {
                       autoWidth={true}
                       onChange={handleXVariableChange}
                     >
-                      {variables.map(type => (
-                        <MenuItem value={type}>{type}</MenuItem>
+                      {variables.map(variable => (
+                        <MenuItem value={variable.name}>{variable.name}</MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -193,8 +207,8 @@ export const AxesControl = (props: IProps) => {
                       autoWidth={true}
                       onChange={handleYVariableChange}
                     >
-                      {variables.map(type => (
-                        <MenuItem value={type}>{type}</MenuItem>
+                      {variables.map(variable => (
+                        <MenuItem value={variable.name}>{variable.name}</MenuItem>
                       ))}
                     </Select>
                   </FormControl>

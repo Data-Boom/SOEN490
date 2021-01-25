@@ -33,7 +33,7 @@ export default function GraphView() {
             {graphDatasets && graphDatasets[0] ?
               <Graph
                 datasets={graphDatasets}
-                initialAxes={graphState.axes}
+                axes={graphState.axes}
               /> : null}
           </Grid>
           <Grid item sm={5}>
