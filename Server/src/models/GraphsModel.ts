@@ -1,6 +1,7 @@
 import { Connection, getConnection } from "typeorm";
+import { BadRequest } from '@tsed/exceptions';
 import { Accounts } from "./entities/Accounts";
-import { Savedgraphs, selectGraphStateQuery } from "./entities/Savedgraphs";
+import { Savedgraphs, selectGraphStateAccountQuery, selectGraphStateQuery } from "./entities/Savedgraphs";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel } from "./interfaces/SavedGraphsInterface";
 
 export class GraphsModel {
@@ -205,12 +206,23 @@ export class GraphsModel {
             .where("id = :id", { id: graphId })
             .execute();
 
-    async updateGraph(graph: IGraphStateModel): Promise<string> {
-        let processGraphInput = await this.processGraphInput(graph)
-        await this.updateGraphQuery(processGraphInput[0], processGraphInput[1], processGraphInput[2], processGraphInput[3], processGraphInput[4],
-            processGraphInput[5], processGraphInput[6], processGraphInput[7], processGraphInput[8], processGraphInput[9], processGraphInput[10])
-        let statusMessage = "Graph successfully updated"
-        return statusMessage
+    async updateGraph(graph: IGraphStateModel, userId: number): Promise<any[]> {
+        let statusCode = 500
+        let statusMessage = "Something went wrong fetching from DB. Maybe its down"
+        let graphOwner = await selectGraphStateAccountQuery(this.connection, graph.id)
+        console.log(graphOwner)
+        if (graphOwner.accountId !== userId) {
+            statusCode = 400
+            statusMessage = "This is not your graph!"
+        }
+        else {
+            let processGraphInput = await this.processGraphInput(graph)
+            await this.updateGraphQuery(processGraphInput[0], processGraphInput[1], processGraphInput[2], processGraphInput[3], processGraphInput[4],
+                processGraphInput[5], processGraphInput[6], processGraphInput[7], processGraphInput[8], processGraphInput[9], processGraphInput[10])
+            statusCode = 200
+            statusMessage = "Graph successfully updated"
+        }
+        return [statusCode, statusMessage]
     }
 
     private deleteGraphQuery = (id: number) =>

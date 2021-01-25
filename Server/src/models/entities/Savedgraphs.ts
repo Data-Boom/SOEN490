@@ -75,3 +75,9 @@ export const selectGraphStateQuery = (connection: Connection) =>
         .addSelect('graphs.axisZoomStart', 'axisZoomStart')
         .addSelect('graphs.axisZoomEnd', 'axisZoomEnd')
         .addSelect('graphs.axisUnits', 'axisUnits')
+
+export const selectGraphStateAccountQuery = (connection: Connection, graphId: string) =>
+    connection.createQueryBuilder(Savedgraphs, 'graphs')
+        .select('graphs.accountId')
+        .where('graphs.id = :id', { id: graphId })
+        .getOneOrFail();

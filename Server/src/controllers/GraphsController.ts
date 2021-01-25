@@ -78,9 +78,10 @@ export class GraphsController {
     async createRequestForUpdatingGraph(request: Request, response: Response) {
         let requestParams: any = { ...request.body };
         let processedRequest: IGraphStateModel = requestParams;
+        let userId = request.body.user.account_id
         try {
             this.savedGraphsService = new GraphsService();
-            let requestResponse = await this.savedGraphsService.updateExistingGraph(processedRequest)
+            let requestResponse = await this.savedGraphsService.updateExistingGraph(processedRequest, userId)
             response.status(requestResponse.statusCode).json(requestResponse.message)
         } catch (error) {
             response.status(error.status).json(error.message);

@@ -57,11 +57,11 @@ export class GraphsService {
         }
     }
 
-    async updateExistingGraph(graph: IGraphStateModel) {
+    async updateExistingGraph(graph: IGraphStateModel, userId: number) {
         try {
-            let status = await this.dataQuery.updateGraph(graph)
-            this.requestResponse.statusCode = 200
-            this.requestResponse.message = status
+            let status = await this.dataQuery.updateGraph(graph, userId)
+            this.requestResponse.statusCode = status[0]
+            this.requestResponse.message = status[1]
             return this.requestResponse
         } catch (error) {
             throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
