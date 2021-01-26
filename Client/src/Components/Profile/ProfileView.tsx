@@ -144,7 +144,7 @@ export function ProfileView() {
   useEffect(() => {
     const callListSavedGraphStates = async () => {
       const savedGraphState = await listGraphStates()
-      setSavedGraphState(savedGraphState)
+      setSavedGraphState(savedGraphState.reverse())
     }
     callListSavedGraphStates()
   }, [])
