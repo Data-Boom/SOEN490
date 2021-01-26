@@ -248,20 +248,20 @@ export class DataQueryModel {
         let authorData = await selectAllAuthorsQuery(this.connection, id)
         let materialData = await selectAllMaterialQuery(this.connection, id)
         let datapointData: IDataPointModel[] = await selectAllDataPointsQuery(this.connection, id)
-        this.valuesToArray(datapointData)
+        this.parseDataPoints(datapointData)
         let datapointComments = await selectAllDataPointCommentsQuery(this.connection, id) || {}
-        this.valuesToArray2(datapointComments)
+        this.parseDataPointComments(datapointComments)
         let completeDatasetData = await selectAllDatasetsQuery(this.connection, id)
         let allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
         return allData;
     }
 
-    private valuesToArray = (dataPoints: IDataPointModel[]): void => {
+    private parseDataPoints = (dataPoints: IDataPointModel[]): void => {
         dataPoints.forEach(dataPoint => {
             dataPoint.values = typeof dataPoint.values === 'string' ? JSON.parse(dataPoint.values) : []
         });
     }
-    private valuesToArray2 = (datapointComments: any): void => {
+    private parseDataPointComments = (datapointComments: any): void => {
         datapointComments.forEach(datapointComment => {
             datapointComment.datapointcomments = typeof datapointComment.datapointcomments === 'string' ? JSON.parse(datapointComment.datapointcomments) : []
         });

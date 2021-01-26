@@ -220,6 +220,7 @@ export class retrieveData {
                         singleAuthorData = rawData[1][authorIndex]
                         allAuthorData.push(singleAuthorData)
                         rawData[1].splice(authorIndex, 1)
+                        authorIndex--
                     }
                 }
                 publication.authors = allAuthorData
@@ -232,6 +233,7 @@ export class retrieveData {
                         singleMaterialData = rawData[3][materialIndex]
                         allMaterialData.push(singleMaterialData)
                         rawData[3].splice(materialIndex, 1)
+                        materialIndex--
                     }
                 }
 
@@ -242,6 +244,7 @@ export class retrieveData {
                         singleDataPointData = rawData[4][dataPointIndex]
                         allDataPointData.push(singleDataPointData)
                         rawData[4].splice(dataPointIndex, 1)
+                        dataPointIndex--
                     }
                 }
 
