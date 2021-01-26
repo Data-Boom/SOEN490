@@ -21,12 +21,12 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
         <Grid item>
             <Box className={classStyles().datasetBorder}>
                 <Grid container alignItems='center' justify='space-between'>
-                    <Grid item container justify='flex-start' xs={3}>
+                    <Grid item container justify='flex-start' xs={2}>
                         <Typography variant="body2" noWrap>
                             {dataset.name}
                         </Typography>
                     </Grid>
-                    <Grid item xs={7}>
+                    <Grid item xs={6}>
                     </Grid>
                     <Grid item xs={1}>
                         <IconButton onClick={() => onReviewDatasetClick(dataset.id)}>

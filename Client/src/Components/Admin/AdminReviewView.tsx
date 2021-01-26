@@ -28,7 +28,7 @@ export function AdminReviewView() {
     }
     return (
 
-        <Grid container justify="center" spacing={3}>
+        <Grid container justify="center">
             <Grid>
                 <AdminReviewList
                     datasets={datasetState}
