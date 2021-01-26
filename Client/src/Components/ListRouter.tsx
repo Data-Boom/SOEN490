@@ -35,6 +35,10 @@ interface IProps {
 
 export const linkWidth: number = 240
 
+//# of datasets to review shown in side bar
+export const numOfDatasetsToReview = 10;
+
+
 export const ListItemLink = (props: IProps) => {
   const { id, icon, primary, to } = props
 
@@ -76,7 +80,7 @@ export const ListRouter = () => {
           <ListItemLink id="research-menu" to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
           <ListItemLink id="profile-menu" to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
           <ListItemLink id="about-menu" to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
-          <ListItemLink id="admin-review" to={adminReviewRoute} primary="Admin Review" icon={<MessageIcon />} />
+          <ListItemLink id="admin-review" to={adminReviewRoute} primary="Admin Review (#)" icon={<MessageIcon />} />
         </List>
       </Paper>
     </div>
