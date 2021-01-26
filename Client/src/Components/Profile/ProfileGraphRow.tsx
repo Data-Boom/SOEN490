@@ -1,13 +1,12 @@
 import { Box, Grid, Typography } from "@material-ui/core"
-import { Link } from 'react-router-dom'
+
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import { classStyles } from '../../appTheme'
 
-
 interface IGraphModel {
     graphset: IGraphStateModel,
-    id: string
 }
 
 export const ProfileGraphRow = (props: IGraphModel) => {

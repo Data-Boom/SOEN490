@@ -3,14 +3,13 @@ import { Box, Grid } from "@material-ui/core"
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 import { ProfileGraphRow } from '../Profile/ProfileGraphRow'
 import React from 'react'
-import { toGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
 
-interface IGDProps {
+interface IGraphDatasetListProps {
     graphDataset: IGraphStateModel[],
 
 }
 
-export const ProfileGraphStateList = (props: IGDProps) => {
+export const ProfileGraphStateList = (props: IGraphDatasetListProps) => {
     const { graphDataset } = { ...props }
 
     const renderGraphListRows = () => {
@@ -19,7 +18,6 @@ export const ProfileGraphStateList = (props: IGDProps) => {
                 < ProfileGraphRow
                     graphset={graphDSet}
                     key={graphDSet.id}
-                    id={graphDSet.id}
                 />
             )
         })
