@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-
+import { IGraphStateModel } from '../models/interfaces/GraphStateInterface';
 import { GraphsService } from '../services/GraphsService';
-import { IGraphStateModel } from '../models/interfaces/SavedGraphsInterface';
 
 export class GraphsController {
     private savedGraphsService: GraphsService;
@@ -19,7 +18,7 @@ export class GraphsController {
      */
     async createRequestForSingleGraph(request: Request, response: Response) {
         let requestParam = request.params.graphStateId;
-        let graphId: number = +requestParam;
+        let graphId = Number(requestParam);
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");
         }
@@ -101,7 +100,7 @@ export class GraphsController {
     async createRequestForDeletingGraph(request: Request, response: Response) {
         let userId = request.body.user.account_id
         let requestParam = request.params.graphStateId;
-        let graphId: number = +requestParam;
+        let graphId = Number(requestParam);
         if (isNaN(graphId)) {
             response.status(400).json("Invalid graph ID entered");
         }
