@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, Typography } from "@material-ui/core"
+import { Box, Grid, IconButton, Typography, Tooltip } from "@material-ui/core"
 import React, { useState } from 'react'
 
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -34,14 +34,18 @@ export const DatasetRow = (props: IProps) => {
           <Grid item xs={7}>
           </Grid>
           <Grid item xs={1}>
-            <IconButton onClick={handleHiddenSwitch}>
-              {isHidden ? <VisibilityOffIcon color='primary' /> : <VisibilityIcon color='primary' />}
-            </IconButton>
+            <Tooltip title="Show/Hide datasets">
+              <IconButton onClick={handleHiddenSwitch}>
+                {isHidden ? <VisibilityOffIcon color='primary' /> : <VisibilityIcon color='primary' />}
+              </IconButton>
+            </Tooltip>
           </Grid>
           <Grid item xs={1}>
-            <IconButton onClick={() => onRemoveDatasetClick(dataset.id)}>
-              <DeleteIcon color='primary' />
-            </IconButton>
+            <Tooltip title="Remove dataset from graph">
+              <IconButton onClick={() => onRemoveDatasetClick(dataset.id)}>
+                <DeleteIcon color='primary' />
+              </IconButton>
+            </Tooltip>
           </Grid>
         </Grid>
       </Box>
