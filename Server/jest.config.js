@@ -14,7 +14,6 @@ module.exports = {
     ],
     collectCoverageFrom: [
     'src/controllers/*.ts',
-    'src/genericInterfaces/*.ts',
     'src/middleware/*.ts',
     'src/models/*.ts',
     'src/services/*.ts'
