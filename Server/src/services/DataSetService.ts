@@ -1,4 +1,4 @@
-import { IApprovalDatasetModel, IAuthorModel, IClientDatasetModel, IDataPointModel, IDatasetIDModel, IDatasetInfoModel, IMaterialModel } from "../models/interfaces/DatasetModelInterface";
+import { IApprovalDatasetModel, IAuthorModel, IClientDatasetModel, IDataPointModel, IDatasetIDModel, IDatasetInfoModel, IMaterialModel, IPublicationModel } from "../models/interfaces/DatasetModelInterface";
 
 import { DataQueryModel } from "../models/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
@@ -6,16 +6,19 @@ import { IResponse } from "../genericInterfaces/ResponsesInterface";
 import { BadRequest, InternalServerError, NotFound } from '@tsed/exceptions';
 import { DatasetUpdateModel } from '../models/DatasetUpdateModel';
 import { DatasetApprovalModel } from "../models/DatasetApprovalModel";
+import { DatasetDeleteModel } from "../models/DatasetDeleteModel";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
     private datasetApprovalModel: DatasetApprovalModel
     private updateModel: DatasetUpdateModel
+    private deleteModel: DatasetDeleteModel
     private requestResponse: IResponse
 
     constructor() {
         this.dataQuery = new DataQueryModel();
         this.updateModel = new DatasetUpdateModel()
+        this.deleteModel = new DatasetDeleteModel()
         this.requestResponse = {} as any
     }
 
@@ -173,23 +176,18 @@ export class DataSetService {
         return selectedDatasetIds;
     }
 
-    // allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
-
     private async getDataFromDatasetIds2(selectedDatasetIds: number[]) {
         try {
-            console.log("getting data")
             let rawData = await this.dataQuery.getAllData2(selectedDatasetIds)
-            console.log(rawData[1])
+            let publication: IPublicationModel
+            let dataPointComments: string[]
             let datasetInfo: IDatasetInfoModel
             let singleAuthorData: IAuthorModel
             let allAuthorData: IAuthorModel[] = []
-            let authorIndex = 0;
             let singleMaterialData: IMaterialModel
             let allMaterialData: IMaterialModel[]
-            let materialIndex = 0;
             let singleDataPointData: IDataPointModel
             let allDataPointData: IDataPointModel[]
-            let dataPointIndex = 0;
             let singleDataSet: IClientDatasetModel
             let allDataSets: Array<IClientDatasetModel> = [];
             let currentDataset: number = 0
@@ -202,48 +200,74 @@ export class DataSetService {
                     category: rawData[2][index]?.category,
                     subcategory: rawData[2][index]?.subcategory
                 }
-                allAuthorData = []
-                for (authorIndex = 0; authorIndex < rawData[1].length; authorIndex++) {
-                    if (rawData[1][authorIndex].dataset_id == currentDataset) {
-                        singleAuthorData = {
-                            firstName: rawData[1][authorIndex].firstName,
-                            middleName: rawData[1][authorIndex].middleName,
-                            lastName: rawData[1][authorIndex].lastName
-                        }
+
+                //Sort through publications, grab the one desired
+                for (let publicationIndex = 0; publicationIndex < rawData[0].length; publicationIndex++) {
+                    if (rawData[0][publicationIndex].dataset_id == currentDataset) {
+                        delete rawData[0][publicationIndex].dataset_id
+                        publication = rawData[0][publicationIndex]
+                        rawData[0].splice(publicationIndex, 1)
+                        break;
                     }
-                    allAuthorData.push(singleAuthorData)
                 }
-                rawData[0][index].authors = allAuthorData
+
+                //Sort through authors, then group them accordingly
+                allAuthorData = []
+                for (let authorIndex = 0; authorIndex < rawData[1].length; authorIndex++) {
+                    if (rawData[1][authorIndex].dataset_id == currentDataset) {
+                        delete rawData[1][authorIndex].dataset_id
+                        singleAuthorData = rawData[1][authorIndex]
+                        allAuthorData.push(singleAuthorData)
+                        rawData[1].splice(authorIndex, 1)
+                    }
+                }
+                publication.authors = allAuthorData
 
                 //Sort through materials, then group them accordingly
                 allMaterialData = []
-                do {
-                    singleMaterialData = rawData[3][materialIndex]
-                    allMaterialData.push(singleMaterialData)
-                    materialIndex++;
-                } while (materialIndex < rawData[3].length && rawData[3][materialIndex].dataset_id == currentDataset);
+                for (let materialIndex = 0; materialIndex < rawData[3].length; materialIndex++) {
+                    if (rawData[3][materialIndex].dataset_id == currentDataset) {
+                        delete rawData[3][materialIndex].dataset_id
+                        singleMaterialData = rawData[3][materialIndex]
+                        allMaterialData.push(singleMaterialData)
+                        rawData[3].splice(materialIndex, 1)
+                    }
+                }
 
                 //Sort through data points, then group them accordingly
                 allDataPointData = []
-                do {
-                    singleDataPointData = rawData[4][dataPointIndex]
-                    allDataPointData.push(singleDataPointData)
-                    dataPointIndex++;
-                } while (dataPointIndex < rawData[4].length && rawData[4][dataPointIndex].dataset_id == currentDataset);
+                for (let dataPointIndex = 0; dataPointIndex < rawData[4].length; dataPointIndex++) {
+                    if (rawData[4][dataPointIndex].dataset_id == currentDataset) {
+                        singleDataPointData = rawData[4][dataPointIndex]
+                        allDataPointData.push(singleDataPointData)
+                        rawData[4].splice(dataPointIndex, 1)
+                    }
+                }
+
+                //Sort through data point comments, grab the ones desired
+                dataPointComments = undefined
+                for (let commentIndex = 0; commentIndex < rawData[5].length; commentIndex++) {
+                    if (rawData[5][commentIndex]?.dataset_id == currentDataset) {
+                        dataPointComments = rawData[5][commentIndex]?.datapointcomments
+                        rawData[5].splice(commentIndex, 1)
+                        break;
+                    }
+                }
 
                 singleDataSet = {
-                    publication: rawData[0][index],
+                    publication: publication,
                     dataset_id: currentDataset,
                     dataset_info: datasetInfo,
                     materials: allMaterialData,
                     dataPoints: allDataPointData,
-                    dataPointComments: rawData[5][index]?.datapointcomments
+                    dataPointComments: dataPointComments
                 }
+
                 allDataSets.push(singleDataSet);
             }
             return allDataSets
         } catch (error) {
-            console.error(error);
+            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
         }
     }
 
@@ -309,7 +333,7 @@ export class DataSetService {
      * @param userReceived
      * Account ID: number
      */
-    async getUserSavedDatasets(userReceived: string) {
+    async getUserSavedDatasets(userReceived: number) {
         let rawData = await this.dataQuery.getSavedDatasetIDOfUser(userReceived);
         if (rawData[0]) {
             let setOfData = await this.getDatasetsFromRawData(rawData[1]);
@@ -440,15 +464,21 @@ export class DataSetService {
 
     async rejectDataSet(datasetId: number) {
         try {
-            let response = await this.updateModel.rejectDataset(datasetId)
+            let response = await this.deleteModel.verifyDatasetExists(datasetId)
             if (response == undefined || response == null) {
-                throw new BadRequest("No DataSet Exists under this ID")
+                throw new BadRequest("No such data set exists")
             }
+            response = await this.deleteModel.rejectDataset(datasetId)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
         } catch (error) {
-            throw new InternalServerError("Something went wrong deleting this DataSet. Maybe its down")
+            if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
+            }
+            else {
+                throw new InternalServerError("Something went wrong deleting this DataSet. Maybe its down")
+            }
         }
     }
 

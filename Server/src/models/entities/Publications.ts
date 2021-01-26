@@ -107,6 +107,7 @@ export const selectAllPublicationsQuery = (connection: Connection, datasets: num
         .addSelect('publication.dateAccessed', 'dateAccessed')
         .addSelect('publisher.name', 'publisher')
         .addSelect('publicationtype.name', 'publicationType')
+        .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
         .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')

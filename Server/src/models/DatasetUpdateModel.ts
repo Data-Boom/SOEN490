@@ -1,8 +1,5 @@
 import { Connection, getConnection } from "typeorm";
-import { Publications } from './entities/Publications';
 import { Dataset } from './entities/Dataset';
-import { Datapoints } from './entities/Datapoints';
-import { Datapointcomments } from './entities/Datapointcomments';
 import { Unapproveddatasets } from "./entities/Unapproveddatasets";
 
 /**
@@ -12,50 +9,6 @@ export class DatasetUpdateModel {
     private connection: Connection;
     constructor() {
         this.connection = getConnection();
-    }
-
-    private selectLinkedPublicationIdQuery = (id: number) =>
-        this.connection.createQueryBuilder(Dataset, 'dataset')
-            .select('dataset.publicationId', 'publication_id')
-            .where('dataset.id = :id', { id: id })
-            .getRawOne();
-
-    private deleteDatapointCommentsQuery = (id: number) =>
-        this.connection.createQueryBuilder()
-            .delete()
-            .from(Datapointcomments)
-            .where("datasetId = :id", { id: id })
-            .execute();
-
-    private deleteDatapointsQuery = (id: number) =>
-        this.connection.createQueryBuilder()
-            .delete()
-            .from(Datapoints)
-            .where("datasetId = :id", { id: id })
-            .execute();
-
-    private deleteDatasetQuery = (id: number) =>
-        this.connection.createQueryBuilder()
-            .delete()
-            .from(Dataset)
-            .where("id = :id", { id: id })
-            .execute();
-
-    private deletePublicationQuery = (id: number) =>
-        this.connection.createQueryBuilder()
-            .delete()
-            .from(Publications)
-            .where("id = :id", { id: id })
-            .execute();
-
-    async rejectDataset(id: number) {
-        let publicationId = await this.selectLinkedPublicationIdQuery(id);
-        await this.deleteDatapointCommentsQuery(id)
-        await this.deleteDatapointsQuery(id)
-        await this.deleteDatasetQuery(id)
-        await this.deletePublicationQuery(publicationId)
-        await this.wipeEntryFromUnapprovedTable(id)
-        return "Success"
     }
 
     async updateApprovedStatus(datasetId: number) {

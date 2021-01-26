@@ -167,17 +167,12 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getSavedDatasetIDOfUser(userEmail: string): Promise<any[]> {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-                .innerJoin('dataset.accounts', 'account')
-                .where('account.id = :idRef', { idRef: userID })
-                .getRawMany();
-            return [true, idDatasetData];
-        }
+    async getSavedDatasetIDOfUser(userID: number): Promise<any[]> {
+        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+            .innerJoin('dataset.accounts', 'account')
+            .where('account.id = :idRef', { idRef: userID })
+            .getRawMany();
+        return [true, idDatasetData];
     }
 
     private async fetchAccountIdFromEmail(userEmail: string) {

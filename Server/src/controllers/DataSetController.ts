@@ -93,7 +93,7 @@ export class DataSetController {
      * An object containing a response: Response
      */
     async createRequestForUserSavedDatsets(request: Request, response: Response) {
-        let userId = Number(request.body.user.account_id)
+        let userId: any = request.body.user.account_id
         if (isNaN(userId)) {
             response.status(500).json("Invalid search params entered");
         }
@@ -158,13 +158,15 @@ export class DataSetController {
     }
 
     async createRequestToRejectDataset(request: Request, response: Response) {
-        if (!request.query && !request.query.datasetId) {
-            response.status(400).json("No Dataset ID provided");
+        let requestParam = request.params.datasetId;
+        let datasetId = Number(requestParam);
+        if (isNaN(datasetId)) {
+            response.status(400).json("Invalid data set ID entered");
         }
         else {
-            let datasetIdToFlag = Number(request.query.datasetId)
             try {
-                let requestResponse = await this.dataSetService.rejectDataSet(datasetIdToFlag)
+                this.dataSetService = new DataSetService();
+                let requestResponse = await this.dataSetService.rejectDataSet(datasetId)
                 return response.status(requestResponse.statusCode).json(requestResponse.message);
             } catch (error) {
                 response.status(error.status).json(error.message);
