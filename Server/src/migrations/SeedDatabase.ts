@@ -309,9 +309,6 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
 
-    // TODO Temporary line, will be removed on merge
-    await queryRunner.query('ALTER TABLE savedgraphs RENAME TO graphstate');
-
     let newGraph = new Graphstate();
     newGraph.id = 1;
     newGraph.accountId = 1;
@@ -344,10 +341,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    // TODO Temporary line, will be removed on merge
-    await queryRunner.query('ALTER TABLE graphstate RENAME TO savedgraphs');
-
-    await queryRunner.query('DELETE FROM savedgraphs');
+    await queryRunner.query('DELETE FROM graphstate');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
     await queryRunner.query('DELETE FROM accounts_datasets_dataset');
