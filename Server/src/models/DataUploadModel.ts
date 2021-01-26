@@ -41,7 +41,7 @@ export class DataUploadModel {
      * @param publicationTypeReceived 
      * Publication type: string
      */
-    async insertReferenceType(publicationTypeReceived: string): Promise<number> {
+    async insertPreferenceType(publicationTypeReceived: string): Promise<number> {
         let publicationType = new Publicationtype();
         publicationType.id;
         publicationType.name = publicationTypeReceived;
@@ -54,6 +54,21 @@ export class DataUploadModel {
             await this.connection.manager.save(publicationType);
         }
         return publicationType.id;
+    }
+
+
+    async updateDataset(datasetId: number, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any[], dataSetComments: string): Promise<number> {
+        await this.connection.query("DELETE FROM dataset_materials_material WHERE datasetId = ?", [datasetId]);
+        //await this.connection.query("DELETE FROM dataset_materials_material (datasetId, materialId) VALUES (?, ?)", [newDatasetId, newMaterialId]);
+        let updatedData: any[] = [datasetId, dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments]
+        await this.connection
+            .createQueryBuilder()
+            .insert()
+            .into(Dataset)
+            .values(updatedData)
+            .orUpdate({ conflict_target: ['id'], overwrite: ['name', 'datatypeId', 'publicationId', 'categoryId', 'subcategoryId', 'materials', 'comments'] })
+            .returning('id')
+            .execute();
     }
 
     private selectPublisherIdQuery = (publisherReceived: string) =>
