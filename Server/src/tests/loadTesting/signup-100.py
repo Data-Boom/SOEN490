@@ -10,8 +10,8 @@ for lp in range(100):
         'email': account, 
         'dateofBirth': '2021-01-24 19:00:00',
         'organizationName': 'Hogwarts',
-        'password': 1,
-        'confirmPassword': 1
+        'password': 'P@ssw0rd',
+        'confirmPassword': 'P@ssw0rd'
     }
     r = requests.post("http://localhost:4000/signup", data = obj)
     print(r.status_code, r.reason)
