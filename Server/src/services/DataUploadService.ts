@@ -1,8 +1,11 @@
 import { DataUploadModel } from "../models/DataUploadModel"
+import { DataQueryModel } from "../models/DatasetQueryModel"
 import { Authors } from "../models/entities/Authors";
 import { validationSchema } from "./helpers/validationSchema";
 import { BadRequest } from '@tsed/exceptions';
 import { IResponse } from "../genericInterfaces/ResponsesInterface";
+import { IMaterials } from "../models/interfaces/MaterialsInterface";
+import { IAuthors } from "../models/interfaces/AuthorsInterface";
 
 export class DataUploadService {
     private uploadModel: DataUploadModel
@@ -25,8 +28,8 @@ export class DataUploadService {
 
         let requestResponse: IResponse = {} as any
 
-        let referenceType: string = ''
-        let referenceTypeID: number = await this.insertReferenceTypeData(this.uploadModel, referenceType)
+        let publicationType: string = ''
+        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, publicationType)
 
         let publisherNameId: number = await this.insertPublisherData(this.uploadModel, this.parsedFileData.reference.publisher)
 
@@ -46,7 +49,7 @@ export class DataUploadService {
         if (this.parsedFileData.reference.dateAccessed !== undefined)
             referenceDateAccessed = this.parsedFileData.reference.dateAccessed;
 
-        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
+        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
 
         let allMaterials: any[] = await this.insertMaterialsData(this.uploadModel, this.parsedFileData.material)
 
@@ -87,12 +90,12 @@ export class DataUploadService {
         return requestResponse;
     }
 
-    async editedUploadedDataset(datasetID: number): Promise<IResponse> {
+    async editedUploadedDataset(datasetId: number): Promise<IResponse> {
 
         let requestResponse: IResponse = {} as any
 
-        let referenceType: string = ''
-        let referenceTypeID: number = await this.insertReferenceTypeData(this.uploadModel, referenceType)
+        let publicationType: string = ''
+        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, publicationType)
 
         let publisherNameId: number = await this.insertPublisherData(this.uploadModel, this.parsedFileData.reference.publisher)
 
@@ -112,7 +115,7 @@ export class DataUploadService {
         if (this.parsedFileData.reference.dateAccessed !== undefined)
             referenceDateAccessed = this.parsedFileData.reference.dateAccessed;
 
-        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
+        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
 
         let allMaterials: any[] = await this.insertMaterialsData(this.uploadModel, this.parsedFileData.material)
 
@@ -122,7 +125,7 @@ export class DataUploadService {
 
         //TODO: First fetch datasetID, Then update its values
 
-        // let dataSetID: number = await this.updateDatasetData(this.uploadModel, this.parsedFileData["dataset name"], dataSetDataTypeID, publicationID, categoryIDs, allMaterials, this.parsedFileData.data.comments)
+        let updatedDataset: any = await this.updateDataset(this.uploadModel, datasetId)
 
         //run check on variable vs contents length to see if they're equal
         if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
@@ -166,7 +169,7 @@ export class DataUploadService {
         }
     }
 
-    private async insertUnitsData(uploadModel, units) {
+    private async insertUnitsData(uploadModel: DataUploadModel, units: string) {
         let unitsId: number
         try {
             if (units == undefined)
@@ -181,7 +184,7 @@ export class DataUploadService {
         return unitsId
     }
 
-    private async insertRepData(uploadModel, repr): Promise<number> {
+    private async insertRepData(uploadModel: DataUploadModel, repr: string): Promise<number> {
         let reprID: number
         try {
             if (repr == undefined)
@@ -196,9 +199,9 @@ export class DataUploadService {
         return reprID
     }
 
-    private async insertReferenceTypeData(uploadModel, referenceType): Promise<number> {
+    private async insertPublicationTypeData(uploadModel: DataUploadModel, referenceType: string): Promise<number> {
         try {
-            let referenceTypeID = await uploadModel.insertReferenceType(referenceType);
+            let referenceTypeID = await uploadModel.insertPreferenceType(referenceType);
             console.log('Received reference ID' + referenceTypeID);
             return referenceTypeID
         } catch (err) {
@@ -206,7 +209,7 @@ export class DataUploadService {
         }
     }
 
-    private async insertPublisherData(uploadModel, referencePublisher): Promise<number> {
+    private async insertPublisherData(uploadModel: DataUploadModel, referencePublisher: string): Promise<number> {
         try {
             let publisherNameId = await uploadModel.insertPublisher(referencePublisher);
             console.log('Received publisher name ID' + publisherNameId);
@@ -216,7 +219,7 @@ export class DataUploadService {
         }
     }
 
-    private async insertAuthorsData(uploadModel, referenceAuthors): Promise<Authors[]> {
+    private async insertAuthorsData(uploadModel: DataUploadModel, referenceAuthors: IAuthors[]): Promise<Authors[]> {
         let allAuthors: Authors[];
         try {
             allAuthors = await uploadModel.insertAuthors(referenceAuthors);
@@ -227,7 +230,7 @@ export class DataUploadService {
         }
     }
 
-    private async insertMaterialsData(uploadModel, material): Promise<any[]> {
+    private async insertMaterialsData(uploadModel: DataUploadModel, material: IMaterials[]): Promise<any[]> {
         try {
             let allMaterials = await uploadModel.insertMaterial(material);
             console.log('received material(s)' + material);
@@ -247,7 +250,7 @@ export class DataUploadService {
         }
     }
 
-    private async insertDataSetDataTypeData(uploadModel, dataType): Promise<number> {
+    private async insertDataSetDataTypeData(uploadModel: DataUploadModel, dataType: string): Promise<number> {
         let dataSetDataTypeID: number
         if (this.parsedFileData["data type"] == undefined)
             dataSetDataTypeID = 1;
@@ -262,12 +265,22 @@ export class DataUploadService {
         return dataSetDataTypeID
     }
 
-    private async insertFullDataSetData(uploadModel, dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments): Promise<number> {
+    private async insertFullDataSetData(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string): Promise<number> {
         try {
             let datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments)
             console.log('DatasetID received: ' + datasetID);
             return datasetID
         } catch (err) {
+            console.log('error receiving datasetID....request rejected');
+        }
+    }
+
+    private async updateDataset(uploadModel: DataUploadModel, datasetId: number, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string) {
+
+        try {
+            let allData = await uploadModel.updateDataset(datasetId, dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments)
+        }
+        catch (err) {
             console.log('error receiving datasetID....request rejected');
         }
     }
