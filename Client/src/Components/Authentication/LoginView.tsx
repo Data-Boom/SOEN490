@@ -1,5 +1,5 @@
 import { FastField, Form, Formik } from 'formik'
-import { ISignInUserModel, defaultSignInUserModel } from '../../Models/Authentication/ISignUpModel'
+import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import React, { useContext } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
@@ -17,7 +17,7 @@ import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
 import Typography from '@material-ui/core/Typography'
 import { UserContext } from '../../App'
-import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
+import { callLogIn as callLogin } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
@@ -56,15 +56,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SignInView() {
+export default function LoginView() {
 
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
 
-  const handleSignInSubmit = async (signInUserInfo: ISignInUserModel): Promise<void> => {
+  const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
-    await callLogIn(signInUserInfo)
-    const userAccount: IUserAccountModel = await getUserDetails({ email: signInUserInfo.email })
+    await callLogin(loginUserInfo)
+    const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
     setUser(userAccount)
   }
 
@@ -79,12 +79,12 @@ export default function SignInView() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Log in
             </Typography>
             <Formik
-              initialValues={defaultSignInUserModel}
+              initialValues={newLoginUserModel}
               validationSchema={loginValidationSchema}
-              onSubmit={handleSignInSubmit}
+              onSubmit={handleLoginSubmit}
             >
               <Form className={classes.form} noValidate>
                 <FastField
@@ -121,7 +121,7 @@ export default function SignInView() {
                   color="primary"
                   className={classes.submit}
                 >
-                  Sign In
+                  Log In
                 </Button>
                 <Grid container>
                   <Grid item xs>

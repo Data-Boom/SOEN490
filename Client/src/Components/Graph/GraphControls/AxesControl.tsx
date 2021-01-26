@@ -137,7 +137,6 @@ export const AxesControl = (props: IProps) => {
 
   const checkYVariablesExist = (type: string, datasets: IDatasetModel[]) => {
     const missingDatasets = []
-    console.log(type)
     datasets.forEach(dataset => {
       let exists = false
       dataset.data.variables.forEach(variableName => {
@@ -149,7 +148,6 @@ export const AxesControl = (props: IProps) => {
         missingDatasets.push(dataset.dataset_name)
       }
     })
-    console.log(missingDatasets)
     setYVariableMissing(missingDatasets)
   }
 

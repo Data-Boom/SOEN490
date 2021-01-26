@@ -18,7 +18,7 @@ interface IFormikProps {
   name: string
 }
 
-export const SaveGraphStateControl = (props: IProps) => {
+export const SaveGraphStateForm = (props: IProps) => {
   const { graphState } = { ...props }
   const [id, setId] = useState(graphState.id)
   const [isNewGraphState, setIsNewGraphState] = useState(!graphState.id)
@@ -31,12 +31,11 @@ export const SaveGraphStateControl = (props: IProps) => {
       setIsNewGraphState(false)
       const createdId: string = await callCreateGraphState(graphStateCopy)
       setId(createdId)
-      SnackbarUtils.success('Graph successfully created')
     }
     else {
       await callUpdateGraphState(graphStateCopy)
-      SnackbarUtils.success('Graph successfully updated')
     }
+    SnackbarUtils.success('Graph Saved')
   }
 
   return (

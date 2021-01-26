@@ -30,11 +30,10 @@ export default function GraphView() {
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={7} >
-            {graphDatasets && graphDatasets[0] ?
-              <Graph
-                datasets={graphDatasets}
-                axes={graphState.axes}
-              /> : null}
+            <Graph
+              datasets={graphDatasets}
+              axes={graphState.axes}
+            />
           </Grid>
           <Grid item sm={5}>
             <Box ml={5} mr={5} mt={5}>
