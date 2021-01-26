@@ -3,7 +3,7 @@ import { get, post, put } from "../RemoteHelper"
 import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 
 //todo validate list graph states works
-const graphStateRoute = '/api/v1/graphStateAPI'
+const graphStateRoute = '/api/v1/graphState'
 
 export const listGraphStates = async (): Promise<IGraphStateModel[]> => {
   const graphList = await get(graphStateRoute)
