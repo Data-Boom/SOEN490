@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, Typography } from '@material-ui/core'
+import { Box, Grid, IconButton, Tooltip, Typography } from '@material-ui/core'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import FeedbackIcon from '@material-ui/icons/Feedback'
@@ -29,19 +29,25 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
                     <Grid item xs={6}>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton onClick={() => onReviewDatasetClick(dataset.id)}>
-                            <FeedbackIcon color='primary' />
-                        </IconButton>
+                        <Tooltip title="Click to review the dataset">
+                            <IconButton onClick={() => onReviewDatasetClick(dataset.id)}>
+                                <RateReviewIcon color='primary' />
+                            </IconButton>
+                        </Tooltip>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton onClick={() => onDeleteDatasetClick(dataset.id)}>
-                            <DeleteIcon color='primary' />
-                        </IconButton>
+                        <Tooltip title="Click to delete the dataset">
+                            <IconButton onClick={() => onDeleteDatasetClick(dataset.id)}>
+                                <DeleteIcon color='primary' />
+                            </IconButton>
+                        </Tooltip>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton onClick={() => onFlagDatasetClick(dataset.id)}>
-                            <RateReviewIcon color='primary' />
-                        </IconButton>
+                        <Tooltip title="Click to flag the dataset">
+                            <IconButton onClick={() => onFlagDatasetClick(dataset.id)}>
+                                <FeedbackIcon color='primary' />
+                            </IconButton>
+                        </Tooltip>
                     </Grid>
                 </Grid>
             </Box>
