@@ -95,3 +95,21 @@ export const selectPublicationsQuery = (connection: Connection, dataset: number)
         .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawOne();
+
+export const selectAllPublicationsQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('publication.name', 'name')
+        .addSelect('publication.doi', 'DOI')
+        .addSelect('publication.pages', 'pages')
+        .addSelect('publication.volume', 'volume')
+        .addSelect('publication.year', 'year')
+        .addSelect('publication.datePublished', 'datePublished')
+        .addSelect('publication.dateAccessed', 'dateAccessed')
+        .addSelect('publisher.name', 'publisher')
+        .addSelect('publicationtype.name', 'publicationType')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
+        .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
+        .whereInIds(datasets)
+        .getRawMany();

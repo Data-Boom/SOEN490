@@ -30,8 +30,8 @@ export const validTestData = {
     "dataset name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
     "material": [
         {
-            "composition": "c",
-            "details": "CARBON, graphite, pressed graphite"
+            "composition": "CO2",
+            "details": "CO2"
         },
         {
             "composition": "C4OS",
