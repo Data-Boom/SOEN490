@@ -17,6 +17,7 @@ import HomeView from "./Home/HomeView"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
 import LoginView from "./Authentication/LoginView"
+import MessageIcon from '@material-ui/icons/Message';
 import { ProfileView } from "./Profile/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
@@ -75,6 +76,7 @@ export const ListRouter = () => {
           <ListItemLink id="research-menu" to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
           <ListItemLink id="profile-menu" to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
           <ListItemLink id="about-menu" to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
+          <ListItemLink id="admin-review" to={adminReviewRoute} primary="Admin Review" icon={<MessageIcon />} />
         </List>
       </Paper>
     </div>
@@ -95,6 +97,7 @@ export const getRoutedViews = () => {
       <Route path={profileRoute} component={ProfileView} />
       <Route path={loginRoute} component={LoginView} />
       <Route path={signUpRoute} component={SignUpView} />
+      <Route path={adminReviewRoute} component={AdminReviewView} />
     </>
   )
 }
