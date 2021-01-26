@@ -11,7 +11,7 @@ import { Publications } from "../models/entities/Publications";
 import { Publicationtype } from "../models/entities/Publicationtype";
 import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
-import { Savedgraphs } from "../models/entities/Savedgraphs";
+import { Graphstate } from "../models/entities/Graphstate";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
 import { AuthenticationService } from '../services/authenticationService';
@@ -309,7 +309,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
 
-    let newGraph = new Savedgraphs();
+    let newGraph = new Graphstate();
     newGraph.id = 1;
     newGraph.accountId = 1;
     newGraph.name = "Test Graph";
@@ -324,7 +324,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     newGraph.axisUnits = ["C", "mm"];
     await connection.manager.save(newGraph);
 
-    let newGraph2 = new Savedgraphs();
+    let newGraph2 = new Graphstate();
     newGraph2.id = 2;
     newGraph2.accountId = 2;
     newGraph2.name = "Test Graph";
@@ -341,7 +341,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query('DELETE FROM savedgraphs');
+    await queryRunner.query('DELETE FROM graphstate');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
     await queryRunner.query('DELETE FROM accounts_datasets_dataset');

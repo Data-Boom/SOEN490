@@ -2,7 +2,7 @@ import 'react-data-grid/dist/react-data-grid.css'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
-import { IContent, IData, IVariable, defaultVariable } from '../../../Models/Datasets/IDatasetModel'
+import { IContent, IData, IVariable, newVariable } from '../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
 import { EditVariableHeader } from './EditVariableHeader'
@@ -54,7 +54,7 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const handleAddColumn = (): void => {
     const copyData = { ...props.data }
-    copyData.variables.push(defaultVariable)
+    copyData.variables.push(newVariable)
     props.onDataChange(copyData)
 
     setEditedVariableIndex(copyData.variables.length - 1)

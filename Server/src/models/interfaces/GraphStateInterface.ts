@@ -19,3 +19,17 @@ export interface IAxisModel {
     zoomEndIndex: number,
     units: string
 }
+
+export interface IUploadGraphModel {
+    id: number,
+    name: string,
+    datasetIds: number[],
+    datasetColors: string[],
+    datasetShapes: string[],
+    datasetHiddenStatus: boolean[],
+    axisVariable: string[],
+    axisLog: boolean[],
+    axisZoomStart: number[],
+    axisZoomEnd: number[],
+    axisUnits: string[]
+}
