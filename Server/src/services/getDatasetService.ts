@@ -1,7 +1,8 @@
-import { IClientDatasetModel, IDatasetIDModel } from "../models/interfaces/DatasetModelInterface";
+import { IAuthorModel, IClientDatasetModel, IDataPointModel, IDatasetIDModel, IDatasetInfoModel, IMaterialModel, IPublicationModel } from "../models/interfaces/DatasetModelInterface";
 
 import { DataQueryModel } from "../models/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { InternalServerError } from "@tsed/exceptions";
 
 export class retrieveData {
     private dataQuery: DataQueryModel;
@@ -167,25 +168,107 @@ export class retrieveData {
     }
 
     /**
-     * This declares an array of IDatasetResponseModel objects called setOfData and each IDatasetResponseModel 
-     * contains: a publication object, an array of author objects, a data set object, an array of material objects, 
-     * an array of data point objects, and a data point comments object.
-     * It then loops through the received array of data set IDs and runs a @getAllData query for each individual 
-     * entry in the array and appends the returned IDatasetResponseModel object to setOfData. Once the loop is 
-     * completed, setOfData is returned. 
+     * This declares an array of IClientDatasetModel objects called allDataSets and each IClientDatasetModel 
+     * contains: a publication object, an array of author objects, a data set ID, a data set info object, an array of material  
+     * objects, an array of data point objects, and a data point comments object. It calls a query to generate
+     * an array containing the data of each data set and then iterates through this massive amount of data to
+     * generate individual IClientDatasetModel objects and push each entry to allDataSets.
      *  
      * @param selectedDatasetIds 
-     * This is an array containing the data set IDs that we wish to get the full data set of: any[]
+     * This is an array containing the data set IDs that we wish to get the full data set of: number[]
      */
-    private async getDataFromDatasetIds(selectedDatasetIds: any[]) {
+    private async getDataFromDatasetIds(selectedDatasetIds: number[]) {
         try {
-            let setOfData: Array<IClientDatasetModel> = [];
-            for (let i = 0; i < selectedDatasetIds.length; i++) {
-                setOfData.push(await this.dataQuery.getAllData(selectedDatasetIds[i]));
+            let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
+            let publication: IPublicationModel
+            let dataPointComments: string[]
+            let datasetInfo: IDatasetInfoModel
+            let singleAuthorData: IAuthorModel
+            let allAuthorData: IAuthorModel[] = []
+            let singleMaterialData: IMaterialModel
+            let allMaterialData: IMaterialModel[]
+            let singleDataPointData: IDataPointModel
+            let allDataPointData: IDataPointModel[]
+            let singleDataSet: IClientDatasetModel
+            let allDataSets: Array<IClientDatasetModel> = [];
+            let currentDataset: number = 0
+            for (let index = 0; index < selectedDatasetIds.length; index++) {
+                currentDataset = rawData[2][index].dataset_id
+                datasetInfo = {
+                    name: rawData[2][index]?.name,
+                    comments: rawData[2][index]?.comments,
+                    datasetDataType: rawData[2][index]?.datasetdatatype,
+                    category: rawData[2][index]?.category,
+                    subcategory: rawData[2][index]?.subcategory
+                }
+
+                //Sort through publications, grab the one desired
+                for (let publicationIndex = 0; publicationIndex < rawData[0].length; publicationIndex++) {
+                    if (rawData[0][publicationIndex].dataset_id == currentDataset) {
+                        delete rawData[0][publicationIndex].dataset_id
+                        publication = rawData[0][publicationIndex]
+                        rawData[0].splice(publicationIndex, 1)
+                        break;
+                    }
+                }
+
+                //Sort through authors, then group them accordingly
+                allAuthorData = []
+                for (let authorIndex = 0; authorIndex < rawData[1].length; authorIndex++) {
+                    if (rawData[1][authorIndex].dataset_id == currentDataset) {
+                        delete rawData[1][authorIndex].dataset_id
+                        singleAuthorData = rawData[1][authorIndex]
+                        allAuthorData.push(singleAuthorData)
+                        rawData[1].splice(authorIndex, 1)
+                    }
+                }
+                publication.authors = allAuthorData
+
+                //Sort through materials, then group them accordingly
+                allMaterialData = []
+                for (let materialIndex = 0; materialIndex < rawData[3].length; materialIndex++) {
+                    if (rawData[3][materialIndex].dataset_id == currentDataset) {
+                        delete rawData[3][materialIndex].dataset_id
+                        singleMaterialData = rawData[3][materialIndex]
+                        allMaterialData.push(singleMaterialData)
+                        rawData[3].splice(materialIndex, 1)
+                    }
+                }
+
+                //Sort through data points, then group them accordingly
+                allDataPointData = []
+                for (let dataPointIndex = 0; dataPointIndex < rawData[4].length; dataPointIndex++) {
+                    if (rawData[4][dataPointIndex].dataset_id == currentDataset) {
+                        singleDataPointData = rawData[4][dataPointIndex]
+                        allDataPointData.push(singleDataPointData)
+                        rawData[4].splice(dataPointIndex, 1)
+                    }
+                }
+
+                //Sort through data point comments, grab the ones desired
+                dataPointComments = undefined
+                for (let commentIndex = 0; commentIndex < rawData[5].length; commentIndex++) {
+                    if (rawData[5][commentIndex]?.dataset_id == currentDataset) {
+                        dataPointComments = rawData[5][commentIndex]?.datapointcomments
+                        rawData[5].splice(commentIndex, 1)
+                        break;
+                    }
+                }
+
+                singleDataSet = {
+                    publication: publication,
+                    dataset_id: currentDataset,
+                    dataset_info: datasetInfo,
+                    materials: allMaterialData,
+                    dataPoints: allDataPointData,
+                    dataPointComments: dataPointComments
+                }
+
+                allDataSets.push(singleDataSet);
             }
-            return setOfData
+            return allDataSets
         } catch (error) {
-            console.error(error);
+            throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
         }
     }
 

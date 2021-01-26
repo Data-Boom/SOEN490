@@ -8,17 +8,17 @@ import {
     IMaterialModel,
     IPublicationModel
 } from "./interfaces/DatasetModelInterface";
-import { Publications, selectPublicationsQuery } from "./entities/Publications";
-import { selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
+import { Publications, selectAllPublicationsQuery, selectPublicationsQuery } from "./entities/Publications";
+import { selectAllDatasetsQuery, selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
 
 import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
 import { Subcategory } from "./entities/Subcategory";
-import { selectAuthorsQuery } from "./entities/Authors";
-import { selectDataPointCommentsQuery } from "./entities/Datapointcomments";
-import { selectDataPointsQuery } from "./entities/Datapoints";
-import { selectMaterialQuery } from "./entities/Material";
+import { selectAllAuthorsQuery, selectAuthorsQuery } from "./entities/Authors";
+import { selectAllDataPointCommentsQuery, selectDataPointCommentsQuery } from "./entities/Datapointcomments";
+import { selectAllDataPointsQuery, selectDataPointsQuery } from "./entities/Datapoints";
+import { selectAllMaterialQuery, selectMaterialQuery } from "./entities/Material";
 
 export class DataQueryModel {
     private connection: Connection;
@@ -243,37 +243,27 @@ export class DataQueryModel {
      * @param id 
      * A data set ID: number
      */
-    async getAllData(id: number): Promise<IClientDatasetModel> {
-        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id) || {}
-        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection, id)
-        publicationData.authors = authorData
-        let completeDatasetData = await selectDatasetsQuery(this.connection, id)
-        let datasetInfo: IDatasetInfoModel = {
-            name: completeDatasetData[0]?.name,
-            comments: completeDatasetData[0]?.comments,
-            datasetDataType: completeDatasetData[0]?.datasetdatatype,
-            category: completeDatasetData[0]?.category,
-            subcategory: completeDatasetData[0]?.subcategory
-        }
-        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection, id)
+    async getAllData(id: number[]): Promise<any> {
+        let publicationData = await selectAllPublicationsQuery(this.connection, id)
+        let authorData = await selectAllAuthorsQuery(this.connection, id)
+        let materialData = await selectAllMaterialQuery(this.connection, id)
+        let datapointData: IDataPointModel[] = await selectAllDataPointsQuery(this.connection, id)
         this.valuesToArray(datapointData)
-        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection, id)
-        let datapointComments = await selectDataPointCommentsQuery(this.connection, id) || {}
-        datapointComments.datapointcomments = typeof datapointComments.datapointcomments === 'string' ? JSON.parse(datapointComments.datapointcomments) : []
-        let allData: IClientDatasetModel = {
-            publication: publicationData,
-            dataset_id: completeDatasetData[0]?.dataset_id,
-            dataset_info: datasetInfo,
-            materials: materialData,
-            dataPoints: datapointData,
-            dataPointComments: datapointComments?.datapointcomments
-        }
+        let datapointComments = await selectAllDataPointCommentsQuery(this.connection, id) || {}
+        this.valuesToArray2(datapointComments)
+        let completeDatasetData = await selectAllDatasetsQuery(this.connection, id)
+        let allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
         return allData;
     }
 
     private valuesToArray = (dataPoints: IDataPointModel[]): void => {
         dataPoints.forEach(dataPoint => {
             dataPoint.values = typeof dataPoint.values === 'string' ? JSON.parse(dataPoint.values) : []
+        });
+    }
+    private valuesToArray2 = (datapointComments: any): void => {
+        datapointComments.forEach(datapointComment => {
+            datapointComment.datapointcomments = typeof datapointComment.datapointcomments === 'string' ? JSON.parse(datapointComment.datapointcomments) : []
         });
     }
 }

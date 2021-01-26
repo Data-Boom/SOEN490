@@ -27,7 +27,7 @@ router.delete('/api/v1/dataset/removeSavedDatset/:userEmail/:datasetId', (reques
     getDataControllerObject.createRequestForRemovingSavedDataset(request, response);
 });
 
-router.get('/dataset*', (request: Request, response: Response) => {
+router.get('/api/v1/dataset*', (request: Request, response: Response) => {
     getDataControllerObject.createRequestForData(request, response);
 });
 

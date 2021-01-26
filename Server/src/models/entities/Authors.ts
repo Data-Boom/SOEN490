@@ -48,3 +48,14 @@ export const selectAuthorsQuery = (connection: Connection, dataset: number) =>
         .innerJoin('publication.authors', 'author')
         .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
+
+export const selectAllAuthorsQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('author.firstName', 'firstName')
+        .addSelect('author.lastName', 'lastName')
+        .addSelect('author.middleName', 'middleName')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('publication.authors', 'author')
+        .whereInIds(datasets)
+        .getRawMany();

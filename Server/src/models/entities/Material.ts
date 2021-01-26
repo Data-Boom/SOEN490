@@ -53,3 +53,13 @@ export const selectMaterialQuery = (connection: Connection, dataset: number) =>
         .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
+
+export const selectAllMaterialQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('composition.composition', 'composition')
+        .addSelect('material.details', 'details')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+        .whereInIds(datasets)
+        .getRawMany();

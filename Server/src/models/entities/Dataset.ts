@@ -121,3 +121,17 @@ export const selectDatasetsQuery = (connection: Connection, dataset: number) =>
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawMany();
+
+export const selectAllDatasetsQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.name', 'name')
+        .addSelect('dataset.id', 'dataset_id')
+        .addSelect('datasetdatatype.name', 'datasetdatatype')
+        .addSelect('category.name', 'category')
+        .addSelect('subcategory.name', 'subcategory')
+        .addSelect('dataset.comments', 'comments')
+        .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
+        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .whereInIds(datasets)
+        .getRawMany();
