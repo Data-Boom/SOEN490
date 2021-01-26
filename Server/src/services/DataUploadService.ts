@@ -6,12 +6,13 @@ import { BadRequest } from '@tsed/exceptions';
 import { IResponse } from "../genericInterfaces/ResponsesInterface";
 import { IMaterials } from "../models/interfaces/MaterialsInterface";
 import { IAuthors } from "../models/interfaces/AuthorsInterface";
+import { IDataSetModel } from "../genericInterfaces/DataProcessInterfaces";
 
 export class DataUploadService {
     private uploadModel: DataUploadModel
     private parsedFileData: any
 
-    constructor(parsedFileData: any) {
+    constructor(parsedFileData: IDataSetModel) {
         this.parsedFileData = parsedFileData
         this.uploadModel = new DataUploadModel()
     }
@@ -90,7 +91,7 @@ export class DataUploadService {
         return requestResponse;
     }
 
-    async editedUploadedDataset(datasetId: number): Promise<IResponse> {
+    async editDataset(datasetId: number): Promise<IResponse> {
 
         let requestResponse: IResponse = {} as any
 

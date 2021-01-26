@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { DataUploadService } from '../services/DataUploadService'
+import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -10,6 +11,7 @@ import { DataUploadService } from '../services/DataUploadService'
 
 export class DataUploadController {
     private dataService: DataUploadService
+    private dataSet: IDataSetModel
 
     constructor() {
     }
@@ -22,6 +24,8 @@ export class DataUploadController {
         }
         else {
             try {
+                this.dataSet = request.body
+                this.dataService = new DataUploadService(this.dataSet)
                 await this.dataService.validateExtractedData();
                 let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
@@ -31,17 +35,18 @@ export class DataUploadController {
         }
     }
 
-    async createEditedUploadRequest(request: Request, response: Response): Promise<Response> {
-        let datasetId = Number(request.params.datasetId)
-        if (!request.body || !datasetId) {
+    async createEditUploadRequest(request: Request, response: Response): Promise<Response> {
+        if (!request.body || !request.params.datasetId) {
             response.status(400).json({
                 message: "No Dataset Received"
             })
         }
         else {
             try {
+                let datasetId = Number(request.params.datasetId)
+                this.dataService = new DataUploadService(this.dataSet)
                 await this.dataService.validateExtractedData();
-                let extractDataResponse: any = await this.dataService.editedUploadedDataset(datasetId);
+                let extractDataResponse: any = await this.dataService.editDataset(datasetId);
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
             } catch (error) {
                 return response.status(error.status).json(error.message);
