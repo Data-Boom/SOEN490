@@ -9,7 +9,8 @@ import { EditVariableHeader } from './EditVariableHeader'
 
 interface IProps {
   data: IData,
-  onDataChange: (newData: IData) => void
+  onDataChange: (newData: IData) => void,
+  editable: boolean
 }
 
 export const DatasetDataTable = (props: IProps): any => {
@@ -118,15 +119,15 @@ export const DatasetDataTable = (props: IProps): any => {
     return (
       <>
         <Grid item>
-          <Button variant="contained" color="primary" onClick={handleAddRow}>Add row</Button>
+          <Button variant="contained" color="primary" onClick={handleAddRow} disabled={!props.editable}>Add row</Button>
         </Grid>
 
         <Grid item>
-          <Button variant="contained" color="primary" onClick={handleAddColumn}>New variable</Button>
+          <Button variant="contained" color="primary" onClick={handleAddColumn} disabled={!props.editable}>New variable</Button>
         </Grid>
 
         <Grid item>
-          <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows}>Remove selected</Button>
+          <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows} disabled={!props.editable}>Remove selected</Button>
         </Grid>
       </>
     )

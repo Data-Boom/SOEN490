@@ -8,7 +8,8 @@ import React from 'react'
 
 interface IProps {
   authors: IAuthor[],
-  fieldArrayHelpers: ArrayHelpers
+  fieldArrayHelpers: ArrayHelpers,
+  editable: boolean
 }
 
 export const AuthorsList = (props: IProps) => {
@@ -25,6 +26,7 @@ export const AuthorsList = (props: IProps) => {
           key={index}
           index={index}
           onRemoveAuthorClick={handleRemoveAuthor}
+          editable={props.editable}
           removable={shouldRenderRemove()}
         />
       )
@@ -50,7 +52,7 @@ export const AuthorsList = (props: IProps) => {
           {renderAuthorRows()}
         </Grid>
         <Grid item>
-          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor}>
+          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!props.editable}>
             <AddIcon />
           </IconButton>
         </Grid>
