@@ -11,6 +11,7 @@ import { Publisher } from "./entities/Publisher";
 import { Datasetdatatype } from "./entities/Datasetdatatype";
 import { Units } from "./entities/Units";
 import { Representations } from "./entities/Representations";
+import { Unapproveddatasets } from "./entities/Unapproveddatasets";
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
@@ -36,7 +37,7 @@ export class DatasetDeleteModel {
     private selectDataPointFKViaDatasetIdQuery = (id: number) =>
         this.connection.createQueryBuilder(Datapoints, 'datapoints')
             .select('datapoints.unitsId', 'unitsId')
-            .select('datapoints.representationsId', 'representationsId')
+            .addSelect('datapoints.representationsId', 'representationsId')
             .where('datapoints.datasetId = :id', { id: id })
             .getRawMany();
 
@@ -170,11 +171,11 @@ export class DatasetDeleteModel {
         let unitsToDelete: number[] = []
         let reprToDelete: number[] = []
         for (let index = 0; index < rawDataPointFK.length; index++) {
-            isVariableInUse = await this.selectOneUseOfUnitQuery(rawDataPointFK.id)
+            isVariableInUse = await this.selectOneUseOfUnitQuery(rawDataPointFK[index].unitsId)
             if (isVariableInUse == undefined) {
                 unitsToDelete.push(rawDataPointFK[index].unitsId)
             }
-            isVariableInUse = await this.selectOneUseOfRepresentationQuery(rawDataPointFK.id)
+            isVariableInUse = await this.selectOneUseOfRepresentationQuery(rawDataPointFK[index].representationsId)
             if (isVariableInUse == undefined) {
                 reprToDelete.push(rawDataPointFK[index].representationsId)
             }
@@ -189,8 +190,8 @@ export class DatasetDeleteModel {
 
     private async deleteDataPointsOfDataset(datasetId: number) {
         let rawDataPointFK = await this.selectDataPointFKViaDatasetIdQuery(datasetId)
-        await this.deleteUnitsRepresentationsOfDataPoints(rawDataPointFK)
         await this.deleteDatapointsQuery(datasetId)
+        await this.deleteUnitsRepresentationsOfDataPoints(rawDataPointFK)
     }
 
     private async deleteMaterialsOfDataset(datasetId: number) {
@@ -283,6 +284,7 @@ export class DatasetDeleteModel {
         await this.deleteDataPointsOfDataset(id)
         await this.deleteMaterialsOfDataset(id)
         // Delete dataset proper
+        await this.wipeEntryFromUnapprovedTable(id)
         await this.deleteDatasetQuery(id)
         await this.deleteDatasetDataType(rawDatasetFKs.datatypeId)
         // Delete publication and its data
@@ -290,8 +292,15 @@ export class DatasetDeleteModel {
         await this.deletePublication(rawDatasetFKs.publicationId)
         await this.deletePublisher(rawDatasetFKs.publisherId)
         await this.deletePublicationType(rawDatasetFKs.publicationTypeId)
-        // Delete unapproved table entry - Add once table is created
-        // await this.wipeEntryFromUnapprovedTable(id)
         return "Successfully deleted data set"
+    }
+
+    //TODO: Axe this duplicate, refactor all the data set models akin to DataUpload in services
+    private async wipeEntryFromUnapprovedTable(datasetId: number) {
+        await this.connection.createQueryBuilder()
+            .delete()
+            .from(Unapproveddatasets)
+            .where("datasetId = :id", { id: datasetId })
+            .execute();
     }
 }

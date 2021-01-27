@@ -462,9 +462,9 @@ export class DataSetService {
         }
     }
 
-    async flagNewDataset(datasetId: number, flaggedComment?: string) {
+    async flagNewDataset(datasetId: number, flaggedComment?: string, additionalComment?: string) {
         try {
-            let response = await this.updateModel.flagDataSet(datasetId, flaggedComment)
+            let response = await this.updateModel.flagDataSet(datasetId, flaggedComment, additionalComment)
             if (response == undefined || response == null) {
                 throw new BadRequest("Could not flag this Dataset")
             }

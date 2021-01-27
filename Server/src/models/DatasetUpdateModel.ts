@@ -19,7 +19,8 @@ export class DatasetUpdateModel {
             .execute()
     }
 
-    async flagDataSet(datasetId: number, flaggedComment?: string) {
+    async flagDataSet(datasetId: number, flaggedComment?: string, additionalComment?: string) {
+        await this.updateDatasetComments(datasetId, additionalComment)
         await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
             .update('unapproved_datasets')
             .set({ flaggedComments: flaggedComment, isFlagged: 1 })

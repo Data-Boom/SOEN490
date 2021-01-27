@@ -176,8 +176,9 @@ export class DataSetController {
         else {
             let datasetIdToFlag = Number(request.query.datasetId)
             let flaggedComments = String(request.query.flaggedComments)
+            let additionalComments = String(request.query.additionalComments)
             try {
-                let requestResponse = await this.dataSetService.flagNewDataset(datasetIdToFlag, flaggedComments)
+                let requestResponse = await this.dataSetService.flagNewDataset(datasetIdToFlag, flaggedComments, additionalComments)
                 return response.status(requestResponse.statusCode).json(requestResponse.message);
             } catch (error) {
                 response.status(error.status).json(error.message);
