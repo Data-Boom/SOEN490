@@ -1,4 +1,5 @@
 import { createConnection, getConnection } from 'typeorm';
+import { array } from 'yup/lib/locale';
 
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 import { retrieveData } from "../../services/getDatasetService";
@@ -50,7 +51,7 @@ describe('data service test', () => {
     let testData: IDataRequestModel;
     testData = {} as any;
     testData.datasetId = undefined;
-    testData.material = ["O2", "carbon, graphite, pressed graphite"];
+    testData.material = ["carbon, graphite, pressed graphite"];
     testData.year = undefined;
     testData.firstName = undefined;
     testData.lastName = undefined;
