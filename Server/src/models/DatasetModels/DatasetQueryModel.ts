@@ -1,21 +1,17 @@
 import { Connection, getConnection } from "typeorm";
-import {
-    IApprovalDatasetModel,
-    IDataPointModel,
-    IDatasetIDModel
-} from "./interfaces/DatasetModelInterface";
-import { Publications, selectAllPublicationsQuery } from "./entities/Publications";
-import { selectAllDatasetsQuery, selectDatasetIdsQuery } from "./entities/Dataset";
+import { Accounts, selectAccountIdFromEmailQuery } from "../entities/Accounts";
+import { selectAllAuthorsQuery } from "../entities/Authors";
+import { Category } from "../entities/Category";
+import { Composition } from "../entities/Composition";
+import { selectAllDataPointCommentsQuery } from "../entities/Datapointcomments";
+import { selectDataPointsQuery } from "../entities/Datapoints";
+import { selectDatasetIdsQuery, selectAllDatasetsQuery } from "../entities/Dataset";
+import { selectAllMaterialQuery } from "../entities/Material";
+import { Publications, selectAllPublicationsQuery } from "../entities/Publications";
+import { Subcategory } from "../entities/Subcategory";
+import { selectUnapprovedDatasetInfoQuery } from "../entities/Unapproveddatasets";
+import { IDatasetIDModel, IDataPointModel } from "../interfaces/DatasetModelInterface";
 
-import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
-import { Category } from "./entities/Category";
-import { Composition } from "./entities/Composition";
-import { Subcategory } from "./entities/Subcategory";
-import { selectAllAuthorsQuery } from "./entities/Authors";
-import { selectAllDataPointCommentsQuery } from "./entities/Datapointcomments";
-import { selectDataPointsQuery } from "./entities/Datapoints";
-import { selectAllMaterialQuery } from "./entities/Material";
-import { selectUnapprovedDatasetInfoQuery } from "./entities/Unapproveddatasets";
 
 export class DataQueryModel {
     private connection: Connection;
@@ -244,13 +240,6 @@ export class DataQueryModel {
         let completeDatasetData = await selectAllDatasetsQuery(this.connection, id)
         let allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
         return allData;
-    }
-
-    async fetchUnapprovedDatasetsInfo(idArray: number[]): Promise<any[]> {
-        let approvalData = await selectUnapprovedDatasetInfoQuery(this.connection)
-            .whereInIds(idArray)
-            .getRawMany();
-        return approvalData;
     }
 
     private parseDataPoints = (dataPoints: IDataPointModel[]): void => {

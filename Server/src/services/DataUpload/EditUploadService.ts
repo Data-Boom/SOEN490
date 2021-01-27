@@ -1,7 +1,8 @@
 import { BadRequest, InternalServerError } from '@tsed/exceptions';
 import { getConnection } from "typeorm"
 import { IResponse } from "../../genericInterfaces/ResponsesInterface"
-import { DatasetDeleteModel } from "../../models/DatasetDeleteModel"
+import { DatasetCommonModel } from '../../models/DatasetModels/DatasetCommonModel';
+import { DatasetDeleteModel } from '../../models/DatasetModels/DatasetDeleteModel';
 import { DataUploadModel } from "../../models/DataUploadModel"
 import { Authors } from "../../models/entities/Authors"
 import AbstractUploadService from "./AbstractUploadService"
@@ -10,12 +11,13 @@ import AbstractUploadService from "./AbstractUploadService"
 export default class EditUploadService extends AbstractUploadService {
     async uploadData(): Promise<IResponse> {
         let deleteModel = new DatasetDeleteModel()
+        let commonModel = new DatasetCommonModel()
         let connection = getConnection()
         let requestResponse: IResponse = {} as any
 
         // First clear tables that need dataset ID
-        let rawDatasetFKs = await deleteModel.selectDatasetFKQuery(this.datasetId);
-        await deleteModel.deleteDatapointCommentsQuery(this.datasetId)
+        let rawDatasetFKs = await commonModel.selectDatasetFKQuery(this.datasetId);
+        await commonModel.deleteDatapointCommentsQuery(this.datasetId)
         await deleteModel.deleteDataPointsOfDataset(this.datasetId)
         await deleteModel.deleteMaterialsOfDataset(this.datasetId)
 

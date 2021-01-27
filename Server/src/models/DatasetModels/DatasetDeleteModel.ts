@@ -1,38 +1,30 @@
 import { Connection, getConnection } from "typeorm";
-import { Publications } from './entities/Publications';
-import { Dataset } from './entities/Dataset';
-import { Datapoints } from './entities/Datapoints';
-import { Datapointcomments } from './entities/Datapointcomments';
-import { Material } from "./entities/Material";
-import { Authors } from "./entities/Authors";
-import { Composition } from "./entities/Composition";
-import { Publicationtype } from "./entities/Publicationtype";
-import { Publisher } from "./entities/Publisher";
-import { Datasetdatatype } from "./entities/Datasetdatatype";
-import { Units } from "./entities/Units";
-import { Representations } from "./entities/Representations";
-import { Unapproveddatasets } from "./entities/Unapproveddatasets";
+import { Authors } from "../entities/Authors";
+import { Composition } from "../entities/Composition";
+import { Datapointcomments } from "../entities/Datapointcomments";
+import { Datapoints } from "../entities/Datapoints";
+import { Dataset } from "../entities/Dataset";
+import { Datasetdatatype } from "../entities/Datasetdatatype";
+import { Material } from "../entities/Material";
+import { Publications } from "../entities/Publications";
+import { Publicationtype } from "../entities/Publicationtype";
+import { Publisher } from "../entities/Publisher";
+import { Representations } from "../entities/Representations";
+import { Unapproveddatasets } from "../entities/Unapproveddatasets";
+import { Units } from "../entities/Units";
+import { DatasetCommonModel } from "./DatasetCommonModel";
+
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
  */
 export class DatasetDeleteModel {
     private connection: Connection;
+    private commonModel: DatasetCommonModel
     constructor() {
         this.connection = getConnection();
+        this.commonModel = new DatasetCommonModel();
     }
-
-    selectDatasetFKQuery = (id: number) =>
-        this.connection.createQueryBuilder(Dataset, 'dataset')
-            .select('dataset.publicationId', 'publicationId')
-            .addSelect('dataset.datatypeId', 'datatypeId')
-            .addSelect('publisher.id', 'publisherId')
-            .addSelect('publicationtype.id', 'publicationTypeId')
-            .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-            .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
-            .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
-            .where('dataset.id = :id', { id: id })
-            .getRawOne();
 
     private selectDataPointFKViaDatasetIdQuery = (id: number) =>
         this.connection.createQueryBuilder(Datapoints, 'datapoints')
@@ -94,13 +86,6 @@ export class DatasetDeleteModel {
             .delete()
             .from(Representations)
             .whereInIds(idArray)
-            .execute();
-
-    deleteDatapointCommentsQuery = (id: number) =>
-        this.connection.createQueryBuilder()
-            .delete()
-            .from(Datapointcomments)
-            .where("datasetId = :id", { id: id })
             .execute();
 
     private deleteDatapointsQuery = (id: number) =>
@@ -272,19 +257,14 @@ export class DatasetDeleteModel {
         }
     }
 
-    async verifyDatasetExists(id: number): Promise<any> {
-        let verification = await this.connection.manager.findOne(Dataset, { id: id });
-        return verification
-    }
-
     async rejectDataset(id: number): Promise<string> {
-        let rawDatasetFKs = await this.selectDatasetFKQuery(id);
+        let rawDatasetFKs = await this.commonModel.selectDatasetFKQuery(id);
         // First clear tables that need dataset ID
-        await this.deleteDatapointCommentsQuery(id)
+        await this.commonModel.deleteDatapointCommentsQuery(id)
         await this.deleteDataPointsOfDataset(id)
         await this.deleteMaterialsOfDataset(id)
         // Delete dataset proper
-        await this.wipeEntryFromUnapprovedTable(id)
+        await this.commonModel.wipeEntryFromUnapprovedTable(id)
         await this.deleteDatasetQuery(id)
         await this.deleteDatasetDataType(rawDatasetFKs.datatypeId)
         // Delete publication and its data
@@ -293,14 +273,5 @@ export class DatasetDeleteModel {
         await this.deletePublisher(rawDatasetFKs.publisherId)
         await this.deletePublicationType(rawDatasetFKs.publicationTypeId)
         return "Successfully deleted data set"
-    }
-
-    //TODO: Axe this duplicate, refactor all the data set models akin to DataUpload in services
-    private async wipeEntryFromUnapprovedTable(datasetId: number) {
-        await this.connection.createQueryBuilder()
-            .delete()
-            .from(Unapproveddatasets)
-            .where("datasetId = :id", { id: datasetId })
-            .execute();
     }
 }

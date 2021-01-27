@@ -1,25 +1,24 @@
-import { IApprovalDatasetModel, IAuthorModel, IClientDatasetModel, IDataPointModel, IDatasetIDModel, IDatasetInfoModel, IMaterialModel, IPublicationModel } from "../models/interfaces/DatasetModelInterface";
-
-import { DataQueryModel } from "../models/DatasetQueryModel";
-import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { InternalServerError, NotFound, BadRequest } from "@tsed/exceptions";
 import { IResponse } from "../genericInterfaces/ResponsesInterface";
-import { BadRequest, InternalServerError, NotFound } from '@tsed/exceptions';
-import { DatasetUpdateModel } from '../models/DatasetUpdateModel';
-import { DatasetApprovalModel } from "../models/DatasetApprovalModel";
-import { DatasetDeleteModel } from "../models/DatasetDeleteModel";
+import { DatasetApprovalModel } from "../models/DatasetModels/DatasetApprovalModel";
+import { DatasetCommonModel } from "../models/DatasetModels/DatasetCommonModel";
+import { DatasetDeleteModel } from "../models/DatasetModels/DatasetDeleteModel";
+import { DataQueryModel } from "../models/DatasetModels/DatasetQueryModel";
+import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
+import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel } from "../models/interfaces/DatasetModelInterface";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
     private approvalModel: DatasetApprovalModel
-    private updateModel: DatasetUpdateModel
     private deleteModel: DatasetDeleteModel
     private requestResponse: IResponse
+    private commonModel: DatasetCommonModel
 
     constructor() {
         this.dataQuery = new DataQueryModel();
-        this.updateModel = new DatasetUpdateModel()
         this.deleteModel = new DatasetDeleteModel()
         this.approvalModel = new DatasetApprovalModel()
+        this.commonModel = new DatasetCommonModel();
         this.requestResponse = {} as any
     }
 
@@ -388,7 +387,7 @@ export class DataSetService {
     async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
         let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
         let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
-        let approvalData = await this.dataQuery.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
+        let approvalData = await this.approvalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
         let setOfData = await this.getDataFromUnapprovedDatasetIds(incompletDatasets, approvalData);
         return setOfData
     }
@@ -454,7 +453,7 @@ export class DataSetService {
 
     async rejectDataSet(datasetId: number) {
         try {
-            let response = await this.deleteModel.verifyDatasetExists(datasetId)
+            let response = await this.commonModel.verifyDatasetExists(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No such data set exists")
             }
@@ -474,7 +473,7 @@ export class DataSetService {
 
     async flagNewDataset(datasetId: number, flaggedComment?: string, additionalComment?: string) {
         try {
-            let response = await this.updateModel.flagDataSet(datasetId, flaggedComment, additionalComment)
+            let response = await this.approvalModel.flagDataSet(datasetId, flaggedComment, additionalComment)
             if (response == undefined || response == null) {
                 throw new BadRequest("Could not flag this Dataset")
             }
@@ -503,8 +502,8 @@ export class DataSetService {
 
     async adminApprovedDataset(datasetId: number, datasetCommentsToAppend: string) {
         try {
-            await this.updateModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
-            let response = await this.updateModel.approveDataset(datasetId)
+            await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
+            let response = await this.approvalModel.approveDataset(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No dataset under this ID")
             }
@@ -518,7 +517,7 @@ export class DataSetService {
 
     async userApprovedDataset(datasetId: number) {
         try {
-            let response = await this.updateModel.approveDataset(datasetId)
+            let response = await this.approvalModel.approveDataset(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No dataset under this ID")
             }
