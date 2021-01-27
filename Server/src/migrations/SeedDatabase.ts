@@ -342,6 +342,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query('DELETE FROM graphstate');
+    await queryRunner.query('DELETE FROM unapproveddatasets');
     await queryRunner.query('DELETE FROM dataset_materials_material');
     await queryRunner.query('DELETE FROM publications_authors_authors');
     await queryRunner.query('DELETE FROM accounts_datasets_dataset');

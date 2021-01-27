@@ -9,6 +9,8 @@ import { Composition } from "./entities/Composition";
 import { Publicationtype } from "./entities/Publicationtype";
 import { Publisher } from "./entities/Publisher";
 import { Datasetdatatype } from "./entities/Datasetdatatype";
+import { Units } from "./entities/Units";
+import { Representations } from "./entities/Representations";
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
@@ -37,6 +39,16 @@ export class DatasetDeleteModel {
             .select('datapoints.representationsId', 'representationsId')
             .where('datapoints.datasetId = :id', { id: id })
             .getRawMany();
+
+    private selectOneUseOfUnitQuery = (id: number) =>
+        this.connection.createQueryBuilder(Datapoints, 'datapoints')
+            .where("datapoints.unitsId = :id", { id: id })
+            .getOne();
+
+    private selectOneUseOfRepresentationQuery = (id: number) =>
+        this.connection.createQueryBuilder(Datapoints, 'datapoints')
+            .where("datapoints.representationsId = :id", { id: id })
+            .getOne();
 
     private selectAllLinkedCompositionIdsQuery = (idArray: number[]) =>
         this.connection.createQueryBuilder(Material, 'material')
@@ -68,6 +80,20 @@ export class DatasetDeleteModel {
         this.connection.createQueryBuilder(Dataset, 'dataset')
             .where("dataset.datatypeId = :id", { id: id })
             .getOne();
+
+    private deletUnitsQuery = (idArray: number[]) =>
+        this.connection.createQueryBuilder()
+            .delete()
+            .from(Units)
+            .whereInIds(idArray)
+            .execute();
+
+    private deletRepresentationsQuery = (idArray: number[]) =>
+        this.connection.createQueryBuilder()
+            .delete()
+            .from(Representations)
+            .whereInIds(idArray)
+            .execute();
 
     private deleteDatapointCommentsQuery = (id: number) =>
         this.connection.createQueryBuilder()
@@ -139,29 +165,31 @@ export class DatasetDeleteModel {
             .where("id = :id", { id: id })
             .execute();
 
-    private selectOneUseOfUnitQuery = (id: number) =>
-        this.connection.createQueryBuilder(Datapoints, 'datapoints')
-            .where("datapoints.publisherId = :id", { id: id })
-            .getOne();
-
-    private async deleteUnitsRepresentationOfDataPoints(rawDataPointFK: any) {
+    private async deleteUnitsRepresentationsOfDataPoints(rawDataPointFK: any) {
         let isVariableInUse: any
         let unitsToDelete: number[] = []
+        let reprToDelete: number[] = []
         for (let index = 0; index < rawDataPointFK.length; index++) {
-            isVariableInUse = await this.selectOneUseOfCompositionQuery(rawDataPointFK.id)
+            isVariableInUse = await this.selectOneUseOfUnitQuery(rawDataPointFK.id)
             if (isVariableInUse == undefined) {
                 unitsToDelete.push(rawDataPointFK[index].unitsId)
             }
+            isVariableInUse = await this.selectOneUseOfRepresentationQuery(rawDataPointFK.id)
+            if (isVariableInUse == undefined) {
+                reprToDelete.push(rawDataPointFK[index].representationsId)
+            }
         }
         if (unitsToDelete.length > 0) {
-            await this.deleteCompositionsQuery(unitsToDelete)
+            await this.deletUnitsQuery(unitsToDelete)
+        }
+        if (reprToDelete.length > 0) {
+            await this.deletRepresentationsQuery(reprToDelete)
         }
     }
 
     private async deleteDataPointsOfDataset(datasetId: number) {
-        //TODO: Delete unit and representation
-        // unitsId representationsId
         let rawDataPointFK = await this.selectDataPointFKViaDatasetIdQuery(datasetId)
+        await this.deleteUnitsRepresentationsOfDataPoints(rawDataPointFK)
         await this.deleteDatapointsQuery(datasetId)
     }
 
