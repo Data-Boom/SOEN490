@@ -22,7 +22,7 @@ export class DatasetDeleteModel {
         this.connection = getConnection();
     }
 
-    private selectDatasetFKQuery = (id: number) =>
+    selectDatasetFKQuery = (id: number) =>
         this.connection.createQueryBuilder(Dataset, 'dataset')
             .select('dataset.publicationId', 'publicationId')
             .addSelect('dataset.datatypeId', 'datatypeId')
@@ -96,7 +96,7 @@ export class DatasetDeleteModel {
             .whereInIds(idArray)
             .execute();
 
-    private deleteDatapointCommentsQuery = (id: number) =>
+    deleteDatapointCommentsQuery = (id: number) =>
         this.connection.createQueryBuilder()
             .delete()
             .from(Datapointcomments)
@@ -188,13 +188,13 @@ export class DatasetDeleteModel {
         }
     }
 
-    private async deleteDataPointsOfDataset(datasetId: number) {
+    async deleteDataPointsOfDataset(datasetId: number) {
         let rawDataPointFK = await this.selectDataPointFKViaDatasetIdQuery(datasetId)
         await this.deleteDatapointsQuery(datasetId)
         await this.deleteUnitsRepresentationsOfDataPoints(rawDataPointFK)
     }
 
-    private async deleteMaterialsOfDataset(datasetId: number) {
+    async deleteMaterialsOfDataset(datasetId: number) {
         let isMaterialInUse: any
         let materialsToDelete: number[] = []
         let rawCompositionIds: any
@@ -228,14 +228,14 @@ export class DatasetDeleteModel {
         }
     }
 
-    private async deleteDatasetDataType(datasetDataTypeId: number) {
+    async deleteDatasetDataType(datasetDataTypeId: number) {
         let isDatasetDataTypeInUse = await this.selectOneUseOfDatasetDataTypeQuery(datasetDataTypeId)
         if (isDatasetDataTypeInUse == undefined) {
             await this.deleteDatasetDataTypeQuery(datasetDataTypeId)
         }
     }
 
-    private async deleteAuthorsOfPublication(publicationsId: number) {
+    async deleteAuthorsOfPublication(publicationsId: number) {
         let isAuthorInUse: any
         let authorsToDelete: number[] = []
         let rawAuthorIds = await this.connection.query("SELECT authorsId FROM publications_authors_authors WHERE publicationsId = ?", [publicationsId])
@@ -252,20 +252,20 @@ export class DatasetDeleteModel {
             await this.deleteAuthorsQuery(authorsToDelete)
     }
 
-    private async deletePublication(publicationId: number) {
+    async deletePublication(publicationId: number) {
         let isPublicationInUse = await this.selectOneUseOfPublicationQuery(publicationId)
         if (isPublicationInUse == undefined) {
             await this.deletePublicationQuery(publicationId)
         }
     }
-    private async deletePublisher(publisherId: number) {
+    async deletePublisher(publisherId: number) {
         let isPublisherInUse = await this.selectOneUseOfPublisherQuery(publisherId)
         if (isPublisherInUse == undefined) {
             await this.deletePublisherQuery(publisherId)
         }
     }
 
-    private async deletePublicationType(publicationTypeId: number) {
+    async deletePublicationType(publicationTypeId: number) {
         let isPublicationTypeInUse = await this.selectOneUseOfPublicationTypeQuery(publicationTypeId)
         if (isPublicationTypeInUse == undefined) {
             await this.deletePublicationTypeQuery(publicationTypeId)

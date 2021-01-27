@@ -1,26 +1,21 @@
 import { Connection, getConnection } from "typeorm";
 import {
     IApprovalDatasetModel,
-    IAuthorModel,
-    IClientDatasetModel,
     IDataPointModel,
-    IDatasetIDModel,
-    IDatasetInfoModel,
-    IMaterialModel,
-    IPublicationModel
+    IDatasetIDModel
 } from "./interfaces/DatasetModelInterface";
-import { Publications, selectAllPublicationsQuery, selectPublicationsQuery } from "./entities/Publications";
-import { Dataset, selectAllDatasetsQuery, selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
+import { Publications, selectAllPublicationsQuery } from "./entities/Publications";
+import { selectAllDatasetsQuery, selectDatasetIdsQuery } from "./entities/Dataset";
 
 import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
 import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
 import { Subcategory } from "./entities/Subcategory";
-import { selectAllAuthorsQuery, selectAuthorsQuery } from "./entities/Authors";
-import { selectAllDataPointCommentsQuery, selectDataPointCommentsQuery } from "./entities/Datapointcomments";
+import { selectAllAuthorsQuery } from "./entities/Authors";
+import { selectAllDataPointCommentsQuery } from "./entities/Datapointcomments";
 import { selectDataPointsQuery } from "./entities/Datapoints";
-import { selectAllMaterialQuery, selectMaterialQuery } from "./entities/Material";
-import { selectUnapprovedDatasetInfoQuery, Unapproveddatasets } from "./entities/Unapproveddatasets";
+import { selectAllMaterialQuery } from "./entities/Material";
+import { selectUnapprovedDatasetInfoQuery } from "./entities/Unapproveddatasets";
 
 export class DataQueryModel {
     private connection: Connection;
