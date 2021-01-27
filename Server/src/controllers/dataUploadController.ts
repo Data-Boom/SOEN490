@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { DataUploadService } from '../services/DataUploadService'
+import { UnapprovedUploadService } from '../services/DataUpload/UnapprovedUploadService'
 import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
+import EditUploadService from '../services/DataUpload/EditUploadService';
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -10,7 +11,7 @@ import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
  */
 
 export class DataUploadController {
-    private dataService: DataUploadService
+    private dataService: any
     private dataSet: IDataSetModel
 
     constructor() {
@@ -25,7 +26,7 @@ export class DataUploadController {
         else {
             try {
                 this.dataSet = request.body
-                this.dataService = new DataUploadService(this.dataSet)
+                this.dataService = new UnapprovedUploadService(this.dataSet)
                 await this.dataService.validateExtractedData();
                 let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
@@ -44,9 +45,9 @@ export class DataUploadController {
         else {
             try {
                 let datasetId = Number(request.params.datasetId)
-                this.dataService = new DataUploadService(this.dataSet)
+                this.dataService = new EditUploadService(this.dataSet, datasetId)
                 await this.dataService.validateExtractedData();
-                let extractDataResponse: any = await this.dataService.editDataset(datasetId);
+                let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
             } catch (error) {
                 return response.status(error.status).json(error.message);
