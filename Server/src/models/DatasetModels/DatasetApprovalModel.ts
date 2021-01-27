@@ -71,7 +71,7 @@ export class DatasetApprovalModel {
 
     async updateDatasetComments(datasetId: number, datasetCommentsToAppend?: string) {
         let oldComment = await this.selectDatasetCommentQuery(datasetId)
-        let newComment = oldComment.concat(" " + datasetCommentsToAppend)
+        let newComment = oldComment.comments.concat(" " + datasetCommentsToAppend)
         await this.connection.createQueryBuilder(Dataset, 'dataset')
             .update('dataset')
             .set({ comments: newComment })

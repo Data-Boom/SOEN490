@@ -228,7 +228,6 @@ export class DatasetDeleteModel {
         // Check which authors are still in use
         for (let index = 0; index < rawAuthorIds.length; index++) {
             isAuthorInUse = await this.connection.query("SELECT publicationsId FROM publications_authors_authors WHERE authorsId = ?", [rawAuthorIds[index].authorsId]);
-            console.log(isAuthorInUse)
             if (isAuthorInUse.length < 1) {
                 authorsToDelete.push(rawAuthorIds[index].authorsId)
             }
