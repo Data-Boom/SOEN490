@@ -12,6 +12,7 @@ interface IProps {
   materials: IMaterial[],
   categories: any[],
   subcategories: any[],
+  editable: boolean
 }
 
 const getOptions = (options: any[]): any => {
@@ -31,16 +32,16 @@ export const MetaForm = (props: IProps) => {
       <Typography variant='h6' align="left">Meta</Typography>
       <Grid container spacing={4}>
         <Grid item sm={3}>
-          <FastField name="meta.dataset_name" label='Dataset Name' component={MuiTextFieldFormik} />
+          <FastField name="meta.dataset_name" label='Dataset Name' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="meta.data_type" label='Data Type' component={MuiTextFieldFormik} />
+          <FastField name="meta.data_type" label='Data Type' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <Field name="meta.category" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
+          <Field name="meta.category" label='Category' disabled={!props.editable} component={MuiSelectFormik} options={getOptions(categories)} />
         </Grid>
         <Grid item sm={3}>
-          <Field name="meta.subcategory" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
+          <Field name="meta.subcategory" label='Subcategory' disabled={!props.editable} component={MuiSelectFormik} options={getOptions(subcategories)} />
         </Grid>
         <Grid item sm={12}>
           <FieldArray name='meta.material' >

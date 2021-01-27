@@ -1,13 +1,16 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Grid, Typography } from '@material-ui/core'
+import { IDatasetModel, example2, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 
 import { AdminReviewList } from './AdminReviewList'
-import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
 import { toDatasetRows } from '../Graph/GraphFunctions'
 
 export function AdminReviewView() {
     const [datasetState, setDatasetState] = useState([])
+    const [editable, setEditable] = useState(false)
+    const [dataset, setDataset] = useState(exampleExportDatasetModel)
     //const completeDataset: IDatasetModel[]
     useEffect(() => {
         const callListDatasetStates = async () => {
@@ -23,18 +26,35 @@ export function AdminReviewView() {
     const handleReviewDataset = (datasetId: number) => {
 
     }
+
+    const handleEditDataset = () => {
+        setEditable(!editable)
+    }
+
     const handleFlagDataset = (datasetId: number) => {
+
+    }
+
+    const handleSubmit = (datasetId: IDatasetModel) => {
 
     }
     return (
 
-        <Grid container justify="center">
-            <Grid>
+        <Grid container spacing={3}>
+            <Grid xs={3}>
                 <AdminReviewList
                     datasets={datasetState}
                     onReviewDatasetClick={handleReviewDataset}
                     onDeleteDatasetClick={handleDeleteDataset}
                     onFlagDatasetClick={handleFlagDataset}
+                />
+                <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>
+            </Grid>
+            <Grid xs={9}>
+                <DatasetUploadForm
+                    onSubmit={handleSubmit}
+                    initialDataset={dataset}
+                    editable={editable}
                 />
             </Grid>
         </Grid>

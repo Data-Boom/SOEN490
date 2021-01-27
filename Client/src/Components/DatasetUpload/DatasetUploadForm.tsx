@@ -13,6 +13,7 @@ import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
 
 interface IProps {
   initialDataset: IDatasetModel,
+  editable: boolean,
   onSubmit(formDataset: IDatasetModel): void
 }
 
@@ -68,9 +69,9 @@ export const DatasetUploadForm = (props: IProps): any => {
       onSubmit={handleSubmit}
     >
       <Form>
-        <MetaForm materials={materials} categories={categories} subcategories={subcategories} />
-        <ReferenceForm />
-        <DataForm />
+        <MetaForm materials={materials} editable={props.editable} categories={categories} subcategories={subcategories} />
+        <ReferenceForm editable={props.editable} />
+        <DataForm editable={props.editable} />
         <Button variant="contained" color="primary" type="submit">Save Dataset</Button>
       </Form>
     </Formik>
