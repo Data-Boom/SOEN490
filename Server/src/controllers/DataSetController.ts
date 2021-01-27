@@ -39,12 +39,12 @@ export class DataSetController {
     }
 
     async createRequestToDeleteSavedDataSet(request: Request, response: Response) {
-
-        if (!request.query.hasOwnProperty('datasetId')) {
-            response.status(400).json("Search ID Not Entered");
+        let requestParam = request.params.datasetId;
+        let datasetId = Number(requestParam);
+        if (isNaN(datasetId)) {
+            response.status(400).json("Invalid data set ID entered");
         }
         else {
-            let datasetId = Number(request.query.datasetId)
             let userId: number = request.body.user.account_id
             try {
                 let requestResponse = await this.dataSetService.removeSavedDatasetService(userId, datasetId)
@@ -106,6 +106,34 @@ export class DataSetController {
             }
         }
     }
+
+    //TODO: Readd later
+    /**
+     * This controller will take a request, grab the user email and data set ID, verify said ID is a number,
+     * and then send the service a request to add the user's saved data set preference to the database.
+     * 
+     * @param request
+     * An object containing the request information and parameters: Request 
+     * @param response 
+     * An object containing a response: Response
+    async createRequestForAddingSavedDataset(request: Request, response: Response) {
+        let userEmail = request.params.userEmail;
+        let requestParam = request.params.datasetId;
+        let datasetId: number = +requestParam;
+        if (isNaN(datasetId)) {
+            response.status(400).json("Invalid data set ID entered");
+        }
+        else {
+            try {
+                let executionStatus = await this.dataSetService.addSavedDatasetService(userEmail, datasetId)
+                if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
+                else { return response.status(400).json(executionStatus[1]); }
+            } catch (err) {
+                response.status(500).json(err);
+            }
+        }
+    }
+     */
 
     /**
      * This controller will take a request, send it to the getDataService to acquire an array 
@@ -199,13 +227,13 @@ export class DataSetController {
     }
 
     async createUserApprovedDatasetRequest(request: Request, response: Response) {
-        if (!request.query && !request.query.datasetId) {
-            response.status(400).json("No datasetID provided to flag dataset");
+        let requestParam = request.params.datasetId;
+        let datasetId = Number(requestParam);
+        if (isNaN(datasetId)) {
+            response.status(400).json("Invalid data set ID entered");
         }
-        let datasetIdToApprove = Number(request.query.datasetId)
-
         try {
-            let requestResponse = await this.dataSetService.userApprovedDataset(datasetIdToApprove)
+            let requestResponse = await this.dataSetService.userApprovedDataset(datasetId)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
             response.status(error.status).json(error.message);

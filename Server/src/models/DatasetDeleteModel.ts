@@ -139,17 +139,22 @@ export class DatasetDeleteModel {
             .where("id = :id", { id: id })
             .execute();
 
-    private async deleteUnits(rawDataPointFK: any) {
-        let isCompositionInUse: any
-        let compositionsToDelete: number[] = []
+    private selectOneUseOfUnitQuery = (id: number) =>
+        this.connection.createQueryBuilder(Datapoints, 'datapoints')
+            .where("datapoints.publisherId = :id", { id: id })
+            .getOne();
+
+    private async deleteUnitsRepresentationOfDataPoints(rawDataPointFK: any) {
+        let isVariableInUse: any
+        let unitsToDelete: number[] = []
         for (let index = 0; index < rawDataPointFK.length; index++) {
-            isCompositionInUse = await this.selectOneUseOfCompositionQuery(rawDataPointFK.id)
-            if (isCompositionInUse == undefined) {
-                compositionsToDelete.push(rawDataPointFK[index].id)
+            isVariableInUse = await this.selectOneUseOfCompositionQuery(rawDataPointFK.id)
+            if (isVariableInUse == undefined) {
+                unitsToDelete.push(rawDataPointFK[index].unitsId)
             }
         }
-        if (compositionsToDelete.length > 0) {
-            await this.deleteCompositionsQuery(compositionsToDelete)
+        if (unitsToDelete.length > 0) {
+            await this.deleteCompositionsQuery(unitsToDelete)
         }
     }
 

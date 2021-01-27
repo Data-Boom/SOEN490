@@ -57,7 +57,7 @@ export class DataUploadModel {
     }
 
 
-    async updateDataset(datasetId: number, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any[], dataSetComments: string): Promise<number> {
+    async updateDataset(datasetId: number, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any[], dataSetComments: string) {
         await this.connection.query("DELETE FROM dataset_materials_material WHERE datasetId = ?", [datasetId]);
         //await this.connection.query("DELETE FROM dataset_materials_material (datasetId, materialId) VALUES (?, ?)", [newDatasetId, newMaterialId]);
         let updatedData: any[] = [datasetId, dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments]
