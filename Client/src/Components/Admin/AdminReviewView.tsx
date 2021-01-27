@@ -16,6 +16,7 @@ export function AdminReviewView() {
     useEffect(() => {
         const callListDatasetStates = async () => {
             const datasetState = await listGraphStates()
+
             setDatasetState(datasetState)
         }
         callListDatasetStates()
