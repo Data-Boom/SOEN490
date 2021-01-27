@@ -31,6 +31,13 @@ export class DatasetDeleteModel {
             .where('dataset.id = :id', { id: id })
             .getRawOne();
 
+    private selectDataPointFKViaDatasetIdQuery = (id: number) =>
+        this.connection.createQueryBuilder(Datapoints, 'datapoints')
+            .select('datapoints.unitsId', 'unitsId')
+            .select('datapoints.representationsId', 'representationsId')
+            .where('datapoints.datasetId = :id', { id: id })
+            .getRawMany();
+
     private selectAllLinkedCompositionIdsQuery = (idArray: number[]) =>
         this.connection.createQueryBuilder(Material, 'material')
             .select('material.compositionId', 'id')
@@ -132,8 +139,24 @@ export class DatasetDeleteModel {
             .where("id = :id", { id: id })
             .execute();
 
+    private async deleteUnits(rawDataPointFK: any) {
+        let isCompositionInUse: any
+        let compositionsToDelete: number[] = []
+        for (let index = 0; index < rawDataPointFK.length; index++) {
+            isCompositionInUse = await this.selectOneUseOfCompositionQuery(rawDataPointFK.id)
+            if (isCompositionInUse == undefined) {
+                compositionsToDelete.push(rawDataPointFK[index].id)
+            }
+        }
+        if (compositionsToDelete.length > 0) {
+            await this.deleteCompositionsQuery(compositionsToDelete)
+        }
+    }
+
     private async deleteDataPointsOfDataset(datasetId: number) {
         //TODO: Delete unit and representation
+        // unitsId representationsId
+        let rawDataPointFK = await this.selectDataPointFKViaDatasetIdQuery(datasetId)
         await this.deleteDatapointsQuery(datasetId)
     }
 

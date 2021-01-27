@@ -176,9 +176,9 @@ export class DataSetService {
         return selectedDatasetIds;
     }
 
-    private async getDataFromDatasetIds2(selectedDatasetIds: number[]) {
+    private async getDataFromDatasetIds(selectedDatasetIds: number[]) {
         try {
-            let rawData = await this.dataQuery.getAllData2(selectedDatasetIds)
+            let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
             let publication: IPublicationModel
             let dataPointComments: string[]
             let datasetInfo: IDatasetInfoModel
@@ -219,6 +219,7 @@ export class DataSetService {
                         singleAuthorData = rawData[1][authorIndex]
                         allAuthorData.push(singleAuthorData)
                         rawData[1].splice(authorIndex, 1)
+                        authorIndex--
                     }
                 }
                 publication.authors = allAuthorData
@@ -231,6 +232,7 @@ export class DataSetService {
                         singleMaterialData = rawData[3][materialIndex]
                         allMaterialData.push(singleMaterialData)
                         rawData[3].splice(materialIndex, 1)
+                        materialIndex--
                     }
                 }
 
@@ -241,6 +243,7 @@ export class DataSetService {
                         singleDataPointData = rawData[4][dataPointIndex]
                         allDataPointData.push(singleDataPointData)
                         rawData[4].splice(dataPointIndex, 1)
+                        dataPointIndex--
                     }
                 }
 
@@ -268,29 +271,6 @@ export class DataSetService {
             return allDataSets
         } catch (error) {
             throw new InternalServerError("Something went wrong fetching from DB. Maybe its down")
-        }
-    }
-
-    /**
-     * This declares an array of IDatasetResponseModel objects called setOfData and each IDatasetResponseModel 
-     * contains: a publication object, an array of author objects, a data set object, an array of material objects, 
-     * an array of data point objects, and a data point comments object.
-     * It then loops through the received array of data set IDs and runs a @getAllData query for each individual 
-     * entry in the array and appends the returned IDatasetResponseModel object to setOfData. Once the loop is 
-     * completed, setOfData is returned. 
-     *  
-     * @param selectedDatasetIds 
-     * This is an array containing the data set IDs that we wish to get the full data set of: any[]
-     */
-    private async getDataFromDatasetIds(selectedDatasetIds: any[]) {
-        try {
-            let setOfData: Array<IClientDatasetModel> = [];
-            for (let i = 0; i < selectedDatasetIds.length; i++) {
-                setOfData.push(await this.dataQuery.fetchRegularDataSet(selectedDatasetIds[i]));
-            }
-            return setOfData
-        } catch (error) {
-            console.error(error);
         }
     }
 

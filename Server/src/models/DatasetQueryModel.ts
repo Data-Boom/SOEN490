@@ -18,7 +18,7 @@ import { Composition } from "./entities/Composition";
 import { Subcategory } from "./entities/Subcategory";
 import { selectAllAuthorsQuery, selectAuthorsQuery } from "./entities/Authors";
 import { selectAllDataPointCommentsQuery, selectDataPointCommentsQuery } from "./entities/Datapointcomments";
-import { selectAllDataPointsQuery, selectDataPointsQuery } from "./entities/Datapoints";
+import { selectDataPointsQuery } from "./entities/Datapoints";
 import { selectAllMaterialQuery, selectMaterialQuery } from "./entities/Material";
 import { selectUnapprovedDatasetInfoQuery, Unapproveddatasets } from "./entities/Unapproveddatasets";
 
@@ -236,41 +236,23 @@ export class DataQueryModel {
      * @param id 
      * A data set ID: number
      */
-    async getAllData(id: number): Promise<any[]> {
-        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id) || {}
-        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection, id)
-        publicationData.authors = authorData
-        let completeDatasetData = await selectDatasetsQuery(this.connection, id)
-        let datasetInfo: IDatasetInfoModel = {
-            name: completeDatasetData[0]?.name,
-            comments: completeDatasetData[0]?.comments,
-            datasetDataType: completeDatasetData[0]?.datasetdatatype,
-            category: completeDatasetData[0]?.category,
-            subcategory: completeDatasetData[0]?.subcategory
-        }
-        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection, id)
-        this.valuesToArray(datapointData)
-        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection, id)
-        let datapointComments = await selectDataPointCommentsQuery(this.connection, id) || {}
-        datapointComments.datapointcomments = typeof datapointComments.datapointcomments === 'string' ? JSON.parse(datapointComments.datapointcomments) : []
-        return [publicationData, completeDatasetData[0].dataset_id, datasetInfo, datapointData, materialData, datapointComments];
-    }
-
-    async fetchRegularDataSet(id: number): Promise<IClientDatasetModel> {
-        let allData = await this.getAllData(id)
-        let compiledDataset: IClientDatasetModel = {
-            publication: allData[0],
-            dataset_id: allData[1],
-            dataset_info: allData[2],
-            materials: allData[4],
-            dataPoints: allData[3],
-            dataPointComments: allData[5].datapointcomments
-        }
-        return compiledDataset;
+    async getAllData(id: number[]): Promise<any> {
+        let publicationData = await selectAllPublicationsQuery(this.connection, id)
+        let authorData = await selectAllAuthorsQuery(this.connection, id)
+        let materialData = await selectAllMaterialQuery(this.connection, id)
+        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection)
+            .whereInIds(id)
+            .getRawMany();
+        this.parseDataPoints(datapointData)
+        let datapointComments = await selectAllDataPointCommentsQuery(this.connection, id) || {}
+        this.parseDataPointComments(datapointComments)
+        let completeDatasetData = await selectAllDatasetsQuery(this.connection, id)
+        let allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
+        return allData;
     }
 
     async fetchUnapprovedDataSet(id: number): Promise<IApprovalDatasetModel> {
-        let allData = await this.getAllData(id)
+        let allData = await this.getAllData([id])
         let approvalData = await selectUnapprovedDatasetInfoQuery(this.connection, id)
         let compiledDataset: IApprovalDatasetModel = {
             publication: allData[0],
@@ -285,25 +267,12 @@ export class DataQueryModel {
         return compiledDataset;
     }
 
-    async getAllData2(id: number[]): Promise<any> {
-        let publicationData = await selectAllPublicationsQuery(this.connection, id)
-        let authorData = await selectAllAuthorsQuery(this.connection, id)
-        let materialData = await selectAllMaterialQuery(this.connection, id)
-        let datapointData: IDataPointModel[] = await selectAllDataPointsQuery(this.connection, id)
-        this.valuesToArray(datapointData)
-        let datapointComments = await selectAllDataPointCommentsQuery(this.connection, id) || {}
-        this.valuesToArray2(datapointComments)
-        let completeDatasetData = await selectAllDatasetsQuery(this.connection, id)
-        let allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
-        return allData;
-    }
-
-    private valuesToArray = (dataPoints: IDataPointModel[]): void => {
+    private parseDataPoints = (dataPoints: IDataPointModel[]): void => {
         dataPoints.forEach(dataPoint => {
             dataPoint.values = typeof dataPoint.values === 'string' ? JSON.parse(dataPoint.values) : []
         });
     }
-    private valuesToArray2 = (datapointComments: any): void => {
+    private parseDataPointComments = (datapointComments: any): void => {
         datapointComments.forEach(datapointComment => {
             datapointComment.datapointcomments = typeof datapointComment.datapointcomments === 'string' ? JSON.parse(datapointComment.datapointcomments) : []
         });
