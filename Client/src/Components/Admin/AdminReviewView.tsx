@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { IDatasetModel, example2, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 
@@ -11,6 +11,7 @@ export function AdminReviewView() {
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
     const [dataset, setDataset] = useState(exampleExportDatasetModel)
+    const [comment, setComment] = useState("Add a comment")
     //const completeDataset: IDatasetModel[]
     useEffect(() => {
         const callListDatasetStates = async () => {
@@ -38,6 +39,10 @@ export function AdminReviewView() {
     const handleSubmit = (datasetId: IDatasetModel) => {
 
     }
+
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    };
     return (
 
         <Grid container spacing={3}>
@@ -51,11 +56,26 @@ export function AdminReviewView() {
                 <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>
             </Grid>
             <Grid xs={9}>
-                <DatasetUploadForm
-                    onSubmit={handleSubmit}
-                    initialDataset={dataset}
-                    editable={editable}
-                />
+                <Grid container spacing={3}>
+                    <Grid xs={12}>
+                        <DatasetUploadForm
+                            onSubmit={handleSubmit}
+                            initialDataset={dataset}
+                            editable={editable}
+                        />
+                    </Grid>
+                    <Grid xs={12}>
+                        <TextField
+                            id="standard-multiline-flexible"
+                            label="Add a Comment"
+                            multiline
+                            fullWidth={true}
+                            rowsMax={4}
+                            value={comment}
+                            onChange={handleCommentChange}
+                        />
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
 

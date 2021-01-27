@@ -38,10 +38,10 @@ export const MetaForm = (props: IProps) => {
           <FastField name="meta.data_type" label='Data Type' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <Field name="meta.category" label='Category' disabled={!props.editable} component={MuiSelectFormik} options={getOptions(categories)} />
+          <Field name="meta.category" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
         </Grid>
         <Grid item sm={3}>
-          <Field name="meta.subcategory" label='Subcategory' disabled={!props.editable} component={MuiSelectFormik} options={getOptions(subcategories)} />
+          <Field name="meta.subcategory" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
         </Grid>
         <Grid item sm={12}>
           <FieldArray name='meta.material' >
