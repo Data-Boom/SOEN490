@@ -21,6 +21,7 @@ export const DatasetUploadView = (props: IProps) => {
         <DatasetUploadForm
           onSubmit={handleSubmitForm}
           initialDataset={initialDataset}
+          editable={true}
         />
       </Box>
     </Container>

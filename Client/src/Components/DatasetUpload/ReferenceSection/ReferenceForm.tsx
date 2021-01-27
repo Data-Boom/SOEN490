@@ -7,28 +7,34 @@ import React from 'react'
 import { classStyles } from '../../../appTheme'
 import { get } from 'lodash'
 
-export const ReferenceForm = () => {
+interface IProps {
+  editable: boolean
+}
+
+export const ReferenceForm = (props: IProps) => {
+
+
   return (
     <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Reference</Typography>
       <Grid container spacing={4}>
         <Grid item sm={4}>
-          <FastField name="reference.title" label='Title' component={MuiTextFieldFormik} />
+          <FastField name="reference.title" label='Title' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.type" label='Type' component={MuiTextFieldFormik} />
+          <FastField name="reference.type" label='Type' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.publisher" label='Publisher' component={MuiTextFieldFormik} />
+          <FastField name="reference.publisher" label='Publisher' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.volume" label='Volume' component={MuiTextFieldFormik} />
+          <FastField name="reference.volume" label='Volume' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.pages" label='Pages' component={MuiTextFieldFormik} />
+          <FastField name="reference.pages" label='Pages' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={4}>
-          <FastField name="reference.year" label='Year' component={MuiTextFieldFormik} />
+          <FastField name="reference.year" label='Year' disabled={!props.editable} component={MuiTextFieldFormik} />
         </Grid>
       </Grid>
       <Grid container spacing={4}>

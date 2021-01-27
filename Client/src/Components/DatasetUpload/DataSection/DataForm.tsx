@@ -6,6 +6,7 @@ import React from 'react'
 import { classStyles } from '../../../appTheme'
 
 interface IProps {
+  editable: boolean
 }
 
 export const DataForm = (props: IProps) => {
@@ -16,7 +17,7 @@ export const DataForm = (props: IProps) => {
 
   return (
     <Box className={classStyles().defaultBorder}>
-      <FastField name="data" label='Dataset Name' component={FormikDatasetDataTable} />
+      <FastField name="data" label='Dataset Name' disabled={!props.editable} component={FormikDatasetDataTable} />
     </Box>
   )
 }
