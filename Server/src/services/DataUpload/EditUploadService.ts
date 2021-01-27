@@ -1,6 +1,7 @@
 import { BadRequest } from "@tsed/exceptions"
 import { getConnection } from "typeorm"
 import { IResponse } from "../../genericInterfaces/ResponsesInterface"
+import { DatasetDeleteModel } from "../../models/DatasetDeleteModel"
 import { DataUploadModel } from "../../models/DataUploadModel"
 import { Authors } from "../../models/entities/Authors"
 import AbstractUploadService from "./AbstractUploadService"
@@ -8,14 +9,15 @@ import AbstractUploadService from "./AbstractUploadService"
 
 export default class EditUploadService extends AbstractUploadService {
     async uploadData(): Promise<IResponse> {
+        let deleteModel = new DatasetDeleteModel()
         let connection = getConnection()
         let requestResponse: IResponse = {} as any
 
         // First clear tables that need dataset ID
-        let rawDatasetFKs = await this.deleteModel.selectDatasetFKQuery(this.datasetId);
-        await this.deleteModel.deleteDatapointCommentsQuery(this.datasetId)
-        await this.deleteModel.deleteDataPointsOfDataset(this.datasetId)
-        await this.deleteModel.deleteMaterialsOfDataset(this.datasetId)
+        let rawDatasetFKs = await deleteModel.selectDatasetFKQuery(this.datasetId);
+        await deleteModel.deleteDatapointCommentsQuery(this.datasetId)
+        await deleteModel.deleteDataPointsOfDataset(this.datasetId)
+        await deleteModel.deleteMaterialsOfDataset(this.datasetId)
 
         // Generate and link new materials
         let allMaterials: any[] = await this.insertMaterialsData(this.uploadModel, this.parsedFileData.material)
@@ -69,11 +71,11 @@ export default class EditUploadService extends AbstractUploadService {
         await this.uploadModel.insertCommentsForDataSet(this.datasetId, individualDataSetComments)
 
         // Delete remaining old data set data
-        await this.deleteModel.deleteDatasetDataType(rawDatasetFKs.datatypeId)
-        await this.deleteModel.deleteAuthorsOfPublication(rawDatasetFKs.publicationId)
-        await this.deleteModel.deletePublication(rawDatasetFKs.publicationId)
-        await this.deleteModel.deletePublisher(rawDatasetFKs.publisherId)
-        await this.deleteModel.deletePublicationType(rawDatasetFKs.publicationTypeId)
+        await deleteModel.deleteDatasetDataType(rawDatasetFKs.datatypeId)
+        await deleteModel.deleteAuthorsOfPublication(rawDatasetFKs.publicationId)
+        await deleteModel.deletePublication(rawDatasetFKs.publicationId)
+        await deleteModel.deletePublisher(rawDatasetFKs.publisherId)
+        await deleteModel.deletePublicationType(rawDatasetFKs.publicationTypeId)
 
         requestResponse.message = "Dataset Updated!"
         requestResponse.statusCode = 201;

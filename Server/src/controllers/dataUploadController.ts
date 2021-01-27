@@ -44,6 +44,7 @@ export class DataUploadController {
         }
         else {
             try {
+                this.dataSet = request.body
                 let datasetId = Number(request.params.datasetId)
                 this.dataService = new EditUploadService(this.dataSet, datasetId)
                 await this.dataService.validateExtractedData();

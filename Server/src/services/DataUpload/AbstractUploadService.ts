@@ -1,6 +1,5 @@
 import { BadRequest } from "@tsed/exceptions";
 import { IDataSetModel } from "../../genericInterfaces/DataProcessInterfaces";
-import { DatasetDeleteModel } from "../../models/DatasetDeleteModel";
 import { DataUploadModel } from "../../models/DataUploadModel";
 import { Authors } from "../../models/entities/Authors";
 import { IAuthors } from "../../models/interfaces/AuthorsInterface";
@@ -12,7 +11,6 @@ export default abstract class AbstractUploadService {
     protected uploadModel: DataUploadModel
     protected parsedFileData: any
     protected datasetId: number
-    protected deleteModel: DatasetDeleteModel
 
     constructor(parsedFileData: IDataSetModel, datasetId: any = {}) {
         this.parsedFileData = parsedFileData
