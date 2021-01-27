@@ -1,4 +1,4 @@
-import { BadRequest } from "@tsed/exceptions"
+import { BadRequest, InternalServerError } from '@tsed/exceptions';
 import { getConnection } from "typeorm"
 import { IResponse } from "../../genericInterfaces/ResponsesInterface"
 import { DatasetDeleteModel } from "../../models/DatasetDeleteModel"
@@ -50,7 +50,7 @@ export default class EditUploadService extends AbstractUploadService {
 
         // Update data set
         let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData["dataset name"], dataSetDataTypeID, publicationID, categoryIDs, this.parsedFileData.data.comments]
-        await this.uploadModel.updateDataset(arrayOfDatasetInfo)
+        await this.insertDataset(this.uploadModel, arrayOfDatasetInfo)
 
         // Run check on variable vs contents length to see if they're equal for data points and insert
         if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
@@ -82,7 +82,12 @@ export default class EditUploadService extends AbstractUploadService {
         return requestResponse;
     }
 
-    protected insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string) {
-        throw new Error("Method not implemented.")
+    protected async insertDataset(uploadModel: DataUploadModel, arrayOfDatasetInfo: any) {
+        try {
+            await uploadModel.updateDataset(arrayOfDatasetInfo)
+        }
+        catch (error) {
+            throw new InternalServerError('Internal server issue updating your dataset')
+        }
     }
 }
