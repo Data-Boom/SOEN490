@@ -18,9 +18,7 @@ export class Unapproveddatasets {
   dataset?: Dataset
 }
 
-export const selectUnapprovedDatasetInfoQuery = (connection: Connection, dataset: number) =>
+export const selectUnapprovedDatasetInfoQuery = (connection: Connection) =>
   connection.createQueryBuilder(Unapproveddatasets, 'unapproved_dataset')
     .select('unapproved_dataset.flaggedComment', 'flaggedComment')
     .addSelect('unapproved_dataset.isFlagged', 'isFlagged')
-    .where('unapproved_dataset.datasetId = :datasetId', { datasetId: dataset })
-    .getRawOne();

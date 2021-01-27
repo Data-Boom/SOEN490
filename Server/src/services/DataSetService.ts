@@ -10,7 +10,7 @@ import { DatasetDeleteModel } from "../models/DatasetDeleteModel";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
-    private datasetApprovalModel: DatasetApprovalModel
+    private approvalModel: DatasetApprovalModel
     private updateModel: DatasetUpdateModel
     private deleteModel: DatasetDeleteModel
     private requestResponse: IResponse
@@ -19,6 +19,7 @@ export class DataSetService {
         this.dataQuery = new DataQueryModel();
         this.updateModel = new DatasetUpdateModel()
         this.deleteModel = new DatasetDeleteModel()
+        this.approvalModel = new DatasetApprovalModel()
         this.requestResponse = {} as any
     }
 
@@ -274,18 +275,6 @@ export class DataSetService {
         }
     }
 
-    private async getDataFromUnapprovedDatasetIds(selectedDatasetIds: any[]) {
-        try {
-            let setOfData: Array<IApprovalDatasetModel> = [];
-            for (let i = 0; i < selectedDatasetIds.length; i++) {
-                setOfData.push(await this.dataQuery.fetchUnapprovedDataSet(selectedDatasetIds[i]));
-            }
-            return setOfData
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     /**
      * This method is used to get an array of data set IDs that were uploaded by the specifed user ID. 
      * It will call a query to get a raw data packet which contains the data set IDs matching this parameter, 
@@ -377,26 +366,47 @@ export class DataSetService {
         return setOfData;
     }
 
-    private async getUnapprovedDatasetsFromRawData(rawData: IDatasetIDModel[]) {
-        let selectedDatasetIds = await this.createDatasetIdArray(rawData);
-        let setOfData = await this.getDataFromUnapprovedDatasetIds(selectedDatasetIds);
+    private async getDataFromUnapprovedDatasetIds(incompletDatasets: IClientDatasetModel[], approvalData: any[]) {
+        let setOfData: Array<IApprovalDatasetModel> = [];
+        let compiledDataset: IApprovalDatasetModel
+        for (let i = 0; i < incompletDatasets.length; i++) {
+            compiledDataset = {
+                publication: incompletDatasets[i].publication,
+                dataset_id: incompletDatasets[i].dataset_id,
+                dataset_info: incompletDatasets[i].dataset_info,
+                datasetIsFlagged: approvalData[i].isFlagged,
+                datasetFlaggedComment: approvalData[i].flaggedComment,
+                materials: incompletDatasets[i].materials,
+                dataPoints: incompletDatasets[i].dataPoints,
+                dataPointComments: incompletDatasets[i].dataPointComments
+            }
+            setOfData.push(compiledDataset)
+        }
         return setOfData;
     }
 
+    async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
+        let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
+        let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
+        let approvalData = await this.dataQuery.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
+        let setOfData = await this.getDataFromUnapprovedDatasetIds(incompletDatasets, approvalData);
+        return setOfData
+    }
+
     /**
-     * This method is used to get an array of all unapproved data set IDs. 
+     * This method is used to get an array of all `unapproved` data set IDs. 
      * It will call a query to get a raw data packet which contains all of the unapproved data set IDs, 
      * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
      */
     async getUnapprovedAllDatasets() {
         try {
-            let datasetIds = await this.datasetApprovalModel.getUnapprovedDatasets();
-            let response: IApprovalDatasetModel[];
-            if (datasetIds == undefined || datasetIds == null) {
+            let rawDatasetIds = await this.approvalModel.getUnapprovedDatasets();
+            let response: IApprovalDatasetModel[] = [];
+            if (rawDatasetIds == undefined || rawDatasetIds == null) {
                 throw new NotFound("No Unapproved Datasets in database")
             }
             else {
-                response = await this.getUnapprovedDatasetsFromRawData(datasetIds);
+                response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response as any
@@ -408,13 +418,13 @@ export class DataSetService {
 
     async getUserFlaggedDatasets(userId: number) {
         try {
-            let datasetIds = await this.datasetApprovalModel.selectUserFlaggedDatasets(userId);
+            let rawDatasetIds = await this.approvalModel.selectUserFlaggedDatasets(userId);
             let response: IApprovalDatasetModel[];
-            if (datasetIds == undefined || datasetIds == null) {
+            if (rawDatasetIds == undefined || rawDatasetIds == null) {
                 throw new NotFound("No Unapproved Datasets in database")
             }
             else {
-                response = await this.getUnapprovedDatasetsFromRawData(datasetIds);
+                response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response as any
@@ -426,13 +436,13 @@ export class DataSetService {
 
     async getAllFlaggedDatasets() {
         try {
-            let datasetIds = await this.datasetApprovalModel.selectAllFlaggedDatasets();
+            let rawDatasetIds = await this.approvalModel.selectAllFlaggedDatasets();
             let response: IApprovalDatasetModel[];
-            if (datasetIds == undefined || datasetIds == null) {
+            if (rawDatasetIds == undefined || rawDatasetIds == null) {
                 throw new NotFound("No Unapproved Datasets in database")
             }
             else {
-                response = await this.getUnapprovedDatasetsFromRawData(datasetIds);
+                response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response as any

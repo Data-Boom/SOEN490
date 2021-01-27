@@ -137,7 +137,7 @@ export class DataSetController {
 
     /**
      * This controller will take a request, send it to the getDataService to acquire an array 
-     * containing the unapproved, but not flagged, data sets in the database
+     * containing the unapproved data sets in the database
      * 
      * @param request
      * An object containing the request information and parameters: Request 
@@ -146,6 +146,7 @@ export class DataSetController {
      */
     async createRequestForUnapprovedDatsets(request: Request, response: Response) {
         try {
+            this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.getUnapprovedAllDatasets()
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {

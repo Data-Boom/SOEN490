@@ -246,20 +246,11 @@ export class DataQueryModel {
         return allData;
     }
 
-    async fetchUnapprovedDataSet(id: number): Promise<IApprovalDatasetModel> {
-        let allData = await this.getAllData([id])
-        let approvalData = await selectUnapprovedDatasetInfoQuery(this.connection, id)
-        let compiledDataset: IApprovalDatasetModel = {
-            publication: allData[0],
-            dataset_id: allData[1],
-            dataset_info: allData[2],
-            datasetIsFlagged: approvalData.isFlagged,
-            datasetFlaggedComment: approvalData.flaggedComment,
-            materials: allData[4],
-            dataPoints: allData[3],
-            dataPointComments: allData[5].datapointcomments
-        }
-        return compiledDataset;
+    async fetchUnapprovedDatasetsInfo(idArray: number[]): Promise<any[]> {
+        let approvalData = await selectUnapprovedDatasetInfoQuery(this.connection)
+            .whereInIds(idArray)
+            .getRawMany();
+        return approvalData;
     }
 
     private parseDataPoints = (dataPoints: IDataPointModel[]): void => {
