@@ -504,3 +504,37 @@ export const inValidTestData = {
     }
 }
 
+export const validGraphStateData1 = [{
+    "datasets": [
+        {
+            "id": 1,
+            "color": "red",
+            "shape": "square",
+            "isHidden": false
+        },
+        {
+            "color": "green",
+            "id": 2,
+            "isHidden": true,
+            "shape": "triangle",
+        }
+    ],
+    "name": "Test Graph",
+    "axes": [
+        {
+            "variableName": "temperature",
+            "logarithmic": true,
+            "zoomStartIndex": 100,
+            "zoomEndIndex": 100,
+            "units": "C"
+        },
+        {
+            "variableName": "width",
+            "logarithmic": true,
+            "zoomStartIndex": 100,
+            "zoomEndIndex": 100,
+            "units": "mm"
+        }
+    ],
+    "id": 1
+}]

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 
 import { GraphsController } from '../../controllers/GraphsController';
+import { validGraphStateData1 } from '../testData/testData';
 
 describe('SavedGraphs Controller ', () => {
   let mockRequest;
@@ -24,40 +25,7 @@ describe('SavedGraphs Controller ', () => {
   });
 
   test('Valid GraphID Request', async () => {
-    let expectedResponse = {
-      "datasets": [
-        {
-          "id": 1,
-          "color": "red",
-          "shape": "square",
-          "isHidden": false
-        },
-        {
-          "color": "green",
-          "id": 2,
-          "isHidden": true,
-          "shape": "triangle",
-        }
-      ],
-      "name": "Test Graph",
-      "axes": [
-        {
-          "variableName": "temperature",
-          "logarithmic": true,
-          "zoomStartIndex": 100,
-          "zoomEndIndex": 100,
-          "units": "C"
-        },
-        {
-          "variableName": "width",
-          "logarithmic": true,
-          "zoomStartIndex": 100,
-          "zoomEndIndex": 100,
-          "units": "mm"
-        }
-      ],
-      "id": 1
-    }
+    let expectedResponse = validGraphStateData1[0]
     mockRequest = {
       params: {
         graphStateId: '1'
@@ -92,40 +60,7 @@ describe('SavedGraphs Controller ', () => {
   });
 
   test('Valid User Saved Graphs Request; multiple data sets on graph', async () => {
-    let expectedResponse = [{
-      "datasets": [
-        {
-          "id": 1,
-          "color": "red",
-          "shape": "square",
-          "isHidden": false
-        },
-        {
-          "color": "green",
-          "id": 2,
-          "isHidden": true,
-          "shape": "triangle",
-        }
-      ],
-      "name": "Test Graph",
-      "axes": [
-        {
-          "variableName": "temperature",
-          "logarithmic": true,
-          "zoomEndIndex": 100,
-          "zoomStartIndex": 100,
-          "units": "C"
-        },
-        {
-          "variableName": "width",
-          "logarithmic": true,
-          "zoomEndIndex": 100,
-          "zoomStartIndex": 100,
-          "units": "mm"
-        }
-      ],
-      "id": 1
-    }]
+    let expectedResponse = validGraphStateData1
     mockRequest = {
       body: {
         user: {

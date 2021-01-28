@@ -15,7 +15,8 @@ module.exports = {
     collectCoverageFrom: [
         'src/controllers/**/*.ts',
         'src/middleware/*.ts',
-        'src/models/**/*.ts',
+        'src/models/DatasetModels/*.ts',
+        'src/models/*.ts',
         'src/services/**/*.ts'
     ]
     ,
