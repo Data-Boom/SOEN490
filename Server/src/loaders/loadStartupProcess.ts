@@ -9,9 +9,9 @@ import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
 import { dataExtractionRouter } from '../routes/dataExtractionRouter'
 import { dataUploadRouter } from '../routes/dataUploadRouter'
-import { getDataRouter } from '../routes/getDatasetRouter';
 import { getConnectionManager } from 'typeorm';
 import { GraphsRouter } from '../routes/GraphsRouter';
+import { DataSetRouter } from '../routes/DatasetRouter';
 
 const cookieParser = require('cookie-parser');
 
@@ -64,7 +64,7 @@ export class LoadStartupProcess {
      */
     this.app.use('/', dataExtractionRouter)
     this.app.use('/', authenticationRouter)
-    this.app.use('/', getDataRouter)
+    this.app.use('/', DataSetRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
     this.app.use('/', dataUploadRouter)
     this.app.use('/', GraphsRouter)

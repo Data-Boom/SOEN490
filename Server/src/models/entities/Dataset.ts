@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, Connection } from "typeorm";
+import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
@@ -97,6 +97,9 @@ export class Dataset {
     @JoinColumn()
     uploader?: Accounts
 
+    @Column({ type: 'integer', default: 0 })
+    isApproved: number
+
     @CreateDateColumn()
     created: Date
 
@@ -134,4 +137,10 @@ export const selectAllDatasetsQuery = (connection: Connection, datasets: number[
         .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
         .whereInIds(datasets)
+        .getRawMany();
+
+export const selectDatasetIdsBasedOnApprovalStatusQuery = (connection: Connection, isApproved: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('dataset.id', 'dataset_id')
+        .where('dataset.isApproved = :isApproved', { isApproved: isApproved })
         .getRawMany();

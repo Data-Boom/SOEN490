@@ -1,14 +1,25 @@
-import { IAuthorModel, IClientDatasetModel, IDataPointModel, IDatasetIDModel, IDatasetInfoModel, IMaterialModel, IPublicationModel } from "../models/interfaces/DatasetModelInterface";
-
-import { DataQueryModel } from "../models/DatasetQueryModel";
+import { InternalServerError, NotFound, BadRequest } from "@tsed/exceptions";
+import { IResponse } from "../genericInterfaces/ResponsesInterface";
+import { DatasetApprovalModel } from "../models/DatasetModels/DatasetApprovalModel";
+import { DatasetCommonModel } from "../models/DatasetModels/DatasetCommonModel";
+import { DatasetDeleteModel } from "../models/DatasetModels/DatasetDeleteModel";
+import { DataQueryModel } from "../models/DatasetModels/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
-import { InternalServerError } from "@tsed/exceptions";
+import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel } from "../models/interfaces/DatasetModelInterface";
 
-export class retrieveData {
+export class DataSetService {
     private dataQuery: DataQueryModel;
+    private approvalModel: DatasetApprovalModel
+    private deleteModel: DatasetDeleteModel
+    private requestResponse: IResponse
+    private commonModel: DatasetCommonModel
 
     constructor() {
         this.dataQuery = new DataQueryModel();
+        this.deleteModel = new DatasetDeleteModel()
+        this.approvalModel = new DatasetApprovalModel()
+        this.commonModel = new DatasetCommonModel();
+        this.requestResponse = {} as any
     }
 
     /**
@@ -104,8 +115,6 @@ export class retrieveData {
                 rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
             }
             else {
-                console.log(lastNameReceived, 'fn');
-
                 rawData = await this.dataQuery.getDatasetIDFromAuthorLastName(lastNameReceived);
             }
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
@@ -131,7 +140,7 @@ export class retrieveData {
      * This is an array of raw data packets (aka. JSON objects): any[]
      */
     private async createDatasetIdArray(rawData: any[]) {
-        let datasetIdArray = [];
+        let datasetIdArray: number[] = [];
         for (let index = 0; index < rawData.length; index++) {
             datasetIdArray[index] = rawData[index].dataset_id;
         }
@@ -151,7 +160,7 @@ export class retrieveData {
      * An array formed from combining multiple data set IDs arrays together: any[]
      */
     private async selectDatasetIds(paramsEntered: number, rawDatasetIds: any[]) {
-        let selectedDatasetIds = []
+        let selectedDatasetIds: number[] = []
         let count: number
         for (let i = 0; i < rawDatasetIds.length; i++) {
             count = 1;
@@ -161,22 +170,12 @@ export class retrieveData {
                 }
             }
             if (count == paramsEntered) {
-                selectedDatasetIds.push(rawDatasetIds[i]);
+                selectedDatasetIds.push(Number(rawDatasetIds[i]));
             }
         }
         return selectedDatasetIds;
     }
 
-    /**
-     * This declares an array of IClientDatasetModel objects called allDataSets and each IClientDatasetModel 
-     * contains: a publication object, an array of author objects, a data set ID, a data set info object, an array of material  
-     * objects, an array of data point objects, and a data point comments object. It calls a query to generate
-     * an array containing the data of each data set and then iterates through this massive amount of data to
-     * generate individual IClientDatasetModel objects and push each entry to allDataSets.
-     *  
-     * @param selectedDatasetIds 
-     * This is an array containing the data set IDs that we wish to get the full data set of: number[]
-     */
     private async getDataFromDatasetIds(selectedDatasetIds: number[]) {
         try {
             let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
@@ -302,7 +301,7 @@ export class retrieveData {
      * @param userReceived
      * Account ID: number
      */
-    async getUserSavedDatasets(userReceived: string) {
+    async getUserFavoriteDatasets(userReceived: number) {
         let rawData = await this.dataQuery.getSavedDatasetIDOfUser(userReceived);
         if (rawData[0]) {
             let setOfData = await this.getDatasetsFromRawData(rawData[1]);
@@ -322,7 +321,7 @@ export class retrieveData {
      * @param datasetId
      * Data Set ID: number
      */
-    async addSavedDatasetService(userEmail: string, datasetId: number) {
+    async addUserFavoriteDataset(userEmail: string, datasetId: number) {
         let executionStatus = await this.dataQuery.addSavedDatasetModel(userEmail, datasetId);
         return executionStatus;
     }
@@ -336,10 +335,20 @@ export class retrieveData {
      * @param datasetId
      * Data Set ID: number
      */
-    async removeSavedDatasetService(userEmail: string, datasetId: number) {
-        let executionStatus = await this.dataQuery.removeSavedDatasetModel(userEmail, datasetId);
-        return executionStatus;
+    async removeUserFavoriteDataset(userId: number, datasetId: number) {
+        try {
+            let response = await this.dataQuery.removeSavedDatasetModel(userId, datasetId);
+            if (response == undefined || response == null) {
+                throw new NotFound("Could not find your saved datasets")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong deleting your saved datasets. Try later")
+        }
     }
+
 
     /**
      * This method accepts an array of IDatasetIDModel models where each object has a data set ID that we wish to acquire
@@ -354,5 +363,169 @@ export class retrieveData {
         let selectedDatasetIds = await this.createDatasetIdArray(rawData);
         let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds);
         return setOfData;
+    }
+
+    private async getDataFromUnapprovedDatasetIds(incompletDatasets: IClientDatasetModel[], approvalData: any[]) {
+        let setOfData: Array<IApprovalDatasetModel> = [];
+        let compiledDataset: IApprovalDatasetModel
+        for (let i = 0; i < incompletDatasets.length; i++) {
+            compiledDataset = {
+                publication: incompletDatasets[i].publication,
+                dataset_id: incompletDatasets[i].dataset_id,
+                dataset_info: incompletDatasets[i].dataset_info,
+                datasetIsFlagged: approvalData[i].isFlagged,
+                datasetFlaggedComment: approvalData[i].flaggedComment,
+                materials: incompletDatasets[i].materials,
+                dataPoints: incompletDatasets[i].dataPoints,
+                dataPointComments: incompletDatasets[i].dataPointComments
+            }
+            setOfData.push(compiledDataset)
+        }
+        return setOfData;
+    }
+
+    async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
+        let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
+        let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
+        let approvalData = await this.approvalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
+        let setOfData = await this.getDataFromUnapprovedDatasetIds(incompletDatasets, approvalData);
+        return setOfData
+    }
+
+    /**
+     * This method is used to get an array of all `unapproved` data set IDs. 
+     * It will call a query to get a raw data packet which contains all of the unapproved data set IDs, 
+     * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
+     */
+    async getUnapprovedAllDatasets() {
+        try {
+            let rawDatasetIds = await this.approvalModel.getUnapprovedDatasets();
+            let response: IApprovalDatasetModel[] = [];
+            if (rawDatasetIds == undefined || rawDatasetIds == null) {
+                throw new NotFound("No Unapproved Datasets in database")
+            }
+            else {
+                response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+        }
+    }
+
+    async getUserFlaggedDatasets(userId: number) {
+        try {
+            let rawDatasetIds = await this.approvalModel.selectUserFlaggedDatasets(userId);
+            let response: IApprovalDatasetModel[];
+            if (rawDatasetIds == undefined || rawDatasetIds == null) {
+                throw new NotFound("No Unapproved Datasets in database")
+            }
+            else {
+                response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+        }
+    }
+
+    async getAllFlaggedDatasets() {
+        try {
+            let rawDatasetIds = await this.approvalModel.selectAllFlaggedDatasets();
+            let response: IApprovalDatasetModel[];
+            if (rawDatasetIds == undefined || rawDatasetIds == null) {
+                throw new NotFound("No Unapproved Datasets in database")
+            }
+            else {
+                response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+        }
+    }
+
+    async rejectDataSet(datasetId: number) {
+        try {
+            let response = await this.commonModel.verifyDatasetExists(datasetId)
+            if (response == undefined || response == null) {
+                throw new BadRequest("No such data set exists")
+            }
+            response = await this.deleteModel.rejectDataset(datasetId)
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
+            }
+            else {
+                throw new InternalServerError("Something went wrong deleting this DataSet. Maybe its down")
+            }
+        }
+    }
+
+    async flagNewDataset(datasetId: number, flaggedComment?: string, additionalComment?: string) {
+        try {
+            let response = await this.approvalModel.flagDataSet(datasetId, flaggedComment, additionalComment)
+            if (response == undefined || response == null) {
+                throw new BadRequest("Could not flag this Dataset")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Something went wrong with flagging this dataset. Try again later")
+        }
+    }
+
+    async fetchFlaggedDatasets(userId: number) {
+        try {
+            //let response = await this.dataQuery.selectUserFlaggedDatasets(userId)
+            let response = null
+            if (response == undefined || response == null) {
+                throw new BadRequest("Could fetch user flagged datasets")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Internal server error fetching flagged datasets. Try again later")
+        }
+    }
+
+    async adminApprovedDataset(datasetId: number, datasetCommentsToAppend: string) {
+        try {
+            await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
+            let response = await this.approvalModel.approveDataset(datasetId)
+            if (response == undefined || response == null) {
+                throw new BadRequest("No dataset under this ID")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Internal server error approving this dataset. Try again later")
+        }
+    }
+
+    async userApprovedDataset(datasetId: number) {
+        try {
+            let response = await this.approvalModel.approveDataset(datasetId)
+            if (response == undefined || response == null) {
+                throw new BadRequest("No dataset under this ID")
+            }
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            throw new InternalServerError("Internal server error approving this dataset. Try again later")
+        }
     }
 }

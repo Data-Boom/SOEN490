@@ -31,7 +31,7 @@ describe('Data Upload Controller', () => {
         }
         await dataUploadController.createRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
-        expect(mockResponse.status).toBeCalledWith(200)
+        expect(mockResponse.status).toBeCalledWith(201)
     })
 
     test('Invalid Json Upload', async () => {

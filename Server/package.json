@@ -35,6 +35,7 @@
   "dependencies": {
     "@tsed/exceptions": "^6.17.1",
     "@types/cors": "^2.8.5",
+    "@types/jsonwebtoken": "^8.5.0",
     "argon2": "^0.27.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

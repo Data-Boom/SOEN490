@@ -15,6 +15,7 @@ import { Datapointcomments } from './entities/Datapointcomments';
 import { Representations } from './entities/Representations';
 import { IMaterials } from './interfaces/MaterialsInterface';
 import { IAuthors } from './interfaces/AuthorsInterface';
+import { Unapproveddatasets } from "./entities/Unapproveddatasets";
 
 /**
  * This model class is responsible for updating the database with the extracted from the fileUpload. 
@@ -40,7 +41,7 @@ export class DataUploadModel {
      * @param publicationTypeReceived 
      * Publication type: string
      */
-    async insertReferenceType(publicationTypeReceived: string): Promise<number> {
+    async insertPublicationType(publicationTypeReceived: string): Promise<number> {
         let publicationType = new Publicationtype();
         publicationType.id;
         publicationType.name = publicationTypeReceived;
@@ -53,6 +54,23 @@ export class DataUploadModel {
             await this.connection.manager.save(publicationType);
         }
         return publicationType.id;
+    }
+
+
+    async updateDataset(arrayOfDatasetInfo: any[]) {
+        await this.connection
+            .createQueryBuilder()
+            .update(Dataset)
+            .set({
+                name: arrayOfDatasetInfo[1],
+                datatypeId: arrayOfDatasetInfo[2],
+                publicationId: arrayOfDatasetInfo[3],
+                categoryId: arrayOfDatasetInfo[4][0],
+                subcategoryId: arrayOfDatasetInfo[4][1],
+                comments: arrayOfDatasetInfo[5]
+            })
+            .where("id = :id", { id: arrayOfDatasetInfo[0] })
+            .execute();
     }
 
     private selectPublisherIdQuery = (publisherReceived: string) =>
@@ -171,21 +189,8 @@ export class DataUploadModel {
         return allAuthors;
     }
 
-    private selectPublicationIdQuery = (publicationName: string, publicationDOI: string, publicationPages: number, publicationVolume: number, publicationYear: number) =>
-        this.connection.createQueryBuilder(Publications, 'publication')
-            .select('publication.id', 'id')
-            .where('LOWER(publication.name) = LOWER(:publicationNameRef)', { publicationNameRef: publicationName })
-            .andWhere('LOWER(publication.doi) = LOWER(:publicationDOIRef)', { publicationDOIRef: publicationDOI })
-            .andWhere('publication.pages = :publicationPagesRef', { publicationPagesRef: publicationPages })
-            .andWhere('publication.volume = :publicationVolumeRef', { publicationVolumeRef: publicationVolume })
-            .andWhere('publication.year = :publicationYearRef', { publicationYearRef: publicationYear })
-            .getRawOne();
-
     /**
-     * This method will create a Publications object and return it's ID. It will check if a  
-     * duplicate Publications exists via a query and if it exists will set the
-     * Publications object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Publications table.
+     * This method will create a Publications object and return it's ID. 
      *
      * @param referenceTitle 
      * Publication title: string
@@ -221,14 +226,7 @@ export class DataUploadModel {
         publication.datePublished = referenceDatePublished;
         publication.dateAccessed = referenceDateAccessed;
         publication.authors = referenceAuthors;
-        let publicationExists: any;
-        publicationExists = await this.selectPublicationIdQuery(referenceTitle, referenceDOI, referencePages, referenceVolume, referenceYear);
-        if (publicationExists != undefined) {
-            publication.id = publicationExists.id;
-        }
-        else {
-            await this.connection.manager.save(publication);
-        }
+        await this.connection.manager.save(publication);
         return publication.id;
     }
 
@@ -543,5 +541,13 @@ export class DataUploadModel {
         datapointcomments.datasetId = dataSetID;
         datapointcomments.comments = comments;
         await this.connection.manager.save(datapointcomments);
+    }
+
+    async createEntryInUnapprovedDataSets(datasetId: number) {
+        let unapprovedDataset = new Unapproveddatasets()
+        unapprovedDataset.datasetId = datasetId
+        unapprovedDataset.flaggedComment
+        unapprovedDataset.isFlagged = 0
+        await this.connection.manager.save(unapprovedDataset)
     }
 }

@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { DataUploadService } from '../services/DataUploadService'
+import { UnapprovedUploadService } from '../services/DataUpload/UnapprovedUploadService'
+import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
+import EditUploadService from '../services/DataUpload/EditUploadService';
+import AbstractUploadService from '../services/DataUpload/AbstractUploadService';
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -9,7 +12,8 @@ import { DataUploadService } from '../services/DataUploadService'
  */
 
 export class DataUploadController {
-    private dataService: DataUploadService
+    private dataService: AbstractUploadService
+    private dataSet: IDataSetModel
 
     constructor() {
     }
@@ -17,12 +21,33 @@ export class DataUploadController {
     async createRequest(request: Request, response: Response): Promise<Response> {
         if (!request.body) {
             response.status(400).json({
-                message: "No Json to Upload Received"
+                message: "No Data to Upload"
             })
         }
         else {
-            this.dataService = new DataUploadService(request.body);
             try {
+                this.dataSet = request.body
+                this.dataService = new UnapprovedUploadService(this.dataSet)
+                await this.dataService.validateExtractedData();
+                let extractDataResponse: any = await this.dataService.uploadData();
+                return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
+            } catch (error) {
+                return response.status(error.status).json(error.message);
+            }
+        }
+    }
+
+    async createEditUploadRequest(request: Request, response: Response): Promise<Response> {
+        if (!request.body || !request.params.datasetId) {
+            response.status(400).json({
+                message: "No Dataset Received"
+            })
+        }
+        else {
+            try {
+                this.dataSet = request.body
+                let datasetId = Number(request.params.datasetId)
+                this.dataService = new EditUploadService(this.dataSet, datasetId)
                 await this.dataService.validateExtractedData();
                 let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);

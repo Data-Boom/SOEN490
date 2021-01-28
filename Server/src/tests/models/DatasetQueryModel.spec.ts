@@ -1,6 +1,5 @@
 import { createConnection, getConnection } from 'typeorm';
-
-import { DataQueryModel } from '../../models/DatasetQueryModel';
+import { DataQueryModel } from '../../models/DatasetModels/DatasetQueryModel';
 
 describe('data service test', () => {
     let dataQueryModel: DataQueryModel;
@@ -81,8 +80,8 @@ describe('data service test', () => {
         done()
     });
 
-    test('Feeds the email of account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
-        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser("j.comkj")
+    test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
+        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser(1)
         expect(arrayOfData[1][0].dataset_id).toEqual(2);
         done()
     });
@@ -93,9 +92,9 @@ describe('data service test', () => {
         done()
     });
 
-    test('Feeds an invalid email and expects to see an error message', async done => {
-        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser("not valid")
-        expect(arrayOfData[1]).toEqual("Invalid user email provided");
+    test('Feeds an invalid account ID and expects to see an no IDs returned', async done => {
+        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser(5000)
+        expect(arrayOfData[0].dataset_id).toBeUndefined()
         done()
     });
 })
