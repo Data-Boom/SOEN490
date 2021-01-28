@@ -14,11 +14,11 @@ interface IProps {
 }
 
 export const AuthorRow = (props: IProps) => {
-  const { index, onRemoveAuthorClick, removable } = props
+  const { index, onRemoveAuthorClick, removable, editable } = props
 
   const removeButton = () => {
     return (
-      <IconButton color="primary" aria-label="remove author" onClick={() => onRemoveAuthorClick(index)} disabled={!props.editable}>
+      <IconButton color="primary" aria-label="remove author" onClick={() => onRemoveAuthorClick(index)} disabled={!editable}>
         <ClearIcon />
       </IconButton>
     )
@@ -28,13 +28,13 @@ export const AuthorRow = (props: IProps) => {
     <Box>
       <Grid item container spacing={4}>
         <Grid item>
-          <FastField name={`reference.authors[${index}].firstName`} disabled={!props.editable} shouldUpdate={shouldComponentUpdate} label='First Name' component={MuiTextFieldFormik} />
+          <FastField name={`reference.authors[${index}].firstName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='First Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
-          <FastField name={`reference.authors[${index}].middleName`} disabled={!props.editable} shouldUpdate={shouldComponentUpdate} label='Middle Name' component={MuiTextFieldFormik} />
+          <FastField name={`reference.authors[${index}].middleName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='Middle Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
-          <FastField name={`reference.authors[${index}].lastName`} disabled={!props.editable} shouldUpdate={shouldComponentUpdate} label='Last Name' component={MuiTextFieldFormik} />
+          <FastField name={`reference.authors[${index}].lastName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='Last Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
           {removable ? removeButton() : null}

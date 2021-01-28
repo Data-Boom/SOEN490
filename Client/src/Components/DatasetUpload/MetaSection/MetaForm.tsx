@@ -26,23 +26,23 @@ const getOptions = (options: any[]): any => {
 }
 
 export const MetaForm = (props: IProps) => {
-  const { materials, categories, subcategories } = props
+  const { materials, categories, subcategories, editable } = props
 
   return (
     <Box className={classStyles().defaultBorder}>
       <Typography variant='h6' align="left">Meta</Typography>
       <Grid container spacing={4}>
         <Grid item sm={3}>
-          <FastField name="meta.dataset_name" label='Dataset Name' shouldUpdate={shouldComponentUpdate} disabled={!props.editable} component={MuiTextFieldFormik} />
+          <FastField name="meta.dataset_name" label='Dataset Name' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <FastField name="meta.data_type" label='Data Type' shouldUpdate={shouldComponentUpdate} disabled={!props.editable} component={MuiTextFieldFormik} />
+          <FastField name="meta.data_type" label='Data Type' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiTextFieldFormik} />
         </Grid>
         <Grid item sm={3}>
-          <Field name="meta.category" label='Category' shouldUpdate={shouldComponentUpdate} disabled={!props.editable} component={MuiSelectFormik} options={getOptions(categories)} />
+          <Field name="meta.category" label='Category' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(categories)} />
         </Grid>
         <Grid item sm={3}>
-          <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!props.editable} component={MuiSelectFormik} options={getOptions(subcategories)} />
+          <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(subcategories)} />
         </Grid>
         <Grid item sm={12}>
           <FieldArray name='meta.material' >
@@ -51,7 +51,7 @@ export const MetaForm = (props: IProps) => {
                 value={get(form.values, 'meta.material')}
                 fieldArrayHelpers={fieldArrayHelpers}
                 options={materials}
-                editable={props.editable}
+                editable={editable}
               />)
             }}
           </FieldArray>

@@ -19,9 +19,9 @@ const materialToString = (material: IMaterial) => {
 }
 
 export const MaterialSelectChipArray = (props: IProps) => {
-  const { value, options, fieldArrayHelpers } = props
+  const { value, options, fieldArrayHelpers, editable } = props
   const handleDelete = (materialToDelete: IMaterial) => {
-    if (props.editable) {
+    if (editable) {
       const indexToRemove = value.findIndex(material => materialToString(material) == materialToString(materialToDelete))
       fieldArrayHelpers.remove(indexToRemove)
     }
@@ -56,7 +56,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
         {renderMaterials()}
         <Grid item sm={6}>
           <Autocomplete
-            disabled={!props.editable}
+            disabled={!editable}
             onChange={handleAdd}
             options={options}
             getOptionLabel={option => materialToString(option)}

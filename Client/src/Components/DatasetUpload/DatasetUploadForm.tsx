@@ -24,7 +24,7 @@ interface DatasetUploadFormValues {
 }
 
 export const DatasetUploadForm = (props: IProps): any => {
-  const { initialDataset, onSubmit } = props
+  const { initialDataset, onSubmit, editable } = props
 
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
@@ -69,9 +69,9 @@ export const DatasetUploadForm = (props: IProps): any => {
       onSubmit={handleSubmit}
     >
       <Form>
-        <MetaForm materials={materials} editable={props.editable} categories={categories} subcategories={subcategories} />
-        <ReferenceForm editable={props.editable} />
-        <DataForm editable={props.editable} />
+        <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
+        <ReferenceForm editable={editable} />
+        <DataForm editable={editable} />
         <Button variant="contained" color="primary" type="submit">Save Dataset</Button>
       </Form>
     </Formik>

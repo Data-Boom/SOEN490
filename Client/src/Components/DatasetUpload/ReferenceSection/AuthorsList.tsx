@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export const AuthorsList = (props: IProps) => {
-  const { authors, fieldArrayHelpers } = props
+  const { authors, fieldArrayHelpers, editable } = props
 
   const handleRemoveAuthor = (indexToRemove: number) => {
     fieldArrayHelpers.remove(indexToRemove)
@@ -26,7 +26,7 @@ export const AuthorsList = (props: IProps) => {
           key={index}
           index={index}
           onRemoveAuthorClick={handleRemoveAuthor}
-          editable={props.editable}
+          editable={editable}
           removable={shouldRenderRemove()}
         />
       )
@@ -52,7 +52,7 @@ export const AuthorsList = (props: IProps) => {
           {renderAuthorRows()}
         </Grid>
         <Grid item>
-          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!props.editable}>
+          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!editable}>
             <AddIcon />
           </IconButton>
         </Grid>
