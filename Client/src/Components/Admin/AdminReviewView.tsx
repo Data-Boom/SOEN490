@@ -24,7 +24,7 @@ export function AdminReviewView() {
     }, [])
 
     const handleDeleteDataset = (datasetId: number) => {
-        console.log()
+
     }
     const handleReviewDataset = (datasetId: number) => {
 
