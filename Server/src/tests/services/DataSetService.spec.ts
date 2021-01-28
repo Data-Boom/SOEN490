@@ -240,12 +240,12 @@ describe('data service test', () => {
     done()
   });
 
-  // test('Asks to flag a data set', async done => {
-  //   let response = await retrieveDataObject.flagNewDataset(1)
-  //   expect(response.message).toEqual("Dataset Flagged!");
-  //   expect(response.statusCode).toEqual(200);
-  //   done()
-  // });
+  test('Asks to flag a data set', async done => {
+    let response = await retrieveDataObject.flagNewDataset(5)
+    expect(response.message).toEqual("Dataset Flagged!");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
 
   //rejectDataSet
   //adminApprovedDataset

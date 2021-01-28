@@ -46,20 +46,23 @@ export class DatasetApprovalModel {
     }
 
     private async approveSingleDatasetQuery(datasetId: number) {
-        await this.connection.createQueryBuilder(Dataset, 'dataset')
-            .update('dataset')
+        await this.connection.createQueryBuilder()
+            .update(Dataset)
             .set({ isApproved: 1 })
-            .where('dataset.id = :datasetId', { datasetId: datasetId })
+            .where('id = :datasetId', { datasetId: datasetId })
             .execute()
     }
 
     async flagDataSet(datasetId: number, flaggedComment?: string, additionalComment?: string) {
+        console.log("comment edit if applicable")
         await this.updateDatasetComments(datasetId, additionalComment)
-        await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
-            .update('unapproved_datasets')
-            .set({ flaggedComments: flaggedComment, isFlagged: 1 })
-            .where('unapproved_datasets.datasetId = :datasetId', { datasetId: datasetId })
+        console.log("flagging")
+        await this.connection.createQueryBuilder()
+            .update(Unapproveddatasets)
+            .set({ flaggedComment: flaggedComment, isFlagged: 1 })
+            .where('datasetId = :datasetId', { datasetId: datasetId })
             .execute()
+        console.log("flagged")
         return "Dataset Flagged!"
     }
 
@@ -70,13 +73,15 @@ export class DatasetApprovalModel {
     }
 
     async updateDatasetComments(datasetId: number, datasetCommentsToAppend?: string) {
-        let oldComment = await this.selectDatasetCommentQuery(datasetId)
-        let newComment = oldComment.comments.concat(" " + datasetCommentsToAppend)
-        await this.connection.createQueryBuilder(Dataset, 'dataset')
-            .update('dataset')
-            .set({ comments: newComment })
-            .where('dataset.id = :datasetId', { datasetId: datasetId })
-            .execute()
+        if (datasetCommentsToAppend !== null && datasetCommentsToAppend !== undefined) {
+            let oldComment = await this.selectDatasetCommentQuery(datasetId)
+            let newComment = oldComment.comments.concat(" " + datasetCommentsToAppend)
+            await this.connection.createQueryBuilder()
+                .update(Dataset)
+                .set({ comments: newComment })
+                .where('id = :datasetId', { datasetId: datasetId })
+                .execute()
+        }
     }
 
     async fetchUnapprovedDatasetsInfo(idArray: number[]): Promise<any[]> {

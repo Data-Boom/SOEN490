@@ -15,6 +15,7 @@ import { Graphstate } from "../models/entities/Graphstate";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
 import { AuthenticationService } from '../services/authenticationService';
+import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
 
 export class SeedDatabase1611344612000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -169,6 +170,12 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     dataset.uploaderId = 1;
     await connection.manager.save(dataset);
 
+    let unapproveddataset = new Unapproveddatasets();
+    unapproveddataset.datasetId = 1;
+    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.isFlagged = 1;
+    await connection.manager.save(unapproveddataset);
+
     let dataset2 = new Dataset();
     dataset2.id = 2;
     dataset2.name = "Someone's Favorite";
@@ -179,7 +186,56 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     dataset2.comments = "";
     dataset2.materials = [];
     dataset2.uploaderId;
+    dataset2.isApproved = 1;
     await connection.manager.save(dataset2);
+
+    dataset.id = 5;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 5;
+    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
+    dataset.id = 6;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 6;
+    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
+    dataset.id = 7;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 7;
+    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
 
     // Units below this line
 
