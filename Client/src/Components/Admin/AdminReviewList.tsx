@@ -1,10 +1,10 @@
 import { AdminReviewRow } from "./AdminReviewRow"
 import { Grid } from "@material-ui/core"
-import { IDatasetRowModel } from "../../Models/Datasets/IDatasetRowModel"
+import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import React from 'react'
 
 interface IAdminListprops {
-    datasets: IDatasetRowModel[]
+    datasets: IDatasetModel[]
 }
 
 export const AdminReviewList = (props: IAdminListprops) => {
