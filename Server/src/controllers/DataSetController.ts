@@ -31,9 +31,9 @@ export class DataSetController {
             this.processedRequest = requestParams;
             try {
                 let arrayOfData = await this.dataSetService.getArrayOfDatasets(this.processedRequest)
-                return response.status(200).send(arrayOfData);
+                return response.status(200).json(arrayOfData);
             } catch (err) {
-                response.status(400).send(err);
+                response.status(400).json(err);
             }
         }
     }
@@ -49,9 +49,9 @@ export class DataSetController {
             try {
                 this.dataSetService = new DataSetService();
                 let requestResponse = await this.dataSetService.removeUserFavoriteDataset(userId, datasetId)
-                return response.status(requestResponse.statusCode).send(requestResponse.message);
+                return response.status(requestResponse.statusCode).json(requestResponse.message);
             } catch (err) {
-                response.status(err.status).send(err.message);
+                response.status(err.status).json(err.message);
             }
         }
     }
@@ -70,7 +70,7 @@ export class DataSetController {
     async createRequestForUserUploadedDatasets(request: Request, response: Response) {
         let userId: any = request.body.user.account_id
         if (isNaN(userId)) {
-            response.status(400).send("Invalid search params entered");
+            response.status(400).json("Invalid search params entered");
         }
         else {
             try {
@@ -78,7 +78,7 @@ export class DataSetController {
                 let arrayOfData = await this.dataSetService.getUserUploadedDatasets(userId)
                 return response.status(200).json(arrayOfData);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
@@ -103,9 +103,9 @@ export class DataSetController {
             try {
                 this.dataSetService = new DataSetService();
                 let arrayOfData = await this.dataSetService.getUserFavoriteDatasets(userId)
-                return response.status(200).send(arrayOfData);
+                return response.status(200).json(arrayOfData);
             } catch (err) {
-                response.status(500).send(err);
+                response.status(500).json(err);
             }
         }
     }
