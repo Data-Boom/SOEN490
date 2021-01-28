@@ -2,6 +2,7 @@ import { DataSetService } from "../../services/DataSetService";
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 
 import { createConnection, getConnection } from 'typeorm';
+import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
 
 
 describe('data service test', () => {
@@ -213,4 +214,40 @@ describe('data service test', () => {
     expect(arrayOfData[0].dataset_id).toBeUndefined()
     done()
   });
+
+
+  test('Asks for all unapproved data sets, expects a data set with ID of 1', async done => {
+    let response = await retrieveDataObject.getUnapprovedAllDatasets()
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Asks for all flagged data sets expects a data set with ID of 1', async done => {
+    let response = await retrieveDataObject.getAllFlaggedDatasets()
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Asks for all flagged data sets of account ID 1, expects a data set with ID of 1', async done => {
+    let response = await retrieveDataObject.getUserFlaggedDatasets(1)
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  // test('Asks to flag a data set', async done => {
+  //   let response = await retrieveDataObject.flagNewDataset(1)
+  //   expect(response.message).toEqual("Dataset Flagged!");
+  //   expect(response.statusCode).toEqual(200);
+  //   done()
+  // });
+
+  //rejectDataSet
+  //adminApprovedDataset
+  //userApprovedDataset
 })

@@ -384,7 +384,7 @@ export class DataSetService {
         return setOfData;
     }
 
-    async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
+    private async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
         let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
         let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
         let approvalData = await this.approvalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
@@ -482,21 +482,6 @@ export class DataSetService {
             return this.requestResponse
         } catch (error) {
             throw new InternalServerError("Something went wrong with flagging this dataset. Try again later")
-        }
-    }
-
-    async fetchFlaggedDatasets(userId: number) {
-        try {
-            //let response = await this.dataQuery.selectUserFlaggedDatasets(userId)
-            let response = null
-            if (response == undefined || response == null) {
-                throw new BadRequest("Could fetch user flagged datasets")
-            }
-            this.requestResponse.statusCode = 200
-            this.requestResponse.message = response
-            return this.requestResponse
-        } catch (error) {
-            throw new InternalServerError("Internal server error fetching flagged datasets. Try again later")
         }
     }
 

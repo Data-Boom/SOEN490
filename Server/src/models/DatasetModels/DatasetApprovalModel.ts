@@ -22,9 +22,9 @@ export class DatasetApprovalModel {
 
     async selectUserFlaggedDatasets(uploaderId: number): Promise<IDatasetIDModel[]> {
         let userFlaggedDatasets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
-            .select('unapproved_datasets.datasetId', 'dataset_id')
-            .innerJoin(Dataset, 'dataset.id = unapproved_datasets.datasetId')
-            .where('unapproved_datasets.isFlagged = 1')
+            .select('dataset.id', 'dataset_id')
+            .innerJoin(Dataset, 'dataset', 'dataset.id = unapproved_datasets.datasetId')
+            .where('unapproved_datasets.isFlagged = :flag', { flag: 1 })
             .andWhere('dataset.uploaderId = :uploaderId', { uploaderId: uploaderId })
             .getRawMany();
         return userFlaggedDatasets

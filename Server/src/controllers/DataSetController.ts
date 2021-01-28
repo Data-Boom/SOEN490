@@ -202,7 +202,7 @@ export class DataSetController {
         let userId: number = request.body.user.account_id
         try {
             this.dataSetService = new DataSetService();
-            let requestResponse = await this.dataSetService.fetchFlaggedDatasets(userId)
+            let requestResponse = await this.dataSetService.getUserFlaggedDatasets(userId)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
             response.status(error.status).json(error.message);
