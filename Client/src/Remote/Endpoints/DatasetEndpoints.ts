@@ -3,6 +3,7 @@ import { IDataSetModel } from './../../../../Server/src/genericInterfaces/DataPr
 import { IDatasetModel } from './../../Models/Datasets/IDatasetModel';
 import { get, post, put } from "../RemoteHelper"
 import { IRemoteDatasetModel, toLocalDatasets } from '../../Models/Datasets/IRemoteDatasetModel';
+import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel';
 
 const datasetRoute = '/api/v1/dataset'
 const flagDatasetRoute = '/api/v1/flagDataSet/'
@@ -17,7 +18,7 @@ export const listUnapprovedDatasets = async (): Promise<IDatasetModel[]> => {
 }
 
 export const getUnapprovedDatasets = async (): Promise<IDatasetModel[]> => {
-    const remoteDatasets: IRemoteDatasetModel[] = await get(unapprovedDatasetsRoute)
+    const remoteDatasets: IRemoteApprovedDatasetModel[] = await get(unapprovedDatasetsRoute)
     const localDatasets = toLocalDatasets(remoteDatasets)
     return localDatasets
 }

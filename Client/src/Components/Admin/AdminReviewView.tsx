@@ -11,8 +11,8 @@ export function AdminReviewView() {
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
     const [dataset, setDataset] = useState(exampleExportDatasetModel)
-    const [comment, setComment] = useState("Add a comment")
-    const [flaggedComment, setFlaggedComment] = useState("Add a flagged comment")
+    const [comment, setComment] = useState("")
+    const [flaggedComment, setFlaggedComment] = useState("")
 
     useEffect(() => {
         const callListDatasetStates = async () => {
