@@ -47,19 +47,33 @@ export function AdminReviewView() {
     };
     return (
 
-        <Grid container spacing={3}>
+        <Grid justify="flex-start" container spacing={4}>
             <Grid xs={3}>
-                <AdminReviewList
-                    datasets={datasetState}
-                    onReviewDatasetClick={handleReviewDataset}
-                    onDeleteDatasetClick={handleDeleteDataset}
-                    onFlagDatasetClick={handleFlagDataset}
-                />
-                <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
+                <Box p={4} pt={7}>
+                    <Typography>
+                        Datasets to be reviewed
+                    </Typography>
+                    <AdminReviewList
+                        datasets={datasetState}
+                    />
+                    <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
                 <Button id="toggle-edit" color="primary" variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
                 <Button id="toggle-edit" color="primary" variant="contained">Delete</Button>
+                </Box>
+                <Box p={5}>
+                    <TextField
+                        id="standard-multiline-flexible"
+                        label="Add a Comment"
+                        multiline
+                        fullWidth={true}
+                        rowsMax={4}
+                        value={comment}
+                        onChange={handleCommentChange}
+                    />
+                </Box>
             </Grid>
-            <Grid xs={9}>
+
+            <Grid xs={8}>
                 <Grid container spacing={3}>
                     <Grid xs={12}>
                         <DatasetUploadForm
@@ -68,19 +82,10 @@ export function AdminReviewView() {
                             editable={editable}
                         />
                     </Grid>
-                    <Grid xs={12}>
-                        <TextField
-                            id="standard-multiline-flexible"
-                            label="Add a Comment"
-                            multiline
-                            fullWidth={true}
-                            rowsMax={4}
-                            value={comment}
-                            onChange={handleCommentChange}
-                        />
-                    </Grid>
+
                 </Grid>
             </Grid>
+
         </Grid>
 
     )

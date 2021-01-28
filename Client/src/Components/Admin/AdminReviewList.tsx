@@ -4,14 +4,11 @@ import { IDatasetRowModel } from "../../Models/Datasets/IDatasetRowModel"
 import React from 'react'
 
 interface IAdminListprops {
-    datasets: IDatasetRowModel[],
-    onDeleteDatasetClick: (datasetId: number) => void,
-    onReviewDatasetClick: (datasetId: number) => void,
-    onFlagDatasetClick: (datasetId: number) => void
+    datasets: IDatasetRowModel[]
 }
 
 export const AdminReviewList = (props: IAdminListprops) => {
-    const { datasets, onDeleteDatasetClick, onReviewDatasetClick, onFlagDatasetClick } = { ...props }
+    const { datasets } = { ...props }
 
     const renderAdminDatasetRows = () => {
         return datasets && datasets.map(datasets => {
@@ -19,9 +16,6 @@ export const AdminReviewList = (props: IAdminListprops) => {
                 <AdminReviewRow
                     dataset={datasets}
                     key={datasets.id}
-                    onDeleteDatasetClick={onDeleteDatasetClick}
-                    onReviewDatasetClick={onReviewDatasetClick}
-                    onFlagDatasetClick={onFlagDatasetClick}
                 />
             )
         })
