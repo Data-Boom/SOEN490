@@ -237,6 +237,22 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
+    dataset.id = 8;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 8;
+    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
     // Units below this line
 
     let unitsNone = new Units();

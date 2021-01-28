@@ -54,15 +54,12 @@ export class DatasetApprovalModel {
     }
 
     async flagDataSet(datasetId: number, flaggedComment?: string, additionalComment?: string) {
-        console.log("comment edit if applicable")
         await this.updateDatasetComments(datasetId, additionalComment)
-        console.log("flagging")
         await this.connection.createQueryBuilder()
             .update(Unapproveddatasets)
             .set({ flaggedComment: flaggedComment, isFlagged: 1 })
             .where('datasetId = :datasetId', { datasetId: datasetId })
             .execute()
-        console.log("flagged")
         return "Dataset Flagged!"
     }
 

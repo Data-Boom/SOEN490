@@ -210,7 +210,7 @@ describe('data service test', () => {
   });
 
   test('Feeds an invalid account and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(5000)
+    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(-1)
     expect(arrayOfData[0].dataset_id).toBeUndefined()
     done()
   });
@@ -240,14 +240,34 @@ describe('data service test', () => {
     done()
   });
 
-  test('Asks to flag a data set', async done => {
+  test('Flag an unapproved data set, with no additional comments', async done => {
     let response = await retrieveDataObject.flagNewDataset(5)
     expect(response.message).toEqual("Dataset Flagged!");
     expect(response.statusCode).toEqual(200);
     done()
   });
 
-  //rejectDataSet
+  test('Flag an unapproved data set, with additional comments', async done => {
+    let response = await retrieveDataObject.flagNewDataset(6, "Fix the title please", "Admin: Pretty good data set, 10/10")
+    expect(response.message).toEqual("Dataset Flagged!");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Flag an unapproved data set, with additional comments', async done => {
+    let response = await retrieveDataObject.flagNewDataset(6, "Fix the title please", "Admin: Pretty good data set, 10/10")
+    expect(response.message).toEqual("Dataset Flagged!");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Reject an unapproved data set', async done => {
+    let response = await retrieveDataObject.rejectDataSet(7)
+    expect(response.message).toEqual("Successfully removed data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
   //adminApprovedDataset
   //userApprovedDataset
 })
