@@ -16,15 +16,7 @@ interface IAdminReviewModel {
 }
 export const AdminReviewRow = (props: IAdminReviewModel) => {
     const { dataset, onDeleteDatasetClick, onReviewDatasetClick, onFlagDatasetClick } = { ...props }
-    const [isChecked, setIsChecked] = useState("xyz");
-    const handleRadioButton = (event) => {
-        if (event.target.value === isChecked) {
-            setIsChecked("");
 
-        } else {
-            setIsChecked(event.target.value)
-        }
-    }
     return (
         <Grid item>
             <Box className={classStyles().datasetBorder}>
@@ -32,16 +24,9 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
                     <Grid item container justify='flex-start' xs={3}>
 
                         <Typography variant="body2" noWrap>
-                            <FormControl component="fieldset">
-                                <RadioGroup aria-label="dataset" name={dataset.name}
-                                    value={isChecked}>
-                                    <FormControlLabel
-                                        value={dataset.name}
-                                        control={<Radio onClick={handleRadioButton} />}
-                                        label={dataset.name}
-                                    />
-                                </RadioGroup>
-                            </FormControl>
+                            <div>
+                                <input type="radio" value={dataset.name} name="dataset" />{dataset.name}
+                            </div>
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
