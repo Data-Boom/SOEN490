@@ -12,6 +12,7 @@ export function AdminReviewView() {
     const [editable, setEditable] = useState(false)
     const [dataset, setDataset] = useState(exampleExportDatasetModel)
     const [comment, setComment] = useState("Add a comment")
+    const [flaggedComment, setFlaggedComment] = useState("Add a flagged comment")
 
     useEffect(() => {
         const callListDatasetStates = async () => {
@@ -43,8 +44,12 @@ export function AdminReviewView() {
     }
 
     const handleCommentChange = (event) => {
-        setComment(event.target.value);
-    };
+        setComment(event.target.value)
+    }
+
+    const handleFlaggedCommentChange = (event) => {
+        setFlaggedComment(event.target.value)
+    }
     return (
 
         <Grid justify="flex-start" container spacing={4}>
@@ -69,6 +74,17 @@ export function AdminReviewView() {
                         rowsMax={4}
                         value={comment}
                         onChange={handleCommentChange}
+                    />
+                </Box>
+                <Box p={5}>
+                    <TextField
+                        id="standard-multiline-flexible"
+                        label="Add a Flagged Comment"
+                        multiline
+                        fullWidth={true}
+                        rowsMax={4}
+                        value={flaggedComment}
+                        onChange={handleFlaggedCommentChange}
                     />
                 </Box>
             </Grid>
