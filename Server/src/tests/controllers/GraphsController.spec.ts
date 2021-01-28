@@ -68,71 +68,75 @@ describe('SavedGraphs Controller ', () => {
     expect(mockResponse.status).toBeCalledWith(200);
   });
 
-  //   test('Invalid GraphID Request', async () => {
-  //     mockRequest = {
-  //       params: {
-  //         graphStateId: 'werwer'
-  //       }
+  test('Invalid GraphID Request', async () => {
+    mockRequest = {
+      params: {
+        graphStateId: 'werwer'
+      }
 
-  //     }
-  //     await SavedGraphsController.createRequestForSingleSavedGraph(mockRequest as Request, mockResponse as Response)
-  //     expect(mockResponse.json).toBeCalledWith("Invalid graph ID entered");
-  //     expect(mockResponse.status).toBeCalledWith(400);
-  //   });
+    }
+    await SavedGraphsController.createRequestForSingleGraph(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith("Invalid graph ID entered");
+    expect(mockResponse.status).toBeCalledWith(400);
+  });
 
-  //   test('Non-existant GraphID Request', async () => {
-  //     mockRequest = {
-  //    params: {
-  //      graphStateId: '100000000'
-  //    }
-  //     }
-  //     await SavedGraphsController.createRequestForSingleSavedGraph(mockRequest as Request, mockResponse as Response)
-  //     expect(mockResponse.json).toBeCalledWith("Graph does not exist");
-  //     expect(mockResponse.status).toBeCalledWith(400);
-  //   });
+  test('Non-existant GraphID Request', async () => {
+    mockRequest = {
+      params: {
+        graphStateId: '-1'
+      }
+    }
+    await SavedGraphsController.createRequestForSingleGraph(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith("Graph does not exist");
+    expect(mockResponse.status).toBeCalledWith(400);
+  });
 
-  //   test('Valid User Saved Graphs Request; multiple data sets on graph', async () => {
-  //     let expectedResponse = [{
-  //       "datasets": [
-  //         {
-  //           "id": 1,
-  //           "color": "red",
-  //           "shape": "square",
-  //           "isHidden": false
-  //         },
-  //         {
-  //           "color": "green",
-  //           "id": 2,
-  //           "isHidden": true,
-  //           "shape": "triangle",
-  //         }
-  //       ],
-  //       "name": "Test Graph",
-  //       "axes": [
-  //         {
-  //           "variableName": "temperature",
-  //           "mode": "normal",
-  //           "zoom": 100,
-  //           "units": "C"
-  //         },
-  //         {
-  //           "variableName": "width",
-  //           "mode": "normal",
-  //           "zoom": 100,
-  //           "units": "mm"
-  //         }
-  //       ],
-  //       "id": 1
-  //     }]
-  //     mockRequest = {
-  //       params: {
-  //         userSavedGraphs: "j.comkj"
-  //       }
-  //     }
-  //     await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
-  //     expect(mockResponse.json).toBeCalledWith(expectedResponse);
-  //     expect(mockResponse.status).toBeCalledWith(200);
-  //   });
+  test('Valid User Saved Graphs Request; multiple data sets on graph', async () => {
+    let expectedResponse = [{
+      "datasets": [
+        {
+          "id": 1,
+          "color": "red",
+          "shape": "square",
+          "isHidden": false
+        },
+        {
+          "color": "green",
+          "id": 2,
+          "isHidden": true,
+          "shape": "triangle",
+        }
+      ],
+      "name": "Test Graph",
+      "axes": [
+        {
+          "variableName": "temperature",
+          "logarithmic": true,
+          "zoomEndIndex": 100,
+          "zoomStartIndex": 100,
+          "units": "C"
+        },
+        {
+          "variableName": "width",
+          "logarithmic": true,
+          "zoomEndIndex": 100,
+          "zoomStartIndex": 100,
+          "units": "mm"
+        }
+      ],
+      "id": 1
+    }]
+    mockRequest = {
+      body: {
+        user: {
+          account_id: '1'
+        }
+      }
+    }
+    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(200);
+  });
 
   //   test('Valid User Saved Graphs Request; one data set on graph', async () => {
   //     let expectedResponse = [{

@@ -63,10 +63,20 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     book.name = "Book";
     await connection.manager.save(book);
 
+    let toDelete = new Publicationtype();
+    toDelete.id;
+    toDelete.name = "Report";
+    await connection.manager.save(toDelete);
+
     let publisherName = new Publisher();
     publisherName.id;
     publisherName.name = "University of California Press";
     await connection.manager.save(publisherName);
+
+    let publisherNameToDelete = new Publisher();
+    publisherNameToDelete.id;
+    publisherNameToDelete.name = "Deleted Press";
+    await connection.manager.save(publisherNameToDelete);
 
     let author1 = new Authors();
     author1.id;
@@ -74,12 +84,27 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     author1.lastName = "Marsh";
     author1.middleName = "P.";
     await connection.manager.save(author1);
+
     let author2 = new Authors();
     author2.id;
     author2.firstName = "John";
     author2.lastName = "Mclain";
     author2.middleName = "L.";
     await connection.manager.save(author2);
+
+    let author3 = new Authors();
+    author3.id;
+    author3.firstName = "Alex";
+    author3.lastName = "Grail";
+    author3.middleName = "P.";
+    await connection.manager.save(author3);
+
+    let author4 = new Authors();
+    author4.id;
+    author4.firstName = "Jack";
+    author4.lastName = "Mclain";
+    author4.middleName;
+    await connection.manager.save(author4);
 
     let publication = new Publications();
     publication.id;
@@ -107,6 +132,32 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     publication2.authors = [];
     await connection.manager.save(publication2);
 
+    let publicationToDelete = new Publications();
+    publicationToDelete.id;
+    publicationToDelete.name = "Publication To Delete";
+    publicationToDelete.pages = 100;
+    publicationToDelete.publicationtypeId = toDelete.id;
+    publicationToDelete.publisherId = publisherNameToDelete.id;
+    publicationToDelete.year = 1980;
+    publicationToDelete.volume = 5;
+    publicationToDelete.datePublished;
+    publicationToDelete.dateAccessed;
+    publicationToDelete.authors = [author3, author4];
+    await connection.manager.save(publicationToDelete);
+
+    let publicationToDelete2 = new Publications();
+    publicationToDelete2.id;
+    publicationToDelete2.name = "Publication To Delete";
+    publicationToDelete2.pages = 100;
+    publicationToDelete2.publicationtypeId = toDelete.id;
+    publicationToDelete2.publisherId = publisherNameToDelete.id;
+    publicationToDelete2.year = 1980;
+    publicationToDelete2.volume = 5;
+    publicationToDelete2.datePublished;
+    publicationToDelete2.dateAccessed;
+    publicationToDelete2.authors = [author3, author4];
+    await connection.manager.save(publicationToDelete2);
+
     let compositionC = new Composition();
     compositionC.id;
     compositionC.composition = "C";
@@ -116,6 +167,11 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     compositionO2.id;
     compositionO2.composition = "O2";
     await connection.manager.save(compositionO2);
+
+    let compositionToDelete = new Composition();
+    compositionToDelete.id;
+    compositionToDelete.composition = "CO2";
+    await connection.manager.save(compositionToDelete);
 
     let materialC = new Material();
     materialC.id;
@@ -128,6 +184,12 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     materialO2.compositionId = compositionO2.id;
     materialO2.details = "Oxygen";
     await connection.manager.save(materialO2);
+
+    let materialToDelete = new Material();
+    materialToDelete.id;
+    materialToDelete.compositionId = compositionToDelete.id;
+    materialToDelete.details = "Going into the void";
+    await connection.manager.save(materialToDelete);
 
     let category1 = new Category();
     category1.id = 1;
@@ -158,6 +220,11 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     datasetdatatype.id;
     datasetdatatype.name = "Hugoniot";
     await connection.manager.save(datasetdatatype);
+
+    let datasetdatatypeToDelete = new Datasetdatatype();
+    datasetdatatypeToDelete.id;
+    datasetdatatypeToDelete.name = "Deletion";
+    await connection.manager.save(datasetdatatypeToDelete);
 
     let dataset = new Dataset();
     dataset.id = 1;
@@ -225,7 +292,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     dataset.id = 7;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publicationToDelete2.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
@@ -235,6 +302,22 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
 
     unapproveddataset.datasetId = 7;
     unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
+    dataset.id = 70;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatypeToDelete.id;
+    dataset.publicationId = publicationToDelete.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [materialToDelete];
+    dataset.uploaderId;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 70;
+    unapproveddataset.flaggedComment;
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
