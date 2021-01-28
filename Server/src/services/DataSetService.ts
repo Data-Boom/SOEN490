@@ -487,7 +487,7 @@ export class DataSetService {
         }
     }
 
-    async adminApprovedDataset(datasetId: number, datasetCommentsToAppend: string) {
+    async adminApprovedDataset(datasetId: number, datasetCommentsToAppend?: string) {
         try {
             await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
             let response = await this.approvalModel.approveDataset(datasetId)

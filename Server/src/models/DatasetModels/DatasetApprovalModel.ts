@@ -66,7 +66,7 @@ export class DatasetApprovalModel {
     async approveDataset(datasetId: number) {
         await this.approveSingleDatasetQuery(datasetId)
         await this.commonModel.wipeEntryFromUnapprovedTable(datasetId)
-        return "Successfully approved new Dataset"
+        return "Successfully approved new data set"
     }
 
     async updateDatasetComments(datasetId: number, datasetCommentsToAppend?: string) {

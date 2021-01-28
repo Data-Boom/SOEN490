@@ -215,6 +215,24 @@ describe('data service test', () => {
     done()
   });
 
+  test('Sets data set with ID 5 as a favorite of account ID 1', async done => {
+    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
+    expect(response[1]).toEqual("Favorite data set successfully saved")
+    done()
+  });
+
+  test('Sets data set with ID 5 as a favorite of account ID 1 a second time', async done => {
+    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
+    expect(response[1]).toEqual("Favorite data set is already saved")
+    done()
+  });
+
+  test('Removes data set with ID 5 as a favorite of account ID 1', async done => {
+    let response = await retrieveDataObject.removeUserFavoriteDataset(1, 5)
+    expect(response.message).toEqual([true, "User favorite successfully removed"])
+    done()
+  });
+
 
   test('Asks for all unapproved data sets, expects a data set with ID of 1', async done => {
     let response = await retrieveDataObject.getUnapprovedAllDatasets()
@@ -268,6 +286,24 @@ describe('data service test', () => {
     done()
   });
 
-  //adminApprovedDataset
-  //userApprovedDataset
+  test('Admin approves a data set, with additional comments', async done => {
+    let response = await retrieveDataObject.adminApprovedDataset(5, "Admin: Pretty good data set, 10/10")
+    expect(response.message).toEqual("Successfully approved new data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Admin approves a data set, with no additional comments', async done => {
+    let response = await retrieveDataObject.adminApprovedDataset(6)
+    expect(response.message).toEqual("Successfully approved new data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('User approves a data set, with no additional comments', async done => {
+    let response = await retrieveDataObject.userApprovedDataset(8)
+    expect(response.message).toEqual("Successfully approved new data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
 })

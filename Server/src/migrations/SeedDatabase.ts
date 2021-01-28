@@ -16,6 +16,7 @@ import { Subcategory } from "../models/entities/Subcategory";
 import { Units } from "../models/entities/Units";
 import { AuthenticationService } from '../services/authenticationService';
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
+import { Datapointcomments } from "../models/entities/Datapointcomments";
 
 export class SeedDatabase1611344612000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -253,6 +254,22 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
+    dataset.id = 9;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId = 1;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 9;
+    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
     // Units below this line
 
     let unitsNone = new Units();
@@ -297,6 +314,12 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(reprNone);
 
     // Data points below this line. 
+
+    let datapointComments = new Datapointcomments();
+    datapointComments.id;
+    datapointComments.datasetId = dataset.id;
+    datapointComments.comments = ["im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478"];
+    await connection.manager.save(datapointComments);
 
     let datapoint = new Datapoints();
     datapoint.id;
