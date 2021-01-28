@@ -477,8 +477,6 @@ export class DataSetService {
             if (response == undefined || response == null) {
                 throw new BadRequest("Could not flag this Dataset")
             }
-            console.log("before req response")
-            console.log(response)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
