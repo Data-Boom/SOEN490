@@ -1,3 +1,4 @@
+import { createMuiTheme } from "@material-ui/core/styles";
 import { getIn } from "formik";
 
 export const shouldComponentUpdate = (nextProps, currentProps) => {
@@ -13,3 +14,11 @@ export const shouldComponentUpdate = (nextProps, currentProps) => {
     || getIn(nextProps.formik.touched, currentProps.name) !== getIn(currentProps.formik.touched, currentProps.name)
 
 }
+
+export const disabledTheme = createMuiTheme({
+  palette: {
+    text: {
+      disabled: 'black'
+    }
+  }
+});
