@@ -1,5 +1,4 @@
 export const validTestData = {
-
     "reference": {
         "type": "book",
         "publisher": "University of California Press",
@@ -246,8 +245,10 @@ export const validTestData = {
             }
         ],
         "comments": "References 5,6,14\nAverage density = 2.134 g/cc"
+    },
+    "user": {
+        "account_id": 1
     }
-
 }
 
 export const inValidTestData = {
@@ -497,7 +498,9 @@ export const inValidTestData = {
             }
         ],
         "comments": "References 5,6,14\nAverage density = 2.134 g/cc"
+    },
+    "user": {
+        "account_id": 1
     }
-
 }
 

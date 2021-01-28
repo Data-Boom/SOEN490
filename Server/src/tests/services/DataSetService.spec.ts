@@ -1,16 +1,16 @@
-import { createConnection, getConnection } from 'typeorm';
-import { array } from 'yup/lib/locale';
-
+import { DataSetService } from "../../services/DataSetService";
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
-import { retrieveData } from "../../services/getDatasetService";
+
+import { createConnection, getConnection } from 'typeorm';
+
 
 describe('data service test', () => {
-  let retrieveDataObject: retrieveData;
+  let retrieveDataObject: DataSetService;
   jest.setTimeout(60000)
 
   beforeAll(async () => {
     await createConnection();
-    retrieveDataObject = new retrieveData();
+    retrieveDataObject = new DataSetService();
   });
 
   afterAll(async () => {
@@ -51,7 +51,7 @@ describe('data service test', () => {
     let testData: IDataRequestModel;
     testData = {} as any;
     testData.datasetId = undefined;
-    testData.material = ["carbon, graphite, pressed graphite"];
+    testData.material = ["O2", "carbon, graphite, pressed graphite"];
     testData.year = undefined;
     testData.firstName = undefined;
     testData.lastName = undefined;
@@ -196,8 +196,8 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds the email of account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("j.comkj")
+  test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(1)
     expect(arrayOfData[1][0].dataset_id).toEqual(2);
     done()
   });
@@ -208,9 +208,9 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds an invalid email and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("nothing")
-    expect(arrayOfData[1]).toEqual("Invalid user email provided");
+  test('Feeds an invalid account and expects to see an error message', async done => {
+    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(5000)
+    expect(arrayOfData[0].dataset_id).toBeUndefined()
     done()
   });
 })

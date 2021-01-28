@@ -1,24 +1,17 @@
 import { Connection, getConnection } from "typeorm";
-import {
-    IAuthorModel,
-    IClientDatasetModel,
-    IDataPointModel,
-    IDatasetIDModel,
-    IDatasetInfoModel,
-    IMaterialModel,
-    IPublicationModel
-} from "./interfaces/DatasetModelInterface";
-import { Publications, selectAllPublicationsQuery, selectPublicationsQuery } from "./entities/Publications";
-import { selectAllDatasetsQuery, selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
+import { Accounts, selectAccountIdFromEmailQuery } from "../entities/Accounts";
+import { selectAllAuthorsQuery } from "../entities/Authors";
+import { Category } from "../entities/Category";
+import { Composition } from "../entities/Composition";
+import { selectAllDataPointCommentsQuery } from "../entities/Datapointcomments";
+import { selectDataPointsQuery } from "../entities/Datapoints";
+import { selectDatasetIdsQuery, selectAllDatasetsQuery } from "../entities/Dataset";
+import { selectAllMaterialQuery } from "../entities/Material";
+import { Publications, selectAllPublicationsQuery } from "../entities/Publications";
+import { Subcategory } from "../entities/Subcategory";
+import { selectUnapprovedDatasetInfoQuery } from "../entities/Unapproveddatasets";
+import { IDatasetIDModel, IDataPointModel } from "../interfaces/DatasetModelInterface";
 
-import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
-import { Category } from "./entities/Category";
-import { Composition } from "./entities/Composition";
-import { Subcategory } from "./entities/Subcategory";
-import { selectAllAuthorsQuery, selectAuthorsQuery } from "./entities/Authors";
-import { selectAllDataPointCommentsQuery, selectDataPointCommentsQuery } from "./entities/Datapointcomments";
-import { selectAllDataPointsQuery, selectDataPointsQuery } from "./entities/Datapoints";
-import { selectAllMaterialQuery, selectMaterialQuery } from "./entities/Material";
 
 export class DataQueryModel {
     private connection: Connection;
@@ -165,17 +158,12 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getSavedDatasetIDOfUser(userEmail: string): Promise<any[]> {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-                .innerJoin('dataset.accounts', 'account')
-                .where('account.id = :idRef', { idRef: userID })
-                .getRawMany();
-            return [true, idDatasetData];
-        }
+    async getFavoriteDatasetIDOfUser(userID: number): Promise<any[]> {
+        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+            .innerJoin('dataset.accounts', 'account')
+            .where('account.id = :idRef', { idRef: userID })
+            .getRawMany();
+        return [true, idDatasetData];
     }
 
     private async fetchAccountIdFromEmail(userEmail: string) {
@@ -198,7 +186,7 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async addSavedDatasetModel(userEmail: string, datasetId: number) {
+    async addUserFavoriteDatasetModel(userEmail: string, datasetId: number) {
         let userID = await this.fetchAccountIdFromEmail(userEmail)
         if (userID == false)
             return [false, "Invalid user email provided"]
@@ -225,14 +213,10 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async removeSavedDatasetModel(userEmail: string, datasetId: number) {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
-            return [true, "User favorite successfully removed"];
-        }
+    async removeUserFavoriteDatasetModel(userId: number, datasetId: number) {
+        await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userId, datasetId]);
+        return [true, "User favorite successfully removed"];
+
     }
 
     /**
@@ -247,7 +231,9 @@ export class DataQueryModel {
         let publicationData = await selectAllPublicationsQuery(this.connection, id)
         let authorData = await selectAllAuthorsQuery(this.connection, id)
         let materialData = await selectAllMaterialQuery(this.connection, id)
-        let datapointData: IDataPointModel[] = await selectAllDataPointsQuery(this.connection, id)
+        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection)
+            .whereInIds(id)
+            .getRawMany();
         this.parseDataPoints(datapointData)
         let datapointComments = await selectAllDataPointCommentsQuery(this.connection, id) || {}
         this.parseDataPointComments(datapointComments)

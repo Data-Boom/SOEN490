@@ -1,16 +1,16 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
-import { getDataController } from '../../controllers/getDatasetController';
+import { DataSetController } from '../../controllers/DataSetController';
 
 describe('SavedGraphs Controller ', () => {
     let mockRequest;
     let mockResponse;
-    let GetDataControllerController: getDataController;
+    let GetDataControllerController: DataSetController;
 
     beforeEach(async () => {
         await createConnection();
         jest.setTimeout(60000)
-        GetDataControllerController = new getDataController();
+        GetDataControllerController = new DataSetController();
         mockRequest = {};
         mockResponse = {
             status: jest.fn(() => mockResponse),
@@ -25,11 +25,10 @@ describe('SavedGraphs Controller ', () => {
     test('Valid Save Data Set Request', async () => {
         mockRequest = {
             params: {
-                userEmail: 'test@t.com',
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Favorite data set successfully saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -41,7 +40,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '2'
             }
         }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Favorite data set is already saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -53,7 +52,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid user email provided");
         expect(mockResponse.status).toBeCalledWith(400);
     });
@@ -65,7 +64,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: "wrtrterterte"
             }
         }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
         expect(mockResponse.status).toBeCalledWith(400);
     });
@@ -78,7 +77,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestForRemovingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -90,7 +89,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestForRemovingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -102,7 +101,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestForRemovingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid user email provided");
         expect(mockResponse.status).toBeCalledWith(400);
     });
@@ -114,7 +113,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: "wrtrterterte"
             }
         }
-        await GetDataControllerController.createRequestForRemovingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
         expect(mockResponse.status).toBeCalledWith(400);
     });
