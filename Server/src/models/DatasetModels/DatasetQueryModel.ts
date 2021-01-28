@@ -158,7 +158,7 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getSavedDatasetIDOfUser(userID: number): Promise<any[]> {
+    async getFavoriteDatasetIDOfUser(userID: number): Promise<any[]> {
         let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin('dataset.accounts', 'account')
             .where('account.id = :idRef', { idRef: userID })
@@ -186,7 +186,7 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async addSavedDatasetModel(userEmail: string, datasetId: number) {
+    async addUserFavoriteDatasetModel(userEmail: string, datasetId: number) {
         let userID = await this.fetchAccountIdFromEmail(userEmail)
         if (userID == false)
             return [false, "Invalid user email provided"]
@@ -213,7 +213,7 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async removeSavedDatasetModel(userId: number, datasetId: number) {
+    async removeUserFavoriteDatasetModel(userId: number, datasetId: number) {
         await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userId, datasetId]);
         return [true, "User favorite successfully removed"];
 

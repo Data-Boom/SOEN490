@@ -39,7 +39,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData["data type"])
 
-        let dataSetID: number = await this.insertDataset(this.uploadModel, this.parsedFileData["dataset name"], dataSetDataTypeID, publicationID, categoryIDs, allMaterials, this.parsedFileData.data.comments)
+        let dataSetID: number = await this.insertDataset(this.uploadModel, this.parsedFileData["dataset name"], dataSetDataTypeID, publicationID, categoryIDs, allMaterials, this.parsedFileData.data.comments, this.userId)
 
         //run check on variable vs contents length to see if they're equal
         if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
@@ -72,9 +72,9 @@ export class UnapprovedUploadService extends AbstractUploadService {
         return requestResponse;
     }
 
-    protected async insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string): Promise<number> {
+    protected async insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string, userId: number): Promise<number> {
         try {
-            let datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments)
+            let datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments, userId)
             console.log('DatasetID received: ' + datasetID);
             return datasetID
         } catch (err) {

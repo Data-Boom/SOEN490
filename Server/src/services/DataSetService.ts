@@ -302,7 +302,7 @@ export class DataSetService {
      * Account ID: number
      */
     async getUserFavoriteDatasets(userReceived: number) {
-        let rawData = await this.dataQuery.getSavedDatasetIDOfUser(userReceived);
+        let rawData = await this.dataQuery.getFavoriteDatasetIDOfUser(userReceived);
         if (rawData[0]) {
             let setOfData = await this.getDatasetsFromRawData(rawData[1]);
             return [true, setOfData];
@@ -322,7 +322,7 @@ export class DataSetService {
      * Data Set ID: number
      */
     async addUserFavoriteDataset(userEmail: string, datasetId: number) {
-        let executionStatus = await this.dataQuery.addSavedDatasetModel(userEmail, datasetId);
+        let executionStatus = await this.dataQuery.addUserFavoriteDatasetModel(userEmail, datasetId);
         return executionStatus;
     }
 
@@ -337,7 +337,7 @@ export class DataSetService {
      */
     async removeUserFavoriteDataset(userId: number, datasetId: number) {
         try {
-            let response = await this.dataQuery.removeSavedDatasetModel(userId, datasetId);
+            let response = await this.dataQuery.removeUserFavoriteDatasetModel(userId, datasetId);
             if (response == undefined || response == null) {
                 throw new NotFound("Could not find your saved datasets")
             }

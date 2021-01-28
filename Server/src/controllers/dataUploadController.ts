@@ -18,7 +18,7 @@ export class DataUploadController {
     constructor() {
     }
 
-    async createRequest(request: Request, response: Response): Promise<Response> {
+    async createNewDatasetRequest(request: Request, response: Response): Promise<Response> {
         if (!request.body) {
             response.status(400).json({
                 message: "No Data to Upload"
@@ -26,8 +26,9 @@ export class DataUploadController {
         }
         else {
             try {
+                let userId: any = request.body.user.account_id
                 this.dataSet = request.body
-                this.dataService = new UnapprovedUploadService(this.dataSet)
+                this.dataService = new UnapprovedUploadService(this.dataSet, null, userId)
                 await this.dataService.validateExtractedData();
                 let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
@@ -38,7 +39,12 @@ export class DataUploadController {
     }
 
     async createEditUploadRequest(request: Request, response: Response): Promise<Response> {
-        if (!request.body || !request.params.datasetId) {
+        let requestParam = request.params.datasetId;
+        let datasetId = Number(requestParam);
+        if (isNaN(datasetId)) {
+            response.status(400).json("Invalid data set ID entered");
+        }
+        else if (!request.body) {
             response.status(400).json({
                 message: "No Dataset Received"
             })
@@ -46,8 +52,7 @@ export class DataUploadController {
         else {
             try {
                 this.dataSet = request.body
-                let datasetId = Number(request.params.datasetId)
-                this.dataService = new EditUploadService(this.dataSet, datasetId)
+                this.dataService = new EditUploadService(this.dataSet, datasetId, null)
                 await this.dataService.validateExtractedData();
                 let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);

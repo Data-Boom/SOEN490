@@ -11,16 +11,18 @@ export default abstract class AbstractUploadService {
     protected uploadModel: DataUploadModel
     protected parsedFileData: any
     protected datasetId: number
+    protected userId: number
 
-    constructor(parsedFileData: IDataSetModel, datasetId: any = {}) {
+    constructor(parsedFileData: IDataSetModel, datasetId: any = {}, userId: any = {}) {
         this.parsedFileData = parsedFileData
         this.datasetId = datasetId
+        this.userId = userId
         this.uploadModel = new DataUploadModel()
     }
 
     abstract uploadData()
 
-    protected abstract insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string)
+    protected abstract insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string, userId: number)
 
     async validateExtractedData() {
         try {
