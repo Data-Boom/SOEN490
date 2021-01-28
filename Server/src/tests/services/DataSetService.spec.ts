@@ -279,8 +279,15 @@ describe('data service test', () => {
     done()
   });
 
-  test('Reject an unapproved data set', async done => {
+  test('Reject an unapproved data set, most', async done => {
     let response = await retrieveDataObject.rejectDataSet(7)
+    expect(response.message).toEqual("Successfully removed data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Reject an unapproved data set', async done => {
+    let response = await retrieveDataObject.rejectDataSet(70)
     expect(response.message).toEqual("Successfully removed data set");
     expect(response.statusCode).toEqual(200);
     done()

@@ -58,18 +58,4 @@ describe('Data Upload Controller', () => {
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
         expect(mockResponse.status).toBeCalledWith(201)
     })
-
-    test('Invalid Data Set Edit', async () => {
-
-        let expectedResponse = "Dataset Updated!"
-        mockRequest = {
-            body: validTestData,
-            params: {
-                datasetId: '2'
-            }
-        }
-        await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith(expectedResponse)
-        expect(mockResponse.status).toBeCalledWith(201)
-    })
 })
