@@ -69,17 +69,12 @@ export class DataSetController {
      */
     async createRequestForUserUploadedDatasets(request: Request, response: Response) {
         let userId: any = request.body.user.account_id
-        if (isNaN(userId)) {
-            response.status(400).json("Invalid search params entered");
-        }
-        else {
-            try {
-                this.dataSetService = new DataSetService();
-                let arrayOfData = await this.dataSetService.getUserUploadedDatasets(userId)
-                return response.status(200).json(arrayOfData);
-            } catch (err) {
-                response.status(500).json(err);
-            }
+        try {
+            this.dataSetService = new DataSetService();
+            let arrayOfData = await this.dataSetService.getUserUploadedDatasets(userId)
+            return response.status(200).json(arrayOfData);
+        } catch (err) {
+            response.status(500).json(err);
         }
     }
 
@@ -96,17 +91,12 @@ export class DataSetController {
      */
     async createRequestForUserFavoriteDatsets(request: Request, response: Response) {
         let userId: any = request.body.user.account_id
-        if (isNaN(userId)) {
-            response.status(500).json("Invalid search params entered");
-        }
-        else {
-            try {
-                this.dataSetService = new DataSetService();
-                let arrayOfData = await this.dataSetService.getUserFavoriteDatasets(userId)
-                return response.status(200).json(arrayOfData);
-            } catch (err) {
-                response.status(500).json(err);
-            }
+        try {
+            this.dataSetService = new DataSetService();
+            let arrayOfData = await this.dataSetService.getUserFavoriteDatasets(userId)
+            return response.status(200).json(arrayOfData);
+        } catch (err) {
+            response.status(500).json(err);
         }
     }
 
