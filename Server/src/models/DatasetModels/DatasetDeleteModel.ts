@@ -1,7 +1,6 @@
 import { Connection, getConnection } from "typeorm";
 import { Authors } from "../entities/Authors";
 import { Composition } from "../entities/Composition";
-import { Datapointcomments } from "../entities/Datapointcomments";
 import { Datapoints } from "../entities/Datapoints";
 import { Dataset } from "../entities/Dataset";
 import { Datasetdatatype } from "../entities/Datasetdatatype";
@@ -10,13 +9,13 @@ import { Publications } from "../entities/Publications";
 import { Publicationtype } from "../entities/Publicationtype";
 import { Publisher } from "../entities/Publisher";
 import { Representations } from "../entities/Representations";
-import { Unapproveddatasets } from "../entities/Unapproveddatasets";
 import { Units } from "../entities/Units";
 import { DatasetCommonModel } from "./DatasetCommonModel";
 
 
 /**
- * This model class is responsible for updating the database with the extracted from the fileUpload. 
+ * This model class is responsible for all methods pertaining to removing a data set entry from the database.
+ * A number of these methods are also referenced during the updating of a data set entry. 
  */
 export class DatasetDeleteModel {
     private connection: Connection;
@@ -271,6 +270,6 @@ export class DatasetDeleteModel {
         await this.deletePublication(rawDatasetFKs.publicationId)
         await this.deletePublisher(rawDatasetFKs.publisherId)
         await this.deletePublicationType(rawDatasetFKs.publicationTypeId)
-        return "Successfully deleted data set"
+        return "Successfully removed data set"
     }
 }

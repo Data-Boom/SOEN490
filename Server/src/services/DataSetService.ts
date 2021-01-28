@@ -301,7 +301,7 @@ export class DataSetService {
      * @param userReceived
      * Account ID: number
      */
-    async getUserSavedDatasets(userReceived: number) {
+    async getUserFavoriteDatasets(userReceived: number) {
         let rawData = await this.dataQuery.getSavedDatasetIDOfUser(userReceived);
         if (rawData[0]) {
             let setOfData = await this.getDatasetsFromRawData(rawData[1]);
@@ -321,7 +321,7 @@ export class DataSetService {
      * @param datasetId
      * Data Set ID: number
      */
-    async addSavedDatasetService(userEmail: string, datasetId: number) {
+    async addUserFavoriteDataset(userEmail: string, datasetId: number) {
         let executionStatus = await this.dataQuery.addSavedDatasetModel(userEmail, datasetId);
         return executionStatus;
     }
@@ -335,7 +335,7 @@ export class DataSetService {
      * @param datasetId
      * Data Set ID: number
      */
-    async removeSavedDatasetService(userId: number, datasetId: number) {
+    async removeUserFavoriteDataset(userId: number, datasetId: number) {
         try {
             let response = await this.dataQuery.removeSavedDatasetModel(userId, datasetId);
             if (response == undefined || response == null) {

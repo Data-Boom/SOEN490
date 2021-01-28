@@ -21,9 +21,9 @@ export class DatasetApprovalModel {
             .getRawOne();
 
     async selectUserFlaggedDatasets(uploaderId: number): Promise<IDatasetIDModel[]> {
-        let userFlaggedDatasets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_Datasets')
+        let userFlaggedDatasets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
             .select('unapproved_datasets.datasetId', 'dataset_id')
-            .innerJoin(Dataset, 'dataset.id = unapproved_Datasets.datasetId')
+            .innerJoin(Dataset, 'dataset.id = unapproved_datasets.datasetId')
             .where('unapproved_datasets.isFlagged = 1')
             .andWhere('dataset.uploaderId = :uploaderId', { uploaderId: uploaderId })
             .getRawMany();
@@ -45,7 +45,7 @@ export class DatasetApprovalModel {
         return allFlaggedDatsets
     }
 
-    async updateApprovedStatus(datasetId: number) {
+    private async approveSingleDatasetQuery(datasetId: number) {
         await this.connection.createQueryBuilder(Dataset, 'dataset')
             .update('dataset')
             .set({ isApproved: 1 })
@@ -64,7 +64,7 @@ export class DatasetApprovalModel {
     }
 
     async approveDataset(datasetId: number) {
-        await this.updateApprovedStatus(datasetId)
+        await this.approveSingleDatasetQuery(datasetId)
         await this.commonModel.wipeEntryFromUnapprovedTable(datasetId)
         return "Successfully approved new Dataset"
     }

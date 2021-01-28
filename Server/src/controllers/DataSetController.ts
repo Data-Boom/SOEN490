@@ -38,7 +38,7 @@ export class DataSetController {
         }
     }
 
-    async createRequestToDeleteSavedDataSet(request: Request, response: Response) {
+    async createRequestToDeleteUserFavoriteDataSet(request: Request, response: Response) {
         let requestParam = request.params.datasetId;
         let datasetId = Number(requestParam);
         if (isNaN(datasetId)) {
@@ -47,7 +47,8 @@ export class DataSetController {
         else {
             let userId: number = request.body.user.account_id
             try {
-                let requestResponse = await this.dataSetService.removeSavedDatasetService(userId, datasetId)
+                this.dataSetService = new DataSetService();
+                let requestResponse = await this.dataSetService.removeUserFavoriteDataset(userId, datasetId)
                 return response.status(requestResponse.statusCode).send(requestResponse.message);
             } catch (err) {
                 response.status(err.status).send(err.message);
@@ -73,6 +74,7 @@ export class DataSetController {
         }
         else {
             try {
+                this.dataSetService = new DataSetService();
                 let arrayOfData = await this.dataSetService.getUserUploadedDatasets(userId)
                 return response.status(200).json(arrayOfData);
             } catch (err) {
@@ -92,14 +94,15 @@ export class DataSetController {
      * @param response 
      * An object containing a response: Response
      */
-    async createRequestForUserSavedDatsets(request: Request, response: Response) {
+    async createRequestForUserFavoriteDatsets(request: Request, response: Response) {
         let userId: any = request.body.user.account_id
         if (isNaN(userId)) {
             response.status(500).json("Invalid search params entered");
         }
         else {
             try {
-                let arrayOfData = await this.dataSetService.getUserSavedDatasets(userId)
+                this.dataSetService = new DataSetService();
+                let arrayOfData = await this.dataSetService.getUserFavoriteDatasets(userId)
                 return response.status(200).send(arrayOfData);
             } catch (err) {
                 response.status(500).send(err);
@@ -179,6 +182,7 @@ export class DataSetController {
             let flaggedComments = String(request.query.flaggedComments)
             let additionalComments = String(request.query.additionalComments)
             try {
+                this.dataSetService = new DataSetService();
                 let requestResponse = await this.dataSetService.flagNewDataset(datasetIdToFlag, flaggedComments, additionalComments)
                 return response.status(requestResponse.statusCode).json(requestResponse.message);
             } catch (error) {
@@ -207,6 +211,7 @@ export class DataSetController {
     async createRequestForUserFlaggedDatasets(request: Request, response: Response) {
         let userId: number = request.body.user.account_id
         try {
+            this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.fetchFlaggedDatasets(userId)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
@@ -221,6 +226,7 @@ export class DataSetController {
         let datasetIdToApprove = Number(request.query.datasetId)
         let datasetComments = String(request.query.datasetComments)
         try {
+            this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.adminApprovedDataset(datasetIdToApprove, datasetComments)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
@@ -235,6 +241,7 @@ export class DataSetController {
             response.status(400).json("Invalid data set ID entered");
         }
         try {
+            this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.userApprovedDataset(datasetId)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {

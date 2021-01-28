@@ -18,7 +18,7 @@ router.get('/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets', (reques
 });
 
 router.get('/api/v1/dataset/userSavedDatsets/:userSavedDatsets', (request: Request, response: Response) => {
-    dataSetController.createRequestForUserSavedDatsets(request, response);
+    dataSetController.createRequestForUserFavoriteDatsets(request, response);
 });
 
 router.get('/api/v1/dataset/fetchUnapprovedDatasets$', (request: Request, response: Response) => {

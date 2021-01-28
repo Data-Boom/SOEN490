@@ -197,7 +197,7 @@ describe('data service test', () => {
   });
 
   test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(1)
+    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(1)
     expect(arrayOfData[1][0].dataset_id).toEqual(2);
     done()
   });
@@ -209,7 +209,7 @@ describe('data service test', () => {
   });
 
   test('Feeds an invalid account and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets(5000)
+    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(5000)
     expect(arrayOfData[0].dataset_id).toBeUndefined()
     done()
   });

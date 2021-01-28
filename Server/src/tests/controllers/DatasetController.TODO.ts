@@ -77,7 +77,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestToDeleteSavedDataSet(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -89,7 +89,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestToDeleteSavedDataSet(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -101,7 +101,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestToDeleteSavedDataSet(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid user email provided");
         expect(mockResponse.status).toBeCalledWith(400);
     });
@@ -113,7 +113,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: "wrtrterterte"
             }
         }
-        await GetDataControllerController.createRequestToDeleteSavedDataSet(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
         expect(mockResponse.status).toBeCalledWith(400);
     });

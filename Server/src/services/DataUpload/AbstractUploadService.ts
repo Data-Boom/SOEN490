@@ -18,11 +18,11 @@ export default abstract class AbstractUploadService {
         this.uploadModel = new DataUploadModel()
     }
 
-    protected abstract uploadData()
+    abstract uploadData()
 
     protected abstract insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string)
 
-    protected async validateExtractedData() {
+    async validateExtractedData() {
         try {
             await validationSchema.validate(this.parsedFileData)
         } catch (err) {
@@ -76,7 +76,7 @@ export default abstract class AbstractUploadService {
 
     protected async insertPublicationTypeData(uploadModel: DataUploadModel, referenceType: string): Promise<number> {
         try {
-            let referenceTypeID = await uploadModel.insertPreferenceType(referenceType);
+            let referenceTypeID = await uploadModel.insertPublicationType(referenceType);
             console.log('Received reference ID' + referenceTypeID);
             return referenceTypeID
         } catch (err) {

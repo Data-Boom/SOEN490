@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { UnapprovedUploadService } from '../services/DataUpload/UnapprovedUploadService'
 import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
 import EditUploadService from '../services/DataUpload/EditUploadService';
+import AbstractUploadService from '../services/DataUpload/AbstractUploadService';
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -11,7 +12,7 @@ import EditUploadService from '../services/DataUpload/EditUploadService';
  */
 
 export class DataUploadController {
-    private dataService: any
+    private dataService: AbstractUploadService
     private dataSet: IDataSetModel
 
     constructor() {

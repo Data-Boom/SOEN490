@@ -41,7 +41,7 @@ export class DataUploadModel {
      * @param publicationTypeReceived 
      * Publication type: string
      */
-    async insertPreferenceType(publicationTypeReceived: string): Promise<number> {
+    async insertPublicationType(publicationTypeReceived: string): Promise<number> {
         let publicationType = new Publicationtype();
         publicationType.id;
         publicationType.name = publicationTypeReceived;
