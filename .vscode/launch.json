@@ -5,11 +5,29 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-chrome",
+            "name": "Launch via NPM",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "runtimeArgs": [
+                "run-script",
+                "dev"
+            ],
+            "localRoot": "${workspaceFolder}\\server",
+            "remoteRoot": "${workspaceFolder}\\server",
+            "port": 9229,
+            "runtimeExecutable": "npm",
+            "address": "localhost",
+            "type": "node",
+            "cwd": "${workspaceFolder}\\server",
+            "restart": true
+        },
+        {
+            "name": "Attach",
+            "request": "attach",
+            "address": "localhost",
+            "type": "node",
+            "cwd": "${workspaceFolder}\\server",
+            "localRoot": "${workspaceFolder}\\server",
+            "remoteRoot": "${workspaceFolder}\\server"
         }
     ]
 }

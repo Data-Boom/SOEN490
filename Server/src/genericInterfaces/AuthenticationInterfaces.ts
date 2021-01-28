@@ -7,6 +7,12 @@ export interface IPasswordResetInformation {
     email: string
 }
 
+export interface IPasswordUpdateInformation {
+    password: string,
+    passwordConfirmation: string,
+    jwtToken: string
+}
+
 export interface ISignUpInformation {
     email: string,
     password: string,

@@ -145,6 +145,7 @@ export class AuthenticationController {
             serviceResponse = await this.authenticationService.resetPassword(passwordResetInfo);
             return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
+            console.log(error);
             return response.status(error.status).json(error.message);
         }
     }

@@ -7,14 +7,12 @@ import mailgun from 'mailgun-js';
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
-import { IFetchUserDetail, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { IFetchUserDetail, IPasswordResetInformation, IPasswordUpdateInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
-
-let mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.DOMAIN_NAME });
 
 /**
  * This class services authentication or User related requests and handles
@@ -93,6 +91,20 @@ export class AuthenticationService {
         return this.requestResponse;
     }
 
+    async updatePassword(resetPasswordInformation: IPasswordUpdateInformation): Promise<IResponse> {
+        let verifiedToken: boolean;
+
+
+        verifiedToken = await AuthenticationModel.verifyResetToken(verifiedToken);
+        if (!verifiedToken) {
+            throw new BadRequest("The token has expired");
+        }
+        else {
+            // todo: update password
+        }
+        return this.requestResponse;
+    }
+
     async resetPassword(resetPasswordInformation: IPasswordResetInformation): Promise<IResponse> {
         let verifiedEmail: boolean;
         let accessToken: string;
@@ -120,22 +132,23 @@ export class AuthenticationService {
                 from: "noreply@databoom.com",
                 to: resetPasswordInformation.email,
                 subject: 'Reset your password',
-                html: `
-                    <h2>To reset your password, please click on this link</h2>
-                    <p>${process.env.CLIENT_URL}/resetPassword/${accessToken}</p>
+                html: `<h2>To reset your password, please click on this link</h2><p>${process.env.CLIENT_URL}/api/v1/resetpassword/${accessToken}</p>
                 `
             };
 
-            mg.message().send(data, function (error, body) {
+            let mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.DOMAIN_NAME });
+
+            await mg.messages().send(data, function (error, body) {
                 if (error) {
-                    this.requestResponse.statusCode = 400;
-                    this.requestResponse.message = error.message;
-                } else {
-                    this.requestResponse.statusCode = 200;
-                    this.requestResponse.message = "Email has been sent";
+                    console.log(error);
+                    throw new InternalServerError(error.message);
                 }
             });
+
+            this.requestResponse.statusCode = 200;
+            this.requestResponse.message = "Email has been sent";
         }
+
         return this.requestResponse;
     }
 
