@@ -29,14 +29,14 @@ export const FileUploadForm = (props: IProps) => {
     const input: HTMLInputElement = event.target[fileInputId]
     const file: File = input.files[0]
     //if validate file was not provided will isValidFile = true
-    const isValidFile = validateFile(file) //|| true
-    if (isValidFile) {
-      onSubmit(file)
-      setAlertSuccess(true)
-    }
-    else {
-      setAlertOpen(true)
-    }
+    // const isValidFile = validateFile(file) //|| true
+    //if (isValidFile) {
+    onSubmit(file)
+    setAlertSuccess(true)
+    //}
+    // else {
+    //  setAlertOpen(true)
+    // }
   }
 
   return (

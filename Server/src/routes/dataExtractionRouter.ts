@@ -1,8 +1,8 @@
+import { NextFunction, Request, Response, Router } from 'express';
 
-import { Request, Response, Router, NextFunction } from 'express';
-import multer from 'multer';
-import { dataExtractionController } from '../controllers/dataExtractionController';
 import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
+import { dataExtractionController } from '../controllers/dataExtractionController';
+import multer from 'multer';
 
 interface MulterRequest extends Request {
   file: any;

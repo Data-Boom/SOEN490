@@ -1,9 +1,9 @@
-import { BadRequest } from "@tsed/exceptions";
+import { ILoginInformation, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
 import { AuthenticationService } from '../services/authenticationService';
-import { ILoginInformation, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { BadRequest } from "@tsed/exceptions";
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
@@ -158,7 +158,7 @@ export class AuthenticationController {
             serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
 
             //todo put secure: true when we go https.
-            response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
+            response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
 
             return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {

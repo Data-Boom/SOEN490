@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button'
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
 import React from 'react'
+import { post } from '../../Remote/RemoteHelper'
 import { rm } from "../../Assets/readMeMessage"
 
 const fileFormat = 'application/json'
@@ -26,10 +27,7 @@ export default function DataCell() {
     }
 
     try {
-      await fetch('http://localhost:4000/api/v1/dataExtract', options)
-        .then(resp => resp.json())
-        .then(result => {
-        })
+      await post('api/v1/dataExtract', formData)
     }
     catch (err) {
       //todo add error handling

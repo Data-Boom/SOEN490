@@ -19,9 +19,7 @@ export class JWTAuthenticator {
         }
         jwt.verify(token, process.env.ACCESS_SECRET_KEY, (err: Error, decoded: any) => {
             if (err) {
-                if (err) {
-                    return response.status(403).json({ error: "JWT Token provided is incorrect" })
-                }
+                return response.status(403).json({ error: "JWT Token provided is incorrect" })
             }
             let requestBody = request.body
             Object.assign(requestBody, {
