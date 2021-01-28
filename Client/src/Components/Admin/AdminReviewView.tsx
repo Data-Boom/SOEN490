@@ -12,20 +12,18 @@ export function AdminReviewView() {
     const [editable, setEditable] = useState(false)
     const [dataset, setDataset] = useState(exampleExportDatasetModel)
     const [comment, setComment] = useState("Add a comment")
-    //const completeDataset: IDatasetModel[]
+
     useEffect(() => {
         const callListDatasetStates = async () => {
             const datasetState = await listGraphStates()
-            //const datasetState = dataset.dataset_name
-
             setDatasetState(datasetState)
-            //setDataset(dataset);
+
         }
         callListDatasetStates()
     }, [])
 
     const handleDeleteDataset = (datasetId: number) => {
-
+        console.log()
     }
     const handleReviewDataset = (datasetId: number) => {
 
@@ -39,6 +37,7 @@ export function AdminReviewView() {
 
     }
 
+    //handle submit after pressing
     const handleSubmit = (datasetId: IDatasetModel) => {
 
     }
@@ -56,7 +55,9 @@ export function AdminReviewView() {
                     onDeleteDatasetClick={handleDeleteDataset}
                     onFlagDatasetClick={handleFlagDataset}
                 />
-                <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>
+                <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
+                <Button id="toggle-edit" color="primary" variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
+                <Button id="toggle-edit" color="primary" variant="contained">Delete</Button>
             </Grid>
             <Grid xs={9}>
                 <Grid container spacing={3}>

@@ -21,7 +21,7 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
         <Grid item>
             <Box className={classStyles().datasetBorder}>
                 <Grid container alignItems='center' justify='space-between'>
-                    <Grid item container justify='flex-start' xs={3}>
+                    <Grid item container justify='flex-start' xs={5}>
 
                         <Typography variant="body2" noWrap>
                             <div>
@@ -29,28 +29,16 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
                             </div>
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                     </Grid>
-                    <Grid item xs={1}>
-                        <Tooltip title="Click to review the dataset">
-                            <IconButton onClick={() => onReviewDatasetClick(dataset.id)}>
-                                <RateReviewIcon color='primary' />
-                            </IconButton>
-                        </Tooltip>
+                    <Grid item xs={2}>
+
                     </Grid>
-                    <Grid item xs={1}>
-                        <Tooltip title="Click to delete the dataset">
-                            <IconButton onClick={() => onDeleteDatasetClick(dataset.id)}>
-                                <DeleteIcon color='primary' />
-                            </IconButton>
-                        </Tooltip>
+                    <Grid item xs={2}>
+
                     </Grid>
-                    <Grid item xs={1}>
-                        <Tooltip title="Click to flag the dataset">
-                            <IconButton onClick={() => onFlagDatasetClick(dataset.id)}>
-                                <FeedbackIcon color='primary' />
-                            </IconButton>
-                        </Tooltip>
+                    <Grid item xs={2}>
+
                     </Grid>
                 </Grid>
             </Box>
