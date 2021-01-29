@@ -1,7 +1,9 @@
 import { Box, Button } from '@material-ui/core'
 
+import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
+import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React from 'react'
 import { rm } from "../../Assets/readMeMessage"
 
@@ -11,7 +13,9 @@ export const FileUploadView = () => {
   const isValidFile = (file: File) => {
     return file && file.type === fileFormat
   }
+  const handleUploadFormSubmit = (values: IDatasetModel) => {
 
+  }
   const handleSubmit = async (jsonFile: File) => {
     const formData = new FormData()
     formData.append('file', jsonFile)
@@ -23,6 +27,13 @@ export const FileUploadView = () => {
       })
       const extractedDataset = await response.json()
       console.log(extractedDataset, 'extracted dataset')
+      //Refresh or reroute here
+      return (
+        <DatasetUploadForm
+          onSubmit={handleUploadFormSubmit}
+          initialDataset={extractedDataset}
+        />
+      )
 
     }
     catch (err) {
