@@ -136,7 +136,7 @@ describe('Data Set Controller ', () => {
     test('Remove Non-existant Favorite Data Set Request', async () => {
         mockRequest = {
             params: {
-                datasetId: '-1'
+                datasetId: '0'
             },
             body: {
                 user: {

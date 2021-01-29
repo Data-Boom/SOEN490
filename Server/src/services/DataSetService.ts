@@ -411,6 +411,9 @@ export class DataSetService {
             this.requestResponse.message = response as any
             return this.requestResponse
         } catch (error) {
+            if (error instanceof NotFound) {
+                throw new NotFound(error.message)
+            }
             throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
         }
     }
