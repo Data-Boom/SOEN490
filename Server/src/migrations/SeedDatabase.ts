@@ -158,6 +158,19 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     publicationToDelete2.authors = [author3, author4];
     await connection.manager.save(publicationToDelete2);
 
+    let publicationToDelete3 = new Publications();
+    publicationToDelete3.id;
+    publicationToDelete3.name = "Publication To Delete";
+    publicationToDelete3.pages = 100;
+    publicationToDelete3.publicationtypeId = toDelete.id;
+    publicationToDelete3.publisherId = publisherNameToDelete.id;
+    publicationToDelete3.year = 1980;
+    publicationToDelete3.volume = 5;
+    publicationToDelete3.datePublished;
+    publicationToDelete3.dateAccessed;
+    publicationToDelete3.authors = [author3, author4];
+    await connection.manager.save(publicationToDelete3);
+
     let compositionC = new Composition();
     compositionC.id;
     compositionC.composition = "C";
@@ -356,7 +369,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     dataset.id = 10;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publicationToDelete3.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
