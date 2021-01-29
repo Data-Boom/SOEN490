@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
-import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
-import { flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
+import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
+import { FlagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
+import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
 export function AdminReviewView() {
 
     const [datasetState, setDatasetState] = useState([])
@@ -13,7 +14,7 @@ export function AdminReviewView() {
     const [dataset, setDataset] = useState<IApprovedDatasetModel>()
     const [comment, setComment] = useState("")
     const [flaggedComment, setFlaggedComment] = useState("")
-    const [flaggedDataset, setFlaggedDataset] = useState()
+    const [flaggedDataset, setFlaggedDataset] = useState<IRemoteApprovedDatasetModel>()
 
 
     const handleDeleteDataset = () => {
@@ -29,9 +30,9 @@ export function AdminReviewView() {
 
     const handleFlagDataset = async () => {
 
-        const flaggedDataset = await flagDataset(dataset.id, dataset)
-        console.log(flaggedDataset + "is flagged")
-        //console.log("dataset flagged")
+        const query: IFlaggedDatasetQuery = { datasetId: dataset.id, flaggedComment: flaggedComment, additionalComment: comment }
+        await FlagDataset(query)
+
     }
 
     //handle submit after pressing
