@@ -10,7 +10,7 @@ import { toDatasetRows } from '../Graph/GraphFunctions'
 export function AdminReviewView() {
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
-    const [dataset, setDataset] = useState(exampleExportDatasetModel)
+    const [dataset, setDataset] = useState<IDatasetModel>()
     const [comment, setComment] = useState("")
     const [flaggedComment, setFlaggedComment] = useState("")
 
@@ -22,6 +22,8 @@ export function AdminReviewView() {
         }
         callListDatasetStates()
     }, [])
+
+
 
     const handleDeleteDataset = (datasetId: number) => {
 
@@ -43,6 +45,12 @@ export function AdminReviewView() {
 
     }
 
+    const handleDatasetChange = (newDataset: IDatasetModel) => {
+        console.log(newDataset)
+        setEditable(true)
+        setDataset(newDataset)
+    }
+
     const handleCommentChange = (event) => {
         setComment(event.target.value)
     }
@@ -60,6 +68,7 @@ export function AdminReviewView() {
                     </Typography>
                     <AdminReviewList
                         datasets={datasetState}
+                        onChange={handleDatasetChange}
                     />
                     <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
                 <Button id="toggle-edit" color="primary" variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
@@ -92,11 +101,13 @@ export function AdminReviewView() {
             <Grid xs={8}>
                 <Grid container spacing={3}>
                     <Grid xs={12}>
-                        <DatasetUploadForm
-                            onSubmit={handleSubmit}
-                            initialDataset={dataset}
-                            editable={editable}
-                        />
+                        {dataset &&
+                            <DatasetUploadForm
+                                onSubmit={handleSubmit}
+                                initialDataset={dataset}
+                                editable={editable}
+                            />
+                        }
                     </Grid>
 
                 </Grid>

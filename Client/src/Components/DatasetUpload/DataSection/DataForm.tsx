@@ -16,11 +16,10 @@ export const DataForm = (props: IProps) => {
   const { editable } = props
 
   useEffect(() => {
-    console.log(editable)
+
   }, [props.editable])
 
   const FormikDatasetDataTable = ({ field, form, ...props }) => {
-    console.log(editable)
     return <DatasetDataTable editable={editable} data={field.value} onDataChange={(newData: IData) => form.setFieldValue(field.name, newData)} />
   }
 

@@ -1,16 +1,17 @@
+import React, { useEffect, useState } from 'react'
+import { getUnapprovedDatasets, listUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoints"
+
 import { AdminReviewRow } from "./AdminReviewRow"
 import { Grid } from "@material-ui/core"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
-import { getUnapprovedDatasets, listUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoints"
 import { getDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
-import React, { useEffect, useState } from 'react'
 
 interface IAdminListprops {
     datasets: IDatasetModel[]
+    onChange(formDataset: IDatasetModel): void
 }
 
 export const AdminReviewList = (props: IAdminListprops) => {
-    //const { datasets } = { ...props }
 
     const [datasets, setDatasets] = useState(props.datasets)
 
@@ -29,6 +30,7 @@ export const AdminReviewList = (props: IAdminListprops) => {
                 <AdminReviewRow
                     dataset={datasets}
                     key={datasets.id}
+                    onChange={props.onChange}
                 />
             )
         })
