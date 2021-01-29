@@ -47,8 +47,6 @@ export function AdminReviewView() {
     }
 
     const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
-        console.log(newDataset)
-        setEditable(true)
         setDataset(newDataset)
     }
 
