@@ -504,3 +504,87 @@ export const inValidTestData = {
     }
 }
 
+export const validGraphStateData1 = [{
+    "datasets": [
+        {
+            "id": 1,
+            "color": "red",
+            "shape": "square",
+            "isHidden": false
+        },
+        {
+            "color": "green",
+            "id": 2,
+            "isHidden": true,
+            "shape": "triangle",
+        }
+    ],
+    "name": "Test Graph",
+    "axes": [
+        {
+            "variableName": "temperature",
+            "logarithmic": true,
+            "zoomStartIndex": 100,
+            "zoomEndIndex": 100,
+            "units": "C"
+        },
+        {
+            "variableName": "width",
+            "logarithmic": true,
+            "zoomStartIndex": 100,
+            "zoomEndIndex": 100,
+            "units": "mm"
+        }
+    ],
+    "id": 1
+}]
+
+export const validGraphStateData2 = [{
+    "datasets": [
+        {
+            "id": 1,
+            "color": "red",
+            "shape": "square",
+            "isHidden": false
+        }
+    ],
+    "name": "Test Graph #2",
+    "axes": [
+        {
+            "variableName": "temperature",
+            "logarithmic": true,
+            "zoomEndIndex": 100,
+            "zoomStartIndex": 100,
+            "units": "C"
+        }
+    ],
+    "id": 2
+}]
+
+export const oneFavoriteDataset = [
+    {
+        publication: {
+            name: "Someone's Favorite Publisher",
+            DOI: null,
+            pages: null,
+            volume: null,
+            year: 1900,
+            datePublished: null,
+            dateAccessed: null,
+            publisher: 'University of California Press',
+            publicationType: 'Book',
+            authors: []
+        },
+        dataset_id: 2,
+        dataset_info: {
+            name: "Someone's Favorite",
+            comments: '',
+            datasetDataType: 'Not Specified',
+            category: 'None Entered',
+            subcategory: 'None Entered'
+        },
+        materials: [],
+        dataPoints: [],
+        dataPointComments: undefined
+    }
+]

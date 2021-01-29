@@ -95,8 +95,6 @@ export class GraphsModel {
             singleGraphData = await this.processSavedGraphData(rawGraphData[index])
             sortedGraphData.push(singleGraphData)
         }
-        console.log(sortedGraphData)
-        console.log(sortedGraphData.length)
         return sortedGraphData
     }
 
@@ -180,7 +178,7 @@ export class GraphsModel {
         newGraph.axisZoomEnd = graph.axisZoomEnd;
         newGraph.axisUnits = graph.axisUnits;
         await this.connection.manager.save(newGraph);
-        return newGraph.id.toString()
+        return "Graph successfully saved"
     }
 
     /**
@@ -206,7 +204,7 @@ export class GraphsModel {
         if (graphOwner == undefined) {
             return "Graph does not exist"
         }
-        else if (graphOwner.accountId !== userId) {
+        else if (graphOwner.accountId != userId) {
             return "This is not your graph!"
         }
         else {

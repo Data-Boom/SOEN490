@@ -204,8 +204,7 @@ export class DataQueryModel {
     }
 
     /**
-     * This method accepts a user's email and a data set ID, will get the user ID associated with
-     * the email and, if the email was valid, will delete the user ID and data set ID relation in  
+     * This method accepts a user's ID and a data set ID and will delete the user ID and data set ID relation in  
      * the accounts_datasets_dataset table. 
      * 
      * @param userEmail 
@@ -215,7 +214,7 @@ export class DataQueryModel {
      */
     async removeUserFavoriteDatasetModel(userId: number, datasetId: number) {
         await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userId, datasetId]);
-        return [true, "User favorite successfully removed"];
+        return "User favorite successfully removed";
 
     }
 
