@@ -70,8 +70,6 @@ export class DatasetApprovalModel {
             .innerJoin(Dataset, 'dataset', 'dataset.id = unapproved_datasets.datasetId')
             .where('dataset.id = :id', { id: id })
             .getRawOne();
-        console.log(userId)
-        console.log(upload)
         if (upload.uploaderId != userId || upload == undefined) {
             return "User ID does not match uploader ID!"
         }
