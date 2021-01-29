@@ -306,8 +306,8 @@ describe('data service test', () => {
     done()
   });
 
-  test('User approves a data set, with no additional comments', async done => {
-    let response = await retrieveDataObject.userApprovedDataset(8)
+  test('User approves a data set', async done => {
+    let response = await retrieveDataObject.userApprovedDataset(8, 2)
     expect(response.message).toEqual("Successfully approved new data set");
     expect(response.statusCode).toEqual(200);
     done()
