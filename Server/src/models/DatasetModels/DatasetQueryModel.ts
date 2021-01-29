@@ -78,6 +78,8 @@ export class DataQueryModel {
             .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
             .setParameters({ firstNameRef: firstName, lastNameRef: lastName })
             .getRawMany();
+        console.log('model query')
+        console.log(authorDatasetData)
         return authorDatasetData;
     }
 
