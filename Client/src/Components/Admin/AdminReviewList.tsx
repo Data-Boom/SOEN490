@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getUnapprovedDatasets, listUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoints"
+import { getUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoints"
 
 import { AdminReviewRow } from "./AdminReviewRow"
 import { Grid } from "@material-ui/core"

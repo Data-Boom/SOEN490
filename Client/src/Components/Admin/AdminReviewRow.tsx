@@ -5,17 +5,12 @@ import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import RateReviewIcon from '@material-ui/icons/RateReview'
 import { classStyles } from '../../appTheme'
 import { getUnapprovedDatasets } from '../../Remote/Endpoints/DatasetEndpoints'
-
-//import classes from '*.module.css'
+import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 
 interface IAdminReviewModel {
     dataset: IApprovedDatasetModel,
     onChange(formDataset: IDatasetModel): void
 }
-
-
-//let data = listUnapprovedDatasets()
-//setDatasets(data)
 
 export const AdminReviewRow = (props: IAdminReviewModel) => {
     const { dataset, onChange } = { ...props }

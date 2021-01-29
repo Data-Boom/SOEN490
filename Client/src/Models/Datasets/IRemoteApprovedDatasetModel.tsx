@@ -11,6 +11,13 @@ export const toLocalDatasets = (remoteDatasets: IRemoteApprovedDatasetModel[]): 
     return remoteDatasets && remoteDatasets.map(remoteDataset => toLocalDatasetModel(remoteDataset)) || []
 }
 
+
+export const toRemoteApprovedDatasets = (remoteDatasets: IApprovedDatasetModel): IRemoteApprovedDatasetModel => {
+    //return remoteDatasets && remoteDatasets.map(remoteDataset => toLocalDatasetModel(remoteDataset)) || []
+
+    return null
+}
+
 export const toLocalDatasetModel = (remoteDataset: IRemoteApprovedDatasetModel): IApprovedDatasetModel => {
     if (!remoteDataset) {
         return null

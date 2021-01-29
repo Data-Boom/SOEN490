@@ -5,12 +5,15 @@ import React, { useEffect, useState } from 'react'
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
+import { flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 export function AdminReviewView() {
+
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
     const [dataset, setDataset] = useState<IApprovedDatasetModel>()
     const [comment, setComment] = useState("")
     const [flaggedComment, setFlaggedComment] = useState("")
+    const [flaggedDataset, setFlaggedDataset] = useState()
 
 
     const handleDeleteDataset = () => {
@@ -24,8 +27,11 @@ export function AdminReviewView() {
         setEditable(!editable)
     }
 
-    const handleFlagDataset = () => {
-        console.log("dataset flagged")
+    const handleFlagDataset = async () => {
+
+        const flaggedDataset = await flagDataset(dataset.id, dataset)
+        console.log(flaggedDataset + "is flagged")
+        //console.log("dataset flagged")
     }
 
     //handle submit after pressing

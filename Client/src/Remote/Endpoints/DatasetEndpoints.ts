@@ -12,14 +12,13 @@ const flagDatasetRoute = '/api/v1/flagDataSet/'
 const adminApprovedDatasetRoute = '/api/v1/adminApprovedDataset/'
 const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
 
-}
 export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> => {
     const remoteDatasets: IRemoteApprovedDatasetModel[] = await get(unapprovedDatasetsRoute)
     const localDatasets = toLocalDatasets(remoteDatasets)
     return localDatasets
 }
 
-export const flagDataset = async (datasetId: number, dataset: IRemoteApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
+export const flagDataset = async (datasetId: number, dataset: IApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
     const flaggedDataset = await put(flagDatasetRoute + '/' + datasetId, dataset)
     return flaggedDataset
 }
@@ -29,7 +28,7 @@ export const callRejectDataset = async (datasetId: number): Promise<IRemoteAppro
     return deletedDataset
 }
 
-export const adminApprovedDataset = async (datasetId: number, dataset: IRemoteApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
+export const adminApprovedDataset = async (datasetId: number, dataset: IApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
     const adminApprovedDataset = await put(adminApprovedDatasetRoute + '/' + datasetId, dataset)
     return adminApprovedDataset
 }
