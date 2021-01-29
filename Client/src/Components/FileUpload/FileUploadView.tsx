@@ -17,13 +17,13 @@ export const FileUploadView = () => {
     formData.append('file', jsonFile)
 
     try {
-      console.log(formData, 'formData')
-      // const extractedDataset = await callDataExtract(formData)
-      console.log('got gere')
-      await fetch('/api/v1/dataExtract', {
+      const response = await fetch('/api/v1/dataExtract', {
         method: 'POST',
         body: formData
       })
+      const extractedDataset = await response.json()
+      console.log(extractedDataset, 'extracted dataset')
+
     }
     catch (err) {
       //todo add error handling
