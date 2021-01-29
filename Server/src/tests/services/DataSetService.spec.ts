@@ -229,7 +229,7 @@ describe('data service test', () => {
 
   test('Removes data set with ID 5 as a favorite of account ID 1', async done => {
     let response = await retrieveDataObject.removeUserFavoriteDataset(1, 5)
-    expect(response.message).toEqual([true, "User favorite successfully removed"])
+    expect(response.message).toEqual("User favorite successfully removed")
     done()
   });
 

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 import { DataSetController } from '../../controllers/DataSetController';
+import { IDataRequestModel } from '../../models/interfaces/DataRequestModelInterface';
 
 describe('SavedGraphs Controller ', () => {
     let mockRequest;
@@ -22,13 +23,61 @@ describe('SavedGraphs Controller ', () => {
         await getConnection().close();
     });
 
+    test('Feeds data set ID of 1 and expects to see a data set with ID of 1 returned', async done => {
+        let expectedResponse = [
+            {
+                publication: {
+                    name: "Someone's Favorite Publisher",
+                    DOI: null,
+                    pages: null,
+                    volume: null,
+                    year: 1900,
+                    datePublished: null,
+                    dateAccessed: null,
+                    publisher: 'University of California Press',
+                    publicationType: 'Book',
+                    authors: []
+                },
+                dataset_id: 2,
+                dataset_info: {
+                    name: "Someone's Favorite",
+                    comments: '',
+                    datasetDataType: 'Not Specified',
+                    category: 'None Entered',
+                    subcategory: 'None Entered'
+                },
+                materials: [],
+                dataPoints: [],
+                dataPointComments: undefined
+            }
+        ]
+
+        mockRequest = {
+            query: {
+                datasetId: [2]
+            },
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            }
+        }
+        await GetDataControllerController.createRequestForData(mockRequest as Request, mockResponse as Response)
+        //let arrayOfData = mockResponse.json as unknown as IDataRequestModel[]
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.status).toBeCalledWith(200);
+        done()
+    });
+
+    //TODO: Readd later
+    /**
     test('Valid Save Data Set Request', async () => {
         mockRequest = {
             params: {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Favorite data set successfully saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -40,7 +89,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '2'
             }
         }
-        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Favorite data set is already saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
@@ -52,7 +101,7 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid user email provided");
         expect(mockResponse.status).toBeCalledWith(400);
     });
@@ -64,17 +113,22 @@ describe('SavedGraphs Controller ', () => {
                 datasetId: "wrtrterterte"
             }
         }
-        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
         expect(mockResponse.status).toBeCalledWith(400);
     });
+    */
 
     // Do these tests last
     test('Valid Remove Data Set Request', async () => {
         mockRequest = {
             params: {
-                userEmail: 'j.comkj',
                 datasetId: '1'
+            },
+            body: {
+                user: {
+                    account_id: '1'
+                }
             }
         }
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
@@ -85,8 +139,12 @@ describe('SavedGraphs Controller ', () => {
     test('Remove Non-existant Data Set Request', async () => {
         mockRequest = {
             params: {
-                userEmail: 'j.comkj',
-                datasetId: '1'
+                datasetId: '-1'
+            },
+            body: {
+                user: {
+                    account_id: '1'
+                }
             }
         }
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
@@ -94,23 +152,15 @@ describe('SavedGraphs Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    test('Invalid Save Data Set Request', async () => {
+    test('Invalid Remove Data Set Request; false data set ID', async () => {
         mockRequest = {
             params: {
-                userEmail: 'fake@email.com',
-                datasetId: '1'
-            }
-        }
-        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Invalid user email provided");
-        expect(mockResponse.status).toBeCalledWith(400);
-    });
-
-    test('Invalid Save Data Set Request', async () => {
-        mockRequest = {
-            params: {
-                userEmail: 'j.comkj',
-                datasetId: "wrtrterterte"
+                datasetId: 'werwerewr'
+            },
+            body: {
+                user: {
+                    account_id: '1'
+                }
             }
         }
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)

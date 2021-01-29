@@ -339,13 +339,13 @@ export class DataSetService {
         try {
             let response = await this.dataQuery.removeUserFavoriteDatasetModel(userId, datasetId);
             if (response == undefined || response == null) {
-                throw new NotFound("Could not find your saved datasets")
+                throw new NotFound("Could not find this saved data set")
             }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response as any
             return this.requestResponse
         } catch (error) {
-            throw new InternalServerError("Something went wrong deleting your saved datasets. Try later")
+            throw new InternalServerError("Something went wrong deleting a saved data set. Try later")
         }
     }
 
