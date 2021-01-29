@@ -169,8 +169,8 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(compositionO2);
 
     let compositionToDelete = new Composition();
-    compositionToDelete.id;
-    compositionToDelete.composition = "CO2";
+    compositionToDelete.id = 5;
+    compositionToDelete.composition = "To Delete";
     await connection.manager.save(compositionToDelete);
 
     let materialC = new Material();
@@ -186,8 +186,8 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(materialO2);
 
     let materialToDelete = new Material();
-    materialToDelete.id;
-    materialToDelete.compositionId = compositionToDelete.id;
+    materialToDelete.id = 5;
+    materialToDelete.compositionId = 5;
     materialToDelete.details = "Going into the void";
     await connection.manager.save(materialToDelete);
 
@@ -439,10 +439,21 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     unitsKMPS.units = "km/s";
     await connection.manager.save(unitsKMPS);
 
+    let unitsToDelete = new Units();
+    unitsToDelete.id;
+    unitsToDelete.name;
+    unitsToDelete.units = "Del";
+    await connection.manager.save(unitsToDelete);
+
     let reprNone = new Representations();
     reprNone.id;
     reprNone.repr = "N/A";
     await connection.manager.save(reprNone);
+
+    let reprToDelete = new Representations();
+    reprToDelete.id;
+    reprToDelete.repr = "Del";
+    await connection.manager.save(reprToDelete);
 
     // Data points below this line. 
 
@@ -531,6 +542,14 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     datapoint9.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
     datapoint9.unitsId = unitsNone.id;
     datapoint9.representationsId = reprNone.id;
+    await connection.manager.save(datapoint9);
+
+    datapoint9.id;
+    datapoint9.datasetId = 70;
+    datapoint9.name = "Compression Ratio";
+    datapoint9.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
+    datapoint9.unitsId = unitsToDelete.id;
+    datapoint9.representationsId = reprToDelete.id;
     await connection.manager.save(datapoint9);
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
