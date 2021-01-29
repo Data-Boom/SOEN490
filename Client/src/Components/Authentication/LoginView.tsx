@@ -1,6 +1,6 @@
 import { FastField, Form, Formik } from 'formik'
-import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
-import React, { useContext } from 'react'
+import { IForgotPasswordModel, ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
+import React, { useContext, useState } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
@@ -22,6 +22,10 @@ import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { Modal, Paper } from '@material-ui/core'
+import { classStyles } from '../../appTheme'
+import ForgotPasswordView from './ForgotPasswordView'
+import CancelIcon from "@material-ui/icons/Cancel"
 
 function Copyright() {
   return (
@@ -61,6 +65,20 @@ export default function LoginView() {
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
 
+  const [openModal, setOpen] = useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handlePasswordReset = (resetPasswordInfo: IForgotPasswordModel) => {
+    handleClose()
+  }
+
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
     await callLogin(loginUserInfo)
@@ -73,6 +91,23 @@ export default function LoginView() {
       {user && user.firstName ?
         <Redirect to={homeRoute} /> :
         <Container component="main" maxWidth="xs">
+          <Modal
+            open={openModal}
+            onClose={handleClose}
+          >
+            <Paper elevation={3}>
+              <Box m={5}>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <CancelIcon color="primary" onClick={() => setOpen(false)} />
+                  </Grid>
+                </Grid>
+                <ForgotPasswordView
+
+                />
+              </Box>
+            </Paper>
+          </Modal>
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
