@@ -97,6 +97,7 @@ export const getRoutedViews = () => {
       <Route path={signInRoute} component={SignInView} />
       <Route path={signUpRoute} component={SignUpView} />
       <Route path={forgotPasswordRoute} component={ForgotPasswordView} />
+      <Route path={resetPasswordRoute} component={ResetPasswordView} />
     </>
   )
 }
