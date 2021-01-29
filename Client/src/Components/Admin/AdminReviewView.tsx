@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
+import { callRejectDataset, FlagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
-import { flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
-
+import { stringify } from 'query-string'
 export function AdminReviewView() {
 
     const [datasetState, setDatasetState] = useState([])
@@ -18,8 +18,9 @@ export function AdminReviewView() {
     const [flaggedDataset, setFlaggedDataset] = useState<IRemoteApprovedDatasetModel>()
 
 
-    const handleDeleteDataset = () => {
-        console.log("dataset deleted")
+    const handleDeleteDataset = async () => {
+        //console.log("dataset deleted")
+        await callRejectDataset(stringify(dataset.id))
     }
     const handleReviewDataset = (datasetId: number) => {
 
@@ -32,8 +33,7 @@ export function AdminReviewView() {
     const handleFlagDataset = async () => {
 
         const query: IFlaggedDatasetQuery = { datasetId: dataset.id, flaggedComments: flaggedComment, additionalComments: comment }
-        console.log(query)
-        await flagDataset(query)
+        await FlagDataset(query)
 
     }
 

@@ -25,9 +25,15 @@ export const flagDataset = async (query: IFlaggedDatasetQuery) => {
     await put(flagDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }), stringify(query, { arrayFormat: 'bracket' }))
 }
 
-export const callRejectDataset = async (datasetId: number): Promise<IRemoteApprovedDatasetModel> => {
-    const deletedDataset = await get(datasetRoute + '/' + datasetId)
-    return deletedDataset
+export const callRejectDataset = async (datasetId: string) => {
+    const deletedDataset: IApprovedDatasetModel = await get(datasetRoute + '/' + stringify(datasetId))
+    //console.log("deleted dataset: " + deletedDataset.id)
+
+    /*fetch(datasetRoute + '/' + item, {
+        method: 'delete'
+      })
+      .then(response => response.json());
+    return deletedDataset*/
 }
 
 export const adminApprovedDataset = async (datasetId: number, dataset: IApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
