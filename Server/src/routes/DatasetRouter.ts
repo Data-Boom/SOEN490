@@ -23,6 +23,7 @@ router.get('/api/v1/dataset/userSavedDatsets/:userSavedDatsets', (request: Reque
 });
 
 router.get('/api/v1/dataset/fetchUnapprovedDatasets$', (request: Request, response: Response) => {
+    console.log(request)
     dataSetController.createRequestForUnapprovedDatsets(request, response);
 });
 
@@ -35,6 +36,7 @@ router.delete('/api/v1/dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuth
 })
 
 router.put('/api/v1/flagDataSet', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+    console.log(request.body)
     dataSetController.createRequestToFlagDataset(request, response);
 })
 

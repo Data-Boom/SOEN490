@@ -20,15 +20,9 @@ export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> 
     return localDatasets
 }
 
-/*export const flagDataset = async (datasetId: number): Promise<IRemoteApprovedDatasetModel> => {
-    const flaggedDataset: IRemoteApprovedDatasetModel = await put(flagDatasetRoute + '/' + datasetId, datasetId)
-    console.log(await put(flagDatasetRoute + '/' + datasetId, datasetId))
-    return flaggedDataset
-}*/
-
 export const flagDataset = async (query: IFlaggedDatasetQuery) => {
     console.log(stringify(query, { arrayFormat: 'bracket' }))
-    await put(flagDatasetRoute, '?' + stringify(query, { arrayFormat: 'bracket' }))
+    await put(flagDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }), stringify(query, { arrayFormat: 'bracket' }))
 }
 
 export const callRejectDataset = async (datasetId: number): Promise<IRemoteApprovedDatasetModel> => {

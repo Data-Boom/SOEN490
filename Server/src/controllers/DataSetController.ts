@@ -140,6 +140,7 @@ export class DataSetController {
      */
     async createRequestForUnapprovedDatsets(request: Request, response: Response) {
         try {
+            console.log(request)
             this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.getUnapprovedAllDatasets()
             return response.status(requestResponse.statusCode).json(requestResponse.message);
@@ -169,6 +170,7 @@ export class DataSetController {
             response.status(400).json("No datasetID provided to flag dataset");
         }
         else {
+            console.log(request)
             let datasetIdToFlag = Number(request.query.datasetId)
             let flaggedComments = String(request.query.flaggedComments)
             let additionalComments = String(request.query.additionalComments)
