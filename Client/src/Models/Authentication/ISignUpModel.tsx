@@ -1,4 +1,4 @@
-export interface ISignInUserModel {
+export interface ILoginUserModel {
   email: string,
   password: string
 }
@@ -24,7 +24,7 @@ export interface IForgotPasswordModel {
 
 //todo revert to an actual empty/default model
 //todo password should match
-export const defaultSignUpUserModel: ISignUpUserModel = {
+export const newSignUpUserModel: ISignUpUserModel = {
   firstName: '',
   lastName: '',
   email: '',
@@ -34,7 +34,7 @@ export const defaultSignUpUserModel: ISignUpUserModel = {
   confirmPassword: ''
 }
 
-export const defaultSignInUserModel: ISignInUserModel = {
+export const newLoginUserModel: ILoginUserModel = {
   email: '',
   password: ''
 }

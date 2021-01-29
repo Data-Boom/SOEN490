@@ -29,9 +29,9 @@ describe('Data Upload Controller', () => {
         mockRequest = {
             body: validTestData
         }
-        await dataUploadController.createRequest(mockRequest as Request, mockResponse as Response)
+        await dataUploadController.createNewDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
-        expect(mockResponse.status).toBeCalledWith(200)
+        expect(mockResponse.status).toBeCalledWith(201)
     })
 
     test('Invalid Json Upload', async () => {
@@ -40,8 +40,22 @@ describe('Data Upload Controller', () => {
         mockRequest = {
             body: inValidTestData
         }
-        await dataUploadController.createRequest(mockRequest as Request, mockResponse as Response)
+        await dataUploadController.createNewDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
         expect(mockResponse.status).toBeCalledWith(400)
+    })
+
+    test('Valid Data Set Edit', async () => {
+
+        let expectedResponse = "Dataset Updated!"
+        mockRequest = {
+            body: validTestData,
+            params: {
+                datasetId: '9'
+            }
+        }
+        await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(201)
     })
 })

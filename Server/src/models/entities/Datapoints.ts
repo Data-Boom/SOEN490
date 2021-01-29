@@ -61,7 +61,7 @@ export class Datapoints {
     updated: Date
 }
 
-export const selectDataPointsQuery = (connection: Connection, dataset: number) =>
+export const selectDataPointsQuery = (connection: Connection) =>
     connection.createQueryBuilder(Dataset, 'dataset')
         .select('datapoints.name', 'name')
         .addSelect('datapoints.values', 'values')
@@ -71,5 +71,3 @@ export const selectDataPointsQuery = (connection: Connection, dataset: number) =
         .innerJoin(Datapoints, 'datapoints', 'datapoints.datasetId = dataset.id')
         .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
         .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')
-        .where('dataset.id = :datasetId', { datasetId: dataset })
-        .getRawMany();

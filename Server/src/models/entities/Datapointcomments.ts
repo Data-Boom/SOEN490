@@ -39,3 +39,11 @@ export const selectDataPointCommentsQuery = (connection: Connection, dataset: nu
         .innerJoin(Datapointcomments, 'datapointcomments', 'datapointcomments.datasetId = dataset.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
         .getRawOne();
+
+export const selectAllDataPointCommentsQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('datapointcomments.comments', 'datapointcomments')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Datapointcomments, 'datapointcomments', 'datapointcomments.datasetId = dataset.id')
+        .whereInIds(datasets)
+        .getRawMany();

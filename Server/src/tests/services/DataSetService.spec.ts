@@ -1,15 +1,17 @@
-import { createConnection, getConnection } from 'typeorm';
-
+import { DataSetService } from "../../services/DataSetService";
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
-import { retrieveData } from "../../services/getDatasetService";
+
+import { createConnection, getConnection } from 'typeorm';
+import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
+
 
 describe('data service test', () => {
-  let retrieveDataObject: retrieveData;
+  let retrieveDataObject: DataSetService;
   jest.setTimeout(60000)
 
   beforeAll(async () => {
     await createConnection();
-    retrieveDataObject = new retrieveData();
+    retrieveDataObject = new DataSetService();
   });
 
   afterAll(async () => {
@@ -189,14 +191,14 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds the email of account ID of 1 and expects to see a data set with ID of 1 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("j.comkj")
-    expect(arrayOfData[1][0].dataset_id).toEqual(1);
+  test('Feeds the email of account ID of 3 and expects to see an uploaded data set with ID of 2 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("tester@123.com")
+    expect(arrayOfData[1][0].dataset_id).toEqual(2);
     done()
   });
 
-  test('Feeds the email of account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("j.comkj")
+  test('Feeds an account ID of 1 and expects to see a favorited data set IDs of 2 returned', async done => {
+    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(1)
     expect(arrayOfData[1][0].dataset_id).toEqual(2);
     done()
   });
@@ -207,9 +209,107 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds an invalid email and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserSavedDatasets("nothing")
-    expect(arrayOfData[1]).toEqual("Invalid user email provided");
+  test('Feeds an invalid account and expects to see an error message', async done => {
+    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(-1)
+    expect(arrayOfData[0].dataset_id).toBeUndefined()
+    done()
+  });
+
+  test('Sets data set with ID 5 as a favorite of account ID 1', async done => {
+    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
+    expect(response[1]).toEqual("Favorite data set successfully saved")
+    done()
+  });
+
+  test('Sets data set with ID 5 as a favorite of account ID 1 a second time', async done => {
+    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
+    expect(response[1]).toEqual("Favorite data set is already saved")
+    done()
+  });
+
+  test('Removes data set with ID 5 as a favorite of account ID 1', async done => {
+    let response = await retrieveDataObject.removeUserFavoriteDataset(1, 5)
+    expect(response.message).toEqual("User favorite successfully removed")
+    done()
+  });
+
+
+  test('Asks for all unapproved data sets, expects at least one data set', async done => {
+    let response = await retrieveDataObject.getUnapprovedAllDatasets()
+    expect(response.message[0]).not.toBeUndefined();
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Asks for all flagged data sets expects a data set with ID of 1', async done => {
+    let response = await retrieveDataObject.getAllFlaggedDatasets()
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Asks for all flagged data sets of account ID 1, expects a data set with ID of 1', async done => {
+    let response = await retrieveDataObject.getUserFlaggedDatasets(1)
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Flag an unapproved data set, with no additional comments', async done => {
+    let response = await retrieveDataObject.flagNewDataset(5)
+    expect(response.message).toEqual("Dataset Flagged!");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Flag an unapproved data set, with additional comments', async done => {
+    let response = await retrieveDataObject.flagNewDataset(6, "Fix the title please", "Admin: Pretty good data set, 10/10")
+    expect(response.message).toEqual("Dataset Flagged!");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Flag an unapproved data set, with additional comments', async done => {
+    let response = await retrieveDataObject.flagNewDataset(6, "Fix the title please", "Admin: Pretty good data set, 10/10")
+    expect(response.message).toEqual("Dataset Flagged!");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Reject an unapproved data set, most', async done => {
+    let response = await retrieveDataObject.rejectDataSet(7)
+    expect(response.message).toEqual("Successfully removed data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Reject an unapproved data set', async done => {
+    let response = await retrieveDataObject.rejectDataSet(70)
+    expect(response.message).toEqual("Successfully removed data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Admin approves a data set, with additional comments', async done => {
+    let response = await retrieveDataObject.adminApprovedDataset(5, "Admin: Pretty good data set, 10/10")
+    expect(response.message).toEqual("Successfully approved new data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('Admin approves a data set, with no additional comments', async done => {
+    let response = await retrieveDataObject.adminApprovedDataset(6)
+    expect(response.message).toEqual("Successfully approved new data set");
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
+
+  test('User approves a data set, with no additional comments', async done => {
+    let response = await retrieveDataObject.userApprovedDataset(8)
+    expect(response.message).toEqual("Successfully approved new data set");
+    expect(response.statusCode).toEqual(200);
     done()
   });
 })

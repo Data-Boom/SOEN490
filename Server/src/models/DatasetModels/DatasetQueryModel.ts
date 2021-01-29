@@ -1,24 +1,17 @@
 import { Connection, getConnection } from "typeorm";
-import {
-    IAuthorModel,
-    IClientDatasetModel,
-    IDataPointModel,
-    IDatasetIDModel,
-    IDatasetInfoModel,
-    IMaterialModel,
-    IPublicationModel
-} from "./interfaces/DatasetModelInterface";
-import { Publications, selectPublicationsQuery } from "./entities/Publications";
-import { selectDatasetIdsQuery, selectDatasetsQuery } from "./entities/Dataset";
+import { Accounts, selectAccountIdFromEmailQuery } from "../entities/Accounts";
+import { selectAllAuthorsQuery } from "../entities/Authors";
+import { Category } from "../entities/Category";
+import { Composition } from "../entities/Composition";
+import { selectAllDataPointCommentsQuery } from "../entities/Datapointcomments";
+import { selectDataPointsQuery } from "../entities/Datapoints";
+import { selectDatasetIdsQuery, selectAllDatasetsQuery } from "../entities/Dataset";
+import { selectAllMaterialQuery } from "../entities/Material";
+import { Publications, selectAllPublicationsQuery } from "../entities/Publications";
+import { Subcategory } from "../entities/Subcategory";
+import { selectUnapprovedDatasetInfoQuery } from "../entities/Unapproveddatasets";
+import { IDatasetIDModel, IDataPointModel } from "../interfaces/DatasetModelInterface";
 
-import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
-import { Category } from "./entities/Category";
-import { Composition } from "./entities/Composition";
-import { Subcategory } from "./entities/Subcategory";
-import { selectAuthorsQuery } from "./entities/Authors";
-import { selectDataPointCommentsQuery } from "./entities/Datapointcomments";
-import { selectDataPointsQuery } from "./entities/Datapoints";
-import { selectMaterialQuery } from "./entities/Material";
 
 export class DataQueryModel {
     private connection: Connection;
@@ -165,17 +158,12 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getSavedDatasetIDOfUser(userEmail: string): Promise<any[]> {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-                .innerJoin('dataset.accounts', 'account')
-                .where('account.id = :idRef', { idRef: userID })
-                .getRawMany();
-            return [true, idDatasetData];
-        }
+    async getFavoriteDatasetIDOfUser(userID: number): Promise<any[]> {
+        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+            .innerJoin('dataset.accounts', 'account')
+            .where('account.id = :idRef', { idRef: userID })
+            .getRawMany();
+        return [true, idDatasetData];
     }
 
     private async fetchAccountIdFromEmail(userEmail: string) {
@@ -198,7 +186,7 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async addSavedDatasetModel(userEmail: string, datasetId: number) {
+    async addUserFavoriteDatasetModel(userEmail: string, datasetId: number) {
         let userID = await this.fetchAccountIdFromEmail(userEmail)
         if (userID == false)
             return [false, "Invalid user email provided"]
@@ -216,8 +204,7 @@ export class DataQueryModel {
     }
 
     /**
-     * This method accepts a user's email and a data set ID, will get the user ID associated with
-     * the email and, if the email was valid, will delete the user ID and data set ID relation in  
+     * This method accepts a user's ID and a data set ID and will delete the user ID and data set ID relation in  
      * the accounts_datasets_dataset table. 
      * 
      * @param userEmail 
@@ -225,14 +212,10 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async removeSavedDatasetModel(userEmail: string, datasetId: number) {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
-            return [true, "User favorite successfully removed"];
-        }
+    async removeUserFavoriteDatasetModel(userId: number, datasetId: number) {
+        await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userId, datasetId]);
+        return "User favorite successfully removed";
+
     }
 
     /**
@@ -243,37 +226,29 @@ export class DataQueryModel {
      * @param id 
      * A data set ID: number
      */
-    async getAllData(id: number): Promise<IClientDatasetModel> {
-        let publicationData: IPublicationModel = await selectPublicationsQuery(this.connection, id) || {}
-        let authorData: IAuthorModel[] = await selectAuthorsQuery(this.connection, id)
-        publicationData.authors = authorData
-        let completeDatasetData = await selectDatasetsQuery(this.connection, id)
-        let datasetInfo: IDatasetInfoModel = {
-            name: completeDatasetData[0]?.name,
-            comments: completeDatasetData[0]?.comments,
-            datasetDataType: completeDatasetData[0]?.datasetdatatype,
-            category: completeDatasetData[0]?.category,
-            subcategory: completeDatasetData[0]?.subcategory
-        }
-        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection, id)
-        this.valuesToArray(datapointData)
-        let materialData: IMaterialModel[] = await selectMaterialQuery(this.connection, id)
-        let datapointComments = await selectDataPointCommentsQuery(this.connection, id) || {}
-        datapointComments.datapointcomments = typeof datapointComments.datapointcomments === 'string' ? JSON.parse(datapointComments.datapointcomments) : []
-        let allData: IClientDatasetModel = {
-            publication: publicationData,
-            dataset_id: completeDatasetData[0]?.dataset_id,
-            dataset_info: datasetInfo,
-            materials: materialData,
-            dataPoints: datapointData,
-            dataPointComments: datapointComments?.datapointcomments
-        }
+    async getAllData(id: number[]): Promise<any> {
+        let publicationData = await selectAllPublicationsQuery(this.connection, id)
+        let authorData = await selectAllAuthorsQuery(this.connection, id)
+        let materialData = await selectAllMaterialQuery(this.connection, id)
+        let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection)
+            .whereInIds(id)
+            .getRawMany();
+        this.parseDataPoints(datapointData)
+        let datapointComments = await selectAllDataPointCommentsQuery(this.connection, id) || {}
+        this.parseDataPointComments(datapointComments)
+        let completeDatasetData = await selectAllDatasetsQuery(this.connection, id)
+        let allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
         return allData;
     }
 
-    private valuesToArray = (dataPoints: IDataPointModel[]): void => {
+    private parseDataPoints = (dataPoints: IDataPointModel[]): void => {
         dataPoints.forEach(dataPoint => {
             dataPoint.values = typeof dataPoint.values === 'string' ? JSON.parse(dataPoint.values) : []
+        });
+    }
+    private parseDataPointComments = (datapointComments: any): void => {
+        datapointComments.forEach(datapointComment => {
+            datapointComment.datapointcomments = typeof datapointComment.datapointcomments === 'string' ? JSON.parse(datapointComment.datapointcomments) : []
         });
     }
 }

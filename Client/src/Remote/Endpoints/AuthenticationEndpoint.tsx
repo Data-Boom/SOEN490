@@ -1,6 +1,6 @@
 import { ISignInUserModel, ISignUpUserModel, IResetPasswordModel, IForgotPasswordModel } from "../../Models/Authentication/ISignUpModel"
 
-import SnackbarUtils from "../../Components/SnackbarUtils"
+import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 import { post } from "../RemoteHelper"
 import { forgotPasswordRoute } from "../../Common/Consts/Routes"
 
@@ -15,9 +15,9 @@ export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => 
   }
 }
 
-export const callLogIn = async (signInUser: ISignInUserModel): Promise<any> => {
+export const callLogIn = async (loginUser: ILoginUserModel): Promise<any> => {
   //server sets a token in browser cookie in http only mode
-  await post(loginRoute, signInUser)
+  await post(loginRoute, loginUser)
 }
 
 export const callResetPassword = async (resetPasswordInfo: IResetPasswordModel): Promise<any> => {

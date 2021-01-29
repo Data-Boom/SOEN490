@@ -24,6 +24,7 @@ export interface ISignUpInformation {
 }
 
 export interface IJwtParams {
+    email: string,
     account_id: number,
     firstName: string
 }

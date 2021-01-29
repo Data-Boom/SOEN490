@@ -1,8 +1,8 @@
 import './Blurb.css'
 
 import { Grid } from '@material-ui/core'
-import React from 'react'
 import { Link } from 'react-router-dom'
+import React from 'react'
 
 export default function Blurb() {
   return (
@@ -15,7 +15,7 @@ export default function Blurb() {
           <Link to={"uploadDataset"}><h1 className="Header">Uploads</h1></Link>
         </Grid>
         <Grid item sm={2}>
-          <Link to={"sign-in"}><h1 className="Header">Accounts</h1></Link>
+          <Link to={"login"}><h1 className="Header">Accounts</h1></Link>
         </Grid>
         <Grid item sm={2}>
           <Link to={"search"}><h1 className="Header">Discover</h1></Link>

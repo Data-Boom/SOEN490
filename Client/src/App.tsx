@@ -4,7 +4,7 @@ import { getUserFromStorage, putUserInStorage } from './Common/Storage'
 import { IUserAccountModel } from './Models/Authentication/IUserAccountModel'
 import NavigationMenu from './Components/NavigationMenu'
 import { SnackbarProvider } from 'notistack'
-import { SnackbarUtilsConfigurator } from './Components/SnackbarUtils'
+import { SnackbarUtilsConfigurator } from './Components/Utils/SnackbarUtils'
 import { ThemeProvider } from '@material-ui/core'
 import { theme } from './appTheme'
 

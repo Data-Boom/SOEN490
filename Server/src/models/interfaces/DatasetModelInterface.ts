@@ -50,3 +50,8 @@ export interface IClientDatasetModel {
     dataPoints: IDataPointModel[]
     dataPointComments: string[]
 }
+
+export interface IApprovalDatasetModel extends IClientDatasetModel {
+    datasetIsFlagged: number
+    datasetFlaggedComment: string
+}

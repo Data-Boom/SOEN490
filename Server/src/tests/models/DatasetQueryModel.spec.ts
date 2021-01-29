@@ -1,6 +1,5 @@
 import { createConnection, getConnection } from 'typeorm';
-
-import { DataQueryModel } from '../../models/DatasetQueryModel';
+import { DataQueryModel } from '../../models/DatasetModels/DatasetQueryModel';
 
 describe('data service test', () => {
     let dataQueryModel: DataQueryModel;
@@ -40,7 +39,7 @@ describe('data service test', () => {
     });
 
     test('Input author with first name Stanley and last name Marsh, expect to find at least one dataset id', async done => {
-        let id = await dataQueryModel.getDatasetIDFromAuthor("Stanley", "Marsh");
+        let id = await dataQueryModel.getDatasetIDFromAuthor('Stanley', 'Marsh');
         expect(id[0].dataset_id).not.toBeUndefined()
         done()
     });
@@ -58,20 +57,20 @@ describe('data service test', () => {
     });
 
     test('Input data set ID of 1, expect a data set with ID of 1 as part of the return', async done => {
-        let id = await dataQueryModel.getAllData(1);
-        expect(id.dataset_id).toBe(1)
+        let id = await dataQueryModel.getAllData([1]);
+        expect(id[0][0].dataset_id).toBe(1)
         done()
     });
 
     test('Input data set ID of -1, expect an empty return', async done => {
-        let id = await dataQueryModel.getAllData(-1);
-        expect(id.dataset_id).toBeUndefined()
+        let id = await dataQueryModel.getAllData([-1]);
+        expect(id[0][0]).toBeUndefined()
         done()
     });
 
     test('Input data set ID of null, expect an empty return', async done => {
         let id = await dataQueryModel.getAllData(null);
-        expect(id.dataset_id).toBeUndefined()
+        expect(id[0][0]).toBeUndefined()
         done()
     });
 
@@ -81,8 +80,8 @@ describe('data service test', () => {
         done()
     });
 
-    test('Feeds the email of account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
-        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser("j.comkj")
+    test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
+        let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(1)
         expect(arrayOfData[1][0].dataset_id).toEqual(2);
         done()
     });
@@ -93,9 +92,9 @@ describe('data service test', () => {
         done()
     });
 
-    test('Feeds an invalid email and expects to see an error message', async done => {
-        let arrayOfData = await dataQueryModel.getSavedDatasetIDOfUser("not valid")
-        expect(arrayOfData[1]).toEqual("Invalid user email provided");
+    test('Feeds an invalid account ID and expects to see an no IDs returned', async done => {
+        let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(5000)
+        expect(arrayOfData[0].dataset_id).toBeUndefined()
         done()
     });
 })
