@@ -18,7 +18,7 @@ import { AuthenticationService } from '../services/authenticationService';
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
 import { Datapointcomments } from "../models/entities/Datapointcomments";
 
-export class SeedDatabase1611344612000 implements MigrationInterface {
+export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 

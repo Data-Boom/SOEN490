@@ -71,9 +71,6 @@ export class DataQueryModel {
      * The last name of an author: string
      */
     async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetIDModel[]> {
-        console.log('model params')
-        console.log(firstName)
-        console.log(lastName)
         let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
@@ -81,8 +78,6 @@ export class DataQueryModel {
             .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
             .setParameters({ firstNameRef: firstName, lastNameRef: lastName })
             .getRawMany();
-        console.log('model query')
-        console.log(authorDatasetData)
         return authorDatasetData;
     }
 
