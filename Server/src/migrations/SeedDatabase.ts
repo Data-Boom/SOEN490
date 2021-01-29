@@ -353,6 +353,54 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
+    dataset.id = 10;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId = 1;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 10;
+    unapproveddataset.flaggedComment;
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
+    dataset.id = 11;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId = 1;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 11;
+    unapproveddataset.flaggedComment;
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
+    dataset.id = 12;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId = 1;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 12;
+    unapproveddataset.flaggedComment;
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
     // Units below this line
 
     let unitsNone = new Units();

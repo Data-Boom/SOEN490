@@ -183,4 +183,50 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
+    test('Valid Reject Data Set Request', async () => {
+        mockRequest = {
+            params: {
+                datasetId: 10
+            }
+        }
+        await GetDataControllerController.createRequestToRejectDataset(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Successfully removed data set");
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Valid Get Account 1 Unapproved Data Sets Request; expect at least one entry in return', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            }
+        }
+        await GetDataControllerController.createRequestForUserFlaggedDatasets(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json[0]).not.toBeUndefined;
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Valid Admin Approve Data Set Request', async () => {
+        mockRequest = {
+            query: {
+                datasetId: 11
+            }
+        }
+        await GetDataControllerController.createAdminApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Successfully approved new data set");
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Valid User Approve Data Set Request', async () => {
+        mockRequest = {
+            params: {
+                datasetId: 12
+            }
+        }
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Successfully approved new data set");
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
 })
