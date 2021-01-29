@@ -24,6 +24,7 @@ import SearchView from "./Search/SearchView"
 import SignUpView from "./Authentication/SignUpView"
 import ResetPasswordView from "./Authentication/ResetPasswordView"
 import ForgotPasswordView from "./Authentication/ForgotPasswordView"
+import LoginView from "./Authentication/LoginView"
 
 interface IProps {
   id: string;
