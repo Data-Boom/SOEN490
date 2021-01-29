@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 import { DataSetController } from '../../controllers/DataSetController';
-import { IDataRequestModel } from '../../models/interfaces/DataRequestModelInterface';
 import { oneFavoriteDataset } from '../testData/testData';
 
 describe('Data Set Controller ', () => {
@@ -121,11 +120,11 @@ describe('Data Set Controller ', () => {
     test('Valid Remove Favorite Data Set Request', async () => {
         mockRequest = {
             params: {
-                datasetId: '1'
+                datasetId: '3'
             },
             body: {
                 user: {
-                    account_id: '1'
+                    account_id: '3'
                 }
             }
         }
@@ -134,7 +133,7 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    test('Remove Non-existant Data Set Request', async () => {
+    test('Remove Non-existant Favorite Data Set Request', async () => {
         mockRequest = {
             params: {
                 datasetId: '-1'
@@ -150,7 +149,7 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    test('Invalid Remove Data Set Request; false data set ID', async () => {
+    test('Invalid Remove Favorite Data Set Request; false data set ID', async () => {
         mockRequest = {
             params: {
                 datasetId: 'werwerewr'
