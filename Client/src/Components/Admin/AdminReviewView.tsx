@@ -7,7 +7,6 @@ import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
 import { callRejectDataset, FlagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
-import { flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 import { stringify } from 'query-string'
 export function AdminReviewView() {
 
@@ -33,7 +32,7 @@ export function AdminReviewView() {
 
     const handleFlagDataset = async () => {
 
-        const query: IFlaggedDatasetQuery = { datasetId: dataset.id, flaggedComment: flaggedComment, additionalComment: comment }
+        const query: IFlaggedDatasetQuery = { datasetId: dataset.id, flaggedComments: flaggedComment, additionalComments: comment }
         await FlagDataset(query)
 
     }
