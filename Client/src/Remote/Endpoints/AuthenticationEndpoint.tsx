@@ -1,4 +1,4 @@
-import { ISignInUserModel, ISignUpUserModel, IResetPasswordModel, IForgotPasswordModel } from "../../Models/Authentication/ISignUpModel"
+import { ISignUpUserModel, IResetPasswordModel, IForgotPasswordModel, ILoginUserModel } from "../../Models/Authentication/ISignUpModel"
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 import { post } from "../RemoteHelper"
