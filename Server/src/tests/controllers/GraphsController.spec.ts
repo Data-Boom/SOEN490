@@ -176,6 +176,21 @@ describe('SavedGraphs Controller ', () => {
     expect(mockResponse.status).toBeCalledWith(200);
   });
 
+  test('Invalid Graph Update Request; user did not create this graph', async () => {
+    let expectedResponse = "This is not your graph!"
+    mockRequest = {
+      body: {
+        "id": 2,
+        user: {
+          account_id: '1'
+        }
+      }
+    }
+    await SavedGraphsController.createRequestForUpdatingGraph(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(400);
+  });
+
   //Do these deletion tests last
   test('Delete Graph Request', async () => {
     mockRequest = {
