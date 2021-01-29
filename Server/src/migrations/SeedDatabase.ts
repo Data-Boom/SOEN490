@@ -240,7 +240,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
 
     let unapproveddataset = new Unapproveddatasets();
     unapproveddataset.datasetId = 1;
-    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.flaggedComment = "Is there a spelling error in the first author's name?";
     unapproveddataset.isFlagged = 1;
     await connection.manager.save(unapproveddataset);
 
@@ -269,7 +269,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(dataset);
 
     unapproveddataset.datasetId = 5;
-    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.flaggedComment;
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
@@ -285,7 +285,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(dataset);
 
     unapproveddataset.datasetId = 6;
-    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.flaggedComment;
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
@@ -301,7 +301,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(dataset);
 
     unapproveddataset.datasetId = 7;
-    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.flaggedComment;
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
@@ -333,7 +333,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(dataset);
 
     unapproveddataset.datasetId = 8;
-    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.flaggedComment;
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 
@@ -349,7 +349,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(dataset);
 
     unapproveddataset.datasetId = 9;
-    unapproveddataset.flaggedComment = "Is the author list correct?";
+    unapproveddataset.flaggedComment;
     unapproveddataset.isFlagged = 0;
     await connection.manager.save(unapproveddataset);
 

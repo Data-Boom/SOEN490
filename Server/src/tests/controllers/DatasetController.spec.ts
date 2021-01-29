@@ -166,12 +166,21 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(400);
     });
 
-
     test('Valid Get Unapproved Data Sets Request; expect at least one entry in return', async () => {
         await GetDataControllerController.createRequestForUnapprovedDatsets(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json[0]).not.toBeUndefined;
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
+    test('Valid Flag Data Set Request', async () => {
+        mockRequest = {
+            query: {
+                datasetId: 9
+            }
+        }
+        await GetDataControllerController.createRequestToFlagDataset(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Dataset Flagged!");
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
 
 })
