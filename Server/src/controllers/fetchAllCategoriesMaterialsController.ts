@@ -19,9 +19,9 @@ export class fetchAllCategoriesMaterialsController {
     async createRequestForAllCategories(request: Request, response: Response) {
         try {
             let arrayOfData = await this.fetchAllCategoriesMaterialsService.getBasicCategoryDataService()
-            return response.status(200).send(arrayOfData);
-        } catch (err) {
-            response.status(500).send(err);
+            return response.status(200).json(arrayOfData);
+        } catch (error) {
+            response.status(error.status).json(error.message);
         }
     }
 
@@ -37,9 +37,9 @@ export class fetchAllCategoriesMaterialsController {
     async createRequestForAllSubcategories(request: Request, response: Response) {
         try {
             let arrayOfData = await this.fetchAllCategoriesMaterialsService.getBasicSubcategoryDataService()
-            return response.status(200).send(arrayOfData);
-        } catch (err) {
-            response.status(500).send(err);
+            return response.status(200).json(arrayOfData);
+        } catch (error) {
+            response.status(error.status).json(error.message);
         }
     }
 
@@ -55,9 +55,9 @@ export class fetchAllCategoriesMaterialsController {
     async createRequestForAllMaterials(request: Request, response: Response) {
         try {
             let arrayOfData = await this.fetchAllCategoriesMaterialsService.getBasicMaterialDataService()
-            return response.status(200).send(arrayOfData);
-        } catch (err) {
-            response.status(500).send(err);
+            return response.status(200).json(arrayOfData);
+        } catch (error) {
+            response.status(error.status).json(error.message);
         }
     }
 }
