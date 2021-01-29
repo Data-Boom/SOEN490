@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+
 import { DataSetController } from '../controllers/DataSetController';
 import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 
@@ -34,7 +35,7 @@ router.delete('/api/v1/dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuth
 })
 
 router.put('/api/v1/flagDataSet', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
-    dataSetController.createRequestToFlagDataset(request, response)
+    dataSetController.createRequestToFlagDataset(request, response);
 })
 
 router.get('/api/v1/userFlaggedDatasets', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {

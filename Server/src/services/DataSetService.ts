@@ -339,13 +339,13 @@ export class DataSetService {
         try {
             let response = await this.dataQuery.removeUserFavoriteDatasetModel(userId, datasetId);
             if (response == undefined || response == null) {
-                throw new NotFound("Could not find your saved datasets")
+                throw new NotFound("Could not find this saved data set")
             }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response as any
             return this.requestResponse
         } catch (error) {
-            throw new InternalServerError("Something went wrong deleting your saved datasets. Try later")
+            throw new InternalServerError("Something went wrong deleting a saved data set. Try later")
         }
     }
 
@@ -384,7 +384,7 @@ export class DataSetService {
         return setOfData;
     }
 
-    async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
+    private async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
         let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
         let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
         let approvalData = await this.approvalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
@@ -411,6 +411,9 @@ export class DataSetService {
             this.requestResponse.message = response as any
             return this.requestResponse
         } catch (error) {
+            if (error instanceof NotFound) {
+                throw new NotFound(error.message)
+            }
             throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
         }
     }
@@ -485,22 +488,7 @@ export class DataSetService {
         }
     }
 
-    async fetchFlaggedDatasets(userId: number) {
-        try {
-            //let response = await this.dataQuery.selectUserFlaggedDatasets(userId)
-            let response = null
-            if (response == undefined || response == null) {
-                throw new BadRequest("Could fetch user flagged datasets")
-            }
-            this.requestResponse.statusCode = 200
-            this.requestResponse.message = response
-            return this.requestResponse
-        } catch (error) {
-            throw new InternalServerError("Internal server error fetching flagged datasets. Try again later")
-        }
-    }
-
-    async adminApprovedDataset(datasetId: number, datasetCommentsToAppend: string) {
+    async adminApprovedDataset(datasetId: number, datasetCommentsToAppend?: string) {
         try {
             await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
             let response = await this.approvalModel.approveDataset(datasetId)

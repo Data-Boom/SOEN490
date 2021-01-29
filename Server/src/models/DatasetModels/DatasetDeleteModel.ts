@@ -192,17 +192,17 @@ export class DatasetDeleteModel {
             }
         }
         if (materialsToDelete.length > 0) {
-            rawCompositionIds = this.selectAllLinkedCompositionIdsQuery(materialsToDelete)
+            rawCompositionIds = await this.selectAllLinkedCompositionIdsQuery(materialsToDelete)
             await this.deleteMaterialsQuery(materialsToDelete)
             await this.deleteCompositions(rawCompositionIds)
         }
     }
 
-    private async deleteCompositions(rawCompositionIds: any) {
+    private async deleteCompositions(rawCompositionIds: any[]) {
         let isCompositionInUse: any
         let compositionsToDelete: number[] = []
         for (let index = 0; index < rawCompositionIds.length; index++) {
-            isCompositionInUse = await this.selectOneUseOfCompositionQuery(rawCompositionIds.id)
+            isCompositionInUse = await this.selectOneUseOfCompositionQuery(rawCompositionIds[index].id)
             if (isCompositionInUse == undefined) {
                 compositionsToDelete.push(rawCompositionIds[index].id)
             }

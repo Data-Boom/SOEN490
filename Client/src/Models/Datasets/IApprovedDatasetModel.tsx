@@ -6,7 +6,7 @@ export interface IApprovedDatasetModel extends IDatasetModel {
 }
 
 export interface IFlaggedDatasetQuery {
-    datasetId?: number,
-    flaggedComment?: string,
-    additionalComment?: string
+    datasetId: number,
+    flaggedComments?: string,
+    additionalComments?: string
 }

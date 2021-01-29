@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { DataSetService } from '../services/DataSetService';
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
@@ -34,24 +35,6 @@ export class DataSetController {
                 return response.status(200).json(arrayOfData);
             } catch (err) {
                 response.status(400).json(err);
-            }
-        }
-    }
-
-    async createRequestToDeleteUserFavoriteDataSet(request: Request, response: Response) {
-        let requestParam = request.params.datasetId;
-        let datasetId = Number(requestParam);
-        if (isNaN(datasetId)) {
-            response.status(400).json("Invalid data set ID entered");
-        }
-        else {
-            let userId: number = request.body.user.account_id
-            try {
-                this.dataSetService = new DataSetService();
-                let requestResponse = await this.dataSetService.removeUserFavoriteDataset(userId, datasetId)
-                return response.status(requestResponse.statusCode).json(requestResponse.message);
-            } catch (err) {
-                response.status(err.status).json(err.message);
             }
         }
     }
@@ -128,6 +111,24 @@ export class DataSetController {
     }
      */
 
+    async createRequestToDeleteUserFavoriteDataSet(request: Request, response: Response) {
+        let requestParam = request.params.datasetId;
+        let datasetId = Number(requestParam);
+        if (isNaN(datasetId)) {
+            response.status(400).json("Invalid data set ID entered");
+        }
+        else {
+            let userId: number = request.body.user.account_id
+            try {
+                this.dataSetService = new DataSetService();
+                let requestResponse = await this.dataSetService.removeUserFavoriteDataset(userId, datasetId)
+                return response.status(requestResponse.statusCode).json(requestResponse.message);
+            } catch (err) {
+                response.status(err.status).json(err.message);
+            }
+        }
+    }
+
     /**
      * This controller will take a request, send it to the getDataService to acquire an array 
      * containing the unapproved data sets in the database
@@ -202,7 +203,7 @@ export class DataSetController {
         let userId: number = request.body.user.account_id
         try {
             this.dataSetService = new DataSetService();
-            let requestResponse = await this.dataSetService.fetchFlaggedDatasets(userId)
+            let requestResponse = await this.dataSetService.getUserFlaggedDatasets(userId)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
             response.status(error.status).json(error.message);
