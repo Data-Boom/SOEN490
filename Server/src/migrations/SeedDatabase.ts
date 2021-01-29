@@ -505,7 +505,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     let newGraph2 = new Graphstate();
     newGraph2.id = 2;
     newGraph2.accountId = 2;
-    newGraph2.name = "Test Graph";
+    newGraph2.name = "Test Graph #2";
     newGraph2.datasetIds = [1];
     newGraph2.datasetColors = ["red"];
     newGraph2.datasetShapes = ["square"];

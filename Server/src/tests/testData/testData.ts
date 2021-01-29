@@ -538,3 +538,25 @@ export const validGraphStateData1 = [{
     ],
     "id": 1
 }]
+
+export const validGraphStateData2 = [{
+    "datasets": [
+        {
+            "id": 1,
+            "color": "red",
+            "shape": "square",
+            "isHidden": false
+        }
+    ],
+    "name": "Test Graph #2",
+    "axes": [
+        {
+            "variableName": "temperature",
+            "logarithmic": true,
+            "zoomEndIndex": 100,
+            "zoomStartIndex": 100,
+            "units": "C"
+        }
+    ],
+    "id": 2
+}]

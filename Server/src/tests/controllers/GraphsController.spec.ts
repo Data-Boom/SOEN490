@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 
 import { GraphsController } from '../../controllers/GraphsController';
-import { validGraphStateData1 } from '../testData/testData';
+import { validGraphStateData1, validGraphStateData2 } from '../testData/testData';
 
 describe('SavedGraphs Controller ', () => {
   let mockRequest;
@@ -73,48 +73,19 @@ describe('SavedGraphs Controller ', () => {
     expect(mockResponse.status).toBeCalledWith(200);
   });
 
-  //   test('Valid User Saved Graphs Request; one data set on graph', async () => {
-  //     let expectedResponse = [{
-  //       "datasets": [
-  //         {
-  //           "id": 1,
-  //           "color": "red",
-  //           "shape": "square",
-  //           "isHidden": false
-  //         }
-  //       ],
-  //       "name": "Test Graph",
-  //       "axes": [
-  //         {
-  //           "variableName": "temperature",
-  //           "mode": "normal",
-  //           "zoom": 100,
-  //           "units": "C"
-  //         }
-  //       ],
-  //       "id": 2
-  //     }]
-  //     mockRequest = {
-  //       params: {
-  //         userSavedGraphs: "test@t.com"
-  //       }
-  //     }
-  //     await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
-  //     expect(mockResponse.json).toBeCalledWith(expectedResponse);
-  //     expect(mockResponse.status).toBeCalledWith(200);
-  //   });
-
-  //   test('Invalid User Saved Graphs Request', async () => {
-  //     let expectedResponse = "Invalid user email provided"
-  //     mockRequest = {
-  //       params: {
-  //         userSavedGraphs: "2"
-  //       }
-  //     }
-  //     await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
-  //     expect(mockResponse.json).toBeCalledWith(expectedResponse);
-  //     expect(mockResponse.status).toBeCalledWith(400);
-  //   });
+  test('Valid User Saved Graphs Request; one data set on graph', async () => {
+    let expectedResponse = validGraphStateData2
+    mockRequest = {
+      body: {
+        user: {
+          account_id: '2'
+        }
+      }
+    }
+    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(200);
+  });
 
   //   test('Valid Graph Insert Request', async () => {
   //     let expectedResponse = "Graph successfully saved"
