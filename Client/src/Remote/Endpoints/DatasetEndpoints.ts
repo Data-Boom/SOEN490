@@ -25,17 +25,17 @@ export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> 
     return localDatasets
 }
 
-export const flagDataset = async (datasetId: number, dataset: IDataSetModel): Promise<IDatasetModel> => {
+export const flagDataset = async (datasetId: number, dataset: IRemoteApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
     const flaggedDataset = await put(flagDatasetRoute + '/' + datasetId, dataset)
     return flaggedDataset
 }
 
-export const callRejectDataset = async (datasetId: number): Promise<IDatasetModel> => {
+export const callRejectDataset = async (datasetId: number): Promise<IRemoteApprovedDatasetModel> => {
     const deletedDataset = await get(datasetRoute + '/' + datasetId)
     return deletedDataset
 }
 
-export const adminApprovedDataset = async (datasetId: number, dataset: IDatasetModel): Promise<IDatasetModel> => {
+export const adminApprovedDataset = async (datasetId: number, dataset: IRemoteApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
     const adminApprovedDataset = await put(adminApprovedDatasetRoute + '/' + datasetId, dataset)
     return adminApprovedDataset
 }
