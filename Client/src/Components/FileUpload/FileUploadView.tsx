@@ -10,15 +10,16 @@ const fileFormat = 'application/json'
 export const FileUploadView = () => {
   const isValidFile = (file: File) => {
     return file && file.type === fileFormat
+    console.log('file is valid')
   }
 
   const handleSubmit = async (jsonFile: File) => {
     const formData = new FormData()
     formData.append('file', jsonFile)
+    console.log('handling data extraction')
 
     try {
       const response = await fetch('/api/v1/dataExtract', {
-        method: 'POST',
         body: formData
       })
       const extractedDataset = await response.json()
@@ -27,6 +28,7 @@ export const FileUploadView = () => {
     }
     catch (err) {
       //todo add error handling
+      console.log(err)
     }
   }
 
