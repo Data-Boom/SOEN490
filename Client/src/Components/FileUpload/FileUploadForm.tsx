@@ -31,11 +31,9 @@ export const FileUploadForm = (props: IProps) => {
     if (isValid) {
       onSubmit(file)
       setAlertSuccess(true)
-      console.log('file submission success')
     }
     else {
       setAlertOpen(true)
-      console.log('file didnt go through')
     }
   }
 
