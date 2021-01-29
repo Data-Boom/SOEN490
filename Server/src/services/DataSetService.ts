@@ -349,7 +349,12 @@ export class DataSetService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
-            throw new InternalServerError("Something went wrong deleting a saved data set. Try later")
+            else if (error instanceof InternalServerError) {
+                throw new InternalServerError("Something went wrong deleting a saved data set. Try later")
+            }
+            else {
+                throw new Error()
+            }
         }
     }
 
@@ -418,7 +423,12 @@ export class DataSetService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
-            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+            else if (error instanceof InternalServerError) {
+                throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+            }
+            else {
+                throw new Error()
+            }
         }
     }
 
@@ -439,7 +449,12 @@ export class DataSetService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
-            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+            else if (error instanceof InternalServerError) {
+                throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+            }
+            else {
+                throw new Error()
+            }
         }
     }
 
@@ -460,7 +475,12 @@ export class DataSetService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
-            throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+            else if (error instanceof InternalServerError) {
+                throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
+            }
+            else {
+                throw new Error()
+            }
         }
     }
 
@@ -497,7 +517,12 @@ export class DataSetService {
             if (error instanceof BadRequest) {
                 throw new BadRequest(error.message)
             }
-            throw new InternalServerError("Something went wrong with flagging this data set. Try again later")
+            else if (error instanceof InternalServerError) {
+                throw new InternalServerError("Something went wrong with flagging this data set. Try again later")
+            }
+            else {
+                throw new Error()
+            }
         }
     }
 
@@ -515,7 +540,12 @@ export class DataSetService {
             if (error instanceof BadRequest) {
                 throw new BadRequest(error.message)
             }
-            throw new InternalServerError("Internal server error approving this data set. Try again later")
+            else if (error instanceof InternalServerError) {
+                throw new InternalServerError("Internal server error approving this data set. Try again later")
+            }
+            else {
+                throw new Error()
+            }
         }
     }
 
@@ -533,7 +563,12 @@ export class DataSetService {
             if (error instanceof BadRequest) {
                 throw new BadRequest(error.message)
             }
-            throw new InternalServerError("Data set already approved or an internal server error occured when approving data set.")
+            else if (error instanceof InternalServerError) {
+                throw new InternalServerError("Data set already approved or an internal server error occured when approving data set.")
+            }
+            else {
+                throw new Error(error.message)
+            }
         }
     }
 }

@@ -234,12 +234,12 @@ describe('data service test', () => {
   });
 
 
-  test('Asks for all unapproved data sets, expects at least one data set', async done => {
-    let response = await retrieveDataObject.getUnapprovedAllDatasets()
-    expect(response.message[0]).not.toBeUndefined();
-    expect(response.statusCode).toEqual(200);
-    done()
-  });
+  // test('Asks for all unapproved data sets, expects at least one data set', async done => {
+  //   let response = await retrieveDataObject.getUnapprovedAllDatasets()
+  //   expect(response.message[0]).not.toBeUndefined();
+  //   expect(response.statusCode).toEqual(200);
+  //   done()
+  // });
 
   test('Asks for all flagged data sets expects a data set with ID of 1', async done => {
     let response = await retrieveDataObject.getAllFlaggedDatasets()
