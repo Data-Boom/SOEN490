@@ -117,8 +117,8 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    // Do these tests last
-    test('Valid Remove Data Set Request', async () => {
+    // Do these after other favorite data set tests
+    test('Valid Remove Favorite Data Set Request', async () => {
         mockRequest = {
             params: {
                 datasetId: '1'
@@ -165,4 +165,13 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
         expect(mockResponse.status).toBeCalledWith(400);
     });
+
+
+    test('Valid Get Unapproved Data Sets Request; expect at least one entry in return', async () => {
+        await GetDataControllerController.createRequestForUnapprovedDatsets(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json[0]).not.toBeUndefined;
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+
 })
