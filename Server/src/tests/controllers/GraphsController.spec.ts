@@ -3,7 +3,7 @@ import { createConnection, getConnection } from 'typeorm';
 import { GraphsController } from '../../controllers/GraphsController';
 import { validGraphStateData1, validGraphStateData2 } from '../testData/testData';
 
-describe('SavedGraphs Controller ', () => {
+describe('Graphs State Controller ', () => {
   let mockRequest;
   let mockResponse;
   let SavedGraphsController: GraphsController;

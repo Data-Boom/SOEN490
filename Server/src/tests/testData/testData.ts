@@ -560,3 +560,31 @@ export const validGraphStateData2 = [{
     ],
     "id": 2
 }]
+
+export const oneFavoriteDataset = [
+    {
+        publication: {
+            name: "Someone's Favorite Publisher",
+            DOI: null,
+            pages: null,
+            volume: null,
+            year: 1900,
+            datePublished: null,
+            dateAccessed: null,
+            publisher: 'University of California Press',
+            publicationType: 'Book',
+            authors: []
+        },
+        dataset_id: 2,
+        dataset_info: {
+            name: "Someone's Favorite",
+            comments: '',
+            datasetDataType: 'Not Specified',
+            category: 'None Entered',
+            subcategory: 'None Entered'
+        },
+        materials: [],
+        dataPoints: [],
+        dataPointComments: undefined
+    }
+]

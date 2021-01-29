@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 import { DataSetController } from '../../controllers/DataSetController';
 import { IDataRequestModel } from '../../models/interfaces/DataRequestModelInterface';
+import { oneFavoriteDataset } from '../testData/testData';
 
-describe('SavedGraphs Controller ', () => {
+describe('Data Set Controller ', () => {
     let mockRequest;
     let mockResponse;
     let GetDataControllerController: DataSetController;
@@ -24,34 +25,6 @@ describe('SavedGraphs Controller ', () => {
     });
 
     test('Feeds data set ID of 1 and expects to see a data set with ID of 1 returned', async done => {
-        let expectedResponse = [
-            {
-                publication: {
-                    name: "Someone's Favorite Publisher",
-                    DOI: null,
-                    pages: null,
-                    volume: null,
-                    year: 1900,
-                    datePublished: null,
-                    dateAccessed: null,
-                    publisher: 'University of California Press',
-                    publicationType: 'Book',
-                    authors: []
-                },
-                dataset_id: 2,
-                dataset_info: {
-                    name: "Someone's Favorite",
-                    comments: '',
-                    datasetDataType: 'Not Specified',
-                    category: 'None Entered',
-                    subcategory: 'None Entered'
-                },
-                materials: [],
-                dataPoints: [],
-                dataPointComments: undefined
-            }
-        ]
-
         mockRequest = {
             query: {
                 datasetId: [2]
@@ -63,8 +36,7 @@ describe('SavedGraphs Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestForData(mockRequest as Request, mockResponse as Response)
-        //let arrayOfData = mockResponse.json as unknown as IDataRequestModel[]
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.json).toBeCalledWith(oneFavoriteDataset);
         expect(mockResponse.status).toBeCalledWith(200);
         done()
     });
@@ -118,6 +90,32 @@ describe('SavedGraphs Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(400);
     });
     */
+
+    test('Valid Get User Uploaded Data Sets Request', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: 'tester@123.com'
+                }
+            }
+        }
+        await GetDataControllerController.createRequestForUserUploadedDatasets(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith([true, oneFavoriteDataset]);
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Valid Get User Favorite Data Sets Request', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '3'
+                }
+            }
+        }
+        await GetDataControllerController.createRequestForUserFavoriteDatsets(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith([true, oneFavoriteDataset]);
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
 
     // Do these tests last
     test('Valid Remove Data Set Request', async () => {

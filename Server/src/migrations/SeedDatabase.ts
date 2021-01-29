@@ -253,7 +253,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     dataset2.subcategoryId = subcategory1.id;
     dataset2.comments = "";
     dataset2.materials = [];
-    dataset2.uploaderId;
+    dataset2.uploaderId = 3;
     dataset2.isApproved = 1;
     await connection.manager.save(dataset2);
 
@@ -486,6 +486,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(datapoint9);
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
+    await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (3, 2)');
 
     let newGraph = new Graphstate();
     newGraph.id = 1;
