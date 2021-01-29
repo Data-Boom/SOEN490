@@ -4,9 +4,6 @@ import React, { useEffect, useState } from 'react'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
-import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
-import { toDatasetRows } from '../Graph/GraphFunctions'
-
 export function AdminReviewView() {
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
@@ -14,14 +11,6 @@ export function AdminReviewView() {
     const [comment, setComment] = useState("")
     const [flaggedComment, setFlaggedComment] = useState("")
 
-    useEffect(() => {
-        const callListDatasetStates = async () => {
-            const datasetState = await listGraphStates()
-            setDatasetState(datasetState)
-
-        }
-        callListDatasetStates()
-    }, [])
 
     const handleDeleteDataset = () => {
         console.log("dataset deleted")

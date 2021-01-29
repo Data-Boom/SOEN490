@@ -1,8 +1,6 @@
-import { Box, FormControl, FormControlLabel, Grid, IconButton, Radio, RadioGroup, Tooltip, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 
-import DeleteIcon from '@material-ui/icons/Delete'
-import FeedbackIcon from '@material-ui/icons/Feedback'
 import RateReviewIcon from '@material-ui/icons/RateReview'
 import { classStyles } from '../../appTheme'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
