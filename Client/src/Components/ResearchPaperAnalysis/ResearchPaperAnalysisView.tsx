@@ -51,7 +51,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
           <Typography>Page description pretty much</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            validateFile={validateUploadedFile}
+            isValidFile={validateUploadedFile}
             acceptFileFormat={fileFormat}
           />
         </Box>
