@@ -1,9 +1,10 @@
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
-import { post } from "../RemoteHelper"
+import { PostRequestExecutor } from "../RequestExecutor/Implementation/PostRequestExecutor"
 
 const dataExtractionRoute = '/api/v1/dataExtract'
 
 export const callDataExtract = async (formData: any): Promise<IDatasetModel> => {
-  const result = await post(dataExtractionRoute, formData)
+  const requestExecutor = new PostRequestExecutor(dataExtractionRoute, formData)
+  const result = await requestExecutor.execute()
   return result
 }

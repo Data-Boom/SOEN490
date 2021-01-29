@@ -1,4 +1,4 @@
-import { get } from "../RemoteHelper"
+import { GetRequestExecutor } from "../RequestExecutor/Implementation/GetRequestExecutor"
 
 const categoryRoute = '/category'
 
@@ -9,6 +9,7 @@ interface ICategoryModel {
 }
 
 export const listCategories = async (): Promise<ICategoryModel[]> => {
-  const categories = await get(categoryRoute)
+  const requestExecutor = new GetRequestExecutor(categoryRoute)
+  const categories = await requestExecutor.execute()
   return categories
 }
