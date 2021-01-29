@@ -105,6 +105,19 @@ export class AuthenticationService {
         return this.requestResponse;
     }
 
+    async findUserEmailByToken(resetToken: string): Promise<IResponse> {
+        let accessToken: string;
+        let userEmail: string;
+
+        userEmail = await AuthenticationModel.findEmailByToken(resetToken);
+        if (!userEmail) {
+            throw new BadRequest("User was not found by the reset token");
+        }
+        else {
+
+        }
+    }
+
     async resetPassword(resetPasswordInformation: IPasswordResetInformation): Promise<IResponse> {
         let verifiedEmail: boolean;
         let accessToken: string;
@@ -132,7 +145,7 @@ export class AuthenticationService {
                 from: "noreply@databoom.com",
                 to: resetPasswordInformation.email,
                 subject: 'Reset your password',
-                html: `<h2>To reset your password, please click on this link</h2><p>${process.env.CLIENT_URL}/api/v1/resetpassword/${accessToken}</p>
+                html: `<h2>To reset your password, please click on this link</h2><p><a>${process.env.CLIENT_URL}/api/v1/resetpassword/${accessToken}</a></p>
                 `
             };
 

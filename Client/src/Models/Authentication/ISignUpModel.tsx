@@ -14,6 +14,11 @@ export interface ISignUpUserModel {
 }
 
 export interface IResetPasswordModel {
+  password: string,
+  passwordConfirmation: string
+}
+
+export interface IForgotPasswordModel {
   email: string
 }
 
@@ -34,6 +39,11 @@ export const defaultSignInUserModel: ISignInUserModel = {
   password: ''
 }
 
-export const defaultResetPasswordUserModel: IResetPasswordModel = {
+export const defaultForgotPasswordModel: IForgotPasswordModel = {
   email: ''
+}
+
+export const defaultResetPasswordModel: IResetPasswordModel = {
+  password: '',
+  passwordConfirmation: ''
 }

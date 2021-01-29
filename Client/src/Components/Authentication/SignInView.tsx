@@ -1,5 +1,5 @@
 import { FastField, Form, Formik } from 'formik'
-import { ISignInUserModel, defaultSignInUserModel, IResetPasswordModel } from '../../Models/Authentication/ISignUpModel'
+import { ISignInUserModel, defaultSignInUserModel, IForgotPasswordModel } from '../../Models/Authentication/ISignUpModel'
 import React, { useContext, useState } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
@@ -24,8 +24,8 @@ import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
 import { Modal, Paper } from '@material-ui/core'
 import { classStyles } from "../../appTheme"
-import CancelIcon from '@material-ui/icons/Cancel';
-import ResetPasswordView from './ResetPasswordView'
+import CancelIcon from '@material-ui/icons/Cancel'
+import ForgotPasswordView from './ForgotPasswordView'
 
 
 function Copyright() {
@@ -76,7 +76,7 @@ export default function SignInView() {
     setOpenModal(false)
   }
 
-  const handlePassworDReset = (resetPasswordInfo: IResetPasswordModel) => {
+  const handlePasswordReset = (resetPasswordInfo: IForgotPasswordModel) => {
 
     handleClose()
   }
@@ -103,7 +103,7 @@ export default function SignInView() {
                   <Box m={0} p={2}>
                     <CancelIcon color="primary" className={classStyles().closeButton} width="2%" onClick={handleClose} />
                     <Grid container>
-                      <ResetPasswordView
+                      <ForgotPasswordView
 
                       />
                     </Grid>

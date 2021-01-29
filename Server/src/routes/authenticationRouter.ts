@@ -24,9 +24,19 @@ router.post('/passwordReset', (request: Request, response: Response, next: NextF
     authenticationController.createPasswordResetRequest(request, response, next);
 });
 
-router.post('/api/v1/resetpassword', async (request: Request, response: Response, next: NextFunction) => {
-    authenticationController.createPasswordResetRequest(request, response, next); ACTUAL PASSWORD RESET
+router.get('/api/v1/resetPassword/:resetToken', (request: Request, response: Response, next: NextFunction) => {
+    console.log("Get for v1/resetPassword");
+    authenticationController.getUserWithResetTokenRequest(request, response, next);
 });
+
+router.post('/api/v1/resetPassword/:resetToken', (request: Request, response: Response, next: NextFunction) => {
+    console.log("Post for v1/resetPassword");
+    authenticationController.getUserWithResetTokenRequest(request, response, next);
+});
+
+// router.post('/api/v1/resetpassword', async (request: Request, response: Response, next: NextFunction) => {
+//     authenticationController.updateUsersPassword(request, response, next);
+// });
 
 router.post('/updateUserInfo', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
     authenticationController.updateUserDetailRequest(request, response, next);

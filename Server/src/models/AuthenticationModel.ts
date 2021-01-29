@@ -45,6 +45,24 @@ export class AuthenticationModel {
         return userEmail !== undefined;
     }
 
+    /**
+     * Method to find an email by its token
+     * @param resetToken - User's reset token
+     */
+    static async findEmailByToken(resetToken: string): Promise<string> {
+        let connection = getConnection();
+        let user = await connection.getRepository(Accounts)
+            .createQueryBuilder('accounts')
+            .where('accounts.resetToken = :token', { token: resetToken })
+            .getOne();
+
+        if (user !== undefined) {
+            return user.resetToken;
+        } else {
+            return "";
+        }
+    }
+
     /*
      * Method to verify if the user with the token exists.
      * @param email - User's email

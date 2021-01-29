@@ -9,7 +9,8 @@ export const profileRoute = '/profile'
 
 export const signInRoute = '/sign-in'
 export const signUpRoute = '/sign-up'
-export const resetPasswordRoute = '/resetPassword'
+export const resetPasswordRoute = '/api/v1/resetPassword'
+export const forgotPasswordRoute = '/forgotPassword'
 
 export const dataCellAnalysisRoute = '/dataCellAnalysis'
 export const signOutRoute = '/sign-in'

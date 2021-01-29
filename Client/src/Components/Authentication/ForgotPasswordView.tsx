@@ -1,5 +1,5 @@
 import { FastField, Form, Formik } from 'formik'
-import { defaultResetPasswordModel, IResetPasswordModel } from '../../Models/Authentication/ISignUpModel'
+import { defaultForgotPasswordModel, IForgotPasswordModel } from '../../Models/Authentication/ISignUpModel'
 import React from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
@@ -9,8 +9,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import Typography from '@material-ui/core/Typography'
-import { callResetPassword } from '../../Remote/Endpoints/AuthenticationEndpoint'
-import { resetPasswordValidationSchema } from './AuthenticationValidationSchema'
+import { callForgotPassword } from '../../Remote/Endpoints/AuthenticationEndpoint'
+import { forgotPasswordValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export default function ResetPasswordView() {
+export default function ForgotPasswordView() {
 
     const classes = useStyles()
 
-    const handleResetPasswordSubmit = async (resetPasswordInfo: IResetPasswordModel): Promise<void> => {
+    const handleForgotPasswordSubmit = async (resetPasswordInfo: IForgotPasswordModel): Promise<void> => {
         console.log("Got to the first call")
-        await callResetPassword(resetPasswordInfo);
+        await callForgotPassword(resetPasswordInfo);
     }
 
     return (
@@ -51,32 +51,22 @@ export default function ResetPasswordView() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Reset Password
+                        Forgot Password
                     </Typography>
                     <Formik
-                        initialValues={defaultResetPasswordModel}
-                        validationSchema={resetPasswordValidationSchema}
-                        onSubmit={handleResetPasswordSubmit}
+                        initialValues={defaultForgotPasswordModel}
+                        validationSchema={forgotPasswordValidationSchema}
+                        onSubmit={handleForgotPasswordSubmit}
                     >
                         <Form className={classes.form} noValidate>
                             <FastField
                                 variant="outlined"
                                 margin="normal"
                                 required
-                                id="password"
-                                label="Password"
-                                name="password"
-                                type="password"
-                                component={MuiTextFieldFormik}
-                            />
-                            <FastField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                id="passwordConfirmation"
-                                label="Password Confirmation"
-                                name="passwordConfirmation"
-                                type="password"
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
                                 component={MuiTextFieldFormik}
                             />
                             <Button
@@ -86,7 +76,7 @@ export default function ResetPasswordView() {
                                 color="primary"
                                 className={classes.submit}
                             >
-                                Reset Password
+                                Forgot Password
                             </Button>
                         </Form>
                     </Formik>
