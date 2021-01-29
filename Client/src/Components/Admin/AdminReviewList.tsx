@@ -3,12 +3,13 @@ import { getUnapprovedDatasets, listUnapprovedDatasets } from "../../Remote/Endp
 
 import { AdminReviewRow } from "./AdminReviewRow"
 import { Grid } from "@material-ui/core"
+import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { getDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
 
 interface IAdminListprops {
-    datasets: IDatasetModel[]
-    onChange(formDataset: IDatasetModel): void
+    datasets: IApprovedDatasetModel[]
+    onChange(formDataset: IApprovedDatasetModel): void
 }
 
 export const AdminReviewList = (props: IAdminListprops) => {

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import FeedbackIcon from '@material-ui/icons/Feedback'
+import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import RateReviewIcon from '@material-ui/icons/RateReview'
 import { classStyles } from '../../appTheme'
@@ -11,7 +12,7 @@ import { listUnapprovedDatasets } from '../../Remote/Endpoints/DatasetEndpoints'
 //import classes from '*.module.css'
 
 interface IAdminReviewModel {
-    dataset: IDatasetModel,
+    dataset: IApprovedDatasetModel,
     onChange(formDataset: IDatasetModel): void
 }
 
@@ -23,7 +24,6 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
     const { dataset, onChange } = { ...props }
 
     const setDataset = () => {
-        console.log(dataset)
         onChange(dataset)
     }
 
