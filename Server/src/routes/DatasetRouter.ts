@@ -33,7 +33,7 @@ router.delete('/api/v1/dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuth
     dataSetController.createRequestToRejectDataset(request, response)
 })
 
-router.put('/api/v1/flagDataSet/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.put('/api/v1/flagDataSet', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
     dataSetController.createRequestToFlagDataset(request, response)
 })
 
