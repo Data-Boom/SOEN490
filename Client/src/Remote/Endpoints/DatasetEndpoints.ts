@@ -8,14 +8,7 @@ import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprov
 const datasetRoute = '/api/v1/dataset'
 const flagDatasetRoute = '/api/v1/flagDataSet/'
 const adminApprovedDatasetRoute = '/api/v1/adminApprovedDataset/'
-const userFlaggedDatasetsRoute = '/api/v1/userFlaggedDatasets'
 const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
-
-
-export const listUnapprovedDatasets = async (): Promise<IDatasetModel[]> => {
-    const unapprovedDatasets = await get(unapprovedDatasetsRoute)
-    return unapprovedDatasets
-}
 
 export const getUnapprovedDatasets = async (): Promise<IDatasetModel[]> => {
     const remoteDatasets: IRemoteApprovedDatasetModel[] = await get(unapprovedDatasetsRoute)
