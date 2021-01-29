@@ -46,24 +46,4 @@ export abstract class RequestExecutorTemplate {
   protected abstract setHeaders(request: RequestInit): void
   protected abstract setRequestMethod(request: RequestInit): void
   protected abstract setRequestBody(request: RequestInit): void
-
-  private fetchRemote = async (url: string, request: RequestInit): Promise<Response> => {
-    const response = await fetch(url, request)
-
-    if (response.status.toString().charAt(0) == '5') {
-      SnackbarUtils.error('Server Unavailable')
-      return Promise.resolve(null)
-    }
-
-    const message = await response.json()
-
-    if (response.status.toString().charAt(0) == '2') {
-      return message
-    }
-
-    if (response.status.toString().charAt(0) == '4') {
-      SnackbarUtils.warning(JSON.stringify(message))
-      return message
-    }
-  }
 }
