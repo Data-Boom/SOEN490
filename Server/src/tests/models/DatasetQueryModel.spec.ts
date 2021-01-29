@@ -39,7 +39,7 @@ describe('data service test', () => {
     });
 
     test('Input author with first name Stanley and last name Marsh, expect to find at least one dataset id', async done => {
-        let id = await dataQueryModel.getDatasetIDFromAuthor("Stanley", "Marsh");
+        let id = await dataQueryModel.getDatasetIDFromAuthor('Stanley', 'Marsh');
         console.log('model test')
         console.log(id)
         expect(id[0].dataset_id).not.toBeUndefined()
