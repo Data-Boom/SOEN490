@@ -9,7 +9,7 @@ import { getUnapprovedDatasets } from '../../Remote/Endpoints/DatasetEndpoints'
 //import classes from '*.module.css'
 
 interface IAdminReviewModel {
-    dataset: IDatasetModel,
+    dataset: IApprovedDatasetModel,
     onChange(formDataset: IDatasetModel): void
 }
 
@@ -21,7 +21,6 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
     const { dataset, onChange } = { ...props }
 
     const setDataset = () => {
-        console.log(dataset)
         onChange(dataset)
     }
 

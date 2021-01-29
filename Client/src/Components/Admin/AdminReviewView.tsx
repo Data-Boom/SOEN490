@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
+import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 export function AdminReviewView() {
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
-    const [dataset, setDataset] = useState<IDatasetModel>()
+    const [dataset, setDataset] = useState<IApprovedDatasetModel>()
     const [comment, setComment] = useState("")
     const [flaggedComment, setFlaggedComment] = useState("")
 
@@ -28,13 +29,11 @@ export function AdminReviewView() {
     }
 
     //handle submit after pressing
-    const handleSubmit = (datasetId: IDatasetModel) => {
+    const handleSubmit = (datasetId: IApprovedDatasetModel) => {
 
     }
 
-    const handleDatasetChange = (newDataset: IDatasetModel) => {
-        console.log(newDataset)
-        setEditable(true)
+    const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
         setDataset(newDataset)
     }
 
