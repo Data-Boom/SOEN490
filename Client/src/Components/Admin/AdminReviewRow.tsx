@@ -1,15 +1,16 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 
+import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import RateReviewIcon from '@material-ui/icons/RateReview'
 import { classStyles } from '../../appTheme'
-import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { getUnapprovedDatasets } from '../../Remote/Endpoints/DatasetEndpoints'
 
 //import classes from '*.module.css'
 
 interface IAdminReviewModel {
-    dataset: IDatasetModel
+    dataset: IDatasetModel,
+    onChange(formDataset: IDatasetModel): void
 }
 
 
@@ -17,7 +18,12 @@ interface IAdminReviewModel {
 //setDatasets(data)
 
 export const AdminReviewRow = (props: IAdminReviewModel) => {
-    const { dataset } = { ...props }
+    const { dataset, onChange } = { ...props }
+
+    const setDataset = () => {
+        console.log(dataset)
+        onChange(dataset)
+    }
 
     return (
         <Grid item>
@@ -26,7 +32,7 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
                     <Grid item container justify='flex-start' xs={7}>
                         <Typography variant="body2" noWrap>
                             <div>
-                                <input type="radio" value={dataset.dataset_name} name="dataset" />{dataset.dataset_name}
+                                <input type="radio" value={dataset.dataset_name} onClick={setDataset} name="dataset" />{dataset.dataset_name}
                             </div>
                         </Typography>
                     </Grid>
