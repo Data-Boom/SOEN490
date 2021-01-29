@@ -62,7 +62,8 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
   const dataset: IDatasetModel = {
     category: remoteDataset.dataset_info.category,
     subcategory: remoteDataset.dataset_info.subcategory,
-    data: toLocalDataPoints(remoteDataset.dataPoints, remoteDataset.dataPointComments),
+    //data: toLocalDataPoints(remoteDataset.dataPoints, remoteDataset.dataPointComments),
+    data: toLocalDataPoints(remoteDataset.dataPoints || [], remoteDataset.dataPointComments || []),
     data_type: remoteDataset.dataset_info.datasetDataType,
     dataset_name: remoteDataset.dataset_info.name,
     material: remoteDataset.materials,

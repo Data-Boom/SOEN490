@@ -40,6 +40,8 @@ const fetchRemote = async (url: string, method: string, data: any = {}): Promise
   try {
     const response = await fetch(url, request)
 
+    console.log("request: " + response.status)
+
     if (response.status.toString().charAt(0) == '5') {
       SnackbarUtils.error('Server Unavailable')
       return Promise.resolve(null)
