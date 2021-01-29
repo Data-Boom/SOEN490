@@ -1,12 +1,13 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
+import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel, example2, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
-import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
-import { FlagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
+import { flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
+
 export function AdminReviewView() {
 
     const [datasetState, setDatasetState] = useState([])
@@ -30,8 +31,9 @@ export function AdminReviewView() {
 
     const handleFlagDataset = async () => {
 
-        const query: IFlaggedDatasetQuery = { datasetId: dataset.id, flaggedComment: flaggedComment, additionalComment: comment }
-        await FlagDataset(query)
+        const query: IFlaggedDatasetQuery = { datasetId: dataset.id, flaggedComments: flaggedComment, additionalComments: comment }
+        console.log(query)
+        await flagDataset(query)
 
     }
 

@@ -1,4 +1,3 @@
-import { IFlaggedDatasetQuery } from './../../Models/Datasets/IApprovedDatasetModel';
 import { IRemoteApprovedDatasetModel, toLocalDatasets } from '../../Models/Datasets/IRemoteApprovedDatasetModel';
 import { get, post, put } from "../RemoteHelper"
 
@@ -6,6 +5,7 @@ import { IApprovalDatasetModel } from './../../../../Server/src/models/interface
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
 import { IDataSetModel } from './../../../../Server/src/genericInterfaces/DataProcessInterfaces';
 import { IDatasetModel } from './../../Models/Datasets/IDatasetModel';
+import { IFlaggedDatasetQuery } from './../../Models/Datasets/IApprovedDatasetModel';
 import { IRemoteDatasetModel } from '../../Models/Datasets/IRemoteDatasetModel';
 import { stringify } from 'query-string';
 
@@ -26,10 +26,9 @@ export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> 
     return flaggedDataset
 }*/
 
-export const FlagDataset = async (flaggeddatasetQuery: IFlaggedDatasetQuery) => {
-    await put(flagDatasetRoute, stringify(flaggeddatasetQuery, { arrayFormat: 'bracket' }))
-
-    //return localDatasets
+export const flagDataset = async (query: IFlaggedDatasetQuery) => {
+    console.log(stringify(query, { arrayFormat: 'bracket' }))
+    await put(flagDatasetRoute, '?' + stringify(query, { arrayFormat: 'bracket' }))
 }
 
 export const callRejectDataset = async (datasetId: number): Promise<IRemoteApprovedDatasetModel> => {
