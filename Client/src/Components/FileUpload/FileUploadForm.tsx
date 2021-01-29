@@ -27,10 +27,12 @@ export const FileUploadForm = (props: IProps) => {
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement, Event>) => {
     const input: HTMLInputElement = event.target[fileInputId]
+    console.log(input, 'input')
     const file: File = input.files[0]
     //if validate file was not provided will isValidFile = true
     const isValidFile = validateFile(file) //|| true
     if (isValidFile) {
+      console.log(file)
       onSubmit(file)
       setAlertSuccess(true)
     }

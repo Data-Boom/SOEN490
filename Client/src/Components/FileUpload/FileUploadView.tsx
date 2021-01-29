@@ -1,15 +1,16 @@
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
+import { Box, Button } from '@material-ui/core'
+
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
 import React from 'react'
+import { callDataExtract } from '../../Remote/Endpoints/DataExtractionEndpoint'
 import { rm } from "../../Assets/readMeMessage"
 
 const fileFormat = 'application/json'
-export default function DataCell() {
 
-  const validateJson = (file: File) => {
-    return file && file.type !== fileFormat
+export const FileUploadView = () => {
+  const isValidFile = (file: File) => {
+    return file && file.type === fileFormat
   }
 
   /**
@@ -20,16 +21,9 @@ export default function DataCell() {
     const formData = new FormData()
     formData.append('file', jsonFile)
 
-    const options = {
-      method: 'POST',
-      body: formData,
-    }
-
     try {
-      await fetch('http://localhost:4000/api/v1/dataExtract', options)
-        .then(resp => resp.json())
-        .then(result => {
-        })
+      console.log(formData, 'formData')
+      const extractedDataset = await callDataExtract(formData)
     }
     catch (err) {
       //todo add error handling
@@ -40,7 +34,7 @@ export default function DataCell() {
     <>
       <FileUploadForm
         onSubmit={handleSubmit}
-        validateFile={validateJson}
+        validateFile={isValidFile}
         acceptFileFormat={fileFormat}
       />
       <Box p={4}>
