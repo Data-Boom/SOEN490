@@ -48,7 +48,7 @@ export class SeedDatabase1611344612000 implements MigrationInterface {
     await connection.manager.save(user2);
 
     let user3 = new Accounts();
-    user3.id;
+    user3.id = 3;
     user3.email = 'tester@123.com';
     user3.password = await authenticationService.hashPassword('123') as any;
     user3.firstName = 'Wyatt';
