@@ -87,89 +87,48 @@ describe('SavedGraphs Controller ', () => {
     expect(mockResponse.status).toBeCalledWith(200);
   });
 
-  //   test('Valid Graph Insert Request', async () => {
-  //     let expectedResponse = "Graph successfully saved"
-  //     mockRequest = {
-  //       body: {
-  //         "datasets": [
-  //           {
-  //             "id": 100,
-  //             "color": "blue",
-  //             "shape": "square",
-  //             "isHidden": true
-  //           },
-  //           {
-  //             "id": 101,
-  //             "color": "green",
-  //             "shape": "circle",
-  //             "isHidden": false
-  //           }
-  //         ],
-  //         "name": "Adding Graphset Test",
-  //         "axes": [
-  //           {
-  //             "variableName": "density",
-  //             "mode": "small",
-  //             "zoom": 100,
-  //             "units": "cm, C"
-  //           },
-  //           {
-  //             "variableName": "temp",
-  //             "mode": "big",
-  //             "zoom": 100,
-  //             "units": "cm, C"
-  //           }
-  //         ],
-  //         "id": 1,
-  //         "email": "j.comkj"
-  //       }
-  //     }
-  //     await SavedGraphsController.createRequestForAddingSavedGraph(mockRequest as Request, mockResponse as Response)
-  //     expect(mockResponse.json).toBeCalledWith(expectedResponse);
-  //     expect(mockResponse.status).toBeCalledWith(200);
-  //   });
-
-  //   test('Invalid Graph Insert Request', async () => {
-  //     let expectedResponse = "Invalid user email provided"
-  //     mockRequest = {
-  //       body: {
-  //         "datasets": [
-  //           {
-  //             "id": 100,
-  //             "color": "blue",
-  //             "shape": "square",
-  //             "isHidden": true
-  //           },
-  //           {
-  //             "id": 101,
-  //             "color": "green",
-  //             "shape": "circle",
-  //             "isHidden": false
-  //           }
-  //         ],
-  //         "name": "Adding Graphset Test",
-  //         "axes": [
-  //           {
-  //             "variableName": "density",
-  //             "mode": "small",
-  //             "zoom": 100,
-  //             "units": "cm, C"
-  //           },
-  //           {
-  //             "variableName": "temp",
-  //             "mode": "big",
-  //             "zoom": 100,
-  //             "units": "cm, C"
-  //           }
-  //         ],
-  //         "id": 1,
-  //         "email": "123@123.com"
-  //       }
-  //     }
-  //     await SavedGraphsController.createRequestForAddingSavedGraph(mockRequest as Request, mockResponse as Response)
-  //     expect(mockResponse.json).toBeCalledWith(expectedResponse);
-  //     expect(mockResponse.status).toBeCalledWith(400);
-  //   });
+  test('Valid Graph Insert Request', async () => {
+    let expectedResponse = "Graph successfully saved"
+    mockRequest = {
+      body: {
+        "datasets": [
+          {
+            "id": 100,
+            "color": "blue",
+            "shape": "square",
+            "isHidden": true
+          },
+          {
+            "id": 101,
+            "color": "green",
+            "shape": "circle",
+            "isHidden": false
+          }
+        ],
+        "name": "Adding Graphset Test",
+        "axes": [
+          {
+            "variableName": "density",
+            "mode": "small",
+            "zoom": 100,
+            "units": "cm, C"
+          },
+          {
+            "variableName": "temp",
+            "mode": "big",
+            "zoom": 100,
+            "units": "cm, C"
+          }
+        ],
+        user: {
+          account_id: '1'
+        }
+      }
+    }
+    await SavedGraphsController.createRequestForAddingGraph(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(201);
+  });
 
   //   //Do these deletion tests last
   //   test('Delete Graph Request', async () => {
