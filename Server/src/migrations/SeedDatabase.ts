@@ -342,12 +342,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
-    dataset.uploaderId;
+    dataset.uploaderId = 2;
     await connection.manager.save(dataset);
 
     unapproveddataset.datasetId = 8;
     unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
+    unapproveddataset.isFlagged = 1;
     await connection.manager.save(unapproveddataset);
 
     dataset.id = 9;
@@ -411,7 +411,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     unapproveddataset.datasetId = 12;
     unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
+    unapproveddataset.isFlagged = 1;
     await connection.manager.save(unapproveddataset);
 
     // Units below this line
