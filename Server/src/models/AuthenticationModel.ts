@@ -40,27 +40,26 @@ export class AuthenticationModel {
         let userEmail = await connection.getRepository(Accounts)
             .createQueryBuilder('accounts')
             .where('accounts.email = :email', { email: email })
-            .getOne()
+            .getOne();
 
         return userEmail !== undefined;
     }
 
     /**
-     * Method to find an email by its token
+     * Method to update a user's password by its resetToken
      * @param resetToken - User's reset token
      */
-    static async findEmailByToken(resetToken: string): Promise<string> {
+    static async resetPasswordByToken(resetToken: string, passwordHash: string): Promise<boolean> {
         let connection = getConnection();
-        let user = await connection.getRepository(Accounts)
-            .createQueryBuilder('accounts')
-            .where('accounts.resetToken = :token', { token: resetToken })
-            .getOne();
 
-        if (user !== undefined) {
-            return user.resetToken;
-        } else {
-            return "";
-        }
+        await connection.manager
+            .createQueryBuilder(Accounts, 'accounts')
+            .update('accounts')
+            .set({ password: passwordHash })
+            .where('accounts.resetToken = :resetToken', { resetToken: resetToken })
+            .execute();
+
+        return true
     }
 
     /*

@@ -3,14 +3,14 @@ export interface ILoginInformation {
     password: string
 }
 
-export interface IPasswordResetInformation {
+export interface IForgotPasswordInformation {
     email: string
 }
 
-export interface IPasswordUpdateInformation {
+export interface IResetPasswordInformation {
     password: string,
     passwordConfirmation: string,
-    jwtToken: string
+    resetToken: string
 }
 
 export interface ISignUpInformation {

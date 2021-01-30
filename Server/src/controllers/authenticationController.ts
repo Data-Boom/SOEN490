@@ -2,7 +2,7 @@ import { BadRequest } from "@tsed/exceptions";
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationService } from '../services/authenticationService';
-import { ILoginInformation, IPasswordResetInformation, IPasswordUpdateInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { IForgotPasswordInformation, ILoginInformation, IPasswordUpdateInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
@@ -49,53 +49,41 @@ export class AuthenticationController {
         }
     }
 
-    async createPasswordResetRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
-        this.invalidResponse = this.validatePasswordResetRequest(request);
+    async createForgotPasswordRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+        this.invalidResponse = this.validateForgotPasswordRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("Request is invalid, Email attribute is missing");
         }
         else {
             let requestParams: any = { ...request.body };
-            let passwordResetInfo: IPasswordResetInformation = requestParams;
-            let res: any = await this.callServiceForPasswordReset(passwordResetInfo, response, next);
+            let forgotPasswordInfo: IForgotPasswordInformation = requestParams;
+            let res: any = await this.callServiceForForgotPassword(forgotPasswordInfo, response, next);
             return res;
         }
     }
 
-    async getUserWithResetTokenRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
-        this.invalidResponse = this.validateResetTokenRequest(request);
+    async resetPasswordWithResetTokenRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
+        this.invalidResponse = this.validateResetPasswordRequest(request);
         if (this.invalidResponse) {
             return response.status(400).json("User was not found");
         }
         else {
-            let resetToken: string = request.params.resetToken;
-            let res: any = await this.callServiceForResetToken(resetToken, response, next);
-            return res;
-        }
-    }
-
-    async updateUsersPassword(request: Request, response: Response, next: NextFunction): Promise<Response> {
-        this.invalidResponse = this.validateUpdatePasswordRequest(request);
-        if (this.invalidResponse) {
-            return response.status(400).json("Request is invalid, one or two inputs are missing");
-        }
-        else {
             let requestParams: any = { ...request.body };
-            let passwordResetInfo: IPasswordUpdateInformation = requestParams;
-            let res: any = await this.callServiceForUpdatePassword(passwordResetInfo, response, next);
+            let resetPasswordInfo: IResetPasswordInformation = requestParams;
+            let res: any = await this.callServiceForResetPassword(resetPasswordInfo, response, next);
             return res;
         }
     }
 
-    private validateResetTokenRequest(request: Request): boolean {
-        return !request.params.resetToken
+    private validateResetPasswordRequest(request: Request): boolean {
+        return !request.body.resetToken && (this.validateUpdatePasswordRequest(request));
     }
 
     private validateUpdatePasswordRequest(request: Request): boolean {
         return !request.body.password && !request.body.passwordConfirmation && request.body.password === request.body.passwordConfirmation;
     }
 
-    private validatePasswordResetRequest(request: Request): boolean {
+    private validateForgotPasswordRequest(request: Request): boolean {
         return !request.body.email;
     }
 
@@ -171,11 +159,11 @@ export class AuthenticationController {
         }
     }
 
-    private async callServiceForPasswordReset(passwordResetInfo: IPasswordResetInformation, response: Response, next: NextFunction): Promise<Response> {
+    private async callServiceForForgotPassword(forgotPasswordInfo: IForgotPasswordInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse
         try {
-            serviceResponse = await this.authenticationService.resetPassword(passwordResetInfo);
+            serviceResponse = await this.authenticationService.forgotPassword(forgotPasswordInfo);
             return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
             console.log(error);
@@ -183,23 +171,11 @@ export class AuthenticationController {
         }
     }
 
-    private async callServiceForResetToken(resetToken: string, response: Response, next: NextFunction): Promise<Response> {
+    private async callServiceForResetPassword(resetPasswordInfo: IResetPasswordInformation, response: Response, next: NextFunction): Promise<Response> {
         this.authenticationService = new AuthenticationService();
         let serviceResponse: IResponse;
         try {
-            serviceResponse = await this.authenticationService.findUserEmailByToken(resetToken);
-            return response.status(serviceResponse.statusCode).json('Success');
-        } catch (error) {
-            console.log(error);
-            return response.status(error.status).json(error.message);
-        }
-    }
-
-    private async callServiceForUpdatePassword(passwordResetInfo: IPasswordUpdateInformation, response: Response, next: NextFunction): Promise<Response> {
-        this.authenticationService = new AuthenticationService();
-        let serviceResponse: IResponse
-        try {
-            serviceResponse = await this.authenticationService.updatePassword(passwordResetInfo);
+            serviceResponse = await this.authenticationService.updatePassword(resetPasswordInfo);
             return response.status(serviceResponse.statusCode).json('Success');
         } catch (error) {
             console.log(error);

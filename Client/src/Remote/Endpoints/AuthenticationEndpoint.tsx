@@ -6,7 +6,6 @@ import { forgotPasswordRoute, resetPasswordRoute } from "../../Common/Consts/Rou
 
 const signupRoute = '/signup'
 const loginRoute = '/login'
-// const resetPasswordRoute = '/passwordReset'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
   const result = await post(signupRoute, signUpInfo)
