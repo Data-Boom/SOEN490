@@ -33,7 +33,7 @@ export const AxesControl = (props: IProps) => {
   const classes = classStyles()
 
   //todo unhardcode the variables
-  const [showSettings, setSettingsToggle] = useState(false)
+  const [showSettings, setSettingsToggle] = useState(true)
 
   const [xVariableMissing, setXVariableMissing] = useState([])
   const [yVariableMissing, setYVariableMissing] = useState([])
@@ -191,7 +191,6 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleXUnitChange}
                       >
-                        <MenuItem value={''}>{''}</MenuItem>
                         {xUnits.map(type => (
                           <MenuItem value={type}>{type}</MenuItem>
                         ))}
@@ -229,7 +228,6 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleYUnitChange}
                       >
-                        <MenuItem value={''}>{''}</MenuItem>
                         {yUnits.map(type => (
                           <MenuItem value={type}>{type}</MenuItem>
                         ))}

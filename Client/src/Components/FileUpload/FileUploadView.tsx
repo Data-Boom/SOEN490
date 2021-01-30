@@ -8,6 +8,8 @@ import { FileUploadForm } from './FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React from 'react'
 import { datasetUploadRoute } from '../../Common/Consts/Routes'
+import SnackbarUtils from '../Utils/SnackbarUtils'
+import { extractDatasetFromFile } from '../../Remote/Endpoints/FileUploadEndpoint'
 import { rm } from "../../Assets/readMeMessage"
 import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 
@@ -18,31 +20,24 @@ export const FileUploadView = () => {
   const history = useHistory()
 
   const handleSubmit = async (jsonFile: File) => {
-    const formData = new FormData()
-    formData.append('file', jsonFile)
-
     try {
-      const response = await fetch('/api/v1/dataExtract', {
-        method: 'POST',
-        body: formData
-      })
-      const extractedDataset = await response.json()
-      console.log(extractedDataset, 'extracted dataset')
+      const extractedDataset = await extractDatasetFromFile(jsonFile)
       history.push({//will route the data to the dataset upload view page
         pathname: datasetUploadRoute,
         state: extractedDataset
       })
     }
-    catch (err) {
-      //todo add error handling
+    catch (error) {
+      SnackbarUtils.warning(error)
     }
   }
 
   return (
     <>
       <FileUploadForm
+        acceptFileFormat={fileFormat}
         onSubmit={handleSubmit}
-      // validateFile={isValidFile}
+        isValidFile={isValidFile}
       />
       <Box p={4}>
         <Download file="emptyJsonDataset.json" content={JSON.stringify("../../Assets/emptyJSFile.json", null, 2)}>

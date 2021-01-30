@@ -54,7 +54,6 @@ export default abstract class AbstractUploadService {
             else {
                 unitsId = await uploadModel.insertUnits(units);
             }
-            console.log('added units id: ' + unitsId);
         } catch (err) {
             console.log('rejected request for referenceTypeID');
         }
@@ -69,7 +68,6 @@ export default abstract class AbstractUploadService {
             else {
                 reprID = await uploadModel.insertRepresentation(repr);
             }
-            console.log('added rep id: ' + reprID);
         } catch (err) {
             console.log('rejected request for referenceTypeID');
         }
@@ -79,7 +77,6 @@ export default abstract class AbstractUploadService {
     protected async insertPublicationTypeData(uploadModel: DataUploadModel, referenceType: string): Promise<number> {
         try {
             let referenceTypeID = await uploadModel.insertPublicationType(referenceType);
-            console.log('Received reference ID' + referenceTypeID);
             return referenceTypeID
         } catch (err) {
             console.log('rejected request for referenceTypeID');
@@ -89,7 +86,6 @@ export default abstract class AbstractUploadService {
     protected async insertPublisherData(uploadModel: DataUploadModel, referencePublisher: string): Promise<number> {
         try {
             let publisherNameId = await uploadModel.insertPublisher(referencePublisher);
-            console.log('Received publisher name ID' + publisherNameId);
             return publisherNameId
         } catch (err) {
             console.log('rejected request for inserting publisherNameId')
@@ -100,7 +96,6 @@ export default abstract class AbstractUploadService {
         let allAuthors: Authors[];
         try {
             allAuthors = await uploadModel.insertAuthors(referenceAuthors);
-            console.log('reference authors: ' + referenceAuthors);
             return allAuthors
         } catch (err) {
             console.log('reference authors not found....request rejected');
@@ -110,7 +105,6 @@ export default abstract class AbstractUploadService {
     protected async insertMaterialsData(uploadModel: DataUploadModel, material: IMaterials[]): Promise<any[]> {
         try {
             let allMaterials = await uploadModel.insertMaterial(material);
-            console.log('received material(s)' + material);
             return allMaterials
         } catch (err) {
             console.log('material(s) not found');
@@ -120,7 +114,6 @@ export default abstract class AbstractUploadService {
     protected async insertPublicationData(uploadModel, referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors): Promise<number> {
         try {
             let publicationID = await uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
-            console.log('received publicationID ' + publicationID);
             return publicationID
         } catch (err) {
             console.log('publicationID was not received......rejecting request');
@@ -134,7 +127,6 @@ export default abstract class AbstractUploadService {
         else {
             try {
                 dataSetDataTypeID = await uploadModel.insertDataSetDataType(dataType)
-                console.log('Received datasetTypeID: ' + dataSetDataTypeID);
             } catch (err) {
                 console.log('error receiving datasetTypeID....request rejected');
             }
