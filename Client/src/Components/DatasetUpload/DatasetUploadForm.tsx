@@ -9,6 +9,7 @@ import { ReferenceForm } from './ReferenceSection/ReferenceForm'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
+import { datasetValidationSchema } from './DatasetValidationSchema'
 
 interface IProps {
   initialDataset: IDatasetModel,

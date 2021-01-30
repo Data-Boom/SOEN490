@@ -11,7 +11,15 @@ interface IProps {
 
 const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
   const dataset: IDatasetModel = {
-    category: partialDataset.category || defaultDatasetModel.category
+    reference: partialDataset.reference || defaultDatasetModel.reference,
+    dataset_name: partialDataset.dataset_name || defaultDatasetModel.dataset_name,
+    material: partialDataset.material || defaultDatasetModel.material,
+    category: partialDataset.category || defaultDatasetModel.category,
+    subcategory: partialDataset.subcategory || defaultDatasetModel.subcategory,
+    data_type: partialDataset.data_type || defaultDatasetModel.data_type,
+    data: partialDataset.data || defaultDatasetModel.data,
+    id: partialDataset.id || defaultDatasetModel.id,
+    //authors: partialDataset.reference.authors || defaultDatasetModel.reference.authors
   }
 
   return dataset
