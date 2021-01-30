@@ -165,7 +165,6 @@ export class DataSetController {
     }
 
     async createRequestToFlagDataset(request: Request, response: Response) {
-        console.log("got here")
         if (!request.query && !request.query.datasetId) {
             response.status(400).json("No datasetID provided to flag dataset");
         }

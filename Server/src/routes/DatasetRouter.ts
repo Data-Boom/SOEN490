@@ -35,14 +35,12 @@ router.delete('/api/v1/dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuth
 })
 
 router.put('/api/v1/flagDataSet', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
-    console.log(request.body)
     dataSetController.createRequestToFlagDataset(request, response);
 })
 
 router.get('/api/v1/userFlaggedDatasets', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataSetController.createRequestForUserFlaggedDatasets(request, response)
 })
-
 
 router.put('/api/v1/approveDataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataSetController.createUserApprovedDatasetRequest(request, response)
