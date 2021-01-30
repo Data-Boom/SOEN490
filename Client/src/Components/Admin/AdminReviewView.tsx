@@ -1,7 +1,8 @@
-import { Box, Button, createMuiTheme, Grid, TextField, Typography, withStyles } from '@material-ui/core'
+import { Box, Button, Grid, TextField, Typography, createMuiTheme, withStyles } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import React, { useEffect, useState } from 'react'
 import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
+
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
 
@@ -17,8 +18,8 @@ export function AdminReviewView() {
     const handleDeleteDataset = async () => {
         await callRejectDataset(dataset.id)
         setUpdate(update + 1)
+        handleDatasetChange(null)
     }
-
 
     const handleEditDataset = () => {
         setEditable(!editable)
@@ -33,6 +34,7 @@ export function AdminReviewView() {
         const query: IFlaggedDatasetQuery = { datasetId: dataset.id, additionalComments: comment }
         await adminApprovedDataset(query)
         setUpdate(update + 1)
+        handleDatasetChange(null)
     }
 
     const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
