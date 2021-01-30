@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography'
 import { callResetPassword } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { resetPasswordValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { useParams } from 'react-router'
+import { render } from 'react-dom'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,7 +35,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
+interface IResetPasswordParam {
+    resetToken: string
+}
+
 export default function ResetPasswordView() {
+
+    const { resetToken } = useParams<IResetPasswordParam>()
 
     const classes = useStyles()
 
@@ -88,6 +96,11 @@ export default function ResetPasswordView() {
                             >
                                 Reset Password
                             </Button>
+                            <input
+                                name="resetToken"
+                                hidden
+                                value={resetToken}
+                            />
                         </Form>
                     </Formik>
                 </div>
