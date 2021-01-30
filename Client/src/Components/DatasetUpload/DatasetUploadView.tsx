@@ -3,7 +3,6 @@ import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatas
 
 import { DatasetUploadForm } from './DatasetUploadForm'
 import React from 'react'
-import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 import { useLocation } from "react-router-dom"
 
 interface IProps {
@@ -18,6 +17,7 @@ export const DatasetUploadView = (props: IProps) => {
 
   const handleSubmitForm = (formDataset: IDatasetModel) => {
     // todo: call backend to save dataset here
+    console.log(formDataset, 'submitted dataset')
   }
 
   return (
