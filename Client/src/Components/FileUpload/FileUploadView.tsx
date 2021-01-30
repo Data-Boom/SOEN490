@@ -22,8 +22,6 @@ export const FileUploadView = () => {
       //   body: formData
       // })
       // const extractedDataset = await response.json()
-      console.log(extractedDataset, 'extracted dataset')
-
     }
     catch (err) {
       //todo add error handling
@@ -33,8 +31,9 @@ export const FileUploadView = () => {
   return (
     <>
       <FileUploadForm
+        acceptFileFormat={fileFormat}
         onSubmit={handleSubmit}
-      // validateFile={isValidFile}
+        isValidFile={isValidFile}
       />
       <Box p={4}>
         <Download file="emptyJsonDataset.json" content={JSON.stringify("../../Assets/emptyJSFile.json", null, 2)}>

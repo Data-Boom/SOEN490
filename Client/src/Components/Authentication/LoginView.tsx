@@ -64,7 +64,6 @@ export default function LoginView() {
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
     await callLogIn(loginUserInfo)
-    console.log('wif2');
     const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
     setUser(userAccount)
   }
