@@ -140,6 +140,7 @@ export class DataSetController {
      */
     async createRequestForUnapprovedDatsets(request: Request, response: Response) {
         try {
+            console.log(request)
             this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.getUnapprovedAllDatasets()
             return response.status(requestResponse.statusCode).json(requestResponse.message);
@@ -165,6 +166,7 @@ export class DataSetController {
     }
 
     async createRequestToFlagDataset(request: Request, response: Response) {
+        console.log("got here")
         if (!request.query && !request.query.datasetId) {
             response.status(400).json("No datasetID provided to flag dataset");
         }
@@ -215,7 +217,7 @@ export class DataSetController {
             response.status(400).json("No datasetID provided to flag dataset");
         }
         let datasetIdToApprove = Number(request.query.datasetId)
-        let datasetComments = String(request.query.datasetComments)
+        let datasetComments = String(request.query.additionalComments)
         try {
             this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.adminApprovedDataset(datasetIdToApprove, datasetComments)

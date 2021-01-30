@@ -1,5 +1,5 @@
 import { IRemoteApprovedDatasetModel, toLocalDatasets } from '../../Models/Datasets/IRemoteApprovedDatasetModel';
-import { get, post, put } from "../RemoteHelper"
+import { _delete, get, post, put } from "../RemoteHelper"
 
 import { IApprovalDatasetModel } from './../../../../Server/src/models/interfaces/DatasetModelInterface';
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
@@ -9,9 +9,9 @@ import { IFlaggedDatasetQuery } from './../../Models/Datasets/IApprovedDatasetMo
 import { IRemoteDatasetModel } from '../../Models/Datasets/IRemoteDatasetModel';
 import { stringify } from 'query-string';
 
-const datasetRoute = '/api/v1/dataset'
+const datasetRoute = '/api/v1/dataset/'
 const flagDatasetRoute = '/api/v1/flagDataSet'
-const adminApprovedDatasetRoute = '/api/v1/adminApprovedDataset/'
+const adminApprovedDatasetRoute = '/api/v1/adminApprovedDataset'
 const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
 
 export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> => {
@@ -20,19 +20,17 @@ export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> 
     return localDatasets
 }
 
-export const FlagDataset = async (flaggeddatasetQuery: IFlaggedDatasetQuery) => {
-    await put(flagDatasetRoute, stringify(flaggeddatasetQuery, { arrayFormat: 'bracket' }))
-    //console.log(stringify(flaggeddatasetQuery, { arrayFormat: 'bracket' }))
+export const flagDataset = async (query: IFlaggedDatasetQuery) => {
+    console.log(stringify(query, { arrayFormat: 'bracket' }))
+    await put(flagDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }))
 }
 
-export const callRejectDataset = async (datasetId: string) => {
-    const deletedDataset: IApprovedDatasetModel = await get(datasetRoute + '/' + stringify(datasetId))
-
+export const callRejectDataset = async (datasetId: number) => {
+    await _delete(datasetRoute + datasetId)
 }
 
-export const adminApprovedDataset = async (datasetId: number, dataset: IApprovedDatasetModel): Promise<IRemoteApprovedDatasetModel> => {
-    const adminApprovedDataset = await put(adminApprovedDatasetRoute + '/' + datasetId, dataset)
-    return adminApprovedDataset
+export const adminApprovedDataset = async (query: IFlaggedDatasetQuery) => {
+    await put(adminApprovedDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }))
 }
 
 
