@@ -2,21 +2,10 @@ import { Box, Button, createMuiTheme, Grid, TextField, Typography, withStyles } 
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import React, { useEffect, useState } from 'react'
 import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
-
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
-import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
 
 export function AdminReviewView() {
-
-    const theme = createMuiTheme({
-        typography: {
-            allVariants: {
-                color: "#00008B"
-            },
-        },
-    });
-
 
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
