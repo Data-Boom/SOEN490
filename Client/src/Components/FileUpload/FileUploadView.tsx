@@ -6,15 +6,22 @@ import { FileUploadForm } from './FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React from 'react'
 import { rm } from "../../Assets/readMeMessage"
+import { Redirect, Route } from 'react-router-dom'
+import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
+import { datasetUploadRoute } from '../../Common/Consts/Routes'
 
-const fileFormat = 'application/json'
+//const fileFormat = 'application/json'
 
 export const FileUploadView = () => {
-  const isValidFile = (file: File) => {
-    return file && file.type === fileFormat
-  }
+  // const isValidFile = (file: File) => {
+  //   return file && file.type === fileFormat
+  // }
   const handleUploadFormSubmit = (values: IDatasetModel) => {
-
+    // window.location.href = datasetUploadRoute
+    console.log('running page check')
+    return (
+      <Redirect to="localhost:3000/#/uploadDataset" />
+    )
   }
   const handleSubmit = async (jsonFile: File) => {
     const formData = new FormData()
@@ -28,12 +35,8 @@ export const FileUploadView = () => {
       const extractedDataset = await response.json()
       console.log(extractedDataset, 'extracted dataset')
       //Refresh or reroute here
-      return (
-        <DatasetUploadForm
-          onSubmit={handleUploadFormSubmit}
-          initialDataset={extractedDataset}
-        />
-      )
+      window.location.href = "#/uploadDataset"
+      console.log('running page check')
 
     }
     catch (err) {
