@@ -54,7 +54,7 @@ export const toLocalDatasets = (remoteDatasets: IRemoteDatasetModel[]): IDataset
 }
 
 export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatasetModel => {
-  if (!remoteDataset || !remoteDataset.dataset_id) {
+  if (!remoteDataset) {
     return null
   }
   //todo add comments on the dataset upload form

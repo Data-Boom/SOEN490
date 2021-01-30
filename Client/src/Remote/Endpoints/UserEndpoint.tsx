@@ -1,8 +1,6 @@
 import { IUserAccountModel, IUserDetailsModel, toLocalUserAccountModel } from "../../Models/Authentication/IUserAccountModel"
 import { get, post } from "../FluentRequest"
 
-import { stringify } from 'query-string'
-
 const updateUserInfoRoute = '/updateUserInfo'
 const userDetailsRoute = '/userDetails'
 
