@@ -33,7 +33,7 @@ router.delete('/api/v1/dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuth
     dataSetController.createRequestToRejectDataset(request, response)
 })
 
-router.put('/api/v1/flagDataSet/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.put('/api/v1/flagDataSet', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
     dataSetController.createRequestToFlagDataset(request, response)
 })
 
@@ -41,12 +41,12 @@ router.get('/api/v1/userFlaggedDatasets', JWTAuthenticator.verifyJWT, (request: 
     dataSetController.createRequestForUserFlaggedDatasets(request, response)
 })
 
-router.put('/api/v1/adminApprovedDataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
-    dataSetController.createAdminApprovedDatasetRequest(request, response)
+router.put('/api/v1/approveDataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+    dataSetController.createUserApprovedDatasetRequest(request, response)
 })
 
-router.put('/api/v1/userApprovedDataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
-    dataSetController.createUserApprovedDatasetRequest(request, response)
+router.put('/api/v1/approveDataset', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+    dataSetController.createAdminApprovedDatasetRequest(request, response)
 })
 
 export { router as DataSetRouter };

@@ -22,9 +22,9 @@ export class DatasetApprovalModel {
 
     async selectUserFlaggedDatasets(uploaderId: number): Promise<IDatasetIDModel[]> {
         let userFlaggedDatasets = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
-            .select('unapproved_datasets.datasetId', 'dataset_id')
-            .innerJoin(Dataset, 'dataset.id = unapproved_datasets.datasetId')
-            .where('unapproved_datasets.isFlagged = 1')
+            .select('dataset.id', 'dataset_id')
+            .innerJoin(Dataset, 'dataset', 'dataset.id = unapproved_datasets.datasetId')
+            .where('unapproved_datasets.isFlagged = :flag', { flag: 1 })
             .andWhere('dataset.uploaderId = :uploaderId', { uploaderId: uploaderId })
             .getRawMany();
         return userFlaggedDatasets
@@ -46,37 +46,57 @@ export class DatasetApprovalModel {
     }
 
     private async approveSingleDatasetQuery(datasetId: number) {
-        await this.connection.createQueryBuilder(Dataset, 'dataset')
-            .update('dataset')
+        await this.connection.createQueryBuilder()
+            .update(Dataset)
             .set({ isApproved: 1 })
-            .where('dataset.id = :datasetId', { datasetId: datasetId })
+            .where('id = :datasetId', { datasetId: datasetId })
             .execute()
     }
 
     async flagDataSet(datasetId: number, flaggedComment?: string, additionalComment?: string) {
         await this.updateDatasetComments(datasetId, additionalComment)
-        await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
-            .update('unapproved_datasets')
-            .set({ flaggedComments: flaggedComment, isFlagged: 1 })
-            .where('unapproved_datasets.datasetId = :datasetId', { datasetId: datasetId })
+        await this.connection.createQueryBuilder()
+            .update(Unapproveddatasets)
+            .set({ flaggedComment: flaggedComment, isFlagged: 1 })
+            .where('datasetId = :datasetId', { datasetId: datasetId })
             .execute()
         return "Dataset Flagged!"
+    }
+
+    async verifyUnapprovedDatasetUploader(id: number, userId: number): Promise<any> {
+        let upload = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
+            .select('dataset.uploaderId', 'uploaderId')
+            .addSelect('unapproved_datasets.isFlagged', 'isFlagged')
+            .innerJoin(Dataset, 'dataset', 'dataset.id = unapproved_datasets.datasetId')
+            .where('dataset.id = :id', { id: id })
+            .getRawOne();
+        if (upload.uploaderId != userId || upload == undefined) {
+            return "User ID does not match uploader ID!"
+        }
+        else if (upload.isFlagged != 1) {
+            return "You cannot approve a data set until it passes initial screening!"
+        }
+        else {
+            return true
+        }
     }
 
     async approveDataset(datasetId: number) {
         await this.approveSingleDatasetQuery(datasetId)
         await this.commonModel.wipeEntryFromUnapprovedTable(datasetId)
-        return "Successfully approved new Dataset"
+        return "Successfully approved new data set"
     }
 
     async updateDatasetComments(datasetId: number, datasetCommentsToAppend?: string) {
-        let oldComment = await this.selectDatasetCommentQuery(datasetId)
-        let newComment = oldComment.comments.concat(" " + datasetCommentsToAppend)
-        await this.connection.createQueryBuilder(Dataset, 'dataset')
-            .update('dataset')
-            .set({ comments: newComment })
-            .where('dataset.id = :datasetId', { datasetId: datasetId })
-            .execute()
+        if (datasetCommentsToAppend !== null && datasetCommentsToAppend !== undefined) {
+            let oldComment = await this.selectDatasetCommentQuery(datasetId)
+            let newComment = oldComment.comments.concat(" " + datasetCommentsToAppend)
+            await this.connection.createQueryBuilder()
+                .update(Dataset)
+                .set({ comments: newComment })
+                .where('id = :datasetId', { datasetId: datasetId })
+                .execute()
+        }
     }
 
     async fetchUnapprovedDatasetsInfo(idArray: number[]): Promise<any[]> {
