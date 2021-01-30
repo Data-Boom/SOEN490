@@ -3,6 +3,7 @@ import { Box, Button } from '@material-ui/core'
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
 import React from 'react'
+import SnackbarUtils from '../Utils/SnackbarUtils'
 import { extractDatasetFromFile } from '../../Remote/Endpoints/FileUploadEndpoint'
 import { rm } from "../../Assets/readMeMessage"
 
@@ -16,15 +17,9 @@ export const FileUploadView = () => {
   const handleSubmit = async (jsonFile: File) => {
     try {
       const extractedDataset = await extractDatasetFromFile(jsonFile)
-
-      // const response = await fetch('/api/v1/dataExtract', {
-      //   method: 'POST',
-      //   body: formData
-      // })
-      // const extractedDataset = await response.json()
     }
-    catch (err) {
-      //todo add error handling
+    catch (error) {
+      SnackbarUtils.warning(error)
     }
   }
 
