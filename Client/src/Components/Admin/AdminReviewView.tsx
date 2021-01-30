@@ -5,6 +5,7 @@ import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remo
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
+import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
 
 export function AdminReviewView() {
 
@@ -19,6 +20,7 @@ export function AdminReviewView() {
         await callRejectDataset(dataset.id)
         setUpdate(update + 1)
     }
+
 
     const handleEditDataset = () => {
         setEditable(!editable)
