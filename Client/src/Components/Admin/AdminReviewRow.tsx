@@ -1,10 +1,7 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import RateReviewIcon from '@material-ui/icons/RateReview'
 import { classStyles } from '../../appTheme'
-import { getUnapprovedDatasets } from '../../Remote/Endpoints/DatasetEndpoints'
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 
 interface IAdminReviewModel {

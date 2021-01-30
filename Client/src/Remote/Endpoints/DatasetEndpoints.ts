@@ -1,12 +1,7 @@
 import { IRemoteApprovedDatasetModel, toLocalDatasets } from '../../Models/Datasets/IRemoteApprovedDatasetModel';
 import { _delete, get, post, put } from "../RemoteHelper"
-
-import { IApprovalDatasetModel } from './../../../../Server/src/models/interfaces/DatasetModelInterface';
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
-import { IDataSetModel } from './../../../../Server/src/genericInterfaces/DataProcessInterfaces';
-import { IDatasetModel } from './../../Models/Datasets/IDatasetModel';
 import { IFlaggedDatasetQuery } from './../../Models/Datasets/IApprovedDatasetModel';
-import { IRemoteDatasetModel } from '../../Models/Datasets/IRemoteDatasetModel';
 import { stringify } from 'query-string';
 
 const datasetRoute = '/api/v1/dataset/'

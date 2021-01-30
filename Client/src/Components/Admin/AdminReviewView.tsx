@@ -1,13 +1,11 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
-import { IDatasetModel, example2, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
 import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
-import { stringify } from 'query-string'
 
 export function AdminReviewView() {
 
@@ -20,7 +18,6 @@ export function AdminReviewView() {
 
 
     const handleDeleteDataset = async () => {
-        //console.log("dataset deleted")
         await callRejectDataset(dataset.id)
     }
 
