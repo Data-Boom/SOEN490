@@ -353,7 +353,7 @@ export class DataSetService {
                 throw new InternalServerError("Something went wrong deleting a saved data set. Try later")
             }
             else {
-                throw new Error()
+                throw new Error(error.message)
             }
         }
     }
@@ -427,7 +427,7 @@ export class DataSetService {
                 throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
             }
             else {
-                throw new Error()
+                throw new Error(error.message)
             }
         }
     }
@@ -453,7 +453,7 @@ export class DataSetService {
                 throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
             }
             else {
-                throw new Error()
+                throw new Error(error.message)
             }
         }
     }
@@ -479,7 +479,7 @@ export class DataSetService {
                 throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
             }
             else {
-                throw new Error()
+                throw new Error(error.message)
             }
         }
     }
@@ -521,7 +521,7 @@ export class DataSetService {
                 throw new InternalServerError("Something went wrong with flagging this data set. Try again later")
             }
             else {
-                throw new Error()
+                throw new Error(error.message)
             }
         }
     }
@@ -544,7 +544,7 @@ export class DataSetService {
                 throw new InternalServerError("Internal server error approving this data set. Try again later")
             }
             else {
-                throw new Error()
+                throw new Error(error.message)
             }
         }
     }
