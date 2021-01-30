@@ -1,8 +1,8 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
-import { FlagDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel, example2, exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
+import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
@@ -21,7 +21,7 @@ export function AdminReviewView() {
 
     const handleDeleteDataset = async () => {
         //console.log("dataset deleted")
-        await callRejectDataset(stringify(dataset.id))
+        await callRejectDataset(dataset.id)
     }
     const handleReviewDataset = (datasetId: number) => {
 
@@ -32,15 +32,15 @@ export function AdminReviewView() {
     }
 
     const handleFlagDataset = async () => {
-
         const query: IFlaggedDatasetQuery = { datasetId: dataset.id, flaggedComments: flaggedComment, additionalComments: comment }
         await flagDataset(query)
 
     }
 
     //handle submit after pressing
-    const handleSubmit = (datasetId: IApprovedDatasetModel) => {
-
+    const handleSubmit = async (datasetId: IApprovedDatasetModel) => {
+        const query: IFlaggedDatasetQuery = { datasetId: dataset.id, additionalComments: comment }
+        await adminApprovedDataset(query)
     }
 
     const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
