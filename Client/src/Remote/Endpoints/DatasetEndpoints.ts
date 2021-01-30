@@ -6,7 +6,7 @@ import { stringify } from 'query-string';
 
 const datasetRoute = '/api/v1/dataset/'
 const flagDatasetRoute = '/api/v1/flagDataSet'
-const adminApprovedDatasetRoute = '/api/v1/adminApprovedDataset'
+const adminApprovedDatasetRoute = '/api/v1/approveDataset'
 const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
 
 export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> => {
