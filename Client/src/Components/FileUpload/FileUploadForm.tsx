@@ -8,8 +8,6 @@ import { Snackbar } from '@material-ui/core'
 import { SyntheticEvent } from 'react'
 import { classStyles } from '../../appTheme'
 import uploadimage from './uploadimage.png'
-import { Link } from 'react-router-dom'
-import { datasetUploadRoute } from '../../Common/Consts/Routes'
 
 interface IProps {
   acceptFileFormat?: string,

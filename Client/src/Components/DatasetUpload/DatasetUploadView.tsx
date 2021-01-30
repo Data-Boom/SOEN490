@@ -11,9 +11,9 @@ interface IProps {
 }
 export const DatasetUploadView = (props: IProps) => {
   const location = useLocation()
-  console.log(location.state)
+  //console.log(location.state)
   const initialSentDataset = location.state as IDatasetModel
-  console.log(typeof (initialSentDataset))
+  //console.log(typeof (initialSentDataset))
   const initialDataset = props.initialDataset || initialSentDataset || defaultDatasetModel
 
   const handleSubmitForm = (formDataset: IDatasetModel) => {
