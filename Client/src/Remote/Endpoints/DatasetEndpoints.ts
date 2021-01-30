@@ -1,7 +1,9 @@
 import { IRemoteApprovedDatasetModel, toLocalDatasets } from '../../Models/Datasets/IRemoteApprovedDatasetModel';
 import { _delete, get, post, put } from "../RemoteHelper"
+
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
 import { IFlaggedDatasetQuery } from './../../Models/Datasets/IApprovedDatasetModel';
+import SnackbarUtils from '../../Components/Utils/SnackbarUtils';
 import { stringify } from 'query-string';
 
 const datasetRoute = '/api/v1/dataset/'
@@ -16,16 +18,26 @@ export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> 
 }
 
 export const flagDataset = async (query: IFlaggedDatasetQuery) => {
-    console.log(stringify(query, { arrayFormat: 'bracket' }))
-    await put(flagDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }))
+    const result = await put(flagDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }))
+    if (result == 'Dataset Flagged!') {
+        SnackbarUtils.success(`Dataset ${query.datasetId} was flagged!`)
+    }
 }
 
 export const callRejectDataset = async (datasetId: number) => {
-    await _delete(datasetRoute + datasetId)
+    const result = await _delete(datasetRoute + datasetId)
+    console.log(result)
+    if (result == 'Successfully removed data set') {
+        SnackbarUtils.success(`Dataset ${datasetId} was deleted!`)
+    }
 }
 
 export const adminApprovedDataset = async (query: IFlaggedDatasetQuery) => {
-    await put(adminApprovedDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }))
+    const result = await put(adminApprovedDatasetRoute + "?" + stringify(query, { arrayFormat: 'bracket' }))
+    console.log(result)
+    if (result == 'Successfully approved new data set') {
+        SnackbarUtils.success(`Dataset ${query.datasetId} was approved!`)
+    }
 }
 
 
