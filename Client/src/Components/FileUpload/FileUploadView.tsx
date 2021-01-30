@@ -1,28 +1,21 @@
 import { Box, Button } from '@material-ui/core'
+import { Link, Redirect, Route, useHistory } from 'react-router-dom'
 
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
+import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React from 'react'
-import { rm } from "../../Assets/readMeMessage"
-import { Redirect, Route } from 'react-router-dom'
-import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
 import { datasetUploadRoute } from '../../Common/Consts/Routes'
+import { rm } from "../../Assets/readMeMessage"
+import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 
 //const fileFormat = 'application/json'
 
+
 export const FileUploadView = () => {
-  // const isValidFile = (file: File) => {
-  //   return file && file.type === fileFormat
-  // }
-  const handleUploadFormSubmit = (values: IDatasetModel) => {
-    // window.location.href = datasetUploadRoute
-    console.log('running page check')
-    return (
-      <Redirect to="localhost:3000/#/uploadDataset" />
-    )
-  }
+  const history = useHistory()
   const handleSubmit = async (jsonFile: File) => {
     const formData = new FormData()
     formData.append('file', jsonFile)
@@ -35,8 +28,12 @@ export const FileUploadView = () => {
       const extractedDataset = await response.json()
       console.log(extractedDataset, 'extracted dataset')
       //Refresh or reroute here
-      window.location.href = "#/uploadDataset"
-      console.log('running page check')
+      // window.location.href = '#/uploadDataset?initialDataset=$' + extractedDataset
+      history.push({
+        pathname: datasetUploadRoute,
+        state: extractedDataset as IDatasetModel
+      })
+
 
     }
     catch (err) {
