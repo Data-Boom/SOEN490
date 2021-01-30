@@ -13,15 +13,26 @@ import { extractDatasetFromFile } from '../../Remote/Endpoints/FileUploadEndpoin
 import { rm } from "../../Assets/readMeMessage"
 import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 
-//const fileFormat = 'application/json'
+const fileFormat = 'application/json'
 
 
 export const FileUploadView = () => {
   const history = useHistory()
 
+  const isValidFile = (file: File) => {
+    return file && file.type === fileFormat
+  }
+
   const handleSubmit = async (jsonFile: File) => {
     try {
+      // const response = await fetch('/api/v1/dataExtract', {
+      //   method: 'POST',
+      //   body: formData
+      // })
+      // const extractedDataset = await response.json()
+      // console.log(extractedDataset, 'extracted dataset')
       const extractedDataset = await extractDatasetFromFile(jsonFile)
+
       history.push({//will route the data to the dataset upload view page
         pathname: datasetUploadRoute,
         state: extractedDataset
