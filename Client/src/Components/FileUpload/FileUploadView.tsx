@@ -16,6 +16,9 @@ import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 
 export const FileUploadView = () => {
   const history = useHistory()
+  const submitTest = () => {
+
+  }
   const handleSubmit = async (jsonFile: File) => {
     const formData = new FormData()
     formData.append('file', jsonFile)
@@ -29,7 +32,7 @@ export const FileUploadView = () => {
       console.log(extractedDataset, 'extracted dataset')
       history.push({
         pathname: datasetUploadRoute,
-        state: extractedDataset as IDatasetModel
+        state: extractedDataset
       })
 
 
