@@ -86,7 +86,6 @@ export class FluentRequest {
     }
 
     if (response.status.toString().charAt(0) == '4') {
-      SnackbarUtils.warning(JSON.stringify(await response.json()))
       return response
     }
   }

@@ -24,6 +24,8 @@ export const FileUploadForm = (props: IProps) => {
   const [alertSuccess, setAlertSuccess] = useState(false)
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement, Event>) => {
+    event.preventDefault()
+    event.stopPropagation()
     const input: HTMLInputElement = event.target[fileInputId]
     const file: File = input.files[0]
 

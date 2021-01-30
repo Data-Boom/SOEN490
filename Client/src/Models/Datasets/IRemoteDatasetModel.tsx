@@ -54,7 +54,7 @@ export const toLocalDatasets = (remoteDatasets: IRemoteDatasetModel[]): IDataset
 }
 
 export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatasetModel => {
-  if (!remoteDataset) {
+  if (!remoteDataset || !remoteDataset.dataset_id) {
     return null
   }
   //todo add comments on the dataset upload form
@@ -109,7 +109,7 @@ const buildContent = (remotePoints: IRemoteDataPointModel[], rowIndex: number): 
   const points: number[] = []
   const variableCount: number = remotePoints.length
   for (let i = 0; i < variableCount; i++) {
-    const contentPoint = remotePoints[i].values[rowIndex];
+    const contentPoint = remotePoints[i].values[rowIndex]
     points.push(contentPoint)
   }
 

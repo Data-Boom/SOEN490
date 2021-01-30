@@ -1,4 +1,4 @@
-import { IRemoteDatasetModel, toLocalDatasetModel, toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
+import { IRemoteDatasetModel, toLocalDatasetModel } from "../../Models/Datasets/IRemoteDatasetModel"
 
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { post } from "../FluentRequest"

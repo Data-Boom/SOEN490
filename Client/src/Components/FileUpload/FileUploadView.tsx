@@ -1,17 +1,13 @@
 import { Box, Button } from '@material-ui/core'
-import { Link, Redirect, Route, useHistory } from 'react-router-dom'
 
-import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
-import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
-import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React from 'react'
-import { datasetUploadRoute } from '../../Common/Consts/Routes'
 import SnackbarUtils from '../Utils/SnackbarUtils'
+import { datasetUploadRoute } from '../../Common/Consts/Routes'
 import { extractDatasetFromFile } from '../../Remote/Endpoints/FileUploadEndpoint'
 import { rm } from "../../Assets/readMeMessage"
-import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
+import { useHistory } from 'react-router-dom'
 
 const fileFormat = 'application/json'
 
@@ -32,6 +28,10 @@ export const FileUploadView = () => {
       // const extractedDataset = await response.json()
       // console.log(extractedDataset, 'extracted dataset')
       const extractedDataset = await extractDatasetFromFile(jsonFile)
+      if (!extractedDataset) {
+        SnackbarUtils.warning('Server failed to parse dataset')
+        return
+      }
 
       history.push({//will route the data to the dataset upload view page
         pathname: datasetUploadRoute,
@@ -39,7 +39,7 @@ export const FileUploadView = () => {
       })
     }
     catch (error) {
-      SnackbarUtils.warning(error)
+      SnackbarUtils.warning(JSON.parse(error))
     }
   }
 
