@@ -20,8 +20,9 @@ export function AdminReviewView() {
 
     const handleDeleteDataset = async () => {
         //console.log("dataset deleted")
-        await callRejectDataset(stringify(dataset.id))
+        //await callRejectDataset(stringify(dataset.id))
     }
+
     const handleReviewDataset = (datasetId: number) => {
 
     }
