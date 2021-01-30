@@ -234,7 +234,8 @@ export class DataSetController {
         }
         try {
             this.dataSetService = new DataSetService();
-            let requestResponse = await this.dataSetService.userApprovedDataset(datasetId)
+            let userId: number = request.body.user.account_id
+            let requestResponse = await this.dataSetService.userApprovedDataset(datasetId, userId)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
             response.status(error.status).json(error.message);

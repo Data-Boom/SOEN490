@@ -206,6 +206,55 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
+    // The two invalid user approval tests must happen before the valid approval tests
+    test('Invalid User Approve Data Set Request; wrong ID', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '2'
+                }
+            },
+            params: {
+                datasetId: 12
+            }
+        }
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("User ID does not match uploader ID!");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Invalid User Approve Data Set Request; data set not yet flagged', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            },
+            params: {
+                datasetId: 11
+            }
+        }
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("You cannot approve a data set until it passes initial screening!");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Valid User Approve Data Set Request', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            },
+            params: {
+                datasetId: 12
+            }
+        }
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Successfully approved new data set");
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
     test('Valid Admin Approve Data Set Request', async () => {
         mockRequest = {
             query: {
@@ -213,17 +262,6 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createAdminApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Successfully approved new data set");
-        expect(mockResponse.status).toBeCalledWith(200);
-    });
-
-    test('Valid User Approve Data Set Request', async () => {
-        mockRequest = {
-            params: {
-                datasetId: 12
-            }
-        }
-        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Successfully approved new data set");
         expect(mockResponse.status).toBeCalledWith(200);
     });
