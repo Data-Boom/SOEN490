@@ -6,6 +6,7 @@ const requestBase: RequestInit = {
   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
   credentials: 'same-origin', // include, *same-origin, omit
   redirect: 'follow', // manual, *follow, error
+  headers: { 'Content-Type': 'application/json' },
   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 }
 
@@ -63,6 +64,7 @@ export class FluentRequest {
   }
 
   public async call(): Promise<Response> {
+    console.log("🚀 ~ file: FluentRequest.tsx ~ line 63 ~ FluentRequest ~ withBody ~ this.requestInit", this.requestInit)
     const url = this.query ? this.url + '?' + this.query : this.url
     return this.fetchRemote(url, this.requestInit)
   }
