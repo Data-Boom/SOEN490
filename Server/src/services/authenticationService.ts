@@ -7,7 +7,7 @@ import mailgun from 'mailgun-js';
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
 import { AuthenticationModel } from '../models/AuthenticationModel'
-import { IFetchUserDetail, IForgotPasswordInformation, IPasswordUpdateInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { IFetchUserDetail, IForgotPasswordInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IJwtParams } from '../genericInterfaces/AuthenticationInterfaces';
 import { ILoginInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'

@@ -12,27 +12,27 @@ let authenticationController = new AuthenticationController();
  */
 
 router.post('/signup', (request: Request, response: Response, next: NextFunction) => {
-    authenticationController.createSignUpRequest(request, response, next);
+  authenticationController.createSignUpRequest(request, response, next);
 });
 
 router.post('/login', (request: Request, response: Response, next: NextFunction) => {
-    authenticationController.createLoginRequest(request, response, next);
+  authenticationController.createLoginRequest(request, response, next);
 });
 
 router.post('/forgotPassword', (request: Request, response: Response, next: NextFunction) => {
-    authenticationController.createForgotPasswordRequest(request, response, next);
+  authenticationController.createForgotPasswordRequest(request, response, next);
 });
 
 router.post('/api/v1/resetPassword/:resetToken', (request: Request, response: Response, next: NextFunction) => {
-    authenticationController.resetPasswordWithResetTokenRequest(request, response, next);
+  authenticationController.resetPasswordWithResetTokenRequest(request, response, next);
 });
 
 router.post('/updateUserInfo', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
-    authenticationController.updateUserDetailRequest(request, response, next);
+  authenticationController.updateUserDetailRequest(request, response, next);
 });
 
 router.get('/userDetails', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
-    authenticationController.createFetchUserDetailsRequest(request, response);
+  authenticationController.createFetchUserDetailsRequest(request, response);
 });
 
 
