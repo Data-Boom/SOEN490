@@ -2,7 +2,6 @@ import { Box, Container } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 import { DatasetUploadForm } from './DatasetUploadForm'
-import { IDatasetRowModel } from '../../Models/Datasets/IDatasetRowModel'
 import React from 'react'
 import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 import { useLocation } from "react-router-dom"
@@ -13,7 +12,7 @@ interface IProps {
 export const DatasetUploadView = (props: IProps) => {
   const location = useLocation()
   console.log(location.state)
-  const initialSentDataset = location.state
+  const initialSentDataset = location.state as IDatasetModel
   console.log(typeof (initialSentDataset))
   const initialDataset = props.initialDataset || initialSentDataset || defaultDatasetModel
 

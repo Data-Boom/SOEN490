@@ -27,8 +27,6 @@ export const FileUploadView = () => {
       })
       const extractedDataset = await response.json()
       console.log(extractedDataset, 'extracted dataset')
-      //Refresh or reroute here
-      // window.location.href = '#/uploadDataset?initialDataset=$' + extractedDataset
       history.push({
         pathname: datasetUploadRoute,
         state: extractedDataset as IDatasetModel
