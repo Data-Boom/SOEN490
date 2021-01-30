@@ -1,5 +1,6 @@
 import { JsonFileExtractorFactory } from './JsonFileHandlerFactory';
 import { IResponse } from '../../genericInterfaces/ResponsesInterface';
+import { BadRequest } from '@tsed/exceptions';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -28,9 +29,19 @@ export class DataExtractionService {
             //this.factory = new PDFFileExtractorFactory()
         }
         let fileHandler: any = await this.factory.getFileHandler(this.filePath)
-        let parsedData = await fileHandler.parseFile()
-        requestResponse.message = parsedData
-        requestResponse.statusCode = 200;
-        return requestResponse;
+        try {
+            let parsedData = await fileHandler.parseFile()
+            requestResponse.message = parsedData
+            requestResponse.statusCode = 200;
+            return requestResponse;
+        }
+        catch (error) {
+            if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
+            }
+            else {
+                throw new Error(error.message)
+            }
+        }
     }
 }
