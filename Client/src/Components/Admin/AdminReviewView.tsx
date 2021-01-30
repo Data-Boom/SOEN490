@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
+import { Box, Button, createMuiTheme, Grid, TextField, Typography, withStyles } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import React, { useEffect, useState } from 'react'
 import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
@@ -8,6 +8,15 @@ import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
 import { IRemoteApprovedDatasetModel } from '../../Models/Datasets/IRemoteApprovedDatasetModel'
 
 export function AdminReviewView() {
+
+    const theme = createMuiTheme({
+        typography: {
+            allVariants: {
+                color: "#00008B"
+            },
+        },
+    });
+
 
     const [datasetState, setDatasetState] = useState([])
     const [editable, setEditable] = useState(false)
@@ -53,14 +62,16 @@ export function AdminReviewView() {
         <Grid justify="flex-start" container spacing={4}>
             <Grid xs={3}>
                 <Box p={4} pt={7}>
-                    <Typography>
+                    <Typography variant='h5'>
                         Datasets to be reviewed
                     </Typography>
+                    <br></br>
                     <AdminReviewList
                         datasets={datasetState}
                         onChange={handleDatasetChange}
                         update={update}
                     />
+                    <br></br>
                     <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
                 <Button id="toggle-edit" color="primary" onClick={handleFlagDataset} variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
                 <Button id="toggle-edit" color="primary" onClick={handleDeleteDataset} variant="contained">Delete</Button>

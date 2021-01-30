@@ -17,10 +17,10 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
     }
 
     return (
-        <Grid item>
+        <Grid item xs={12}>
             <Box className={classStyles().datasetBorder}>
                 <Grid container alignItems='center' justify='space-between'>
-                    <Grid item container justify='flex-start' xs={7}>
+                    <Grid item container justify='flex-start' xs={10}>
                         <Typography variant="body2" noWrap>
                             <div>
                                 <input type="radio" value={dataset.dataset_name} onClick={setDataset} name="dataset" />{dataset.dataset_name}
