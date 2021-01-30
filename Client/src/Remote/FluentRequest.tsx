@@ -59,12 +59,11 @@ export class FluentRequest {
   }
 
   public withBody(data: any): FluentRequest {
-    this.requestInit.body = data
+    this.requestInit.body = JSON.stringify(data)
     return this
   }
 
   public async call(): Promise<Response> {
-    console.log("🚀 ~ file: FluentRequest.tsx ~ line 63 ~ FluentRequest ~ withBody ~ this.requestInit", this.requestInit)
     const url = this.query ? this.url + '?' + this.query : this.url
     return this.fetchRemote(url, this.requestInit)
   }
@@ -82,15 +81,13 @@ export class FluentRequest {
       return Promise.resolve(null)
     }
 
-    const message = await response.json()
-
     if (response.status.toString().charAt(0) == '2') {
-      return message
+      return response
     }
 
     if (response.status.toString().charAt(0) == '4') {
-      SnackbarUtils.warning(JSON.stringify(message))
-      return message
+      SnackbarUtils.warning(JSON.stringify(await response.json()))
+      return response
     }
   }
 }

@@ -17,7 +17,7 @@ import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
 import Typography from '@material-ui/core/Typography'
 import { UserContext } from '../../App'
-import { callLogIn as callLogin } from '../../Remote/Endpoints/AuthenticationEndpoint'
+import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
@@ -63,7 +63,8 @@ export default function LoginView() {
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
-    await callLogin(loginUserInfo)
+    await callLogIn(loginUserInfo)
+    console.log('wif2');
     const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
     setUser(userAccount)
   }
