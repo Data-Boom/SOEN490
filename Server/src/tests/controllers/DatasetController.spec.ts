@@ -40,6 +40,22 @@ describe('Data Set Controller ', () => {
         done()
     });
 
+    test('Invalid search, no search query entered', async done => {
+        mockRequest = {
+            query: {
+            },
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            }
+        }
+        await GetDataControllerController.createRequestForData(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Invalid search params entered");
+        expect(mockResponse.status).toBeCalledWith(400);
+        done()
+    });
+
     //TODO: Readd later
     /**
     test('Valid Save Data Set Request', async () => {
@@ -264,6 +280,74 @@ describe('Data Set Controller ', () => {
         await GetDataControllerController.createAdminApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Successfully approved new data set");
         expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Invalid Admin Approve Data Set Request; no query passed', async () => {
+        mockRequest = {
+            query: {
+            }
+        }
+        await GetDataControllerController.createAdminApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Invalid User Approve Data Set Request; bad ID passed', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            },
+            params: {
+                datasetId: 'regregreg'
+            }
+        }
+        await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Invalid Reject Data Set Request; no ID passed', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            },
+            params: {
+                datasetId: 'regregreg'
+            }
+        }
+        await GetDataControllerController.createRequestToRejectDataset(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Invalid Flag Data Set Request; no ID passed', async () => {
+        mockRequest = {
+            query: {
+            }
+        }
+        await GetDataControllerController.createRequestToFlagDataset(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("No datasetID provided to flag dataset");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Invalid Remove User Favorite Data Set Request; no ID passed', async () => {
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            },
+            params: {
+                datasetId: 'regregreg'
+            }
+        }
+        await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
+        expect(mockResponse.status).toBeCalledWith(400);
     });
 
 })

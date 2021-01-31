@@ -94,6 +94,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
                     value={form.values.material}
                     fieldArrayHelpers={fieldArrayHelpers}
                     options={materials}
+                    editable={true}
                   />)
                 }}
               </FieldArray>

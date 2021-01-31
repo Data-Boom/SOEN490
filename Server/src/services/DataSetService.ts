@@ -1,5 +1,4 @@
-import { InternalServerError, NotFound, BadRequest } from "@tsed/exceptions";
-import { NotBeforeError } from "jsonwebtoken";
+import { NotFound, BadRequest } from "@tsed/exceptions";
 import { IResponse } from "../genericInterfaces/ResponsesInterface";
 import { DatasetApprovalModel } from "../models/DatasetModels/DatasetApprovalModel";
 import { DatasetCommonModel } from "../models/DatasetModels/DatasetCommonModel";
@@ -271,7 +270,7 @@ export class DataSetService {
             }
             return allDataSets
         } catch (error) {
-            throw new InternalServerError("Data set return compilation failed")
+            throw new Error("Data set return compilation failed")
         }
     }
 
@@ -339,22 +338,11 @@ export class DataSetService {
     async removeUserFavoriteDataset(userId: number, datasetId: number) {
         try {
             let response = await this.dataQuery.removeUserFavoriteDatasetModel(userId, datasetId);
-            if (response == undefined || response == null) {
-                throw new NotFound("Could not find this saved data set")
-            }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response as any
             return this.requestResponse
         } catch (error) {
-            if (error instanceof NotFound) {
-                throw new NotFound(error.message)
-            }
-            else if (error instanceof InternalServerError) {
-                throw new InternalServerError("Something went wrong deleting a saved data set. Try later")
-            }
-            else {
-                throw new Error(error.message)
-            }
+            throw new Error("Something went wrong fetching all Unapproved Datasets. Try later")
         }
     }
 
@@ -410,7 +398,7 @@ export class DataSetService {
         try {
             let rawDatasetIds = await this.approvalModel.getUnapprovedDatasets();
             let response: IApprovalDatasetModel[] = [];
-            if (rawDatasetIds == undefined || rawDatasetIds == null) {
+            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
                 throw new NotFound("No Unapproved Datasets in database")
             }
             else {
@@ -423,11 +411,8 @@ export class DataSetService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
-            else if (error instanceof InternalServerError) {
-                throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
-            }
             else {
-                throw new Error(error.message)
+                throw new Error("Something went wrong fetching all Unapproved Datasets. Try later")
             }
         }
     }
@@ -436,8 +421,8 @@ export class DataSetService {
         try {
             let rawDatasetIds = await this.approvalModel.selectUserFlaggedDatasets(userId);
             let response: IApprovalDatasetModel[];
-            if (rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Unapproved Datasets in database")
+            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
+                throw new NotFound("No Flagged Unapproved Datasets in database for this user")
             }
             else {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -449,11 +434,8 @@ export class DataSetService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
-            else if (error instanceof InternalServerError) {
-                throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
-            }
             else {
-                throw new Error(error.message)
+                throw new Error("Something went wrong fetching all Unapproved Datasets. Try later")
             }
         }
     }
@@ -462,8 +444,8 @@ export class DataSetService {
         try {
             let rawDatasetIds = await this.approvalModel.selectAllFlaggedDatasets();
             let response: IApprovalDatasetModel[];
-            if (rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Unapproved Datasets in database")
+            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
+                throw new NotFound("No Flagged Unapproved Datasets in database")
             }
             else {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -475,11 +457,8 @@ export class DataSetService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
-            else if (error instanceof InternalServerError) {
-                throw new InternalServerError("Something went wrong fetching all Unapproved Datasets. Try later")
-            }
             else {
-                throw new Error(error.message)
+                throw new Error("Something went wrong fetching all Unapproved Datasets. Try later")
             }
         }
     }
@@ -499,7 +478,7 @@ export class DataSetService {
                 throw new BadRequest(error.message)
             }
             else {
-                throw new InternalServerError("Something went wrong deleting this Data Set. Try again later")
+                throw new Error("Something went wrong deleting this Data Set. Try again later")
             }
         }
     }
@@ -517,22 +496,19 @@ export class DataSetService {
             if (error instanceof BadRequest) {
                 throw new BadRequest(error.message)
             }
-            else if (error instanceof InternalServerError) {
-                throw new InternalServerError("Something went wrong with flagging this data set. Try again later")
-            }
             else {
-                throw new Error(error.message)
+                throw new Error("Something went wrong with flagging this data set. Try again later")
             }
         }
     }
 
     async adminApprovedDataset(datasetId: number, datasetCommentsToAppend?: string) {
         try {
-            await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
             let response = await this.approvalModel.approveDataset(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No dataset under this ID")
             }
+            await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
@@ -540,11 +516,8 @@ export class DataSetService {
             if (error instanceof BadRequest) {
                 throw new BadRequest(error.message)
             }
-            else if (error instanceof InternalServerError) {
-                throw new InternalServerError("Internal server error approving this data set. Try again later")
-            }
             else {
-                throw new Error(error.message)
+                throw new Error("Internal server error approving this data set. Try again later")
             }
         }
     }
@@ -563,11 +536,8 @@ export class DataSetService {
             if (error instanceof BadRequest) {
                 throw new BadRequest(error.message)
             }
-            else if (error instanceof InternalServerError) {
-                throw new InternalServerError("Data set already approved or an internal server error occured when approving data set.")
-            }
             else {
-                throw new Error(error.message)
+                throw new Error("Data set already approved or an internal server error occured when approving data set.")
             }
         }
     }
