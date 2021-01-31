@@ -217,7 +217,7 @@ export class DataSetController {
         if (isNaN(datasetIdToApprove)) {
             response.status(400).json("Invalid data set ID entered");
         }
-        let datasetComments = String(request.query.datasetComments)
+        let datasetComments = String(request.query.additionalComments)
         try {
             this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.adminApprovedDataset(datasetIdToApprove, datasetComments)

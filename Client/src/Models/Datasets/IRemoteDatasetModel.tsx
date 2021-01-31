@@ -62,7 +62,7 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
   const dataset: IDatasetModel = {
     category: remoteDataset.dataset_info.category,
     subcategory: remoteDataset.dataset_info.subcategory,
-    data: toLocalDataPoints(remoteDataset.dataPoints, remoteDataset.dataPointComments),
+    data: toLocalDataPoints(remoteDataset.dataPoints || [], remoteDataset.dataPointComments || []),
     data_type: remoteDataset.dataset_info.datasetDataType,
     dataset_name: remoteDataset.dataset_info.name,
     material: remoteDataset.materials,
@@ -77,14 +77,13 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
       type: remoteDataset.publication.publicationType,
       volume: remoteDataset.publication.volume,
       year: remoteDataset.publication.year,
-    },
-    id: remoteDataset.dataset_id
+    }, id: remoteDataset.dataset_id
   }
 
   return dataset
 }
 
-const toLocalDataPoints = (remotePoints: IRemoteDataPointModel[], dataComments: string[]): IData => {
+export const toLocalDataPoints = (remotePoints: IRemoteDataPointModel[], dataComments: string[]): IData => {
   const data: IData = {} as any
   data.variables = remotePoints.map((remotePoint) => toVariable(remotePoint))
   data.contents = toContents(remotePoints, dataComments)
