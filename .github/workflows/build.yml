@@ -23,8 +23,9 @@ jobs:
           TEST_PORT: ${{ secrets.TEST_PORT }}
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
       - run: echo $PWD
-      - run: cd Server echo $PWD
+      - run: cd Server 
       - run: ls -la
+      - run: echo $PWD
       - run: |
           cd Server && npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run && npm run test "$TEST_DB_NAME" "$TEST_DB_PORT" "$TEST_DB_TYPE" "$TEST_HOST" "$TEST_PASSWORD" "$TEST_PORT" "$ACCESS_SECRET_KEY" echo $PWD
       - run: cd Server && npx ts-node ./node_modules/typeorm/cli.js migration:revert
