@@ -2,11 +2,11 @@ import * as Yup from 'yup'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
-import { IPasswordFormModel, defaultPasswordFormModel } from '../../../../Models/Profile/IProfileModel'
 
 import { MuiTextFieldFormik } from '../../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../../appTheme'
+import { defaultResetPasswordModel, IResetPasswordModel } from '../../../../Models/Authentication/ISignUpModel'
 
 interface IProps {
   onSubmit: (newPassword: string) => void
@@ -22,13 +22,13 @@ export default function PasswordChangeForm(props: IProps) {
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
   })
 
-  const handleSubmit = (formValues: IPasswordFormModel) => {
+  const handleSubmit = (formValues: IResetPasswordModel) => {
     onSubmit(formValues.password)
   }
 
   return (
     <Formik
-      initialValues={defaultPasswordFormModel}
+      initialValues={defaultResetPasswordModel}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >

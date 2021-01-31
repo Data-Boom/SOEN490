@@ -7,13 +7,3 @@ export interface IUser {
   organization: string,
   password: string
 }
-
-export interface IPasswordFormModel {
-  password: string,
-  passwordConfirmation: string
-}
-
-export const defaultPasswordFormModel: IPasswordFormModel = {
-  password: '',
-  passwordConfirmation: ''
-}
