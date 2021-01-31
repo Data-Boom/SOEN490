@@ -9,7 +9,7 @@
   "scripts": {
     "tsc": "tsc",
     "build": "tsc",
-    "dev": "nodemon --legacy-watch --watch './src/*.' --exec \"ts-node-dev --poll --respawn --transpile-only\" ./src/app.ts",
+    "dev": "nodemon --legacy-watch --watch './src/*.' --exec \"ts-node-dev --poll --respawn --inspect=9229 --transpile-only\" ./src/app.ts",
     "prod": "tsc && node ./build/app.js",
     "migrate": "npx ts-node ./node_modules/typeorm/cli.js migration:run",
     "revert": "npx ts-node ./node_modules/typeorm/cli.js migration:revert",
@@ -23,6 +23,8 @@
   "devDependencies": {
     "@types/express": "^4.17.8",
     "@types/jest": "^26.0.19",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mailgun-js": "^0.22.11",
     "@types/node": "^14.11.1",
     "@types/supertest": "^2.0.10",
     "jest": "^26.5.3",

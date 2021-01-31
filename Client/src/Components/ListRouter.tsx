@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
+import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -25,6 +25,9 @@ import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
 import SignUpView from "./Authentication/SignUpView"
+import ResetPasswordView from "./Authentication/ResetPasswordView"
+import ForgotPasswordView from "./Authentication/ForgotPasswordView"
+import { resetPasswordRoute } from "../Remote/Endpoints/AuthenticationEndpoint"
 
 interface IProps {
   id: string;
@@ -102,6 +105,8 @@ export const getRoutedViews = () => {
       <Route path={loginRoute} component={LoginView} />
       <Route path={signUpRoute} component={SignUpView} />
       <Route path={adminReviewRoute} component={AdminReviewView} />
+      <Route path={forgotPasswordRoute} component={ForgotPasswordView} />
+      <Route path={resetPasswordRoute} component={ResetPasswordView} />
     </>
   )
 }
