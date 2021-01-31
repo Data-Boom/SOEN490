@@ -3,6 +3,7 @@ import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatas
 
 import { DatasetUploadForm } from './DatasetUploadForm'
 import React from 'react'
+import { callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 import { useLocation } from "react-router-dom"
 
 interface IProps {
@@ -30,11 +31,10 @@ export const DatasetUploadView = (props: IProps) => {
   let initialValues = props.initialDataset || initialSentDataset || defaultDatasetModel
   initialValues = fixPartialForform(initialValues)
 
-  const handleSubmitForm = (formDataset: IDatasetModel) => {
-    console.log(formDataset, 'submitted dataset')
+  const handleSubmitForm = async (formDataset: IDatasetModel) => {
+    await callSaveDataset(formDataset)
   }
 
-  console.log(initialValues)
 
   return (
     <Container>

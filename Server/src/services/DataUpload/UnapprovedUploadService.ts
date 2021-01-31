@@ -1,8 +1,8 @@
-import { DataUploadModel } from "../../models/DataUploadModel"
+import AbstractUploadService from "./AbstractUploadService";
 import { Authors } from "../../models/entities/Authors";
 import { BadRequest } from '@tsed/exceptions';
+import { DataUploadModel } from "../../models/DataUploadModel"
 import { IResponse } from "../../genericInterfaces/ResponsesInterface";
-import AbstractUploadService from "./AbstractUploadService";
 
 export class UnapprovedUploadService extends AbstractUploadService {
 
@@ -67,7 +67,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         await this.uploadModel.createEntryInUnapprovedDataSets(dataSetID)
 
-        requestResponse.message = "Upload to Database was successful!"
+        requestResponse.message = dataSetID.toString()
         requestResponse.statusCode = 201;
         return requestResponse;
     }

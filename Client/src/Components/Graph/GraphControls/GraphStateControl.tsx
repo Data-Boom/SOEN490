@@ -9,8 +9,8 @@ import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { SaveGraphStateForm } from './SaveGraphStateForm'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
+import { callGetDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
-import { getDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
   graphState: IGraphStateModel,
@@ -31,7 +31,7 @@ export const GraphStateControl = (props: IProps) => {
         SnackbarUtils.error('Failed to fetch graph state')
       }
       else {
-        const datasets = await getDatasets({ datasetId: remoteGraphState.datasets.map(dataset => dataset.id) })
+        const datasets = await callGetDatasets({ datasetId: remoteGraphState.datasets.map(dataset => dataset.id) })
         setCompleteDatasets(datasets)
         onGraphStateChange(remoteGraphState, datasets)
       }
