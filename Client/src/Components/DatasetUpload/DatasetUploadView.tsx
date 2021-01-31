@@ -32,6 +32,7 @@ export const DatasetUploadView = (props: IProps) => {
   initialValues = fixPartialForform(initialValues)
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
+    console.log(formDataset, 'formdAtase')
     await callSaveDataset(formDataset)
   }
 
@@ -41,6 +42,8 @@ export const DatasetUploadView = (props: IProps) => {
       <Box pt={4} pb={4}>
         <DatasetUploadForm
           onSubmit={handleSubmitForm}
+          editable={true}
+          buttonName="Save Dataset"
           initialDataset={initialValues}
         />
       </Box>

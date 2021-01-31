@@ -13,7 +13,9 @@ import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
 
 interface IProps {
   initialDataset: IDatasetModel,
-  onSubmit(formDataset: IDatasetModel): void
+  editable: boolean,
+  onSubmit(formDataset: IDatasetModel): void,
+  buttonName: string
 }
 
 interface DatasetUploadFormValues {
@@ -23,7 +25,7 @@ interface DatasetUploadFormValues {
 }
 
 export const DatasetUploadForm = (props: IProps): any => {
-  const { initialDataset, onSubmit } = props
+  const { initialDataset, onSubmit, editable, buttonName } = props
   const meta: IDatasetMeta = initialDataset
   const reference: IReference = initialDataset.reference
   const data: IData = initialDataset.data
@@ -52,6 +54,7 @@ export const DatasetUploadForm = (props: IProps): any => {
     callListCategories()
     callListSubcategory()
     callListMaterials()
+    console.log(initialDataset)
   }, [])
 
   const handleSubmit = (values: DatasetUploadFormValues) => {
@@ -61,15 +64,16 @@ export const DatasetUploadForm = (props: IProps): any => {
 
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={initialValues}
       validationSchema={datasetValidationSchema}
       onSubmit={handleSubmit}
     >
       <Form>
-        <MetaForm materials={materials} categories={categories} subcategories={subcategories} />
-        <ReferenceForm />
-        <DataForm />
-        <Button variant="contained" color="primary" type="submit">Save Dataset</Button>
+        <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
+        <ReferenceForm editable={editable} />
+        <DataForm editable={editable} />
+        <Button variant="contained" color="primary" type="submit">{buttonName}</Button>
       </Form>
     </Formik>
   )

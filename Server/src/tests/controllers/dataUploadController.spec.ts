@@ -45,6 +45,21 @@ describe('Data Upload Controller', () => {
         expect(mockResponse.status).toBeCalledWith(400)
     })
 
+    test('Invalid Upload', async () => {
+
+        let expectedResponse = "No Data to Upload"
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: 1
+                }
+            }
+        }
+        await dataUploadController.createNewDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(400)
+    })
+
     test('Valid Data Set Edit', async () => {
 
         let expectedResponse = "Dataset Updated!"
@@ -57,5 +72,33 @@ describe('Data Upload Controller', () => {
         await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
         expect(mockResponse.status).toBeCalledWith(201)
+    })
+
+    test('Invalid Data Set Edit; bad data set id', async () => {
+
+        let expectedResponse = "Invalid data set ID entered"
+        mockRequest = {
+            body: validTestData,
+            params: {
+                datasetId: 'wefwfeewfewfwefwef'
+            }
+        }
+        await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(400)
+    })
+
+    test('Invalid Data Set Edit; empty body', async () => {
+
+        let expectedResponse = "No Dataset Received"
+        mockRequest = {
+            body: {},
+            params: {
+                datasetId: '9'
+            }
+        }
+        await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(400)
     })
 })

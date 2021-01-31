@@ -6,17 +6,21 @@ import { IContent, IData, IVariable, newVariable } from '../../../Models/Dataset
 import React, { useState } from 'react'
 
 import { EditVariableHeader } from './EditVariableHeader'
+import { useEffect } from 'react'
 
 interface IProps {
   data: IData,
-  onDataChange: (newData: IData) => void
+  onDataChange: (newData: IData) => void,
+  editable: boolean
 }
 
 export const DatasetDataTable = (props: IProps): any => {
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
+  const editable = props.editable
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
+    console.log(editable)
     setEditedVariableIndex(indexOfClickedHeader)
   }
 
@@ -82,10 +86,11 @@ export const DatasetDataTable = (props: IProps): any => {
     const columns = props.data.variables.map((variable, index) => {
       return (
         {
-          key: `${index}`, name: variable.name, editable: true, editor: TextEditor, headerRenderer: (): any => <EditVariableHeader
+          key: `${index}`, name: variable.name, editable: editable, editor: TextEditor, headerRenderer: (): any => <EditVariableHeader
             variable={variable}
             index={index}
             editMode={editedVariableIndex === index}
+            editable={editable}
             onHeaderClick={handleHeaderClick}
             onEditModalClose={closeEditVariableModal}
             onVariableUpdate={handleVariableUpdate}
@@ -118,15 +123,15 @@ export const DatasetDataTable = (props: IProps): any => {
     return (
       <>
         <Grid item>
-          <Button variant="contained" color="primary" onClick={handleAddRow}>Add row</Button>
+          <Button variant="contained" color="primary" onClick={handleAddRow} disabled={!editable}>Add row</Button>
         </Grid>
 
         <Grid item>
-          <Button variant="contained" color="primary" onClick={handleAddColumn}>New variable</Button>
+          <Button variant="contained" color="primary" onClick={handleAddColumn} disabled={!editable}>New variable</Button>
         </Grid>
 
         <Grid item>
-          <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows}>Remove selected</Button>
+          <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows} disabled={!editable}>Remove selected</Button>
         </Grid>
       </>
     )
@@ -153,7 +158,7 @@ export const DatasetDataTable = (props: IProps): any => {
           rows={getRows()}
           onRowsChange={handleRowChange}
           selectedRows={selectedRows}
-          onSelectedRowsChange={setSelectedRows}
+          onSelectedRowsChange={editable && setSelectedRows}
         />
       </Box>
     </>
