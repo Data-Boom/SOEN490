@@ -24,9 +24,9 @@ jobs:
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
           TEST_PORT: ${{ secrets.TEST_PORT }}
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
-          run: |
-            npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run 
-            npm run test
+        run: |
+          npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run 
+          npm run test
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
