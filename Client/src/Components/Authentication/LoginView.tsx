@@ -25,7 +25,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Modal, Paper } from '@material-ui/core'
 import ForgotPasswordView from './ForgotPasswordView'
 import CancelIcon from "@material-ui/icons/Cancel"
-import { classStyles } from "../../appTheme"
 
 function Copyright() {
   return (
@@ -57,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }))
 
@@ -90,7 +94,7 @@ export default function LoginView() {
           <Modal
             open={openModal}
             onClose={handleClose}
-            className={classStyles().modal}
+            className={classes.modal}
           >
             <Grid xs={6} justify="center">
               <Paper elevation={3}>
