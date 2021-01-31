@@ -19,25 +19,22 @@ const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetMode
     data_type: partialDataset.data_type || defaultDatasetModel.data_type,
     data: partialDataset.data || defaultDatasetModel.data,
     id: partialDataset.id || defaultDatasetModel.id,
-    //authors: partialDataset.reference.authors || defaultDatasetModel.reference.authors
   }
 
-  // return dataset
-  return null
+  return dataset
 }
 
 export const DatasetUploadView = (props: IProps) => {
   const location = useLocation()
-  //console.log(location.state)
   const initialSentDataset = location.state as IDatasetModel
-  //console.log(typeof (initialSentDataset))
   let initialValues = props.initialDataset || initialSentDataset || defaultDatasetModel
   initialValues = fixPartialForform(initialValues)
 
   const handleSubmitForm = (formDataset: IDatasetModel) => {
-    // todo: call backend to save dataset here
     console.log(formDataset, 'submitted dataset')
   }
+
+  console.log(initialValues)
 
   return (
     <Container>

@@ -10,7 +10,6 @@ import { datasetValidationSchema } from './DatasetValidationSchema'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
-import { datasetValidationSchema } from './DatasetValidationSchema'
 
 interface IProps {
   initialDataset: IDatasetModel,
@@ -28,7 +27,7 @@ export const DatasetUploadForm = (props: IProps): any => {
   const meta: IDatasetMeta = initialDataset
   const reference: IReference = initialDataset.reference
   const data: IData = initialDataset.data
-  const [initialValues, setInitialValues] = useState<DatasetUploadFormValues>({ meta, reference, data })
+  const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
@@ -55,28 +54,11 @@ export const DatasetUploadForm = (props: IProps): any => {
     callListMaterials()
   }, [])
 
-  useEffect(() => {
-
-    setInitialValues(
-      {
-        meta: {
-          category: initialDataset.category,
-          data_type: initialDataset.data_type,
-          dataset_name: initialDataset.dataset_name,
-          material: initialDataset.material,
-          subcategory: initialDataset.subcategory,
-          id: initialDataset.id
-        },
-        reference: initialDataset.reference,
-        data: initialDataset.data
-      }
-    )
-  }, [initialDataset])
-
   const handleSubmit = (values: DatasetUploadFormValues) => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
   }
+  console.log(initialValues, 'initialValues')
 
   return (
     <Formik
