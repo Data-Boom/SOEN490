@@ -1,8 +1,8 @@
-import { DataUploadModel } from "../../models/DataUploadModel"
+import AbstractUploadService from "./AbstractUploadService";
 import { Authors } from "../../models/entities/Authors";
 import { BadRequest } from '@tsed/exceptions';
+import { DataUploadModel } from "../../models/DataUploadModel"
 import { IResponse } from "../../genericInterfaces/ResponsesInterface";
-import AbstractUploadService from "./AbstractUploadService";
 
 export class UnapprovedUploadService extends AbstractUploadService {
 
@@ -37,9 +37,9 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let categoryIDs: number[] = await this.uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
 
-        let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData["data type"])
+        let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData.data_type)
 
-        let dataSetID: number = await this.insertDataset(this.uploadModel, this.parsedFileData["dataset name"], dataSetDataTypeID, publicationID, categoryIDs, allMaterials, this.parsedFileData.data.comments, this.userId)
+        let dataSetID: number = await this.insertDataset(this.uploadModel, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, this.parsedFileData.data.comments, this.userId)
 
         //run check on variable vs contents length to see if they're equal
         if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
@@ -67,7 +67,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         await this.uploadModel.createEntryInUnapprovedDataSets(dataSetID)
 
-        requestResponse.message = "Upload to Database was successful!"
+        requestResponse.message = dataSetID.toString()
         requestResponse.statusCode = 201;
         return requestResponse;
     }

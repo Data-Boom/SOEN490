@@ -1,14 +1,14 @@
 import { ILoginUserModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
-import { post } from "../RemoteHelper"
+import { post } from "../FluentRequest"
 
-const signupRoute = '/signup'
+const signUpRoute = '/signup'
 const loginRoute = '/login'
 const resetPasswordRoute = '/resetPassword'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
-  const result = await post(signupRoute, signUpInfo)
+  const result = await post(signUpRoute).withBody(signUpInfo).json()
   if (result == 'Success') {
     SnackbarUtils.success(`Sign up for ${signUpInfo.email} was successful!`)
   }
@@ -16,5 +16,6 @@ export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => 
 
 export const callLogIn = async (loginUser: ILoginUserModel): Promise<any> => {
   //server sets a token in browser cookie in http only mode
-  await post(loginRoute, loginUser)
+  const result = await post(loginRoute).withBody(loginUser).json()
+  return result
 }

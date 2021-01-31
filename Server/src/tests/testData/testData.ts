@@ -4,18 +4,18 @@ export const validTestData = {
         "publisher": "University of California Press",
         "authors": [
             {
-                "firstname": "alpha",
-                "lastname": "testing"
+                "firstName": "alpha",
+                "lastName": "testing"
             },
             {
-                "firstname": "Stanley",
-                "middlename": "P.",
-                "lastname": "Marsh"
+                "firstName": "Stanley",
+                "middleName": "P.",
+                "lastName": "Marsh"
             },
             {
-                "firstname": "John",
-                "middlename": "L.",
-                "lastname": "Mclain"
+                "firstName": "John",
+                "middleName": "L.",
+                "lastName": "Mclain"
             }
         ],
         "title": "Dataset Insert Daily",
@@ -26,7 +26,7 @@ export const validTestData = {
         "datePublished": "2021-01-16",
         "dateAccessed": "2021-01-16"
     },
-    "dataset name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
+    "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
     "material": [
         {
             "composition": "CO2",
@@ -39,7 +39,7 @@ export const validTestData = {
     ],
     "category": "cell size",
     "subcategory": "width",
-    "data type": "HUGoniot",
+    "data_type": "HUGoniot",
     "data": {
         "variables": [
             {
@@ -257,18 +257,18 @@ export const inValidTestData = {
         "publisher": "University of California Press",
         "authors": [
             {
-                "firstname": "alpha",
-                "lastname": "testing"
+                "firstName": "alpha",
+                "lastName": "testing"
             },
             {
-                "firstname": "Stanley",
-                "middlename": "P.",
-                "lastname": "Marsh"
+                "firstName": "Stanley",
+                "middleName": "P.",
+                "lastName": "Marsh"
             },
             {
-                "firstname": "John",
-                "middlename": "L.",
-                "lastname": "Mclain"
+                "firstName": "John",
+                "middleName": "L.",
+                "lastName": "Mclain"
             }
         ],
         "title": "Dataset Insert Daily",
@@ -279,7 +279,7 @@ export const inValidTestData = {
         "datePublished": "2021-01-16",
         "dateAccessed": "2021-01-16"
     },
-    "dataset name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
+    "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
     "material": [
         {
             "composition": "c",
@@ -292,7 +292,7 @@ export const inValidTestData = {
     ],
     "category": "cell size",
     "subcategory": "width",
-    "data type": "HUGoniot",
+    "data_type": "HUGoniot",
     "data": {
         "variables": [
             {

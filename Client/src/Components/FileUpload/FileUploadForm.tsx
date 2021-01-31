@@ -10,29 +10,31 @@ import { classStyles } from '../../appTheme'
 import uploadimage from './uploadimage.png'
 
 interface IProps {
-  acceptFileFormat: string,
+  acceptFileFormat?: string,
   onSubmit: (uploadedFile: File) => void,
-  //return true if file isValid
-  validateFile?: (uploadedFile: File) => boolean,
+  isValidFile?: (uploadedFile: File) => boolean,
 }
 
 const fileInputId = 'fileInput'
 
 export const FileUploadForm = (props: IProps) => {
-  const { onSubmit, validateFile, acceptFileFormat } = props
+  const { onSubmit, isValidFile, acceptFileFormat } = props
 
   const [alertOpen, setAlertOpen] = useState(false)
   const [alertSuccess, setAlertSuccess] = useState(false)
 
-
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement, Event>) => {
+    event.preventDefault()
+    event.stopPropagation()
     const input: HTMLInputElement = event.target[fileInputId]
     const file: File = input.files[0]
+
     //if validate file was not provided will isValidFile = true
-    const isValidFile = validateFile(file) //|| true
-    if (isValidFile) {
+    const isValid = isValidFile ? isValidFile(file) : true
+    if (isValid) {
       onSubmit(file)
       setAlertSuccess(true)
+      //window.location.href = datasetUploadRoute
     }
     else {
       setAlertOpen(true)

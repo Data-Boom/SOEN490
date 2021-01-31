@@ -1,21 +1,23 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
+import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import { AdminReviewView } from "./Admin/AdminReviewView"
 import BarChartIcon from '@material-ui/icons/BarChart'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
 import DonutSmallIcon from '@material-ui/icons/DonutSmall'
-import FileUploadView from "./DataCell/FileUploadView"
+import { FileUploadView } from "./FileUpload/FileUploadView"
 import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "./Home/HomeView"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
 import LoginView from "./Authentication/LoginView"
+import MessageIcon from '@material-ui/icons/Message';
 import { ProfileView } from "./Profile/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
@@ -32,6 +34,10 @@ interface IProps {
 }
 
 export const linkWidth: number = 240
+
+//# of datasets to review shown in side bar
+export const numOfDatasetsToReview = 10;
+
 
 export const ListItemLink = (props: IProps) => {
   const { id, icon, primary, to } = props
@@ -74,6 +80,7 @@ export const ListRouter = () => {
           <ListItemLink id="research-menu" to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
           <ListItemLink id="profile-menu" to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
           <ListItemLink id="about-menu" to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
+          <ListItemLink id="admin-review" to={adminReviewRoute} primary="Admin Review (#)" icon={<MessageIcon />} />
         </List>
       </Paper>
     </div>
@@ -94,6 +101,7 @@ export const getRoutedViews = () => {
       <Route path={profileRoute} component={ProfileView} />
       <Route path={loginRoute} component={LoginView} />
       <Route path={signUpRoute} component={SignUpView} />
+      <Route path={adminReviewRoute} component={AdminReviewView} />
     </>
   )
 }
