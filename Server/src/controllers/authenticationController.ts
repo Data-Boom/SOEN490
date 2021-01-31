@@ -2,7 +2,7 @@ import { BadRequest } from "@tsed/exceptions";
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationService } from '../services/authenticationService';
-import { IForgotPasswordInformation, ILoginInformation, IPasswordUpdateInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
+import { IForgotPasswordInformation, ILoginInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfaces';
