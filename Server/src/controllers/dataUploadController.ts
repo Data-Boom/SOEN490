@@ -19,10 +19,10 @@ export class DataUploadController {
     }
 
     async createNewDatasetRequest(request: Request, response: Response): Promise<Response> {
-        if (!request.body) {
-            response.status(400).json({
-                message: "No Data to Upload"
-            })
+        if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset name')
+            || !request.body.hasOwnProperty('material') || !request.body.hasOwnProperty('category')
+            || !request.body.hasOwnProperty('data')) {
+            response.status(400).json("No Data to Upload")
         }
         else {
             try {
@@ -44,10 +44,10 @@ export class DataUploadController {
         if (isNaN(datasetId)) {
             response.status(400).json("Invalid data set ID entered");
         }
-        else if (!request.body) {
-            response.status(400).json({
-                message: "No Dataset Received"
-            })
+        else if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset name')
+            || !request.body.hasOwnProperty('material') || !request.body.hasOwnProperty('category')
+            || !request.body.hasOwnProperty('data')) {
+            response.status(400).json("No Dataset Received")
         }
         else {
             try {

@@ -70,7 +70,14 @@ export class FluentRequest {
 
   public async json(): Promise<any> {
     const response = await this.call()
-    return response.json()
+    if (response.status.toString().charAt(0) == '2') {
+      return response.json()
+    }
+    else {
+      const errorMessage = await response.json()
+      SnackbarUtils.error(errorMessage.error || errorMessage)
+      return null
+    }
   }
 
   private async fetchRemote(url: string, request: RequestInit): Promise<Response> {
@@ -86,8 +93,7 @@ export class FluentRequest {
     }
 
     if (response.status.toString().charAt(0) == '4') {
-      SnackbarUtils.warning(JSON.stringify(await response.json()))
       return response
     }
   }
-}
+} 

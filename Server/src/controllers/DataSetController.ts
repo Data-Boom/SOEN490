@@ -164,7 +164,7 @@ export class DataSetController {
     }
 
     async createRequestToFlagDataset(request: Request, response: Response) {
-        if (!request.query && !request.query.datasetId) {
+        if (!request.query.hasOwnProperty('datasetId')) {
             response.status(400).json("No datasetID provided to flag dataset");
         }
         else {
@@ -210,11 +210,14 @@ export class DataSetController {
     }
 
     async createAdminApprovedDatasetRequest(request: Request, response: Response) {
-        if (!request.query && !request.query.datasetId) {
-            response.status(400).json("No datasetID provided to flag dataset");
+        if (!request.query.hasOwnProperty('datasetId')) {
+            response.status(400).json("Invalid data set ID entered");
         }
         let datasetIdToApprove = Number(request.query.datasetId)
-        let datasetComments = String(request.query.datasetComments)
+        if (isNaN(datasetIdToApprove)) {
+            response.status(400).json("Invalid data set ID entered");
+        }
+        let datasetComments = String(request.query.additionalComments)
         try {
             this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.adminApprovedDataset(datasetIdToApprove, datasetComments)
@@ -225,8 +228,7 @@ export class DataSetController {
     }
 
     async createUserApprovedDatasetRequest(request: Request, response: Response) {
-        let requestParam = request.params.datasetId;
-        let datasetId = Number(requestParam);
+        let datasetId = Number(request.params.datasetId);
         if (isNaN(datasetId)) {
             response.status(400).json("Invalid data set ID entered");
         }

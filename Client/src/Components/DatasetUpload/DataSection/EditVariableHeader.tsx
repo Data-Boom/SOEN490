@@ -11,6 +11,7 @@ interface IProps {
   variable: IVariable,
   index: number,
   editMode: boolean,
+  editable: boolean,
   onHeaderClick: (index: number) => void,
   onEditModalClose: () => void,
   onVariableUpdate: (variable: IVariable, index: number) => void,
@@ -18,16 +19,28 @@ interface IProps {
 }
 
 export const EditVariableHeader = (props: IProps) => {
+
+  const editable = props.editable
+
   const handleRemove = () => {
-    props.onVariableRemove(props.index)
+    console.log(editable)
+    if (editable) {
+      props.onVariableRemove(props.index)
+    }
   }
 
   const handleClose = () => {
-    props.onEditModalClose()
+    console.log(editable)
+    if (editable) {
+      props.onEditModalClose()
+    }
   }
 
   const openEditVariableModal = () => {
-    props.onHeaderClick(props.index)
+    console.log(editable)
+    if (editable) {
+      props.onHeaderClick(props.index)
+    }
   }
 
   return (
