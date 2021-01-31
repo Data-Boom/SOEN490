@@ -10,7 +10,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
 import DonutSmallIcon from '@material-ui/icons/DonutSmall'
-import FileUploadView from "./DataCell/FileUploadView"
+import { FileUploadView } from "./FileUpload/FileUploadView"
 import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "./Home/HomeView"

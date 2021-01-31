@@ -1,7 +1,7 @@
 import { Box, Button, Grid, TextField, Typography, createMuiTheme, withStyles } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import React, { useEffect, useState } from 'react'
-import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoints'
+import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'

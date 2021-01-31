@@ -1,21 +1,14 @@
+import { IRemoteDatasetModel, toLocalDataPoints } from "./IRemoteDatasetModel";
 
 import { IApprovedDatasetModel } from "./IApprovedDatasetModel";
-import { IRemoteDatasetModel, toLocalDataPoints } from "./IRemoteDatasetModel";
 
 export interface IRemoteApprovedDatasetModel extends IRemoteDatasetModel {
     datasetIsFlagged: number
     datasetFlaggedComment: string
 }
 
-export const toLocalDatasets = (remoteDatasets: IRemoteApprovedDatasetModel[]): IApprovedDatasetModel[] => {
+export const toLocalApprovedDatasets = (remoteDatasets: IRemoteApprovedDatasetModel[]): IApprovedDatasetModel[] => {
     return remoteDatasets && remoteDatasets.map(remoteDataset => toLocalDatasetModel(remoteDataset)) || []
-}
-
-
-export const toRemoteApprovedDatasets = (remoteDatasets: IApprovedDatasetModel): IRemoteApprovedDatasetModel => {
-    //return remoteDatasets && remoteDatasets.map(remoteDataset => toLocalDatasetModel(remoteDataset)) || []
-
-    return null
 }
 
 export const toLocalDatasetModel = (remoteDataset: IRemoteApprovedDatasetModel): IApprovedDatasetModel => {

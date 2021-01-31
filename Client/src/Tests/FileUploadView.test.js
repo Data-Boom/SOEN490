@@ -1,7 +1,7 @@
 import { configure, mount } from 'enzyme'
 
 import Adapter from 'enzyme-adapter-react-16'
-import FileUploadView from '../Components/DataCell/FileUploadView'
+import FileUploadView from '../Components/FileUpload/FileUploadView'
 import React from 'react'
 import renderer from "react-test-renderer"
 

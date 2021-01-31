@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { AdminReviewRow } from "./AdminReviewRow"
 import { Grid } from "@material-ui/core"
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
-import { getUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoints"
+import { getUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
 
 interface IAdminListprops {
     datasets: IApprovedDatasetModel[]
