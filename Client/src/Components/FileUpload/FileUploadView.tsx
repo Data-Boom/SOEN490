@@ -22,13 +22,11 @@ export const FileUploadView = () => {
   const handleSubmit = async (jsonFile: File) => {
     try {
       const extractedDataset = await extractDatasetFromFile(jsonFile)
-      console.log('somethine else')
-      console.log("🚀 ~ file: FileUploadView.tsx ~ line 31 ~ handleSubmit ~ extractedDataset", extractedDataset)
+
       if (!extractedDataset) {
         SnackbarUtils.warning('Server failed to parse dataset')
         return
       }
-
 
       history.push({
         pathname: datasetUploadRoute,

@@ -58,7 +58,6 @@ export const DatasetUploadForm = (props: IProps): any => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
   }
-  console.log(initialValues, 'initialValues')
 
   return (
     <Formik
