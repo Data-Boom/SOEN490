@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { DataSetService } from '../services/DataSetService';
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
@@ -214,7 +215,7 @@ export class DataSetController {
             response.status(400).json("No datasetID provided to flag dataset");
         }
         let datasetIdToApprove = Number(request.query.datasetId)
-        let datasetComments = String(request.query.datasetComments)
+        let datasetComments = String(request.query.additionalComments)
         try {
             this.dataSetService = new DataSetService();
             let requestResponse = await this.dataSetService.adminApprovedDataset(datasetIdToApprove, datasetComments)

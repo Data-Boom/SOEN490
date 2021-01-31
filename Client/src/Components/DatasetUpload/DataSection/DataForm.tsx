@@ -4,19 +4,28 @@ import { FastField } from 'formik'
 import { IData } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
+import { shouldComponentUpdate } from '../../Forms/ComponentUpdate'
+import { useEffect } from 'react'
+import { useState } from 'react'
 
 interface IProps {
+  editable: boolean
 }
 
 export const DataForm = (props: IProps) => {
+  const { editable } = props
+
+  useEffect(() => {
+
+  }, [props.editable])
 
   const FormikDatasetDataTable = ({ field, form, ...props }) => {
-    return <DatasetDataTable data={field.value} onDataChange={(newData: IData) => form.setFieldValue(field.name, newData)} />
+    return <DatasetDataTable editable={editable} data={field.value} onDataChange={(newData: IData) => form.setFieldValue(field.name, newData)} />
   }
 
   return (
     <Box className={classStyles().defaultBorder}>
-      <FastField name="data" label='Dataset Name' component={FormikDatasetDataTable} />
+      <FastField name="data" label='Dataset Name' shouldUpdate={shouldComponentUpdate} component={FormikDatasetDataTable} />
     </Box>
   )
 }
