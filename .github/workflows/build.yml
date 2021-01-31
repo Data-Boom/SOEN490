@@ -14,7 +14,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: cd Server && npm install && ts-node ./node_modules/typeorm/cli.js migration:run && npm run test
+      - run: cd Server && npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run && npm run test
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
