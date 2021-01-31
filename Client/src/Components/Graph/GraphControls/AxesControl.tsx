@@ -167,7 +167,7 @@ export const AxesControl = (props: IProps) => {
                 <Grid container spacing={4}>
                   <Grid item xs={4}>
                     <FormControl>
-                      <InputLabel id="xVariable">X Variable</InputLabel>
+                      <InputLabel id="xVariableLabel">X Variable</InputLabel>
                       <Select
                         labelId="xVariable"
                         id="xVariable"
@@ -205,7 +205,7 @@ export const AxesControl = (props: IProps) => {
                   </Grid>
                   <Grid item xs={4}>
                     <FormControl>
-                      <InputLabel id="yVariable">Y Variable</InputLabel>
+                      <InputLabel id="yVariableLabel">Y Variable</InputLabel>
                       <Select
                         labelId="yVariable"
                         id="yVariable"
