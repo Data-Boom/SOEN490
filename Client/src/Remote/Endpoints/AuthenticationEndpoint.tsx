@@ -2,13 +2,14 @@ import { ISignUpUserModel, IResetPasswordModel, IForgotPasswordModel, ILoginUser
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 import { post } from "../FluentRequest"
+import { forgotPasswordRoute } from "../../Common/Consts/Routes"
 
 export const resetPasswordRoute = '/api/v1/resetPassword/:resetToken?'
 const signupRoute = '/api/v1/signup'
 const loginRoute = '/api/v1/login'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
-  const result = await post(signUpRoute).withBody(signUpInfo).json()
+  const result = await post(signupRoute).withBody(signUpInfo).json()
   if (result == 'Success') {
     SnackbarUtils.success(`Sign up for ${signUpInfo.email} was successful!`)
   }
@@ -21,9 +22,11 @@ export const callLogIn = async (loginUser: ILoginUserModel): Promise<any> => {
 }
 
 export const callResetPassword = async (resetPasswordInfo: IResetPasswordModel): Promise<any> => {
-  await post(resetPasswordRoute, resetPasswordInfo);
+  const result = await post(resetPasswordRoute).withBody(resetPasswordInfo).json()
+  return result
 }
 
 export const callForgotPassword = async (forgotPasswordInfo: IForgotPasswordModel): Promise<any> => {
-  await post(forgotPasswordRoute, forgotPasswordInfo);
+  const result = await post(forgotPasswordRoute).withBody(forgotPasswordInfo).json()
+  return result
 }

@@ -1,5 +1,5 @@
 import { FastField, Form, Formik } from 'formik'
-import { IForgotPasswordModel, ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
+import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import React, { useContext, useState } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'

@@ -3,7 +3,6 @@ import React from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
@@ -50,7 +49,7 @@ export default function ForgotPasswordView() {
         </Avatar>
         <Typography component="h1" variant="h5">
           Forgot Password
-                  </Typography>
+        </Typography>
         <Formik
           initialValues={defaultForgotPasswordModel}
           validationSchema={forgotPasswordValidationSchema}

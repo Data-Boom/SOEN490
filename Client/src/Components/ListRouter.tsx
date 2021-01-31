@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
+import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -27,7 +27,6 @@ import SearchView from "./Search/SearchView"
 import SignUpView from "./Authentication/SignUpView"
 import ResetPasswordView from "./Authentication/ResetPasswordView"
 import ForgotPasswordView from "./Authentication/ForgotPasswordView"
-import LoginView from "./Authentication/LoginView"
 import { resetPasswordRoute } from "../Remote/Endpoints/AuthenticationEndpoint"
 
 interface IProps {
@@ -103,7 +102,6 @@ export const getRoutedViews = () => {
       <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
       <Route path={aboutRoute} component={AboutView} />
       <Route path={profileRoute} component={ProfileView} />
-      <Route path={signUpRoute} component={SignUpView} />
       <Route path={loginRoute} component={LoginView} />
       <Route path={signUpRoute} component={SignUpView} />
       <Route path={adminReviewRoute} component={AdminReviewView} />
