@@ -18,7 +18,6 @@ jobs:
         run: |
           echo $PWD
           npm install
-          npx ts-node ./node_modules/typeorm/cli.js migration:revert 
           npm run test
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
