@@ -15,9 +15,9 @@ jobs:
             node_version: 14.x
         uses: actions/setup-node@v1
       - name: Run tests
-        run: |                                          
+        run: |                                           
           npm install
-          npm run test
+          npx jest --coverage --config ./jest.config.js 
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
           TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
