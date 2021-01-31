@@ -25,6 +25,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Modal, Paper } from '@material-ui/core'
 import ForgotPasswordView from './ForgotPasswordView'
 import CancelIcon from "@material-ui/icons/Cancel"
+import { classStyles } from "../../appTheme"
 
 function Copyright() {
   return (
@@ -86,19 +87,22 @@ export default function LoginView() {
       <Modal
         open={openModal}
         onClose={handleClose}
+        className={classStyles().modal}
       >
-        <Paper elevation={3}>
-          <Box m={5}>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <CancelIcon color="primary" onClick={() => setOpen(false)} />
+        <Grid xs={6} justify="center">
+          <Paper elevation={3}>
+            <Box padding={1}>
+              <Grid container justify="flex-end">
+                <Grid item>
+                  <CancelIcon color="primary" onClick={() => setOpen(false)} />
+                </Grid>
               </Grid>
-            </Grid>
-            <ForgotPasswordView
+              <ForgotPasswordView
 
-            />
-          </Box>
-        </Paper>
+              />
+            </Box>
+          </Paper>
+        </Grid>
       </Modal>
       {user && user.firstName ?
         <Redirect to={homeRoute} /> :
