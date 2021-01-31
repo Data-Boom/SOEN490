@@ -34,7 +34,6 @@ export const FileUploadForm = (props: IProps) => {
     if (isValid) {
       onSubmit(file)
       setAlertSuccess(true)
-      //window.location.href = datasetUploadRoute
     }
     else {
       setAlertOpen(true)
