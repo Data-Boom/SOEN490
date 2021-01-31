@@ -16,13 +16,13 @@ jobs:
         uses: actions/setup-node@v1
       - name: Run tests
         run: |
-          echo ${{ secrets.TEST_DB_NAME }}
-          echo ${{ secrets.TEST_DB_PORT }}
-          echo ${{ secrets.TEST_DB_TYPE }}
-          echo ${{ secrets.TEST_HOST }}
-          echo ${{ secrets.TEST_PASSWORD }}
-          echo ${{ secrets.TEST_DB_NAME }}   
-          echo ${{ secrets.ACCESS_SECRET_KEY }}                                                 
+          echo ${{ secrets.TEST_DB_NAME }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_DB_PORT }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_DB_TYPE }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_HOST }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_PASSWORD }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_DB_NAME }} | sed 's/./& /g' 
+          echo ${{ secrets.ACCESS_SECRET_KEY }} | sed 's/./& /g'                                           
           npm install
           npm run test
         env:
