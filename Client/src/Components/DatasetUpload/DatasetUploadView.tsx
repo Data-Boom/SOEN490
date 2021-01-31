@@ -22,7 +22,8 @@ const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetMode
     //authors: partialDataset.reference.authors || defaultDatasetModel.reference.authors
   }
 
-  return dataset
+  // return dataset
+  return null
 }
 
 export const DatasetUploadView = (props: IProps) => {
