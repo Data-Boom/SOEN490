@@ -1,5 +1,4 @@
 import { FastField, Form, Formik } from 'formik'
-import { defaultForgotPasswordModel, IForgotPasswordModel } from '../../Models/Authentication/ISignUpModel'
 import React from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
@@ -12,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import { callForgotPassword } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { forgotPasswordValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { defaultForgotPasswordModel, IForgotPasswordModel } from '../../Models/Authentication/ISignUpModel';
 
 const useStyles = makeStyles((theme) => ({
     paper: {

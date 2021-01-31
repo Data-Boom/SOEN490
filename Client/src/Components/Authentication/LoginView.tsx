@@ -23,7 +23,6 @@ import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
 import { Modal, Paper } from '@material-ui/core'
-import { classStyles } from '../../appTheme'
 import ForgotPasswordView from './ForgotPasswordView'
 import CancelIcon from "@material-ui/icons/Cancel"
 
@@ -73,10 +72,6 @@ export default function LoginView() {
 
   const handleClose = () => {
     setOpen(false)
-  }
-
-  const handlePasswordReset = (resetPasswordInfo: IForgotPasswordModel) => {
-    handleClose()
   }
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
@@ -160,7 +155,7 @@ export default function LoginView() {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#/forgotPassword" variant="body2">
+                    <Link onClick={handleOpen} variant="body2">
                       Forgot password?
                     </Link>
                   </Grid>
