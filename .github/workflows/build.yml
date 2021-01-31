@@ -15,17 +15,10 @@ jobs:
             node_version: 14.x
         uses: actions/setup-node@v1
       - name: Run tests
-        run: |
-          echo ${{ secrets.TEST_DB_NAME }} | sed 's/./& /g' 
-          echo ${{ secrets.TEST_DB_PORT }} | sed 's/./& /g' 
-          echo ${{ secrets.TEST_DB_TYPE }} | sed 's/./& /g' 
-          echo ${{ secrets.TEST_HOST }} | sed 's/./& /g' 
-          echo ${{ secrets.TEST_PASSWORD }} | sed 's/./& /g' 
-          echo ${{ secrets.TEST_DB_NAME }} | sed 's/./& /g' 
-          echo ${{ secrets.ACCESS_SECRET_KEY }} | sed 's/./& /g'                                           
+        run: |                                          
           npm install
           npm run test
-        env:
+        with:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
           TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
           TEST_DB_TYPE: ${{ secrets.TEST_DB_TYPE }}
