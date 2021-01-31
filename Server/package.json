@@ -11,8 +11,8 @@
     "build": "tsc",
     "dev": "nodemon --legacy-watch --watch './src/*.' --exec \"ts-node-dev --poll --respawn --transpile-only\" ./src/app.ts",
     "prod": "tsc && node ./build/app.js",
-    "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
-    "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
+    "migrate": "npx ts-node ./node_modules/typeorm/cli.js migration:run",
+    "revert": "npx ts-node ./node_modules/typeorm/cli.js migration:revert",
     "start": "nodemon .",
     "test": "npm run revert && npm run migrate && jest --coverage --config ./jest.config.js && npm run revert",
     "test:watch": "npm run test -- --watch"
