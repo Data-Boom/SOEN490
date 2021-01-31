@@ -8,9 +8,6 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -21,7 +18,7 @@ jobs:
         run: |
           echo $PWD
           npm install
-          npx ts-node ./node_modules/typeorm/cli.js migration:run 
+          npx ts-node ./node_modules/typeorm/cli.js migration:revert 
           npm run test
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
