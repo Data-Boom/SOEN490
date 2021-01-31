@@ -18,9 +18,11 @@ export const MuiSelectFormik = ({ field, form: { touched, errors }, ...props }) 
   return (
     <>
       <FormControl variant="outlined" fullWidth>
-        <InputLabel>{props.label}</InputLabel>
+        <InputLabel shrink={field.value}>{props.label}</InputLabel>
         <Select
           native
+          variant="outlined"
+          fullWidth
           {...field}
           {...props}
           error={error}
