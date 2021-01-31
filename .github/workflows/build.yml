@@ -27,7 +27,3 @@ jobs:
         run: |
           npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run 
           npm run test
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
