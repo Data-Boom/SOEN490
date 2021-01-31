@@ -18,7 +18,7 @@ export default function SearchView(props: IProps) {
   const [foundDatasets, setFoundDatasets] = useState<IDatasetModel[]>([])
 
   // array of selected ids
-  const [selection, setSelection] = useState<SelectionChangeParams>(null)
+  const [selection, setSelection] = useState<SelectionChangeParams>({ rowIds: [] })
 
   const handleSearchClick = async (query: ISearchDatasetsFormModel) => {
     const datasets = await callGetDatasets(query)

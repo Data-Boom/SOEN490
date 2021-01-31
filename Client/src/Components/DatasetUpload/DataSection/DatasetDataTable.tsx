@@ -20,7 +20,6 @@ export const DatasetDataTable = (props: IProps): any => {
   const editable = props.editable
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
-    console.log(editable)
     setEditedVariableIndex(indexOfClickedHeader)
   }
 

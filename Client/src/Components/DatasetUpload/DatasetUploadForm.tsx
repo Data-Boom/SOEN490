@@ -50,7 +50,6 @@ export const DatasetUploadForm = (props: IProps): any => {
     callListCategories()
     callListSubcategory()
     callListMaterials()
-    console.log(initialDataset)
   }, [])
 
   const handleSubmit = (values: DatasetUploadFormValues) => {
