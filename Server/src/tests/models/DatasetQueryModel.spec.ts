@@ -86,7 +86,7 @@ describe('data service test', () => {
         done()
     });
 
-    test('Feeds an invalid email and expects to see an error message', async done => {
+    test('Feeds an invalid email to uploads of user request and expects to see an error message', async done => {
         let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser("not valid")
         expect(arrayOfData[1]).toEqual("Invalid user email provided");
         done()
@@ -95,6 +95,13 @@ describe('data service test', () => {
     test('Feeds an invalid account ID and expects to see an no IDs returned', async done => {
         let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(5000)
         expect(arrayOfData[0].dataset_id).toBeUndefined()
+        done()
+    });
+
+    test('Attempts to add favorite data set to non existant user', async done => {
+        let arrayOfData = await dataQueryModel.addUserFavoriteDatasetModel("not valid", 3)
+        expect(arrayOfData[0]).toEqual(false);
+        expect(arrayOfData[1]).toEqual("Invalid user email provided");
         done()
     });
 })
