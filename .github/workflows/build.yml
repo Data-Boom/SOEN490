@@ -23,7 +23,7 @@ jobs:
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
           TEST_PORT: ${{ secrets.TEST_PORT }}
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
-      - run: npm install && npx ts-node ./node_modules/typeorm/cli.js migration:revert && npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run
+      - run: npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run
       - run: npm run test
       - run: npx ts-node ./node_modules/typeorm/cli.js migration:revert
       - name: Coveralls
