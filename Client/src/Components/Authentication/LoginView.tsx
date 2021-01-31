@@ -84,29 +84,29 @@ export default function LoginView() {
 
   return (
     <>
-      <Modal
-        open={openModal}
-        onClose={handleClose}
-        className={classStyles().modal}
-      >
-        <Grid xs={6} justify="center">
-          <Paper elevation={3}>
-            <Box padding={1}>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <CancelIcon color="primary" onClick={() => setOpen(false)} />
-                </Grid>
-              </Grid>
-              <ForgotPasswordView
-
-              />
-            </Box>
-          </Paper>
-        </Grid>
-      </Modal>
       {user && user.firstName ?
         <Redirect to={homeRoute} /> :
         <Container component="main" maxWidth="xs">
+          <Modal
+            open={openModal}
+            onClose={handleClose}
+            className={classStyles().modal}
+          >
+            <Grid xs={6} justify="center">
+              <Paper elevation={3}>
+                <Box padding={1}>
+                  <Grid container justify="flex-end">
+                    <Grid item>
+                      <CancelIcon color="primary" onClick={() => setOpen(false)} />
+                    </Grid>
+                  </Grid>
+                  <ForgotPasswordView
+
+                  />
+                </Box>
+              </Paper>
+            </Grid>
+          </Modal>
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
