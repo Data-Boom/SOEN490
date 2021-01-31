@@ -23,21 +23,18 @@ export const EditVariableHeader = (props: IProps) => {
   const editable = props.editable
 
   const handleRemove = () => {
-    console.log(editable)
     if (editable) {
       props.onVariableRemove(props.index)
     }
   }
 
   const handleClose = () => {
-    console.log(editable)
     if (editable) {
       props.onEditModalClose()
     }
   }
 
   const openEditVariableModal = () => {
-    console.log(editable)
     if (editable) {
       props.onHeaderClick(props.index)
     }
