@@ -19,8 +19,9 @@ jobs:
         uses: actions/setup-node@v1
       - name: Run tests
         run: |
+          echo $PWD
           npm install
-          ts-node ./node_modules/typeorm/cli.js migration:run 
+          npx ts-node ./node_modules/typeorm/cli.js migration:run 
           npm run test
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
