@@ -32,7 +32,6 @@ export const DatasetUploadView = (props: IProps) => {
   initialValues = fixPartialForform(initialValues)
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    console.log(formDataset, 'formdAtase')
     await callSaveDataset(formDataset)
   }
 

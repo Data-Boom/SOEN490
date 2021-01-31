@@ -26,18 +26,10 @@ interface DatasetUploadFormValues {
 
 export const DatasetUploadForm = (props: IProps): any => {
   const { initialDataset, onSubmit, editable, buttonName } = props
-  const meta: IDatasetMeta = initialDataset
-  const reference: IReference = initialDataset.reference
-  const data: IData = initialDataset.data
-  const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
   const [materials, setMaterials] = useState([])
-  const meta: IDatasetMeta = initialDataset
-  const reference: IReference = initialDataset.reference
-  const data: IData = initialDataset.data
-  const [initialValues, setInitialValues] = useState<DatasetUploadFormValues>({ meta, reference, data })
 
   useEffect(() => {
     const callListCategories = async () => {
@@ -66,11 +58,16 @@ export const DatasetUploadForm = (props: IProps): any => {
     onSubmit(dataset)
   }
 
+  const meta: IDatasetMeta = initialDataset
+  const reference: IReference = initialDataset.reference
+  const data: IData = initialDataset.data
+  const initialValues: DatasetUploadFormValues = { meta, reference, data }
+
   return (
     <Formik
       enableReinitialize={true}
       initialValues={initialValues}
-      //validationSchema={datasetValidationSchema}
+      validationSchema={datasetValidationSchema}
       onSubmit={handleSubmit}
     >
       <Form>
