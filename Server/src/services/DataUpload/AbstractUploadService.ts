@@ -1,11 +1,10 @@
-import { BadRequest } from "@tsed/exceptions";
-import { IDataSetModel } from "../../genericInterfaces/DataProcessInterfaces";
-import { DataUploadModel } from "../../models/DataUploadModel";
 import { Authors } from "../../models/entities/Authors";
+import { BadRequest } from "@tsed/exceptions";
+import { DataUploadModel } from "../../models/DataUploadModel";
 import { IAuthors } from "../../models/interfaces/AuthorsInterface";
+import { IDataSetModel } from "../../genericInterfaces/DataProcessInterfaces";
 import { IMaterials } from "../../models/interfaces/MaterialsInterface";
 import { validationSchema } from "../helpers/validationSchema";
-
 
 export default abstract class AbstractUploadService {
     protected uploadModel: DataUploadModel
@@ -122,7 +121,7 @@ export default abstract class AbstractUploadService {
 
     protected async insertDataSetDataTypeData(uploadModel: DataUploadModel, dataType: string): Promise<number> {
         let dataSetDataTypeID: number
-        if (this.parsedFileData["data type"] == undefined)
+        if (this.parsedFileData.data_type == undefined)
             dataSetDataTypeID = 1;
         else {
             try {

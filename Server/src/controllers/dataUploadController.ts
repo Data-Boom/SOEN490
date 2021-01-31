@@ -45,7 +45,7 @@ export class DataUploadController {
         if (isNaN(datasetId)) {
             response.status(400).json("Invalid data set ID entered");
         }
-        else if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset name')
+        else if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset_name')
             || !request.body.hasOwnProperty('material') || !request.body.hasOwnProperty('category')
             || !request.body.hasOwnProperty('data')) {
             response.status(400).json("No Dataset Received")

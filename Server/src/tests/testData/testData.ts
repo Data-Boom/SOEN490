@@ -4,18 +4,18 @@ export const validTestData = {
         "publisher": "University of California Press",
         "authors": [
             {
-                "firstname": "alpha",
-                "lastname": "testing"
+                "firstName": "alpha",
+                "lastName": "testing"
             },
             {
-                "firstname": "Stanley",
-                "middlename": "P.",
-                "lastname": "Marsh"
+                "firstName": "Stanley",
+                "middleName": "P.",
+                "lastName": "Marsh"
             },
             {
-                "firstname": "John",
-                "middlename": "L.",
-                "lastname": "Mclain"
+                "firstName": "John",
+                "middleName": "L.",
+                "lastName": "Mclain"
             }
         ],
         "title": "Dataset Insert Daily",
@@ -257,18 +257,18 @@ export const inValidTestData = {
         "publisher": "University of California Press",
         "authors": [
             {
-                "firstname": "alpha",
-                "lastname": "testing"
+                "firstName": "alpha",
+                "lastName": "testing"
             },
             {
-                "firstname": "Stanley",
-                "middlename": "P.",
-                "lastname": "Marsh"
+                "firstName": "Stanley",
+                "middleName": "P.",
+                "lastName": "Marsh"
             },
             {
-                "firstname": "John",
-                "middlename": "L.",
-                "lastname": "Mclain"
+                "firstName": "John",
+                "middleName": "L.",
+                "lastName": "Mclain"
             }
         ],
         "title": "Dataset Insert Daily",
