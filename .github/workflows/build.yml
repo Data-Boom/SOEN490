@@ -22,8 +22,8 @@ jobs:
           TEST_PORT: ${{ secrets.TEST_PORT }}
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
       - run: |
-          echo ${#TEST_DB_PORT}
-          echo ${#TEST_PORT}
+          echo ${{ secrets.TEST_DB_PORT }}
+          echo ${{ secrets.TEST_PORT }}
       - run: |
           cd Server && npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run 
           npm run test
