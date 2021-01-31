@@ -43,44 +43,42 @@ export default function ForgotPasswordView() {
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Forgot Password
-                    </Typography>
-          <Formik
-            initialValues={defaultForgotPasswordModel}
-            validationSchema={forgotPasswordValidationSchema}
-            onSubmit={handleForgotPasswordSubmit}
-          >
-            <Form className={classes.form} noValidate>
-              <FastField
-                variant="outlined"
-                margin="normal"
-                required
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                component={MuiTextFieldFormik}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Forgot Password
-              </Button>
-            </Form>
-          </Formik>
-        </div>
-      </Container>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Forgot Password
+                  </Typography>
+        <Formik
+          initialValues={defaultForgotPasswordModel}
+          validationSchema={forgotPasswordValidationSchema}
+          onSubmit={handleForgotPasswordSubmit}
+        >
+          <Form className={classes.form} noValidate>
+            <FastField
+              variant="outlined"
+              margin="normal"
+              required
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              component={MuiTextFieldFormik}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Forgot Password
+            </Button>
+          </Form>
+        </Formik>
+      </div>
     </>
   )
 }
