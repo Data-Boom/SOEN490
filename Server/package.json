@@ -9,7 +9,7 @@
   "scripts": {
     "tsc": "tsc",
     "build": "tsc",
-    "dev": "nodemon --legacy-watch --watch './src/*.' --exec \"ts-node-dev --poll --respawn --transpile-only\" --inspect=9229 ./src/app.ts",
+    "dev": "nodemon --legacy-watch --watch './src/*.' --exec \"ts-node-dev --poll --respawn --inspect=9229 --transpile-only\" ./src/app.ts",
     "prod": "tsc && node ./build/app.js",
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
