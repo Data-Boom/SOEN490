@@ -3,8 +3,8 @@ import { get, post } from "../FluentRequest"
 
 import { stringify } from 'query-string'
 
-const updateUserInfoRoute = '/api/v1/updateUserInfo'
-const userDetailsRoute = '/api/v1/userDetails'
+const updateUserInfoRoute = '/updateUserInfo'
+const userDetailsRoute = '/userDetails'
 
 interface IUserDetailsQuery {
   email: string

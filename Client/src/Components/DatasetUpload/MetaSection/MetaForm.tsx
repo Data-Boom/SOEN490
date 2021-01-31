@@ -17,10 +17,10 @@ interface IProps {
 }
 
 const getOptions = (options: any[]): any => {
+  //todo revert value from id to option.name once backend is able to consume ids for categories
   return (
     <>
-      <option aria-label="None" value="" />
-      {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+      {options.map(option => <option key={option.id} value={option.name}> {option.name} </option>)}
     </>
   )
 }

@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { UnapprovedUploadService } from '../services/DataUpload/UnapprovedUploadService'
-import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
-import EditUploadService from '../services/DataUpload/EditUploadService';
+
 import AbstractUploadService from '../services/DataUpload/AbstractUploadService';
+import EditUploadService from '../services/DataUpload/EditUploadService';
+import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
+import { UnapprovedUploadService } from '../services/DataUpload/UnapprovedUploadService'
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -19,7 +20,7 @@ export class DataUploadController {
     }
 
     async createNewDatasetRequest(request: Request, response: Response): Promise<Response> {
-        if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset name')
+        if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset_name')
             || !request.body.hasOwnProperty('material') || !request.body.hasOwnProperty('category')
             || !request.body.hasOwnProperty('data')) {
             response.status(400).json("No Data to Upload")
@@ -44,7 +45,7 @@ export class DataUploadController {
         if (isNaN(datasetId)) {
             response.status(400).json("Invalid data set ID entered");
         }
-        else if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset name')
+        else if (!request.body.hasOwnProperty('reference') || !request.body.hasOwnProperty('dataset_name')
             || !request.body.hasOwnProperty('material') || !request.body.hasOwnProperty('category')
             || !request.body.hasOwnProperty('data')) {
             response.status(400).json("No Dataset Received")

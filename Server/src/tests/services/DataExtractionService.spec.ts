@@ -5,7 +5,6 @@ describe('Data Extraction Controller', () => {
     let extractionService: DataExtractionService
 
     test('Valid - Request to Extract a JSON file', async () => {
-
         let extension = 'json'
         let filePath = 'upload/ae2035724058e2b1a0aca745f67d48c6'
         extractionService = new DataExtractionService(extension, filePath)

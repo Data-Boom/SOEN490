@@ -61,7 +61,7 @@ export interface IDatasetModel {
   subcategory: string,
   data_type: string,
   data: IData,
-  id: number | undefined
+  id: number | undefined,
 }
 
 // will build a type that is IDatasetModel without reference and data

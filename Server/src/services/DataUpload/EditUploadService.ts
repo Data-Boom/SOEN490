@@ -1,12 +1,12 @@
 import { BadRequest, InternalServerError } from '@tsed/exceptions';
-import { getConnection } from "typeorm"
-import { IResponse } from "../../genericInterfaces/ResponsesInterface"
+
+import AbstractUploadService from "./AbstractUploadService"
+import { Authors } from "../../models/entities/Authors"
+import { DataUploadModel } from "../../models/DataUploadModel"
 import { DatasetCommonModel } from '../../models/DatasetModels/DatasetCommonModel';
 import { DatasetDeleteModel } from '../../models/DatasetModels/DatasetDeleteModel';
-import { DataUploadModel } from "../../models/DataUploadModel"
-import { Authors } from "../../models/entities/Authors"
-import AbstractUploadService from "./AbstractUploadService"
-
+import { IResponse } from "../../genericInterfaces/ResponsesInterface"
+import { getConnection } from "typeorm"
 
 export default class EditUploadService extends AbstractUploadService {
     async uploadData(): Promise<IResponse> {
@@ -48,10 +48,10 @@ export default class EditUploadService extends AbstractUploadService {
         // Grab other 3 FK of data set
         let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
         let categoryIDs: number[] = await this.uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
-        let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData["data type"])
+        let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData.data_type)
 
         // Update data set
-        let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData["dataset name"], dataSetDataTypeID, publicationID, categoryIDs, this.parsedFileData.data.comments]
+        let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, categoryIDs, this.parsedFileData.data.comments]
         await this.insertDataset(this.uploadModel, arrayOfDatasetInfo)
 
         // Run check on variable vs contents length to see if they're equal for data points and insert

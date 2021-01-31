@@ -1,7 +1,8 @@
-import { DataUploadController } from '../../controllers/dataUploadController';
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
-import { validTestData, inValidTestData } from '../testData/testData';
+import { inValidTestData, validTestData } from '../testData/testData';
+
+import { DataUploadController } from '../../controllers/dataUploadController';
 
 describe('Data Upload Controller', () => {
     let mockRequest
@@ -30,7 +31,6 @@ describe('Data Upload Controller', () => {
             body: validTestData
         }
         await dataUploadController.createNewDatasetRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith(expectedResponse)
         expect(mockResponse.status).toBeCalledWith(201)
     })
 

@@ -108,7 +108,7 @@ const buildContent = (remotePoints: IRemoteDataPointModel[], rowIndex: number): 
   const points: number[] = []
   const variableCount: number = remotePoints.length
   for (let i = 0; i < variableCount; i++) {
-    const contentPoint = remotePoints[i].values[rowIndex];
+    const contentPoint = remotePoints[i].values[rowIndex]
     points.push(contentPoint)
   }
 

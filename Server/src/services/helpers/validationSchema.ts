@@ -15,14 +15,14 @@ const referenceValidationSchema = Yup.object().shape({
     authors: Yup.array().of(
         Yup.object().shape(
             {
-                firstname: Yup.string().trim().strict().required('First Name is a required field'),
-                middlename: Yup.string().strict(),
-                lastname: Yup.string().trim().strict().required('Last Name is a required field')
+                firstName: Yup.string().trim().strict().required('First Name is a required field'),
+                middleName: Yup.string().strict(),
+                lastName: Yup.string().trim().strict().required('Last Name is a required field')
             }
         )
     ),
     title: Yup.string().trim().strict().required(requiredMessage('Title')),
-    doi: Yup.string().trim().strict().required(requiredMessage('DOI')),
+    doi: Yup.string().trim(),
     volume: Yup.number().integer(integerMessage('Volume')),
     pages: Yup.number().integer(integerMessage('Pages')),
     year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
@@ -59,9 +59,9 @@ const referenceMaterialSchema =
 
 export const validationSchema = Yup.object().shape({
     reference: referenceValidationSchema,
-    ["dataset name"]: Yup.string().strict().required(requiredMessage('Dataset Name')),
+    dataset_name: Yup.string().strict().required(requiredMessage('Dataset Name')),
     material: Yup.array().of(referenceMaterialSchema),
-    ["data type"]: Yup.string().strict().required(requiredMessage('Dataset Type')),
+    data_type: Yup.string().strict().required(requiredMessage('Dataset Type')),
     data: dataValidationSchema,
     category: Yup.string().strict(),
     subcategory: Yup.string().strict()

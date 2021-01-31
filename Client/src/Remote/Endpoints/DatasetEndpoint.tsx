@@ -1,23 +1,29 @@
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
 import { IRemoteApprovedDatasetModel, toLocalApprovedDatasets } from "../../Models/Datasets/IRemoteApprovedDatasetModel"
-import { IRemoteDatasetModel, toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
-import { _delete, get, put } from "../FluentRequest"
+import { _delete, get, post, put } from "../FluentRequest"
 
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { ISearchDatasetsFormModel } from "../../Components/Search/ISearchDatasetsFormModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
+import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 
 const userUploadedDatasetsRoute = '/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets'
 const userSavedDatasetsRoute = '/api/v1/dataset/userSavedDatsets/:userSavedDatsets'
+const dataUploadRoute = '/api/v1/dataUpload'
 const datasetRoute = '/api/v1/dataset'
 const flagDatasetRoute = '/api/v1/flagDataSet'
 const adminApprovedDatasetRoute = '/api/v1/approveDataset'
 const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
 
-export const getDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
+export const callGetDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
   const result = await get(datasetRoute).withQuery(query).json()
   const localDatasets = toLocalDatasets(result)
   return localDatasets
+}
+
+export const callSaveDataset = async (dataset: IDatasetModel): Promise<number> => {
+  const result = await post(dataUploadRoute).withBody(dataset).json()
+  return result
 }
 
 export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> => {

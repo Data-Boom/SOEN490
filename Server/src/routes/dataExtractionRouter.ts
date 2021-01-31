@@ -18,7 +18,6 @@ let router = Router();
  */
 router.post('/api/v1/dataExtract', [JWTAuthenticator.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
   try {
-    console.log(request.file.path, 'file path')
     let dataExtract = new dataExtractionController(request.file.path, request.file.originalname);
     dataExtract.createRequest(request, response);
   } catch (error) {
