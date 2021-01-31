@@ -24,7 +24,7 @@ jobs:
           echo ${{ secrets.TEST_DB_NAME }} | sed 's/./& /g' 
           echo ${{ secrets.ACCESS_SECRET_KEY }} | sed 's/./& /g'                                           
           npm install
-          npm run test
+          ts-node ./node_modules/typeorm/cli.js migration:run
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
           TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
