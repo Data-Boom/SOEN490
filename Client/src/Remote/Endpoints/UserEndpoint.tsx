@@ -3,8 +3,8 @@ import { get, post } from "../RemoteHelper"
 
 import { stringify } from 'query-string'
 
-const updateUserInfoRoute = '/updateUserInfo'
-const userDetailsRoute = '/userDetails'
+const updateUserInfoRoute = '/api/v1/updateUserInfo'
+const userDetailsRoute = '/api/v1/userDetails'
 
 interface IUserDetailsQuery {
   email: string

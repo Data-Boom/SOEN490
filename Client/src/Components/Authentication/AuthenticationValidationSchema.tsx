@@ -43,6 +43,5 @@ export const resetPasswordValidationSchema = Yup.object().shape({
   passwordConfirmation: Yup.string()
     .required(requiredMessage("Confirm Password"))
     .min(8, "Password is short, should be 8 characters minimum")
-    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-  resetToken: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
 })

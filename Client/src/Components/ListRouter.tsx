@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, resetPasswordRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
+import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -25,6 +25,7 @@ import SignUpView from "./Authentication/SignUpView"
 import ResetPasswordView from "./Authentication/ResetPasswordView"
 import ForgotPasswordView from "./Authentication/ForgotPasswordView"
 import LoginView from "./Authentication/LoginView"
+import { resetPasswordRoute } from "../Remote/Endpoints/AuthenticationEndpoint"
 
 interface IProps {
   id: string;

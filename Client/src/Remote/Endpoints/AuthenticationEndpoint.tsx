@@ -2,10 +2,11 @@ import { ISignUpUserModel, IResetPasswordModel, IForgotPasswordModel, ILoginUser
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 import { post } from "../RemoteHelper"
-import { forgotPasswordRoute, resetPasswordRoute } from "../../Common/Consts/Routes"
+import { forgotPasswordRoute } from "../../Common/Consts/Routes"
 
-const signupRoute = '/signup'
-const loginRoute = '/login'
+const signupRoute = '/api/v1/signup'
+const loginRoute = '/api/v1/login'
+export const resetPasswordRoute = '/api/v1/resetPassword/:resetToken?'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
   const result = await post(signupRoute, signUpInfo)
@@ -20,7 +21,6 @@ export const callLogIn = async (loginUser: ILoginUserModel): Promise<any> => {
 }
 
 export const callResetPassword = async (resetPasswordInfo: IResetPasswordModel): Promise<any> => {
-  console.log("Got to this point")
   await post(resetPasswordRoute, resetPasswordInfo);
 }
 

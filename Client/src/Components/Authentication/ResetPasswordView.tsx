@@ -46,7 +46,6 @@ export default function ResetPasswordView() {
 
   const handleResetPasswordSubmit = async (resetPasswordInfo: IResetPasswordModel): Promise<void> => {
     const resetPassInfo: IResetPasswordModel = { ...resetPasswordInfo, resetToken: resetToken };
-    console.log("ResetPassInfo", resetPassInfo)
     await callResetPassword(resetPassInfo);
   }
 
@@ -60,13 +59,13 @@ export default function ResetPasswordView() {
           </Avatar>
           <Typography component="h1" variant="h5">
             Reset Password
-                    </Typography>
+          </Typography>
           <Formik
             initialValues={defaultResetPasswordModel}
             validationSchema={resetPasswordValidationSchema}
             onSubmit={handleResetPasswordSubmit}
           >
-            <Form className={classes.form} noValidate>
+            <Form className={classes.form}>
               <FastField
                 variant="outlined"
                 margin="normal"
