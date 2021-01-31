@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography } from "@material-ui/core"
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
 import React, { useEffect, useState } from "react"
 
@@ -22,7 +22,7 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
       if (variables.findIndex(variable => variable.name == datasetVariable.name) == -1) {
         variables.push(datasetVariable)
       }
-    });
+    })
   })
 
   return variables
@@ -33,7 +33,7 @@ export const AxesControl = (props: IProps) => {
   const classes = classStyles()
 
   //todo unhardcode the variables
-  const [showSettings, setSettingsToggle] = useState(false)
+  const [showSettings, setSettingsToggle] = useState(true)
 
   const [xVariableMissing, setXVariableMissing] = useState([])
   const [yVariableMissing, setYVariableMissing] = useState([])
@@ -157,7 +157,7 @@ export const AxesControl = (props: IProps) => {
         <Grid item xs={12}>
           <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">
             Settings
-              {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </Button>
         </Grid>
         {showSettings &&
@@ -191,7 +191,6 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleXUnitChange}
                       >
-                        <MenuItem value={''}>{''}</MenuItem>
                         {xUnits.map(type => (
                           <MenuItem value={type}>{type}</MenuItem>
                         ))}
@@ -229,7 +228,6 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleYUnitChange}
                       >
-                        <MenuItem value={''}>{''}</MenuItem>
                         {yUnits.map(type => (
                           <MenuItem value={type}>{type}</MenuItem>
                         ))}

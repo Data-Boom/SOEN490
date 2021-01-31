@@ -454,8 +454,8 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     let unitsToDelete = new Units();
     unitsToDelete.id;
-    unitsToDelete.name;
-    unitsToDelete.units = "Del";
+    unitsToDelete.name = "Deleted";
+    unitsToDelete.units = "Deleted";
     await connection.manager.save(unitsToDelete);
 
     let reprNone = new Representations();
@@ -465,7 +465,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     let reprToDelete = new Representations();
     reprToDelete.id;
-    reprToDelete.repr = "Del";
+    reprToDelete.repr = "Deleted";
     await connection.manager.save(reprToDelete);
 
     // Data points below this line. 

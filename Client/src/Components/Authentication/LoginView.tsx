@@ -1,27 +1,21 @@
 import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
-import Avatar from '@material-ui/core/Avatar'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Checkbox from '@material-ui/core/Checkbox'
-import Container from '@material-ui/core/Container'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Grid from '@material-ui/core/Grid'
+import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@material-ui/core'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
-import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
-import Typography from '@material-ui/core/Typography'
 import { UserContext } from '../../App'
-import { callLogIn as callLogin } from '../../Remote/Endpoints/AuthenticationEndpoint'
+import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { Modal, Paper } from '@material-ui/core'
+import ForgotPasswordView from './ForgotPasswordView'
+import CancelIcon from "@material-ui/icons/Cancel"
 
 function Copyright() {
   return (
@@ -54,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }))
 
 export default function LoginView() {
@@ -61,9 +60,19 @@ export default function LoginView() {
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
 
+  const [openModal, setOpen] = useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
-    await callLogin(loginUserInfo)
+    await callLogIn(loginUserInfo)
     const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
     setUser(userAccount)
   }
@@ -73,6 +82,26 @@ export default function LoginView() {
       {user && user.firstName ?
         <Redirect to={homeRoute} /> :
         <Container component="main" maxWidth="xs">
+          <Modal
+            open={openModal}
+            onClose={handleClose}
+            className={classes.modal}
+          >
+            <Grid xs={6} justify="center">
+              <Paper elevation={3}>
+                <Box padding={1}>
+                  <Grid container justify="flex-end">
+                    <Grid item>
+                      <CancelIcon color="primary" onClick={() => setOpen(false)} />
+                    </Grid>
+                  </Grid>
+                  <ForgotPasswordView
+
+                  />
+                </Box>
+              </Paper>
+            </Grid>
+          </Modal>
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
@@ -126,7 +155,7 @@ export default function LoginView() {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link onClick={handleOpen} variant="body2">
                       Forgot password?
                     </Link>
                   </Grid>

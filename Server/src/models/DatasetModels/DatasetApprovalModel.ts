@@ -70,7 +70,7 @@ export class DatasetApprovalModel {
             .innerJoin(Dataset, 'dataset', 'dataset.id = unapproved_datasets.datasetId')
             .where('dataset.id = :id', { id: id })
             .getRawOne();
-        if (upload.uploaderId != userId || upload == undefined) {
+        if (upload == undefined || upload.uploaderId != userId) {
             return "User ID does not match uploader ID!"
         }
         else if (upload.isFlagged != 1) {

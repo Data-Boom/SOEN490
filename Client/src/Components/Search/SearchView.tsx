@@ -6,7 +6,7 @@ import { ISearchDatasetsFormModel } from './ISearchDatasetsFormModel'
 import { SearchDatasetsForm } from './SearchDatasetsForm'
 import { SearchResults } from './SearchResults'
 import { SelectionChangeParams } from '@material-ui/data-grid'
-import { getDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
+import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 
 interface IProps {
   handleDatasetsSelected?: (datasets: IDatasetModel[]) => void
@@ -18,10 +18,10 @@ export default function SearchView(props: IProps) {
   const [foundDatasets, setFoundDatasets] = useState<IDatasetModel[]>([])
 
   // array of selected ids
-  const [selection, setSelection] = useState<SelectionChangeParams>(null)
+  const [selection, setSelection] = useState<SelectionChangeParams>({ rowIds: [] })
 
   const handleSearchClick = async (query: ISearchDatasetsFormModel) => {
-    const datasets = await getDatasets(query)
+    const datasets = await callGetDatasets(query)
     setFoundDatasets(datasets)
   }
 

@@ -61,7 +61,7 @@ export interface IDatasetModel {
   subcategory: string,
   data_type: string,
   data: IData,
-  id: number | undefined
+  id: number | undefined,
 }
 
 // will build a type that is IDatasetModel without reference and data
@@ -301,6 +301,45 @@ export const exampleExportDatasetModel: IDatasetModel = {
   "reference": {
     "type": "book",
     "publisher": "University of California Press",
+    "authors": [
+      {
+        "firstName": "Stanley",
+        "middleName": "P.",
+        "lastName": "Marsh"
+      },
+      {
+        "firstName": "John",
+        "middleName": "L.",
+        "lastName": "Mclain"
+      }
+    ],
+    "title": "LASL shock Hugoniot data",
+    "volume": 5,
+    "pages": 19,
+    "year": 1980
+  },
+  "id": 1234,
+  "dataset_name": "CARBON_graphite,pressed, Initial density = 2.13 g/cc",
+  "material": [
+    {
+      "composition": "C",
+      "details": "carbon, graphite, pressed graphite", "id": 0
+    },
+    {
+      "composition": "O2",
+      "details": "Oxygen", "id": 1
+    }
+  ],
+  "category": "cell size",
+  "subcategory": "width",
+  "data_type": "hugoniot",
+  "data": tempData
+}
+
+export const example2: IDatasetModel = {
+  "reference": {
+    "type": "novel",
+    "publisher": "University of Dakota Press",
     "authors": [
       {
         "firstName": "Stanley",

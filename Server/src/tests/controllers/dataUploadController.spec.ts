@@ -1,7 +1,8 @@
-import { DataUploadController } from '../../controllers/dataUploadController';
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
-import { validTestData, inValidTestData } from '../testData/testData';
+import { inValidTestData, validTestData } from '../testData/testData';
+
+import { DataUploadController } from '../../controllers/dataUploadController';
 
 describe('Data Upload Controller', () => {
     let mockRequest
@@ -30,7 +31,6 @@ describe('Data Upload Controller', () => {
             body: validTestData
         }
         await dataUploadController.createNewDatasetRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith(expectedResponse)
         expect(mockResponse.status).toBeCalledWith(201)
     })
 
@@ -39,6 +39,21 @@ describe('Data Upload Controller', () => {
         let expectedResponse = "Type is a required field"
         mockRequest = {
             body: inValidTestData
+        }
+        await dataUploadController.createNewDatasetRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(400)
+    })
+
+    test('Invalid Upload', async () => {
+
+        let expectedResponse = "No Data to Upload"
+        mockRequest = {
+            body: {
+                user: {
+                    account_id: 1
+                }
+            }
         }
         await dataUploadController.createNewDatasetRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
@@ -57,5 +72,33 @@ describe('Data Upload Controller', () => {
         await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
         expect(mockResponse.status).toBeCalledWith(201)
+    })
+
+    test('Invalid Data Set Edit; bad data set id', async () => {
+
+        let expectedResponse = "Invalid data set ID entered"
+        mockRequest = {
+            body: validTestData,
+            params: {
+                datasetId: 'wefwfeewfewfwefwef'
+            }
+        }
+        await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(400)
+    })
+
+    test('Invalid Data Set Edit; empty body', async () => {
+
+        let expectedResponse = "No Dataset Received"
+        mockRequest = {
+            body: {},
+            params: {
+                datasetId: '9'
+            }
+        }
+        await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(400)
     })
 })

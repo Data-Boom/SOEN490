@@ -2,7 +2,7 @@ import { Box, Typography, useTheme } from '@material-ui/core'
 import React, { useState } from 'react'
 
 import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
-import { FileUploadForm } from '../DataCell/FileUploadForm'
+import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
 import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
@@ -49,7 +49,7 @@ export const DataCellAnalysisView = (props: IProps) => {
           <Typography>Data Cell Analysis Upload Page</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            validateFile={validatePNG}
+            isValidFile={validatePNG}
             acceptFileFormat={fileFormat}
           />
         </Box>

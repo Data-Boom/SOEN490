@@ -77,14 +77,13 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
       type: remoteDataset.publication.publicationType,
       volume: remoteDataset.publication.volume,
       year: remoteDataset.publication.year,
-    },
-    id: remoteDataset.dataset_id
+    }, id: remoteDataset.dataset_id
   }
 
   return dataset
 }
 
-const toLocalDataPoints = (remotePoints: IRemoteDataPointModel[], dataComments: string[]): IData => {
+export const toLocalDataPoints = (remotePoints: IRemoteDataPointModel[], dataComments: string[]): IData => {
   const data: IData = {} as any
   data.variables = remotePoints.map((remotePoint) => toVariable(remotePoint))
   data.contents = toContents(remotePoints, dataComments)
@@ -109,7 +108,7 @@ const buildContent = (remotePoints: IRemoteDataPointModel[], rowIndex: number): 
   const points: number[] = []
   const variableCount: number = remotePoints.length
   for (let i = 0; i < variableCount; i++) {
-    const contentPoint = remotePoints[i].values[rowIndex];
+    const contentPoint = remotePoints[i].values[rowIndex]
     points.push(contentPoint)
   }
 

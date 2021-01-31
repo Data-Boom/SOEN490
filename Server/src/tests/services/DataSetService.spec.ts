@@ -3,6 +3,7 @@ import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInter
 
 import { createConnection, getConnection } from 'typeorm';
 import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
+import { BadRequest, NotFound } from "@tsed/exceptions";
 
 
 describe('data service test', () => {
@@ -257,6 +258,12 @@ describe('data service test', () => {
     done()
   });
 
+  test('Asks for all flagged data sets of non-existant user, expects an error', async () => {
+    await expect(retrieveDataObject.getUserFlaggedDatasets(0))
+      .rejects
+      .toThrow("No Flagged Unapproved Datasets in database for this user");
+  });
+
   test('Flag an unapproved data set, with no additional comments', async done => {
     let response = await retrieveDataObject.flagNewDataset(5)
     expect(response.message).toEqual("Dataset Flagged!");
@@ -278,7 +285,13 @@ describe('data service test', () => {
     done()
   });
 
-  test('Reject an unapproved data set, most', async done => {
+  test('Invalid reject an unapproved data set', async () => {
+    await expect(retrieveDataObject.rejectDataSet(0))
+      .rejects
+      .toThrow("No such data set exists");
+  });
+
+  test('Reject an unapproved data set', async done => {
     let response = await retrieveDataObject.rejectDataSet(7)
     expect(response.message).toEqual("Successfully removed data set");
     expect(response.statusCode).toEqual(200);
@@ -311,5 +324,11 @@ describe('data service test', () => {
     expect(response.message).toEqual("Successfully approved new data set");
     expect(response.statusCode).toEqual(200);
     done()
+  });
+
+  test('Invalid user approves a data set request', async () => {
+    await expect(retrieveDataObject.userApprovedDataset(0, 2))
+      .rejects
+      .toThrow("User ID does not match uploader ID!");
   });
 })
