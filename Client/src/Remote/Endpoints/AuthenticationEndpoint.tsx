@@ -23,10 +23,14 @@ export const callLogIn = async (loginUser: ILoginUserModel): Promise<any> => {
 
 export const callResetPassword = async (resetPasswordInfo: IResetPasswordModel): Promise<any> => {
   const result = await post(resetPasswordRoute).withBody(resetPasswordInfo).json()
-  return result
+  if (result == 'Success') {
+    SnackbarUtils.success(`Password has been reset!`)
+  }
 }
 
 export const callForgotPassword = async (forgotPasswordInfo: IForgotPasswordModel): Promise<any> => {
   const result = await post(forgotPasswordRoute).withBody(forgotPasswordInfo).json()
-  return result
+  if (result == 'Success') {
+    SnackbarUtils.success(`An email has been sent for ${forgotPasswordInfo.email}!`)
+  }
 }

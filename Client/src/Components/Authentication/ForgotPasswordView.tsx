@@ -37,7 +37,7 @@ export default function ForgotPasswordView() {
   const classes = useStyles()
 
   const handleForgotPasswordSubmit = async (resetPasswordInfo: IForgotPasswordModel): Promise<void> => {
-    await callForgotPassword(resetPasswordInfo);
+    await callForgotPassword(resetPasswordInfo)
   }
 
   return (

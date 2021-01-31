@@ -176,7 +176,7 @@ export class AuthenticationController {
     let serviceResponse: IResponse;
     try {
       serviceResponse = await this.authenticationService.updatePassword(resetPasswordInfo);
-      return response.status(serviceResponse.statusCode).json(serviceResponse.message);
+      return response.status(serviceResponse.statusCode).json('Success');
     } catch (error) {
       console.log(error);
       return response.status(error.status).json(error.message);
