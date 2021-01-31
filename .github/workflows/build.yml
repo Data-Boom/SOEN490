@@ -22,12 +22,11 @@ jobs:
           TEST_PORT: ${{ secrets.TEST_PORT }}
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
       - run: |
-          echo ${{ secrets.TEST_DB_PORT }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_DB_TYPE }} | sed 's/./& /g' 
           echo ${{ secrets.TEST_PORT }} | sed 's/./& /g' 
       - run: |
           cd Server && npm install && npx ts-node ./node_modules/typeorm/cli.js migration:run 
           npm run test
-          echo ${#TEST_DB_PORT}
       - run: cd Server && npx ts-node ./node_modules/typeorm/cli.js migration:revert
       - name: Coveralls
         uses: coverallsapp/github-action@master
