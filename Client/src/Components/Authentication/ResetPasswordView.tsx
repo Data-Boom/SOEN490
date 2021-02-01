@@ -1,6 +1,5 @@
 import { FastField, Field, Form, Formik } from 'formik'
-import { defaultResetPasswordModel, IResetPasswordModel } from '../../Models/Authentication/ISignUpModel'
-import React from 'react'
+import { IResetPasswordModel, defaultResetPasswordModel } from '../../Models/Authentication/ISignUpModel'
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -8,10 +7,11 @@ import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { callResetPassword } from '../../Remote/Endpoints/AuthenticationEndpoint'
-import { resetPasswordValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { resetPasswordValidationSchema } from './AuthenticationValidationSchema'
 import { useParams } from 'react-router'
 
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +92,7 @@ export default function ResetPasswordView() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                id="resetPasswordButton"
               >
                 Reset Password
               </Button>

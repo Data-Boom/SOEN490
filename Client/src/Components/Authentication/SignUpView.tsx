@@ -102,7 +102,7 @@ export default function SignUpView(props: any) {
                     required
                     fullWidth
                     component={MuiTextFieldFormik}
-                    id="email"
+                    id="signUpEmail"
                     label="Email Address"
                     name="email"
                     autoComplete="email" />

@@ -1,16 +1,16 @@
 import { FastField, Form, Formik } from 'formik'
-import React from 'react'
+import { IForgotPasswordModel, defaultForgotPasswordModel } from '../../Models/Authentication/ISignUpModel';
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { callForgotPassword } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { forgotPasswordValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import { defaultForgotPasswordModel, IForgotPasswordModel } from '../../Models/Authentication/ISignUpModel';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,7 +60,7 @@ export default function ForgotPasswordView() {
               variant="outlined"
               margin="normal"
               required
-              id="email"
+              id="forgotPasswordEmail"
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -72,6 +72,7 @@ export default function ForgotPasswordView() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              id="forgotPasswordButton"
             >
               Forgot Password
             </Button>

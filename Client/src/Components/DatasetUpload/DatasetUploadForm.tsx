@@ -73,7 +73,7 @@ export const DatasetUploadForm = (props: IProps): any => {
         <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />
-        <Button variant="contained" color="primary" type="submit">{buttonName}</Button>
+        <Button id={buttonName} variant="contained" color="primary" type="submit">{buttonName}</Button>
       </Form>
     </Formik>
   )

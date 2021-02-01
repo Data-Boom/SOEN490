@@ -1,8 +1,11 @@
+import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
+import { Modal, Paper } from '@material-ui/core'
 import React, { useContext, useState } from 'react'
 
-import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@material-ui/core'
+import CancelIcon from "@material-ui/icons/Cancel"
+import ForgotPasswordView from './ForgotPasswordView'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
@@ -13,9 +16,6 @@ import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import { Modal, Paper } from '@material-ui/core'
-import ForgotPasswordView from './ForgotPasswordView'
-import CancelIcon from "@material-ui/icons/Cancel"
 
 function Copyright() {
   return (
@@ -121,7 +121,7 @@ export default function LoginView() {
                   margin="normal"
                   required
                   fullWidth
-                  id="email"
+                  id="logInViewEmail"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
@@ -155,7 +155,7 @@ export default function LoginView() {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link onClick={handleOpen} variant="body2">
+                    <Link id="ForgotPasswordLink" onClick={handleOpen} variant="body2">
                       Forgot password?
                     </Link>
                   </Grid>
