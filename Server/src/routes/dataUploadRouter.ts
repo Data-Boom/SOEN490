@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
-import { NextFunction, Request, Response, Router } from 'express';
 import { DataUploadController } from '../controllers/dataUploadController';
 import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 
