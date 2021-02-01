@@ -8,21 +8,23 @@ import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 
 interface IProps {
-  value: IMaterial[]
-  options: IMaterial[]
-  fieldArrayHelpers: ArrayHelpers
+  value: IMaterial[],
+  options: IMaterial[],
+  fieldArrayHelpers: ArrayHelpers,
+  editable: boolean
 }
 
 const materialToString = (material: IMaterial) => {
-  return material && material.composition + ' ' + material.details
+  return material && material.composition + ', ' + material.details
 }
 
 export const MaterialSelectChipArray = (props: IProps) => {
-  const { value, options, fieldArrayHelpers } = props
-  console.log(value);
+  const { value, options, fieldArrayHelpers, editable } = props
   const handleDelete = (materialToDelete: IMaterial) => {
-    const indexToRemove = value.findIndex(material => materialToString(material) == materialToString(materialToDelete))
-    fieldArrayHelpers.remove(indexToRemove)
+    if (editable) {
+      const indexToRemove = value.findIndex(material => materialToString(material) == materialToString(materialToDelete))
+      fieldArrayHelpers.remove(indexToRemove)
+    }
   }
 
   const handleAdd = (event, newMaterial: IMaterial) => {
@@ -54,6 +56,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
         {renderMaterials()}
         <Grid item sm={6}>
           <Autocomplete
+            disabled={!editable}
             onChange={handleAdd}
             options={options}
             getOptionLabel={option => materialToString(option)}

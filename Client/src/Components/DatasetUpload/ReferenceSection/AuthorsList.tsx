@@ -1,18 +1,19 @@
-import { ArrayHelpers, FormikProps } from "formik"
 import { Grid, IconButton, Typography } from "@material-ui/core"
-import { IAuthor, defaultAuthor } from "../../../Models/Datasets/IDatasetModel"
-import React, { useState } from 'react'
+import { IAuthor, newAuthor } from "../../../Models/Datasets/IDatasetModel"
 
 import AddIcon from '@material-ui/icons/Add'
+import { ArrayHelpers } from "formik"
 import { AuthorRow } from "./AuthorRow"
+import React from 'react'
 
 interface IProps {
   authors: IAuthor[],
-  fieldArrayHelpers: ArrayHelpers
+  fieldArrayHelpers: ArrayHelpers,
+  editable: boolean
 }
 
 export const AuthorsList = (props: IProps) => {
-  const { authors, fieldArrayHelpers } = props
+  const { authors, fieldArrayHelpers, editable } = props
 
   const handleRemoveAuthor = (indexToRemove: number) => {
     fieldArrayHelpers.remove(indexToRemove)
@@ -25,6 +26,7 @@ export const AuthorsList = (props: IProps) => {
           key={index}
           index={index}
           onRemoveAuthorClick={handleRemoveAuthor}
+          editable={editable}
           removable={shouldRenderRemove()}
         />
       )
@@ -37,7 +39,7 @@ export const AuthorsList = (props: IProps) => {
   }
 
   const handleAddAuthor = () => {
-    fieldArrayHelpers.push(defaultAuthor)
+    fieldArrayHelpers.push(newAuthor)
   }
 
   return (
@@ -50,7 +52,7 @@ export const AuthorsList = (props: IProps) => {
           {renderAuthorRows()}
         </Grid>
         <Grid item>
-          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor}>
+          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!editable}>
             <AddIcon />
           </IconButton>
         </Grid>

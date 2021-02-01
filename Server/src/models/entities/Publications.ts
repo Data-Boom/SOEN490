@@ -1,7 +1,7 @@
 import { Authors } from './Authors';
 import { Publicationtype } from './Publicationtype';
 import { Publisher } from './Publisher';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, Connection } from "typeorm";
 import { Dataset } from './Dataset';
 
 
@@ -79,20 +79,37 @@ export class Publications {
     authors: Authors[];
 }
 
-export const selectPublicationsQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
-        .select('publication.name', 'publication_name')
-        .addSelect('dataset.id', 'dataset_id')
-        .addSelect('publication.doi', 'publication_doi')
-        .addSelect('publication.pages', 'publication_pages')
-        .addSelect('publication.volume', 'publication_volume')
-        .addSelect('publication.year', 'publication_year')
-        .addSelect('publication.datePublished', 'publication_datePublished')
-        .addSelect('publication.dateAccessed', 'publication_dateAccessed')
-        .addSelect('publisher.name', 'publisher_name')
-        .addSelect('publicationtype.name', 'publicationtype_name')
+export const selectPublicationsQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('publication.name', 'name')
+        .addSelect('publication.doi', 'DOI')
+        .addSelect('publication.pages', 'pages')
+        .addSelect('publication.volume', 'volume')
+        .addSelect('publication.year', 'year')
+        .addSelect('publication.datePublished', 'datePublished')
+        .addSelect('publication.dateAccessed', 'dateAccessed')
+        .addSelect('publisher.name', 'publisher')
+        .addSelect('publicationtype.name', 'publicationType')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
         .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawOne();
+
+export const selectAllPublicationsQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('publication.name', 'name')
+        .addSelect('publication.doi', 'DOI')
+        .addSelect('publication.pages', 'pages')
+        .addSelect('publication.volume', 'volume')
+        .addSelect('publication.year', 'year')
+        .addSelect('publication.datePublished', 'datePublished')
+        .addSelect('publication.dateAccessed', 'dateAccessed')
+        .addSelect('publisher.name', 'publisher')
+        .addSelect('publicationtype.name', 'publicationType')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
+        .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
+        .whereInIds(datasets)
         .getRawMany();

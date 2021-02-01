@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, EntityManager } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, Connection } from "typeorm";
 import { Dataset } from './Dataset';
 
 
@@ -39,13 +39,33 @@ export class Authors {
     publications: Publications[];
 }
 
-export const selectAuthorsQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
-        .select('author.firstName', 'author_firstName')
-        .addSelect('author.lastName', 'author_lastName')
-        .addSelect('author.middleName', 'author_middleName')
-        .addSelect('dataset.id', 'dataset_id')
+export const selectAuthorsQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('author.firstName', 'firstName')
+        .addSelect('author.lastName', 'lastName')
+        .addSelect('author.middleName', 'middleName')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin('publication.authors', 'author')
         .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawMany();
+
+export const selectAllAuthorsQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('author.firstName', 'firstName')
+        .addSelect('author.lastName', 'lastName')
+        .addSelect('author.middleName', 'middleName')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
+        .innerJoin('publication.authors', 'author')
+        .whereInIds(datasets)
+        .getRawMany();
+
+export const selectAuthorsOfPublicationQuery = (connection: Connection, id: number) =>
+    connection.createQueryBuilder(Publications, 'publication')
+        .select('author.firstName', 'firstName')
+        .addSelect('author.lastName', 'lastName')
+        .addSelect('author.middleName', 'middleName')
+        .addSelect('author.id', 'id')
+        .innerJoin('publication.authors', 'author')
+        .where('publication.id = :id', { id: id })
         .getRawMany();

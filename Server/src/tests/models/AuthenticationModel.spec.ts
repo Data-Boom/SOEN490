@@ -1,7 +1,6 @@
-import { createConnection, getConnection, TableForeignKey } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 import { AuthenticationModel } from '../../models/AuthenticationModel';
 import { ISignUpInformation } from '../../genericInterfaces/AuthenticationInterfaces';
-import { ILoginInformation } from '../../genericInterfaces/AuthenticationInterfaces';
 
 
 describe('Authentication Model Methods', () => {

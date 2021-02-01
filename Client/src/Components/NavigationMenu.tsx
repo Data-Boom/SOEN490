@@ -1,47 +1,25 @@
 /* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
 
-import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemIcon, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import {
-  HashRouter,
-  Link,
-  NavLink,
-  Route
-} from "react-router-dom"
+import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
+import { HashRouter, Link } from 'react-router-dom'
+import { ListRouter, getRoutedViews } from "./ListRouter"
+import React, { useContext, useState } from 'react'
 
-import { aboutRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, graphRoute, homeRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signInRoute, signUpRoute} from '../Consts/Routes'
-
-
-import { AboutView } from "./Home/AboutView"
-import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import BarChartIcon from '@material-ui/icons/BarChart'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
-import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
-import DonutSmallIcon from '@material-ui/icons/DonutSmall'
-import FileUploadView from "./DataCell/FileUploadView"
-import GraphView from "./Graph/GraphView"
-import HomeIcon from '@material-ui/icons/Home'
-import HomeView from './Home/HomeView'
-import ImageSearchIcon from '@material-ui/icons/ImageSearch'
-import InfoIcon from '@material-ui/icons/Info'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuIcon from '@material-ui/icons/Menu'
-import { ProfileView } from "../Views/ProfileView"
-import React from 'react'
-import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
-import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "./Search/SearchView"
+import { UserContext } from "../App"
 import clsx from "clsx"
+import { linkWidth } from './ListRouter'
+import { loginRoute } from "../Common/Consts/Routes"
+import { removeUserInStorage } from '../Common/Storage'
 import universitylogo from './universitylogo.png'
-import PersonIcon from '@material-ui/icons/Person';
-import SignIn from "../Authentication/SignIn"
-import SignUp from "../Authentication/SignUp"
 
-const drawerWidth = 240
+const drawerWidth = linkWidth
 
-export default function NavigationMenu(): any {
-  const [open, setOpen] = React.useState(false)
+export default function NavigationMenu() {
+  const { user, setUser } = useContext(UserContext)
+  const [open, setOpen] = useState(false)
   const classes = useStyles()
 
   const handleDrawerOpen = () => {
@@ -52,50 +30,35 @@ export default function NavigationMenu(): any {
     setOpen(false)
   }
 
-  const renderNavLink = (route, title, icon, navID = null) => {
-    return (
-      <ListItem button>
-        <ListItemIcon>
-          {icon}
-        </ListItemIcon>
-        <NavLink exact to={route} id={navID} >
-          {title}
-        </NavLink>
-      </ListItem>
-    )
-  }
-
-  const handleSignIn = (): void => {
-
+  function logout() {
+    removeUserInStorage()
+    window.location.replace("/")
   }
 
   const drawer = (): any => {
     return (
-      <>
-        <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{
-          paper: classes.drawerPaper,
-        }}>
-          <div className={classes.drawerHeader}>
-            <IconButton id='Close' onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {renderNavLink(homeRoute, "Home", <HomeIcon />)}
-            {renderNavLink(graphRoute, "Graph", <BarChartIcon />, "graph-id")}
-            {renderNavLink(searchRoute, "Search", <SearchIcon />)}
-            {renderNavLink(researchPaperAnalysisRoute, "Research Analysis", <ImageSearchIcon />)}
-            {renderNavLink(dataCellAnalysisRoute, "Data Cell Analysis", <DonutSmallIcon />)}
-            {renderNavLink(fileUploadRoute, "File Upload", <CloudUploadIcon />)}
-            {renderNavLink(profileRoute, "Profile", <AccountBoxIcon />)}
-            {renderNavLink(datasetUploadRoute, "Dataset Upload", <CloudUploadIcon />)}
-            {renderNavLink(aboutRoute, "About Databoom", <InfoIcon />)}
-            {renderNavLink(signInRoute, "Sign in", <PersonIcon />)}
-          </List>
-        </ Drawer>
-      </>
+      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
+        <div className={classes.drawerHeader}>
+          <IconButton id='Close' onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        {ListRouter()}
+      </ Drawer>
     )
+  }
+
+  const renderGreeting = () => {
+    return user && user.firstName ?
+      (
+        <Typography>
+          Hello, {user.firstName} {user.lastName}
+          <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
+        </Typography>
+      ) : (
+        <Button component={Link} to={loginRoute} id='LogIn' variant="contained">Log in</Button>
+      )
   }
 
   return (
@@ -104,11 +67,13 @@ export default function NavigationMenu(): any {
         <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
-              <Grid item>
-                <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
+              <ClickAwayListener onClickAway={handleDrawerClose}>
+                <Grid item>
+                  <IconButton id='Open' edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen} className={clsx(classes.menuButton)}>
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+              </ClickAwayListener>
               <Grid item>
                 <img src={universitylogo} />
               </Grid>
@@ -118,26 +83,17 @@ export default function NavigationMenu(): any {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                <Button component={Link} to={signInRoute} id='btn1' onClick={handleSignIn} variant="contained">Sign In</Button>
+                {renderGreeting()}
               </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
         {drawer()}
-        <Box pt={16}>
-          <Route exact path={homeRoute} component={HomeView} />
-          <Route path={graphRoute} component={GraphView} />
-          <Route path={fileUploadRoute} component={FileUploadView} />
-          <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
-          <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
-          <Route path={searchRoute} component={SearchView} />
-          <Route path={datasetUploadRoute} component={DatasetUploadView} />
-          <Route path={aboutRoute} component={AboutView} />
-          <Route path={profileRoute} component={ProfileView} />
-          <Route path={signInRoute} component={SignIn} />
-          <Route path={signUpRoute} component={SignUp} />
+        <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
+          {getRoutedViews()}
         </Box>
-      </HashRouter >
+      </HashRouter>
+
     </>
   )
 }

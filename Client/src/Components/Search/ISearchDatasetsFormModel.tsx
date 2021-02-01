@@ -1,21 +1,33 @@
+import * as Yup from 'yup'
+
 export interface ISearchDatasetsFormModel {
-  oxidizer: string,
-  year: string,
-  outputFormat: string,
-  categories: string,
-  subcategories: string,
-  fuel: string,
-  author: string,
-  dilutent: string,
+  datasetId?: number[],
+  material?: string[],
+  firstName?: string,
+  lastName?: string,
+  year?: number,
+  categoryId?: number,
+  subcategoryId?: number
+}
+
+export interface ICategory {
+  name: string,
+  id: number
+}
+export interface ISubcategory {
+  name: string,
+  id: number
 }
 
 export const defaultSearchDatasetsModel: ISearchDatasetsFormModel = {
-  oxidizer: '',
-  year: '',
-  outputFormat: '',
-  categories: '',
-  subcategories: '',
-  fuel: '',
-  author: '',
-  dilutent: '',
+  datasetId: [],
+  material: [],
+  firstName: undefined,
+  lastName: undefined,
+  year: undefined,
+  categoryId: undefined,
+  subcategoryId: undefined
 }
+
+//todo complete Yup validation
+export const searchDatasetsValidationSchema = Yup.object()

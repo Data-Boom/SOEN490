@@ -1,18 +1,25 @@
 import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import { connectDB } from '../database';
-import { fileUploadRouter } from '../routes/fileUploadRouter';
+import 'cookie-parser'
+
 import { authenticationRouter } from '../routes/authenticationRouter';
-import bodyParser from 'body-parser';
+import bodyParser from 'body-parser'
+import { connectDB } from '../database';
+import cors from 'cors';
+import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
-import { getDataRouter } from '../routes/getDatasetRouter';
+import { dataExtractionRouter } from '../routes/dataExtractionRouter'
+import { dataUploadRouter } from '../routes/dataUploadRouter'
+import { getConnectionManager } from 'typeorm';
+import { GraphsRouter } from '../routes/GraphsRouter';
+import { DataSetRouter } from '../routes/DatasetRouter';
+
+const cookieParser = require('cookie-parser');
 
 /**
  * This class contains complete startup procedure of the application. These settings are loaded only once and used
  * to initialize the application. The initial connection to the database is also created here.
  */
-export class loadStartupProcess {
+export class LoadStartupProcess {
   private app: express.Application;
   private config: any;
   private server: any;
@@ -22,6 +29,8 @@ export class loadStartupProcess {
 
     // Create a new express application instance
     this.app = express();
+
+    this.app.use(cookieParser());
 
     this.app.disable("x-powered-by"); //disable HTTP header to not disclose technology used on the website. (fingerprint hiding)
 
@@ -39,7 +48,7 @@ export class loadStartupProcess {
       ],
       credentials: true,
       methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-      origin: "http://localhost:4500",
+      origin: "http://localhost:3000",
       preflightContinue: false,
     };
 
@@ -53,11 +62,12 @@ export class loadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    this.app.use('/', fileUploadRouter)
+    this.app.use('/', dataExtractionRouter)
     this.app.use('/', authenticationRouter)
-    this.app.use('/', getDataRouter)
+    this.app.use('/', DataSetRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
-
+    this.app.use('/', dataUploadRouter)
+    this.app.use('/', GraphsRouter)
 
     this.config = {
       "type": process.env.DB_TYPE,
@@ -66,9 +76,8 @@ export class loadStartupProcess {
       "username": process.env.USER_NAME,
       "password": process.env.PASSWORD,
       "database": process.env.DB_NAME,
-      "synchronize": true,
+      "synchronize": false,
       "logging": true,
-      "migrationsRun": true,
       "entities": [
         "src/models/entities/**/*.ts",
         "dist/entities/**/*.js"
@@ -89,6 +98,11 @@ export class loadStartupProcess {
       try {
         await connectDB(this.config);
       } catch (error) {
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (error.name === "AlreadyHasActiveConnectionError") {
+          const existentConn = getConnectionManager().get("default");
+          return existentConn;
+        }
         console.log("caught error while connecting to db:")
         console.log(error)
       }

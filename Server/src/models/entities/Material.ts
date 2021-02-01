@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, EntityManager } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, Connection } from "typeorm";
 import { Composition } from "./Composition";
 import { Dataset } from "./Dataset";
 
@@ -45,12 +45,21 @@ export class Material {
     updated: Date
 }
 
-export const selectMaterialQuery = (manager: EntityManager, dataset: number) =>
-    manager.createQueryBuilder(Dataset, 'dataset')
-        .select('composition.composition', 'composition_name')
-        .addSelect('material.details', 'material_details')
-        .addSelect('dataset.id', 'dataset_id')
+export const selectMaterialQuery = (connection: Connection, dataset: number) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('composition.composition', 'composition')
+        .addSelect('material.details', 'details')
         .innerJoin('dataset.materials', 'material')
         .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
         .where('dataset.id = :datasetId', { datasetId: dataset })
+        .getRawMany();
+
+export const selectAllMaterialQuery = (connection: Connection, datasets: number[]) =>
+    connection.createQueryBuilder(Dataset, 'dataset')
+        .select('composition.composition', 'composition')
+        .addSelect('material.details', 'details')
+        .addSelect('dataset.id', 'dataset_id')
+        .innerJoin('dataset.materials', 'material')
+        .innerJoin(Composition, 'composition', 'material.compositionId = composition.id')
+        .whereInIds(datasets)
         .getRawMany();

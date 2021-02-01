@@ -28,10 +28,25 @@ export const classStyles = () => {
       padding: '15px',
       margin: '15px 0'
     },
+    datasetBorder: {
+      borderColor: theme.palette.primary.light,
+      borderRadius: 3,
+      borderWidth: '1px',
+      border: 'solid',
+      padding: '3px 10px',
+      margin: '5px 0'
+    },
     modal: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    modalsearch: {
+      display: 'grid',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'auto',
     },
   })()
 }
