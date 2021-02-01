@@ -149,6 +149,7 @@ export default function LoginView() {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  id="LogInButton"
                 >
                   Log In
                 </Button>
@@ -159,7 +160,7 @@ export default function LoginView() {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#/sign-up" variant="body2">
+                    <Link id="SignUpForm" href="#/sign-up" variant="body2">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

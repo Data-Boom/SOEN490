@@ -40,15 +40,15 @@ export default function UserDetailsTab(props: IProps) {
         {readOnly ?
           (
             <Grid item>
-              <Button variant="contained" color="primary" onClick={() => setReadOnly(false)}>Edit Profile</Button>
+              <Button id="EditProfile" variant="contained" color="primary" onClick={() => setReadOnly(false)}>Edit Profile</Button>
             </Grid>
           ) : (
             <>
               <Grid item>
-                <Button variant="contained" color="primary" onClick={handleReset}>Cancel</Button>
+                <Button id="CancelEdit" variant="contained" color="primary" onClick={handleReset}>Cancel</Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" onClick={handleSubmit}>Save</Button>
+                <Button id="SaveEdit" variant="contained" color="primary" onClick={handleSubmit}>Save</Button>
               </Grid>
             </>
           )}

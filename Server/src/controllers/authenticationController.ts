@@ -1,4 +1,4 @@
-import { BadRequest } from "@tsed/exceptions";
+import { ILoginInformation, IPasswordResetInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationService } from '../services/authenticationService';

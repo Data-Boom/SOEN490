@@ -163,7 +163,7 @@ export default function SignUpView(props: any) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-
+                id="SignUpButton"
               >
                 Sign Up
               </Button>

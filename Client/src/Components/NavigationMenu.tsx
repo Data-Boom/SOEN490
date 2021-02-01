@@ -54,10 +54,10 @@ export default function NavigationMenu() {
       (
         <Typography>
           Hello, {user.firstName} {user.lastName}
-          <Button variant="contained" onClick={logout}>Sign out</Button>
+          <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
         </Typography>
       ) : (
-        <Button component={Link} to={loginRoute} id='btn1' variant="contained">Log in</Button>
+        <Button component={Link} to={loginRoute} id='LogIn' variant="contained">Log in</Button>
       )
   }
 
