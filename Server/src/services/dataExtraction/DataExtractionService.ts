@@ -1,6 +1,7 @@
 import { JsonFileExtractorFactory } from './JsonFileHandlerFactory';
 import { IResponse } from '../../genericInterfaces/ResponsesInterface';
 import { BadRequest } from '@tsed/exceptions';
+import { AbstractFileExtractor, FileExtractorFactory } from './FileHandlerFactory';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -10,7 +11,7 @@ export class DataExtractionService {
 
     private dataType: string
     private filePath: string
-    private factory: any
+    private factory: FileExtractorFactory
 
     constructor(dataType: any, filePath: string) {
         this.dataType = dataType
