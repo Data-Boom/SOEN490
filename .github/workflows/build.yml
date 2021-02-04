@@ -16,12 +16,8 @@ jobs:
             node-version: '14.x'
       - name: Install dependencies
         run: npm install
-      - name: Run migration
-        run: npx ts-node ./node_modules/typeorm/cli.js migration:run
       - name: Run tests
         run: jest --coverage --config
-      - name: Revert migration
-        run: npx ts-node ./node_modules/typeorm/cli.js migration:revert
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
           TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
