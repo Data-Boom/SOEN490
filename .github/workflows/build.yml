@@ -17,7 +17,7 @@ jobs:
       - name: Run tests
         run: |                                           
           npm install
-          npx jest --coverage --config ./jest.config.js 
+          npm jest --coverage --config ./jest.config.js 
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
           TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
