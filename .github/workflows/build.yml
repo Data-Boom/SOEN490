@@ -11,9 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        with: 
-            node_version: 14.x
         uses: actions/setup-node@v1
+        with: 
+            node-version: '14.x'
       - name: Run tests
         run: |                                           
           npm install
