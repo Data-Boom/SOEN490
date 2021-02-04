@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
             npm install 
-            cd ../Client && npm install && cd../Server
+            cd ../Client && npm install && cd ../Server
       - name: Run tests
         run: npm run test
         env:
@@ -29,3 +29,7 @@ jobs:
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
           TEST_PORT: ${{ secrets.TEST_PORT }}
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
+          MAILGUN_API: ${{ secrets.MAILGUN_API }}
+          MAILGUN_FROM: ${{ secrests.MAILGUN_FROM }}
+          MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
