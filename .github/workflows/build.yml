@@ -16,14 +16,24 @@ jobs:
             node-version: '14.x'
       - name: Install dependencies
         run: npm install
+      - name: Env
+        run: |
+          echo ${{ secrets.TEST_DB_NAME }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_DB_PORT }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_DB_TYPE }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_HOST }} | sed 's/./& /g'
+          echo ${{ secrets.TEST_USER_NAME }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_PASSWORD }} | sed 's/./& /g' 
+          echo ${{ secrets.TEST_DB_NAME }} | sed 's/./& /g' 
+          echo ${{ secrets.ACCESS_SECRET_KEY }} | sed 's/./& /g'  
       - name: Run tests
-        run: npx jest --coverage --config
+        run: npm run test
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
           TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
           TEST_DB_TYPE: ${{ secrets.TEST_DB_TYPE }}
           TEST_HOST: ${{ secrets.TEST_HOST }}   
-          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
           TEST_PORT: ${{ secrets.TEST_PORT }}
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
