@@ -44,7 +44,7 @@ export default function PasswordChangeForm(props: IProps) {
             </Grid>
           </Grid>
         </Box>
-        <Button variant="contained" color="primary" type="submit">Confirm Password</Button>
+        <Button id="ConfirmPasswordButton" variant="contained" color="primary" type="submit">Confirm Password</Button>
       </Form>
     </Formik>
   )

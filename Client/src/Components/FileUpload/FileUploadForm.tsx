@@ -34,7 +34,6 @@ export const FileUploadForm = (props: IProps) => {
     if (isValid) {
       onSubmit(file)
       setAlertSuccess(true)
-      //window.location.href = datasetUploadRoute
     }
     else {
       setAlertOpen(true)
@@ -62,7 +61,7 @@ export const FileUploadForm = (props: IProps) => {
           <form onSubmit={handleSubmit}>
             <div>
               <input type="file" accept={acceptFileFormat} id={fileInputId} />
-              <Button variant="contained" type='submit' color='primary'> Upload </Button>
+              <Button id="uploadFileButton" variant="contained" type='submit' color='primary'> Upload </Button>
             </div>
           </form>
         </Box>

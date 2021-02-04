@@ -51,7 +51,7 @@ export const SaveGraphStateForm = (props: IProps) => {
               <Field name="name" label='Graph Name' component={MuiTextFieldFormik} />
             </Grid>
             <Grid item sm={4}>
-              <Button type="submit" variant="contained" color="primary">Save Graph</Button>
+              <Button id="SaveGraph" type="submit" variant="contained" color="primary">Save Graph</Button>
             </Grid>
           </Grid>
         </Box>

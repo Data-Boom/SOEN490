@@ -63,9 +63,9 @@ export function AdminReviewView() {
                         update={update}
                     />
                     <br></br>
-                    <Button id="toggle-edit" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
-                <Button id="toggle-edit" color="primary" onClick={handleFlagDataset} variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
-                <Button id="toggle-edit" color="primary" onClick={handleDeleteDataset} variant="contained">Delete</Button>
+                    <Button id="toggleEditButton" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
+                <Button id="flagDatasetButton" color="primary" onClick={handleFlagDataset} variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
+                <Button id="deleteDatasetButton" color="primary" onClick={handleDeleteDataset} variant="contained">Delete</Button>
                 </Box>
                 <Box p={5}>
                     <TextField
