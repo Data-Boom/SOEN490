@@ -31,5 +31,5 @@ jobs:
           ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
           CLIENT_URL: ${{ secrets.CLIENT_URL }}
           MAILGUN_API: ${{ secrets.MAILGUN_API }}
-          MAILGUN_FROM: ${{ secrests.MAILGUN_FROM }}
+          MAILGUN_FROM: ${{ secrets.MAILGUN_FROM }}
           MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
