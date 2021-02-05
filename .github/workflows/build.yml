@@ -1,0 +1,35 @@
+name: CI Build
+on: 
+  pull_request:
+    branches: [master, develop]
+defaults:
+  run:
+    working-directory: ./Server
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with: 
+            node-version: '14.x'
+      - name: Install dependencies
+        run: |
+            npm install 
+            cd ../Client && npm install && cd ../Server
+      - name: Run tests
+        run: npm run test
+        env:
+          TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
+          TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
+          TEST_DB_TYPE: ${{ secrets.TEST_DB_TYPE }}
+          TEST_HOST: ${{ secrets.TEST_HOST }}   
+          TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          TEST_PORT: ${{ secrets.TEST_PORT }}
+          ACCESS_SECRET_KEY: ${{ secrets.ACCESS_SECRET_KEY }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
+          MAILGUN_API: ${{ secrets.MAILGUN_API }}
+          MAILGUN_FROM: ${{ secrets.MAILGUN_FROM }}
+          MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
