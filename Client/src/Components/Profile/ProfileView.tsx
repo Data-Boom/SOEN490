@@ -163,7 +163,8 @@ export function ProfileView() {
           <Tabs value={tab} onChange={handleChange}>
             <Tab label="View Profile" {...a11yProps(0)} />
             <Tab label="View Favourites" {...a11yProps(1)} />
-            <Tab label="View Uploads" {...a11yProps(2)} />
+            <Tab label="Permissions" {...a11yProps(2)} />
+            <Tab label="View Uploads" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -194,6 +195,28 @@ export function ProfileView() {
             </TableContainer>
           </TabPanel>
           <TabPanel value={tab} index={2}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                Add new admin by providing admin's email:
+              </Grid>
+              <Grid item xs={12}>
+                <TableContainer component={Paper} style={{ width: "100%" }}>
+                  <Table aria-label="collapsabile table">
+                    <TableHead >
+                      <TableRow>
+                        <TableCell align="left">Current Admins:
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      admin emails
+                </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
+            </Grid>
+          </TabPanel>
+          <TabPanel value={tab} index={3}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
                 <TableHead>Uploads
