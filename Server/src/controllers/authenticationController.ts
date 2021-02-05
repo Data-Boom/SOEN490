@@ -49,6 +49,8 @@ export class AuthenticationController {
     }
   }
 
+
+
   async createForgotPasswordRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
     this.invalidResponse = this.validateForgotPasswordRequest(request);
     if (this.invalidResponse) {
@@ -109,8 +111,9 @@ export class AuthenticationController {
   private validateUserDetailRequest(request: Request): boolean {
     if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organizationName')) {
       return true;
-    } else
+    } else {
       return false;
+    }
   }
 
   async updateUserDetailRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
