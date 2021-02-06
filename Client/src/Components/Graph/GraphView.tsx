@@ -1,4 +1,4 @@
-import { Box, Grid } from "@material-ui/core"
+import { Box, Grid, Typography } from "@material-ui/core"
 import { IGraphStateModel, newGraphState } from "../../Models/Graph/IGraphStateModel"
 import React, { useState } from "react"
 
@@ -6,6 +6,7 @@ import Graph from './Graph'
 import { GraphStateControl } from "./GraphControls/GraphStateControl"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel } from '../../Models/Graph/IGraphDatasetModel'
+import { Link } from "react-router-dom"
 import { getGraphDatasets } from "./GraphFunctions"
 import { useParams } from "react-router"
 
@@ -27,6 +28,11 @@ export default function GraphView() {
 
   return (
     <>
+      <Link to={'/uploadDataset/' + 2} >
+        <Typography>
+          Hello
+        </Typography>
+      </Link>
       <Box ml={8}>
         <Grid container spacing={3}>
           <Grid item container sm={7} >
