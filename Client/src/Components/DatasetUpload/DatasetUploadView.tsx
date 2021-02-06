@@ -6,10 +6,15 @@ import { DatasetUploadForm } from './DatasetUploadForm'
 import React from 'react'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
+import { useParams } from "react-router"
+import { useState } from 'react'
 
 interface IProps {
-  initialDataset?: IDatasetModel,
-  datasetID?: number
+  initialDataset?: IDatasetModel
+}
+
+interface IDatasetViewParams {
+  datasetID: string
 }
 
 const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
@@ -28,21 +33,25 @@ const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetMode
 }
 
 export const DatasetUploadView = (props: IProps) => {
+  const { datasetID } = useParams<IDatasetViewParams>()
+
   const location = useLocation()
   const initialSentDataset = location.state as IDatasetModel
-  let initialValues = props.initialDataset || initialSentDataset || defaultDatasetModel
-  initialValues = fixPartialForform(initialValues)
-  const datasetID = props.datasetID
+  const [initialValues, setInitialValues] = useState(props.initialDataset || initialSentDataset || defaultDatasetModel)
+  const [editable, setEditable] = useState(true)
+  //initialValues = fixPartialForform(initialValues)
 
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
       const datasetArray = await callGetDatasets({ datasetId: [id] })
       const dataset = datasetArray[0]
-      initialValues = fixPartialForform(dataset)
+      setInitialValues(fixPartialForform(dataset))
+      setEditable(false)
+      console.log(dataset)
     }
 
     if (datasetID) {
-      getDatasetInfo(datasetID)
+      getDatasetInfo(parseInt(datasetID))
     }
   }, [])
 
@@ -56,7 +65,7 @@ export const DatasetUploadView = (props: IProps) => {
       <Box pt={4} pb={4}>
         <DatasetUploadForm
           onSubmit={handleSubmitForm}
-          editable={ }
+          editable={true}
           buttonName="Save Dataset"
           initialDataset={initialValues}
         />
