@@ -50,9 +50,19 @@ export class AuthenticationController {
   }
 
   async createLogoutRequest(request: Request, response: Response, next: NextFunction) {
-    const token = request.cookies.token;
-    let res: any = response.cookie("token", token);
-    res.clearCookie("token");
+    const tokenValue = request.cookies && request.cookies.token;
+
+    console.log('token: ', tokenValue)
+
+    // let requestParams: any = { ...request.body };
+
+    //let res: any = response.cookie("token", token);
+    response.cookie('token', 'tokenValue', { path: '/' });
+    response.clearCookie('token', { path: '/' });
+    response.end();
+    console.log('new token?: ', tokenValue)
+    console.log('token removed!')
+    return response;
   }
 
 
