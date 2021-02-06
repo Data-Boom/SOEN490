@@ -65,7 +65,7 @@ export const DatasetUploadView = (props: IProps) => {
       <Box pt={4} pb={4}>
         <DatasetUploadForm
           onSubmit={handleSubmitForm}
-          editable={true}
+          editable={editable}
           buttonName="Save Dataset"
           initialDataset={initialValues}
         />
