@@ -1,13 +1,15 @@
 import { Box, Container } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { DatasetUploadForm } from './DatasetUploadForm'
 import React from 'react'
-import { callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 
 interface IProps {
-  initialDataset?: IDatasetModel
+  initialDataset?: IDatasetModel,
+  datasetID?: number
 }
 
 const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
@@ -30,6 +32,19 @@ export const DatasetUploadView = (props: IProps) => {
   const initialSentDataset = location.state as IDatasetModel
   let initialValues = props.initialDataset || initialSentDataset || defaultDatasetModel
   initialValues = fixPartialForform(initialValues)
+  const datasetID = props.datasetID
+
+  useEffect(() => {
+    const getDatasetInfo = async (id: number) => {
+      const datasetArray = await callGetDatasets({ datasetId: [id] })
+      const dataset = datasetArray[0]
+      initialValues = fixPartialForform(dataset)
+    }
+
+    if (datasetID) {
+      getDatasetInfo(datasetID)
+    }
+  }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
     await callSaveDataset(formDataset)
@@ -41,7 +56,7 @@ export const DatasetUploadView = (props: IProps) => {
       <Box pt={4} pb={4}>
         <DatasetUploadForm
           onSubmit={handleSubmitForm}
-          editable={true}
+          editable={ }
           buttonName="Save Dataset"
           initialDataset={initialValues}
         />
