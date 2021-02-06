@@ -27,7 +27,6 @@ export const callLogout = async (): Promise<any> => {
   return result;
 }
 
-
 export const callResetPassword = async (resetPasswordInfo: IResetPasswordModel): Promise<any> => {
   const result = await post(resetPasswordRoute).withBody(resetPasswordInfo).json()
   if (result == 'Success') {

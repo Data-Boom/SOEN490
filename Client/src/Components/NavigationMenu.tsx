@@ -34,7 +34,6 @@ export default function NavigationMenu() {
   function logout() {
     removeUserInStorage()
     window.location.replace("/")
-    //to add logout api call
     callLogout();
   }
 

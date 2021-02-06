@@ -51,12 +51,7 @@ export class AuthenticationController {
 
   async createLogoutRequest(request: Request, response: Response, next: NextFunction) {
     const tokenValue = request.cookies && request.cookies.token;
-
     console.log('token: ', tokenValue)
-
-    // let requestParams: any = { ...request.body };
-
-    //let res: any = response.cookie("token", token);
     response.cookie('token', 'tokenValue', { path: '/' });
     response.clearCookie('token', { path: '/' });
     response.end();
@@ -64,7 +59,6 @@ export class AuthenticationController {
     console.log('token removed!')
     return response;
   }
-
 
   async createForgotPasswordRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
     this.invalidResponse = this.validateForgotPasswordRequest(request);
