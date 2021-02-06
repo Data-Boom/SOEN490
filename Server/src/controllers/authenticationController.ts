@@ -49,6 +49,11 @@ export class AuthenticationController {
     }
   }
 
+  async createLogoutRequest(request: Request, response: Response, next: NextFunction) {
+    const token = request.cookies.token;
+    let res: any = response.cookie("token", token);
+    res.clearCookie("token");
+  }
 
 
   async createForgotPasswordRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {

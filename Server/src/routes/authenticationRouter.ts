@@ -20,8 +20,10 @@ router.post('/api/v1/login', (request: Request, response: Response, next: NextFu
 });
 
 //for sign out endpoint
+
 router.get('/api/v1/logout', (request: Request, response: Response, next: NextFunction) => {
   //add controller method
+  authenticationController.createLogoutRequest(request, response, next);
 });
 
 router.post('/api/v1/forgotPassword', (request: Request, response: Response, next: NextFunction) => {
