@@ -14,6 +14,7 @@ import { linkWidth } from './ListRouter'
 import { loginRoute } from "../Common/Consts/Routes"
 import { removeUserInStorage } from '../Common/Storage'
 import universitylogo from './universitylogo.png'
+import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
 
 const drawerWidth = linkWidth
 
@@ -33,6 +34,7 @@ export default function NavigationMenu() {
   function logout() {
     removeUserInStorage()
     window.location.replace("/")
+    callLogout();
   }
 
   const drawer = (): any => {
