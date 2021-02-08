@@ -69,7 +69,7 @@ export class AdminManagementModel {
                 throw new NotFound(error.message)
             }
             else {
-                throw new Error("Something went wrong when adding admin permissions. Try again later")
+                throw new Error("Something went wrong when removing admin permissions. Try again later")
             }
         }
     }
