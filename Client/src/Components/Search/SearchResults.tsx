@@ -10,6 +10,9 @@ interface IProps {
   button?: any,
 }
 
+interface datasetName {
+  dataset: IDatasetModel
+}
 export const SearchResults = (props: IProps) => {
   const width = 160
 
@@ -31,6 +34,19 @@ export const SearchResults = (props: IProps) => {
     return `${reference.year}`
   }
 
+  const onCellClick = () => {
+    console.log("cell clicked")
+    //console.log(dataset_name)
+  }
+
+  const gettype = (params: ValueGetterParams) => {
+    const reference = params.getValue('reference') as IReference
+    console.log("cell clicked")
+    console.log(reference.type)
+
+    //return `${reference.type}`
+  }
+
   const columns: ColDef[] = [
     { field: 'dataset_name', headerName: 'Name', width: width },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
@@ -44,7 +60,8 @@ export const SearchResults = (props: IProps) => {
     <Grid container spacing={3}>
       <Grid item container>
         <div style={{ height: 400, width: '100%' }}>
-          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
+
+          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} onCellClick={gettype} />
         </div>
       </Grid>
       {props && props.button ? <Grid item container justify='flex-end'>
