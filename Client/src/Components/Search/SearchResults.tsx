@@ -1,7 +1,8 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
+import { Grid, Typography } from '@material-ui/core'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
-import { Grid } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import React from 'react'
 
 interface IProps {
@@ -36,19 +37,27 @@ export const SearchResults = (props: IProps) => {
 
   const onCellClick = () => {
     console.log("cell clicked")
-    //console.log(dataset_name)
   }
-
+    //console.log(dataset_name)
   const gettype = (params: ValueGetterParams) => {
     const reference = params.getValue('reference') as IReference
     console.log("cell clicked")
     console.log(reference.type)
-
-    //return `${reference.type}`
+  }
+  const getNameLink = (params: ValueGetterParams) => {
+    const datasetID = params.getValue('id')
+    const datasetName = params.getValue('dataset_name')
+    return (
+      <Link to={'/uploadDataset/' + datasetID} >
+        <Typography>
+          {datasetName}
+        </Typography>
+      </Link>
+    )
   }
 
   const columns: ColDef[] = [
-    { field: 'dataset_name', headerName: 'Name', width: width },
+    { field: 'dataset_name', headerName: 'Name', width: width, renderCell: getNameLink },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
     { field: 'category', headerName: 'Category', width: width },
     { field: 'subcategory', headerName: 'SubCategory', width: width },
