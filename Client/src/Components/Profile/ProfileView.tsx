@@ -1,4 +1,4 @@
-import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Button, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
@@ -222,9 +222,16 @@ export function ProfileView() {
                         </TableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody>
-                      admin emails
-                </TableBody>
+                    <Grid container spacing={2}>
+                      <Grid item xs={8}>
+                        Admin emails
+                      </Grid>
+                      <Grid item xs={2}>
+                        <Button variant="outlined" color="secondary">
+                          X
+                        </Button>
+                      </Grid>
+                    </Grid>
                   </Table>
                 </TableContainer>
               </Grid>
