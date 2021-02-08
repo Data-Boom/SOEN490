@@ -49,3 +49,11 @@ export const defaultResetPasswordModel: IResetPasswordModel = {
   passwordConfirmation: '',
   resetToken: ''
 }
+
+export interface INewAdminModel {
+  email: string
+}
+
+export const defaultNewAdminModel: INewAdminModel = {
+  email: ''
+}

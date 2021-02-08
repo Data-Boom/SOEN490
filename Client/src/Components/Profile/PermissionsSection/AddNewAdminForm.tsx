@@ -6,27 +6,28 @@ import { FastField, Form, Formik } from 'formik'
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
+import { defaultNewAdminModel } from '../../../Models/Authentication/ISignUpModel'
 
-interface IProps {
+interface NewAdminProps {
     onSubmit: (newEmail: string) => void
+    onReset: () => void
 }
-export default function AddNewAdminForm(props: IProps) {
+export default function AddNewAdminForm(props: NewAdminProps) {
 
     const { onSubmit } = props
-
+    const { onReset } = props
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .email().required("Email Address")
     })
 
-    const handleSubmit = (formValues: IResetPasswordModel) => {
-        onSubmit(formValues.password)
+    const handleSubmit = () => {
+
     }
 
     return (
         <Formik
-            initialValues={defaultResetPasswordModel}
-            validationSchema={validationSchema}
+            initialValues={defaultNewAdminModel}
             onSubmit={handleSubmit}
         >
             <Form>
@@ -34,15 +35,15 @@ export default function AddNewAdminForm(props: IProps) {
                     <Typography variant='h6' align="left">Change Password</Typography>
                     <Grid container spacing={4}>
                         <Grid item sm={6}>
-                            <FastField name="password" label='New password' type="password" component={MuiTextFieldFormik} />
+                            <FastField name="email" label='Admin email' type="email" component={MuiTextFieldFormik} />
                         </Grid>
-                        <Grid item sm={6}>
-                            <FastField name="passwordConfirmation" label='Confirm password' type="password" component={MuiTextFieldFormik} />
+                        <Grid item sm={3}>
+                            <Button id="AddNewAdmin" variant="contained" color="secondary" type="submit">Add new admin </Button>
                         </Grid>
                     </Grid>
                 </Box>
-                <Button id="ConfirmPasswordButton" variant="contained" color="primary" type="submit">Confirm Password</Button>
             </Form>
         </Formik>
+
     )
 }

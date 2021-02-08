@@ -2,6 +2,8 @@ import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, 
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 
+import AddNewAdminForm from '../Profile/PermissionsSection/AddNewAdminForm'
+import AddingAdminsTab from './PermissionsSection/AddingAdminsTab'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
@@ -131,6 +133,14 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 }
 
 export function ProfileView() {
+
+  const handleAddNewAdmin = (newAdmin: string) => {
+    //updateUserDetails({ ...user, password: newPassword })
+  }
+  const handleResetAdmin = () => {
+
+  }
+
   const { user, setUser } = useContext(UserContext)
   useEffect(() => {
     const fetchUser = async () => {
@@ -198,6 +208,10 @@ export function ProfileView() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 Add new admin by providing admin's email:
+                <AddNewAdminForm
+                  onSubmit={handleAddNewAdmin}
+                  onReset={handleResetAdmin}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TableContainer component={Paper} style={{ width: "100%" }}>
