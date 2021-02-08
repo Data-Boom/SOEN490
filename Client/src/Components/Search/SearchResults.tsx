@@ -4,6 +4,7 @@ import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { Link } from 'react-router-dom'
 import React from 'react'
+import { SearchViewModal } from './SearchViewModal'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -11,9 +12,6 @@ interface IProps {
   button?: any,
 }
 
-interface datasetName {
-  dataset: IDatasetModel
-}
 export const SearchResults = (props: IProps) => {
   const width = 160
 
@@ -38,6 +36,7 @@ export const SearchResults = (props: IProps) => {
   const getNameLink = (params: ValueGetterParams) => {
     const datasetID = params.getValue('id')
     const datasetName = params.getValue('dataset_name')
+
     return (
       <Link to={'/uploadDataset/' + datasetID} >
         <Typography>
