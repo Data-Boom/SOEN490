@@ -19,7 +19,7 @@ describe('Authentication Model Methods', () => {
         let signUpInfo: ISignUpInformation = {
             email: 'j.com',
             password: '123',
-            isAdmin: false,
+            isAdmin: 0,
             organizationName: 'Mugiwara',
             dateOfBirth: '1980-01-01' as any,
             firstName: 'Ace',
