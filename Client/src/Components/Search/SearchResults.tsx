@@ -1,5 +1,5 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
-import { Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Typography } from '@material-ui/core'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { Link } from 'react-router-dom'
@@ -35,22 +35,15 @@ export const SearchResults = (props: IProps) => {
     return `${reference.year}`
   }
 
-  const onCellClick = () => {
-    console.log("cell clicked")
-  }
-    //console.log(dataset_name)
-  const gettype = (params: ValueGetterParams) => {
-    const reference = params.getValue('reference') as IReference
-    console.log("cell clicked")
-    console.log(reference.type)
-  }
   const getNameLink = (params: ValueGetterParams) => {
     const datasetID = params.getValue('id')
     const datasetName = params.getValue('dataset_name')
     return (
       <Link to={'/uploadDataset/' + datasetID} >
         <Typography>
-          {datasetName}
+          <>
+            <Button variant="outlined">{datasetName}</Button>
+          </>
         </Typography>
       </Link>
     )
@@ -70,7 +63,7 @@ export const SearchResults = (props: IProps) => {
       <Grid item container>
         <div style={{ height: 400, width: '100%' }}>
 
-          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} onCellClick={gettype} />
+          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} onCellClick={getNameLink} />
         </div>
       </Grid>
       {props && props.button ? <Grid item container justify='flex-end'>
