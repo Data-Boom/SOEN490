@@ -32,13 +32,13 @@ export default function AddNewAdminForm(props: NewAdminProps) {
         >
             <Form>
                 <Box className={classStyles().defaultBorder}>
-                    <Typography variant='h6' align="left">Change Password</Typography>
+                    <Typography variant='h6' align="left">Add new admin by providing admin's email:</Typography>
                     <Grid container spacing={4}>
                         <Grid item sm={6}>
                             <FastField name="email" label='Admin email' type="email" component={MuiTextFieldFormik} />
                         </Grid>
                         <Grid item sm={3}>
-                            <Button id="AddNewAdmin" variant="contained" color="secondary" type="submit">Add new admin </Button>
+                            <Button id="AddNewAdmin" variant="contained" color="secondary" type="submit">+ Add new admin </Button>
                         </Grid>
                     </Grid>
                 </Box>
