@@ -31,10 +31,12 @@ export class JWTAuthenticator {
 
     static verifyAdmin(request: Request, response: Response, next: NextFunction): Response {
         // Lets us protect admin only backend routes vs any user routes
-        if (!((request.body.user.account_admin == 1) || (request.body.user.account_admin == 2))) {
+        if ((request.body.user.account_admin == 1) || (request.body.user.account_admin == 2)) {
+            next();
+        }
+        else {
             return response.status(403).json({ error: "You are not authorized to complete this action" })
         }
-        next();
     }
 
     static verifyRoot(request: Request, response: Response, next: NextFunction): Response {

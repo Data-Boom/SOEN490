@@ -12,7 +12,7 @@ export class AdminManagementModel {
 
     async fetchAccountIdFromEmail(userEmail: string) {
         let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
-        if (userRawData == undefined)
+        if (!userRawData)
             throw new NotFound("No such user exists")
         else
             return userRawData.id
