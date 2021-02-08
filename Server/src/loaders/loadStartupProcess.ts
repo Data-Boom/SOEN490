@@ -12,6 +12,7 @@ import { dataUploadRouter } from '../routes/dataUploadRouter'
 import { getConnectionManager } from 'typeorm';
 import { GraphsRouter } from '../routes/GraphsRouter';
 import { DataSetRouter } from '../routes/DatasetRouter';
+import { AdminManagementRouter } from '../routes/AdminManagementRouter';
 
 const cookieParser = require('cookie-parser');
 
@@ -68,6 +69,7 @@ export class LoadStartupProcess {
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
     this.app.use('/', dataUploadRouter)
     this.app.use('/', GraphsRouter)
+    this.app.use('/', AdminManagementRouter)
 
     this.config = {
       "type": process.env.DB_TYPE,

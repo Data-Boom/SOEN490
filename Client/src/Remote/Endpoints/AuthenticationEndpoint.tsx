@@ -7,6 +7,7 @@ import { forgotPasswordRoute } from "../../Common/Consts/Routes"
 export const resetPasswordRoute = '/api/v1/resetPassword/:resetToken?'
 const signupRoute = '/api/v1/signup'
 const loginRoute = '/api/v1/login'
+const logoutRoute = '/api/v1/logout'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
   const result = await post(signupRoute).withBody(signUpInfo).json()
@@ -19,6 +20,11 @@ export const callLogIn = async (loginUser: ILoginUserModel): Promise<any> => {
   //server sets a token in browser cookie in http only mode
   const result = await post(loginRoute).withBody(loginUser).json()
   return result
+}
+
+export const callLogout = async (): Promise<any> => {
+  const result = await post(logoutRoute).json();
+  return result;
 }
 
 export const callResetPassword = async (resetPasswordInfo: IResetPasswordModel): Promise<any> => {

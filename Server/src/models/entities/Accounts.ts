@@ -33,7 +33,7 @@ export class Accounts {
     updatedAt: Date;
 
     @Column({ default: 0 })
-    admin: boolean
+    admin: number
 
     @Column({ nullable: true })
     resetToken: string;
