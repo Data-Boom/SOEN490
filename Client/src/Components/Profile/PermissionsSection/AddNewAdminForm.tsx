@@ -2,27 +2,27 @@ import * as Yup from 'yup'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
+import { INewAdminModel, defaultNewAdminModel } from '../../../Models/Authentication/ISignUpModel'
+import { fetchAllAdmins, updatePermissions } from '../../../Remote/Endpoints/PermissionsEndpoint'
 
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { defaultNewAdminModel } from '../../../Models/Authentication/ISignUpModel'
 
-interface NewAdminProps {
+interface IProps {
+
     onSubmit: (newEmail: string) => void
-    onReset: () => void
 }
-export default function AddNewAdminForm(props: NewAdminProps) {
+export default function AddNewAdminForm(props: IProps) {
 
     const { onSubmit } = props
-    const { onReset } = props
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .email().required("Email Address")
     })
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (formValues: INewAdminModel) => {
+        onSubmit(formValues.email)
     }
 
     return (
