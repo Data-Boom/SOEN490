@@ -1,9 +1,11 @@
 import { AppBar, Box, Button, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
+import { fetchAllAdmins, updatePermissions } from '../../Remote/Endpoints/PermissionsEndpoint'
 
 import AddNewAdminForm from '../Profile/PermissionsSection/AddNewAdminForm'
 import AddingAdminsTab from './PermissionsSection/AddingAdminsTab'
+import { ConfirmationModal } from '../Authentication/ConfirmationModal'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
@@ -134,12 +136,15 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 
 export function ProfileView() {
 
-  const handleAddNewAdmin = (newAdmin: string) => {
-    //updateUserDetails({ ...user, password: newPassword })
+  const handleAddNewAdmin = async (newAdmin: string) => {
+    let test = await updatePermissions({
+      email: newAdmin,
+      operation: "add"
+    })
+    console.log(test)
   }
-  const handleResetAdmin = () => {
-    return window.confirm("Are you sure?")
-  }
+
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
   const { user, setUser } = useContext(UserContext)
   useEffect(() => {
@@ -210,7 +215,6 @@ export function ProfileView() {
                 Admin list
                 <AddNewAdminForm
                   onSubmit={handleAddNewAdmin}
-                  onReset={handleResetAdmin}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -227,9 +231,18 @@ export function ProfileView() {
                         Admin emails
                       </Grid>
                       <Grid item xs={2}>
-                        <Button variant="outlined" color="secondary" onClick={handleResetAdmin}>
+                        <Button variant="outlined" color="secondary" onClick={() => setConfirmModalOpen(true)}>
                           X
                         </Button>
+                        <ConfirmationModal
+                          title="Are you sure you want to remove this Admin?"
+                          description="By clicking the Remove button the user will no longer have admin rights"
+                          acceptButton="Remove"
+                          cancelButton="Cancel"
+                          open={confirmModalOpen}
+                          onClose={() => setConfirmModalOpen(false)}
+                          onSubmit={() => console.log('confirm pressed')}
+                        />
                       </Grid>
                     </Grid>
                   </Table>
