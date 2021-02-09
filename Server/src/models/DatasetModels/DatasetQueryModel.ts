@@ -9,7 +9,6 @@ import { selectDatasetIdsQuery, selectAllDatasetsQuery } from "../entities/Datas
 import { selectAllMaterialQuery } from "../entities/Material";
 import { Publications, selectAllPublicationsQuery } from "../entities/Publications";
 import { Subcategory } from "../entities/Subcategory";
-import { selectUnapprovedDatasetInfoQuery } from "../entities/Unapproveddatasets";
 import { IDatasetIDModel, IDataPointModel } from "../interfaces/DatasetModelInterface";
 
 
@@ -138,17 +137,12 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getUploadedDatasetIDOfUser(userEmail: string): Promise<any[]> {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
-            let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-                .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
-                .where('account.id = :idRef', { idRef: userID })
-                .getRawMany();
-            return [true, idDatasetData];
-        }
+    async getUploadedDatasetIDOfUser(userID: number): Promise<any[]> {
+        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+            .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
+            .where('account.id = :idRef', { idRef: userID })
+            .getRawMany();
+        return idDatasetData;
     }
 
     /**
@@ -163,15 +157,7 @@ export class DataQueryModel {
             .innerJoin('dataset.accounts', 'account')
             .where('account.id = :idRef', { idRef: userID })
             .getRawMany();
-        return [true, idDatasetData];
-    }
-
-    private async fetchAccountIdFromEmail(userEmail: string) {
-        let userRawData = await selectAccountIdFromEmailQuery(this.connection, userEmail)
-        if (userRawData == undefined)
-            return false
-        else
-            return userRawData.id
+        return idDatasetData;
     }
 
     /**
@@ -186,20 +172,18 @@ export class DataQueryModel {
      * @param datasetId 
      * Data Set ID: number
      */
-    async addUserFavoriteDatasetModel(userEmail: string, datasetId: number) {
-        let userID = await this.fetchAccountIdFromEmail(userEmail)
-        if (userID == false)
-            return [false, "Invalid user email provided"]
-        else {
+    async addUserFavoriteDatasetModel(userID: number, datasetId: number) {
+        try {
             let duplicateCheck = await this.connection.query("SELECT * FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userID, datasetId]);
-            if (duplicateCheck[0] == undefined) {
+            if (duplicateCheck.length < 1) {
                 await this.connection.query("INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (?, ?)", [userID, datasetId]);
-                return [true, "Favorite data set successfully saved"];
+                return "Favorite data set successfully saved";
             }
             else {
-                return [true, "Favorite data set is already saved"];
+                return "Favorite data set is already saved";
             }
-
+        } catch (error) {
+            throw new Error("Something went wrong adding a favorite data set. Try later")
         }
     }
 
@@ -215,7 +199,6 @@ export class DataQueryModel {
     async removeUserFavoriteDatasetModel(userId: number, datasetId: number) {
         await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userId, datasetId]);
         return "User favorite successfully removed";
-
     }
 
     /**

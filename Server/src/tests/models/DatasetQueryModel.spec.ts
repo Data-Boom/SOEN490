@@ -1,7 +1,7 @@
 import { createConnection, getConnection } from 'typeorm';
 import { DataQueryModel } from '../../models/DatasetModels/DatasetQueryModel';
 
-describe('data service test', () => {
+describe('data query model test', () => {
     let dataQueryModel: DataQueryModel;
     jest.setTimeout(60000)
 
@@ -75,33 +75,27 @@ describe('data service test', () => {
     });
 
     test('Feeds the email of account ID of 1 and expects to see a data set ID of 1 returned', async done => {
-        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser("j.comkj")
-        expect(arrayOfData[1][0].dataset_id).toEqual(1);
+        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser(1)
+        expect(arrayOfData[0].dataset_id).toEqual(1);
         done()
     });
 
     test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
         let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(1)
-        expect(arrayOfData[1][0].dataset_id).toEqual(2);
+        expect(arrayOfData[0].dataset_id).toEqual(2);
         done()
     });
 
-    test('Feeds an invalid email to uploads of user request and expects to see an error message', async done => {
-        let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser("not valid")
-        expect(arrayOfData[1]).toEqual("Invalid user email provided");
+    test('Feeds an invalid account ID and expects to see an empty return', async done => {
+        let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(-1)
+        expect(arrayOfData).toEqual([]);
         done()
     });
 
-    test('Feeds an invalid account ID and expects to see an no IDs returned', async done => {
-        let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(5000)
-        expect(arrayOfData[0].dataset_id).toBeUndefined()
-        done()
+    test('Attempts to add favorite data set to non existant user', async () => {
+        await expect(dataQueryModel.addUserFavoriteDatasetModel(-1, 3))
+            .rejects
+            .toThrow("Something went wrong adding a favorite data set. Try later");
     });
 
-    test('Attempts to add favorite data set to non existant user', async done => {
-        let arrayOfData = await dataQueryModel.addUserFavoriteDatasetModel("not valid", 3)
-        expect(arrayOfData[0]).toEqual(false);
-        expect(arrayOfData[1]).toEqual("Invalid user email provided");
-        done()
-    });
 })
