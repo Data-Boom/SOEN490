@@ -198,7 +198,7 @@ export class DataQueryModel {
      */
     async removeUserFavoriteDatasetModel(userId: number, datasetId: number) {
         await this.connection.query("DELETE FROM accounts_datasets_dataset WHERE accountsId = ? AND datasetId = ?", [userId, datasetId]);
-        return "User favorite successfully removed";
+        return "User favorite data set successfully removed";
     }
 
     /**

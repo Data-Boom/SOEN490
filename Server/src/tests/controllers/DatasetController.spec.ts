@@ -143,7 +143,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
+        expect(mockResponse.json).toBeCalledWith("User favorite data set successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
@@ -159,7 +159,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
+        expect(mockResponse.json).toBeCalledWith("User favorite data set successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
