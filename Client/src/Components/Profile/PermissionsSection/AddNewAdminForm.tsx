@@ -28,6 +28,7 @@ export default function AddNewAdminForm(props: IProps) {
     return (
         <Formik
             initialValues={defaultNewAdminModel}
+            validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
             <Form>

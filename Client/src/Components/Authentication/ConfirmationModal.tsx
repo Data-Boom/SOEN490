@@ -24,17 +24,19 @@ export const ConfirmationModal = (props: IProps) => {
         className={classStyles().modalsearch}
       >
         <Paper elevation={3}>
-          <Box m={5}>
-            <Grid container justify="flex-end">
-              <Grid item xs={12}>
-                {title}
-              </Grid>
+          <Box m={8}>
+            <Grid container justify="flex-start" spacing={10} >
+              <Box fontWeight="fontWeightBold" m={1}>
+                <Grid item xs={12}>
+                  {title}
+                </Grid>
+              </Box>
               <Grid item xs={12}>
                 {description}
               </Grid>
             </Grid>
-
-            <Grid container justify="flex-start">
+            <Grid item xs={12}></Grid>
+            <Grid container justify="flex-start" spacing={10}>
               <Grid item xs={3}></Grid>
               <Grid item xs={3}>
                 <Button id="cancelConfirmation" onClick={onClose} variant='contained' color="primary" type="reset">{cancelButton}</Button>
