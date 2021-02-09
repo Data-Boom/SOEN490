@@ -87,7 +87,7 @@ describe('Graphs State Controller ', () => {
   });
 
   test('Valid User Saved Graphs Request; user has no graphs', async () => {
-    let expectedResponse = "You don't have any saved graphs!"
+    let expectedResponse = []
     mockRequest = {
       body: {
         user: {

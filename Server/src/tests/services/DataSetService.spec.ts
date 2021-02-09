@@ -258,10 +258,11 @@ describe('data service test', () => {
     done()
   });
 
-  test('Asks for all flagged data sets of non-existant user, expects an error', async () => {
-    await expect(retrieveDataObject.getUserFlaggedDatasets(0))
-      .rejects
-      .toThrow("No Flagged Unapproved Datasets in database for this user");
+  test('Asks for all flagged data sets of non-existant user, expects an error', async done => {
+    let response = await retrieveDataObject.getUserFlaggedDatasets(0)
+    expect(response.message).toEqual([]);
+    expect(response.statusCode).toEqual(200);
+    done()
   });
 
   test('Flag an unapproved data set, with no additional comments', async done => {

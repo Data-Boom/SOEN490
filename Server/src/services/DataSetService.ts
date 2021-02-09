@@ -398,10 +398,7 @@ export class DataSetService {
         try {
             let rawDatasetIds = await this.approvalModel.getUnapprovedDatasets();
             let response: IApprovalDatasetModel[] = [];
-            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Unapproved Datasets in database")
-            }
-            else {
+            if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
@@ -420,11 +417,8 @@ export class DataSetService {
     async getUserFlaggedDatasets(userId: number) {
         try {
             let rawDatasetIds = await this.approvalModel.selectUserFlaggedDatasets(userId);
-            let response: IApprovalDatasetModel[];
-            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Flagged Unapproved Datasets in database for this user")
-            }
-            else {
+            let response: IApprovalDatasetModel[] = [];
+            if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
@@ -444,10 +438,7 @@ export class DataSetService {
         try {
             let rawDatasetIds = await this.approvalModel.selectAllFlaggedDatasets();
             let response: IApprovalDatasetModel[];
-            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Flagged Unapproved Datasets in database")
-            }
-            else {
+            if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
