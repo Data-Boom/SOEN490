@@ -1,15 +1,18 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Modal, Typography } from '@material-ui/core'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { Link } from 'react-router-dom'
-import React from 'react'
-import { SearchViewModal } from './SearchViewModal'
+import React, { useState } from 'react'
 
 interface IProps {
   datasetResults: IDatasetModel[],
   handleSelectionChanged: (selection: SelectionChangeParams) => void,
   button?: any,
+}
+
+interface IProps2 {
+  onDatasetsSelected: (foundDatasets: IDatasetModel[]) => void
 }
 
 export const SearchResults = (props: IProps) => {
@@ -33,11 +36,29 @@ export const SearchResults = (props: IProps) => {
     return `${reference.year}`
   }
 
+
+  const modalOpen = () => {
+    alert("modal is open")
+  }
+
+  const [open, setOpen] = useState(false)
+
+
+  //render DatasetViewModal in here
   const getNameLink = (params: ValueGetterParams) => {
     const datasetID = params.getValue('id')
     const datasetName = params.getValue('dataset_name')
 
+    const handleDatasetName = () => {
+      setOpen(true)
+    }
+
     return (
+      <Button variant="outlined">{datasetName}</Button>
+
+    )
+
+    /*return (
       <Link to={'/uploadDataset/' + datasetID} >
         <Typography>
           <>
@@ -45,7 +66,7 @@ export const SearchResults = (props: IProps) => {
           </>
         </Typography>
       </Link>
-    )
+    )*/
   }
 
   const columns: ColDef[] = [
