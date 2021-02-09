@@ -138,7 +138,7 @@ export function ProfileView() {
     //updateUserDetails({ ...user, password: newPassword })
   }
   const handleResetAdmin = () => {
-
+    return window.confirm("Are you sure?")
   }
 
   const { user, setUser } = useContext(UserContext)
@@ -207,7 +207,7 @@ export function ProfileView() {
           <TabPanel value={tab} index={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                Add new admin by providing admin's email:
+                Admin list
                 <AddNewAdminForm
                   onSubmit={handleAddNewAdmin}
                   onReset={handleResetAdmin}
@@ -227,7 +227,7 @@ export function ProfileView() {
                         Admin emails
                       </Grid>
                       <Grid item xs={2}>
-                        <Button variant="outlined" color="secondary">
+                        <Button variant="outlined" color="secondary" onClick={handleResetAdmin}>
                           X
                         </Button>
                       </Grid>
