@@ -1,9 +1,10 @@
-import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { Button, Grid, Modal, Typography } from '@material-ui/core'
+import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
-import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
+
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
+import { Link } from 'react-router-dom'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -41,26 +42,10 @@ export const SearchResults = (props: IProps) => {
 
   //render DatasetViewModal in here
   const getNameLink = (params: ValueGetterParams) => {
-    const datasetID = params.getValue('id')
+    const datasetId = params.getValue('id')
     const datasetName = params.getValue('dataset_name')
 
-    const handleDatasetName = () => {
-      setOpen(true)
-    }
-
-    const return1 = () => {
-      alert("first return")
-
-      return (<DatasetFormModal onDatasetSelected={return1}
-      />)
-    }
-
-
-
-    return (
-      <><Button variant="outlined" onClick={return1}>{datasetName}</Button>
-      </>
-    )
+    return (<DatasetFormModal datasetId={datasetId.toString()} datasetName={datasetName.toString()} />)
 
     /*return (
       <Link to={'/uploadDataset/' + datasetID} >
@@ -84,7 +69,6 @@ export const SearchResults = (props: IProps) => {
 
   return (
     <>
-      <Button variant="outlined" > Test DatasetViewModal </Button>
       <Grid container spacing={3}>
         <Grid item container>
           <div style={{ height: 400, width: '100%' }}>
