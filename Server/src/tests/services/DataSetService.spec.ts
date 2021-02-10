@@ -3,10 +3,9 @@ import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInter
 
 import { createConnection, getConnection } from 'typeorm';
 import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
-import { BadRequest, NotFound } from "@tsed/exceptions";
 
 
-describe('data service test', () => {
+describe('data set service test', () => {
   let retrieveDataObject: DataSetService;
   jest.setTimeout(60000)
 
@@ -192,45 +191,47 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds the email of account ID of 3 and expects to see an uploaded data set with ID of 2 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("tester@123.com")
-    expect(arrayOfData[1][0].dataset_id).toEqual(2);
+  test('Feeds account ID of 3 and expects to see an uploaded data set with ID of 2 returned', async done => {
+    let response = await retrieveDataObject.getUserUploadedDatasets(3)
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].dataset_id).toEqual(2);
     done()
   });
 
   test('Feeds an account ID of 1 and expects to see a favorited data set IDs of 2 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(1)
-    expect(arrayOfData[1][0].dataset_id).toEqual(2);
+    let response = await retrieveDataObject.getUserFavoriteDatasets(1)
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].dataset_id).toEqual(2);
     done()
   });
 
   test('Feeds an invalid email and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("nothing")
-    expect(arrayOfData[1]).toEqual("Invalid user email provided");
+    let response = await retrieveDataObject.getUserUploadedDatasets(-1)
+    expect(response.message).toEqual([])
     done()
   });
 
-  test('Feeds an invalid account and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(-1)
-    expect(arrayOfData[0].dataset_id).toBeUndefined()
+  test('Feeds an invalid account and expects to see an empty return', async done => {
+    let response = await retrieveDataObject.getUserFavoriteDatasets(-1)
+    expect(response.message).toEqual([])
     done()
   });
 
   test('Sets data set with ID 5 as a favorite of account ID 1', async done => {
-    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
-    expect(response[1]).toEqual("Favorite data set successfully saved")
+    let response = await retrieveDataObject.addUserFavoriteDataset(1, 5)
+    expect(response.message).toEqual("Favorite data set successfully saved")
     done()
   });
 
   test('Sets data set with ID 5 as a favorite of account ID 1 a second time', async done => {
-    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
-    expect(response[1]).toEqual("Favorite data set is already saved")
+    let response = await retrieveDataObject.addUserFavoriteDataset(1, 5)
+    expect(response.message).toEqual("Favorite data set is already saved")
     done()
   });
 
   test('Removes data set with ID 5 as a favorite of account ID 1', async done => {
     let response = await retrieveDataObject.removeUserFavoriteDataset(1, 5)
-    expect(response.message).toEqual("User favorite successfully removed")
+    expect(response.message).toEqual("User favorite data set successfully removed")
     done()
   });
 
