@@ -10,15 +10,8 @@ import SearchView from '../Search/SearchView'
 import { DatasetUploadForm } from './DatasetUploadForm'
 import CancelIcon from "@material-ui/icons/Cancel"
 
-/*interface IProps {
-    dataset: IDatasetModel,
-    editable: boolean,
-    onSubmit(formDataset: IDatasetModel): void,
-    buttonName: string
-}*/
-
 interface IProps {
-    onDatasetSelected: (selectedDataset: IDatasetModel) => void
+    onDatasetSelected: (foundDatasets: IDatasetModel) => void
 }
 
 //render DatasetUploadForm.tsx
@@ -27,13 +20,15 @@ export const DatasetFormModal = (props: IProps) => {
     const [dataset, setDataset] = useState<IDatasetModel>()
     const { onDatasetSelected } = { ...props }
     const [open, setOpen] = useState(false)
+    const [editable, setEditable] = useState(false)
 
+    console.log("datasetFormModal opened")
     const handleDatasetSelected = (selectedDataset: IDatasetModel) => {
         onDatasetSelected(selectedDataset)
         setOpen(false)
     }
 
-    const handleClose = () => {
+    const handleCloseDataset = () => {
         setOpen(false)
     }
 
@@ -50,9 +45,9 @@ export const DatasetFormModal = (props: IProps) => {
                         </Grid>
                     </Grid>
                     <DatasetUploadForm
-                        onSubmit={handleClose}
+                        onSubmit={handleDatasetSelected}
                         initialDataset={dataset}
-                        editable={false}
+                        editable={editable}
                         buttonName="Close"
                     />
                 </Box>

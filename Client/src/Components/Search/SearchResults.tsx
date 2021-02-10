@@ -1,9 +1,9 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { Button, Grid, Modal, Typography } from '@material-ui/core'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
-
 import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
+import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -36,11 +36,6 @@ export const SearchResults = (props: IProps) => {
     return `${reference.year}`
   }
 
-
-  const modalOpen = () => {
-    alert("modal is open")
-  }
-
   const [open, setOpen] = useState(false)
 
 
@@ -53,9 +48,18 @@ export const SearchResults = (props: IProps) => {
       setOpen(true)
     }
 
-    return (
-      <Button variant="outlined">{datasetName}</Button>
+    const return1 = () => {
+      alert("first return")
 
+      return (<DatasetFormModal onDatasetSelected={return1}
+      />)
+    }
+
+
+
+    return (
+      <><Button variant="outlined" onClick={return1}>{datasetName}</Button>
+      </>
     )
 
     /*return (
@@ -79,18 +83,20 @@ export const SearchResults = (props: IProps) => {
   ]
 
   return (
-    <Grid container spacing={3}>
-      <Grid item container>
-        <div style={{ height: 400, width: '100%' }}>
+    <>
+      <Button variant="outlined" > Test DatasetViewModal </Button>
+      <Grid container spacing={3}>
+        <Grid item container>
+          <div style={{ height: 400, width: '100%' }}>
 
-          <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} onCellClick={getNameLink} />
-        </div>
-      </Grid>
-      {props && props.button ? <Grid item container justify='flex-end'>
-        <Grid item>
-          {props.button}
+            <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} onCellClick={getNameLink} />
+          </div>
         </Grid>
-      </Grid> : null}
-    </Grid>
+        {props && props.button ? <Grid item container justify='flex-end'>
+          <Grid item>
+            {props.button}
+          </Grid>
+        </Grid> : null}
+      </Grid></>
   )
 }
