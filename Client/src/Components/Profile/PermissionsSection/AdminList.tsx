@@ -1,8 +1,8 @@
 import { Box, Grid } from "@material-ui/core"
-import { INewAdminModel, IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
 import React, { useEffect, useState } from 'react'
 
 import { AdminReviewRow } from './AdminRows'
+import { IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
 import { fetchAllAdmins } from "../../../Remote/Endpoints/PermissionsEndpoint"
 
 interface IAdminListProps {

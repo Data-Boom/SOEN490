@@ -50,10 +50,3 @@ export const defaultResetPasswordModel: IResetPasswordModel = {
   resetToken: ''
 }
 
-export interface INewAdminModel {
-  email: string
-}
-
-export const defaultNewAdminModel: INewAdminModel = {
-  email: ''
-}

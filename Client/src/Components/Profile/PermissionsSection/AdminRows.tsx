@@ -1,9 +1,8 @@
 import { Box, Button, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
-import { INewAdminModel, IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
 import React, { useState } from 'react'
 
 import { ConfirmationModal } from '../../Authentication/ConfirmationModal'
-import { classStyles } from '../../../appTheme'
+import { IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
 import { updatePermissions } from '../../../Remote/Endpoints/PermissionsEndpoint'
 
 interface IAdminRowModel {
@@ -18,7 +17,7 @@ export const AdminReviewRow = (props: IAdminRowModel) => {
             email: removeAdmin,
             operation: "remove"
         })
-        setConfirmModalOpen(false)
+
     }
 
     return (

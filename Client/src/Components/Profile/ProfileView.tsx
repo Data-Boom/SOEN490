@@ -4,12 +4,11 @@ import { Theme, makeStyles } from '@material-ui/core/styles'
 import { fetchAllAdmins, updatePermissions } from '../../Remote/Endpoints/PermissionsEndpoint'
 
 import AddNewAdminForm from '../Profile/PermissionsSection/AddNewAdminForm'
-import AddingAdminsTab from './PermissionsSection/AddingAdminsTab'
-import { ConfirmationModal } from '../Authentication/ConfirmationModal'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
+import { ProfileAdminStateList } from '../../Components/Profile/PermissionsSection/AdminList'
 import { ProfileGraphStateList } from './ProfileGraphList'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
@@ -136,16 +135,6 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 
 export function ProfileView() {
 
-  const handleAddNewAdmin = async (newAdmin: string) => {
-    let test = await updatePermissions({
-      email: newAdmin,
-      operation: "add"
-    })
-    console.log(test)
-  }
-
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
-
   const { user, setUser } = useContext(UserContext)
   useEffect(() => {
     const fetchUser = async () => {
@@ -164,6 +153,24 @@ export function ProfileView() {
     }
     callListSavedGraphStates()
   }, [])
+
+  const [adminListState, setAdminListState] = useState([])
+
+  useEffect(() => {
+    const callListAdminStates = async () => {
+      const adminListState = await fetchAllAdmins()
+      setAdminListState(adminListState)
+    }
+    callListAdminStates()
+  }, [])
+
+  const handleAddNewAdmin = async (newAdmin: string) => {
+    let test = await updatePermissions({
+      email: newAdmin,
+      operation: "add"
+    })
+    console.log(test)
+  }
 
   const classes = useStyles()
   const [tab, setTab] = React.useState(0)
@@ -217,36 +224,13 @@ export function ProfileView() {
                   onSubmit={handleAddNewAdmin}
                 />
               </Grid>
+              <Grid>
+                Current Admins:
+              </Grid>
               <Grid item xs={12}>
-                <TableContainer component={Paper} style={{ width: "100%" }}>
-                  <Table aria-label="collapsabile table">
-                    <TableHead >
-                      <TableRow>
-                        <TableCell align="left">Current Admins:
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <Grid container spacing={2}>
-                      <Grid item xs={8}>
-                        Admin emails
-                      </Grid>
-                      <Grid item xs={2}>
-                        <Button variant="outlined" color="secondary" onClick={() => setConfirmModalOpen(true)}>
-                          X
-                        </Button>
-                        <ConfirmationModal
-                          title="Are you sure you want to remove this Admin?"
-                          description="By clicking the Remove button the user will no longer have admin rights"
-                          acceptButton="Remove"
-                          cancelButton="Cancel"
-                          open={confirmModalOpen}
-                          onClose={() => setConfirmModalOpen(false)}
-                          onSubmit={() => console.log('confirm pressed')}
-                        />
-                      </Grid>
-                    </Grid>
-                  </Table>
-                </TableContainer>
+                <ProfileAdminStateList
+                  adminlist={adminListState}
+                />
               </Grid>
             </Grid>
           </TabPanel>

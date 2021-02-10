@@ -2,7 +2,7 @@ import * as Yup from 'yup'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
-import { INewAdminModel, defaultNewAdminModel } from '../../../Models/Authentication/IUserAccountModel'
+import { IUserAccountModel, defaultUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
 import { fetchAllAdmins, updatePermissions } from '../../../Remote/Endpoints/PermissionsEndpoint'
 
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
@@ -21,13 +21,14 @@ export default function AddNewAdminForm(props: IProps) {
             .email().required("Email Address")
     })
 
-    const handleSubmit = (formValues: INewAdminModel) => {
+    const handleSubmit = (formValues: IUserAccountModel) => {
         onSubmit(formValues.email)
     }
 
+
     return (
         <Formik
-            initialValues={defaultNewAdminModel}
+            initialValues={defaultUserAccountModel}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
@@ -36,7 +37,7 @@ export default function AddNewAdminForm(props: IProps) {
                     <Typography variant='h6' align="left">Add a new admin by providing admin's email:</Typography>
                     <Grid container spacing={4}>
                         <Grid item sm={6}>
-                            <FastField name="email" label='Admin email' type="email" component={MuiTextFieldFormik} />
+                            <FastField name="email" label='New Admin Email' type="email" component={MuiTextFieldFormik} />
                         </Grid>
                         <Grid item sm={3}>
                             <Button id="AddNewAdmin" variant="contained" color="primary" type="submit">+ Add new admin </Button>
