@@ -2,7 +2,7 @@ import * as Yup from 'yup'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
-import { INewAdminModel, defaultNewAdminModel } from '../../../Models/Authentication/ISignUpModel'
+import { INewAdminModel, defaultNewAdminModel } from '../../../Models/Authentication/IUserAccountModel'
 import { fetchAllAdmins, updatePermissions } from '../../../Remote/Endpoints/PermissionsEndpoint'
 
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
@@ -33,13 +33,13 @@ export default function AddNewAdminForm(props: IProps) {
         >
             <Form>
                 <Box className={classStyles().defaultBorder}>
-                    <Typography variant='h6' align="left">Add new admin by providing admin's email:</Typography>
+                    <Typography variant='h6' align="left">Add a new admin by providing admin's email:</Typography>
                     <Grid container spacing={4}>
                         <Grid item sm={6}>
                             <FastField name="email" label='Admin email' type="email" component={MuiTextFieldFormik} />
                         </Grid>
                         <Grid item sm={3}>
-                            <Button id="AddNewAdmin" variant="contained" color="secondary" type="submit">+ Add new admin </Button>
+                            <Button id="AddNewAdmin" variant="contained" color="primary" type="submit">+ Add new admin </Button>
                         </Grid>
                     </Grid>
                 </Box>
