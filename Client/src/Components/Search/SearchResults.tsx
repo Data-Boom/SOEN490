@@ -1,7 +1,6 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { Button, Grid, Modal, Typography } from '@material-ui/core'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
-import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
 
@@ -38,8 +37,6 @@ export const SearchResults = (props: IProps) => {
 
   const [open, setOpen] = useState(false)
 
-
-  //render DatasetViewModal in here
   const getNameLink = (params: ValueGetterParams) => {
     const datasetID = params.getValue('id')
     const datasetName = params.getValue('dataset_name')
@@ -48,29 +45,13 @@ export const SearchResults = (props: IProps) => {
       setOpen(true)
     }
 
-    const return1 = () => {
-      alert("first return")
-
-      return (<DatasetFormModal onDatasetSelected={return1}
-      />)
-    }
-
-
-
     return (
-      <><Button variant="outlined" onClick={return1}>{datasetName}</Button>
-      </>
+      <div>
+
+      </div>
     )
 
-    /*return (
-      <Link to={'/uploadDataset/' + datasetID} >
-        <Typography>
-          <>
-            <Button variant="outlined">{datasetName}</Button>
-          </>
-        </Typography>
-      </Link>
-    )*/
+
   }
 
   const columns: ColDef[] = [
@@ -84,12 +65,11 @@ export const SearchResults = (props: IProps) => {
 
   return (
     <>
-      <Button variant="outlined" > Test DatasetViewModal </Button>
       <Grid container spacing={3}>
         <Grid item container>
           <div style={{ height: 400, width: '100%' }}>
 
-            <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} onCellClick={getNameLink} />
+            <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} /*onCellClick={getNameLink}*/ />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>

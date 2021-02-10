@@ -13,8 +13,6 @@ import CancelIcon from "@material-ui/icons/Cancel"
 interface IProps {
     onDatasetSelected: (foundDatasets: IDatasetModel) => void
 }
-
-//render DatasetUploadForm.tsx
 export const DatasetFormModal = (props: IProps) => {
 
     const [dataset, setDataset] = useState<IDatasetModel>()
