@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import { ConfirmationModal } from '../../Authentication/ConfirmationModal'
 import { IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
+import { classStyles } from '../../../appTheme'
 import { updatePermissions } from '../../../Remote/Endpoints/PermissionsEndpoint'
 
 interface IAdminRowModel {
@@ -17,7 +18,7 @@ export const AdminReviewRow = (props: IAdminRowModel) => {
             email: removeAdmin,
             operation: "remove"
         })
-
+        setConfirmModalOpen(false)
     }
 
     return (
