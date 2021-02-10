@@ -2,9 +2,7 @@ import { Button, Grid, Modal, Typography } from '@material-ui/core'
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 import React, { useState } from 'react'
-
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
-import { Link } from 'react-router-dom'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -44,16 +42,6 @@ export const SearchResults = (props: IProps) => {
     const datasetName = params.getValue('dataset_name')
 
     return (<DatasetFormModal datasetId={datasetId.toString()} datasetName={datasetName.toString()} />)
-
-    /*return (
-      <Link to={'/uploadDataset/' + datasetID} >
-        <Typography>
-          <>
-            <Button variant="outlined">{datasetName}</Button>
-          </>
-        </Typography>
-      </Link>
-    )*/
   }
 
   const columns: ColDef[] = [
@@ -70,8 +58,7 @@ export const SearchResults = (props: IProps) => {
       <Grid container spacing={3}>
         <Grid item container>
           <div style={{ height: 400, width: '100%' }}>
-
-            <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} /*onCellClick={getNameLink}*/ />
+            <DataGrid rows={props && props.datasetResults} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>

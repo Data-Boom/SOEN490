@@ -1,21 +1,14 @@
 import { Box, Button, Grid, Modal, Paper, ThemeProvider, Typography } from '@material-ui/core'
-import { FastField, Field, FieldArray } from 'formik'
 import { IDatasetModel, IMaterial } from '../../Models/Datasets/IDatasetModel'
-import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useState } from 'react'
-import { disabledTheme, shouldComponentUpdate } from '../Forms/ComponentUpdate'
-
 import CancelIcon from "@material-ui/icons/Cancel"
 import { DatasetUploadForm } from './DatasetUploadForm'
-import SearchView from '../Search/SearchView'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
 import { fixPartialForform } from './DatasetUploadView'
-import { get } from '../../Remote/FluentRequest'
 import { useEffect } from 'react'
 
 interface IProps {
-    //onDatasetSelected: (foundDatasets: IDatasetModel) => void
     datasetId: string,
     datasetName: string
 }
