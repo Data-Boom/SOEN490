@@ -16,7 +16,7 @@ export const signupValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required(requiredMessage("Password"))
     .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
-    .min(8, "Password is short, should have 8 characters minimum"),
+    .min(8, "Password is short, should be 8 characters minimum"),
   confirmPassword: Yup.string()
     .required(requiredMessage("Confirm Password"))
     .min(8, "Password is short, should be 8 characters minimum")
@@ -29,6 +29,8 @@ export const loginValidationSchema = Yup.object().shape({
     .required(requiredMessage("Email Address")),
   password: Yup.string()
     .required(requiredMessage("Password"))
+    .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+
 })
 
 export const forgotPasswordValidationSchema = Yup.object().shape({
@@ -40,6 +42,7 @@ export const forgotPasswordValidationSchema = Yup.object().shape({
 export const resetPasswordValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required(requiredMessage("Password"))
+    .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
     .min(8, "Password is short, should be 8 characters minimum"),
   passwordConfirmation: Yup.string()
     .required(requiredMessage("Confirm Password"))
