@@ -10,11 +10,13 @@ export const signupValidationSchema = Yup.object().shape({
   lastName: Yup.string()
     .required(requiredMessage('Last Name')),
   email: Yup.string()
-    .email().required(requiredMessage("Email Address")), //handles the email logic, no need to add extra reg ex
+    //handles the email logic, no need to add extra reg ex
+    .email().required(requiredMessage("Email Address")),
   organizationName: Yup.string()
     .required(requiredMessage('Organization')),
   password: Yup.string()
     .required(requiredMessage("Password"))
+    //this line adds the validation check for password to have minimum 1 upper and lowercase letter, 1 special character, 1 number and in between 8 to 30 characters
     .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
     .min(8, "Password is short, should be 8 characters minimum"),
   confirmPassword: Yup.string()

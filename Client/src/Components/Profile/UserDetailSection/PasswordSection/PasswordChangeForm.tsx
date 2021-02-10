@@ -17,7 +17,10 @@ export default function PasswordChangeForm(props: IProps) {
   const { onSubmit } = props
 
   const validationSchema = Yup.object().shape({
-    password: Yup.string().required('Password is required').min(8, 'Password should have a minimum of 8 characters'),
+    password: Yup.string()
+      .required('Password is required')
+      .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+      .min(8, 'Password should have a minimum of 8 characters'),
     passwordConfirmation: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
   })
