@@ -282,14 +282,20 @@ export class DataSetService {
      * @param userReceived
      * Account ID: number
      */
-    async getUserUploadedDatasets(userReceived: string) {
-        let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
-        if (rawData[0]) {
-            let setOfData = await this.getDatasetsFromRawData(rawData[1]);
-            return [true, setOfData];
-        }
-        else {
-            return rawData;
+    async getUserUploadedDatasets(userReceived: number) {
+        try {
+            let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
+            if (rawData) {
+                let setOfData = await this.getDatasetsFromRawData(rawData);
+                this.requestResponse.message = setOfData as any
+            }
+            else {
+                this.requestResponse.message = [] as any
+            }
+            this.requestResponse.statusCode = 200
+            return this.requestResponse
+        } catch (error) {
+            throw new Error("Something went wrong getting all uploaded data sets. Try later")
         }
     }
 
@@ -302,36 +308,48 @@ export class DataSetService {
      * Account ID: number
      */
     async getUserFavoriteDatasets(userReceived: number) {
-        let rawData = await this.dataQuery.getFavoriteDatasetIDOfUser(userReceived);
-        if (rawData[0]) {
-            let setOfData = await this.getDatasetsFromRawData(rawData[1]);
-            return [true, setOfData];
-        }
-        else {
-            return rawData;
+        try {
+            let rawData = await this.dataQuery.getFavoriteDatasetIDOfUser(userReceived);
+            if (rawData) {
+                let setOfData = await this.getDatasetsFromRawData(rawData);
+                this.requestResponse.message = setOfData as any
+            }
+            else {
+                this.requestResponse.message = [] as any
+            }
+            this.requestResponse.statusCode = 200
+            return this.requestResponse
+        } catch (error) {
+            throw new Error("Something went wrong getting all favorite data sets. Try later")
         }
     }
 
     /**
-     * This method is used to add a saved data set of a user. It will take a user's email and a data set ID
+     * This method is used to add a saved data set of a user. It will take a user's ID and a data set ID
      * and send this to the service for input.
      * 
-     * @param userEmail
-     * User's Email: string
+     * @param userId
+     * User's ID: number
      * @param datasetId
      * Data Set ID: number
      */
-    async addUserFavoriteDataset(userEmail: string, datasetId: number) {
-        let executionStatus = await this.dataQuery.addUserFavoriteDatasetModel(userEmail, datasetId);
-        return executionStatus;
+    async addUserFavoriteDataset(userId: number, datasetId: number) {
+        try {
+            let response = await this.dataQuery.addUserFavoriteDatasetModel(userId, datasetId);
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response as any
+            return this.requestResponse
+        } catch (error) {
+            throw new Error("Something went wrong adding a favorite data set. Try later")
+        }
     }
 
     /**
      * This method is used to remove a saved data set from the user's favorites. It will take a user's email 
      * and a data set ID and send this to the service for input.
      * 
-     * @param userEmail
-     * User's Email: string
+     * @param userId
+     * User's ID: number
      * @param datasetId
      * Data Set ID: number
      */
@@ -342,7 +360,7 @@ export class DataSetService {
             this.requestResponse.message = response as any
             return this.requestResponse
         } catch (error) {
-            throw new Error("Something went wrong fetching all Unapproved Datasets. Try later")
+            throw new Error("Something went wrong removing a favorite data set. Try later")
         }
     }
 
@@ -398,10 +416,7 @@ export class DataSetService {
         try {
             let rawDatasetIds = await this.approvalModel.getUnapprovedDatasets();
             let response: IApprovalDatasetModel[] = [];
-            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Unapproved Datasets in database")
-            }
-            else {
+            if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
@@ -420,11 +435,8 @@ export class DataSetService {
     async getUserFlaggedDatasets(userId: number) {
         try {
             let rawDatasetIds = await this.approvalModel.selectUserFlaggedDatasets(userId);
-            let response: IApprovalDatasetModel[];
-            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Flagged Unapproved Datasets in database for this user")
-            }
-            else {
+            let response: IApprovalDatasetModel[] = [];
+            if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
@@ -444,10 +456,7 @@ export class DataSetService {
         try {
             let rawDatasetIds = await this.approvalModel.selectAllFlaggedDatasets();
             let response: IApprovalDatasetModel[];
-            if (rawDatasetIds.length < 1 || rawDatasetIds == undefined || rawDatasetIds == null) {
-                throw new NotFound("No Flagged Unapproved Datasets in database")
-            }
-            else {
+            if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
             }
             this.requestResponse.statusCode = 200
