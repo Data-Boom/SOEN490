@@ -1,8 +1,10 @@
-import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { Button, Grid, Modal, Typography } from '@material-ui/core'
+import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 import React, { useState } from 'react'
+
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
+import { Link } from 'react-router-dom'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -38,20 +40,20 @@ export const SearchResults = (props: IProps) => {
   const [open, setOpen] = useState(false)
 
   const getNameLink = (params: ValueGetterParams) => {
-    const datasetID = params.getValue('id')
+    const datasetId = params.getValue('id')
     const datasetName = params.getValue('dataset_name')
 
-    const handleDatasetName = () => {
-      setOpen(true)
-    }
+    return (<DatasetFormModal datasetId={datasetId.toString()} datasetName={datasetName.toString()} />)
 
-    return (
-      <div>
-
-      </div>
-    )
-
-
+    /*return (
+      <Link to={'/uploadDataset/' + datasetID} >
+        <Typography>
+          <>
+            <Button variant="outlined">{datasetName}</Button>
+          </>
+        </Typography>
+      </Link>
+    )*/
   }
 
   const columns: ColDef[] = [

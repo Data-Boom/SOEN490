@@ -17,7 +17,7 @@ interface IDatasetViewParams {
   datasetID: string
 }
 
-const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
+export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
   const dataset: IDatasetModel = {
     reference: partialDataset.reference || defaultDatasetModel.reference,
     dataset_name: partialDataset.dataset_name || defaultDatasetModel.dataset_name,
