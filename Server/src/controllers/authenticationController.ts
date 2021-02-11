@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import { IForgotPasswordInformation, ILoginInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { NextFunction, Request, Response } from 'express';
 
@@ -11,6 +12,13 @@ import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfac
  * This controller is responsible for verifying the user request has correct parameters input.
  * After request is verified, the appropriate service can be called to fulfill user signup or login
  */
+const schema = Yup.object().shape({
+  email: Yup.string().email(),
+  password: Yup.string()
+    .required()
+    .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+})
+
 export class AuthenticationController {
   private authenticationService: AuthenticationService;
   private invalidResponse: boolean;
@@ -82,11 +90,15 @@ export class AuthenticationController {
   }
 
   private validateResetPasswordRequest(request: Request): boolean {
-    return !request.body.resetToken && (this.validateUpdatePasswordRequest(request));
+    if (schema.isValidSync) {
+      return !request.body.resetToken && (this.validateUpdatePasswordRequest(request));
+    }
   }
 
   private validateUpdatePasswordRequest(request: Request): boolean {
-    return !request.body.password && !request.body.passwordConfirmation && request.body.password === request.body.passwordConfirmation;
+    if (schema.isValidSync) {
+      return !request.body.password && !request.body.passwordConfirmation && request.body.password === request.body.passwordConfirmation;
+    }
   }
 
   private validateForgotPasswordRequest(request: Request): boolean {
@@ -94,8 +106,7 @@ export class AuthenticationController {
   }
 
   private validateSignUpRequest(request: Request): boolean {
-    if (request.body.email && request.body.password && request.body.firstName
-      && request.body.lastName && request.body.organizationName) {
+    if (request.body.email && request.body.password && request.body.firstName && request.body.lastName && request.body.organizationName) {
       return false;
     }
     else {
