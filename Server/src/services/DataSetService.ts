@@ -472,13 +472,33 @@ export class DataSetService {
         }
     }
 
-    async rejectDataSet(datasetId: number) {
+    async adminRejectDataSet(datasetId: number) {
         try {
             let response = await this.commonModel.verifyDatasetExists(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No such data set exists")
             }
             response = await this.deleteModel.rejectDataset(datasetId)
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
+            }
+            else {
+                throw new Error("Something went wrong deleting this Data Set. Try again later")
+            }
+        }
+    }
+
+    async userRejectDataSet(datasetId: number, userId: number) {
+        try {
+            let verifyUploader = await this.approvalModel.verifyUnapprovedDatasetUploader(datasetId, userId)
+            if (verifyUploader != true) {
+                throw new BadRequest(verifyUploader)
+            }
+            let response = await this.deleteModel.rejectDataset(datasetId)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse

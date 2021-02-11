@@ -70,11 +70,14 @@ export class DatasetApprovalModel {
             .innerJoin(Dataset, 'dataset', 'dataset.id = unapproved_datasets.datasetId')
             .where('dataset.id = :id', { id: id })
             .getRawOne();
-        if (upload == undefined || upload.uploaderId != userId) {
+        if (!upload) {
+            return "No such unapproved data set exists!"
+        }
+        else if (upload.uploaderId != userId) {
             return "User ID does not match uploader ID!"
         }
         else if (upload.isFlagged != 1) {
-            return "You cannot approve a data set until it passes initial screening!"
+            return "You cannot approve or reject a data set until it passes initial screening!"
         }
         else {
             return true
