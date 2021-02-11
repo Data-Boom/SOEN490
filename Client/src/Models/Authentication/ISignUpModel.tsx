@@ -49,3 +49,4 @@ export const defaultResetPasswordModel: IResetPasswordModel = {
   passwordConfirmation: '',
   resetToken: ''
 }
+
