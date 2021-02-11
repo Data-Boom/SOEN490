@@ -53,12 +53,13 @@ export default function PermissionsTab() {
         onSubmit={handleAddAdmin}
       >
         <Form>
-          <Box className={classStyles().defaultBorder}>
+          <Box className={classStyles().defaultBorder} style={{ width: "100%" }} >
             <Typography variant='h6' align="left">Add a new admin by providing admin's email:</Typography>
             <Grid container spacing={4}>
               <Grid item sm={6}>
                 <FastField name="email" label='New Admin Email' type="email" component={MuiTextFieldFormik} />
               </Grid>
+              <Grid sm={1} />
               <Grid item sm={3}>
                 <Button id="AddNewAdmin" variant="contained" color="primary" type="submit">+ Add new admin </Button>
               </Grid>

@@ -1,5 +1,6 @@
 import { Button, Grid, Paper, Table, TableContainer } from '@material-ui/core'
 import React, { useState } from 'react'
+import { classStyles } from '../../../appTheme'
 
 import { ConfirmationModal } from '../../Authentication/ConfirmationModal'
 
@@ -18,8 +19,8 @@ export const AdminReviewRow = (props: IProps) => {
   }
 
   return (
-    <Grid item xs={12}>
-      <TableContainer component={Paper} style={{ width: "100%" }}>
+    <Grid item xs={12} >
+      <TableContainer component={Paper} style={{ width: "100%" }} className={classStyles().defaultBorder}>
         <Table aria-label="collapsabile table">
           <Grid container spacing={2}>
             <Grid item xs={8}>
