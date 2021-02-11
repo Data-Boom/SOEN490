@@ -147,9 +147,9 @@ export function ProfileView() {
   useEffect(() => {
     const callListSavedGraphStates = async () => {
       const savedGraphState = await listGraphStates()
-      //  setSavedGraphState(savedGraphState.reverse())
+      setSavedGraphState(savedGraphState.reverse())
     }
-    // callListSavedGraphStates()
+    callListSavedGraphStates()
   }, [])
 
   const classes = useStyles()
@@ -199,7 +199,6 @@ export function ProfileView() {
           <TabPanel value={tab} index={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                Admin list
                 <PermissionsTab
                 />
               </Grid>

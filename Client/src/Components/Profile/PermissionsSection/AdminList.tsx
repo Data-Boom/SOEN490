@@ -14,7 +14,7 @@ export const AdminList = (props: IProps) => {
   const { adminList, handleRemoveAdmin } = { ...props }
   return (
     <Grid>
-      {adminList.length > 0 && adminList.map(adminSet => {
+      {adminList && adminList.map(adminSet => {
         return (
           < AdminReviewRow
             adminEmail={adminSet.email}
