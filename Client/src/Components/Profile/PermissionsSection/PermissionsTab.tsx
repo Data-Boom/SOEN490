@@ -19,9 +19,9 @@ export default function PermissionsTab() {
 
   const [adminListState, setAdminListState] = useState([])
 
-  const handleAddAdmin = async (newAdmin: string) => {
+  const handleAddAdmin = async (newAdmin: any) => {
     await updatePermissions({
-      email: newAdmin,
+      email: newAdmin.email,
       operation: "add"
     })
     const adminListState = await fetchAllAdmins()
@@ -45,11 +45,10 @@ export default function PermissionsTab() {
     callListAdminStates()
   }, [])
 
-
   return (
     <Grid>
       <Formik
-        initialValues={{ email: 'dffgd' }}
+        initialValues={{ email: "" }}
         validationSchema={validationSchema}
         onSubmit={handleAddAdmin}
       >

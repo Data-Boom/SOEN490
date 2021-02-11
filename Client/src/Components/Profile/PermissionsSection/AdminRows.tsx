@@ -12,9 +12,10 @@ export const AdminReviewRow = (props: IProps) => {
   const { adminEmail, handleRemoveAdmin } = { ...props }
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
-  // const handleRemoveAdmin = async (removeAdmin: string) => {
-  //   setConfirmModalOpen(false)
-  // }
+  const onHandleRemoveAdmin = async (removeAdmin: string) => {
+    setConfirmModalOpen(true)
+    handleRemoveAdmin(removeAdmin)
+  }
 
   return (
     <Grid item xs={12}>
@@ -35,7 +36,7 @@ export const AdminReviewRow = (props: IProps) => {
                 cancelButton="Cancel"
                 open={confirmModalOpen}
                 onClose={() => setConfirmModalOpen(false)}
-                onSubmit={() => handleRemoveAdmin(adminEmail)}
+                onSubmit={() => onHandleRemoveAdmin(adminEmail)}
               />
             </Grid>
           </Grid>
