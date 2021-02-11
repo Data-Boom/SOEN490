@@ -106,7 +106,7 @@ export class AuthenticationController {
   }
 
   private validateSignUpRequest(request: Request): boolean {
-    if (request.body.email && request.body.password && request.body.firstName && request.body.lastName && request.body.organizationName) {
+    if ((schema.isValidSync) && request.body.email && request.body.password && request.body.firstName && request.body.lastName && request.body.organizationName) {
       return false;
     }
     else {
