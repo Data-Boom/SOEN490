@@ -2,18 +2,16 @@ import { AppBar, Box, Button, Collapse, Container, Grid, IconButton, Paper, Tab,
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 import { fetchAllAdmins, updatePermissions } from '../../Remote/Endpoints/PermissionsEndpoint'
-
-import AddNewAdminForm from '../Profile/PermissionsSection/AddNewAdminForm'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
-import { ProfileAdminStateList } from '../../Components/Profile/PermissionsSection/AdminList'
 import { ProfileGraphStateList } from './ProfileGraphList'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
+import PermissionsTab from './PermissionsSection/PermissionsTab'
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -149,28 +147,10 @@ export function ProfileView() {
   useEffect(() => {
     const callListSavedGraphStates = async () => {
       const savedGraphState = await listGraphStates()
-      setSavedGraphState(savedGraphState.reverse())
+      //  setSavedGraphState(savedGraphState.reverse())
     }
-    callListSavedGraphStates()
+    // callListSavedGraphStates()
   }, [])
-
-  const [adminListState, setAdminListState] = useState([])
-
-  useEffect(() => {
-    const callListAdminStates = async () => {
-      const adminListState = await fetchAllAdmins()
-      setAdminListState(adminListState)
-    }
-    callListAdminStates()
-  }, [])
-
-  const handleAddNewAdmin = async (newAdmin: string) => {
-    let test = await updatePermissions({
-      email: newAdmin,
-      operation: "add"
-    })
-    console.log(test)
-  }
 
   const classes = useStyles()
   const [tab, setTab] = React.useState(0)
@@ -220,16 +200,7 @@ export function ProfileView() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 Admin list
-                <AddNewAdminForm
-                  onSubmit={handleAddNewAdmin}
-                />
-              </Grid>
-              <Grid>
-                Current Admins:
-              </Grid>
-              <Grid item xs={12}>
-                <ProfileAdminStateList
-                  adminlist={adminListState}
+                <PermissionsTab
                 />
               </Grid>
             </Grid>

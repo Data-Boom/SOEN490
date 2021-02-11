@@ -1,31 +1,28 @@
-import { Box, Grid } from "@material-ui/core"
-import React, { useEffect, useState } from 'react'
+import { Grid } from "@material-ui/core"
+import React from 'react'
 
 import { AdminReviewRow } from './AdminRows'
 import { IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
-import { fetchAllAdmins } from "../../../Remote/Endpoints/PermissionsEndpoint"
 
-interface IAdminListProps {
-    adminlist: IUserAccountModel[],
+interface IProps {
+  adminList: IUserAccountModel[],
+  handleRemoveAdmin: (accountEmail: string) => void
 }
 
-export const ProfileAdminStateList = (props: IAdminListProps) => {
-    const { adminlist } = { ...props }
 
-    const [adminListState, setAdminListState] = useState([])
-    const renderAdminListRows = () => {
-        return adminlist && adminlist.map(adminSet => {
-            return (
-                < AdminReviewRow
-                    adminEmail={adminSet}
-                />
-            )
-        })
-    }
-    return (
-        <Grid>
-            {renderAdminListRows()}
-        </Grid>
-    )
+export const AdminList = (props: IProps) => {
+  const { adminList, handleRemoveAdmin } = { ...props }
+  return (
+    <Grid>
+      {adminList.length > 0 && adminList.map(adminSet => {
+        return (
+          < AdminReviewRow
+            adminEmail={adminSet.email}
+            handleRemoveAdmin={handleRemoveAdmin}
+          />
+        )
+      })}
+    </Grid>
+  )
 
 }
