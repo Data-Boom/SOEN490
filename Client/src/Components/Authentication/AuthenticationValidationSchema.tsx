@@ -25,7 +25,7 @@ export const signupValidationSchema = Yup.object().shape({
 
 export const loginValidationSchema = Yup.object().shape({
   email: emailSchema,
-  password: passwordSchema
+  password: Yup.string().required()//if i use passwordSchema, it won't let existing user with short passwords log in
 })
 
 export const forgotPasswordValidationSchema = Yup.object().shape({
