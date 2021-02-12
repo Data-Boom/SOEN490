@@ -4,21 +4,19 @@ const requiredMessage = (fieldName: string): string => {
   return `${fieldName} is a required field`
 }
 
+const passwordSchema = Yup.string().required().matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+
+const emailSchema = Yup.string().email().required(requiredMessage("Email Address"))
+
 export const signupValidationSchema = Yup.object().shape({
   firstName: Yup.string()
     .required(requiredMessage('First Name')),
   lastName: Yup.string()
     .required(requiredMessage('Last Name')),
-  email: Yup.string()
-    //handles the email logic, no need to add extra reg ex
-    .email().required(requiredMessage("Email Address")),
+  email: emailSchema,
   organizationName: Yup.string()
     .required(requiredMessage('Organization')),
-  password: Yup.string()
-    .required(requiredMessage("Password"))
-    //this line adds the validation check for password to have minimum 1 upper and lowercase letter, 1 special character, 1 number and in between 8 to 30 characters
-    .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
-    .min(8, "Password is short, should be 8 characters minimum"),
+  password: passwordSchema,
   confirmPassword: Yup.string()
     .required(requiredMessage("Confirm Password"))
     .min(8, "Password is short, should be 8 characters minimum")
@@ -26,26 +24,16 @@ export const signupValidationSchema = Yup.object().shape({
 })
 
 export const loginValidationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email()
-    .required(requiredMessage("Email Address")),
-  password: Yup.string()
-    .required(requiredMessage("Password"))
-    .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
-
+  email: emailSchema,
+  password: passwordSchema
 })
 
 export const forgotPasswordValidationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email()
-    .required(requiredMessage("Email Address"))
+  email: emailSchema
 })
 
 export const resetPasswordValidationSchema = Yup.object().shape({
-  password: Yup.string()
-    .required(requiredMessage("Password"))
-    .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
-    .min(8, "Password is short, should be 8 characters minimum"),
+  password: passwordSchema,
   passwordConfirmation: Yup.string()
     .required(requiredMessage("Confirm Password"))
     .min(8, "Password is short, should be 8 characters minimum")
