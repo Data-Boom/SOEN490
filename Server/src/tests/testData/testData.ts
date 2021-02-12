@@ -4,6 +4,9 @@ export const validEditTestData = {
         "publisher": "University of California Press",
         "authors": [
             {
+                "firstname": "Stanley",
+                "middlename": "P.",
+                "lastname": "Marsh",
                 "firstName": "Stanley",
                 "middleName": "P.",
                 "lastName": "Marsh"
