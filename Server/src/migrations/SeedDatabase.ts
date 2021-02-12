@@ -118,7 +118,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await connection.manager.save(author4);
 
     let publication = new Publications();
-    publication.id;
+    publication.id = 1;
     publication.name = "LASL shock Hugoniot data";
     publication.pages = 100;
     publication.publicationtypeId = book.id;
@@ -128,6 +128,18 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication.datePublished;
     publication.dateAccessed;
     publication.authors = [author1, author2];
+    await connection.manager.save(publication);
+
+    publication.id;
+    publication.name = "Unapproved Publication";
+    publication.pages = 100;
+    publication.publicationtypeId = book.id;
+    publication.publisherId = publisherName.id;
+    publication.year = 1980;
+    publication.volume = 5;
+    publication.datePublished;
+    publication.dateAccessed;
+    publication.authors = [];
     await connection.manager.save(publication);
 
     let publication2 = new Publications();
@@ -254,7 +266,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 1;
     dataset.name = "CARBON, graphite, pressed, Initial density = 2.13 g/cc";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = 1;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments = "References 5,6,14\nAverage density = 2.134 g/cc";
