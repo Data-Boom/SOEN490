@@ -16,7 +16,7 @@ import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfac
 //helpers
 const passwordSchema = Yup.string()
   .required()
-  .matches(new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/'), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+  .matches(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
 
 const emailSchema = Yup.string().email().required() //do we need a required msg on the backend side?
 
