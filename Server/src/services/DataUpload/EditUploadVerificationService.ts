@@ -27,6 +27,12 @@ export class EditUploadVerificationService {
                     clearFlag = true
                 }
             }
+            else {
+                let verifyDatasetExists = await this.datasetCommonModel.verifyDatasetExists(datasetId)
+                if (verifyDatasetExists != true) {
+                    throw new BadRequest("No such data set exists")
+                }
+            }
             this.dataService = new EditUploadService(dataset, datasetId, null)
             await this.dataService.validateExtractedData();
             this.requestResponse = await this.dataService.uploadData();
