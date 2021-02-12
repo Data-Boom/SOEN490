@@ -28,9 +28,9 @@ const referenceValidationSchema = Yup.object().shape({
 
 export const variableValidationSchema = Yup.object().shape(
   {
-    name: Yup.string().trim().required(requiredMessage('Name')),
-    repr: Yup.string().trim().required(requiredMessage('Representation')),
-    units: Yup.string().trim().required(requiredMessage('Units'))
+    name: Yup.string().trim(),
+    repr: Yup.string().trim(),
+    units: Yup.string().trim()
   }
 )
 

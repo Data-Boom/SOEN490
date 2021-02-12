@@ -1,7 +1,7 @@
-import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Button, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
-
+import { fetchAllAdmins, updatePermissions } from '../../Remote/Endpoints/PermissionsEndpoint'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
@@ -11,6 +11,7 @@ import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
+import PermissionsTab from './PermissionsSection/PermissionsTab'
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -131,6 +132,7 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 }
 
 export function ProfileView() {
+
   const { user, setUser } = useContext(UserContext)
   useEffect(() => {
     const fetchUser = async () => {
@@ -163,7 +165,8 @@ export function ProfileView() {
           <Tabs value={tab} onChange={handleChange}>
             <Tab label="View Profile" {...a11yProps(0)} />
             <Tab label="View Favourites" {...a11yProps(1)} />
-            <Tab label="View Uploads" {...a11yProps(2)} />
+            <Tab label="Permissions" {...a11yProps(2)} />
+            <Tab label="View Uploads" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -194,6 +197,14 @@ export function ProfileView() {
             </TableContainer>
           </TabPanel>
           <TabPanel value={tab} index={2}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <PermissionsTab
+                />
+              </Grid>
+            </Grid>
+          </TabPanel>
+          <TabPanel value={tab} index={3}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
                 <TableHead>Uploads

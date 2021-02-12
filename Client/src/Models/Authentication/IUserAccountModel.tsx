@@ -32,3 +32,11 @@ export const toLocalUserAccountModel = (remoteAccount: IUserAccountRemoteModel):
 
   return localAccountModel
 }
+
+export const defaultUserAccountModel: IUserAccountModel = {
+  dateOfBirth: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+  organizationName: ''
+}

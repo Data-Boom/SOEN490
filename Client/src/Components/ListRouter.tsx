@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
+import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetUploadRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newDatasetUploadRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -11,6 +11,7 @@ import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
 import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
 import DonutSmallIcon from '@material-ui/icons/DonutSmall'
 import { FileUploadView } from "./FileUpload/FileUploadView"
+import ForgotPasswordView from "./Authentication/ForgotPasswordView"
 import GraphView from "./Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "./Home/HomeView"
@@ -21,12 +22,11 @@ import MessageIcon from '@material-ui/icons/Message';
 import { ProfileView } from "./Profile/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
+import ResetPasswordView from "./Authentication/ResetPasswordView"
 import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
 import SignUpView from "./Authentication/SignUpView"
-import ResetPasswordView from "./Authentication/ResetPasswordView"
-import ForgotPasswordView from "./Authentication/ForgotPasswordView"
 import { resetPasswordRoute } from "../Remote/Endpoints/AuthenticationEndpoint"
 
 interface IProps {
@@ -97,7 +97,7 @@ export const getRoutedViews = () => {
       <Route path={graphRoute} component={GraphView} />
       <Route path={fileUploadRoute} component={FileUploadView} />
       <Route path={searchRoute} component={SearchView} />
-      <Route path={datasetUploadRoute} component={DatasetUploadView} />
+      <Route path={newDatasetUploadRoute} component={DatasetUploadView} />
       <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
       <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
       <Route path={aboutRoute} component={AboutView} />

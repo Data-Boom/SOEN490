@@ -33,7 +33,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user1.lastName = 'FireFist';
     user1.dateOfBirth = '1980-01-01' as any;
     user1.organizationName = 'Mugiwara';
-    user1.admin = !!true;
+    user1.admin = 1;
     await connection.manager.save(user1);
 
     let user2 = new Accounts();
@@ -55,8 +55,19 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user3.lastName = 'forfore';
     user3.dateOfBirth = '1980-01-01' as any;
     user3.organizationName = 'Ozark';
-    user3.admin = !!true;
+    user3.admin = 1;
     await connection.manager.save(user3);
+
+    let user4 = new Accounts();
+    user4.id = 4;
+    user4.email = 'admin@potential.com';
+    user4.password = await authenticationService.hashPassword('123') as any;
+    user4.firstName = 'Admin';
+    user4.lastName = 'Manage';
+    user4.dateOfBirth = '1980-01-01' as any;
+    user4.organizationName = 'Ozark';
+    user4.admin = 0;
+    await connection.manager.save(user4);
 
     let book = new Publicationtype();
     book.id;

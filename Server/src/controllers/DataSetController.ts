@@ -53,17 +53,17 @@ export class DataSetController {
         let userId: any = request.body.user.account_id
         try {
             this.dataSetService = new DataSetService();
-            let arrayOfData = await this.dataSetService.getUserUploadedDatasets(userId)
-            return response.status(200).json(arrayOfData);
+            let requestResponse = await this.dataSetService.getUserUploadedDatasets(userId)
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (err) {
             response.status(500).json(err);
         }
     }
 
     /**
-     * This controller will take a request, grab the user ID, and if it a real number will then process the request,
-     * send it to the getDataService to acquire an array of data sets that were saved by this user ID, and
-     * then return a response with the array of data sets. If the request is invalid, or some other problem arrises, 
+     * This controller will take a request, grab the user ID, send it to the service
+     * to acquire an array of data sets that were saved by this user ID, and then return a response with 
+     * the array of data sets. If the request is invalid, or some other problem arrises, 
      * it will throw an error.
      * 
      * @param request
@@ -75,40 +75,39 @@ export class DataSetController {
         let userId: any = request.body.user.account_id
         try {
             this.dataSetService = new DataSetService();
-            let arrayOfData = await this.dataSetService.getUserFavoriteDatasets(userId)
-            return response.status(200).json(arrayOfData);
+            let requestResponse = await this.dataSetService.getUserFavoriteDatasets(userId)
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (err) {
             response.status(500).json(err);
         }
     }
 
-    //TODO: Readd later
     /**
-     * This controller will take a request, grab the user email and data set ID, verify said ID is a number,
-     * and then send the service a request to add the user's saved data set preference to the database.
+     * This controller will take a request, grab the user ID and data set ID, verify data set ID is a number,
+     * and then send the service a request to add this favorite data set to the database.
      * 
      * @param request
      * An object containing the request information and parameters: Request 
      * @param response 
      * An object containing a response: Response
-    async createRequestForAddingSavedDataset(request: Request, response: Response) {
-        let userEmail = request.params.userEmail;
+     */
+    async createRequestToAddUserFavoriteDataSet(request: Request, response: Response) {
         let requestParam = request.params.datasetId;
-        let datasetId: number = +requestParam;
+        let datasetId = Number(requestParam);
         if (isNaN(datasetId)) {
             response.status(400).json("Invalid data set ID entered");
         }
         else {
+            let userId: number = request.body.user.account_id
             try {
-                let executionStatus = await this.dataSetService.addSavedDatasetService(userEmail, datasetId)
-                if (executionStatus[0]) { return response.status(200).json(executionStatus[1]); }
-                else { return response.status(400).json(executionStatus[1]); }
+                this.dataSetService = new DataSetService();
+                let requestResponse = await this.dataSetService.addUserFavoriteDataset(userId, datasetId)
+                return response.status(requestResponse.statusCode).json(requestResponse.message);
             } catch (err) {
-                response.status(500).json(err);
+                response.status(err.status).json(err.message);
             }
         }
     }
-     */
 
     async createRequestToDeleteUserFavoriteDataSet(request: Request, response: Response) {
         let requestParam = request.params.datasetId;
