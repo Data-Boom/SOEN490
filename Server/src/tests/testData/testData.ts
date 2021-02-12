@@ -4,12 +4,12 @@ export const validEditTestData = {
         "publisher": "University of California Press",
         "authors": [
             {
-                "firstname": "Stanley",
+                "firstname": "Jack",
                 "middlename": "P.",
-                "lastname": "Marsh",
-                "firstName": "Stanley",
+                "lastname": "Edit",
+                "firstName": "Jack",
                 "middleName": "P.",
-                "lastName": "Marsh"
+                "lastName": "Edit"
             }
         ],
         "title": "Dataset Insert Daily",
@@ -248,11 +248,6 @@ export const validTestData = {
             {
                 "firstName": "alpha",
                 "lastName": "testing"
-            },
-            {
-                "firstName": "Stanley",
-                "middleName": "P.",
-                "lastName": "Marsh"
             },
             {
                 "firstName": "John",
@@ -501,11 +496,6 @@ export const inValidTestData = {
             {
                 "firstName": "alpha",
                 "lastName": "testing"
-            },
-            {
-                "firstName": "Stanley",
-                "middleName": "P.",
-                "lastName": "Marsh"
             },
             {
                 "firstName": "John",
