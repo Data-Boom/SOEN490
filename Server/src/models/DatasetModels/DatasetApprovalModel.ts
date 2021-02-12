@@ -63,27 +63,6 @@ export class DatasetApprovalModel {
         return "Dataset Flagged!"
     }
 
-    async verifyUnapprovedDatasetUploader(id: number, userId: number): Promise<any> {
-        let upload = await this.connection.createQueryBuilder(Unapproveddatasets, 'unapproved_datasets')
-            .select('dataset.uploaderId', 'uploaderId')
-            .addSelect('unapproved_datasets.isFlagged', 'isFlagged')
-            .innerJoin(Dataset, 'dataset', 'dataset.id = unapproved_datasets.datasetId')
-            .where('dataset.id = :id', { id: id })
-            .getRawOne();
-        if (!upload) {
-            return "No such unapproved data set exists!"
-        }
-        else if (upload.uploaderId != userId) {
-            return "User ID does not match uploader ID!"
-        }
-        else if (upload.isFlagged != 1) {
-            return "You cannot approve or reject a data set until it passes initial screening!"
-        }
-        else {
-            return true
-        }
-    }
-
     async approveDataset(datasetId: number) {
         await this.approveSingleDatasetQuery(datasetId)
         await this.commonModel.wipeEntryFromUnapprovedTable(datasetId)

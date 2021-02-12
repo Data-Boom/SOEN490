@@ -494,7 +494,7 @@ export class DataSetService {
 
     async userRejectDataSet(datasetId: number, userId: number) {
         try {
-            let verifyUploader = await this.approvalModel.verifyUnapprovedDatasetUploader(datasetId, userId)
+            let verifyUploader = await this.commonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
             if (verifyUploader != true) {
                 throw new BadRequest(verifyUploader)
             }
@@ -553,7 +553,7 @@ export class DataSetService {
 
     async userApprovedDataset(datasetId: number, userId: number) {
         try {
-            let verifyUploader = await this.approvalModel.verifyUnapprovedDatasetUploader(datasetId, userId)
+            let verifyUploader = await this.commonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
             if (verifyUploader != true) {
                 throw new BadRequest(verifyUploader)
             }

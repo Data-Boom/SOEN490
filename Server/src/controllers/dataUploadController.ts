@@ -4,6 +4,7 @@ import AbstractUploadService from '../services/DataUpload/AbstractUploadService'
 import EditUploadService from '../services/DataUpload/EditUploadService';
 import { IDataSetModel } from '../genericInterfaces/DataProcessInterfaces';
 import { UnapprovedUploadService } from '../services/DataUpload/UnapprovedUploadService'
+import { EditUploadVerificationService } from '../services/DataUpload/EditUploadVerificationService';
 
 /**
  * The dataUploadController is responsible for processing providing instructions to the application if a request comes in
@@ -53,9 +54,10 @@ export class DataUploadController {
         else {
             try {
                 this.dataSet = request.body
-                this.dataService = new EditUploadService(this.dataSet, datasetId, null)
-                await this.dataService.validateExtractedData();
-                let extractDataResponse: any = await this.dataService.uploadData();
+                let userId: number = request.body.user.account_id
+                let permissionLevel: number = request.body.user.account_admin
+                let uploadVerificationService = new EditUploadVerificationService()
+                let extractDataResponse: any = await uploadVerificationService.verifyUploader(userId, permissionLevel, this.dataSet, datasetId);
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
             } catch (error) {
                 return response.status(error.status).json(error.message);

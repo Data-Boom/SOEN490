@@ -247,7 +247,8 @@ export const validTestData = {
         "comments": "References 5,6,14\nAverage density = 2.134 g/cc"
     },
     "user": {
-        "account_id": 1
+        "account_id": 1,
+        "account_admin": 1
     }
 }
 
