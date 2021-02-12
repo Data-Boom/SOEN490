@@ -29,7 +29,7 @@ export class EditUploadVerificationService {
             }
             else {
                 let verifyDatasetExists = await this.datasetCommonModel.verifyDatasetExists(datasetId)
-                if (verifyDatasetExists != true) {
+                if (verifyDatasetExists == undefined || verifyDatasetExists == null) {
                     throw new BadRequest("No such data set exists")
                 }
             }
