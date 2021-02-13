@@ -22,4 +22,7 @@ export class Units {
 
     @UpdateDateColumn()
     updated: Date
+
+    //TODO: NEED TO TALK TO SEAN ABOUT ADDING A MANY TO MANY WITH DIMENSION
+
 }

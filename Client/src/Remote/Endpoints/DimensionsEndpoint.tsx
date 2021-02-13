@@ -1,9 +1,11 @@
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 import { get, post, put, _delete } from "../FluentRequest"
 
-import { IDimensionModel, IDimensionQueryModel, IUnitModel } from "../../Models/Units/IDimension"
+import { IDimensionModel, IDimensionQueryModel, IUnitModel } from "../../../../Server/src/models/interfaces/IDimension"
 
 const dimensionRoute = '/api/v1/dimension'
+
+// api/v1/dimensions/2
 
 export const callAddDimension = async (dimensionModel: IDimensionModel): Promise<any> => {
     const result: IUnitModel[] = await post(dimensionRoute).withBody(dimensionModel).json()
@@ -13,6 +15,8 @@ export const callAddDimension = async (dimensionModel: IDimensionModel): Promise
     // }
 }
 
+// api/v1/dimensions/2
+
 export const callChangeDimension = async (dimensionQuery: IDimensionModel): Promise<any> => {
     const result = await put(dimensionRoute).withQuery(dimensionQuery).json()
     // if (result == 'Success') {
@@ -20,6 +24,8 @@ export const callChangeDimension = async (dimensionQuery: IDimensionModel): Prom
     // SnackbarUtils.success('Dimension has been changed successfully')
     // }
 }
+
+// api/v1/dimensions/2
 
 export const callDeleteDimension = async (dimensionId: number): Promise<any> => {
     const result = await _delete(dimensionRoute + '/' + dimensionId).json()
@@ -36,6 +42,8 @@ export const callGetAllUnits = async (): Promise<any> => {
     // SnackbarUtils.success(`New dimension has been added successfully`)
     // }
 }
+
+// api/v1/dimensions/2
 
 export const callGetUnits = async (query: IDimensionQueryModel): Promise<any> => {
     const result = await get(dimensionRoute).withQuery(query).json()
