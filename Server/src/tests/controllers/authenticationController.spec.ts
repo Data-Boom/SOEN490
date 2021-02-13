@@ -31,7 +31,7 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Success";
         mockRequest = {
             body: {
-                email: 'j.comkj23r23r23r23r2',
+                email: 'j@kj.com',
                 password: '123',
                 isAdmin: 'false',
                 organizationName: 'Mugiwara',
@@ -62,7 +62,7 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Email already exists! Please enter a different email address";
         mockRequest = {
             body: {
-                email: 'j.comkj',
+                email: 'j@kj.com',
                 password: '123',
                 isAdmin: 'false',
                 organizationName: 'Mugiwara',
@@ -107,7 +107,7 @@ describe('Authentication Controller', () => {
 
     test('Valid Request to get UserDetails', async () => {
         const expectedResponse = {
-            "account_email": "j.comkj",
+            "account_email": "j@kj.com",
             "account_firstName": "Ace",
             "account_lastName": "FireFist",
             "account_dateOfBirth": "1980-01-01T00:00:00.000Z",
@@ -116,7 +116,7 @@ describe('Authentication Controller', () => {
         }
         mockRequest = {
             query: {
-                email: 'j.comkj',
+                email: 'j@kj.com',
             }
         }
         await authenticationController.createFetchUserDetailsRequest(mockRequest as Request, mockResponse as Response);
