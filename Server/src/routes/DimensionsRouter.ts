@@ -8,7 +8,7 @@ let router = Router();
 let dimensionsController = new DimensionsController();
 
 /**
- * This route is used when an authentication API is called.
+ * This route is used when dealing with dimensions and units.
  */
 
 
