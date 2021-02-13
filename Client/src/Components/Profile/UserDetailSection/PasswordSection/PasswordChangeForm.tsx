@@ -16,10 +16,10 @@ export default function PasswordChangeForm(props: IProps) {
 
   const { onSubmit } = props
 
+  const passwordSchema = Yup.string().required().matches(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+
   const validationSchema = Yup.object().shape({
-    password: Yup.string()
-      .required('Password is required')
-      .matches(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character"),
+    password: passwordSchema,
     passwordConfirmation: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
   })

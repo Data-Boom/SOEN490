@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+import { passwordSchema, emailSchema } from './../services/helpers/validationSchema';
 import { IForgotPasswordInformation, ILoginInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { NextFunction, Request, Response } from 'express';
 
@@ -12,14 +12,6 @@ import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfac
  * This controller is responsible for verifying the user request has correct parameters input.
  * After request is verified, the appropriate service can be called to fulfill user signup or login
  */
-
-//helpers
-const passwordSchema = Yup.string()
-  .required()
-  .matches(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
-
-const emailSchema = Yup.string().email().required() //do we need a required msg on the backend side?
-
 
 export class AuthenticationController {
   private authenticationService: AuthenticationService;
@@ -80,8 +72,14 @@ export class AuthenticationController {
 
   async resetPasswordWithResetTokenRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
     this.invalidResponse = this.validateResetPasswordRequest(request);
-    if (this.invalidResponse) {
+    if (this.invalidResponse) {//to do: change to proper message
       return response.status(400).json("User was not found");
+    }//checks of the schema is valid
+    if (passwordSchema.isValidSync(request.body.password)) {
+      return
+    }//checks if the passwords match
+    if (this.passwordConfirmationRequest(request)) {
+      return
     }
     else {
       let requestParams: any = { ...request.body };
@@ -96,7 +94,13 @@ export class AuthenticationController {
   }
 
   private validateUpdatePasswordRequest(request: Request): boolean {
-    return !passwordSchema.isValidSync(request.body.password) && !request.body.passwordConfirmation && request.body.password === request.body.passwordConfirmation;
+    return !request.body.password && !request.body.passwordConfirmation;// && request.body.password === request.body.passwordConfirmation && !passwordSchema.isValidSync(request.body.password);
+  }
+
+  private passwordConfirmationRequest(request: Request): boolean {
+    if (request.body.password === request.body.passwordConfirmation) {
+      return true
+    }
   }
 
   private validateForgotPasswordRequest(request: Request): boolean {
@@ -104,7 +108,7 @@ export class AuthenticationController {
   }
 
   private validateSignUpRequest(request: Request): boolean {
-    if (emailSchema.isValidSync(request.body.email) && passwordSchema.isValidSync(request.body.password) && request.body.firstName && request.body.lastName && request.body.organizationName) {
+    if (request.body.email && request.body.password && request.body.firstName && request.body.lastName && request.body.organizationName && emailSchema.isValidSync(request.body.email) && passwordSchema.isValidSync(request.body.password)) {
       return false;
     }
     else {

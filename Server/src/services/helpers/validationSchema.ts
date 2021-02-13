@@ -66,3 +66,9 @@ export const validationSchema = Yup.object().shape({
     category: Yup.string().strict(),
     subcategory: Yup.string().strict()
 })
+
+export const passwordSchema = Yup.string()
+    .required()
+    .matches(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/), "Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+
+export const emailSchema = Yup.string().email().required()
