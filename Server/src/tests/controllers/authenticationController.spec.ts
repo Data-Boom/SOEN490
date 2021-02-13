@@ -32,7 +32,7 @@ describe('Authentication Controller', () => {
         mockRequest = {
             body: {
                 email: 'j@kj.com',
-                password: '123',
+                password: 'Abc12345!',
                 isAdmin: 'false',
                 organizationName: 'Mugiwara',
                 dateOfBirth: '1980-01-01',
@@ -63,7 +63,7 @@ describe('Authentication Controller', () => {
         mockRequest = {
             body: {
                 email: 'j@kj.com',
-                password: '123',
+                password: 'Abc12345!',
                 isAdmin: 'false',
                 organizationName: 'Mugiwara',
                 dateOfBirth: '1980-01-01',
