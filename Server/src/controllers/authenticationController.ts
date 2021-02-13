@@ -25,11 +25,22 @@ export class AuthenticationController {
     if (this.invalidResponse) {
       return response.status(400).json("Request is invalid. Missing attributes")
     }
+    if (!emailSchema.isValidSync(request.body.email)) {
+      return response.status(400).json("Incorrect email format detected. Email must contain @ and . symbols")
+    }
+    if (!passwordSchema.isValidSync(request.body.password)) {
+      return response.status(400).json("Incorrect password format detected. Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+    }
     else {
       let requestParams: any = { ...request.body };
       let signUpInfo: ISignUpInformation = requestParams;
-      let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
-      return res;
+      try {
+        let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
+        return res;
+      }
+      catch (error) {
+
+      }
     }
   }
 
@@ -72,16 +83,17 @@ export class AuthenticationController {
 
   async resetPasswordWithResetTokenRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
     this.invalidResponse = this.validateResetPasswordRequest(request);
-    if (this.invalidResponse) {//to do: change to proper message
+    if (this.invalidResponse) {
       return response.status(400).json("User was not found");
-    }//checks of the schema is valid
-    if (passwordSchema.isValidSync(request.body.password)) {
-      return
-    }//checks if the passwords match
-    if (this.passwordConfirmationRequest(request)) {
-      return
+    }
+    if (!passwordSchema.isValidSync(request.body.password)) {
+      return response.status(400).json("Incorrect password format detected. Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+    }
+    if (!this.passwordConfirmationRequest(request)) {
+      return response.status(400).json("The entered password and confirmation password don't match. Try again")
     }
     else {
+      console.log("proceeding with reset now")
       let requestParams: any = { ...request.body };
       let resetPasswordInfo: IResetPasswordInformation = requestParams;
       let res: any = await this.callServiceForResetPassword(resetPasswordInfo, response, next);
@@ -94,7 +106,7 @@ export class AuthenticationController {
   }
 
   private validateUpdatePasswordRequest(request: Request): boolean {
-    return !request.body.password && !request.body.passwordConfirmation;// && request.body.password === request.body.passwordConfirmation && !passwordSchema.isValidSync(request.body.password);
+    return !request.body.password && !request.body.passwordConfirmation;
   }
 
   private passwordConfirmationRequest(request: Request): boolean {
@@ -108,7 +120,7 @@ export class AuthenticationController {
   }
 
   private validateSignUpRequest(request: Request): boolean {
-    if (request.body.email && request.body.password && request.body.firstName && request.body.lastName && request.body.organizationName && emailSchema.isValidSync(request.body.email) && passwordSchema.isValidSync(request.body.password)) {
+    if (request.body.email && request.body.password && request.body.firstName && request.body.lastName && request.body.organizationName) {
       return false;
     }
     else {
