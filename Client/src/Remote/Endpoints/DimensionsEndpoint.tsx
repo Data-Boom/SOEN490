@@ -5,8 +5,7 @@ import { IDimensionModel, IDimensionQueryModel, IUnitModel } from "../../../../S
 
 const dimensionRoute = '/api/v1/dimension'
 
-// api/v1/dimensions/2
-
+// /api/v1/dimensions - POST - dimension model
 export const callAddDimension = async (dimensionModel: IDimensionModel): Promise<any> => {
     const result: IUnitModel[] = await post(dimensionRoute).withBody(dimensionModel).json()
     // if (result == 'Success') {
@@ -15,8 +14,7 @@ export const callAddDimension = async (dimensionModel: IDimensionModel): Promise
     // }
 }
 
-// api/v1/dimensions/2
-
+// /api/v1/dimensions/2 - PUT - dimension model
 export const callChangeDimension = async (dimensionQuery: IDimensionModel): Promise<any> => {
     const result = await put(dimensionRoute).withQuery(dimensionQuery).json()
     // if (result == 'Success') {
@@ -25,8 +23,7 @@ export const callChangeDimension = async (dimensionQuery: IDimensionModel): Prom
     // }
 }
 
-// api/v1/dimensions/2
-
+// /api/v1/dimensions/2 - DELETE - dimension ID
 export const callDeleteDimension = async (dimensionId: number): Promise<any> => {
     const result = await _delete(dimensionRoute + '/' + dimensionId).json()
     // if (result == 'Success') {
@@ -35,6 +32,7 @@ export const callDeleteDimension = async (dimensionId: number): Promise<any> => 
     // }
 }
 
+// Needs to be talked with frontend
 export const callGetAllUnits = async (): Promise<any> => {
     const result: IUnitModel[] = await get(dimensionRoute).json()
     // if (result == 'Success') {
@@ -43,8 +41,7 @@ export const callGetAllUnits = async (): Promise<any> => {
     // }
 }
 
-// api/v1/dimensions/2
-
+// Needs to be talked with the frontend
 export const callGetUnits = async (query: IDimensionQueryModel): Promise<any> => {
     const result = await get(dimensionRoute).withQuery(query).json()
     // if (result == 'Success') {

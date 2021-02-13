@@ -1,42 +1,93 @@
-import { Accounts } from './entities/Accounts'
-import { IFetchUserDetail } from '../genericInterfaces/AuthenticationInterfaces';
-import { ISignUpInformation } from '../genericInterfaces/AuthenticationInterfaces'
-import { getConnection } from 'typeorm';
+import { getConnection } from "typeorm";
 import { IDimensionModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
+import { Units } from './entities/Units';
 
 /**
- * This model contains all methods required for obtaining data from the Accounts
+ * This model contains all methods required for obtaining data from the Dimensions
  * table inside the database
  */
 export class DimensionModel {
+  private static connection = getConnection()
 
-    /**
-     * Method responsible for completing signup process. Extracting user information
-     * and sets the entity values
-     * @param signUpInfo - User Information from Frontend Request
+  /**
+   * Method responsible for adding a new dimension.
+   * It sets the entity values
+   * @param dimensionInfo - Dimension Information from Frontend Request
+   */
+  static async insertDimension(dimensionInfo: IDimensionModel) {
+    let dimension = new Dimension();
+    dimension.id;
+    dimension.name = dimensionInfo.name;
+
+    await this.connection.manager.save(dimension);
+  }
+
+  /**
+   * Method to verify if a name for dimension exists. Returns true or undefined
+   * @param name - Dimension name
+   */
+  static async verifyIfNameExists(name: string): Promise<boolean> {
+    let dimensionName = await this.connection.getRepository(Dimension)
+      .createQueryBuilder('dimensions')
+      .where('dimension.name := name', { name: name })
+      .getOne();
+
+    return dimensionName !== undefined;
+  }
+
+  /**
+     * This method deletes an existing dimension but keeps its units in the database
+     * @param dimensionId - dimension info that needs to be deleted
      */
-    static async insertDimension(dimensionInfo: IDimensionModel) {
+  static async deleteDimension(dimensionId: number) {
+    await this.connection.query("DELETE FROM dimensions WHERE id = ?", [dimensionId]);
+    return "User favorite data set successfully removed";
+  }
 
-        let connection = getConnection();
+  /**
+  * This method will update an existing dimension
+  * @param dimensionInfo - dimension info that needs its values updated
+  */
+  static async updateDimension(dimensionInfo: IDimensionModel): Promise<boolean> {
+    await this.connection.manager
+      .createQueryBuilder(Dimension, 'dimensions')
+      .update('dimensions')
+      .set({ name: dimensionInfo.name })
+      .set({ units: dimensionInfo.units })
+      .where('dimensions.id = :id', { id: dimensionInfo.id })
+      .execute()
 
-        let dimension = new Dimension();
-        dimension.id;
-        dimension.name = dimensionInfo.name;
-        await connection.manager.save(dimension);
-    }
+    return true
+  }
 
-    /**
-     * Method to verify Email exists. Returns true or undefined
-     * @param email - User Email
-     */
-    static async verifyIfNameExists(name: string): Promise<boolean> {
+  /**
+  * This method will return units of an existing dimension
+  * @param dimensionId - existing dimension id that needs its units returned
+  */
+  static async getDimensionUnits(dimensionId: number): Promise<Units[]> {
+    let dimensionUnits = await this.connection.manager
+      .createQueryBuilder(Dimension, 'dimensions')
+      .where('dimensions.id = :id', { id: dimensionId })
+      .select('dimensions.units', 'units')
+      .getOne()
 
-        let connection = getConnection();
-        let userEmail = await connection.getRepository(Accounts)
-            .createQueryBuilder('accounts')
-            .where('accounts.email = :email', { email: email })
-            .getOne();
+    console.log(dimensionUnits)
+    return dimensionUnits.units
+  }
 
-        return userEmail !== undefined;
-    }
+  /**
+  * This method will return all existing dimensions
+  */
+  static async getAllDimensions(): Promise<DimensionModel[]> {
+    let dimensions = await this.connection.manager
+      .createQueryBuilder(Dimension, 'dimensions')
+      .select('dimensions.id', 'id')
+      .select('dimensions.name', 'name')
+      .select('dimensions.units', 'units')
+      .getMany()
+
+    console.log(dimensions)
+    return dimensions
+  }
+}
