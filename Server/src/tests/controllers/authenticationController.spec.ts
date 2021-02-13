@@ -31,7 +31,7 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Success";
         mockRequest = {
             body: {
-                email: 'j@kj.com',
+                email: 'j@k.com',
                 password: 'Abc12345!',
                 isAdmin: 'false',
                 organizationName: 'Mugiwara',
@@ -41,8 +41,8 @@ describe('Authentication Controller', () => {
             }
         }
         await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(200);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.status).toBeCalledWith(200);
     });
 
     test('Invalid SignUp Request due to missing parameters - Error 400', async () => {
