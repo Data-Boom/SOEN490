@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from "typeorm";
+import { Dimension } from "./Dimension";
 
 
 /**
@@ -23,6 +24,7 @@ export class Units {
     @UpdateDateColumn()
     updated: Date
 
-    //TODO: NEED TO TALK TO SEAN ABOUT ADDING A MANY TO MANY WITH DIMENSION
+    @OneToOne(type => Dimension)
+    dimension: Dimension
 
 }

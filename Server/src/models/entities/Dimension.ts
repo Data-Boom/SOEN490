@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, JoinTable, OneToMany } from "typeorm";
 import { Units } from "./Units";
 
 
@@ -11,8 +11,6 @@ export class Dimension {
     @Column()
     name: string
 
-    //TODO: NEED TO ASK SEAN ABOUT THIS
-    // @ManyToMany(type => Units, units => units.dimension)
-    @JoinTable()
+    @OneToMany(type => Units, unit => unit.dimension)
     units: Units[];
 }
