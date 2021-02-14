@@ -14,6 +14,7 @@ let dimensionsController = new DimensionsController();
 
 // User must be an admin
 router.post('/api/v1/dimensions', JWTAuthenticator.verifyJWT, async (request: Request, response: Response, next: NextFunction) => {
+
   dimensionsController.createDimension(request, response, next);
 });
 
