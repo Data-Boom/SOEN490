@@ -12,9 +12,6 @@ export class Units {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ length: 50 })
-    representation: string
-
     @Column({ length: 10 })
     name: string
 

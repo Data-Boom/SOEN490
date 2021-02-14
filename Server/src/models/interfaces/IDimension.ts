@@ -7,7 +7,6 @@ export interface IDimensionModel {
 
 export interface IUnitModel {
   name: string,
-  representation: string,
   id?: number,
   conversionFormula: string,
 }
