@@ -11,49 +11,52 @@ interface IProps {
 
 }
 
-const fileFormat = 'image/png'
+const fileFormat = 'image/ppm'
 
-export const DataCellAnalysisView = (props: IProps) => {
+export const CellSizeAnalysisView = (props: IProps) => {
 
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
-  const [isProcessingDataCell, setIsProcessingDataCell] = useState(false)
+  const [isProcessingCellSize, setIsProcessingCellSize] = useState(false)
 
-  const handleSubmit = async (dataCell: File): Promise<void> => {
-    analyzeDataCell(dataCell)
+  const handleSubmit = async (cell: File): Promise<void> => {
+    console.log("handle submit")
+    analyzeCellSize(cell)
   }
 
-  const analyzeDataCell = async (dataCell: File): Promise<void> => {
-    setIsProcessingDataCell(true)
+  const analyzeCellSize = async (cell: File): Promise<void> => {
+    console.log("analyze cell size")
+    setIsProcessingCellSize(true)
     const fetchedDataset = await fetchDataset()
-    setIsProcessingDataCell(false)
+    setIsProcessingCellSize(false)
     setAnalyzedDataset(fetchedDataset)
   }
 
   const fetchDataset = (): Promise<IDatasetModel> => {
-    //todo make an actual API call providing a data cell 
+    console.log("Fetch dataset")
+    //todo make an actual API call providing a cell
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(exampleExportDatasetModel)
       }, 2000)
     })
   }
-  const validatePNG = (file: File) => {
+  const validatePPM = (file: File) => {
+    console.log(file.type)
     return file && file.type === fileFormat
   }
   const theme = useTheme()
 
-  const dataCellUploadSection = (): any => {
+  const cellUploadSection = (): any => {
     return (
       <>
         <Box pt={5}>
-          <Typography>Data Cell Analysis Upload Page</Typography>
+          <Typography>Cell Size Analysis</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            isValidFile={validatePNG}
+            isValidFile={validatePPM}
             acceptFileFormat={fileFormat}
           />
         </Box>
-        <image >test </image>
       </>
     )
   }
@@ -61,7 +64,7 @@ export const DataCellAnalysisView = (props: IProps) => {
   return (
     <>
       {!analyzedDataset ?
-        dataCellUploadSection() :
+        cellUploadSection() :
         <DatasetUploadView initialDataset={analyzedDataset} />
       }
       <Loader
@@ -69,7 +72,7 @@ export const DataCellAnalysisView = (props: IProps) => {
         color={theme.palette.secondary.main}
         height={100}
         width={100}
-        visible={isProcessingDataCell}
+        visible={isProcessingCellSize}
       />
     </>
   )
