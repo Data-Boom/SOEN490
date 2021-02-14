@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne } from "typeorm";
 import { Dimension } from "./Dimension";
 
 
@@ -13,10 +13,10 @@ export class Units {
     id: number
 
     @Column({ length: 50 })
-    name: string
+    representation: string
 
     @Column({ length: 10 })
-    units: string
+    name: string
 
     @CreateDateColumn()
     created: Date
@@ -26,5 +26,8 @@ export class Units {
 
     @OneToOne(type => Dimension)
     dimension: Dimension
+
+    @Column({ length: 100 })
+    conversionFormula: string
 
 }
