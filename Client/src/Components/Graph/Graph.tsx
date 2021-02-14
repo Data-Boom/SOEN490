@@ -29,57 +29,39 @@ export default function Graph(props: IProps) {
   const syncGraphData = () => {
     const xAxis = chartRef.current.xAxes.getIndex(0)
     const yAxis = chartRef.current.yAxes.getIndex(0)
-    console.log(chartRef.current.xAxes, 'undef')
     updateAxis(xAxis, yAxis)
     addSeries(chartRef.current)
     console.log(chartRef.current.series, 'series')
   }
 
   const addSeries = (chart: am4charts.XYChart) => {
-    console.log("🚀 ~ file: Graph.tsx ~ line 40 ~ addSeries ~ datasets", datasets)
     datasets.forEach(dataset => {
-      const datasetSeriesIndex = chart.series.values.findIndex(series => series.name == getSeriesName(dataset))
-      //ensures that a series was only added once to optimize perfomance
-      if (datasetSeriesIndex === -1) {
-        const lineSeries = chart.series.push(new am4charts.CandlestickSeries())
-        const bullet = lineSeries.bullets.push(new am4charts.CircleBullet())
-        //todo make tooltip nice
-        bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {${dataset.id}x} ${axes[0].units}
-        ${axes[1].variableName}: {${dataset.id}y} ${axes[1].units}`
+      let datasetSeries = chart.series.values.find(series => series.name == getSeriesName(dataset))
 
-        lineSeries.dataFields.valueX = `${dataset.id}x`
-        lineSeries.dataFields.valueY = `${dataset.id}y`
-        lineSeries.name = getSeriesName(dataset)
-        lineSeries.data = []
-        mergeDatasetPoints(dataset, lineSeries.data)
+      if (!datasetSeries) {
+        datasetSeries = setUpSeries(chartRef.current, dataset)
+      }
+
+      if (!dataset.isHidden) {
+        datasetSeries.data = dataset.points
+        // getSeriesData(dataset, datasetSeries.data)
       }
     })
   }
 
-  const buildDataForGraph = (datasets: IGraphDatasetModel[]): any[] => {
-    const data = []
-    for (let datasetIndex = 0; datasetIndex < datasets.length; datasetIndex++) {
-      const dataset = datasets[datasetIndex]
-      mergeDatasetPoints(dataset, data)
-    }
+  const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.CandlestickSeries => {
+    const datasetSeries = chart.series.push(new am4charts.CandlestickSeries())
+    const bullet = datasetSeries.bullets.push(new am4charts.CircleBullet())
 
-    return data
-  }
+    bullet.tooltipText = `${dataset.name}
+        ${axes[0].variableName}: {${dataset.id}x} ${axes[0].units}
+        ${axes[1].variableName}: {${dataset.id}y} ${axes[1].units}`
 
-  const mergeDatasetPoints = (dataset: IGraphDatasetModel, data: any[]) => {
-    if (!dataset || dataset.isHidden) {
-      return
-    }
-    //for all current dataset points:
-    console.log(dataset.points, 'dataset.points')
-    for (let pointIndex = 0; pointIndex < dataset.points.length; pointIndex++) {
-      //create new point that has previous points info and this one's
-      const mergedPoint = { ...data[pointIndex], [`${dataset.id}x`]: dataset.points[pointIndex].x, [`${dataset.id}y`]: dataset.points[pointIndex].y }
-      console.log(mergedPoint, 'mergedPoint')
-      data[pointIndex] = mergedPoint
-    }
-    console.log(data, 'data')
+    datasetSeries.dataFields.valueX = `x`
+    datasetSeries.dataFields.valueY = `y`
+    datasetSeries.name = getSeriesName(dataset)
+    datasetSeries.data = []
+    return datasetSeries
   }
 
   const subscribeToChartEvents = (chart: am4charts.XYChart, xAxis: am4charts.Axis, yAxis: am4charts.Axis) => {
