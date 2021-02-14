@@ -3,12 +3,13 @@ import React, { useState } from 'react'
 
 import { Collapse } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { IDimensionModel } from '../../../Models/Profile/IDimenstionModel'
 import { UnitForm } from './UnitForm'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
 interface IProps {
-
+  dimension: IDimensionModel
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,7 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const DimensionForm = () => {
+export const DimensionForm = (props: IProps) => {
+  const dimension = props.dimension
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const handleExpandClick = () => {
@@ -50,11 +52,11 @@ export const DimensionForm = () => {
             </IconButton>
           </Grid>
           <Grid item xs={5}>
-            <Typography variant='h6' align="left">Length</Typography>
+            <Typography variant='h6' align="left">{dimension.name}</Typography>
           </Grid>
           {!expanded &&
             <Grid item xs={6}>
-              <Typography align="left">Base Units: m</Typography>
+              <Typography align="left">Base Units: {dimension.units[dimension.baseUnitId].name}</Typography>
             </Grid>
           }
         </Grid>
