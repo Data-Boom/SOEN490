@@ -30,20 +30,20 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Checking Database if Email Exists - Return true', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j@kj.com'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeTruthy();
     });
 
     test('Checking Database if Email Exists - Return false', async () => {
-        let email: string = 'j.comkj4wfwefwefwefw'
+        let email: string = 'j@kj.com4wfwefwefwefw'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeFalsy();
     });
 
     //CHECK
     test('Checking Database if User is Admin - true', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j@kj.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(1);
     });
@@ -55,7 +55,7 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Obtaining User JWT params from Database', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j@kj.com'
         let mockResponse = {
             'account_admin': 1,
             'account_firstName': 'Ace',
