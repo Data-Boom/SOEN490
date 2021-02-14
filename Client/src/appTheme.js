@@ -48,5 +48,8 @@ export const classStyles = () => {
       justifyContent: 'center',
       overflow: 'auto',
     },
+    divider: {
+      background: theme.palette.primary.light,
+    },
   })()
 }

@@ -1,0 +1,68 @@
+import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Theme, Typography, createStyles, makeStyles } from '@material-ui/core'
+import React, { useState } from 'react'
+
+import { Collapse } from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { UnitForm } from './UnitForm'
+import { classStyles } from '../../../appTheme'
+import clsx from 'clsx'
+
+interface IProps {
+
+}
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+  }),
+);
+
+export const DimensionForm = () => {
+  const classes = useStyles()
+  const [expanded, setExpanded] = useState(false)
+  const handleExpandClick = () => {
+    setExpanded(!expanded)
+  }
+
+  return (
+    <>
+      <Box className={classStyles().defaultBorder} >
+        <Grid container direction="row" alignItems="center">
+          <Grid item xs={1}>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </Grid>
+          <Grid item xs={5}>
+            <Typography variant='h6' align="left">Length</Typography>
+          </Grid>
+          {!expanded &&
+            <Grid item xs={6}>
+              <Typography align="left">Base Units: m</Typography>
+            </Grid>
+          }
+        </Grid>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <UnitForm />
+        </Collapse>
+      </Box>
+    </>
+  )
+
+}
