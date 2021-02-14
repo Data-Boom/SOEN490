@@ -17,11 +17,12 @@ describe('Authentication Model Methods', () => {
 
     test('Inserting new user into database by SignUp - Pass', async () => {
         let signUpInfo: ISignUpInformation = {
-            email: 'j.com',
-            password: '123',
+            email: 'j@kj.com',
+            password: 'Abc12345!',
             isAdmin: 0,
             organizationName: 'Mugiwara',
-            dateOfBirth: '1980-01-01' as any,
+            // dateOfBirth: '1980-01-01' as any,
+            orcID: 123456789876543,
             firstName: 'Ace',
             lastName: 'FireFist'
         }

@@ -20,8 +20,9 @@ export class Accounts {
     @Column()
     lastName: string
 
-    @Column()
-    dateOfBirth: Date
+    @Column({ length: 16 })
+    //dateOfBirth: Date
+    orcID: number
 
     @Column()
     organizationName: string
