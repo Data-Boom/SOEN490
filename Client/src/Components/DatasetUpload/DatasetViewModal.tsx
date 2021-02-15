@@ -11,8 +11,9 @@ import { useEffect } from 'react'
 interface IProps {
     datasetId: string,
     datasetName: string
+    editable: boolean
 }
-export const DatasetFormModal = (props: IProps) => {
+export const DatasetViewModal = (props: IProps) => {
 
     const datasetId = props.datasetId
     const [open, setOpen] = useState(false)
@@ -52,7 +53,7 @@ export const DatasetFormModal = (props: IProps) => {
                         <DatasetUploadForm
                             onSubmit={close}
                             initialDataset={dataset}
-                            editable={false}
+                            editable={props.editable}
                             buttonName="Close"
                         />
                     </Box>

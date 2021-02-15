@@ -2,7 +2,7 @@ import { Button, Grid, Modal, Typography } from '@material-ui/core'
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 import React, { useState } from 'react'
-import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
+import { DatasetViewModal } from '../DatasetUpload/DatasetViewModal'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -41,7 +41,7 @@ export const SearchResults = (props: IProps) => {
     const datasetId = params.getValue('id')
     const datasetName = params.getValue('dataset_name')
 
-    return (<DatasetFormModal datasetId={datasetId.toString()} datasetName={datasetName.toString()} />)
+    return (<DatasetViewModal datasetId={datasetId.toString()} datasetName={datasetName.toString()} editable={false} />)
   }
 
   const columns: ColDef[] = [
