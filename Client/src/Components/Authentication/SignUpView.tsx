@@ -113,9 +113,10 @@ export default function SignUpView(props: any) {
                     variant="outlined"
                     fullWidth
                     required
-                    id="dateOfBirth"
-                    name="dateOfBirth"
-                    type="date"
+                    id="orcID"
+                    label="ORCID"
+                    name="orcID"
+                    type="number"
                     InputLabelProps={{
                       shrink: true,
                     }}
