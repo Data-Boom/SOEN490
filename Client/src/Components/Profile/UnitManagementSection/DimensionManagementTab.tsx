@@ -12,6 +12,7 @@ interface IProps {
 
 export const DimensionManagementTab = () => {
 
+  const [dimensions, setDimensions] = useState(IExampleDimenstions)
   // TODO: Fetch list of dimensions/units from backend.
   // TODO: For each dimenstionm, render a new Dimension Form using its values as the initial values.
   // TODO: Have a "New" button that renders a Dimenstion Form with no initial values.
@@ -32,7 +33,7 @@ export const DimensionManagementTab = () => {
     <>
       <Box className={classStyles().defaultBorder} style={{ width: "100%" }} >
         <Typography variant='h6' align="left">System Wide Dimensions</Typography>
-        {IExampleDimenstions.map(dimension => (
+        {dimensions.map(dimension => (
           <DimensionForm dimension={dimension} />
         ))}
 

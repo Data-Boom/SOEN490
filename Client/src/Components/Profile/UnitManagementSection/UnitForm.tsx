@@ -11,6 +11,9 @@ interface IProps {
 
 export const UnitForm = () => {
 
+  // This file will contain a field to edit the base units of the form. Additionally, it will render a list of individual Units, and a way to add/remove units.
+  // See how Authors are added in the dataset upload form.
+
   return (
     <>
       <Divider className={classStyles().divider} variant="middle" />

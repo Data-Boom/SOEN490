@@ -9,7 +9,7 @@ interface IProps {
 }
 
 
-export const UnitManagementForm = () => {
+export const UnitRow = () => {
 
   return (
     <>
