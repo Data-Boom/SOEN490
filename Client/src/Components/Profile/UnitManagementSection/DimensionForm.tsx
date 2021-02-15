@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const DimensionForm = (props: IProps) => {
+  // This file will contain the default measurement. It will also have a save button, as well as a button to create a new UnitForm. Maybe look how new authors are added in the DatasetModelForm.
   const dimension = props.dimension
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
