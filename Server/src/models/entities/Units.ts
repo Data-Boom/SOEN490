@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne, JoinColumn } from "typeorm";
 import { Dimension } from "./Dimension";
 
 
@@ -21,7 +21,11 @@ export class Units {
     @UpdateDateColumn()
     updated: Date
 
-    @OneToOne(type => Dimension)
+    @Column({ default: 1 })
+    dimensionId: number
+
+    @ManyToOne(type => Dimension, dimension => dimension.units)
+    @JoinColumn({ name: "dimensionId" })
     dimension: Dimension
 
     @Column({ length: 100 })

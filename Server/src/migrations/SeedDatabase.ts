@@ -430,43 +430,36 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let unitsNone = new Units();
     unitsNone.id;
     unitsNone.name = "No Units";
-    unitsNone.units = "No Units";
     await connection.manager.save(unitsNone);
 
     let unitsGCC = new Units();
     unitsGCC.id;
     unitsGCC.name = "g/cc";
-    unitsGCC.units = "g/cc";
     await connection.manager.save(unitsGCC);
 
     let unitsCCG = new Units();
     unitsCCG.id;
     unitsCCG.name = "cc/g";
-    unitsCCG.units = "cc/g";
     await connection.manager.save(unitsCCG);
 
     let unitsKelvin = new Units();
     unitsKelvin.id;
     unitsKelvin.name = "Kelvin";
-    unitsKelvin.units = "K";
     await connection.manager.save(unitsKelvin);
 
     let unitsGigapascal = new Units();
     unitsGigapascal.id;
     unitsGigapascal.name = "Gigapascal";
-    unitsGigapascal.units = "GPa";
     await connection.manager.save(unitsGigapascal);
 
     let unitsKMPS = new Units();
     unitsKMPS.id;
     unitsKMPS.name = "Kilometers per Second";
-    unitsKMPS.units = "km/s";
     await connection.manager.save(unitsKMPS);
 
     let unitsToDelete = new Units();
     unitsToDelete.id;
     unitsToDelete.name = "Deleted";
-    unitsToDelete.units = "Deleted";
     await connection.manager.save(unitsToDelete);
 
     let reprNone = new Representations();

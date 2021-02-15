@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinTable, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, JoinTable, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 import { Units } from "./Units";
 
 
@@ -11,6 +11,10 @@ export class Dimension {
     @Column()
     name: string
 
+    @Column({ default: 1 })
+    unitId: number
+
     @OneToMany(type => Units, unit => unit.dimension)
-    units: Units[];
+    @JoinColumn({ name: "unitId" })
+    units: Units[]
 }
