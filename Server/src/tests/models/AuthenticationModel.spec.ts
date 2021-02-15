@@ -21,7 +21,6 @@ describe('Authentication Model Methods', () => {
             password: 'Abc12345!',
             isAdmin: 0,
             organizationName: 'Mugiwara',
-            // dateOfBirth: '1980-01-01' as any,
             orcID: 123456789876543,
             firstName: 'Ace',
             lastName: 'FireFist'

@@ -21,7 +21,6 @@ export class Accounts {
     lastName: string
 
     @Column({ type: "bigint" })
-    //dateOfBirth: Date
     orcID: number
 
     @Column()

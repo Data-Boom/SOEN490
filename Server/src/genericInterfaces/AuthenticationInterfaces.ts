@@ -18,7 +18,6 @@ export interface ISignUpInformation {
   password: string,
   firstName: string,
   lastName: string,
-  //dateOfBirth: Date,
   orcID: number,
   organizationName: string,
   isAdmin?: number
@@ -40,7 +39,6 @@ export interface IFetchUserDetail {
   email: string,
   firstName: string,
   lastName: string,
-  //dateOfBirth: Date,
   orcID: number,
   organizationName: string,
 }

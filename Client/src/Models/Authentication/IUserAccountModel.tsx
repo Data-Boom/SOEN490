@@ -1,5 +1,4 @@
 export interface IUserAccountRemoteModel {
-  //account_dateOfBirth: string,
   account_orcID: number,
   account_email: string,
   account_firstName: string,
@@ -8,7 +7,6 @@ export interface IUserAccountRemoteModel {
 }
 
 export interface IUserAccountModel {
-  //dateOfBirth: string,
   orcID: number,
   email: string,
   firstName: string,
@@ -26,7 +24,6 @@ export const toLocalUserAccountModel = (remoteAccount: IUserAccountRemoteModel):
   }
   const localAccountModel: IUserAccountModel = {
     orcID: remoteAccount.account_orcID,
-    //dateOfBirth: remoteAccount.account_dateOfBirth,
     email: remoteAccount.account_email,
     firstName: remoteAccount.account_firstName,
     lastName: remoteAccount.account_lastName,
@@ -37,7 +34,6 @@ export const toLocalUserAccountModel = (remoteAccount: IUserAccountRemoteModel):
 }
 
 export const defaultUserAccountModel: IUserAccountModel = {
-  //dateOfBirth: '',
   orcID: 0,
   email: '',
   firstName: '',

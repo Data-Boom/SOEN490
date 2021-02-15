@@ -4,7 +4,6 @@ export interface IUser {
   name: string,
   email: string,
   orcID: number,
-  //dateOfBirth: string,
   organization: string,
   password: string
 }

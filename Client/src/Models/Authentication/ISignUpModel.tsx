@@ -7,7 +7,6 @@ export interface ISignUpUserModel {
   firstName: string,
   lastName: string,
   email: string,
-  //dateOfBirth: string,
   orcID: string,
   organizationName: string,
   password: string,
