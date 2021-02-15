@@ -6,11 +6,14 @@ import React, { useEffect, useRef } from 'react'
 import { Box } from "@material-ui/core"
 import { IAxisStateModel } from "../../Models/Graph/IGraphStateModel"
 import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
+import am4themes_material from "@amcharts/amcharts4/themes/animated"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
   axes: IAxisStateModel[]
 }
+
+am4core.useTheme(am4themes_material)
 
 const getSeriesName = (dataset: IGraphDatasetModel) => {
   return `${dataset.id}`
@@ -46,7 +49,8 @@ export default function Graph(props: IProps) {
         datasetSeries = setUpSeries(chartRef.current, dataset)
       }
 
-      if (!datasetSeries.data || datasetSeries.data) {
+      //optimization to only set data if it wasnt set before
+      if (!datasetSeries.data || datasetSeries.data.length == 0) {
         datasetSeries.data = dataset.points
       }
 
@@ -67,11 +71,11 @@ export default function Graph(props: IProps) {
   }
 
   const shouldHideDataset = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
-    return dataset.isHidden && !datasetSeries.isHidden
+    return dataset.isHidden && (!datasetSeries.isHidden || !datasetSeries.isHiding)
   }
 
   const shouldShowDataset = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
-    return !dataset.isHidden && datasetSeries.isHidden
+    return !dataset.isHidden && (datasetSeries.isHidden || datasetSeries.isHiding)
   }
 
   const pullRemovedDatasets = (chart: am4charts.XYChart) => {
@@ -82,8 +86,8 @@ export default function Graph(props: IProps) {
     })
   }
 
-  const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.ColumnSeries => {
-    const datasetSeries = chart.series.push(new am4charts.ColumnSeries())
+  const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.XYSeries => {
+    const datasetSeries = chart.series.push(new am4charts.XYSeries())
     const bullet = datasetSeries.bullets.push(new am4core.Circle())
     bullet.radius = 5
     bullet.tooltipText = `${dataset.name}
@@ -94,7 +98,6 @@ export default function Graph(props: IProps) {
     datasetSeries.dataFields.valueY = `y`
     datasetSeries.name = getSeriesName(dataset)
     datasetSeries.data = []
-    datasetSeries.minBulletDistance = 20
     return datasetSeries
   }
 
