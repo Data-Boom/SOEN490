@@ -53,19 +53,17 @@ export default function Graph(props: IProps) {
         datasetSeries.data = dataset.points
       }
 
-      toggleVisibilityIfNeed(datasetSeries, dataset)
+      toggleHideShow(datasetSeries, dataset)
     })
   }
 
-  const toggleVisibilityIfNeed = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
+  const toggleHideShow = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
     if (shouldHideDataset(datasetSeries, dataset)) {
-      datasetSeries.hide()
-      return
+      return datasetSeries.hide()
     }
 
     if (shouldShowDataset(datasetSeries, dataset)) {
-      datasetSeries.show()
-      return
+      return datasetSeries.show()
     }
   }
 
