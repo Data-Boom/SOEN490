@@ -6,14 +6,11 @@ import React, { useEffect, useRef } from 'react'
 import { Box } from "@material-ui/core"
 import { IAxisStateModel } from "../../Models/Graph/IGraphStateModel"
 import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
-import am4themes_material from "@amcharts/amcharts4/themes/animated"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
   axes: IAxisStateModel[]
 }
-
-am4core.useTheme(am4themes_material)
 
 const getSeriesName = (dataset: IGraphDatasetModel) => {
   return `${dataset.id}`
@@ -23,18 +20,26 @@ export default function Graph(props: IProps) {
   const { datasets, axes } = { ...props }
   const chartRef = useRef<am4charts.XYChart>()
 
+  //todo order is important? (code should be order agnostic)
   useEffect(() => initiateGraph(), [])
-  useEffect(() => chartRef.current && syncGraphData(), [datasets])
+  useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units])
+  useEffect(() => chartRef.current && handleDatasetsUpdated(), [datasets])
 
-  const syncGraphData = () => {
+  const handleUnitsUpdated = () => {
+    //cleanup series used for old variables
+    chartRef.current.series.clear()
     const xAxis = chartRef.current.xAxes.getIndex(0)
     const yAxis = chartRef.current.yAxes.getIndex(0)
     updateAxis(xAxis, yAxis)
-    addSeries(chartRef.current)
-    console.log(chartRef.current.series, 'series')
   }
 
-  const addSeries = (chart: am4charts.XYChart) => {
+  const handleDatasetsUpdated = () => {
+    pushAddedUpdatedDatasets(chartRef.current)
+    pullRemovedDatasets(chartRef.current)
+  }
+
+  const pushAddedUpdatedDatasets = (chart: am4charts.XYChart) => {
+    console.log("🚀 ~ file: Graph.tsx ~ line 43 ~ pushAddedUpdatedDatasets ~ datasets", datasets)
     datasets.forEach(dataset => {
       let datasetSeries = chart.series.values.find(series => series.name == getSeriesName(dataset))
 
@@ -42,9 +47,18 @@ export default function Graph(props: IProps) {
         datasetSeries = setUpSeries(chartRef.current, dataset)
       }
 
-      if (!dataset.isHidden) {
+      if (!datasetSeries.data || datasetSeries.data) {
         datasetSeries.data = dataset.points
-        // getSeriesData(dataset, datasetSeries.data)
+      }
+
+      datasetSeries.visible = !dataset.isHidden
+    })
+  }
+
+  const pullRemovedDatasets = (chart: am4charts.XYChart) => {
+    chart.series.values.forEach(series => {
+      if (!datasets.find(dataset => getSeriesName(dataset) == series.name)) {
+        chart.series.removeValue(series)
       }
     })
   }
@@ -54,8 +68,8 @@ export default function Graph(props: IProps) {
     const bullet = datasetSeries.bullets.push(new am4charts.CircleBullet())
 
     bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {${dataset.id}x} ${axes[0].units}
-        ${axes[1].variableName}: {${dataset.id}y} ${axes[1].units}`
+        ${axes[0].variableName}: {x} ${axes[0].units}
+        ${axes[1].variableName}: {y} ${axes[1].units}`
 
     datasetSeries.dataFields.valueX = `x`
     datasetSeries.dataFields.valueY = `y`
@@ -76,13 +90,15 @@ export default function Graph(props: IProps) {
     })
   }
 
-  const updateAxis = (xAxis, yAxis) => {
+  const updateAxis = (xAxis: any, yAxis: any) => {
     xAxis.title.text = `${axes[0].variableName}, ${axes[0].units}`
     xAxis.logarithmic = axes[0].logarithmic || false
     xAxis.renderer.minGridDistance = 40
+    xAxis.keepSelection = true
 
-    yAxis.logarithmic = axes[1].logarithmic || false
     yAxis.title.text = `${axes[1].variableName}, ${axes[1].units}`
+    yAxis.logarithmic = axes[1].logarithmic || false
+    yAxis.keepSelection = true
   }
 
   const initiateGraph = () => {
