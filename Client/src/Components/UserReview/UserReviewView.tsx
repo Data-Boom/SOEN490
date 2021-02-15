@@ -4,31 +4,36 @@ import { classStyles } from "../../appTheme";
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel";
 import { callRejectDataset, adminApprovedDataset } from "../../Remote/Endpoints/DatasetEndpoint";
 import { getUserFlaggedDatasets } from "../../Remote/Endpoints/UserEndpoint";
-import { DatasetViewModal } from "../DatasetUpload/DatasetViewModal";
+
+import { DatasetModal } from "./DatasetModal";
 import { UserReviewList } from "./UserReviewList";
 
 export const UserReviewView = () => {
 
+    const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>([])
 
-    const [datasets, setDatasets] = useState([])
-    const [editable, setEditable] = useState(false)
     const [dataset, setDataset] = useState<IApprovedDatasetModel>()
+
+    const [open, setOpen] = useState(false)
 
     useEffect(() => {
         const fetchUserDatasets = async () => {
             const userDatasets: IApprovedDatasetModel[] = await getUserFlaggedDatasets()
             setDatasets(userDatasets)
-            console.log(userDatasets)
         }
         fetchUserDatasets()
     }, [])
+
+    const handleModal = () => {
+        setOpen(true)
+    }
 
     const handleDeleteDataset = async () => {
         await callRejectDataset(dataset.id)
         handleDatasetChange(null)
     }
 
-    const handleApproveDataset = async (datasetId: IApprovedDatasetModel) => {
+    const handleApproveDataset = async (dataset: IApprovedDatasetModel) => {
         const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
         await adminApprovedDataset(query)
         handleDatasetChange(null)
@@ -36,27 +41,6 @@ export const UserReviewView = () => {
 
     const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
         setDataset(newDataset)
-    }
-
-    // const renderUserDatasetList = () => {
-
-    //     return dataset && dataset.map(graphDSet => {
-    //         return (
-    //             < UserReviewList
-    //                 dataset={datatset}
-    //             />
-    //         )
-    //     })
-    // }
-
-    const renderDatasetModal = () => {
-        return (
-            < DatasetViewModal
-                datasetId={dataset.id as any}
-                datasetName={dataset.dataset_name}
-                editable={editable}
-            />
-        )
     }
 
     return (
@@ -69,7 +53,17 @@ export const UserReviewView = () => {
                     <Grid container justify="center" spacing={3}>
                         < UserReviewList
                             userDatasets={datasets}
-                            handleEditRequest={setEditable}
+                            handleModal={handleModal}
+                        />
+                    </Grid>
+                </TableRow>
+                <TableRow>
+                    <Grid container justify="center" spacing={3}>
+                        < DatasetModal
+                            dataset={datasets[0]}
+                            handleApproveDataset={handleApproveDataset}
+                            handleDeleteDataset={handleDeleteDataset}
+                            handleModal={open}
                         />
                     </Grid>
                 </TableRow>

@@ -1,4 +1,4 @@
-import { Box, Grid, Link, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Link, TextField, Typography } from '@material-ui/core';
 
 import { IApprovalDatasetModel } from '../../../../Server/src/models/interfaces/DatasetModelInterface';
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
@@ -7,21 +7,16 @@ import { classStyles } from '../../appTheme';
 import { DatasetViewModal } from '../DatasetUpload/DatasetViewModal';
 import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm';
 import { useState } from 'react';
+import { post } from '../../Remote/FluentRequest';
 
 interface IProps {
     userDatasets: IApprovedDatasetModel[],
-    handleEditRequest(edit: boolean): void
+    handleModal: () => void
 }
 
 export const UserReviewList = (props: IProps) => {
 
-    const { userDatasets, handleEditRequest } = { ...props }
-
-    const [open, setOpen] = useState(false)
-
-    const close = () => {
-        setOpen(false)
-    }
+    const { userDatasets, handleModal } = { ...props }
 
     return (
         <Grid container justify="center" spacing={3}>
@@ -30,12 +25,14 @@ export const UserReviewList = (props: IProps) => {
                     <br></br>
                     {userDatasets && userDatasets.map(dataset => {
                         return (
-                            <DatasetUploadForm
-                                onSubmit={close}
-                                initialDataset={dataset}
-                                editable={false}
-                                buttonName="Close"
-                            />
+                            <Box>
+                                <Grid item>
+                                    <Button size="small" id="view-dataset" onClick={handleModal} color="primary" variant="contained">{dataset.dataset_name} </Button>
+                                </Grid>
+                                <Grid item>
+                                    <p> {dataset.datasetFlaggedComment} </p>
+                                </Grid>
+                            </Box>
                         )
                     })}
                 </Box>
