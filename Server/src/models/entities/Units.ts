@@ -22,11 +22,11 @@ export class Units {
     updated: Date
 
     @Column({ default: 1 })
-    dimensionId: number
+    dimensionId?: number
 
     @ManyToOne(type => Dimension, dimension => dimension.units)
     @JoinColumn({ name: "dimensionId" })
-    dimension: Dimension
+    dimension?: Dimension
 
     @Column({ length: 100 })
     conversionFormula: string
