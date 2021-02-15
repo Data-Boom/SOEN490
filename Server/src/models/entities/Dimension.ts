@@ -12,9 +12,9 @@ export class Dimension {
     name: string
 
     @Column({ default: 1 })
-    unitId: number
+    unitId?: number
 
     @OneToMany(type => Units, unit => unit.dimension)
     @JoinColumn({ name: "unitId" })
-    units: Units[]
+    units?: Units[]
 }
