@@ -20,7 +20,7 @@ export class Accounts {
     @Column()
     lastName: string
 
-    @Column({ length: 16 })
+    @Column({ type: "bigint" })
     //dateOfBirth: Date
     orcID: number
 

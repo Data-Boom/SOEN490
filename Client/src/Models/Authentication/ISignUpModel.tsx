@@ -7,7 +7,8 @@ export interface ISignUpUserModel {
   firstName: string,
   lastName: string,
   email: string,
-  dateOfBirth: string,
+  //dateOfBirth: string,
+  orcID: string,
   organizationName: string,
   password: string,
   confirmPassword: string
@@ -19,7 +20,7 @@ export const newSignUpUserModel: ISignUpUserModel = {
   firstName: '',
   lastName: '',
   email: '',
-  dateOfBirth: '',
+  orcID: '',
   organizationName: '',
   password: '',
   confirmPassword: ''

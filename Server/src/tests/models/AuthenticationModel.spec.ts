@@ -50,7 +50,7 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Checking Database if User is Admin - false', async () => {
-        let email: string = 'j.com'
+        let email: string = 'test@t.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(0);
     });
