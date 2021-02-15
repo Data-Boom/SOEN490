@@ -39,7 +39,6 @@ export default function Graph(props: IProps) {
   }
 
   const pushAddedUpdatedDatasets = (chart: am4charts.XYChart) => {
-    console.log("🚀 ~ file: Graph.tsx ~ line 43 ~ pushAddedUpdatedDatasets ~ datasets", datasets)
     datasets.forEach(dataset => {
       let datasetSeries = chart.series.values.find(series => series.name == getSeriesName(dataset))
 
@@ -51,8 +50,28 @@ export default function Graph(props: IProps) {
         datasetSeries.data = dataset.points
       }
 
-      datasetSeries.visible = !dataset.isHidden
+      toggleVisibilityIfNeed(datasetSeries, dataset)
     })
+  }
+
+  const toggleVisibilityIfNeed = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
+    if (shouldHideDataset(datasetSeries, dataset)) {
+      datasetSeries.hide()
+      return
+    }
+
+    if (shouldShowDataset(datasetSeries, dataset)) {
+      datasetSeries.show()
+      return
+    }
+  }
+
+  const shouldHideDataset = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
+    return dataset.isHidden && !datasetSeries.isHidden
+  }
+
+  const shouldShowDataset = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
+    return !dataset.isHidden && datasetSeries.isHidden
   }
 
   const pullRemovedDatasets = (chart: am4charts.XYChart) => {
@@ -63,10 +82,10 @@ export default function Graph(props: IProps) {
     })
   }
 
-  const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.CandlestickSeries => {
-    const datasetSeries = chart.series.push(new am4charts.CandlestickSeries())
-    const bullet = datasetSeries.bullets.push(new am4charts.CircleBullet())
-
+  const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.ColumnSeries => {
+    const datasetSeries = chart.series.push(new am4charts.ColumnSeries())
+    const bullet = datasetSeries.bullets.push(new am4core.Circle())
+    bullet.radius = 5
     bullet.tooltipText = `${dataset.name}
         ${axes[0].variableName}: {x} ${axes[0].units}
         ${axes[1].variableName}: {y} ${axes[1].units}`
@@ -75,6 +94,7 @@ export default function Graph(props: IProps) {
     datasetSeries.dataFields.valueY = `y`
     datasetSeries.name = getSeriesName(dataset)
     datasetSeries.data = []
+    datasetSeries.minBulletDistance = 20
     return datasetSeries
   }
 
