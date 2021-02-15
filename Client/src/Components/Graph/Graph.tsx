@@ -23,7 +23,6 @@ export default function Graph(props: IProps) {
   const { datasets, axes } = { ...props }
   const chartRef = useRef<am4charts.XYChart>()
 
-  //todo order is important? (code should be order agnostic)
   useEffect(() => initiateGraph(), [])
   useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units])
   useEffect(() => chartRef.current && handleDatasetsUpdated(), [datasets])
@@ -130,6 +129,7 @@ export default function Graph(props: IProps) {
     chartRef.current.scrollbarX = new am4core.Scrollbar()
     chartRef.current.scrollbarY = new am4core.Scrollbar()
     chartRef.current.cursor = new am4charts.XYCursor()
+    chartRef.current.cursor.behavior = "zoomXY"
     chartRef.current.exporting.menu = new am4core.ExportMenu()
 
     const xAxis = chartRef.current.xAxes.push(new am4charts.ValueAxis())
