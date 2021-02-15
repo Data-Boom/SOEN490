@@ -25,9 +25,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
-    //TODO: Apply changes directly to DB before merge and remove statement
-    await queryRunner.query('ALTER TABLE accounts CHANGE COLUMN dateOfBirth orcID bigint(20) NOT NULL');
-
     let user1 = new Accounts();
     user1.id = 1;
     user1.email = 'j@kj.com';
@@ -635,7 +632,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
-    await queryRunner.query('ALTER TABLE accounts CHANGE COLUMN orcID dateOfBirth datetime NOT NULL');
   }
 
 }
