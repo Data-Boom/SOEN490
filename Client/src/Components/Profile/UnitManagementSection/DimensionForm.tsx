@@ -62,7 +62,7 @@ export const DimensionForm = (props: IProps) => {
           }
         </Grid>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <UnitForm />
+          <UnitForm units={dimension.units} />
         </Collapse>
       </Box>
     </>
