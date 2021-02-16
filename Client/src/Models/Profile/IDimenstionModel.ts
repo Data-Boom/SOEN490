@@ -11,6 +11,11 @@ export interface IUnitModel {
   conversionFormula: string,
 }
 
+export const newUnit: IUnitModel = {
+  name: '',
+  conversionFormula: ''
+}
+
 export const IMeters: IUnitModel = {
   name: 'm',
   id: 0,

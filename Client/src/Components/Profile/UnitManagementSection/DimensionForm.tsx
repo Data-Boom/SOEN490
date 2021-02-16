@@ -1,10 +1,12 @@
 import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Theme, Typography, createStyles, makeStyles } from '@material-ui/core'
+import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
 
 import { Collapse } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../Models/Profile/IDimenstionModel'
 import { UnitForm } from './UnitForm'
+import { UnitValidationSchema } from './UnitsValidationSchema'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
@@ -36,6 +38,10 @@ export const DimensionForm = (props: IProps) => {
     setExpanded(!expanded)
   }
 
+  const handleSubmit = () => {
+
+  }
+
   return (
     <>
       <Box className={classStyles().defaultBorder} >
@@ -62,7 +68,17 @@ export const DimensionForm = (props: IProps) => {
           }
         </Grid>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <UnitForm units={dimension.units} />
+          <Formik
+            enableReinitialize={true}
+            initialValues={dimension.units}
+            validationSchema={UnitValidationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <UnitForm />
+              <Button id='unit-submit' variant="contained" color="primary" type="submit">Submit</Button>
+            </Form>
+          </Formik>
         </Collapse>
       </Box>
     </>
