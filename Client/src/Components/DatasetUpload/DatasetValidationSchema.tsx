@@ -19,7 +19,7 @@ const referenceValidationSchema = Yup.object().shape({
     Yup.object().shape(
       {
         firstName: Yup.string().trim().required('First Name is a required field'),
-        middleName: Yup.string(),
+        middleName: Yup.string().nullable(),
         lastName: Yup.string().trim().required('Last Name is a required field')
       }
     )

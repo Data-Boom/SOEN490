@@ -27,11 +27,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     let user1 = new Accounts();
     user1.id = 1;
-    user1.email = 'j.comkj';
-    user1.password = await authenticationService.hashPassword('123') as any;
+    user1.email = 'j@kj.com';
+    user1.password = await authenticationService.hashPassword('Abc12345!') as any;
     user1.firstName = 'Ace';
     user1.lastName = 'FireFist';
-    user1.dateOfBirth = '1980-01-01' as any;
+    user1.orcID = 123456789876543;
     user1.organizationName = 'Mugiwara';
     user1.admin = 1;
     await connection.manager.save(user1);
@@ -42,7 +42,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user2.password = await authenticationService.hashPassword('123') as any;
     user2.firstName = 'Tom';
     user2.lastName = 'Happy';
-    user2.dateOfBirth = '1980-01-01' as any;
+    user2.orcID = 123456789876543;
     user2.organizationName = 'Mobil';
     user2.admin;
     await connection.manager.save(user2);
@@ -53,7 +53,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user3.password = await authenticationService.hashPassword('123') as any;
     user3.firstName = 'Wyatt';
     user3.lastName = 'forfore';
-    user3.dateOfBirth = '1980-01-01' as any;
+    user3.orcID = 123456789876543;
     user3.organizationName = 'Ozark';
     user3.admin = 1;
     await connection.manager.save(user3);
@@ -64,7 +64,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user4.password = await authenticationService.hashPassword('123') as any;
     user4.firstName = 'Admin';
     user4.lastName = 'Manage';
-    user4.dateOfBirth = '1980-01-01' as any;
+    user4.orcID = 123456789876543;
     user4.organizationName = 'Ozark';
     user4.admin = 0;
     await connection.manager.save(user4);
