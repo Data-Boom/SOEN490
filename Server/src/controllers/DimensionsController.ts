@@ -74,14 +74,32 @@ export class DimensionsController {
   }
 
   async deleteDimension(request: Request, response: Response, next: NextFunction): Promise<Response> {
-    this.invalidResponse = this.validateCreateDimensionRequest(request);
+    this.invalidResponse = this.validateDeleteDimension(request);
     if (this.invalidResponse) {
       return response.status(400).json("Request is invalid. Missing attributes")
     } else {
-      let requestParams: any = { ...request.body };
-      let dimensionInfo: IDimensionModel = requestParams;
-      let res: any = await this.callServiceForAddDimension(dimensionInfo, response, next);
+      let dimensionId = +request.params.id
+      let res: any = await this.callServiceForDeleteDimension(dimensionId, response, next);
       return res;
+    }
+  }
+
+  private validateDeleteDimension(request: Request): boolean {
+    return request.params.id === null;
+  }
+
+  private async callServiceForDeleteDimension(dimensionId: number, response: Response, next: NextFunction): Promise<Response> {
+    let serviceResponse: IResponse;
+
+    try {
+      serviceResponse = await this.dimensionService.processDeleteDimension(dimensionId);
+      return response.status(serviceResponse.statusCode).json(serviceResponse.message);
+    } catch (error) {
+      if (error instanceof BadRequest)
+        return response.status(error.status).json(error.message);
+      else {
+        return response.status(error.status).json("Something went Wrong");
+      }
     }
   }
 

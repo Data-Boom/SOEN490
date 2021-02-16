@@ -44,7 +44,7 @@ export class DimensionModel {
   */
   async deleteDimension(dimensionId: number) {
     let connection = getConnection();
-    await connection.query("DELETE FROM dimensions WHERE id = ?", [dimensionId]);
+    await connection.query("DELETE FROM dimension WHERE id = ?", [dimensionId]);
     return "User favorite data set successfully removed";
   }
 
@@ -55,11 +55,11 @@ export class DimensionModel {
   async updateDimension(dimensionInfo: IDimensionModel): Promise<boolean> {
     let connection = getConnection();
     await connection.manager
-      .createQueryBuilder(Dimension, 'dimensions')
-      .update('dimensions')
+      .createQueryBuilder(Dimension, 'dimension')
+      .update('dimension')
       .set({ name: dimensionInfo.name })
       .set({ units: dimensionInfo.units })
-      .where('dimensions.id = :id', { id: dimensionInfo.id })
+      .where('dimension.id = :id', { id: dimensionInfo.id })
       .execute()
 
     return true
@@ -72,9 +72,9 @@ export class DimensionModel {
   async getDimensionUnits(dimensionId: number): Promise<Units[]> {
     let connection = getConnection();
     let dimensionUnits = await connection.manager
-      .createQueryBuilder(Dimension, 'dimensions')
-      .where('dimensions.id = :id', { id: dimensionId })
-      .select('dimensions.units', 'units')
+      .createQueryBuilder(Dimension, 'dimension')
+      .where('dimension.id = :id', { id: dimensionId })
+      .select('dimension.units', 'units')
       .getOne()
 
     console.log(dimensionUnits)
@@ -87,10 +87,10 @@ export class DimensionModel {
   async getAllDimensions(): Promise<Dimension[]> {
     let connection = getConnection();
     let dimensions = await connection.manager
-      .createQueryBuilder(Dimension, 'dimensions')
-      .select('dimensions.id', 'id')
-      .select('dimensions.name', 'name')
-      .select('dimensions.units', 'units')
+      .createQueryBuilder(Dimension, 'dimension')
+      .select('dimension.id', 'id')
+      .select('dimension.name', 'name')
+      .select('dimension.units', 'units')
       .getMany()
 
     console.log(dimensions)

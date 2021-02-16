@@ -26,7 +26,7 @@ router.put('/api/v1/dimensions', async (request: Request, response: Response, ne
 });
 
 // router.delete('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
-router.delete('/api/v1/dimensions', async (request: Request, response: Response, next: NextFunction) => {
+router.delete('/api/v1/dimensions/:id?', async (request: Request, response: Response, next: NextFunction) => {
   dimensionsController.deleteDimension(request, response, next);
 });
 
