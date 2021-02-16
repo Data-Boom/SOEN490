@@ -11,16 +11,21 @@ export interface IUnitModel {
   conversionFormula: string,
 }
 
+export const newUnit: IUnitModel = {
+  name: '',
+  conversionFormula: ''
+}
+
 export const IMeters: IUnitModel = {
   name: 'm',
   id: 0,
-  conversionFormula: '{u}'
+  conversionFormula: 'u'
 }
 
 export const ICentimeters: IUnitModel = {
   name: 'cm',
   id: 1,
-  conversionFormula: '{u} / 100'
+  conversionFormula: 'u / 100'
 }
 
 export const ILengthModel: IDimensionModel = {
@@ -33,13 +38,13 @@ export const ILengthModel: IDimensionModel = {
 export const IkPa: IUnitModel = {
   name: 'kPa',
   id: 0,
-  conversionFormula: '{u}'
+  conversionFormula: 'u'
 }
 
 export const Iatm: IUnitModel = {
   name: 'atm',
   id: 1,
-  conversionFormula: '{u} / 101.325'
+  conversionFormula: 'u / 101.325'
 }
 
 export const IPressureModel: IDimensionModel = {

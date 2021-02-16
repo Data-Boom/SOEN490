@@ -1,21 +1,40 @@
-import { Box, Button, Divider, Grid, Paper, Table, TableContainer, Typography } from '@material-ui/core'
-import React, { useState } from 'react'
+import { Box, Grid, IconButton } from "@material-ui/core"
 
-import { ConfirmationModal } from '../../Authentication/ConfirmationModal'
-import { classStyles } from '../../../appTheme'
+import ClearIcon from '@material-ui/icons/Clear'
+import { FastField } from "formik"
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
+import React from 'react'
 
 interface IProps {
-
+  index: number,
+  onRemoveUnitClick: (index: number) => void,
+  removable: boolean
 }
 
+export const UnitRow = (props: IProps) => {
+  const { index, onRemoveUnitClick, removable } = props
 
-export const UnitRow = () => {
+  const removeButton = () => {
+    return (
+      <IconButton color="primary" aria-label="remove unit" onClick={() => onRemoveUnitClick(index)}>
+        <ClearIcon />
+      </IconButton>
+    )
+  }
 
   return (
-    <>
-      <Divider className={classStyles().divider} variant="middle" />
-      <Typography variant='h6' align="left">System Wide Dimensions</Typography>
-    </>
+    <Box>
+      <Grid item container spacing={4}>
+        <Grid item>
+          <FastField name={`units[${index}].name`} label='Unit Name' component={MuiTextFieldFormik} />
+        </Grid>
+        <Grid item>
+          <FastField name={`units[${index}].conversionFormula`} label='Conversion Formula' component={MuiTextFieldFormik} />
+        </Grid>
+        <Grid item>
+          {removable ? removeButton() : null}
+        </Grid>
+      </Grid>
+    </Box>
   )
-
 }

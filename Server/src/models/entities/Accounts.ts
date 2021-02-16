@@ -20,8 +20,8 @@ export class Accounts {
     @Column()
     lastName: string
 
-    @Column()
-    dateOfBirth: Date
+    @Column({ type: "bigint" })
+    orcID: number
 
     @Column()
     organizationName: string

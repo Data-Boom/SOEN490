@@ -17,6 +17,7 @@ import { Units } from "../models/entities/Units";
 import { AuthenticationService } from '../services/authenticationService';
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
 import { Datapointcomments } from "../models/entities/Datapointcomments";
+import { Dimension } from "../models/entities/Dimension";
 
 export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -31,7 +32,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user1.password = await authenticationService.hashPassword('Abc12345!') as any;
     user1.firstName = 'Ace';
     user1.lastName = 'FireFist';
-    user1.dateOfBirth = '1980-01-01' as any;
+    user1.orcID = 123456789876543;
     user1.organizationName = 'Mugiwara';
     user1.admin = 1;
     await connection.manager.save(user1);
@@ -42,7 +43,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user2.password = await authenticationService.hashPassword('123') as any;
     user2.firstName = 'Tom';
     user2.lastName = 'Happy';
-    user2.dateOfBirth = '1980-01-01' as any;
+    user2.orcID = 123456789876543;
     user2.organizationName = 'Mobil';
     user2.admin;
     await connection.manager.save(user2);
@@ -53,7 +54,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user3.password = await authenticationService.hashPassword('123') as any;
     user3.firstName = 'Wyatt';
     user3.lastName = 'forfore';
-    user3.dateOfBirth = '1980-01-01' as any;
+    user3.orcID = 123456789876543;
     user3.organizationName = 'Ozark';
     user3.admin = 1;
     await connection.manager.save(user3);
@@ -64,7 +65,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user4.password = await authenticationService.hashPassword('123') as any;
     user4.firstName = 'Admin';
     user4.lastName = 'Manage';
-    user4.dateOfBirth = '1980-01-01' as any;
+    user4.orcID = 123456789876543;
     user4.organizationName = 'Ozark';
     user4.admin = 0;
     await connection.manager.save(user4);
@@ -427,57 +428,64 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     // Units below this line
 
-    let unitsNone = new Units();
-    unitsNone.id;
-    unitsNone.name = "No Units";
-    unitsNone.units = "No Units";
-    await connection.manager.save(unitsNone);
+    let volumeDimension = new Dimension();
+    volumeDimension.id;
+    volumeDimension.name = "Volume";
+
+    let densityDimension = new Dimension();
+    densityDimension.id;
+    densityDimension.name = "Density";
 
     let unitsGCC = new Units();
     unitsGCC.id;
     unitsGCC.name = "g/cc";
-    unitsGCC.units = "g/cc";
-    await connection.manager.save(unitsGCC);
+
+    let unitsNone = new Units();
+    unitsNone.id;
+    unitsNone.name = "No Units";
 
     let unitsCCG = new Units();
     unitsCCG.id;
     unitsCCG.name = "cc/g";
-    unitsCCG.units = "cc/g";
-    await connection.manager.save(unitsCCG);
 
     let unitsKelvin = new Units();
     unitsKelvin.id;
     unitsKelvin.name = "Kelvin";
-    unitsKelvin.units = "K";
-    await connection.manager.save(unitsKelvin);
 
     let unitsGigapascal = new Units();
     unitsGigapascal.id;
     unitsGigapascal.name = "Gigapascal";
-    unitsGigapascal.units = "GPa";
-    await connection.manager.save(unitsGigapascal);
 
     let unitsKMPS = new Units();
     unitsKMPS.id;
     unitsKMPS.name = "Kilometers per Second";
-    unitsKMPS.units = "km/s";
-    await connection.manager.save(unitsKMPS);
 
     let unitsToDelete = new Units();
     unitsToDelete.id;
     unitsToDelete.name = "Deleted";
-    unitsToDelete.units = "Deleted";
-    await connection.manager.save(unitsToDelete);
 
     let reprNone = new Representations();
     reprNone.id;
     reprNone.repr = "N/A";
-    await connection.manager.save(reprNone);
 
     let reprToDelete = new Representations();
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
+
+    densityDimension.unitId = unitsGCC.id;
+    densityDimension.units = [unitsGCC]
+
+    await connection.manager.save(unitsNone);
+    await connection.manager.save(unitsCCG);
+    await connection.manager.save(unitsGCC);
     await connection.manager.save(reprToDelete);
+    await connection.manager.save(reprNone);
+    await connection.manager.save(unitsToDelete);
+    await connection.manager.save(unitsKMPS);
+    await connection.manager.save(unitsGigapascal);
+    await connection.manager.save(unitsKelvin);
+
+    await connection.manager.save(densityDimension);
 
     // Data points below this line. 
 

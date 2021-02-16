@@ -1,10 +1,12 @@
 import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Theme, Typography, createStyles, makeStyles } from '@material-ui/core'
+import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
 
 import { Collapse } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../Models/Profile/IDimenstionModel'
 import { UnitForm } from './UnitForm'
+import { UnitValidationSchema } from './UnitsValidationSchema'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
@@ -28,11 +30,18 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const DimensionForm = (props: IProps) => {
+  // This file will contain the default measurement. It will also have a save button, as well as a button to create a new UnitForm. Maybe look how new authors are added in the DatasetModelForm.
   const dimension = props.dimension
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const handleExpandClick = () => {
     setExpanded(!expanded)
+  }
+
+  const initialValues = { dimension }
+
+  const handleSubmit = () => {
+
   }
 
   return (
@@ -61,7 +70,17 @@ export const DimensionForm = (props: IProps) => {
           }
         </Grid>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <UnitForm />
+          <Formik
+            enableReinitialize={true}
+            initialValues={initialValues}
+            validationSchema={UnitValidationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <UnitForm />
+              <Button id='unit-submit' variant="contained" color="primary" type="submit">Submit</Button>
+            </Form>
+          </Formik>
         </Collapse>
       </Box>
     </>

@@ -459,7 +459,6 @@ export class DataUploadModel {
         let units = new Units();
         units.id;
         units.name = unitReceived;
-        units.units = unitReceived;
         let unitsExists: any;
         unitsExists = await this.selectUnitsIdQuery(unitReceived);
         if (unitsExists != undefined) {
