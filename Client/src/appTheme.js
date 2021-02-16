@@ -28,7 +28,7 @@ export const classStyles = () => {
       padding: '15px',
       margin: '15px 0'
     },
-    datasetBorder: {
+    fitBorder: {
       borderColor: theme.palette.primary.light,
       borderRadius: 3,
       borderWidth: '1px',

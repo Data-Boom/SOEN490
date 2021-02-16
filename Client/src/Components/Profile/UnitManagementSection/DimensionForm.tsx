@@ -4,11 +4,13 @@ import React, { useState } from 'react'
 
 import { Collapse } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { IDimensionModel } from '../../../Models/Profile/IDimenstionModel'
+import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { UnitForm } from './UnitForm'
 import { UnitValidationSchema } from './UnitsValidationSchema'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
+
+//import { IDimensionModel } from '../../../Models/Profile/IDimensionModel'
 
 interface IProps {
   dimension: IDimensionModel
@@ -38,15 +40,15 @@ export const DimensionForm = (props: IProps) => {
     setExpanded(!expanded)
   }
 
-  const initialValues = { dimension }
+  const initialValues = dimension
 
-  const handleSubmit = () => {
-
+  const handleSubmit = (formValues: IDimensionModel) => {
+    console.log(formValues)
   }
 
   return (
     <>
-      <Box className={classStyles().defaultBorder} >
+      <Box className={classStyles().fitBorder} >
         <Grid container direction="row" alignItems="center">
           <Grid item xs={1}>
             <IconButton
@@ -72,7 +74,7 @@ export const DimensionForm = (props: IProps) => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Formik
             enableReinitialize={true}
-            initialValues={initialValues}
+            initialValues={dimension}
             validationSchema={UnitValidationSchema}
             onSubmit={handleSubmit}
           >
