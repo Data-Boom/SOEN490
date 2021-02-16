@@ -12,7 +12,7 @@ import { ModalFooter } from './ModalFooter';
 
 
 interface IProps {
-    dataset: IApprovedDatasetModel,
+    singleDataset: IApprovedDatasetModel,
     handleApproveDataset: (dataset: IApprovedDatasetModel) => void
     handleDeleteDataset: () => void
     setOpen: (value: boolean) => void
@@ -26,12 +26,16 @@ export const DatasetModal = (props: IProps) => {
 
     const [editable, setEditable] = useState(false)
 
-    const mappedDataset: IDatasetModel = { ...props.dataset }
+
+
+    const mappedDataset: IDatasetModel = { ...props.singleDataset }
+
 
     const { handleApproveDataset, handleDeleteDataset } = { ...props }
 
     useEffect(() => {
         setDataset(fixPartialForform(mappedDataset))
+        console.log(mappedDataset)
     }, [])
 
     const close = () => {
@@ -65,7 +69,7 @@ export const DatasetModal = (props: IProps) => {
                     <Grid container justify="flex-end">
                         <Grid item>
                             <ModalFooter
-                                dataset={mappedDataset}
+                                dataset={dataset}
                                 handleApproveDataset={handleApproveDataset}
                                 handleDeleteDataset={handleDeleteDataset}
                                 handleEditDataset={handleEditDataset}

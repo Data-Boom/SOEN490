@@ -30,6 +30,9 @@ export const UserReviewRow = (props: IProps) => {
         setDataset(newDataset)
     }
 
+    const handleCheck = () => {
+        setOpen(true)
+    }
 
     return (
         <Box>
@@ -41,7 +44,7 @@ export const UserReviewRow = (props: IProps) => {
             </Grid>
             <Grid>
                 < DatasetModal
-                    dataset={dataset}
+                    singleDataset={props.dataset}
                     handleApproveDataset={handleApproveDataset}
                     handleDeleteDataset={handleDeleteDataset}
                     setOpen={setOpen}
