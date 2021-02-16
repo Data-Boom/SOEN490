@@ -1,7 +1,7 @@
 import { createConnection, getConnection } from 'typeorm';
 import { fetchAllCategoriesMaterialsService } from '../../services/fetchAllCategoriesMaterialsService';
 
-describe('basic data service test', () => {
+describe('get all materials/categories service test', () => {
     let retrieveBasicDataObject: fetchAllCategoriesMaterialsService;
     jest.setTimeout(60000)
 
