@@ -1,7 +1,8 @@
-import { Box, Grid, Button } from "@material-ui/core"
-import React, { useState } from "react"
+import { Box, Button, Grid } from "@material-ui/core"
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
-import { callRejectDataset, adminApprovedDataset } from "../../Remote/Endpoints/DatasetEndpoint"
+import React, { useState } from "react"
+import { adminApprovedDataset, callRejectDataset } from "../../Remote/Endpoints/DatasetEndpoint"
+
 import { DatasetModal } from "./DatasetModal"
 
 interface IProps {
@@ -42,7 +43,7 @@ export const UserReviewRow = (props: IProps) => {
             <Grid item>
                 <p> {props.dataset.datasetFlaggedComment} </p>
             </Grid>
-            <Grid>
+            <Grid style={{ padding: '3px 10px', margin: '5px 0' }}>
                 < DatasetModal
                     singleDataset={props.dataset}
                     handleApproveDataset={handleApproveDataset}

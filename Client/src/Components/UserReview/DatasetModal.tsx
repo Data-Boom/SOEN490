@@ -1,15 +1,15 @@
 import { Box, Button, Grid, Link, Paper, Typography } from '@material-ui/core';
-import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
 import React, { useEffect, useState } from 'react';
-import { classStyles } from '../../appTheme';
-import { callRejectDataset } from '../../Remote/Endpoints/DatasetEndpoint';
-import { IDatasetModel } from '../../Models/Datasets/IDatasetModel';
-import CancelIcon from "@material-ui/icons/Cancel"
-import Modal from '@material-ui/core/Modal/Modal';
-import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm';
-import { fixPartialForform } from '../DatasetUpload/DatasetUploadView';
-import { ModalFooter } from './ModalFooter';
 
+import CancelIcon from "@material-ui/icons/Cancel"
+import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm';
+import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
+import { IDatasetModel } from '../../Models/Datasets/IDatasetModel';
+import Modal from '@material-ui/core/Modal/Modal';
+import { ModalFooter } from './ModalFooter';
+import { callRejectDataset } from '../../Remote/Endpoints/DatasetEndpoint';
+import { classStyles } from '../../appTheme';
+import { fixPartialForform } from '../DatasetUpload/DatasetUploadView';
 
 interface IProps {
     singleDataset: IApprovedDatasetModel,
@@ -52,21 +52,23 @@ export const DatasetModal = (props: IProps) => {
                 onClose={() => setOpen(false)}
                 className={classStyles().modalsearch}
             >
-                <Paper elevation={3}>
+                <Paper elevation={3} style={{ width: "100%" }}>
                     <Box m={5}>
                         <Grid container justify="flex-end">
                             <Grid item>
                                 <CancelIcon color="primary" onClick={() => setOpen(false)} />
                             </Grid>
                         </Grid>
+
                         <DatasetUploadForm
                             onSubmit={close}
                             initialDataset={dataset}
                             editable={editable}
                             buttonName="Close"
                         />
+
                     </Box>
-                    <Grid container justify="flex-end">
+                    <Grid container justify="flex-end" alignItems="center">
                         <Grid item>
                             <ModalFooter
                                 dataset={dataset}

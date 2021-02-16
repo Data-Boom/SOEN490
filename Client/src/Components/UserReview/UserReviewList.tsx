@@ -1,8 +1,9 @@
 import { Box, Grid } from '@material-ui/core';
+
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
 import React from 'react';
-import { classStyles } from '../../appTheme';
 import { UserReviewRow } from './UserReviewRow';
+import { classStyles } from '../../appTheme';
 
 interface IProps {
     userDatasets: IApprovedDatasetModel[]
@@ -15,7 +16,7 @@ export const UserReviewList = (props: IProps) => {
     return (
         <Grid container justify="center" spacing={3}>
             <Grid item xs={3}>
-                <Box className={classStyles().datasetBorder}>
+                <Box style={{ padding: '3px 10px', margin: '5px 0' }}>
                     {userDatasets && userDatasets.map(dataset => {
                         return (
                             <UserReviewRow
