@@ -1,10 +1,11 @@
-import { Box, Button, Grid, Paper, Table, TableContainer, Typography } from '@material-ui/core'
+import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 
 import { DimensionForm } from './DimensionForm'
 import { IExampleDimenstions } from '../../../Models/Profile/IDimensionModel'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
+import { AddIcon } from '@material-ui/data-grid'
 
 interface IProps {
 
@@ -45,6 +46,11 @@ export const DimensionManagementTab = () => {
         {dimensions.map(dimension => (
           <DimensionForm dimension={dimension} />
         ))}
+        <Grid item>
+          <IconButton color="primary" aria-label="add unit">
+            <AddIcon />
+          </IconButton>
+        </Grid>
       </Box>
     </>
   )
