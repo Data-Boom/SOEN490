@@ -15,22 +15,20 @@ interface IProps {
     dataset: IApprovedDatasetModel,
     handleApproveDataset: (dataset: IApprovedDatasetModel) => void
     handleDeleteDataset: () => void
-    handleModal: boolean
-
-    //handleModal: () => boolean
+    setOpen: (value: boolean) => void
+    open: boolean
 }
 
 export const DatasetModal = (props: IProps) => {
 
-
-    const [open, setOpen] = useState(false)
+    const { open, setOpen } = { ...props }
     const [dataset, setDataset] = useState<IDatasetModel>()
 
     const [editable, setEditable] = useState(false)
 
     const mappedDataset: IDatasetModel = { ...props.dataset }
 
-    const { handleApproveDataset, handleDeleteDataset, handleModal } = { ...props }
+    const { handleApproveDataset, handleDeleteDataset } = { ...props }
 
     useEffect(() => {
         setDataset(fixPartialForform(mappedDataset))
@@ -46,7 +44,7 @@ export const DatasetModal = (props: IProps) => {
 
     return (
         <>
-            <Modal open={handleModal}
+            <Modal open={open}
                 onClose={() => setOpen(false)}
                 className={classStyles().modalsearch}
             >

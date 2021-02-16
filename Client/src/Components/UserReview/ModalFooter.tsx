@@ -11,11 +11,13 @@ interface IProps {
 }
 
 export const ModalFooter = (props: IProps) => {
+
+    const { handleApproveDataset, handleDeleteDataset, handleEditDataset } = { ...props }
     return (
         <>
-            <Button size="small" id="edit-dataset" onClick={() => props.handleEditDataset} color="primary" variant="contained">{'Edit Dataset'}</Button>
-            <Button size="small" id="approve-dataset" onClick={() => props.handleApproveDataset} color="primary" variant="contained">{"Approve Dataset"}</Button>
-            <Button size="small" id="delete-dataset" onClick={() => props.handleDeleteDataset} color="primary" variant="contained">{'Delete Dataset'}</Button>
+            <Button size="small" id="edit-dataset" onClick={() => handleEditDataset} color="primary" variant="contained">{'Edit Dataset'}</Button>
+            <Button size="small" id="approve-dataset" onClick={() => handleApproveDataset} color="primary" variant="contained">{"Approve Dataset"}</Button>
+            <Button size="small" id="delete-dataset" onClick={() => handleDeleteDataset} color="primary" variant="contained">{'Delete Dataset'}</Button>
         </>
     )
 }

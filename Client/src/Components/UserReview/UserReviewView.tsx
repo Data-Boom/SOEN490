@@ -12,10 +12,6 @@ export const UserReviewView = () => {
 
     const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>([])
 
-    const [dataset, setDataset] = useState<IApprovedDatasetModel>()
-
-    const [open, setOpen] = useState(false)
-
     useEffect(() => {
         const fetchUserDatasets = async () => {
             const userDatasets: IApprovedDatasetModel[] = await getUserFlaggedDatasets()
@@ -23,25 +19,6 @@ export const UserReviewView = () => {
         }
         fetchUserDatasets()
     }, [])
-
-    const handleModal = () => {
-        setOpen(true)
-    }
-
-    const handleDeleteDataset = async () => {
-        await callRejectDataset(dataset.id)
-        handleDatasetChange(null)
-    }
-
-    const handleApproveDataset = async (dataset: IApprovedDatasetModel) => {
-        const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
-        await adminApprovedDataset(query)
-        handleDatasetChange(null)
-    }
-
-    const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
-        setDataset(newDataset)
-    }
 
     return (
         <TableContainer component={Paper} style={{ width: "100%" }}>
@@ -53,17 +30,6 @@ export const UserReviewView = () => {
                     <Grid container justify="center" spacing={3}>
                         < UserReviewList
                             userDatasets={datasets}
-                            handleModal={handleModal}
-                        />
-                    </Grid>
-                </TableRow>
-                <TableRow>
-                    <Grid container justify="center" spacing={3}>
-                        < DatasetModal
-                            dataset={datasets[0]}
-                            handleApproveDataset={handleApproveDataset}
-                            handleDeleteDataset={handleDeleteDataset}
-                            handleModal={open}
                         />
                     </Grid>
                 </TableRow>
