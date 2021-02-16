@@ -9,16 +9,16 @@ import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDa
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
-    private approvalModel: DatasetApprovalModel
-    private deleteModel: DatasetDeleteModel
+    private datasetApprovalModel: DatasetApprovalModel
+    private datasetDeleteModel: DatasetDeleteModel
+    private datasetCommonModel: DatasetCommonModel
     private requestResponse: IResponse
-    private commonModel: DatasetCommonModel
 
     constructor() {
         this.dataQuery = new DataQueryModel();
-        this.deleteModel = new DatasetDeleteModel()
-        this.approvalModel = new DatasetApprovalModel()
-        this.commonModel = new DatasetCommonModel();
+        this.datasetDeleteModel = new DatasetDeleteModel()
+        this.datasetApprovalModel = new DatasetApprovalModel()
+        this.datasetCommonModel = new DatasetCommonModel();
         this.requestResponse = {} as any
     }
 
@@ -402,7 +402,7 @@ export class DataSetService {
     private async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
         let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
         let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
-        let approvalData = await this.approvalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
+        let approvalData = await this.datasetApprovalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
         let setOfData = await this.getDataFromUnapprovedDatasetIds(incompletDatasets, approvalData);
         return setOfData
     }
@@ -414,7 +414,7 @@ export class DataSetService {
      */
     async getUnapprovedAllDatasets() {
         try {
-            let rawDatasetIds = await this.approvalModel.getUnapprovedDatasets();
+            let rawDatasetIds = await this.datasetApprovalModel.getUnapprovedDatasets();
             let response: IApprovalDatasetModel[] = [];
             if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -434,7 +434,7 @@ export class DataSetService {
 
     async getUserFlaggedDatasets(userId: number) {
         try {
-            let rawDatasetIds = await this.approvalModel.selectUserFlaggedDatasets(userId);
+            let rawDatasetIds = await this.datasetApprovalModel.selectUserFlaggedDatasets(userId);
             let response: IApprovalDatasetModel[] = [];
             if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -454,7 +454,7 @@ export class DataSetService {
 
     async getAllFlaggedDatasets() {
         try {
-            let rawDatasetIds = await this.approvalModel.selectAllFlaggedDatasets();
+            let rawDatasetIds = await this.datasetApprovalModel.selectAllFlaggedDatasets();
             let response: IApprovalDatasetModel[];
             if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -474,11 +474,11 @@ export class DataSetService {
 
     async adminRejectDataSet(datasetId: number) {
         try {
-            let response = await this.commonModel.verifyDatasetExists(datasetId)
+            let response = await this.datasetCommonModel.verifyDatasetExists(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No such data set exists")
             }
-            response = await this.deleteModel.rejectDataset(datasetId)
+            response = await this.datasetDeleteModel.rejectDataset(datasetId)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
@@ -494,11 +494,11 @@ export class DataSetService {
 
     async userRejectDataSet(datasetId: number, userId: number) {
         try {
-            let verifyUploader = await this.commonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
+            let verifyUploader = await this.datasetCommonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
             if (verifyUploader != true) {
                 throw new BadRequest(verifyUploader)
             }
-            let response = await this.deleteModel.rejectDataset(datasetId)
+            let response = await this.datasetDeleteModel.rejectDataset(datasetId)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
@@ -514,7 +514,7 @@ export class DataSetService {
 
     async flagNewDataset(datasetId: number, flaggedComment?: string, additionalComment?: string) {
         try {
-            let response = await this.approvalModel.flagDataSet(datasetId, flaggedComment, additionalComment)
+            let response = await this.datasetApprovalModel.flagDataSet(datasetId, flaggedComment, additionalComment)
             if (response == undefined || response == null) {
                 throw new BadRequest("Could not flag this Dataset")
             }
@@ -533,11 +533,11 @@ export class DataSetService {
 
     async adminApprovedDataset(datasetId: number, datasetCommentsToAppend?: string) {
         try {
-            let response = await this.approvalModel.approveDataset(datasetId)
+            let response = await this.datasetApprovalModel.approveDataset(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No dataset under this ID")
             }
-            await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
+            await this.datasetApprovalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
@@ -553,11 +553,11 @@ export class DataSetService {
 
     async userApprovedDataset(datasetId: number, userId: number) {
         try {
-            let verifyUploader = await this.commonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
+            let verifyUploader = await this.datasetCommonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
             if (verifyUploader != true) {
                 throw new BadRequest(verifyUploader)
             }
-            let response = await this.approvalModel.approveDataset(datasetId)
+            let response = await this.datasetApprovalModel.approveDataset(datasetId)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse

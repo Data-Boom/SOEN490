@@ -30,7 +30,7 @@ export class DataUploadController {
             try {
                 let userId: any = request.body.user.account_id
                 this.dataSet = request.body
-                this.dataService = new UnapprovedUploadService(this.dataSet, null, userId)
+                this.dataService = new UnapprovedUploadService(this.dataSet, null, userId, null)
                 await this.dataService.validateExtractedData();
                 let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
@@ -57,7 +57,10 @@ export class DataUploadController {
                 let userId: number = request.body.user.account_id
                 let permissionLevel: number = request.body.user.account_admin
                 let uploadVerificationService = new EditUploadVerificationService()
-                let extractDataResponse: any = await uploadVerificationService.verifyUploader(userId, permissionLevel, this.dataSet, datasetId);
+                let clearFlag = await uploadVerificationService.verifyUploader(userId, permissionLevel, datasetId);
+                this.dataService = new EditUploadService(this.dataSet, datasetId, null, clearFlag)
+                await this.dataService.validateExtractedData();
+                let extractDataResponse: any = await this.dataService.uploadData();
                 return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
             } catch (error) {
                 return response.status(error.status).json(error.message);
