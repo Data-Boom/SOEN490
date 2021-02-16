@@ -1,3 +1,4 @@
+import { NotFound } from "@tsed/exceptions";
 import { Connection, getConnection } from "typeorm";
 import { IDimensionModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
@@ -8,10 +9,6 @@ import { Units } from './entities/Units';
  * table inside the database
  */
 export class DimensionModel {
-  private connection: Connection;
-  constructor() {
-    this.connection = getConnection();
-  }
 
   /**
    * Method responsible for adding a new dimension.
@@ -19,11 +16,12 @@ export class DimensionModel {
    * @param dimensionInfo - Dimension Information from Frontend Request
    */
   async insertDimension(dimensionInfo: IDimensionModel) {
+    let connection = getConnection();
     let dimension = new Dimension();
     dimension.id;
     dimension.name = dimensionInfo.name;
 
-    await this.connection.manager.save(dimension);
+    await connection.manager.save(dimension);
   }
 
   /**
@@ -31,9 +29,10 @@ export class DimensionModel {
    * @param name - Dimension name
    */
   async verifyIfNameExists(name: string): Promise<boolean> {
-    let dimensionName = await this.connection.getRepository(Dimension)
-      .createQueryBuilder('dimensions')
-      .where('dimension.name := name', { name: name })
+    let connection = getConnection();
+    let dimensionName = await connection.getRepository(Dimension)
+      .createQueryBuilder('dimension')
+      .where('dimension.name = :name', { name: name })
       .getOne();
 
     return dimensionName !== undefined;
@@ -44,7 +43,8 @@ export class DimensionModel {
   * @param dimensionId - dimension info that needs to be deleted
   */
   async deleteDimension(dimensionId: number) {
-    await this.connection.query("DELETE FROM dimensions WHERE id = ?", [dimensionId]);
+    let connection = getConnection();
+    await connection.query("DELETE FROM dimensions WHERE id = ?", [dimensionId]);
     return "User favorite data set successfully removed";
   }
 
@@ -53,7 +53,8 @@ export class DimensionModel {
   * @param dimensionInfo - dimension info that needs its values updated
   */
   async updateDimension(dimensionInfo: IDimensionModel): Promise<boolean> {
-    await this.connection.manager
+    let connection = getConnection();
+    await connection.manager
       .createQueryBuilder(Dimension, 'dimensions')
       .update('dimensions')
       .set({ name: dimensionInfo.name })
@@ -69,7 +70,8 @@ export class DimensionModel {
   * @param dimensionId - existing dimension id that needs its units returned
   */
   async getDimensionUnits(dimensionId: number): Promise<Units[]> {
-    let dimensionUnits = await this.connection.manager
+    let connection = getConnection();
+    let dimensionUnits = await connection.manager
       .createQueryBuilder(Dimension, 'dimensions')
       .where('dimensions.id = :id', { id: dimensionId })
       .select('dimensions.units', 'units')
@@ -83,7 +85,8 @@ export class DimensionModel {
   * This method will return all existing dimensions
   */
   async getAllDimensions(): Promise<Dimension[]> {
-    let dimensions = await this.connection.manager
+    let connection = getConnection();
+    let dimensions = await connection.manager
       .createQueryBuilder(Dimension, 'dimensions')
       .select('dimensions.id', 'id')
       .select('dimensions.name', 'name')
