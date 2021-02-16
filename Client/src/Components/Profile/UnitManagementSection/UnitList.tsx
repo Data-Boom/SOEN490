@@ -1,10 +1,12 @@
-import { Grid, IconButton, Typography } from "@material-ui/core"
+import { ArrayHelpers, FastField } from "formik"
+import { Divider, Grid, IconButton, Tooltip, Typography } from "@material-ui/core"
 
 import AddIcon from '@material-ui/icons/Add'
-import { ArrayHelpers } from "formik"
 import { IUnitModel } from "../../../../../Server/src/models/interfaces/IDimension"
+import { MuiTextFieldFormik } from "../../Forms/FormikFields"
 import React from 'react'
 import { UnitRow } from "./UnitRow"
+import { classStyles } from "../../../appTheme"
 import { newUnit } from "../../../Models/Profile/IDimensionModel"
 
 interface IProps {
@@ -22,15 +24,17 @@ export const UnitList = (props: IProps) => {
   const renderUnitRows = () => {
     console.log(units)
     return units && units.map((unit, index) => {
-
-      return (
-        <UnitRow
-          key={index}
-          index={index}
-          onRemoveUnitClick={handleRemoveUnit}
-          removable={shouldRenderRemove()}
-        />
-      )
+      if (index > 0) {
+        return (
+          <UnitRow
+            key={index}
+            index={index}
+            conversionFormula={unit.conversionFormula}
+            onRemoveUnitClick={handleRemoveUnit}
+            removable={shouldRenderRemove()}
+          />
+        )
+      }
     })
   }
 
@@ -47,7 +51,18 @@ export const UnitList = (props: IProps) => {
     <>
       <Grid item container direction='column' spacing={4} alignItems="flex-start">
         <Grid item>
-          <Typography variant='h6' align="left">Units</Typography>
+          <Typography variant='h6' align="left">Base Unit ID:</Typography>
+        </Grid>
+        <Grid item>
+          <FastField name={`units[0].name`} label='Unit Name' component={MuiTextFieldFormik} />
+        </Grid>
+        <Grid item>
+          <Divider className={classStyles().divider} variant="middle" />
+        </Grid>
+        <Grid item>
+          <Tooltip title="Example Formula for cm to m: u/100, where u is equal to 1" placement="top">
+            <Typography variant='h6' align="left">Units</Typography>
+          </Tooltip>
         </Grid>
         <Grid item>
           {renderUnitRows()}

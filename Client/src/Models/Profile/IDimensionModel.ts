@@ -37,23 +37,54 @@ export const ILengthModel: IDimensionModel = {
   units: [IMeters, ICentimeters]
 }
 
-export const IkPa: IUnitModel = {
-  name: 'kPa',
+export const Iatm: IUnitModel = {
+  name: 'atm',
   id: 0,
   conversionFormula: 'u'
 }
 
-export const Iatm: IUnitModel = {
-  name: 'atm',
+export const IkPa: IUnitModel = {
+  name: 'kPa',
   id: 1,
-  conversionFormula: 'u / 101.325'
+  conversionFormula: 'u * 101.325'
+}
+
+export const IPsi: IUnitModel = {
+  name: 'psi',
+  id: 2,
+  conversionFormula: 'u * 14.696'
 }
 
 export const IPressureModel: IDimensionModel = {
   name: "pressure",
   id: 1,
-  baseUnitId: 1,
-  units: [IkPa, Iatm]
+  baseUnitId: 0,
+  units: [Iatm, IkPa, IPsi]
 }
 
-export const IExampleDimenstions: IDimensionModel[] = [ILengthModel, IPressureModel]
+export const IKelvin: IUnitModel = {
+  name: 'K',
+  id: 0,
+  conversionFormula: 'u'
+}
+
+export const ICelcius: IUnitModel = {
+  name: 'C',
+  id: 1,
+  conversionFormula: 'u + 273.15'
+}
+
+export const IFahrenheit: IUnitModel = {
+  name: 'F',
+  id: 2,
+  conversionFormula: '(u − 273.15) × 9/5 + 32'
+}
+
+export const ITemperatureModel: IDimensionModel = {
+  name: "temperature",
+  id: 2,
+  baseUnitId: 0,
+  units: [IKelvin, ICelcius, IFahrenheit]
+}
+
+export const IExampleDimenstions: IDimensionModel[] = [ILengthModel, IPressureModel, ITemperatureModel]

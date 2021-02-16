@@ -38,23 +38,14 @@ export const UnitForm = (props: IProps) => {
 
   return (
     <>
-      <Box className={classStyles().defaultBorder}>
-        <ThemeProvider theme={disabledTheme}>
-          <Typography variant='h6' align="left">Base Unit ID:</Typography>
-          <Grid container spacing={4}>
-            <Grid item sm={4}>
-              <FastField name="baseUnitId" label='Base Unit Name' component={MuiTextFieldFormik} />
-            </Grid>
-          </Grid>
-          <Grid container spacing={4}>
-            <FieldArray name='units' >
-              {({ form, ...fieldArrayHelpers }) => <UnitList units={form.values.units} fieldArrayHelpers={fieldArrayHelpers} />}
-            </FieldArray>
-          </Grid>
-        </ThemeProvider>
-      </Box >
       <Divider className={classStyles().divider} variant="middle" />
-      <Typography align="left">Example Conversion:</Typography>
+      <ThemeProvider theme={disabledTheme}>
+        <Grid container spacing={4}>
+          <FieldArray name='units' >
+            {({ form, ...fieldArrayHelpers }) => <UnitList units={form.values.units} fieldArrayHelpers={fieldArrayHelpers} />}
+          </FieldArray>
+        </Grid>
+      </ThemeProvider>
     </>
   )
 
