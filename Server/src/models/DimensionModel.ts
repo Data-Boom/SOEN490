@@ -86,14 +86,11 @@ export class DimensionModel {
   */
   async getAllDimensions(): Promise<Dimension[]> {
     let connection = getConnection();
-    let dimensions = await connection.manager
-      .createQueryBuilder(Dimension, 'dimension')
+    let dimensions = await connection.createQueryBuilder(Dimension, 'dimension')
       .select('dimension.id', 'id')
       .select('dimension.name', 'name')
-      .select('dimension.units', 'units')
-      .getMany()
+      .getRawMany()
 
-    console.log(dimensions)
     return dimensions
   }
 }

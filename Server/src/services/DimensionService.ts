@@ -6,6 +6,7 @@ import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { IDimensionModel } from '../models/interfaces/IDimension';
 import { DimensionModel } from '../models/DimensionModel';
 import { Units } from '../models/entities/Units';
+import { Dimension } from '../models/entities/Dimension';
 
 /**
  * This class handles requests related to dimensions and units and also
@@ -86,12 +87,15 @@ export class DimensionService {
   /**
    * This method calls the database for all the existing dimensions
    */
-  async processGetAllDimensions(): Promise<DimensionModel[]> {
+  async processGetAllDimensions() {
     try {
-      return this.dimensionModel.getAllDimensions()
+      let dimensions = await this.dimensionModel.getAllDimensions()
+      this.requestResponse.message = dimensions as any
+      this.requestResponse.statusCode = 200;
+      return this.requestResponse;
     }
     catch (error) {
-      return []
+      throw new InternalServerError("Internal server error, please try again later", error.message)
     }
   }
 

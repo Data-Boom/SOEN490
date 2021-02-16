@@ -50,14 +50,11 @@ export class DimensionsController {
 
 
   async retrieveDimensions(request: Request, response: Response, next: NextFunction): Promise<Response> {
-    this.invalidResponse = this.validateCreateDimensionRequest(request);
-    if (this.invalidResponse) {
-      return response.status(400).json("Request is invalid. Missing attributes")
-    } else {
-      let requestParams: any = { ...request.body };
-      let dimensionInfo: IDimensionModel = requestParams;
-      let res: any = await this.callServiceForAddDimension(dimensionInfo, response, next);
-      return res;
+    try {
+      let requestResponse = await this.dimensionService.processGetAllDimensions();
+      return response.status(requestResponse.statusCode).json(requestResponse.message)
+    } catch (error) {
+      response.status(error.status).json(error.message);
     }
   }
 
