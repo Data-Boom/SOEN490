@@ -38,15 +38,14 @@ export const UnitForm = (props: IProps) => {
 
   return (
     <>
-      <Box className={classStyles().defaultBorder}>
-        <ThemeProvider theme={disabledTheme}>
-          <Grid container spacing={4}>
-            <FieldArray name='units' >
-              {({ form, ...fieldArrayHelpers }) => <UnitList units={form.values.units} fieldArrayHelpers={fieldArrayHelpers} />}
-            </FieldArray>
-          </Grid>
-        </ThemeProvider>
-      </Box >
+      <Divider className={classStyles().divider} variant="middle" />
+      <ThemeProvider theme={disabledTheme}>
+        <Grid container spacing={4}>
+          <FieldArray name='units' >
+            {({ form, ...fieldArrayHelpers }) => <UnitList units={form.values.units} fieldArrayHelpers={fieldArrayHelpers} />}
+          </FieldArray>
+        </Grid>
+      </ThemeProvider>
     </>
   )
 

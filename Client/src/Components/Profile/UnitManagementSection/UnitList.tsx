@@ -60,7 +60,7 @@ export const UnitList = (props: IProps) => {
           <Divider className={classStyles().divider} variant="middle" />
         </Grid>
         <Grid item>
-          <Tooltip title="Example Formula for cm to m: u/100" placement="top">
+          <Tooltip title="Example Formula for cm to m: u/100, where u is equal to 1" placement="top">
             <Typography variant='h6' align="left">Units</Typography>
           </Tooltip>
         </Grid>
