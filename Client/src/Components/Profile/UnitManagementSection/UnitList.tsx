@@ -19,6 +19,7 @@ export const UnitList = (props: IProps) => {
   }
 
   const renderUnitRows = () => {
+    console.log(units)
     return units && units.map((unit, index) => {
       return (
         <UnitRow

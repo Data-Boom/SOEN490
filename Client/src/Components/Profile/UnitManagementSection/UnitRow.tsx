@@ -26,10 +26,10 @@ export const UnitRow = (props: IProps) => {
     <Box>
       <Grid item container spacing={4}>
         <Grid item>
-          <FastField name={`name`} label='Unit Name' component={MuiTextFieldFormik} />
+          <FastField name={`units[${index}].name`} label='Unit Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
-          <FastField name={`conversionFormula`} label='Conversion Formula' component={MuiTextFieldFormik} />
+          <FastField name={`units[${index}].conversionFormula`} label='Conversion Formula' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
           {removable ? removeButton() : null}

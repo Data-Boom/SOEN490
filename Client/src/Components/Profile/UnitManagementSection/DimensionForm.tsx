@@ -38,6 +38,8 @@ export const DimensionForm = (props: IProps) => {
     setExpanded(!expanded)
   }
 
+  const initialValues = { dimension }
+
   const handleSubmit = () => {
 
   }
@@ -70,7 +72,7 @@ export const DimensionForm = (props: IProps) => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Formik
             enableReinitialize={true}
-            initialValues={dimension.units}
+            initialValues={initialValues}
             validationSchema={UnitValidationSchema}
             onSubmit={handleSubmit}
           >
