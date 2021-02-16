@@ -1,4 +1,4 @@
-export interface IDimensionModel {
+/*export interface IDimensionModel {
   name: string,
   id?: number,
   baseUnitId: number,
@@ -9,7 +9,9 @@ export interface IUnitModel {
   name: string,
   id?: number,
   conversionFormula: string,
-}
+}*/
+
+import { IDimensionModel, IUnitModel } from "../../../../Server/src/models/interfaces/IDimension"
 
 export const newUnit: IUnitModel = {
   name: '',
@@ -48,9 +50,9 @@ export const Iatm: IUnitModel = {
 }
 
 export const IPressureModel: IDimensionModel = {
-  name: "atm",
+  name: "pressure",
   id: 1,
-  baseUnitId: 0,
+  baseUnitId: 1,
   units: [IkPa, Iatm]
 }
 

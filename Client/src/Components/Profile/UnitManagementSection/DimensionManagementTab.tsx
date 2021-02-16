@@ -1,8 +1,9 @@
 import { Box, Button, Grid, Paper, Table, TableContainer, Typography } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { DimensionForm } from './DimensionForm'
-import { IExampleDimenstions } from '../../../Models/Profile/IDimenstionModel'
+import { IExampleDimenstions } from '../../../Models/Profile/IDimensionModel'
+import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 
 interface IProps {
@@ -16,6 +17,14 @@ export const DimensionManagementTab = () => {
   // TODO: Fetch list of dimensions/units from backend.
   // TODO: For each dimenstionm, render a new Dimension Form using its values as the initial values.
   // TODO: Have a "New" button that renders a Dimenstion Form with no initial values.
+
+  useEffect(() => {
+    const getDimensions = async () => {
+      const databaseDimensions = await callGetAllDimensions()
+      setDimensions(databaseDimensions)
+    }
+    getDimensions()
+  }, [])
 
   const handleUpdateDimension = () => {
 
@@ -36,7 +45,6 @@ export const DimensionManagementTab = () => {
         {dimensions.map(dimension => (
           <DimensionForm dimension={dimension} />
         ))}
-
       </Box>
     </>
   )

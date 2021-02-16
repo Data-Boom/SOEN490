@@ -3,14 +3,18 @@ import { Equation, EquationEvaluate, EquationOptions, defaultErrorHandler } from
 import { FastField, FieldArray } from 'formik'
 import React, { useState } from 'react'
 
-import { AuthorsList } from '../../DatasetUpload/ReferenceSection/AuthorsList'
-import { ConfirmationModal } from '../../Authentication/ConfirmationModal'
-import { IUnitModel } from '../../../Models/Profile/IDimenstionModel'
 import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import { UnitList } from './UnitList'
 import { classStyles } from '../../../appTheme'
 import { disabledTheme } from '../../Forms/ComponentUpdate'
 import { get } from '../../../Remote/FluentRequest'
+
+//import { IUnitModel } from '../../../Models/Profile/IDimensionModel'
+
+
+
+
+
 
 interface IProps {
 
@@ -24,12 +28,13 @@ export const UnitForm = (props: IProps) => {
   // The EquationEvaluate part will probably have to be moved to UnitRow later on.
 
   /*
-<EquationEvaluate
+  <EquationEvaluate
         value={units[1].conversionFormula}
         variables={{ u: { type: 'number', value: 1 } }}
         errorHandler={defaultErrorHandler}
       />
   */
+
 
   return (
     <>
@@ -38,7 +43,7 @@ export const UnitForm = (props: IProps) => {
           <Typography variant='h6' align="left">Base Unit ID:</Typography>
           <Grid container spacing={4}>
             <Grid item sm={4}>
-              <FastField name="dimension.baseUnitId" label='Base Unit ID' component={MuiTextFieldFormik} />
+              <FastField name="baseUnitId" label='Base Unit ID' component={MuiTextFieldFormik} />
             </Grid>
           </Grid>
           <Grid container spacing={4}>
