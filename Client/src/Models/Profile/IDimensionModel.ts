@@ -52,7 +52,7 @@ export const Iatm: IUnitModel = {
 export const IPressureModel: IDimensionModel = {
   name: "pressure",
   id: 1,
-  baseUnitId: 1,
+  baseUnitId: 0,
   units: [IkPa, Iatm]
 }
 

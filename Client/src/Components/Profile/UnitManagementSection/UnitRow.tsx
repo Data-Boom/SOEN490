@@ -1,4 +1,5 @@
-import { Box, Grid, IconButton } from "@material-ui/core"
+import { Box, Grid, IconButton, Tooltip } from "@material-ui/core"
+import { Equation, EquationEvaluate, EquationOptions, defaultErrorHandler } from "react-equation"
 
 import ClearIcon from '@material-ui/icons/Clear'
 import { FastField } from "formik"
@@ -8,6 +9,7 @@ import React from 'react'
 interface IProps {
   index: number,
   onRemoveUnitClick: (index: number) => void,
+  conversionFormula?: string,
   removable: boolean
 }
 
@@ -30,6 +32,14 @@ export const UnitRow = (props: IProps) => {
         </Grid>
         <Grid item>
           <FastField name={`units[${index}].conversionFormula`} label='Conversion Formula' component={MuiTextFieldFormik} />
+        </Grid>
+        <Grid item>
+
+          <EquationEvaluate
+            value={props.conversionFormula || 'u'}
+            variables={{ u: { type: 'number', value: 1 } }}
+            errorHandler={defaultErrorHandler}
+          />
         </Grid>
         <Grid item>
           {removable ? removeButton() : null}

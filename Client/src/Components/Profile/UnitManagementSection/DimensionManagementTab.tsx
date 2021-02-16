@@ -26,18 +26,6 @@ export const DimensionManagementTab = () => {
     getDimensions()
   }, [])
 
-  const handleUpdateDimension = () => {
-
-  }
-
-  const handleDeleteDimension = () => {
-
-  }
-
-  const handleCreateDimenstion = () => {
-
-  }
-
   return (
     <>
       <Box className={classStyles().defaultBorder} style={{ width: "100%" }} >
