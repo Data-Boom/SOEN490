@@ -13,8 +13,10 @@ import { Units } from '../models/entities/Units';
  */
 export class DimensionService {
   private requestResponse: IResponse = {} as any;
+  private dimensionModel: DimensionModel
 
   constructor() {
+    this.dimensionModel = new DimensionModel()
   }
 
   /**
@@ -25,13 +27,13 @@ export class DimensionService {
    */
   async processAddDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
     let name: boolean
-    name = await DimensionModel.verifyIfNameExists(dimensionInfo.name);
+    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
     if (name) {
       throw new BadRequest("This dimension already exists! Please enter different values");
     }
     else {
       try {
-        await DimensionModel.insertDimension(dimensionInfo);
+        await this.dimensionModel.insertDimension(dimensionInfo);
       }
       catch (error) {
         throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
@@ -48,13 +50,13 @@ export class DimensionService {
    */
   async processUpdateDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
     let name: boolean
-    name = await DimensionModel.verifyIfNameExists(dimensionInfo.name);
+    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
     if (!name) {
       throw new BadRequest("This dimension does not exist!");
     }
     else {
       try {
-        await DimensionModel.updateDimension(dimensionInfo);
+        await this.dimensionModel.updateDimension(dimensionInfo);
       }
       catch (error) {
         throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
@@ -71,7 +73,7 @@ export class DimensionService {
    */
   async processDeleteDimension(dimensionId: number): Promise<IResponse> {
     try {
-      await DimensionModel.deleteDimension(dimensionId);
+      await this.dimensionModel.deleteDimension(dimensionId);
     }
     catch (error) {
       throw new InternalServerError("Internal server error, please try again later", error.message);
@@ -86,7 +88,7 @@ export class DimensionService {
    */
   async processGetAllDimensions(): Promise<DimensionModel[]> {
     try {
-      return DimensionModel.getAllDimensions()
+      return this.dimensionModel.getAllDimensions()
     }
     catch (error) {
       return []
@@ -99,7 +101,7 @@ export class DimensionService {
    */
   async processGetDimensionUnits(dimensionId: number): Promise<Units[]> {
     try {
-      return DimensionModel.getDimensionUnits(dimensionId)
+      return this.dimensionModel.getDimensionUnits(dimensionId)
     }
     catch (error) {
       return []

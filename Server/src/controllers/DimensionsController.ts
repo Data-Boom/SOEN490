@@ -14,6 +14,7 @@ export class DimensionsController {
   private invalidResponse: boolean;
 
   constructor() {
+    this.dimensionService = new DimensionService();
   }
 
   async createDimension(request: Request, response: Response, next: NextFunction): Promise<Response> {
@@ -29,15 +30,10 @@ export class DimensionsController {
   }
 
   private validateCreateDimensionRequest(request: Request): boolean {
-    return request.body.name == null && this.validateCreateUnitsRequest(request.body.units)
-  }
-
-  private validateCreateUnitsRequest(units: IUnitModel[]): boolean {
-    return units.length != 0;
+    return request.body.name == null
   }
 
   private async callServiceForAddDimension(dimensionInfo: IDimensionModel, response: Response, next: NextFunction): Promise<Response> {
-    this.dimensionService = new DimensionService();
     let serviceResponse: IResponse;
 
     try {

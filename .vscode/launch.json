@@ -15,6 +15,7 @@
             "remoteRoot": "${workspaceFolder}\\server",
             "port": 9229,
             "runtimeExecutable": "npm",
+            "sourceMaps": true,
             "address": "localhost",
             "type": "node",
             "cwd": "${workspaceFolder}\\server",

@@ -11,10 +11,7 @@ export class Dimension {
     @Column()
     name: string
 
-    @Column({ default: 1 })
-    unitId?: number
-
-    @OneToMany(type => Units, unit => unit.dimension)
+    @OneToMany(type => Units, unit => unit.dimension, { onDelete: 'NO ACTION' })
     @JoinColumn({ name: "unitId" })
     units?: Units[]
 }
