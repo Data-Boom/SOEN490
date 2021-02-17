@@ -6,9 +6,12 @@ import { IExampleDimenstions } from '../../../Models/Profile/IDimensionModel'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 import { AddIcon } from '@material-ui/data-grid'
+import { ArrayHelpers } from 'formik'
+import { IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 
 interface IProps {
-
+  units: IUnitModel[],
+  fieldArrayHelpers: ArrayHelpers,
 }
 
 
@@ -18,6 +21,11 @@ export const DimensionManagementTab = () => {
   // TODO: Fetch list of dimensions/units from backend.
   // TODO: For each dimenstionm, render a new Dimension Form using its values as the initial values.
   // TODO: Have a "New" button that renders a Dimenstion Form with no initial values.
+
+
+  const addNewDimension = () => {
+    console.log("add new dimension")
+  }
 
   useEffect(() => {
     const getDimensions = async () => {
@@ -35,7 +43,7 @@ export const DimensionManagementTab = () => {
           <DimensionForm dimension={dimension} />
         ))}
         <Grid item>
-          <IconButton color="primary" aria-label="add unit">
+          <IconButton color="primary" aria-label="add unit" onClick={addNewDimension}>
             <AddIcon />
           </IconButton>
         </Grid>

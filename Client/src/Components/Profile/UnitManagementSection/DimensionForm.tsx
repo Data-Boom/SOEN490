@@ -43,7 +43,7 @@ export const DimensionForm = (props: IProps) => {
   const initialValues = dimension
 
   const handleSubmit = (formValues: IDimensionModel) => {
-    console.log(formValues)
+    console.log("form values: " + formValues)
   }
 
   const handleUpdateDimension = () => {

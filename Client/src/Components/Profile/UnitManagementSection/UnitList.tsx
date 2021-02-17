@@ -18,11 +18,13 @@ export const UnitList = (props: IProps) => {
   const { units, fieldArrayHelpers } = props
 
   const handleRemoveUnit = (indexToRemove: number) => {
+    console.log("unit removed")
     fieldArrayHelpers.remove(indexToRemove)
   }
 
+  //additional rows
   const renderUnitRows = () => {
-    console.log(units)
+    console.log("unit rows rendered " + units)
     return units && units.map((unit, index) => {
       if (index > 0) {
         return (
