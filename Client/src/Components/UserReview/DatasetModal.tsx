@@ -13,8 +13,8 @@ import { fixPartialForform } from '../DatasetUpload/DatasetUploadView';
 
 interface IProps {
     singleDataset: IApprovedDatasetModel,
-    handleApproveDataset: (dataset: IApprovedDatasetModel) => void
-    handleDeleteDataset: () => void
+    handleApproveDataset: (dataset: IApprovedDatasetModel) => void,
+    handleDeleteDataset: () => void,
     setOpen: (value: boolean) => void
     open: boolean
 }

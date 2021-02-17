@@ -17,12 +17,13 @@ export const UserReviewRow = (props: IProps) => {
     const [dataset, setDataset] = useState<IApprovedDatasetModel>()
 
     const handleDeleteDataset = async () => {
-        await callRejectDataset(dataset.id)
+        await callRejectDataset(props.dataset.id)
+        setOpen(false)
         handleDatasetChange(null)
     }
 
     const handleApproveDataset = async (dataset: IApprovedDatasetModel) => {
-        const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
+        const query: IFlaggedDatasetQuery = { datasetId: props.dataset.id }
         await adminApprovedDataset(query)
         handleDatasetChange(null)
     }
