@@ -11,6 +11,6 @@ export interface IUnitModel {
   conversionFormula: string,
 }
 
-export interface IDimensionQueryModel {
-  dimensionId: number
-}
+// export interface IDimensionQueryModel {
+//   dimensionId: number
+// }
