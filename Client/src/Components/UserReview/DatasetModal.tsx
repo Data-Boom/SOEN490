@@ -7,6 +7,7 @@ import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetMod
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel';
 import Modal from '@material-ui/core/Modal/Modal';
 import { ModalFooter } from './ModalFooter';
+import { ModalFooterApprove } from './ModalFooterApprove'
 import { callRejectDataset } from '../../Remote/Endpoints/DatasetEndpoint';
 import { classStyles } from '../../appTheme';
 import { fixPartialForform } from '../DatasetUpload/DatasetUploadView';
@@ -15,6 +16,7 @@ interface IProps {
     singleDataset: IApprovedDatasetModel,
     handleApproveDataset: (dataset: IApprovedDatasetModel) => void,
     handleDeleteDataset: () => void,
+    handleSubmitDataset: () => void,
     setOpen: (value: boolean) => void
     open: boolean
 }
@@ -31,8 +33,8 @@ export const DatasetModal = (props: IProps) => {
     const mappedDataset: IDatasetModel = { ...props.singleDataset }
 
 
-    const { handleApproveDataset, handleDeleteDataset } = { ...props }
-
+    const { handleApproveDataset, handleDeleteDataset, handleSubmitDataset } = { ...props }
+    let editOn = false
     useEffect(() => {
         setDataset(fixPartialForform(mappedDataset))
         console.log(mappedDataset)
@@ -43,6 +45,11 @@ export const DatasetModal = (props: IProps) => {
     }
 
     const handleEditDataset = () => {
+        if (editOn) {
+            editOn = true
+        } else {
+            editOn = false
+        }
         setEditable(!editable)
     }
 
@@ -70,12 +77,19 @@ export const DatasetModal = (props: IProps) => {
                     </Box>
                     <Grid container justify="flex-end" alignItems="center">
                         <Grid item>
-                            <ModalFooter
+                            {editOn ? <ModalFooter
                                 dataset={dataset}
                                 handleApproveDataset={handleApproveDataset}
                                 handleDeleteDataset={handleDeleteDataset}
                                 handleEditDataset={handleEditDataset}
-                            />
+                            /> :
+                                <ModalFooterApprove
+                                    dataset={dataset}
+                                    handleSubmitDataset={handleSubmitDataset}
+                                    handleCancelDataset={handleEditDataset}
+                                />
+                            }
+
                         </Grid>
                     </Grid>
                 </Paper>

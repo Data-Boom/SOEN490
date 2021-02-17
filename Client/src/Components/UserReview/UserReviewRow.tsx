@@ -32,6 +32,10 @@ export const UserReviewRow = (props: IProps) => {
         setDataset(newDataset)
     }
 
+    const handleSubmitDataset = async () => {
+
+    }
+
     const handleCheck = () => {
         setOpen(true)
     }
@@ -49,6 +53,7 @@ export const UserReviewRow = (props: IProps) => {
                     singleDataset={props.dataset}
                     handleApproveDataset={handleApproveDataset}
                     handleDeleteDataset={handleDeleteDataset}
+                    handleSubmitDataset={handleSubmitDataset}
                     setOpen={setOpen}
                     open={open}
                 />
