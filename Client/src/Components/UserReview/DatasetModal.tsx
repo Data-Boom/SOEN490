@@ -25,16 +25,11 @@ export const DatasetModal = (props: IProps) => {
 
     const { open, setOpen } = { ...props }
     const [dataset, setDataset] = useState<IDatasetModel>()
-
     const [editable, setEditable] = useState(false)
-
-
-
     const mappedDataset: IDatasetModel = { ...props.singleDataset }
-
-
     const { handleApproveDataset, handleDeleteDataset, handleSubmitDataset } = { ...props }
     const [editOn, steEditOn] = useState(true)
+
     useEffect(() => {
         setDataset(fixPartialForform(mappedDataset))
         console.log(mappedDataset)

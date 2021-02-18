@@ -17,46 +17,52 @@ interface DatasetUploadFormValues {
 
 export const UserReviewRow = (props: IProps) => {
 
-
     const [open, setOpen] = useState(false)
-
-    const [dataset, setDataset] = useState<IDatasetModel>()
-
+    //const [dataset, setDataset] = useState<IDatasetModel>()
+    const { dataset } = { ...props }
     const handleDeleteDataset = async () => {
-        await callRejectDataset(props.dataset.id)
-        setOpen(false)
+        await callRejectDataset(dataset.id)
         handleDatasetChange(null)
+        setOpen(false)
+        reload()
     }
+
     const handleApproveDataset = async (datasetId: number) => {
-        console.log(props.dataset.id)
-        const query: IFlaggedDatasetQuery = { datasetId: props.dataset.id }
+        const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
         await adminApprovedDataset(query)
         handleDatasetChange(null)
         setOpen(false)
+        reload()
     }
 
     const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
-        setDataset(newDataset)
+        //setDataset(newDataset)
+
     }
 
     const handleSubmitDataset = () => {
+
     }
 
     const handleCheck = () => {
         setOpen(true)
     }
 
+    const reload = () => {
+        window.location.reload()
+    }
+
     return (
         <Box>
             <Grid item>
-                <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">{props.dataset.dataset_name} </Button>
+                <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">{dataset.dataset_name} </Button>
             </Grid>
             <Grid item>
-                <p> {props.dataset.datasetFlaggedComment} </p>
+                <p> {dataset.datasetFlaggedComment} </p>
             </Grid>
             <Grid style={{ padding: '3px 10px', margin: '5px 0' }}>
                 < DatasetModal
-                    singleDataset={props.dataset}
+                    singleDataset={dataset}
                     handleApproveDataset={handleApproveDataset}
                     handleDeleteDataset={handleDeleteDataset}
                     handleSubmitDataset={handleSubmitDataset}

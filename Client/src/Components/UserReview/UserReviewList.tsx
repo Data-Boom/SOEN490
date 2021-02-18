@@ -1,18 +1,17 @@
 import { Box, Grid } from '@material-ui/core';
+import React, { useEffect } from 'react';
 
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel';
-import React from 'react';
 import { UserReviewRow } from './UserReviewRow';
 import { classStyles } from '../../appTheme';
 
 interface IProps {
-    userDatasets: IApprovedDatasetModel[]
+    userDatasets: IApprovedDatasetModel[],
 }
 
 export const UserReviewList = (props: IProps) => {
 
     const { userDatasets } = { ...props }
-
     return (
         <Grid container justify="center" spacing={3}>
             <Grid item xs={3}>

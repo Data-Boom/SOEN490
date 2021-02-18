@@ -8,8 +8,11 @@ import { UserReviewList } from "./UserReviewList";
 import { classStyles } from "../../appTheme";
 import { getUserFlaggedDatasets } from "../../Remote/Endpoints/UserEndpoint";
 
-export const UserReviewView = () => {
+interface IProps {
+    userDatasets: IApprovedDatasetModel[],
+}
 
+export const UserReviewView = (props: IProps) => {
     const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>([])
 
     useEffect(() => {
