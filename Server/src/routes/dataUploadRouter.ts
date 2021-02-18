@@ -13,7 +13,7 @@ router.post('/api/v1/dataUpload', JWTAuthenticator.verifyJWT, (request: Request,
     dataUpload.createNewDatasetRequest(request, response);
 });
 
-router.put('/api/v1/dataUpload/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.put('/api/v1/dataUpload/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataUpload.createEditUploadRequest(request, response);
 });
 
