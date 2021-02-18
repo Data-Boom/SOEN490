@@ -3,12 +3,17 @@ import { IDimensionModel, IUnitModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
 import { Datapoints } from "./entities/Datapoints";
+import { Connection, getConnection } from "typeorm";
 
 /**
  * This model contains all methods required for obtaining data from the Dimensions
  * table inside the database
  */
 export class DimensionModel {
+  private connection: Connection;
+  constructor() {
+    this.connection = getConnection();
+  }
 
   /**
    * Method responsible for adding a new dimension.
@@ -79,7 +84,7 @@ export class DimensionModel {
       unit.name = value.name;
       unit.id = value.id;
       unit.conversionFormula = value.conversionFormula;
-      unit.dimensionId = value.dimensionId;
+      // unit.dimensionId = value.dimensionId;
       return unit;
     })
     await Units.save(units);
@@ -93,17 +98,24 @@ export class DimensionModel {
   }
 
   /**
-  * This method will return units of an existing dimension
-  * @param dimensionId - existing dimension id that needs its units returned
+  * This method will return all existing units
   */
-  async getDimensionUnits(dimensionId: number): Promise<Units[]> {
-    return await Units.find({ where: { "dimensionId": dimensionId } })
+  async getAllUnits(): Promise<Units[]> {
+    return await Units.find()
   }
+
+  private selectDimensionsQuery = (connection: Connection) =>
+    connection.createQueryBuilder(Dimension, 'dimension')
+      .select('dimension.name', 'name')
+      .addSelect('dimension.id', 'id')
+      .addSelect('dimension.baseUnitId', 'baseUnitId')
+      .getRawMany()
 
   /**
   * This method will return all existing dimensions
   */
-  async getAllDimensions(): Promise<Dimension[]> {
-    return await Dimension.find()
+  async getAllDimensions(): Promise<IDimensionModel[]> {
+    let dimensions: IDimensionModel[] = await this.selectDimensionsQuery(this.connection)
+    return dimensions
   }
 }

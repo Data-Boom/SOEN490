@@ -14,10 +14,10 @@ export class DimensionsController {
   private invalidResponse: boolean;
 
   constructor() {
-    this.dimensionService = new DimensionService();
   }
 
   async createDimension(request: Request, response: Response, next: NextFunction): Promise<Response> {
+    this.dimensionService = new DimensionService();
     this.invalidResponse = this.validateCreateDimensionRequest(request);
     if (this.invalidResponse) {
       return response.status(400).json("Request is invalid. Missing attributes")
@@ -37,6 +37,7 @@ export class DimensionsController {
     let serviceResponse: IResponse;
 
     try {
+      this.dimensionService = new DimensionService();
       serviceResponse = await this.dimensionService.processAddDimension(dimensionInfo);
       return response.status(serviceResponse.statusCode).json(serviceResponse.message);
     } catch (error) {
@@ -50,6 +51,7 @@ export class DimensionsController {
 
   async retrieveDimensions(response: Response, next: NextFunction): Promise<Response> {
     try {
+      this.dimensionService = new DimensionService();
       let requestResponse = await this.dimensionService.processGetAllDimensions();
       return response.status(requestResponse.statusCode).json(requestResponse.message)
     } catch (error) {
@@ -72,6 +74,7 @@ export class DimensionsController {
     let serviceResponse: IResponse;
 
     try {
+      this.dimensionService = new DimensionService();
       serviceResponse = await this.dimensionService.processAddDimension(dimensionInfo);
       return response.status(serviceResponse.statusCode).json(serviceResponse.message);
     } catch (error) {
@@ -102,6 +105,7 @@ export class DimensionsController {
     let serviceResponse: IResponse;
 
     try {
+      this.dimensionService = new DimensionService();
       serviceResponse = await this.dimensionService.processDeleteDimension(dimensionId);
       return response.status(serviceResponse.statusCode).json(serviceResponse.message);
     } catch (error) {
