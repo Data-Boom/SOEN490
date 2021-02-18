@@ -53,8 +53,13 @@ export const DatasetModal = (props: IProps) => {
             >
                 <Paper elevation={3} style={{ width: "80%", height: "100%" }}>
                     <Box m={5}>
-                        <Grid container justify="flex-end">
-                            <Grid item>
+                        <Grid container justify="space-between">
+                            <Grid item justify="flex-start">
+                                <Typography variant="h5">
+                                    Dataset Review
+                                </Typography>
+                            </Grid>
+                            <Grid item justify="flex-end">
                                 <CancelIcon color="primary" onClick={() => setOpen(false)} />
                             </Grid>
                         </Grid>
@@ -79,7 +84,6 @@ export const DatasetModal = (props: IProps) => {
                                     handleCancelDataset={handleEditDataset}
                                 />
                             }
-
                         </Grid>
                     </Grid>
                 </Paper>
