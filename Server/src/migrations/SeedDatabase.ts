@@ -533,8 +533,9 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
 
-    densityDimension.unitId = unitsGCC.id;
-    densityDimension.units = [unitsGCC]
+    densityDimension.units = [unitsCCG, unitsGCC];
+
+    volumeDimension.units = [unitsKelvin];
 
     await connection.manager.save(unitsNone);
     await connection.manager.save(unitsCCG);
@@ -546,6 +547,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await connection.manager.save(unitsGigapascal);
     await connection.manager.save(unitsKelvin);
 
+    await connection.manager.save(volumeDimension);
     await connection.manager.save(densityDimension);
 
     // Data points below this line. 

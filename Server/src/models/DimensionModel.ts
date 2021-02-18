@@ -1,93 +1,109 @@
-import { getConnection } from "typeorm";
-import { IDimensionModel } from './interfaces/IDimension';
+import { InternalServerError } from "@tsed/exceptions";
+import { IDimensionModel, IUnitModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
+import { Datapoints } from "./entities/Datapoints";
 
 /**
  * This model contains all methods required for obtaining data from the Dimensions
  * table inside the database
  */
 export class DimensionModel {
-  private static connection = getConnection()
 
   /**
    * Method responsible for adding a new dimension.
    * It sets the entity values
    * @param dimensionInfo - Dimension Information from Frontend Request
    */
-  static async insertDimension(dimensionInfo: IDimensionModel) {
-    let dimension = new Dimension();
-    dimension.id;
-    dimension.name = dimensionInfo.name;
+  async insertDimension(dimensionInfo: IDimensionModel) {
+    let dimensionModel = new Dimension();
+    dimensionModel.name = dimensionInfo.name;
+    dimensionModel = await Dimension.save(dimensionModel);
 
-    await this.connection.manager.save(dimension);
+    if (dimensionInfo.units.length != 0) {
+      let unitsToBeAdded: Units[] = []
+      dimensionInfo.units.forEach(element => {
+        let unit = new Units();
+        unit.conversionFormula = element.conversionFormula;
+        unit.name = element.name;
+        unit.dimensionId = dimensionModel.id;
+        unitsToBeAdded.push(unit);
+      });
+      await Units.save(unitsToBeAdded);
+      dimensionModel.baseUnitId = unitsToBeAdded[0].id;
+      await Dimension.save(dimensionModel);
+    }
   }
 
   /**
-   * Method to verify if a name for dimension exists. Returns true or undefined
+   * Method to verify if a name for dimension exists. Returns true if doesn't find
    * @param name - Dimension name
    */
-  static async verifyIfNameExists(name: string): Promise<boolean> {
-    let dimensionName = await this.connection.getRepository(Dimension)
-      .createQueryBuilder('dimensions')
-      .where('dimension.name := name', { name: name })
-      .getOne();
-
-    return dimensionName !== undefined;
+  async verifyIfNameExists(name: string): Promise<boolean> {
+    return await Dimension.findOne({ where: { name: name } }).then((value) => value !== undefined)
   }
 
   /**
-     * This method deletes an existing dimension but keeps its units in the database
-     * @param dimensionId - dimension info that needs to be deleted
-     */
-  static async deleteDimension(dimensionId: number) {
-    await this.connection.query("DELETE FROM dimensions WHERE id = ?", [dimensionId]);
-    return "User favorite data set successfully removed";
+  * This method deletes an existing dimension but keeps its units in the database
+  * @param dimensionId - dimension id that needs to be deleted
+  */
+  async deleteDimension(dimensionId: number) {
+    await Dimension.delete({ "id": dimensionId })
   }
 
   /**
   * This method will update an existing dimension
+  * **VERY IMPORTANT**
+  * Make sure the IDimensionModel and IUnitsModel contain their original ids before calling backend API,
+  * otherwise it'll be treated as a new entry and might be added as a duplicate or removed without notice
   * @param dimensionInfo - dimension info that needs its values updated
   */
-  static async updateDimension(dimensionInfo: IDimensionModel): Promise<boolean> {
-    await this.connection.manager
-      .createQueryBuilder(Dimension, 'dimensions')
-      .update('dimensions')
-      .set({ name: dimensionInfo.name })
-      .set({ units: dimensionInfo.units })
-      .where('dimensions.id = :id', { id: dimensionInfo.id })
-      .execute()
-
-    return true
+  async updateDimension(dimensionInfo: IDimensionModel): Promise<boolean> {
+    let unitIds: number[] = dimensionInfo.units.map(value => value.id);
+    // Check to see if there are units already with the same dimensionId
+    let foundUnits = await Units.find({ where: { dimensionId: dimensionInfo.id } });
+    // Check if any of the found units are already in use in datapoints table
+    foundUnits.forEach(async element => {
+      let foundUnit = await Datapoints.find({ where: { "unitsId": element.id } })
+      if (foundUnit.length != 0) {
+        throw new InternalServerError(`UnitId ${element.id} is already in use`);
+      }
+      // Check if the found unitId from the database doesn't match with the one sent from frontend, then it needs to be removed from database
+      else if (!unitIds.includes(element.id)) {
+        await Units.delete({ "id": element.id });
+      }
+    })
+    // Transform UnitModel[] into Units[]
+    let units: Units[] = dimensionInfo.units.map(value => {
+      let unit = new Units();
+      unit.name = value.name;
+      unit.id = value.id;
+      unit.conversionFormula = value.conversionFormula;
+      unit.dimensionId = value.dimensionId;
+      return unit;
+    })
+    await Units.save(units);
+    // Transform DimensionModel into Dimension
+    let dimension = new Dimension();
+    dimension.id = dimensionInfo.id;
+    dimension.name = dimensionInfo.name;
+    dimension.baseUnitId = dimensionInfo.baseUnitId;
+    await Dimension.save(dimension);
+    return true;
   }
 
   /**
   * This method will return units of an existing dimension
   * @param dimensionId - existing dimension id that needs its units returned
   */
-  static async getDimensionUnits(dimensionId: number): Promise<Units[]> {
-    let dimensionUnits = await this.connection.manager
-      .createQueryBuilder(Dimension, 'dimensions')
-      .where('dimensions.id = :id', { id: dimensionId })
-      .select('dimensions.units', 'units')
-      .getOne()
-
-    console.log(dimensionUnits)
-    return dimensionUnits.units
+  async getDimensionUnits(dimensionId: number): Promise<Units[]> {
+    return await Units.find({ where: { "dimensionId": dimensionId } })
   }
 
   /**
   * This method will return all existing dimensions
   */
-  static async getAllDimensions(): Promise<DimensionModel[]> {
-    let dimensions = await this.connection.manager
-      .createQueryBuilder(Dimension, 'dimensions')
-      .select('dimensions.id', 'id')
-      .select('dimensions.name', 'name')
-      .select('dimensions.units', 'units')
-      .getMany()
-
-    console.log(dimensions)
-    return dimensions
+  async getAllDimensions(): Promise<Dimension[]> {
+    return await Dimension.find()
   }
 }

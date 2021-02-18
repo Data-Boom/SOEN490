@@ -9,8 +9,5 @@ export interface IUnitModel {
   name: string,
   id?: number,
   conversionFormula: string,
-}
-
-export interface IDimensionQueryModel {
-  dimensionId: number
+  dimensionId?: number,
 }

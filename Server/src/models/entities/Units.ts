@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne, JoinColumn, BaseEntity } from "typeorm";
 import { Dimension } from "./Dimension";
 
 
@@ -7,7 +7,7 @@ import { Dimension } from "./Dimension";
  * This entity handles units (ex. GPa, km/s) of data points
  */
 @Entity()
-export class Units {
+export class Units extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -15,20 +15,20 @@ export class Units {
     @Column({ length: 10 })
     name: string
 
+    @Column({ nullable: true })
+    dimensionId?: number
+
+    @ManyToOne(type => Dimension)
+    @JoinColumn()
+    dimension?: Dimension
+
+    @Column({ length: 100, default: "{u}" })
+    conversionFormula: string
+
     @CreateDateColumn()
     created: Date
 
     @UpdateDateColumn()
     updated: Date
-
-    @Column({ default: 1 })
-    dimensionId?: number
-
-    @ManyToOne(type => Dimension, dimension => dimension.units)
-    @JoinColumn({ name: "dimensionId" })
-    dimension?: Dimension
-
-    @Column({ length: 100 })
-    conversionFormula: string
 
 }

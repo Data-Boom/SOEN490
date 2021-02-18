@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinTable, OneToMany, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToOne, JoinColumn, BaseEntity, OneToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { Units } from "./Units";
 
 
 @Entity()
-export class Dimension {
+export class Dimension extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -11,10 +11,17 @@ export class Dimension {
     @Column()
     name: string
 
-    @Column({ default: 1 })
-    unitId?: number
+    @Column({ nullable: true })
+    baseUnitId?: number
 
-    @OneToMany(type => Units, unit => unit.dimension)
-    @JoinColumn({ name: "unitId" })
-    units?: Units[]
+    @OneToOne(type => Units)
+    @JoinColumn()
+    baseUnit?: Units
+
+    @CreateDateColumn()
+    created: Date
+
+    @UpdateDateColumn()
+    updated: Date
+
 }
