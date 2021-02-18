@@ -14,7 +14,7 @@ import { fixPartialForform } from '../DatasetUpload/DatasetUploadView';
 
 interface IProps {
     singleDataset: IApprovedDatasetModel,
-    handleApproveDataset: (dataset: IApprovedDatasetModel) => void,
+    handleApproveDataset: (datasetId: number) => void,
     handleDeleteDataset: () => void,
     handleSubmitDataset: () => void,
     setOpen: (value: boolean) => void
@@ -40,17 +40,12 @@ export const DatasetModal = (props: IProps) => {
         console.log(mappedDataset)
     }, [])
 
-    const close = () => {
+    const handleClose = () => {
         setOpen(false)
     }
 
     const handleEditDataset = () => {
-
         steEditOn(!editOn)
-        setEditable(!editable)
-    }
-    const handleCancelDataset = () => {
-        steEditOn(editOn)
         setEditable(!editable)
     }
 
@@ -67,14 +62,12 @@ export const DatasetModal = (props: IProps) => {
                                 <CancelIcon color="primary" onClick={() => setOpen(false)} />
                             </Grid>
                         </Grid>
-
                         <DatasetUploadForm
-                            onSubmit={close}
+                            onSubmit={handleClose}
                             initialDataset={dataset}
                             editable={editable}
                             buttonName="Close"
                         />
-
                     </Box>
                     <Grid container justify="flex-end" alignItems="center">
                         <Grid item>

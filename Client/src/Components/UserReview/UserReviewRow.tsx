@@ -1,12 +1,18 @@
 import { Box, Button, Grid } from "@material-ui/core"
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
+import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useState } from "react"
 import { adminApprovedDataset, callRejectDataset } from "../../Remote/Endpoints/DatasetEndpoint"
 
 import { DatasetModal } from "./DatasetModal"
 
 interface IProps {
-    dataset: IApprovedDatasetModel
+    dataset: IApprovedDatasetModel,
+}
+interface DatasetUploadFormValues {
+    meta: IDatasetMeta,
+    reference: IReference,
+    data: IData
 }
 
 export const UserReviewRow = (props: IProps) => {
@@ -14,26 +20,26 @@ export const UserReviewRow = (props: IProps) => {
 
     const [open, setOpen] = useState(false)
 
-    const [dataset, setDataset] = useState<IApprovedDatasetModel>()
+    const [dataset, setDataset] = useState<IDatasetModel>()
 
     const handleDeleteDataset = async () => {
         await callRejectDataset(props.dataset.id)
         setOpen(false)
         handleDatasetChange(null)
     }
-
-    const handleApproveDataset = async (dataset: IApprovedDatasetModel) => {
+    const handleApproveDataset = async (datasetId: number) => {
+        console.log(props.dataset.id)
         const query: IFlaggedDatasetQuery = { datasetId: props.dataset.id }
         await adminApprovedDataset(query)
         handleDatasetChange(null)
+        setOpen(false)
     }
 
     const handleDatasetChange = (newDataset: IApprovedDatasetModel) => {
         setDataset(newDataset)
     }
 
-    const handleSubmitDataset = async () => {
-
+    const handleSubmitDataset = () => {
     }
 
     const handleCheck = () => {
