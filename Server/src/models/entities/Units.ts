@@ -7,7 +7,7 @@ import { Dimension } from "./Dimension";
  * This entity handles units (ex. GPa, km/s) of data points
  */
 @Entity()
-export class Units {
+export class Units extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

@@ -3,7 +3,7 @@ import { Units } from "./Units";
 
 
 @Entity()
-export class Dimension {
+export class Dimension extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
