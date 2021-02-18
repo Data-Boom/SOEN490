@@ -27,22 +27,23 @@ export class DimensionService {
    * @param dimensionInfo - dimension info that was sent from the frontend
    */
   async processAddDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
-    let name: boolean
-    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
-    if (name) {
-      throw new BadRequest("This dimension already exists! Please enter different values");
-    }
-    else {
-      try {
-        await this.dimensionModel.insertDimension(dimensionInfo);
+    try {
+      let verifyIfNameExists = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
+      if (verifyIfNameExists) {
+        throw new BadRequest("This dimension already exists! Please enter a new name");
       }
-      catch (error) {
-        throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
+      let dimensionID = await this.dimensionModel.insertDimension(dimensionInfo);
+      this.requestResponse.message = dimensionID as any;
+      this.requestResponse.statusCode = 201;
+      return this.requestResponse
+    } catch (error) {
+      if (error instanceof BadRequest) {
+        throw new BadRequest(error.message)
+      }
+      else {
+        throw new Error("Something went wrong when adding new dimension.")
       }
     }
-    this.requestResponse.message = "Success";
-    this.requestResponse.statusCode = 200;
-    return this.requestResponse
   }
 
   /**
@@ -50,10 +51,9 @@ export class DimensionService {
    * @param dimensionInfo - dimension info that needs to be updated on the database
    */
   async processUpdateDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
-    let name: boolean
-    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
-    if (!name) {
-      throw new BadRequest("This dimension does not exist!");
+    let verifyIfNameExists = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
+    if (!verifyIfNameExists) {
+      throw new BadRequest("This dimension already exists! Please enter a new name");
     }
     else {
       try {
