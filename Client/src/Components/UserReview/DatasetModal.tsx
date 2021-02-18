@@ -49,6 +49,7 @@ export const DatasetModal = (props: IProps) => {
             <Modal open={open}
                 onClose={() => setOpen(false)}
                 className={classStyles().modalsearch}
+                style={{ paddingLeft: "240px", height: "80%", marginTop: "100px" }}
             >
                 <Paper elevation={3} style={{ width: "80%", height: "100%" }}>
                     <Box m={5}>
