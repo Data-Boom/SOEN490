@@ -14,42 +14,35 @@ export class DimensionsController {
   private invalidResponse: boolean;
 
   constructor() {
-    this.dimensionService = new DimensionService();
   }
 
-  async createDimension(request: Request, response: Response, next: NextFunction): Promise<Response> {
-    this.invalidResponse = this.validateCreateDimensionRequest(request);
-    if (this.invalidResponse) {
-      return response.status(400).json("Request is invalid. Missing attributes")
+  async createDimension(request: Request, response: Response) {
+    let invalidResponse = this.validateCreateDimensionRequest(request);
+    if (!invalidResponse) {
+      return response.status(400).json("Request is invalid.")
     } else {
-      let requestParams: any = { ...request.body };
-      let dimensionInfo: IDimensionModel = requestParams;
-      let res: any = await this.callServiceForAddDimension(dimensionInfo, response, next);
-      return res;
-    }
-  }
-
-  private validateCreateDimensionRequest(request: Request): boolean {
-    return request.body.name == null
-  }
-
-  private async callServiceForAddDimension(dimensionInfo: IDimensionModel, response: Response, next: NextFunction): Promise<Response> {
-    let serviceResponse: IResponse;
-
-    try {
-      serviceResponse = await this.dimensionService.processAddDimension(dimensionInfo);
-      return response.status(serviceResponse.statusCode).json(serviceResponse.message);
-    } catch (error) {
-      if (error instanceof BadRequest)
-        return response.status(error.status).json(error.message);
-      else {
-        return response.status(error.status).json("Something went Wrong");
+      try {
+        this.dimensionService = new DimensionService();
+        let requestParams: any = { ...request.body };
+        let dimensionInfo: IDimensionModel = requestParams;
+        let serviceResponse = await this.dimensionService.processAddDimension(dimensionInfo);
+        response.status(serviceResponse.statusCode).json(serviceResponse.message);
+      } catch (error) {
+        response.status(error.status).json(error.message);
       }
     }
   }
 
-  async retrieveDimensions(response: Response, next: NextFunction): Promise<Response> {
+  private validateCreateDimensionRequest(request: Request): boolean {
+    if (request.body.hasOwnProperty('name') && request.body.units.length == 1) { return true }
+    else {
+      return false
+    }
+  }
+
+  async retrieveDimensions(request: Request, response: Response) {
     try {
+      this.dimensionService = new DimensionService();
       let requestResponse = await this.dimensionService.processGetAllDimensions();
       return response.status(requestResponse.statusCode).json(requestResponse.message)
     } catch (error) {
@@ -72,6 +65,7 @@ export class DimensionsController {
     let serviceResponse: IResponse;
 
     try {
+      this.dimensionService = new DimensionService();
       serviceResponse = await this.dimensionService.processAddDimension(dimensionInfo);
       return response.status(serviceResponse.statusCode).json(serviceResponse.message);
     } catch (error) {
@@ -102,6 +96,7 @@ export class DimensionsController {
     let serviceResponse: IResponse;
 
     try {
+      this.dimensionService = new DimensionService();
       serviceResponse = await this.dimensionService.processDeleteDimension(dimensionId);
       return response.status(serviceResponse.statusCode).json(serviceResponse.message);
     } catch (error) {

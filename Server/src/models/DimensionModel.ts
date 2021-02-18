@@ -3,12 +3,17 @@ import { IDimensionModel, IUnitModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
 import { Datapoints } from "./entities/Datapoints";
+import { Connection, getConnection } from "typeorm";
 
 /**
  * This model contains all methods required for obtaining data from the Dimensions
  * table inside the database
  */
 export class DimensionModel {
+  private connection: Connection;
+  constructor() {
+    this.connection = getConnection();
+  }
 
   /**
    * Method responsible for adding a new dimension.
@@ -18,29 +23,29 @@ export class DimensionModel {
   async insertDimension(dimensionInfo: IDimensionModel) {
     let dimensionModel = new Dimension();
     dimensionModel.name = dimensionInfo.name;
-    dimensionModel = await Dimension.save(dimensionModel);
+    await Dimension.save(dimensionModel);
 
-    if (dimensionInfo.units.length != 0) {
-      let unitsToBeAdded: Units[] = []
-      dimensionInfo.units.forEach(element => {
-        let unit = new Units();
-        unit.conversionFormula = element.conversionFormula;
-        unit.name = element.name;
-        unit.dimensionId = dimensionModel.id;
-        unitsToBeAdded.push(unit);
-      });
-      await Units.save(unitsToBeAdded);
-      dimensionModel.baseUnitId = unitsToBeAdded[0].id;
-      await Dimension.save(dimensionModel);
-    }
+    let baseUnit = new Units();
+    baseUnit.name = dimensionInfo.units[0].name;
+    baseUnit.dimensionId = dimensionModel.id;
+    await Units.save(baseUnit);
+
+    dimensionModel.baseUnitId = baseUnit.id;
+    await this.connection.createQueryBuilder()
+      .update(Dimension)
+      .set({ baseUnitId: baseUnit.id })
+      .where('id = :id', { id: dimensionModel.id })
+      .execute()
+
+    return dimensionModel.id
   }
 
   /**
    * Method to verify if a name for dimension exists. Returns true if doesn't find
    * @param name - Dimension name
    */
-  async verifyIfNameExists(name: string): Promise<boolean> {
-    return await Dimension.findOne({ where: { name: name } }).then((value) => value !== undefined)
+  async verifyIfNameExists(name: string): Promise<Dimension> {
+    return await Dimension.findOne({ where: { name: name } })
   }
 
   /**
@@ -79,7 +84,7 @@ export class DimensionModel {
       unit.name = value.name;
       unit.id = value.id;
       unit.conversionFormula = value.conversionFormula;
-      unit.dimensionId = value.dimensionId;
+      // unit.dimensionId = value.dimensionId;
       return unit;
     })
     await Units.save(units);
@@ -93,17 +98,24 @@ export class DimensionModel {
   }
 
   /**
-  * This method will return units of an existing dimension
-  * @param dimensionId - existing dimension id that needs its units returned
+  * This method will return all existing units
   */
-  async getDimensionUnits(dimensionId: number): Promise<Units[]> {
-    return await Units.find({ where: { "dimensionId": dimensionId } })
+  async getAllUnits(): Promise<Units[]> {
+    return await Units.find()
   }
+
+  private selectDimensionsQuery = (connection: Connection) =>
+    connection.createQueryBuilder(Dimension, 'dimension')
+      .select('dimension.name', 'name')
+      .addSelect('dimension.id', 'id')
+      .addSelect('dimension.baseUnitId', 'baseUnitId')
+      .getRawMany()
 
   /**
   * This method will return all existing dimensions
   */
-  async getAllDimensions(): Promise<Dimension[]> {
-    return await Dimension.find()
+  async getAllDimensions(): Promise<IDimensionModel[]> {
+    let dimensions: IDimensionModel[] = await this.selectDimensionsQuery(this.connection)
+    return dimensions
   }
 }

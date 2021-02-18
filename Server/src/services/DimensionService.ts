@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
-import { IDimensionModel } from '../models/interfaces/IDimension';
+import { IDimensionModel, IUnitModel } from '../models/interfaces/IDimension';
 import { DimensionModel } from '../models/DimensionModel';
 import { Units } from '../models/entities/Units';
 import { Dimension } from '../models/entities/Dimension';
@@ -27,22 +27,23 @@ export class DimensionService {
    * @param dimensionInfo - dimension info that was sent from the frontend
    */
   async processAddDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
-    let name: boolean
-    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
-    if (name) {
-      throw new BadRequest("This dimension already exists! Please enter different values");
-    }
-    else {
-      try {
-        await this.dimensionModel.insertDimension(dimensionInfo);
+    try {
+      let verifyIfNameExists = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
+      if (verifyIfNameExists) {
+        throw new BadRequest("This dimension already exists! Please enter a new name");
       }
-      catch (error) {
-        throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
+      let dimensionID = await this.dimensionModel.insertDimension(dimensionInfo);
+      this.requestResponse.message = dimensionID as any;
+      this.requestResponse.statusCode = 201;
+      return this.requestResponse
+    } catch (error) {
+      if (error instanceof BadRequest) {
+        throw new BadRequest(error.message)
+      }
+      else {
+        throw new Error("Something went wrong when adding new dimension.")
       }
     }
-    this.requestResponse.message = "Success";
-    this.requestResponse.statusCode = 200;
-    return this.requestResponse
   }
 
   /**
@@ -50,10 +51,9 @@ export class DimensionService {
    * @param dimensionInfo - dimension info that needs to be updated on the database
    */
   async processUpdateDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
-    let name: boolean
-    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
-    if (!name) {
-      throw new BadRequest("This dimension does not exist!");
+    let verifyIfNameExists = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
+    if (!verifyIfNameExists) {
+      throw new BadRequest("This dimension already exists! Please enter a new name");
     }
     else {
       try {
@@ -90,25 +90,31 @@ export class DimensionService {
   async processGetAllDimensions() {
     try {
       let dimensions = await this.dimensionModel.getAllDimensions()
+      let rawUnits = await this.dimensionModel.getAllUnits()
+      let processedUnit: IUnitModel
+      let processedUnits: IUnitModel[]
+      for (let dimensionIndex = 0; dimensionIndex < dimensions.length; dimensionIndex++) {
+        processedUnits = []
+        for (let unitIndex = 0; unitIndex < rawUnits.length; unitIndex++) {
+          if (rawUnits[unitIndex].dimensionId == dimensions[dimensionIndex].id) {
+            processedUnit = {
+              name: rawUnits[unitIndex].name,
+              id: rawUnits[unitIndex].id,
+              conversionFormula: rawUnits[unitIndex].conversionFormula
+            }
+            processedUnits.push(processedUnit)
+            rawUnits.splice(unitIndex, 1)
+            unitIndex--
+          }
+        }
+        dimensions[dimensionIndex].units = processedUnits
+      }
       this.requestResponse.message = dimensions as any
       this.requestResponse.statusCode = 200;
       return this.requestResponse;
     }
     catch (error) {
-      throw new InternalServerError("Internal server error, please try again later", error.message)
-    }
-  }
-
-  /**
-   * This method gets all of an existing dimension's units
-   * @param dimensionId - the dimension id that needs its units returned from the database
-   */
-  async processGetDimensionUnits(dimensionId: number): Promise<Units[]> {
-    try {
-      return this.dimensionModel.getDimensionUnits(dimensionId)
-    }
-    catch (error) {
-      return []
+      throw new Error("Failed to get all dimensions")
     }
   }
 }
