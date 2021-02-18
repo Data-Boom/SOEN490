@@ -65,7 +65,7 @@ export const selectDataPointsQuery = (connection: Connection) =>
     connection.createQueryBuilder(Dataset, 'dataset')
         .select('datapoints.name', 'name')
         .addSelect('datapoints.values', 'values')
-        .addSelect('units.units', 'units')
+        .addSelect('units.name', 'units')
         .addSelect('representations.repr', 'representation')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Datapoints, 'datapoints', 'datapoints.datasetId = dataset.id')
