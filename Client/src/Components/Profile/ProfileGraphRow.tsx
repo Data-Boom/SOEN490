@@ -1,10 +1,9 @@
-import { Box, Grid, Typography } from "@material-ui/core"
-
+import { Box, Grid, Typography, IconButton } from "@material-ui/core"
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import { classStyles } from '../../appTheme'
-
+import CancelIcon from '@material-ui/icons/Cancel';
 interface IGraphModel {
     graphset: IGraphStateModel,
 }
@@ -23,6 +22,9 @@ export const ProfileGraphRow = (props: IGraphModel) => {
                     </Link>
                 </Box>
             </Grid>
+            <IconButton aria-label="delete" disabled color="primary">
+                <CancelIcon />
+            </IconButton>
         </Grid >
     )
 }
