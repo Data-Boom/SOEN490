@@ -14,13 +14,13 @@ export const ModalFooterApprove = (props: IProps) => {
     const { handleSubmitDataset, handleCancelDataset } = { ...props }
     return (
         <>
-            <Grid container xs={9} sm={11} spacing={4} style={{ margin: 2 }}>
-                <Grid item sm={2}></Grid>
+            <Grid container xs={9} sm={9} spacing={7} style={{ margin: 2 }}>
                 <Grid item xs={3} sm={3}>
-                    <Button id="Submit-dataset" onClick={() => handleSubmitDataset} color="primary" variant="contained">{'Submit Dataset'}</Button>
+                    <Button size="large" id="cancel-dataset" onClick={handleCancelDataset} color="primary" variant="contained">{"Cancel"}</Button>
                 </Grid>
+                <Grid item xs={3} sm={3}></Grid>
                 <Grid item xs={3} sm={3}>
-                    <Button id="cancel-dataset" onClick={handleCancelDataset} color="primary" variant="contained">{"Cancel"}</Button>
+                    <Button size="large" id="Submit-dataset" onClick={() => handleSubmitDataset} color="primary" variant="contained">{'Submit'}</Button>
                 </Grid>
             </Grid>
         </>

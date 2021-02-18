@@ -34,7 +34,7 @@ export const DatasetModal = (props: IProps) => {
 
 
     const { handleApproveDataset, handleDeleteDataset, handleSubmitDataset } = { ...props }
-    let editOn = false
+    const [editOn, steEditOn] = useState(true)
     useEffect(() => {
         setDataset(fixPartialForform(mappedDataset))
         console.log(mappedDataset)
@@ -45,11 +45,12 @@ export const DatasetModal = (props: IProps) => {
     }
 
     const handleEditDataset = () => {
-        if (editOn) {
-            editOn = true
-        } else {
-            editOn = false
-        }
+
+        steEditOn(!editOn)
+        setEditable(!editable)
+    }
+    const handleCancelDataset = () => {
+        steEditOn(editOn)
         setEditable(!editable)
     }
 
@@ -59,7 +60,7 @@ export const DatasetModal = (props: IProps) => {
                 onClose={() => setOpen(false)}
                 className={classStyles().modalsearch}
             >
-                <Paper elevation={3} style={{ width: "100%" }}>
+                <Paper elevation={3} style={{ width: "80%", height: "100%" }}>
                     <Box m={5}>
                         <Grid container justify="flex-end">
                             <Grid item>
