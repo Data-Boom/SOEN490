@@ -17,11 +17,11 @@ describe('Authentication Model Methods', () => {
 
     test('Inserting new user into database by SignUp - Pass', async () => {
         let signUpInfo: ISignUpInformation = {
-            email: 'j.com',
-            password: '123',
+            email: 'j@kj.com',
+            password: 'Abc12345!',
             isAdmin: 0,
             organizationName: 'Mugiwara',
-            dateOfBirth: '1980-01-01' as any,
+            orcID: 123456789876543,
             firstName: 'Ace',
             lastName: 'FireFist'
         }
@@ -30,32 +30,32 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Checking Database if Email Exists - Return true', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j@kj.com'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeTruthy();
     });
 
     test('Checking Database if Email Exists - Return false', async () => {
-        let email: string = 'j.comkj4wfwefwefwefw'
+        let email: string = 'j@kj.com4wfwefwefwefw'
         let res = await AuthenticationModel.verifyIfEmailExists(email);
         expect(res).toBeFalsy();
     });
 
     //CHECK
     test('Checking Database if User is Admin - true', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j@kj.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(1);
     });
 
     test('Checking Database if User is Admin - false', async () => {
-        let email: string = 'j.com'
+        let email: string = 'test@t.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(0);
     });
 
     test('Obtaining User JWT params from Database', async () => {
-        let email: string = 'j.comkj'
+        let email: string = 'j@kj.com'
         let mockResponse = {
             'account_admin': 1,
             'account_firstName': 'Ace',

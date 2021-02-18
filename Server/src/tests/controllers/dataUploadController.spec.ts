@@ -60,7 +60,7 @@ describe('Data Upload Controller', () => {
         expect(mockResponse.status).toBeCalledWith(400)
     })
 
-    test('Valid Data Set Edit', async () => {
+    test('Valid User Data Set Edit', async () => {
 
         let expectedResponse = "Dataset Updated!"
         mockRequest = {
@@ -74,13 +74,27 @@ describe('Data Upload Controller', () => {
         expect(mockResponse.status).toBeCalledWith(201)
     })
 
-    test('Invalid Data Set Edit; bad data set id', async () => {
+    test('Invalid User Data Set Edit; bad data set id', async () => {
 
         let expectedResponse = "Invalid data set ID entered"
         mockRequest = {
             body: validTestData,
             params: {
                 datasetId: 'wefwfeewfewfwefwef'
+            }
+        }
+        await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse)
+        expect(mockResponse.status).toBeCalledWith(400)
+    })
+
+    test('Invalid User Data Set Edit; different uploader ID', async () => {
+
+        let expectedResponse = "User ID does not match uploader ID!"
+        mockRequest = {
+            body: validTestData,
+            params: {
+                datasetId: '15'
             }
         }
         await dataUploadController.createEditUploadRequest(mockRequest as Request, mockResponse as Response)

@@ -34,14 +34,14 @@ describe('Authentication tests', () => {
 
     test('Test Load User Details Function', async () => {
         const expectedResponse = {
-            "account_email": "j.comkj",
+            "account_email": "j@kj.com",
             "account_firstName": "Ace",
             "account_lastName": "FireFist",
-            "account_dateOfBirth": "1980-01-01T00:00:00.000Z",
+            "account_orcID": "123456789876543",
             "account_organizationName": "Mugiwara",
             "account_permissions": 1
         }
-        let userEmail: string = "j.comkj";
+        let userEmail: string = "j@kj.com";
         let res: any = await authenticationService.loadUserDetails(userEmail);
         expect(res.statusCode).toBe(200);
         expect(res.message).toStrictEqual(JSON.stringify(expectedResponse));
