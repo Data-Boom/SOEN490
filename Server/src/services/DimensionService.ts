@@ -51,21 +51,23 @@ export class DimensionService {
    * @param dimensionInfo - dimension info that needs to be updated on the database
    */
   async processUpdateDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
-    let verifyIfNameExists = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
-    if (!verifyIfNameExists) {
-      throw new BadRequest("This dimension already exists! Please enter a new name");
-    }
-    else {
-      try {
-        await this.dimensionModel.updateDimension(dimensionInfo);
+    try {
+      let verifyIfDimensionExists = await this.dimensionModel.verifyIfDimensionExists(dimensionInfo.id);
+      if (!verifyIfDimensionExists) {
+        throw new BadRequest("This dimension does not exist!");
       }
-      catch (error) {
-        throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
+      let dimensionID = await this.dimensionModel.updateDimension(dimensionInfo);
+      this.requestResponse.message = dimensionID as any;
+      this.requestResponse.statusCode = 200;
+      return this.requestResponse
+    } catch (error) {
+      if (error instanceof BadRequest) {
+        throw new BadRequest(error.message)
+      }
+      else {
+        throw new Error("Something went wrong when updating dimension.")
       }
     }
-    this.requestResponse.message = "Success";
-    this.requestResponse.statusCode = 200;
-    return this.requestResponse
   }
 
   /**

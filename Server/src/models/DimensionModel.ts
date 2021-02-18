@@ -1,4 +1,4 @@
-import { InternalServerError } from "@tsed/exceptions";
+import { BadRequest, InternalServerError } from "@tsed/exceptions";
 import { IDimensionModel, IUnitModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
@@ -15,37 +15,53 @@ export class DimensionModel {
     this.connection = getConnection();
   }
 
+  private async insertNewUnit(name: string, dimensionId: number, conversionFormula?: string) {
+    let unit = new Units();
+    unit.name = name;
+    unit.dimensionId = dimensionId;
+    unit.conversionFormula = conversionFormula;
+    return unit
+  }
+
+  private async updateDimensionBaseUnit(id: number, baseUnitId: number) {
+    await this.connection.createQueryBuilder()
+      .update(Dimension)
+      .set({ baseUnitId: baseUnitId })
+      .where('id = :id', { id: id })
+      .execute()
+  }
+
   /**
    * Method responsible for adding a new dimension.
    * It sets the entity values
    * @param dimensionInfo - Dimension Information from Frontend Request
    */
-  async insertDimension(dimensionInfo: IDimensionModel) {
+  async insertDimension(dimensionInfo: IDimensionModel): Promise<number> {
     let dimensionModel = new Dimension();
     dimensionModel.name = dimensionInfo.name;
     await Dimension.save(dimensionModel);
 
-    let baseUnit = new Units();
-    baseUnit.name = dimensionInfo.units[0].name;
-    baseUnit.dimensionId = dimensionModel.id;
+    let baseUnit = await this.insertNewUnit(dimensionInfo.units[0].name, dimensionModel.id)
     await Units.save(baseUnit);
-
-    dimensionModel.baseUnitId = baseUnit.id;
-    await this.connection.createQueryBuilder()
-      .update(Dimension)
-      .set({ baseUnitId: baseUnit.id })
-      .where('id = :id', { id: dimensionModel.id })
-      .execute()
+    await this.updateDimensionBaseUnit(dimensionModel.id, baseUnit.id)
 
     return dimensionModel.id
   }
 
   /**
-   * Method to verify if a name for dimension exists. Returns true if doesn't find
+   * Method to verify if a name for dimension exists; returns the dimension
    * @param name - Dimension name
    */
   async verifyIfNameExists(name: string): Promise<Dimension> {
     return await Dimension.findOne({ where: { name: name } })
+  }
+
+  /**
+   * Method to verify if a dimension exists by ID. Returns true if doesn't find
+   * @param id - Dimension ID
+   */
+  async verifyIfDimensionExists(id: number): Promise<Dimension> {
+    return await Dimension.findOne({ where: { id: id } })
   }
 
   /**
@@ -56,45 +72,55 @@ export class DimensionModel {
     await Dimension.delete({ "id": dimensionId })
   }
 
+  private async updateDimensionName(id: number, name: string) {
+    await this.connection.createQueryBuilder()
+      .update(Dimension)
+      .set({ name: name })
+      .where('id = :id', { id: id })
+      .execute()
+  }
+
+  private async updateUnit(id: number, name: string, conversionFormula: string) {
+    await this.connection.createQueryBuilder()
+      .update(Units)
+      .set({ name: name, conversionFormula: conversionFormula })
+      .where('id = :id', { id: id })
+      .execute()
+  }
+
   /**
   * This method will update an existing dimension
   * **VERY IMPORTANT**
   * Make sure the IDimensionModel and IUnitsModel contain their original ids before calling backend API,
-  * otherwise it'll be treated as a new entry and might be added as a duplicate or removed without notice
+  * otherwise it'll be treated as a new entry and be added as a duplicate
   * @param dimensionInfo - dimension info that needs its values updated
   */
-  async updateDimension(dimensionInfo: IDimensionModel): Promise<boolean> {
-    let unitIds: number[] = dimensionInfo.units.map(value => value.id);
-    // Check to see if there are units already with the same dimensionId
-    let foundUnits = await Units.find({ where: { dimensionId: dimensionInfo.id } });
-    // Check if any of the found units are already in use in datapoints table
-    foundUnits.forEach(async element => {
-      let foundUnit = await Datapoints.find({ where: { "unitsId": element.id } })
-      if (foundUnit.length != 0) {
-        throw new InternalServerError(`UnitId ${element.id} is already in use`);
+  async updateDimension(dimensionInfo: IDimensionModel): Promise<number> {
+    let newUnit: Units
+    let newUnits: Units[] = []
+    let dimensionId = dimensionInfo.id
+    await this.updateDimensionName(dimensionId, dimensionInfo.name)
+    try {
+      for (let i = 0; i < dimensionInfo.units.length; i++) {
+        if (!dimensionInfo.units[i].name || !dimensionInfo.units[i].conversionFormula)
+          throw new BadRequest("This dimension does not exist!");
+        if (!dimensionInfo.units[i].id) {
+          newUnit = await this.insertNewUnit(dimensionInfo.units[i].name, dimensionId, dimensionInfo.units[i].conversionFormula)
+          newUnits.push(newUnit)
+        }
+        else {
+          // Sanity check to ensure that base unit never has a conversion formula added on accident
+          if (dimensionInfo.units[i].id == dimensionInfo.baseUnitId) {
+            dimensionInfo.units[i].conversionFormula = "{u}"
+          }
+          await this.updateUnit(dimensionInfo.units[i].id, dimensionInfo.units[i].name, dimensionInfo.units[i].conversionFormula)
+        }
       }
-      // Check if the found unitId from the database doesn't match with the one sent from frontend, then it needs to be removed from database
-      else if (!unitIds.includes(element.id)) {
-        await Units.delete({ "id": element.id });
-      }
-    })
-    // Transform UnitModel[] into Units[]
-    let units: Units[] = dimensionInfo.units.map(value => {
-      let unit = new Units();
-      unit.name = value.name;
-      unit.id = value.id;
-      unit.conversionFormula = value.conversionFormula;
-      // unit.dimensionId = value.dimensionId;
-      return unit;
-    })
-    await Units.save(units);
-    // Transform DimensionModel into Dimension
-    let dimension = new Dimension();
-    dimension.id = dimensionInfo.id;
-    dimension.name = dimensionInfo.name;
-    dimension.baseUnitId = dimensionInfo.baseUnitId;
-    await Dimension.save(dimension);
-    return true;
+      await Units.save(newUnits);
+    } catch (error) {
+      throw new BadRequest(error.message)
+    }
+    return dimensionId;
   }
 
   /**
