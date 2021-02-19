@@ -2,7 +2,7 @@ export interface IDimensionModel {
   name: string,
   id?: number,
   baseUnitId: number,
-  units: IUnitModel[],
+  units?: IUnitModel[],
 }
 
 export interface IUnitModel {

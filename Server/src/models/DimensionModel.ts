@@ -103,7 +103,28 @@ export class DimensionModel {
   /**
   * This method will return all existing dimensions
   */
-  async getAllDimensions(): Promise<Dimension[]> {
-    return await Dimension.find()
+  async getAllDimensions(): Promise<IDimensionModel[]> {
+    let dimensions = await Dimension.find();
+    let units = await Units.find();
+
+    let dimensionModels = dimensions.map(value => {
+      let dimensionModel: IDimensionModel = {
+        name: value.name,
+        id: value.id,
+        baseUnitId: value.baseUnitId
+      }
+      let unitsModels = units.filter(value => value.dimensionId == dimensionModel.id).map(value => {
+        let unit: IUnitModel = {
+          name: value.name,
+          id: value.id,
+          conversionFormula: value.conversionFormula,
+          dimensionId: value.dimensionId
+        }
+        return unit
+      })
+      dimensionModel.units = unitsModels;
+      return dimensionModel;
+    })
+    return dimensionModels;
   }
 }
