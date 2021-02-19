@@ -1,4 +1,4 @@
-import { InternalServerError } from "@tsed/exceptions";
+import { BadRequest, InternalServerError } from "@tsed/exceptions";
 import { IDimensionModel, IUnitModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
@@ -15,7 +15,7 @@ export class DimensionModel {
    * It sets the entity values
    * @param dimensionInfo - Dimension Information from Frontend Request
    */
-  async insertDimension(dimensionInfo: IDimensionModel) {
+  async insertDimension(dimensionInfo: IDimensionModel): Promise<IDimensionModel> {
     let dimensionModel = new Dimension();
     dimensionModel.name = dimensionInfo.name;
     dimensionModel = await Dimension.save(dimensionModel);
@@ -29,10 +29,22 @@ export class DimensionModel {
         unit.dimensionId = dimensionModel.id;
         unitsToBeAdded.push(unit);
       });
-      await Units.save(unitsToBeAdded);
+      let units = await Units.save(unitsToBeAdded);
       dimensionModel.baseUnitId = unitsToBeAdded[0].id;
+      dimensionInfo.baseUnitId = unitsToBeAdded[0].id;
+      dimensionInfo.id = dimensionModel.id;
+      // Update the dimension and add its units
       await Dimension.save(dimensionModel);
+      dimensionInfo.units = units.map(value => {
+        let units = new Units();
+        units.id = value.id;
+        units.name = value.name;
+        units.conversionFormula = value.conversionFormula;
+        units.dimensionId = dimensionModel.id;
+        return units;
+      })
     }
+    return dimensionInfo;
   }
 
   /**
@@ -58,18 +70,21 @@ export class DimensionModel {
   * otherwise it'll be treated as a new entry and might be added as a duplicate or removed without notice
   * @param dimensionInfo - dimension info that needs its values updated
   */
-  async updateDimension(dimensionInfo: IDimensionModel): Promise<boolean> {
+  async updateDimension(dimensionInfo: IDimensionModel): Promise<IDimensionModel> {
     let unitIds: number[] = dimensionInfo.units.map(value => value.id);
     // Check to see if there are units already with the same dimensionId
     let foundUnits = await Units.find({ where: { dimensionId: dimensionInfo.id } });
     // Check if any of the found units are already in use in datapoints table
     foundUnits.forEach(async element => {
-      let foundUnit = await Datapoints.find({ where: { "unitsId": element.id } })
-      if (foundUnit.length != 0) {
-        throw new InternalServerError(`UnitId ${element.id} is already in use`);
-      }
       // Check if the found unitId from the database doesn't match with the one sent from frontend, then it needs to be removed from database
-      else if (!unitIds.includes(element.id)) {
+      if (!unitIds.includes(element.id)) {
+        let foundUnit = await Datapoints.find({ where: { "unitsId": element.id } })
+        if (foundUnit.length != 0) {
+          throw new BadRequest(`UnitId ${element.id} is already in use`);
+        }
+        if (dimensionInfo.baseUnitId == element.id) {
+          throw new BadRequest(`Cannot delete a unit ${element.id} that's also a base unit`);
+        }
         await Units.delete({ "id": element.id });
       }
     })
@@ -79,17 +94,26 @@ export class DimensionModel {
       unit.name = value.name;
       unit.id = value.id;
       unit.conversionFormula = value.conversionFormula;
-      unit.dimensionId = value.dimensionId;
+      unit.dimensionId = dimensionInfo.id;
       return unit;
     })
-    await Units.save(units);
+    let savedUnits = await Units.save(units);
+    dimensionInfo.units = savedUnits.map(value => {
+      let unitsModel: IUnitModel = {
+        id: value.id,
+        name: value.name,
+        conversionFormula: value.conversionFormula,
+        dimensionId: dimensionInfo.id
+      };
+      return unitsModel;
+    });
     // Transform DimensionModel into Dimension
     let dimension = new Dimension();
     dimension.id = dimensionInfo.id;
     dimension.name = dimensionInfo.name;
     dimension.baseUnitId = dimensionInfo.baseUnitId;
     await Dimension.save(dimension);
-    return true;
+    return dimensionInfo;
   }
 
   /**

@@ -34,15 +34,15 @@ export class DimensionService {
     }
     else {
       try {
-        await this.dimensionModel.insertDimension(dimensionInfo);
+        let createdDimension = await this.dimensionModel.insertDimension(dimensionInfo);
+        this.requestResponse.message = createdDimension as any;
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse
       }
       catch (error) {
         throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
       }
     }
-    this.requestResponse.message = "Success";
-    this.requestResponse.statusCode = 200;
-    return this.requestResponse
   }
 
   /**
@@ -50,20 +50,13 @@ export class DimensionService {
    * @param dimensionInfo - dimension info that needs to be updated on the database
    */
   async processUpdateDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
-    let name: boolean
-    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
-    if (!name) {
-      throw new BadRequest("This dimension does not exist!");
+    try {
+      let updatedDimension = await this.dimensionModel.updateDimension(dimensionInfo);
+      this.requestResponse.message = updatedDimension as any;
     }
-    else {
-      try {
-        await this.dimensionModel.updateDimension(dimensionInfo);
-      }
-      catch (error) {
-        throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
-      }
+    catch (error) {
+      throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
     }
-    this.requestResponse.message = "Success";
     this.requestResponse.statusCode = 200;
     return this.requestResponse
   }

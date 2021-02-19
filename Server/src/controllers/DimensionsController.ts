@@ -72,7 +72,7 @@ export class DimensionsController {
     let serviceResponse: IResponse;
 
     try {
-      serviceResponse = await this.dimensionService.processAddDimension(dimensionInfo);
+      serviceResponse = await this.dimensionService.processUpdateDimension(dimensionInfo);
       return response.status(serviceResponse.statusCode).json(serviceResponse.message);
     } catch (error) {
       if (error instanceof BadRequest)
@@ -95,7 +95,7 @@ export class DimensionsController {
   }
 
   private validateUpdateDimension(request: Request): boolean {
-    return request.params.id === null;
+    return request.body.id === null || request.body.name === null;
   }
 
   private async callServiceForDeleteDimension(dimensionId: number, response: Response, next: NextFunction): Promise<Response> {
