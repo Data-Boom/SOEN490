@@ -28,6 +28,9 @@ export class Publications {
     @Column({ nullable: true, type: "int" })
     volume: number
 
+    @Column({ nullable: true, type: "int" })
+    issue: number
+
     @Column({ default: 1 })
     publicationtypeId: number
 
@@ -79,6 +82,7 @@ export const selectPublicationsQuery = (connection: Connection, dataset: number)
         .addSelect('publication.doi', 'DOI')
         .addSelect('publication.pages', 'pages')
         .addSelect('publication.volume', 'volume')
+        .addSelect('publication.issue', 'issue')
         .addSelect('publication.year', 'year')
         .addSelect('publisher.name', 'publisher')
         .addSelect('publicationtype.name', 'publicationType')
@@ -94,6 +98,7 @@ export const selectAllPublicationsQuery = (connection: Connection, datasets: num
         .addSelect('publication.doi', 'DOI')
         .addSelect('publication.pages', 'pages')
         .addSelect('publication.volume', 'volume')
+        .addSelect('publication.issue', 'issue')
         .addSelect('publication.year', 'year')
         .addSelect('publisher.name', 'publisher')
         .addSelect('publicationtype.name', 'publicationType')

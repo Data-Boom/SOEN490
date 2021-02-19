@@ -32,6 +32,7 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteApprovedDatasetModel):
             title: remoteDataset.publication.name,
             type: remoteDataset.publication.publicationType,
             volume: remoteDataset.publication.volume,
+            issue: remoteDataset.publication.issue,
             year: remoteDataset.publication.year,
         }, id: remoteDataset.dataset_id
     }

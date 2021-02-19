@@ -7,6 +7,7 @@ export interface IPublicationModel {
     DOI: string
     pages: number
     volume: number
+    issue: number
     year: string
     publisher: string
     publicationType: string

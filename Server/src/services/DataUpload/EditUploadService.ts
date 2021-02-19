@@ -38,9 +38,10 @@ export default class EditUploadService extends AbstractUploadService {
         let referencePages: string = this.parsedFileData.reference.pages;
         let referenceYear: number = this.parsedFileData.reference.year;
         let referenceVolume: number = this.parsedFileData.reference.volume;
+        let referenceIssue: number = this.parsedFileData.reference.issue;
 
         // Grab other 3 FK of data set
-        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, allAuthors)
+        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceIssue, allAuthors)
         let categoryIDs: number[] = await this.uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
         let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData.data_type)
 

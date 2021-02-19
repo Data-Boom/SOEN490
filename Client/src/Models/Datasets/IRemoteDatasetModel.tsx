@@ -5,6 +5,7 @@ interface IRemotePublicationModel {
   DOI: string,
   pages: string,
   volume: number,
+  issue: number,
   year: number,
   publisher: string,
   publicationType: string,
@@ -72,6 +73,7 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
       title: remoteDataset.publication.name,
       type: remoteDataset.publication.publicationType,
       volume: remoteDataset.publication.volume,
+      issue: remoteDataset.publication.issue,
       year: remoteDataset.publication.year,
     }, id: remoteDataset.dataset_id
   }

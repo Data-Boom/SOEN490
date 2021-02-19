@@ -554,6 +554,7 @@ export const oneFavoriteDataset = [
             DOI: null,
             pages: null,
             volume: null,
+            issue: null,
             year: 1900,
             publisher: 'University of California Press',
             publicationType: 'Book',
