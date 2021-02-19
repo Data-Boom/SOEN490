@@ -27,8 +27,6 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteApprovedDatasetModel):
         reference: {
             authors: remoteDataset.publication.authors,
             doi: remoteDataset.publication.DOI,
-            dateAccessed: remoteDataset.publication.dateAccessed,
-            datePublished: remoteDataset.publication.datePublished,
             pages: remoteDataset.publication.pages,
             publisher: remoteDataset.publication.publisher,
             title: remoteDataset.publication.name,

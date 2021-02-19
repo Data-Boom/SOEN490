@@ -10,8 +10,9 @@ const requiredMessage = (fieldName: string): string => {
 
 const referenceValidationSchema = Yup.object().shape({
   year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
-  volume: Yup.number().integer(integerMessage('Volume')).required(requiredMessage('Volume')),
-  pages: Yup.number().integer(integerMessage('Pages')).required(requiredMessage('Pages')),
+  doi: Yup.string().trim().nullable(),
+  volume: Yup.number().nullable().integer(integerMessage('Volume')),
+  pages: Yup.string().trim().nullable().matches(new RegExp(/^\d+(-\d+)?$/), "Pages must be a single number or two numbers separated by a hyphen if included"),
   title: Yup.string().trim().required(requiredMessage('Title')),
   type: Yup.string().trim().required(requiredMessage('Type')),
   publisher: Yup.string().trim().required(requiredMessage('Publisher')),

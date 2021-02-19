@@ -206,14 +206,10 @@ export class DataUploadModel {
      * Publication year: number
      * @param referenceVolume 
      * Publication volume: number
-     * @param referenceDatePublished 
-     * Date that the reference was published: Date
-     * @param referenceDateAccessed 
-     * Date that the reference was accessed: Date
      * @param referenceAuthors 
      * Array of all Authors table entries to be linked to this publication: any[]
      */
-    async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: string, referenceTypeId: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceDatePublished: Date, referenceDateAccessed: Date, referenceAuthors: Authors[]): Promise<number> {
+    async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: string, referenceTypeId: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceAuthors: Authors[]): Promise<number> {
         let publication = new Publications();
         publication.id;
         publication.name = referenceTitle;
@@ -223,8 +219,6 @@ export class DataUploadModel {
         publication.publisherId = publisherNameId;
         publication.year = referenceYear;
         publication.volume = referenceVolume;
-        publication.datePublished = referenceDatePublished;
-        publication.dateAccessed = referenceDateAccessed;
         publication.authors = referenceAuthors;
         await this.connection.manager.save(publication);
         return publication.id;
