@@ -16,7 +16,8 @@ export const validTestData = {
         "title": "Dataset Insert Daily",
         "doi": "10.1794/TEXTHERE.926855",
         "volume": 5,
-        "pages": 19,
+        "issue": 1,
+        "pages": "19",
         "year": 1980
     },
     "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
@@ -262,7 +263,8 @@ export const inValidTestData = {
         "title": "Dataset Insert Daily",
         "doi": "10.1794/TEXTHERE.926855",
         "volume": 5,
-        "pages": 19,
+        "issue": 1,
+        "pages": "19",
         "year": 1980
     },
     "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
