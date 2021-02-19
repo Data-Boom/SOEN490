@@ -13,7 +13,7 @@ const referenceValidationSchema = Yup.object().shape({
   doi: Yup.string().trim().nullable(),
   volume: Yup.number().nullable().integer(integerMessage('Volume')),
   issue: Yup.number().nullable().integer(integerMessage('Issue')),
-  pages: Yup.string().trim().nullable().matches(new RegExp(/^\d+(-\d+)?$/), "Pages must be a single number or two numbers separated by a hyphen if included"),
+  pages: Yup.string().trim().matches(new RegExp(/^(?:\d+$|\d+-\d+$|)$/), "Pages must be a single number or two numbers separated by a hyphen if included"),
   title: Yup.string().trim().required(requiredMessage('Title')),
   type: Yup.string().trim().required(requiredMessage('Type')),
   publisher: Yup.string().trim().required(requiredMessage('Publisher')),

@@ -212,6 +212,13 @@ export class DataUploadModel {
      * Array of all Authors table entries to be linked to this publication: any[]
      */
     async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: string, referenceTypeId: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceIssue: number, referenceAuthors: Authors[]): Promise<number> {
+        //Need to check for "" being sent instead of null
+        if (referencePages == "")
+            referencePages = null
+        if (!referenceVolume)
+            referenceVolume = null
+        if (!referenceIssue)
+            referenceIssue = null
         let publication = new Publications();
         publication.id;
         publication.name = referenceTitle;
