@@ -1,9 +1,9 @@
-import { IDimensionModel, IDimensionQueryModel, IUnitModel } from "../../../../Server/src/models/interfaces/IDimension"
+import { IDimensionModel, IUnitModel } from "../../../../Server/src/models/interfaces/IDimension"
 import { _delete, get, post, put } from "../FluentRequest"
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 
-const dimensionRoute = '/api/v1/dimension'
+const dimensionRoute = '/api/v1/dimensions'
 
 // /api/v1/dimensions - POST - dimension model
 export const callAddDimension = async (dimensionModel: IDimensionModel): Promise<any> => {

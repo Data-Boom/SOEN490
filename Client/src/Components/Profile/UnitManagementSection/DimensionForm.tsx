@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
 
 import { Collapse } from '@material-ui/core'
+import { DimensionList } from './DimensionList'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { UnitForm } from './UnitForm'
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const DimensionForm = (props: IProps) => {
-  // This file will contain the default measurement. It will also have a save button, as well as a button to create a new UnitForm. Maybe look how new authors are added in the DatasetModelForm.
+
   const dimension = props.dimension
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
@@ -40,7 +41,24 @@ export const DimensionForm = (props: IProps) => {
     setExpanded(!expanded)
   }
 
-  const initialValues = dimension
+  const renderBaseUnit = () => {
+    let name = ''
+    if (dimension.units.length > 0) {
+      dimension.units.forEach(unit => {
+        if (unit.id == dimension.baseUnitId) {
+          name = unit.name
+        }
+      })
+    }
+    else {
+      return (
+        < Typography align="left"> No Base Units</Typography >
+      )
+    }
+    return (
+      <Typography align='left'>Base Unit: {name}</Typography>
+    )
+  }
 
   const handleSubmit = (formValues: IDimensionModel) => {
     console.log("form values: " + formValues)
@@ -77,11 +95,9 @@ export const DimensionForm = (props: IProps) => {
           <Grid item xs={5}>
             <Typography variant='h6' align="left">{dimension.name}</Typography>
           </Grid>
-          {!expanded &&
-            <Grid item xs={6}>
-              <Typography align="left">Base Units: {dimension.units[dimension.baseUnitId].name}</Typography>
-            </Grid>
-          }
+          <Grid item xs={6}>
+            {!expanded && renderBaseUnit()}
+          </Grid>
         </Grid>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Formik

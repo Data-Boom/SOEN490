@@ -12,21 +12,37 @@ import { newUnit } from "../../../Models/Profile/IDimensionModel"
 interface IProps {
   units: IUnitModel[],
   fieldArrayHelpers: ArrayHelpers,
+  baseUnitId?: number
 }
 
 export const UnitList = (props: IProps) => {
-  const { units, fieldArrayHelpers } = props
+  const { units, fieldArrayHelpers, baseUnitId } = props
 
   const handleRemoveUnit = (indexToRemove: number) => {
-    console.log("unit removed")
     fieldArrayHelpers.remove(indexToRemove)
+  }
+
+  const renderBaseUnitRow = () => {
+    if (baseUnitId) {
+      return units && units.map((unit, index) => {
+        if (unit.id == baseUnitId) {
+          return (
+            <FastField name={`units[${index}].name`} label='Unit Name' component={MuiTextFieldFormik} />
+          )
+        }
+      })
+    }
+    else {
+      return (
+        <FastField name={`units[0].name`} label='Unit Name' component={MuiTextFieldFormik} />
+      )
+    }
   }
 
   //additional rows
   const renderUnitRows = () => {
-    console.log("unit rows rendered " + units)
     return units && units.map((unit, index) => {
-      if (index > 0) {
+      if (unit.id != baseUnitId) {
         return (
           <UnitRow
             key={index}
@@ -56,7 +72,7 @@ export const UnitList = (props: IProps) => {
           <Typography variant='h6' align="left">Base Unit ID:</Typography>
         </Grid>
         <Grid item>
-          <FastField name={`units[0].name`} label='Unit Name' component={MuiTextFieldFormik} />
+          {renderBaseUnitRow()}
         </Grid>
         <Grid item>
           <Divider className={classStyles().divider} variant="middle" />
