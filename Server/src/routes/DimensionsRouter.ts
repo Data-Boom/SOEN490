@@ -21,7 +21,7 @@ router.get('/api/v1/dimensions', [JWTAuthenticator.verifyJWT, JWTAuthenticator.v
 });
 
 // router.put('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
-router.put('/api/v1/dimensions/:id?', async (request: Request, response: Response, next: NextFunction) => {
+router.put('/api/v1/dimensions', async (request: Request, response: Response, next: NextFunction) => {
   dimensionsController.updateDimension(request, response, next);
 });
 
