@@ -120,7 +120,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let publication = new Publications();
     publication.id = 1;
     publication.name = "LASL shock Hugoniot data";
-    publication.pages = 100;
+    publication.pages = "100";
     publication.publicationtypeId = book.id;
     publication.publisherId = publisherName.id;
     publication.year = 1980;
@@ -146,7 +146,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let publication3 = new Publications();
     publication3.id;
     publication3.name = "Unapproved Publication";
-    publication3.pages = 100;
+    publication3.pages = "100";
     publication3.publicationtypeId = book.id;
     publication3.publisherId = publisherName.id;
     publication3.year = 1980;
@@ -159,7 +159,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let publicationToDelete = new Publications();
     publicationToDelete.id;
     publicationToDelete.name = "Publication To Delete";
-    publicationToDelete.pages = 100;
+    publicationToDelete.pages = "100";
     publicationToDelete.publicationtypeId = toDelete.id;
     publicationToDelete.publisherId = publisherNameToDelete.id;
     publicationToDelete.year = 1980;
@@ -172,7 +172,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let publicationToDelete2 = new Publications();
     publicationToDelete2.id;
     publicationToDelete2.name = "Publication To Delete";
-    publicationToDelete2.pages = 100;
+    publicationToDelete2.pages = "100";
     publicationToDelete2.publicationtypeId = toDelete.id;
     publicationToDelete2.publisherId = publisherNameToDelete.id;
     publicationToDelete2.year = 1980;
@@ -185,7 +185,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let publicationToDelete3 = new Publications();
     publicationToDelete3.id;
     publicationToDelete3.name = "Publication To Delete";
-    publicationToDelete3.pages = 100;
+    publicationToDelete3.pages = "100";
     publicationToDelete3.publicationtypeId = toDelete.id;
     publicationToDelete3.publisherId = publisherNameToDelete.id;
     publicationToDelete3.year = 1980;

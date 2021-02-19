@@ -22,8 +22,8 @@ export class Publications {
     @Column({ nullable: true })
     doi: string
 
-    @Column({ nullable: true, type: "int" })
-    pages: number
+    @Column({ nullable: true, length: 20 })
+    pages: string
 
     @Column({ nullable: true, type: "int" })
     volume: number

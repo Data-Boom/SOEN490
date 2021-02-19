@@ -19,7 +19,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let referenceTitle: string = this.parsedFileData.reference.title;
         let referenceDOI: string = this.parsedFileData.reference.doi;
-        let referencePages: number = this.parsedFileData.reference.pages;
+        let referencePages: string = this.parsedFileData.reference.pages;
         let referenceYear: number = this.parsedFileData.reference.year;
         let referenceVolume: number = this.parsedFileData.reference.volume;
 
