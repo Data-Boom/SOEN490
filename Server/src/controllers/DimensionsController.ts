@@ -63,8 +63,13 @@ export class DimensionsController {
       return response.status(400).json("Request is invalid. Missing attributes")
     } else {
       let dimensionInfo: IDimensionModel = { ...request.body };
-      let res: any = await this.callServiceForUpdateDimension(dimensionInfo, response, next);
-      return res;
+      if (this.validateDimensionInfo(dimensionInfo)) {
+        let res: any = await this.callServiceForUpdateDimension(dimensionInfo, response, next);
+        return res;
+      }
+      else {
+        return response.status(400).json("Dimension has a baseUnit that is not included in the request.")
+      }
     }
   }
 
@@ -96,6 +101,16 @@ export class DimensionsController {
 
   private validateUpdateDimension(request: Request): boolean {
     return request.body.id === null || request.body.name === null;
+  }
+
+  private validateDimensionInfo(dimension: IDimensionModel): boolean {
+    if (dimension.units.length != 0) {
+      let unitIds = dimension.units.map(unit => unit.id);
+      if (!unitIds.includes(dimension.baseUnitId)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private async callServiceForDeleteDimension(dimensionId: number, response: Response, next: NextFunction): Promise<Response> {
