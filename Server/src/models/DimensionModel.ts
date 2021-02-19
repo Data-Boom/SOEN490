@@ -15,7 +15,7 @@ export class DimensionModel {
    * It sets the entity values
    * @param dimensionInfo - Dimension Information from Frontend Request
    */
-  async insertDimension(dimensionInfo: IDimensionModel) {
+  async insertDimension(dimensionInfo: IDimensionModel): Promise<IDimensionModel> {
     let dimensionModel = new Dimension();
     dimensionModel.name = dimensionInfo.name;
     dimensionModel = await Dimension.save(dimensionModel);
@@ -29,10 +29,22 @@ export class DimensionModel {
         unit.dimensionId = dimensionModel.id;
         unitsToBeAdded.push(unit);
       });
-      await Units.save(unitsToBeAdded);
+      let units = await Units.save(unitsToBeAdded);
       dimensionModel.baseUnitId = unitsToBeAdded[0].id;
+      dimensionInfo.baseUnitId = unitsToBeAdded[0].id;
+      dimensionInfo.id = dimensionModel.id;
+      // Update the dimension and add its units
       await Dimension.save(dimensionModel);
+      dimensionInfo.units = units.map(value => {
+        let units = new Units();
+        units.id = value.id;
+        units.name = value.name;
+        units.conversionFormula = value.conversionFormula;
+        units.dimensionId = dimensionModel.id;
+        return units;
+      })
     }
+    return dimensionInfo;
   }
 
   /**

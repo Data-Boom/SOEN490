@@ -34,15 +34,15 @@ export class DimensionService {
     }
     else {
       try {
-        await this.dimensionModel.insertDimension(dimensionInfo);
+        let createdDimension = await this.dimensionModel.insertDimension(dimensionInfo);
+        this.requestResponse.message = createdDimension as any;
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse
       }
       catch (error) {
         throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
       }
     }
-    this.requestResponse.message = "Success";
-    this.requestResponse.statusCode = 200;
-    return this.requestResponse
   }
 
   /**
