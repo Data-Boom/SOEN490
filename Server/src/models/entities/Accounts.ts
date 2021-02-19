@@ -55,5 +55,6 @@ export class Accounts {
 export const selectAccountIdFromEmailQuery = (connection: Connection, email: string) =>
     connection.createQueryBuilder(Accounts, 'account')
         .select('account.id', 'id')
+        .addSelect('account.admin', 'permissionLevel')
         .where('account.email = :email', { email: email })
         .getRawOne();

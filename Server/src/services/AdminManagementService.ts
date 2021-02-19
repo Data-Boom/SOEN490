@@ -1,4 +1,4 @@
-import { NotFound } from "@tsed/exceptions";
+import { BadRequest, NotFound } from "@tsed/exceptions";
 import { IResponse } from '../genericInterfaces/ResponsesInterface';
 import { AdminManagementModel } from "../models/AdminManagementModel";
 
@@ -31,6 +31,9 @@ export class AdminManagementService {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
             }
+            else if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
+            }
             else {
                 throw new Error("Something went wrong when adding admin permissions. Try again later")
             }
@@ -46,6 +49,9 @@ export class AdminManagementService {
         } catch (error) {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
+            }
+            else if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
             }
             else {
                 throw new Error("Something went wrong removing admin permissions. Try again later")
