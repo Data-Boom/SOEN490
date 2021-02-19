@@ -55,12 +55,6 @@ export class Publications {
     @Column({ type: "int", width: 4 })
     year: number
 
-    @Column({ nullable: true })
-    datePublished: Date
-
-    @Column({ nullable: true })
-    dateAccessed: Date
-
     @CreateDateColumn()
     created: Date
 
@@ -86,8 +80,6 @@ export const selectPublicationsQuery = (connection: Connection, dataset: number)
         .addSelect('publication.pages', 'pages')
         .addSelect('publication.volume', 'volume')
         .addSelect('publication.year', 'year')
-        .addSelect('publication.datePublished', 'datePublished')
-        .addSelect('publication.dateAccessed', 'dateAccessed')
         .addSelect('publisher.name', 'publisher')
         .addSelect('publicationtype.name', 'publicationType')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
@@ -103,8 +95,6 @@ export const selectAllPublicationsQuery = (connection: Connection, datasets: num
         .addSelect('publication.pages', 'pages')
         .addSelect('publication.volume', 'volume')
         .addSelect('publication.year', 'year')
-        .addSelect('publication.datePublished', 'datePublished')
-        .addSelect('publication.dateAccessed', 'dateAccessed')
         .addSelect('publisher.name', 'publisher')
         .addSelect('publicationtype.name', 'publicationType')
         .addSelect('dataset.id', 'dataset_id')

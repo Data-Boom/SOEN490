@@ -17,9 +17,7 @@ export const validTestData = {
         "doi": "10.1794/TEXTHERE.926855",
         "volume": 5,
         "pages": 19,
-        "year": 1980,
-        "datePublished": "2021-01-16",
-        "dateAccessed": "2021-01-16"
+        "year": 1980
     },
     "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
     "material": [
@@ -265,9 +263,7 @@ export const inValidTestData = {
         "doi": "10.1794/TEXTHERE.926855",
         "volume": 5,
         "pages": 19,
-        "year": 1980,
-        "datePublished": "2021-01-16",
-        "dateAccessed": "2021-01-16"
+        "year": 1980
     },
     "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
     "material": [
@@ -559,8 +555,6 @@ export const oneFavoriteDataset = [
             pages: null,
             volume: null,
             year: 1900,
-            datePublished: null,
-            dateAccessed: null,
             publisher: 'University of California Press',
             publicationType: 'Book',
             authors: []

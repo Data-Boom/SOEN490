@@ -8,8 +8,6 @@ export interface IPublicationModel {
     pages: number
     volume: number
     year: string
-    datePublished: Date
-    dateAccessed: Date
     publisher: string
     publicationType: string
     authors: IAuthorModel[]

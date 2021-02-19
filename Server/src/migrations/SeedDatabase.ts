@@ -22,6 +22,9 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 
+    //TODO: Apply changes directly to DB before merge and remove statement
+    await queryRunner.query('ALTER TABLE publications DROP COLUMN dateAccessed, DROP COLUMN datePublished');
+
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
@@ -125,8 +128,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication.publisherId = publisherName.id;
     publication.year = 1980;
     publication.volume = 5;
-    publication.datePublished;
-    publication.dateAccessed;
     publication.authors = [author1, author2];
     await connection.manager.save(publication);
 
@@ -138,8 +139,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication2.publisherId = publisherName.id;
     publication2.year = 1900;
     publication2.volume;
-    publication2.datePublished;
-    publication2.dateAccessed;
     publication2.authors = [];
     await connection.manager.save(publication2);
 
@@ -151,8 +150,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication3.publisherId = publisherName.id;
     publication3.year = 1980;
     publication3.volume = 5;
-    publication3.datePublished;
-    publication3.dateAccessed;
     publication3.authors = [];
     await connection.manager.save(publication3);
 
@@ -164,8 +161,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publicationToDelete.publisherId = publisherNameToDelete.id;
     publicationToDelete.year = 1980;
     publicationToDelete.volume = 5;
-    publicationToDelete.datePublished;
-    publicationToDelete.dateAccessed;
     publicationToDelete.authors = [author3, author4];
     await connection.manager.save(publicationToDelete);
 
@@ -177,8 +172,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publicationToDelete2.publisherId = publisherNameToDelete.id;
     publicationToDelete2.year = 1980;
     publicationToDelete2.volume = 5;
-    publicationToDelete2.datePublished;
-    publicationToDelete2.dateAccessed;
     publicationToDelete2.authors = [author3, author4];
     await connection.manager.save(publicationToDelete2);
 
@@ -190,8 +183,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publicationToDelete3.publisherId = publisherNameToDelete.id;
     publicationToDelete3.year = 1980;
     publicationToDelete3.volume = 5;
-    publicationToDelete3.datePublished;
-    publicationToDelete3.dateAccessed;
     publicationToDelete3.authors = [author3, author4];
     await connection.manager.save(publicationToDelete3);
 
@@ -693,6 +684,9 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
+
+    //TODO: Apply changes directly to DB before merge and remove statement
+    await queryRunner.query('ALTER TABLE publications ADD COLUMN dateAccessed datetime, ADD COLUMN datePublished datetime');
   }
 
 }

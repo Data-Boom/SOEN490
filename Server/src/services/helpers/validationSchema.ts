@@ -25,9 +25,7 @@ const referenceValidationSchema = Yup.object().shape({
     doi: Yup.string().trim().nullable(),
     volume: Yup.number().nullable().integer(integerMessage('Volume')),
     pages: Yup.string().trim().nullable().matches(new RegExp(/^\d+(-\d+)?$/), "Pages must be a single number or two numbers separated by a hyphen if included"),
-    year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
-    datePublished: Yup.date(),
-    dateAccessed: Yup.date()
+    year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4)
 })
 
 export const variableValidationSchema = Yup.object().shape(
