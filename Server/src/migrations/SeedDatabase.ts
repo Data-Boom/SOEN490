@@ -23,7 +23,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let connection = getConnection();
 
     //TODO: Apply changes directly to DB before merge and remove statement
-    await queryRunner.query('ALTER TABLE publications DROP COLUMN dateAccessed, DROP COLUMN datePublished');
+    await queryRunner.query('ALTER TABLE publications DROP COLUMN dateAccessed, DROP COLUMN datePublished, ADD COLUMN issue int(11)');
 
     // Accounts Data
     let authenticationService = new AuthenticationService();
@@ -686,7 +686,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
 
     //TODO: Apply changes directly to DB before merge and remove statement
-    await queryRunner.query('ALTER TABLE publications ADD COLUMN dateAccessed datetime, ADD COLUMN datePublished datetime');
+    await queryRunner.query('ALTER TABLE publications ADD COLUMN dateAccessed datetime, ADD COLUMN datePublished datetime, DROP COLUMN issue');
   }
 
 }
