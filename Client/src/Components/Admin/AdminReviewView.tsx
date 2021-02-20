@@ -18,6 +18,7 @@ export function AdminReviewView() {
 
   const handleDeleteDataset = async () => {
     await callRejectDataset(dataset.id)
+    //todo this is not good, should use useEffects and useStates properly, refactor later
     setUpdate(update + 1)
     handleDatasetChange(null)
   }
@@ -31,6 +32,7 @@ export function AdminReviewView() {
     await flagDataset(query)
   }
 
+  //todo datasetId is passed but not used? looks like it should be used
   const handleApproveDataset = async (datasetId: IApprovedDatasetModel) => {
     const query: IFlaggedDatasetQuery = { datasetId: dataset.id, additionalComments: comment }
     await adminApprovedDataset(query)
