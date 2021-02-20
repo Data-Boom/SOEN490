@@ -1,5 +1,5 @@
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
-import { IDimensionModel, IUnitModel } from './interfaces/IDimension';
+import { BadRequest } from "@tsed/exceptions";
+import { IDimensionModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
 import { Datapoints } from "./entities/Datapoints";
@@ -21,28 +21,9 @@ export class DimensionModel {
     dimensionModel = await Dimension.save(dimensionModel);
 
     if (dimensionInfo.units.length != 0) {
-      let unitsToBeAdded: Units[] = []
-      dimensionInfo.units.forEach(element => {
-        let unit = new Units();
-        unit.conversionFormula = element.conversionFormula;
-        unit.name = element.name;
-        unit.dimensionId = dimensionModel.id;
-        unitsToBeAdded.push(unit);
-      });
+      let unitsToBeAdded = Units.convertToUnits(dimensionInfo.units, dimensionModel.id);
       let units = await Units.save(unitsToBeAdded);
-      dimensionModel.baseUnitId = unitsToBeAdded[0].id;
-      dimensionInfo.baseUnitId = unitsToBeAdded[0].id;
-      dimensionInfo.id = dimensionModel.id;
-      // Update the dimension and add its units
-      await Dimension.save(dimensionModel);
-      dimensionInfo.units = units.map(value => {
-        let units = new Units();
-        units.id = value.id;
-        units.name = value.name;
-        units.conversionFormula = value.conversionFormula;
-        units.dimensionId = dimensionModel.id;
-        return units;
-      })
+      dimensionInfo = Dimension.convertToModel(dimensionModel, units);
     }
     return dimensionInfo;
   }
@@ -60,6 +41,13 @@ export class DimensionModel {
   * @param dimensionId - dimension id that needs to be deleted
   */
   async deleteDimension(dimensionId: number) {
+    let dimensionUnits = await Units.find({ where: { "dimensionId": dimensionId } });
+    for (const unit of dimensionUnits) {
+      await this.validateUnitInUseDatapoint(unit);
+    }
+    for (const unit of dimensionUnits) {
+      await Units.delete({ "id": unit.id });
+    }
     await Dimension.delete({ "id": dimensionId })
   }
 
@@ -72,48 +60,30 @@ export class DimensionModel {
   */
   async updateDimension(dimensionInfo: IDimensionModel): Promise<IDimensionModel> {
     let unitIds: number[] = dimensionInfo.units.map(value => value.id);
-    // Check to see if there are units already with the same dimensionId
     let foundUnits = await Units.find({ where: { dimensionId: dimensionInfo.id } });
-    // Check if any of the found units are already in use in datapoints table
-    foundUnits.forEach(async element => {
-      // Check if the found unitId from the database doesn't match with the one sent from frontend, then it needs to be removed from database
+    for (const element of foundUnits) {
       if (!unitIds.includes(element.id)) {
-        let foundUnit = await Datapoints.find({ where: { "unitsId": element.id } })
-        if (foundUnit.length != 0) {
-          throw new BadRequest(`UnitId ${element.id} is already in use`);
-        }
-        if (dimensionInfo.baseUnitId == element.id) {
-          throw new BadRequest(`Cannot delete a unit ${element.id} that's also a base unit`);
-        }
+        await this.validateUnitInUseDatapoint(element);
         await Units.delete({ "id": element.id });
       }
-    })
-    // Transform UnitModel[] into Units[]
-    let units: Units[] = dimensionInfo.units.map(value => {
-      let unit = new Units();
-      unit.name = value.name;
-      unit.id = value.id;
-      unit.conversionFormula = value.conversionFormula;
-      unit.dimensionId = dimensionInfo.id;
-      return unit;
-    })
+    }
+    let units = Units.convertToUnits(dimensionInfo.units, dimensionInfo.id)
     let savedUnits = await Units.save(units);
-    dimensionInfo.units = savedUnits.map(value => {
-      let unitsModel: IUnitModel = {
-        id: value.id,
-        name: value.name,
-        conversionFormula: value.conversionFormula,
-        dimensionId: dimensionInfo.id
-      };
-      return unitsModel;
-    });
-    // Transform DimensionModel into Dimension
-    let dimension = new Dimension();
-    dimension.id = dimensionInfo.id;
-    dimension.name = dimensionInfo.name;
-    dimension.baseUnitId = dimensionInfo.baseUnitId;
+    dimensionInfo.units = Units.convertToModel(savedUnits);
+    let dimension = Dimension.convertToDimension(dimensionInfo);
     await Dimension.save(dimension);
     return dimensionInfo;
+  }
+
+  /**
+   * Validates a unit entity before deletion to make sure it is not in use in datapoints
+   * @param unit - entity that needs to be checked
+   */
+  private async validateUnitInUseDatapoint(unit: Units) {
+    let foundUnit = await Datapoints.find({ where: { "unitsId": unit.id } })
+    if (foundUnit.length != 0) {
+      throw new BadRequest(`Can't remove a unit since it is already in use in datapoints`);
+    }
   }
 
   /**
@@ -131,22 +101,9 @@ export class DimensionModel {
     let dimensions = await Dimension.find();
     let units = await Units.find();
 
-    let dimensionModels = dimensions.map(value => {
-      let dimensionModel: IDimensionModel = {
-        name: value.name,
-        id: value.id,
-        baseUnitId: value.baseUnitId
-      }
-      let unitsModels = units.filter(value => value.dimensionId == dimensionModel.id).map(value => {
-        let unit: IUnitModel = {
-          name: value.name,
-          id: value.id,
-          conversionFormula: value.conversionFormula,
-          dimensionId: value.dimensionId
-        }
-        return unit
-      })
-      dimensionModel.units = unitsModels;
+    let dimensionModels = dimensions.map(dimension => {
+      let filteredUnits = units.filter(value => value.dimensionId == dimension.id)
+      let dimensionModel = Dimension.convertToModel(dimension, filteredUnits);
       return dimensionModel;
     })
     return dimensionModels;

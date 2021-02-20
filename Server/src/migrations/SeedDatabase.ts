@@ -121,13 +121,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let publication = new Publications();
     publication.id = 1;
     publication.name = "LASL shock Hugoniot data";
-    publication.pages = 100;
+    publication.pages = "100";
     publication.publicationtypeId = book.id;
     publication.publisherId = publisherName.id;
     publication.year = 1980;
     publication.volume = 5;
-    publication.datePublished;
-    publication.dateAccessed;
     publication.authors = [author1, author2];
     await connection.manager.save(publication);
 
@@ -139,60 +137,50 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication2.publisherId = publisherName.id;
     publication2.year = 1900;
     publication2.volume;
-    publication2.datePublished;
-    publication2.dateAccessed;
     publication2.authors = [];
     await connection.manager.save(publication2);
 
     let publication3 = new Publications();
     publication3.id;
     publication3.name = "Unapproved Publication";
-    publication3.pages = 100;
+    publication3.pages = "100";
     publication3.publicationtypeId = book.id;
     publication3.publisherId = publisherName.id;
     publication3.year = 1980;
     publication3.volume = 5;
-    publication3.datePublished;
-    publication3.dateAccessed;
     publication3.authors = [];
     await connection.manager.save(publication3);
 
     let publicationToDelete = new Publications();
     publicationToDelete.id;
     publicationToDelete.name = "Publication To Delete";
-    publicationToDelete.pages = 100;
+    publicationToDelete.pages = "100";
     publicationToDelete.publicationtypeId = toDelete.id;
     publicationToDelete.publisherId = publisherNameToDelete.id;
     publicationToDelete.year = 1980;
     publicationToDelete.volume = 5;
-    publicationToDelete.datePublished;
-    publicationToDelete.dateAccessed;
     publicationToDelete.authors = [author3, author4];
     await connection.manager.save(publicationToDelete);
 
     let publicationToDelete2 = new Publications();
     publicationToDelete2.id;
     publicationToDelete2.name = "Publication To Delete";
-    publicationToDelete2.pages = 100;
+    publicationToDelete2.pages = "100";
     publicationToDelete2.publicationtypeId = toDelete.id;
     publicationToDelete2.publisherId = publisherNameToDelete.id;
     publicationToDelete2.year = 1980;
     publicationToDelete2.volume = 5;
-    publicationToDelete2.datePublished;
-    publicationToDelete2.dateAccessed;
     publicationToDelete2.authors = [author3, author4];
     await connection.manager.save(publicationToDelete2);
 
     let publicationToDelete3 = new Publications();
     publicationToDelete3.id;
     publicationToDelete3.name = "Publication To Delete";
-    publicationToDelete3.pages = 100;
+    publicationToDelete3.pages = "100";
     publicationToDelete3.publicationtypeId = toDelete.id;
     publicationToDelete3.publisherId = publisherNameToDelete.id;
     publicationToDelete3.year = 1980;
     publicationToDelete3.volume = 5;
-    publicationToDelete3.datePublished;
-    publicationToDelete3.dateAccessed;
     publicationToDelete3.authors = [author3, author4];
     await connection.manager.save(publicationToDelete3);
 
@@ -489,9 +477,9 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     // Units below this line
 
-    let volumeDimension = new Dimension();
-    volumeDimension.id;
-    volumeDimension.name = "Volume";
+    let temperatureDimension = new Dimension();
+    temperatureDimension.id;
+    temperatureDimension.name = "Temperature";
 
     let densityDimension = new Dimension();
     densityDimension.id;
@@ -533,9 +521,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
 
-    densityDimension.units = [unitsCCG, unitsGCC];
+    densityDimension.baseUnit = unitsGCC;
+    densityDimension.baseUnitId = unitsGCC.id;
 
-    volumeDimension.units = [unitsKelvin];
+    temperatureDimension.baseUnit = unitsKelvin;
+    temperatureDimension.baseUnitId = unitsKelvin.id;
 
     await connection.manager.save(unitsNone);
     await connection.manager.save(unitsCCG);
@@ -547,7 +537,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await connection.manager.save(unitsGigapascal);
     await connection.manager.save(unitsKelvin);
 
-    await connection.manager.save(volumeDimension);
+    await connection.manager.save(temperatureDimension);
     await connection.manager.save(densityDimension);
 
     // Data points below this line. 
