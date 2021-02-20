@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 
+import { BadRequest } from '@tsed/exceptions';
 import { DimensionService } from '../services/DimensionService';
 import { IDimensionModel } from '../models/interfaces/IDimension'
-import { BadRequest } from '@tsed/exceptions';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
 
 /**
@@ -49,6 +49,7 @@ export class DimensionsController {
 
   async retrieveDimensions(response: Response, next: NextFunction): Promise<Response> {
     try {
+      console.log("Here!")
       let requestResponse = await this.dimensionService.processGetAllDimensions();
       return response.status(requestResponse.statusCode).json(requestResponse.message)
     } catch (error) {

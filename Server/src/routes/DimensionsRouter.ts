@@ -13,12 +13,12 @@ let dimensionsController = new DimensionsController();
  * These routes are temporarily unprotected, but later need to be uncommented
  */
 // router.post('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
-router.post('/api/v1/dimensions', async (request: Request, response: Response) => {
-  dimensionsController.createDimension(request, response);
+router.post('/api/v1/dimensions', async (request: Request, response: Response, next: NextFunction) => {
+  dimensionsController.createDimension(request, response, next);
 });
 
-router.get('/api/v1/dimensions', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
-  dimensionsController.retrieveDimensions(request, response);
+router.get('/api/v1/dimensions', (request: Request, response: Response, next: NextFunction) => {
+  dimensionsController.retrieveDimensions(response, next);
 });
 
 // router.put('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
@@ -32,4 +32,3 @@ router.delete('/api/v1/dimensions/:id?', async (request: Request, response: Resp
 });
 
 export { router as dimensionsRouter }
-

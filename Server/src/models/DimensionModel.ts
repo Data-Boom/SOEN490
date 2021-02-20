@@ -1,8 +1,8 @@
 import { BadRequest } from "@tsed/exceptions";
-import { IDimensionModel } from './interfaces/IDimension';
-import { Dimension } from './entities/Dimension';
-import { Units } from './entities/Units';
 import { Datapoints } from "./entities/Datapoints";
+import { Dimension } from './entities/Dimension';
+import { IDimensionModel } from './interfaces/IDimension';
+import { Units } from './entities/Units';
 
 /**
  * This model contains all methods required for obtaining data from the Dimensions
@@ -96,14 +96,17 @@ export class DimensionModel {
   */
   async getAllDimensions(): Promise<IDimensionModel[]> {
     let dimensions = await Dimension.find();
+    console.log(dimensions)
     let units = await Units.find();
-
+    //console.log(units)
+    //console.log("Here 2!")
     let dimensionModels = dimensions.map(dimension => {
       let dimensionModel = Dimension.convertToModel(dimension);
       let filteredUnits = units.filter(value => value.dimensionId == dimensionModel.id)
       dimensionModel.units = Units.convertToModel(filteredUnits);
       return dimensionModel;
     })
+    console.log(dimensionModels)
     return dimensionModels;
   }
 }
