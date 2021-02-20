@@ -6,10 +6,10 @@ import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remo
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetForm } from '../DatasetUpload/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
-import { FormikValues } from 'formik'
+import { FormikProps } from 'formik'
 
 export function AdminReviewView() {
-  const formikReference = useRef<FormikValues>()
+  const formikReference = useRef<FormikProps<unknown>>()
   const [editable, setEditable] = useState(false)
   const [dataset, setDataset] = useState<IApprovedDatasetModel>()
   const [comment, setComment] = useState("")

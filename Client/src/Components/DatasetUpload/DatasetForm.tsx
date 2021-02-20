@@ -3,6 +3,7 @@ import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Dat
 import React, { useEffect, useState } from 'react'
 
 import { DataForm } from './DataSection/DataForm'
+import { IFormProps } from '../Forms/IFormikForm'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
 import { datasetValidationSchema } from './DatasetValidationSchema'
@@ -10,11 +11,10 @@ import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
 
-interface IProps {
+interface IProps extends IFormProps {
   initialDataset: IDatasetModel,
   editable: boolean,
-  onSubmit(formDataset: IDatasetModel): void,
-  formikReference: any
+  onSubmit(formDataset: IDatasetModel): void
 }
 
 interface DatasetUploadFormValues {

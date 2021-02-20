@@ -5,7 +5,7 @@ import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/Dataset
 
 import { DatasetForm } from './DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
-import { FormikValues } from 'formik'
+import { FormikProps } from 'formik'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -37,7 +37,7 @@ export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IData
 
 export const DatasetView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
-  const formikReference = useRef<FormikValues>()
+  const formikReference = useRef<FormikProps<unknown>>()
 
   const location = useLocation()
   const initialSentDataset = location.state as IDatasetModel

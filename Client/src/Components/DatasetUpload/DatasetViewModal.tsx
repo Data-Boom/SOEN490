@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react'
 import CancelIcon from "@material-ui/icons/Cancel"
 import { DatasetForm } from './DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
-import { FormikValues } from 'formik'
+import { FormikProps } from 'formik'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
@@ -16,7 +16,7 @@ interface IProps {
   datasetName: string
 }
 export const DatasetFormModal = (props: IProps) => {
-  const formikReference = useRef<FormikValues>()
+  const formikReference = useRef<FormikProps<unknown>>()
   const { datasetId, datasetName } = { ...props }
   const [open, setOpen] = useState(false)
   const [dataset, setDataset] = useState<IDatasetModel>()
