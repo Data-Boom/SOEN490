@@ -2,7 +2,7 @@ import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
 import React, { useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
-import { DatasetUploadForm } from './DatasetUploadForm'
+import { DatasetForm } from './DatasetUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
@@ -50,7 +50,7 @@ export const DatasetFormModal = (props: IProps) => {
                 <CancelIcon color="primary" onClick={() => setOpen(false)} />
               </Grid>
             </Grid>
-            <DatasetUploadForm
+            <DatasetForm
               onSubmit={close}
               initialDataset={dataset}
               editable={false}

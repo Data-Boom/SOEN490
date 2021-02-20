@@ -23,7 +23,7 @@ interface DatasetUploadFormValues {
   data: IData
 }
 
-export const DatasetUploadForm = (props: IProps): any => {
+export const DatasetForm = (props: IProps): any => {
   const { initialDataset, onSubmit, editable, formikReference } = props
 
   const [categories, setCategories] = useState([])

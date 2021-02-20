@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
-import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
+import { DatasetForm } from '../DatasetUpload/DatasetUploadForm'
 
 export function AdminReviewView() {
 
@@ -95,7 +95,7 @@ export function AdminReviewView() {
         <Grid container spacing={3}>
           <Grid xs={12}>
             {dataset &&
-              <DatasetUploadForm
+              <DatasetForm
                 onSubmit={handleApproveDataset}
                 initialDataset={dataset}
                 editable={editable}

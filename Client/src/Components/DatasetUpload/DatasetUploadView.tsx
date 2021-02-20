@@ -1,10 +1,10 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
+import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
-import { DatasetUploadForm } from './DatasetUploadForm'
+import { DatasetForm } from './DatasetUploadForm'
 import { FormikValues } from 'formik'
-import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -33,7 +33,7 @@ export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IData
   return dataset
 }
 
-export const DatasetUploadView = (props: IProps) => {
+export const DatasetView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
 
   const formikReference = useRef<FormikValues>()
@@ -58,13 +58,13 @@ export const DatasetUploadView = (props: IProps) => {
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    console.log(formDataset)
+    await callSaveDataset(formDataset)
   }
 
   return (
     <Container>
       <Box pt={4} pb={4}>
-        <DatasetUploadForm
+        <DatasetForm
           onSubmit={handleSubmitForm}
           editable={editable}
           initialDataset={initialValues}
