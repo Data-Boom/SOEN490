@@ -198,6 +198,12 @@ describe('Data Set Controller ', () => {
 
     test('Valid Reject Data Set Request', async () => {
         mockRequest = {
+            body: {
+                user: {
+                    account_id: '1',
+                    account_admin: '1'
+                }
+            },
             params: {
                 datasetId: 10
             }
@@ -249,7 +255,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("You cannot approve a data set until it passes initial screening!");
+        expect(mockResponse.json).toBeCalledWith("You cannot approve or reject a data set until it passes initial screening!");
         expect(mockResponse.status).toBeCalledWith(400);
     });
 
@@ -294,7 +300,8 @@ describe('Data Set Controller ', () => {
         mockRequest = {
             body: {
                 user: {
-                    account_id: '1'
+                    account_id: '1',
+                    account_admin: '1'
                 }
             },
             params: {
@@ -310,7 +317,8 @@ describe('Data Set Controller ', () => {
         mockRequest = {
             body: {
                 user: {
-                    account_id: '1'
+                    account_id: '1',
+                    account_admin: '1'
                 }
             },
             params: {

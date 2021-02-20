@@ -3,11 +3,10 @@ import { IContent, IData, IDatasetModel, IVariable } from "./IDatasetModel"
 interface IRemotePublicationModel {
   name: string,
   DOI: string,
-  pages: number,
+  pages: string,
   volume: number,
+  issue: number,
   year: number,
-  datePublished: Date,
-  dateAccessed: Date,
   publisher: string,
   publicationType: string,
   authors: IRemoteAuthorModel[],
@@ -69,13 +68,12 @@ export const toLocalDatasetModel = (remoteDataset: IRemoteDatasetModel): IDatase
     reference: {
       authors: remoteDataset.publication.authors,
       doi: remoteDataset.publication.DOI,
-      dateAccessed: remoteDataset.publication.dateAccessed,
-      datePublished: remoteDataset.publication.datePublished,
       pages: remoteDataset.publication.pages,
       publisher: remoteDataset.publication.publisher,
       title: remoteDataset.publication.name,
       type: remoteDataset.publication.publicationType,
       volume: remoteDataset.publication.volume,
+      issue: remoteDataset.publication.issue,
       year: remoteDataset.publication.year,
     }, id: remoteDataset.dataset_id
   }

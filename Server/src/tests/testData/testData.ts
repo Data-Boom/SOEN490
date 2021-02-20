@@ -8,11 +8,6 @@ export const validTestData = {
                 "lastName": "testing"
             },
             {
-                "firstName": "Stanley",
-                "middleName": "P.",
-                "lastName": "Marsh"
-            },
-            {
                 "firstName": "John",
                 "middleName": "L.",
                 "lastName": "Mclain"
@@ -21,10 +16,9 @@ export const validTestData = {
         "title": "Dataset Insert Daily",
         "doi": "10.1794/TEXTHERE.926855",
         "volume": 5,
-        "pages": 19,
-        "year": 1980,
-        "datePublished": "2021-01-16",
-        "dateAccessed": "2021-01-16"
+        "issue": 1,
+        "pages": "19",
+        "year": 1980
     },
     "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
     "material": [
@@ -261,11 +255,6 @@ export const inValidTestData = {
                 "lastName": "testing"
             },
             {
-                "firstName": "Stanley",
-                "middleName": "P.",
-                "lastName": "Marsh"
-            },
-            {
                 "firstName": "John",
                 "middleName": "L.",
                 "lastName": "Mclain"
@@ -274,10 +263,9 @@ export const inValidTestData = {
         "title": "Dataset Insert Daily",
         "doi": "10.1794/TEXTHERE.926855",
         "volume": 5,
-        "pages": 19,
-        "year": 1980,
-        "datePublished": "2021-01-16",
-        "dateAccessed": "2021-01-16"
+        "issue": 1,
+        "pages": "19",
+        "year": 1980
     },
     "dataset_name": "My Test: CARBON_graphite,pressed, Initial density = 2.13 g/cc",
     "material": [
@@ -568,9 +556,8 @@ export const oneFavoriteDataset = [
             DOI: null,
             pages: null,
             volume: null,
+            issue: null,
             year: 1900,
-            datePublished: null,
-            dateAccessed: null,
             publisher: 'University of California Press',
             publicationType: 'Book',
             authors: []
