@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 import { classStyles } from '../../appTheme'
 import CancelIcon from '@material-ui/icons/Cancel';
+import { ConfirmationModal } from '../Authentication/ConfirmationModal';
+
 interface IGraphModel {
     graphset: IGraphStateModel,
 }
@@ -22,8 +24,9 @@ export const ProfileGraphRow = (props: IGraphModel) => {
                     </Link>
                 </Box>
             </Grid>
-            <IconButton aria-label="delete" disabled color="primary">
-                <CancelIcon />
+            <IconButton aria-label="delete" color="secondary" >
+                <CancelIcon onClick={() => { alert('clicked') }} />
+                {/**call delete dataset endpoint? */}
             </IconButton>
         </Grid >
     )

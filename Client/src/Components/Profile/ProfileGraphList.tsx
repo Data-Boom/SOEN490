@@ -1,4 +1,4 @@
-import { Box, Grid } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 import { ProfileGraphRow } from '../Profile/ProfileGraphRow'
