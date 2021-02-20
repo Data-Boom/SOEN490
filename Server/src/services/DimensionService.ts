@@ -1,10 +1,10 @@
 import 'dotenv/config';
 
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { BadRequest } from "@tsed/exceptions";
 
-import { IResponse } from '../genericInterfaces/ResponsesInterface'
-import { IDimensionModel } from '../models/interfaces/IDimension';
 import { DimensionModel } from '../models/DimensionModel';
+import { IDimensionModel } from '../models/interfaces/IDimension';
+import { IResponse } from '../genericInterfaces/ResponsesInterface'
 import { Units } from '../models/entities/Units';
 
 /**
@@ -13,8 +13,10 @@ import { Units } from '../models/entities/Units';
  */
 export class DimensionService {
   private requestResponse: IResponse = {} as any;
+  private dimensionModel: DimensionModel
 
   constructor() {
+    this.dimensionModel = new DimensionModel()
   }
 
   /**
@@ -25,21 +27,21 @@ export class DimensionService {
    */
   async processAddDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
     let name: boolean
-    name = await DimensionModel.verifyIfNameExists(dimensionInfo.name);
+    name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
     if (name) {
-      throw new BadRequest("This dimension already exists! Please enter different values");
+      throw new BadRequest("This dimension already exists! Please use different values");
     }
     else {
       try {
-        await DimensionModel.insertDimension(dimensionInfo);
+        let createdDimension = await this.dimensionModel.insertDimension(dimensionInfo);
+        this.requestResponse.message = createdDimension as any;
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse
       }
       catch (error) {
-        throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
+        throw new BadRequest(error.message);
       }
     }
-    this.requestResponse.message = "Success";
-    this.requestResponse.statusCode = 200;
-    return this.requestResponse
   }
 
   /**
@@ -47,20 +49,13 @@ export class DimensionService {
    * @param dimensionInfo - dimension info that needs to be updated on the database
    */
   async processUpdateDimension(dimensionInfo: IDimensionModel): Promise<IResponse> {
-    let name: boolean
-    name = await DimensionModel.verifyIfNameExists(dimensionInfo.name);
-    if (!name) {
-      throw new BadRequest("This dimension does not exist!");
+    try {
+      let updatedDimension = await this.dimensionModel.updateDimension(dimensionInfo);
+      this.requestResponse.message = updatedDimension as any;
     }
-    else {
-      try {
-        await DimensionModel.updateDimension(dimensionInfo);
-      }
-      catch (error) {
-        throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
-      }
+    catch (error) {
+      throw new BadRequest(error.message);
     }
-    this.requestResponse.message = "Success";
     this.requestResponse.statusCode = 200;
     return this.requestResponse
   }
@@ -71,10 +66,10 @@ export class DimensionService {
    */
   async processDeleteDimension(dimensionId: number): Promise<IResponse> {
     try {
-      await DimensionModel.deleteDimension(dimensionId);
+      await this.dimensionModel.deleteDimension(dimensionId);
     }
     catch (error) {
-      throw new InternalServerError("Internal server error, please try again later", error.message);
+      throw new BadRequest(error.message);
     }
     this.requestResponse.message = "Success";
     this.requestResponse.statusCode = 200;
@@ -84,12 +79,15 @@ export class DimensionService {
   /**
    * This method calls the database for all the existing dimensions
    */
-  async processGetAllDimensions(): Promise<DimensionModel[]> {
+  async processGetAllDimensions() {
     try {
-      return DimensionModel.getAllDimensions()
+      let dimensions = await this.dimensionModel.getAllDimensions()
+      this.requestResponse.message = dimensions as any
+      this.requestResponse.statusCode = 200;
+      return this.requestResponse;
     }
     catch (error) {
-      return []
+      throw new BadRequest(error.message);
     }
   }
 
@@ -99,10 +97,10 @@ export class DimensionService {
    */
   async processGetDimensionUnits(dimensionId: number): Promise<Units[]> {
     try {
-      return DimensionModel.getDimensionUnits(dimensionId)
+      return this.dimensionModel.getDimensionUnits(dimensionId)
     }
     catch (error) {
-      return []
+      throw new BadRequest(error.message);
     }
   }
 }

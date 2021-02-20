@@ -189,7 +189,14 @@ export class DataSetController {
         else {
             try {
                 this.dataSetService = new DataSetService();
-                let requestResponse = await this.dataSetService.rejectDataSet(datasetId)
+                let requestResponse: any;
+                if ((request.body.user.account_admin == 1) || (request.body.user.account_admin == 2)) {
+                    requestResponse = await this.dataSetService.adminRejectDataSet(datasetId)
+                }
+                else {
+                    let userId: number = request.body.user.account_id
+                    requestResponse = await this.dataSetService.userRejectDataSet(datasetId, userId)
+                }
                 return response.status(requestResponse.statusCode).json(requestResponse.message);
             } catch (error) {
                 response.status(error.status).json(error.message);

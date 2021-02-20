@@ -8,11 +8,6 @@ export const validTestData = {
                 "lastName": "testing"
             },
             {
-                "firstName": "Stanley",
-                "middleName": "P.",
-                "lastName": "Marsh"
-            },
-            {
                 "firstName": "John",
                 "middleName": "L.",
                 "lastName": "Mclain"
@@ -259,11 +254,6 @@ export const inValidTestData = {
             {
                 "firstName": "alpha",
                 "lastName": "testing"
-            },
-            {
-                "firstName": "Stanley",
-                "middleName": "P.",
-                "lastName": "Marsh"
             },
             {
                 "firstName": "John",

@@ -8,32 +8,9 @@ import { UnitList } from './UnitList'
 import { classStyles } from '../../../appTheme'
 import { disabledTheme } from '../../Forms/ComponentUpdate'
 import { get } from '../../../Remote/FluentRequest'
+import { indexOf } from 'lodash'
 
-//import { IUnitModel } from '../../../Models/Profile/IDimensionModel'
-
-
-
-
-
-
-interface IProps {
-
-}
-
-
-export const UnitForm = (props: IProps) => {
-
-  // This file will contain a field to edit the base units of the form. Additionally, it will render a list of individual Units, and a way to add/remove units.
-  // See how Authors are added in the dataset upload form.
-  // The EquationEvaluate part will probably have to be moved to UnitRow later on.
-
-  /*
-  <EquationEvaluate
-        value={units[1].conversionFormula}
-        variables={{ u: { type: 'number', value: 1 } }}
-        errorHandler={defaultErrorHandler}
-      />
-  */
+export const UnitForm = () => {
 
   return (
     <>
@@ -41,7 +18,7 @@ export const UnitForm = (props: IProps) => {
       <ThemeProvider theme={disabledTheme}>
         <Grid container spacing={4}>
           <FieldArray name='units' >
-            {({ form, ...fieldArrayHelpers }) => <UnitList units={form.values.units} fieldArrayHelpers={fieldArrayHelpers} />}
+            {({ form, ...fieldArrayHelpers }) => <UnitList units={form.values.units} fieldArrayHelpers={fieldArrayHelpers} baseUnitId={form.values.baseUnitId} />}
           </FieldArray>
         </Grid>
       </ThemeProvider>

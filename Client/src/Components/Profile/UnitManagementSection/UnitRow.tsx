@@ -15,6 +15,7 @@ interface IProps {
 
 export const UnitRow = (props: IProps) => {
   const { index, onRemoveUnitClick, removable } = props
+  const conversionFormula = props.conversionFormula.replace(/[{}]/g, '')
 
   const removeButton = () => {
     return (
@@ -36,7 +37,7 @@ export const UnitRow = (props: IProps) => {
         <Grid item>
 
           <EquationEvaluate
-            value={props.conversionFormula || 'u'}
+            value={conversionFormula || 'u'}
             variables={{ u: { type: 'number', value: 1 } }}
             errorHandler={defaultErrorHandler}
           />

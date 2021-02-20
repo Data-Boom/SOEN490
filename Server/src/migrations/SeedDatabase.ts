@@ -119,7 +119,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await connection.manager.save(author4);
 
     let publication = new Publications();
-    publication.id;
+    publication.id = 1;
     publication.name = "LASL shock Hugoniot data";
     publication.pages = 100;
     publication.publicationtypeId = book.id;
@@ -143,6 +143,19 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication2.dateAccessed;
     publication2.authors = [];
     await connection.manager.save(publication2);
+
+    let publication3 = new Publications();
+    publication3.id;
+    publication3.name = "Unapproved Publication";
+    publication3.pages = 100;
+    publication3.publicationtypeId = book.id;
+    publication3.publisherId = publisherName.id;
+    publication3.year = 1980;
+    publication3.volume = 5;
+    publication3.datePublished;
+    publication3.dateAccessed;
+    publication3.authors = [];
+    await connection.manager.save(publication3);
 
     let publicationToDelete = new Publications();
     publicationToDelete.id;
@@ -255,7 +268,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 1;
     dataset.name = "CARBON, graphite, pressed, Initial density = 2.13 g/cc";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = 1;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments = "References 5,6,14\nAverage density = 2.134 g/cc";
@@ -285,7 +298,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 5;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publication3.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
@@ -301,7 +314,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 6;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publication3.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
@@ -349,7 +362,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 8;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publication3.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
@@ -365,7 +378,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 9;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publication3.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
@@ -375,7 +388,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     unapproveddataset.datasetId = 9;
     unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
+    unapproveddataset.isFlagged = 1;
     await connection.manager.save(unapproveddataset);
 
     dataset.id = 10;
@@ -397,7 +410,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 11;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publication3.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
@@ -413,7 +426,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.id = 12;
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication.id;
+    dataset.publicationId = publication3.id;
     dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
@@ -426,15 +439,65 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     unapproveddataset.isFlagged = 1;
     await connection.manager.save(unapproveddataset);
 
+    dataset.id = 13;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication3.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId = 2;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 13;
+    unapproveddataset.flaggedComment;
+    unapproveddataset.isFlagged = 1;
+    await connection.manager.save(unapproveddataset);
+
+    dataset.id = 14;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication3.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId = 2;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 14;
+    unapproveddataset.flaggedComment;
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
+    dataset.id = 15;
+    dataset.name = "An unapproved dataset";
+    dataset.datatypeId = datasetdatatype.id;
+    dataset.publicationId = publication3.id;
+    dataset.categoryId = category.id;
+    dataset.subcategoryId = subcategory.id;
+    dataset.comments;
+    dataset.materials = [];
+    dataset.uploaderId = 2;
+    await connection.manager.save(dataset);
+
+    unapproveddataset.datasetId = 15;
+    unapproveddataset.flaggedComment;
+    unapproveddataset.isFlagged = 0;
+    await connection.manager.save(unapproveddataset);
+
     // Units below this line
 
     let volumeDimension = new Dimension();
     volumeDimension.id;
     volumeDimension.name = "Volume";
+    await connection.manager.save(volumeDimension);
 
     let densityDimension = new Dimension();
     densityDimension.id;
     densityDimension.name = "Density";
+    await connection.manager.save(densityDimension);
 
     let unitsGCC = new Units();
     unitsGCC.id;
@@ -472,9 +535,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
 
-    densityDimension.unitId = unitsGCC.id;
-    densityDimension.units = [unitsGCC]
-
     await connection.manager.save(unitsNone);
     await connection.manager.save(unitsCCG);
     await connection.manager.save(unitsGCC);
@@ -484,8 +544,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await connection.manager.save(unitsKMPS);
     await connection.manager.save(unitsGigapascal);
     await connection.manager.save(unitsKelvin);
-
-    await connection.manager.save(densityDimension);
 
     // Data points below this line. 
 

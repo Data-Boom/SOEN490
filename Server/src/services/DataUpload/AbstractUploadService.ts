@@ -11,11 +11,13 @@ export default abstract class AbstractUploadService {
     protected parsedFileData: any
     protected datasetId: number
     protected userId: number
+    protected clearFlag: boolean
 
-    constructor(parsedFileData: IDataSetModel, datasetId: any = {}, userId: any = {}) {
+    constructor(parsedFileData: IDataSetModel, datasetId: any = {}, userId: any = {}, clearFlag: any = {}) {
         this.parsedFileData = parsedFileData
         this.datasetId = datasetId
         this.userId = userId
+        this.clearFlag = clearFlag
         this.uploadModel = new DataUploadModel()
     }
 

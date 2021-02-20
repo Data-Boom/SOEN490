@@ -1,13 +1,13 @@
 import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 
-import { DimensionForm } from './DimensionForm'
-import { IExampleDimenstions } from '../../../Models/Profile/IDimensionModel'
-import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
-import { classStyles } from '../../../appTheme'
 import { AddIcon } from '@material-ui/data-grid'
 import { ArrayHelpers } from 'formik'
+import { DimensionForm } from './DimensionForm'
+import { IExampleDimenstions } from '../../../Models/Profile/IDimensionModel'
 import { IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
+import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
+import { classStyles } from '../../../appTheme'
 
 interface IProps {
   units: IUnitModel[],
@@ -30,6 +30,7 @@ export const DimensionManagementTab = () => {
   useEffect(() => {
     const getDimensions = async () => {
       const databaseDimensions = await callGetAllDimensions()
+      console.log(databaseDimensions)
       setDimensions(databaseDimensions)
     }
     getDimensions()
