@@ -1,6 +1,7 @@
 import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Theme, Typography, createStyles, makeStyles } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
+import { callChangeDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 
 import { Collapse } from '@material-ui/core'
 import { DimensionList } from './DimensionList'
@@ -8,7 +9,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { UnitForm } from './UnitForm'
 import { UnitValidationSchema } from './UnitsValidationSchema'
-import { callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
@@ -62,18 +62,24 @@ export const DimensionForm = (props: IProps) => {
   }
 
   const handleSubmit = (formValues: IDimensionModel) => {
-    console.log("form values: " + formValues)
+    console.log(formValues)
+    if (formValues.id) {
+      handleUpdateDimension(formValues)
+    }
+    else {
+      handleCreateDimension(formValues)
+    }
   }
 
-  const handleUpdateDimension = () => {
-
+  const handleUpdateDimension = async (formValues: IDimensionModel) => {
+    await callChangeDimension(formValues)
   }
 
   const handleDeleteDimension = async () => {
     await callDeleteDimension(dimension.id)
   }
 
-  const handleCreateDimenstion = () => {
+  const handleCreateDimension = async (formValues: IDimensionModel) => {
 
   }
 
