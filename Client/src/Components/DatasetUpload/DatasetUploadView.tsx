@@ -1,9 +1,10 @@
-import { Box, Button, Container } from '@material-ui/core'
+import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import React, { useRef } from 'react'
 
 import { DatasetUploadForm } from './DatasetUploadForm'
-import React from 'react'
+import { FormikValues } from 'formik'
+import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -35,11 +36,12 @@ export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IData
 export const DatasetUploadView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
 
+  const formikReference = useRef<FormikValues>()
+
   const location = useLocation()
   const initialSentDataset = location.state as IDatasetModel
   const [initialValues, setInitialValues] = useState(props.initialDataset || initialSentDataset || defaultDatasetModel)
   const [editable, setEditable] = useState(true)
-  //initialValues = fixPartialForform(initialValues)
 
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
@@ -56,9 +58,8 @@ export const DatasetUploadView = (props: IProps) => {
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    await callSaveDataset(formDataset)
+    console.log(formDataset)
   }
-
 
   return (
     <Container>
@@ -67,9 +68,21 @@ export const DatasetUploadView = (props: IProps) => {
           onSubmit={handleSubmitForm}
           editable={editable}
           initialDataset={initialValues}
-          submitComponent={null}
+          formikReference={formikReference}
         />
-        <Button id="Save Dataset" variant="contained" color="primary" type="submit">Save Dataset</Button>
+        <Grid container spacing={3} justify="center">
+          {props.initialDataset || initialSentDataset ?
+            <Grid item>
+              <Button id="form-submit" variant="outlined" color="primary" onClick={() => formikReference.current.resetForm()}>
+                Cancel
+              </Button>
+            </Grid> : null}
+          <Grid item>
+            <Button id="form-submit" variant="contained" color="primary" onClick={() => formikReference.current.handleSubmit()}>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   )

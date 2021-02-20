@@ -54,7 +54,6 @@ export const DatasetFormModal = (props: IProps) => {
               onSubmit={close}
               initialDataset={dataset}
               editable={false}
-              submitComponent={null}
             />
           </Box>
         </Paper>

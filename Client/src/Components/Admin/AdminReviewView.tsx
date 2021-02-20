@@ -99,7 +99,6 @@ export function AdminReviewView() {
                 onSubmit={handleApproveDataset}
                 initialDataset={dataset}
                 editable={editable}
-                submitComponent={null}
               />
             }
           </Grid>

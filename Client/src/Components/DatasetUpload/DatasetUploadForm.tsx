@@ -14,7 +14,7 @@ interface IProps {
   initialDataset: IDatasetModel,
   editable: boolean,
   onSubmit(formDataset: IDatasetModel): void,
-  submitComponent: any
+  formikReference?: any
 }
 
 interface DatasetUploadFormValues {
@@ -24,7 +24,7 @@ interface DatasetUploadFormValues {
 }
 
 export const DatasetUploadForm = (props: IProps): any => {
-  const { initialDataset, onSubmit, editable } = props
+  const { initialDataset, onSubmit, editable, formikReference } = props
 
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
@@ -67,6 +67,7 @@ export const DatasetUploadForm = (props: IProps): any => {
       initialValues={initialValues}
       validationSchema={datasetValidationSchema}
       onSubmit={handleSubmit}
+      innerRef={formikReference}
     >
       <Form>
         <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />

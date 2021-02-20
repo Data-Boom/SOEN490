@@ -7,6 +7,7 @@ export const MuiTextFieldFormik = ({ field, form: { touched, errors }, ...props 
   const error = get(touched, field.name) && !!get(errors, field.name)
   const helperText = get(touched, field.name) && get(errors, field.name)
   const variant = props.variant || "outlined"
+  console.error(errors)
   return (
     <TextField fullWidth variant={variant} {...field} {...props} error={error} helperText={helperText} />
   )
