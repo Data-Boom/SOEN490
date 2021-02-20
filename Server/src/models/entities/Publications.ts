@@ -22,11 +22,14 @@ export class Publications {
     @Column({ nullable: true })
     doi: string
 
-    @Column({ nullable: true, type: "int" })
-    pages: number
+    @Column({ nullable: true, length: 20 })
+    pages: string
 
     @Column({ nullable: true, type: "int" })
     volume: number
+
+    @Column({ nullable: true, type: "int" })
+    issue: number
 
     @Column({ default: 1 })
     publicationtypeId: number
@@ -55,12 +58,6 @@ export class Publications {
     @Column({ type: "int", width: 4 })
     year: number
 
-    @Column({ nullable: true })
-    datePublished: Date
-
-    @Column({ nullable: true })
-    dateAccessed: Date
-
     @CreateDateColumn()
     created: Date
 
@@ -85,9 +82,8 @@ export const selectPublicationsQuery = (connection: Connection, dataset: number)
         .addSelect('publication.doi', 'DOI')
         .addSelect('publication.pages', 'pages')
         .addSelect('publication.volume', 'volume')
+        .addSelect('publication.issue', 'issue')
         .addSelect('publication.year', 'year')
-        .addSelect('publication.datePublished', 'datePublished')
-        .addSelect('publication.dateAccessed', 'dateAccessed')
         .addSelect('publisher.name', 'publisher')
         .addSelect('publicationtype.name', 'publicationType')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
@@ -102,9 +98,8 @@ export const selectAllPublicationsQuery = (connection: Connection, datasets: num
         .addSelect('publication.doi', 'DOI')
         .addSelect('publication.pages', 'pages')
         .addSelect('publication.volume', 'volume')
+        .addSelect('publication.issue', 'issue')
         .addSelect('publication.year', 'year')
-        .addSelect('publication.datePublished', 'datePublished')
-        .addSelect('publication.dateAccessed', 'dateAccessed')
         .addSelect('publisher.name', 'publisher')
         .addSelect('publicationtype.name', 'publicationType')
         .addSelect('dataset.id', 'dataset_id')

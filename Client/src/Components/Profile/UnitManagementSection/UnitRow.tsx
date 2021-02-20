@@ -32,7 +32,7 @@ export const UnitRow = (props: IProps) => {
           <FastField name={`units[${index}].name`} label='Unit Name' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
-          <FastField name={`units[${index}].conversionFormula`} label='Conversion Formula' component={MuiTextFieldFormik} />
+          <FastField name={`units[${index}].conversionFormula`} label='Conversion to Base' component={MuiTextFieldFormik} />
         </Grid>
         <Grid item>
 

@@ -40,7 +40,7 @@ export const DimensionManagementTab = () => {
     <>
       <Box className={classStyles().defaultBorder} style={{ width: "100%" }} >
         <Typography variant='h6' align="left">System Wide Dimensions</Typography>
-        {dimensions.map(dimension => (
+        {dimensions && dimensions.map(dimension => (
           <DimensionForm dimension={dimension} />
         ))}
         <Grid item>
