@@ -57,7 +57,7 @@ export const UnitList = (props: IProps) => {
   }
 
   const shouldRenderRemove = () => {
-    // allow removing authors if there is at least 2
+    // allow removing units if there is at least 2
     return units.length > 1
   }
 
@@ -69,7 +69,7 @@ export const UnitList = (props: IProps) => {
     <>
       <Grid item container direction='column' spacing={4} alignItems="flex-start">
         <Grid item>
-          <Typography variant='h6' align="left">Base Unit ID:</Typography>
+          <Typography variant='h6' align="left">Base Unit Name:</Typography>
         </Grid>
         <Grid item>
           {renderBaseUnitRow()}

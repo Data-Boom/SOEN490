@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { UnitForm } from './UnitForm'
 import { UnitValidationSchema } from './UnitsValidationSchema'
+import { callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
@@ -68,8 +69,8 @@ export const DimensionForm = (props: IProps) => {
 
   }
 
-  const handleDeleteDimension = () => {
-
+  const handleDeleteDimension = async () => {
+    await callDeleteDimension(dimension.id)
   }
 
   const handleCreateDimenstion = () => {
@@ -95,8 +96,13 @@ export const DimensionForm = (props: IProps) => {
           <Grid item xs={5}>
             <Typography variant='h6' align="left">{dimension.name}</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             {!expanded && renderBaseUnit()}
+          </Grid>
+          <Grid item xs={1}>
+            {!expanded &&
+              <Button id='unit-delete' onClick={handleDeleteDimension} variant="contained" color="primary" type="submit">Delete</Button>
+            }
           </Grid>
         </Grid>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
