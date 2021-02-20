@@ -93,6 +93,9 @@ export const DimensionList = (props: IProps) => {
                 <Grid item>
                     <FastField name={`dimension[0].name`} label='Dimension Name' component={MuiTextFieldFormik} />
                 </Grid>
+                <Grid item>
+                    <Divider className={classStyles().divider} variant="middle" />
+                </Grid>
             </Grid>
         </Box>
     )
