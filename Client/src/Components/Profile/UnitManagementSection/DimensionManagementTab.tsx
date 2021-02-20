@@ -1,11 +1,11 @@
 import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Typography } from '@material-ui/core'
+import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import React, { useEffect, useState } from 'react'
 
 import { AddIcon } from '@material-ui/data-grid'
 import { ArrayHelpers } from 'formik'
 import { DimensionForm } from './DimensionForm'
 import { IExampleDimenstions } from '../../../Models/Profile/IDimensionModel'
-import { IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 
@@ -17,7 +17,7 @@ interface IProps {
 
 export const DimensionManagementTab = () => {
 
-  const [dimensions, setDimensions] = useState(IExampleDimenstions)
+  const [dimensions, setDimensions] = useState<IDimensionModel[]>()
   // TODO: Fetch list of dimensions/units from backend.
   // TODO: For each dimenstionm, render a new Dimension Form using its values as the initial values.
   // TODO: Have a "New" button that renders a Dimenstion Form with no initial values.
