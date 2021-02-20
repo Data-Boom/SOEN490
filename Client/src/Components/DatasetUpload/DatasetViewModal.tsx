@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import { DatasetForm } from './DatasetForm'
-import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FormikProps } from 'formik'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
@@ -33,9 +32,6 @@ export const DatasetFormModal = (props: IProps) => {
     }
   }, [])
 
-  const close = () => {
-    setOpen(false)
-  }
   return (
     <>
       <Grid item>
@@ -53,12 +49,11 @@ export const DatasetFormModal = (props: IProps) => {
               </Grid>
             </Grid>
             <DatasetForm
-              onSubmit={close}
+              onSubmit={null}
               initialDataset={dataset}
               editable={false}
               formikReference={formikReference}
             />
-            <DefaultFormFooter formikReference={formikReference} />
           </Box>
         </Paper>
 
