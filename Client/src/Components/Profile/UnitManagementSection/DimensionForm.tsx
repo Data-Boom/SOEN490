@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { UnitForm } from './UnitForm'
 import { UnitValidationSchema } from './UnitsValidationSchema'
-import { callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
+import { callAddDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
@@ -71,10 +71,12 @@ export const DimensionForm = (props: IProps) => {
 
   const handleDeleteDimension = async () => {
     await callDeleteDimension(dimension.id)
+    console.log("dimension deleted")
   }
 
-  const handleCreateDimenstion = () => {
+  const handleCreateDimenstion = async () => {
 
+    await callAddDimension(dimension)
   }
 
   return (
