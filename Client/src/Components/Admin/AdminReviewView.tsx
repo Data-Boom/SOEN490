@@ -1,14 +1,15 @@
-import { Box, Button, Grid, TextField, Typography, createMuiTheme, withStyles } from '@material-ui/core'
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
-import { DatasetUploadForm } from '../DatasetUpload/DatasetUploadForm'
+import { DatasetForm } from '../DatasetUpload/DatasetForm'
+import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
+import { FormikProps } from 'formik'
 
 export function AdminReviewView() {
-
-  const [datasetState, setDatasetState] = useState([])
+  const formikReference = useRef<FormikProps<unknown>>()
   const [editable, setEditable] = useState(false)
   const [dataset, setDataset] = useState<IApprovedDatasetModel>()
   const [comment, setComment] = useState("")
@@ -17,6 +18,7 @@ export function AdminReviewView() {
 
   const handleDeleteDataset = async () => {
     await callRejectDataset(dataset.id)
+    //todo this is not good, should use useEffects and useStates properly, refactor later
     setUpdate(update + 1)
     handleDatasetChange(null)
   }
@@ -30,6 +32,7 @@ export function AdminReviewView() {
     await flagDataset(query)
   }
 
+  //todo datasetId is passed but not used? looks like it should be used
   const handleApproveDataset = async (datasetId: IApprovedDatasetModel) => {
     const query: IFlaggedDatasetQuery = { datasetId: dataset.id, additionalComments: comment }
     await adminApprovedDataset(query)
@@ -55,17 +58,17 @@ export function AdminReviewView() {
         <Box p={4} pt={7}>
           <Typography variant='h5'>
             Datasets to be reviewed
-                    </Typography>
+          </Typography>
           <br></br>
           <AdminReviewList
-            datasets={datasetState}
+            datasets={[]}
             onChange={handleDatasetChange}
             update={update}
           />
           <br></br>
           <Button id="toggleEditButton" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;
-                <Button id="flagDatasetButton" color="primary" onClick={handleFlagDataset} variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
-                <Button id="deleteDatasetButton" color="primary" onClick={handleDeleteDataset} variant="contained">Delete</Button>
+          <Button id="flagDatasetButton" color="primary" onClick={handleFlagDataset} variant="contained">Flag</Button>&nbsp;&nbsp;&nbsp;
+          <Button id="deleteDatasetButton" color="primary" onClick={handleDeleteDataset} variant="contained">Delete</Button>
         </Box>
         <Box p={5}>
           <TextField
@@ -95,12 +98,15 @@ export function AdminReviewView() {
         <Grid container spacing={3}>
           <Grid xs={12}>
             {dataset &&
-              <DatasetUploadForm
-                onSubmit={handleApproveDataset}
-                initialDataset={dataset}
-                editable={editable}
-                buttonName="Approve Dataset"
-              />
+              <>
+                <DatasetForm
+                  onSubmit={handleApproveDataset}
+                  initialDataset={dataset}
+                  editable={editable}
+                  formikReference={formikReference}
+                />
+                <DefaultFormFooter formikReference={formikReference} />
+              </>
             }
           </Grid>
 

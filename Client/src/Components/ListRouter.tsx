@@ -8,7 +8,7 @@ import { AdminReviewView } from "./Admin/AdminReviewView"
 import BarChartIcon from '@material-ui/icons/BarChart'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
-import { DatasetUploadView } from "./DatasetUpload/DatasetUploadView"
+import { DatasetView } from "./DatasetUpload/DatasetView"
 import DonutSmallIcon from '@material-ui/icons/DonutSmall'
 import { FileUploadView } from "./FileUpload/FileUploadView"
 import ForgotPasswordView from "./Authentication/ForgotPasswordView"
@@ -18,7 +18,7 @@ import HomeView from "./Home/HomeView"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
 import LoginView from "./Authentication/LoginView"
-import MessageIcon from '@material-ui/icons/Message';
+import MessageIcon from '@material-ui/icons/Message'
 import { ProfileView } from "./Profile/ProfileView"
 import React from 'react'
 import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
@@ -37,10 +37,10 @@ interface IProps {
   to: string;
 }
 
-export const linkWidth: number = 240
+export const linkWidth = 240
 
 //# of datasets to review shown in side bar
-export const numOfDatasetsToReview = 10;
+export const numOfDatasetsToReview = 10
 
 
 export const ListItemLink = (props: IProps) => {
@@ -99,7 +99,7 @@ export const getRoutedViews = () => {
       <Route path={graphRoute} component={GraphView} />
       <Route path={fileUploadRoute} component={FileUploadView} />
       <Route path={searchRoute} component={SearchView} />
-      <Route path={newDatasetUploadRoute} component={DatasetUploadView} />
+      <Route path={newDatasetUploadRoute} component={DatasetView} />
       <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
       <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
       <Route path={aboutRoute} component={AboutView} />

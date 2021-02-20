@@ -1,22 +1,22 @@
-import { Box, Button, Grid, Modal, Paper, ThemeProvider, Typography } from '@material-ui/core'
-import { IDatasetModel, IMaterial } from '../../Models/Datasets/IDatasetModel'
-import React, { useState } from 'react'
+import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
+import React, { useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
-import { DatasetUploadForm } from './DatasetUploadForm'
+import { DatasetForm } from './DatasetForm'
+import { FormikProps } from 'formik'
+import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
-import { fixPartialForform } from './DatasetUploadView'
+import { fixPartialForform } from './DatasetView'
 import { useEffect } from 'react'
 
 interface IProps {
   datasetId: string,
   datasetName: string
-  editable: boolean
 }
-export const DatasetViewModal = (props: IProps) => {
-
-  const datasetId = props.datasetId
+export const DatasetFormModal = (props: IProps) => {
+  const formikReference = useRef<FormikProps<unknown>>()
+  const { datasetId, datasetName } = { ...props }
   const [open, setOpen] = useState(false)
   const [dataset, setDataset] = useState<IDatasetModel>()
 
@@ -32,13 +32,10 @@ export const DatasetViewModal = (props: IProps) => {
     }
   }, [])
 
-  const close = () => {
-    setOpen(false)
-  }
   return (
     <>
       <Grid item>
-        <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">{props.datasetName}</Button>
+        <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">{datasetName}</Button>
       </Grid>
       <Modal open={open}
         onClose={() => setOpen(false)}
@@ -51,11 +48,11 @@ export const DatasetViewModal = (props: IProps) => {
                 <CancelIcon color="primary" onClick={() => setOpen(false)} />
               </Grid>
             </Grid>
-            <DatasetUploadForm
-              onSubmit={close}
+            <DatasetForm
+              onSubmit={null}
               initialDataset={dataset}
-              editable={props.editable}
-              buttonName="Close"
+              editable={false}
+              formikReference={formikReference}
             />
           </Box>
         </Paper>

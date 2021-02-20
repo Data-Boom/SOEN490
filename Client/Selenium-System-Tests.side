@@ -1956,7 +1956,7 @@
       "id": "44f1dae8-74aa-446e-8c71-7d518be51dc1",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:3000/#/uploadDataset",
+      "target": "http://localhost:3000/#/dataset",
       "targets": [],
       "value": ""
     }, {
