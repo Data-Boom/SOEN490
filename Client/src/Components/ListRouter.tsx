@@ -8,7 +8,7 @@ import { AdminReviewView } from "./Admin/AdminReviewView"
 import BarChartIcon from '@material-ui/icons/BarChart'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DataCellAnalysisView } from "./DataCellAnalysis/DataCellAnalysisView"
-import { DatasetView } from "./DatasetUpload/DatasetUploadView"
+import { DatasetView } from "./DatasetUpload/DatasetView"
 import DonutSmallIcon from '@material-ui/icons/DonutSmall'
 import { FileUploadView } from "./FileUpload/FileUploadView"
 import ForgotPasswordView from "./Authentication/ForgotPasswordView"

@@ -1,13 +1,15 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
-import { DatasetForm } from '../DatasetUpload/DatasetUploadForm'
+import { DatasetForm } from '../DatasetUpload/DatasetForm'
+import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
+import { FormikValues } from 'formik'
 
 export function AdminReviewView() {
-
+  const formikReference = useRef<FormikValues>()
   const [datasetState, setDatasetState] = useState([])
   const [editable, setEditable] = useState(false)
   const [dataset, setDataset] = useState<IApprovedDatasetModel>()
@@ -95,11 +97,15 @@ export function AdminReviewView() {
         <Grid container spacing={3}>
           <Grid xs={12}>
             {dataset &&
-              <DatasetForm
-                onSubmit={handleApproveDataset}
-                initialDataset={dataset}
-                editable={editable}
-              />
+              <>
+                <DatasetForm
+                  onSubmit={handleApproveDataset}
+                  initialDataset={dataset}
+                  editable={editable}
+                  formikReference={formikReference}
+                />
+                <DefaultFormFooter formikReference={formikReference} />
+              </>
             }
           </Grid>
 

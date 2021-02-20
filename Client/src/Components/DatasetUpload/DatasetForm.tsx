@@ -14,7 +14,7 @@ interface IProps {
   initialDataset: IDatasetModel,
   editable: boolean,
   onSubmit(formDataset: IDatasetModel): void,
-  formikReference?: any
+  formikReference: any
 }
 
 interface DatasetUploadFormValues {

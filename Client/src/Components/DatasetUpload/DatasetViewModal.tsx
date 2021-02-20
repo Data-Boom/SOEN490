@@ -1,12 +1,14 @@
 import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
-import { DatasetForm } from './DatasetUploadForm'
+import { DatasetForm } from './DatasetForm'
+import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
+import { FormikValues } from 'formik'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
-import { fixPartialForform } from './DatasetUploadView'
+import { fixPartialForform } from './DatasetView'
 import { useEffect } from 'react'
 
 interface IProps {
@@ -14,8 +16,8 @@ interface IProps {
   datasetName: string
 }
 export const DatasetFormModal = (props: IProps) => {
-
-  const datasetId = props.datasetId
+  const formikReference = useRef<FormikValues>()
+  const { datasetId, datasetName } = { ...props }
   const [open, setOpen] = useState(false)
   const [dataset, setDataset] = useState<IDatasetModel>()
 
@@ -37,7 +39,7 @@ export const DatasetFormModal = (props: IProps) => {
   return (
     <>
       <Grid item>
-        <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">{props.datasetName}</Button>
+        <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">{datasetName}</Button>
       </Grid>
       <Modal open={open}
         onClose={() => setOpen(false)}
@@ -54,7 +56,9 @@ export const DatasetFormModal = (props: IProps) => {
               onSubmit={close}
               initialDataset={dataset}
               editable={false}
+              formikReference={formikReference}
             />
+            <DefaultFormFooter formikReference={formikReference} />
           </Box>
         </Paper>
 

@@ -1,9 +1,10 @@
-import { Box, Button, Container, Grid } from '@material-ui/core'
+import { Box, Container } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
-import { DatasetForm } from './DatasetUploadForm'
+import { DatasetForm } from './DatasetForm'
+import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FormikValues } from 'formik'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
@@ -18,6 +19,7 @@ interface IDatasetViewParams {
   datasetID: string
 }
 
+//todo im not sure this works at the end of the day need to find a better solution to some fields being undefined instead of default
 export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
   const dataset: IDatasetModel = {
     reference: partialDataset.reference || defaultDatasetModel.reference,
@@ -35,11 +37,11 @@ export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IData
 
 export const DatasetView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
-
   const formikReference = useRef<FormikValues>()
 
   const location = useLocation()
   const initialSentDataset = location.state as IDatasetModel
+  //todo not sure if this should be a state variable
   const [initialValues, setInitialValues] = useState(props.initialDataset || initialSentDataset || defaultDatasetModel)
   const [editable, setEditable] = useState(true)
 
@@ -70,19 +72,7 @@ export const DatasetView = (props: IProps) => {
           initialDataset={initialValues}
           formikReference={formikReference}
         />
-        <Grid container spacing={3} justify="center">
-          {props.initialDataset || initialSentDataset ?
-            <Grid item>
-              <Button id="form-submit" variant="outlined" color="primary" onClick={() => formikReference.current.resetForm()}>
-                Cancel
-              </Button>
-            </Grid> : null}
-          <Grid item>
-            <Button id="form-submit" variant="contained" color="primary" onClick={() => formikReference.current.handleSubmit()}>
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
+        <DefaultFormFooter formikReference={formikReference} />
       </Box>
     </Container>
   )
