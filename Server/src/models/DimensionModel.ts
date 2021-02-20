@@ -102,9 +102,8 @@ export class DimensionModel {
     let units = await Units.find();
 
     let dimensionModels = dimensions.map(dimension => {
-      let dimensionModel = Dimension.convertToModel(dimension);
-      let filteredUnits = units.filter(value => value.dimensionId == dimensionModel.id)
-      dimensionModel.units = Units.convertToModel(filteredUnits);
+      let filteredUnits = units.filter(value => value.dimensionId == dimension.id)
+      let dimensionModel = Dimension.convertToModel(dimension, filteredUnits);
       return dimensionModel;
     })
     return dimensionModels;
