@@ -1,4 +1,4 @@
-import { Box, Container } from '@material-ui/core'
+import { Box, Button, Container } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
@@ -66,9 +66,10 @@ export const DatasetUploadView = (props: IProps) => {
         <DatasetUploadForm
           onSubmit={handleSubmitForm}
           editable={editable}
-          buttonName="Save Dataset"
           initialDataset={initialValues}
+          submitComponent={null}
         />
+        <Button id="Save Dataset" variant="contained" color="primary" type="submit">Save Dataset</Button>
       </Box>
     </Container>
   )

@@ -2,7 +2,6 @@ import { Form, Formik } from 'formik'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 
-import { Button } from '@material-ui/core'
 import { DataForm } from './DataSection/DataForm'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
@@ -15,7 +14,7 @@ interface IProps {
   initialDataset: IDatasetModel,
   editable: boolean,
   onSubmit(formDataset: IDatasetModel): void,
-  buttonName: string
+  submitComponent: any
 }
 
 interface DatasetUploadFormValues {
@@ -25,7 +24,7 @@ interface DatasetUploadFormValues {
 }
 
 export const DatasetUploadForm = (props: IProps): any => {
-  const { initialDataset, onSubmit, editable, buttonName } = props
+  const { initialDataset, onSubmit, editable } = props
 
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
@@ -73,7 +72,6 @@ export const DatasetUploadForm = (props: IProps): any => {
         <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />
-        <Button id={buttonName} variant="contained" color="primary" type="submit">{buttonName}</Button>
       </Form>
     </Formik>
   )
