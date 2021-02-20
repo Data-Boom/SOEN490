@@ -1,29 +1,30 @@
-import { getConnection, MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner, getConnection } from "typeorm";
+
 import { Accounts } from "../models/entities/Accounts";
+import { AuthenticationService } from '../services/authenticationService';
 import { Authors } from "../models/entities/Authors";
 import { Category } from "../models/entities/Category";
 import { Composition } from "../models/entities/Composition";
+import { Datapointcomments } from "../models/entities/Datapointcomments";
 import { Datapoints } from "../models/entities/Datapoints";
 import { Dataset } from "../models/entities/Dataset";
 import { Datasetdatatype } from "../models/entities/Datasetdatatype";
+import { Graphstate } from "../models/entities/Graphstate";
 import { Material } from "../models/entities/Material";
 import { Publications } from "../models/entities/Publications";
 import { Publicationtype } from "../models/entities/Publicationtype";
 import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
-import { Graphstate } from "../models/entities/Graphstate";
 import { Subcategory } from "../models/entities/Subcategory";
-import { Units } from "../models/entities/Units";
-import { AuthenticationService } from '../services/authenticationService';
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
-import { Datapointcomments } from "../models/entities/Datapointcomments";
+import { Units } from "../models/entities/Units";
 
 export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 
     //TODO: Apply changes directly to DB before merge and remove statement
-    await queryRunner.query('ALTER TABLE publications DROP COLUMN dateAccessed, DROP COLUMN datePublished, ADD COLUMN issue int(11)');
+    // await queryRunner.query('ALTER TABLE publications DROP COLUMN dateAccessed, DROP COLUMN datePublished, ADD COLUMN issue int(11)');
 
     // Accounts Data
     let authenticationService = new AuthenticationService();
