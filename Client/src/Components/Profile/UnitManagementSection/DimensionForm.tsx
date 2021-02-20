@@ -96,11 +96,15 @@ export const DimensionForm = (props: IProps) => {
           </IconButton>
           <Typography align="left">{dimension.name}</Typography>
         </Grid>
-        <Grid item xs={5}>
-          {expanded ? null : renderBaseUnit()}
-        </Grid>
-        <Grid item xs={1}>
-          {expanded ? null : <Button id='unit-delete' onClick={handleDeleteDimension} variant="contained" color="primary" type="submit">Delete</Button>}
+        <Grid item xs={6}>
+          {expanded ? null :
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item>
+                {renderBaseUnit()}
+              </Grid>
+              <Button id='unit-delete' onClick={handleDeleteDimension} variant="contained" color="primary" type="submit">Delete</Button>
+            </Grid>
+          }
         </Grid>
       </Grid>
     )
