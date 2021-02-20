@@ -9,8 +9,9 @@ let dimensionsController = new DimensionsController();
 
 /**
  * This route is used when dealing with dimensions and units.
+ * **IMPORTANT**
+ * These routes are temporarily unprotected, but later need to be uncommented
  */
-
 // router.post('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
 router.post('/api/v1/dimensions', async (request: Request, response: Response, next: NextFunction) => {
   dimensionsController.createDimension(request, response, next);
