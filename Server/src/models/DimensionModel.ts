@@ -45,6 +45,9 @@ export class DimensionModel {
     for (const unit of dimensionUnits) {
       await this.validateUnitInUseDatapoint(unit);
     }
+    for (const unit of dimensionUnits) {
+      await Units.delete({ "id": unit.id });
+    }
     await Dimension.delete({ "id": dimensionId })
   }
 
