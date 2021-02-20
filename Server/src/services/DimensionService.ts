@@ -2,11 +2,11 @@ import 'dotenv/config';
 
 import { BadRequest, InternalServerError } from "@tsed/exceptions";
 
-import { IResponse } from '../genericInterfaces/ResponsesInterface'
-import { IDimensionModel } from '../models/interfaces/IDimension';
-import { DimensionModel } from '../models/DimensionModel';
-import { Units } from '../models/entities/Units';
 import { Dimension } from '../models/entities/Dimension';
+import { DimensionModel } from '../models/DimensionModel';
+import { IDimensionModel } from '../models/interfaces/IDimension';
+import { IResponse } from '../genericInterfaces/ResponsesInterface'
+import { Units } from '../models/entities/Units';
 
 /**
  * This class handles requests related to dimensions and units and also
