@@ -1,12 +1,11 @@
 import { ArrayHelpers, FastField } from "formik"
-import { Divider, Grid, IconButton, Tooltip, Typography } from "@material-ui/core"
+import { Grid, IconButton, Tooltip, Typography } from "@material-ui/core"
 
 import AddIcon from '@material-ui/icons/Add'
 import { IUnitModel } from "../../../../../Server/src/models/interfaces/IDimension"
 import { MuiTextFieldFormik } from "../../Forms/FormikFields"
 import React from 'react'
 import { UnitRow } from "./UnitRow"
-import { classStyles } from "../../../appTheme"
 import { newUnit } from "../../../Models/Profile/IDimensionModel"
 
 interface IProps {
@@ -27,7 +26,7 @@ export const UnitList = (props: IProps) => {
       return units && units.map((unit, index) => {
         if (unit.id == baseUnitId) {
           return (
-            <FastField name={`units[${index}].name`} label='Unit Name' component={MuiTextFieldFormik} />
+            <FastField name={`units[${index}].name`} label='Base Unit Name' component={MuiTextFieldFormik} />
           )
         }
       })
@@ -67,19 +66,16 @@ export const UnitList = (props: IProps) => {
 
   return (
     <>
-      <Grid item container direction='column' spacing={4} alignItems="flex-start">
+      <Grid container direction='column' spacing={2} alignItems="flex-start">
         <Grid item>
-          <Typography variant='h6' align="left">Base Unit Name:</Typography>
+          <Typography align="left">Base Units:</Typography>
         </Grid>
         <Grid item>
           {renderBaseUnitRow()}
         </Grid>
         <Grid item>
-          <Divider className={classStyles().divider} variant="middle" />
-        </Grid>
-        <Grid item>
           <Tooltip title="Example Formula for cm to m: u/100, where u is equal to 1" placement="top">
-            <Typography variant='h6' align="left">Units</Typography>
+            <Typography align="left">Units:</Typography>
           </Tooltip>
         </Grid>
         <Grid item>
