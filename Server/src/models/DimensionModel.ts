@@ -45,6 +45,9 @@ export class DimensionModel {
     for (const unit of dimensionUnits) {
       await this.validateUnitInUseDatapoint(unit);
     }
+    for (const unit of dimensionUnits) {
+      await Units.delete({ "id": unit.id });
+    }
     await Dimension.delete({ "id": dimensionId })
   }
 
@@ -101,9 +104,8 @@ export class DimensionModel {
     //console.log(units)
     //console.log("Here 2!")
     let dimensionModels = dimensions.map(dimension => {
-      let dimensionModel = Dimension.convertToModel(dimension);
-      let filteredUnits = units.filter(value => value.dimensionId == dimensionModel.id)
-      dimensionModel.units = Units.convertToModel(filteredUnits);
+      let filteredUnits = units.filter(value => value.dimensionId == dimension.id)
+      let dimensionModel = Dimension.convertToModel(dimension, filteredUnits);
       return dimensionModel;
     })
     console.log(dimensionModels)

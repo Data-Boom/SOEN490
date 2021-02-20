@@ -16,6 +16,7 @@ export interface IReference {
     authors: IAuthor[];
     title: string;
     volume: number;
+    issue: number;
     pages: number;
     year: number;
 }
