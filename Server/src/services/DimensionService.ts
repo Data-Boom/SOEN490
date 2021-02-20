@@ -1,8 +1,7 @@
 import 'dotenv/config';
 
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
+import { BadRequest } from "@tsed/exceptions";
 
-import { Dimension } from '../models/entities/Dimension';
 import { DimensionModel } from '../models/DimensionModel';
 import { IDimensionModel } from '../models/interfaces/IDimension';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
@@ -30,7 +29,7 @@ export class DimensionService {
     let name: boolean
     name = await this.dimensionModel.verifyIfNameExists(dimensionInfo.name);
     if (name) {
-      throw new BadRequest("This dimension already exists! Please enter different values");
+      throw new BadRequest("This dimension already exists! Please use different values");
     }
     else {
       try {
@@ -40,7 +39,7 @@ export class DimensionService {
         return this.requestResponse
       }
       catch (error) {
-        throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
+        throw new BadRequest(error.message);
       }
     }
   }
@@ -55,7 +54,7 @@ export class DimensionService {
       this.requestResponse.message = updatedDimension as any;
     }
     catch (error) {
-      throw new InternalServerError("Internal Server Issue. Please try again later", error.message);
+      throw new BadRequest(error.message);
     }
     this.requestResponse.statusCode = 200;
     return this.requestResponse
@@ -70,7 +69,7 @@ export class DimensionService {
       await this.dimensionModel.deleteDimension(dimensionId);
     }
     catch (error) {
-      throw new InternalServerError("Internal server error, please try again later", error.message);
+      throw new BadRequest(error.message);
     }
     this.requestResponse.message = "Success";
     this.requestResponse.statusCode = 200;
@@ -88,7 +87,7 @@ export class DimensionService {
       return this.requestResponse;
     }
     catch (error) {
-      throw new InternalServerError("Internal server error, please try again later", error.message)
+      throw new BadRequest(error.message);
     }
   }
 
@@ -101,7 +100,7 @@ export class DimensionService {
       return this.dimensionModel.getDimensionUnits(dimensionId)
     }
     catch (error) {
-      return []
+      throw new BadRequest(error.message);
     }
   }
 }

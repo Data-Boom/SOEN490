@@ -1,5 +1,5 @@
-import { BadRequest, InternalServerError } from "@tsed/exceptions";
-import { IDimensionModel, IUnitModel } from './interfaces/IDimension';
+import { BadRequest } from "@tsed/exceptions";
+import { IDimensionModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
 import { Datapoints } from "./entities/Datapoints";
@@ -41,6 +41,10 @@ export class DimensionModel {
   * @param dimensionId - dimension id that needs to be deleted
   */
   async deleteDimension(dimensionId: number) {
+    let dimensionUnits = await Units.find({ where: { "dimensionId": dimensionId } });
+    for (const unit of dimensionUnits) {
+      await this.validateUnitInUseDatapoint(unit);
+    }
     await Dimension.delete({ "id": dimensionId })
   }
 
@@ -53,30 +57,30 @@ export class DimensionModel {
   */
   async updateDimension(dimensionInfo: IDimensionModel): Promise<IDimensionModel> {
     let unitIds: number[] = dimensionInfo.units.map(value => value.id);
-    // Check to see if there are units already with the same dimensionId
     let foundUnits = await Units.find({ where: { dimensionId: dimensionInfo.id } });
-    // Check if any of the found units are already in use in datapoints table
-    const checkForDeletion = async () => {
-      for (const element of foundUnits) {
-        // Check if the found unitId from the database doesn't match with the one sent from frontend, then it needs to be removed from database
-        if (!unitIds.includes(element.id)) {
-          let foundUnit = await Datapoints.find({ where: { "unitsId": element.id } })
-          if (foundUnit.length != 0) {
-            throw new BadRequest(`UnitId ${element.id} is already in use`);
-          }
-          await Units.delete({ "id": element.id });
-        }
+    for (const element of foundUnits) {
+      if (!unitIds.includes(element.id)) {
+        await this.validateUnitInUseDatapoint(element);
+        await Units.delete({ "id": element.id });
       }
     }
-    await checkForDeletion();
-    // Transform UnitModel[] into Units[]
-    let units: Units[] = Units.convertToUnits(dimensionInfo.units, dimensionInfo.id)
+    let units = Units.convertToUnits(dimensionInfo.units, dimensionInfo.id)
     let savedUnits = await Units.save(units);
     dimensionInfo.units = Units.convertToModel(savedUnits);
-    // Transform DimensionModel into Dimension
     let dimension = Dimension.convertToDimension(dimensionInfo);
     await Dimension.save(dimension);
     return dimensionInfo;
+  }
+
+  /**
+   * Validates a unit entity before deletion to make sure it is not in use in datapoints
+   * @param unit - entity that needs to be checked
+   */
+  private async validateUnitInUseDatapoint(unit: Units) {
+    let foundUnit = await Datapoints.find({ where: { "unitsId": unit.id } })
+    if (foundUnit.length != 0) {
+      throw new BadRequest(`Can't remove a unit since it is already in use in datapoints`);
+    }
   }
 
   /**
