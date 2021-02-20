@@ -428,9 +428,9 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     // Units below this line
 
-    let volumeDimension = new Dimension();
-    volumeDimension.id;
-    volumeDimension.name = "Volume";
+    let temperatureDimension = new Dimension();
+    temperatureDimension.id;
+    temperatureDimension.name = "Temperature";
 
     let densityDimension = new Dimension();
     densityDimension.id;
@@ -472,9 +472,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
 
-    densityDimension.units = [unitsCCG, unitsGCC];
+    densityDimension.baseUnit = unitsGCC;
+    densityDimension.baseUnitId = unitsGCC.id;
 
-    volumeDimension.units = [unitsKelvin];
+    temperatureDimension.baseUnit = unitsKelvin;
+    temperatureDimension.baseUnitId = unitsKelvin.id;
 
     await connection.manager.save(unitsNone);
     await connection.manager.save(unitsCCG);
@@ -486,7 +488,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await connection.manager.save(unitsGigapascal);
     await connection.manager.save(unitsKelvin);
 
-    await connection.manager.save(volumeDimension);
+    await connection.manager.save(temperatureDimension);
     await connection.manager.save(densityDimension);
 
     // Data points below this line. 
