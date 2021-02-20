@@ -10,7 +10,6 @@ import { FormikValues } from 'formik'
 
 export function AdminReviewView() {
   const formikReference = useRef<FormikValues>()
-  const [datasetState, setDatasetState] = useState([])
   const [editable, setEditable] = useState(false)
   const [dataset, setDataset] = useState<IApprovedDatasetModel>()
   const [comment, setComment] = useState("")
@@ -60,7 +59,7 @@ export function AdminReviewView() {
           </Typography>
           <br></br>
           <AdminReviewList
-            datasets={datasetState}
+            datasets={[]}
             onChange={handleDatasetChange}
             update={update}
           />
