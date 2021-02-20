@@ -5,28 +5,28 @@ import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetMod
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel';
 
 interface IProps {
-    dataset: IDatasetModel,
-    handleApproveDataset(datasetId: number): void,
-    handleDeleteDataset: () => void,
-    handleEditDataset(): void
+  dataset: IDatasetModel,
+  handleApproveDataset(datasetId: number): void,
+  handleDeleteDataset: () => void,
+  handleEditDataset(): void
 }
 
 export const ModalFooter = (props: IProps) => {
-    const { handleApproveDataset, handleDeleteDataset, handleEditDataset } = { ...props }
-    return (
-        <>
-            <Grid container xs={9} sm={11} spacing={4} style={{ margin: 2 }}>
-                <Grid item sm={2}></Grid>
-                <Grid item xs={3} sm={3}>
-                    <Button id="edit-dataset" onClick={handleEditDataset} color="primary" variant="contained">{'Edit Dataset'}</Button>
-                </Grid>
-                <Grid item xs={3} sm={3}>
-                    <Button id="approve-dataset" onClick={() => handleApproveDataset(props.dataset.id)} color="primary" variant="contained">{"Approve Dataset"}</Button>
-                </Grid>
-                <Grid item xs={3} sm={3}>
-                    <Button id="delete-dataset" onClick={handleDeleteDataset} color="secondary" variant="contained">{'Delete Dataset'}</Button>
-                </Grid>
-            </Grid>
-        </>
-    )
+  const { handleApproveDataset, handleDeleteDataset, handleEditDataset } = { ...props }
+  return (
+    <>
+      <Grid container xs={9} sm={11} spacing={4} style={{ margin: 2 }}>
+        <Grid item sm={2}></Grid>
+        <Grid item xs={3} sm={3}>
+          <Button id="edit-dataset" onClick={handleEditDataset} color="primary" variant="contained">{'Edit Dataset'}</Button>
+        </Grid>
+        <Grid item xs={3} sm={3}>
+          <Button id="approve-dataset" onClick={() => handleApproveDataset(props.dataset.id)} color="primary" variant="contained">{"Approve Dataset"}</Button>
+        </Grid>
+        <Grid item xs={3} sm={3}>
+          <Button id="delete-dataset" onClick={handleDeleteDataset} color="secondary" variant="contained">{'Delete Dataset'}</Button>
+        </Grid>
+      </Grid>
+    </>
+  )
 }

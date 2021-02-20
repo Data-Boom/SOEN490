@@ -9,36 +9,36 @@ import { classStyles } from "../../appTheme";
 import { getUserFlaggedDatasets } from "../../Remote/Endpoints/UserEndpoint";
 
 interface IProps {
-    userDatasets: IApprovedDatasetModel[],
+  userDatasets: IApprovedDatasetModel[],
 }
 
 export const UserReviewView = (props: IProps) => {
-    const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>([])
+  const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>([])
 
-    useEffect(() => {
-        const fetchUserDatasets = async () => {
-            const userDatasets: IApprovedDatasetModel[] = await getUserFlaggedDatasets()
-            setDatasets(userDatasets)
-        }
-        fetchUserDatasets()
-    }, [])
+  useEffect(() => {
+    const fetchUserDatasets = async () => {
+      const userDatasets: IApprovedDatasetModel[] = await getUserFlaggedDatasets()
+      setDatasets(userDatasets)
+    }
+    fetchUserDatasets()
+  }, [])
 
-    return (
-        <TableContainer component={Paper} style={{ width: "100%" }} >
-            <Table aria-label="collapsible table" >
-                <Typography variant='h5'>
-                    Datasets to be reviewed
+  return (
+    <TableContainer component={Paper} style={{ width: "100%" }} >
+      <Table aria-label="collapsible table" >
+        <Typography variant='h5'>
+          Datasets to be reviewed
                 </Typography>
-                <TableRow>
-                    <Grid container justify="center" spacing={3}>
-                        < UserReviewList
-                            userDatasets={datasets}
-                        />
-                    </Grid>
-                </TableRow>
-            </Table>
-        </TableContainer>
-    )
+        <TableRow>
+          <Grid container justify="center" spacing={3}>
+            < UserReviewList
+              userDatasets={datasets}
+            />
+          </Grid>
+        </TableRow>
+      </Table>
+    </TableContainer>
+  )
 }
 
 
