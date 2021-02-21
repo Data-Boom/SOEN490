@@ -1,17 +1,25 @@
 import { Box, Grid, Typography, IconButton } from "@material-ui/core"
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 import { Link } from 'react-router-dom'
-import React from 'react'
+import React, { useState } from 'react'
 import { classStyles } from '../../appTheme'
 import CancelIcon from '@material-ui/icons/Cancel';
 import { ConfirmationModal } from '../Authentication/ConfirmationModal';
 
 interface IGraphModel {
     graphset: IGraphStateModel,
+    handleRemoveGraphSet: (graphsetID: string) => void
 }
 
 export const ProfileGraphRow = (props: IGraphModel) => {
-    const { graphset } = { ...props }
+    const { graphset, handleRemoveGraphSet } = { ...props }
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false)
+
+    const onHandleRemoveGraphSet = async (removeGraphSetID: string) => {
+        setConfirmModalOpen(true)
+        handleRemoveGraphSet(removeGraphSetID)
+    }
+
 
     return (
         <Grid container justify="center" spacing={3}>
@@ -25,9 +33,18 @@ export const ProfileGraphRow = (props: IGraphModel) => {
                 </Box>
             </Grid>
             <IconButton aria-label="delete" color="secondary" >
-                <CancelIcon onClick={() => { alert('clicked') }} />
+                <CancelIcon onClick={() => setConfirmModalOpen(true)} />
                 {/**call delete dataset endpoint? */}
             </IconButton>
+            <ConfirmationModal
+                title="Are you sure you want to remove this graph set?"
+                description="By clicking the Remove button the user will no longer be able to view the saved graph set"
+                acceptButton="Remove"
+                cancelButton="Cancel"
+                open={confirmModalOpen}
+                onClose={() => setConfirmModalOpen(false)}
+                onSubmit={() => onHandleRemoveGraphSet(graphset.id)}
+            />
         </Grid >
     )
 }
