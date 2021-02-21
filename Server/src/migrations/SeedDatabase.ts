@@ -17,13 +17,13 @@ import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
-import { Datapointcomments } from "../models/entities/Datapointcomments";
 import { Dimension } from "../models/entities/Dimension";
+import { Units } from "../models/entities/Units";
 
 export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
-    
+
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
