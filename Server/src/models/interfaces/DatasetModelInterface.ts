@@ -21,9 +21,9 @@ export interface IAuthorModel {
 }
 
 export interface IDatasetInfoModel {
-    name: string
+    dataset_name: string
     comments: string
-    datasetDataType: string
+    data_type: string
     category: string
     subcategory: string
 }
@@ -44,9 +44,9 @@ export interface IDataPointModel {
 
 export interface IClientDatasetModel {
     reference: IPublicationModel
-    dataset_id: number
+    id: number
     dataset_info: IDatasetInfoModel
-    materials: IMaterialModel[]
+    material: IMaterialModel[]
     dataPoints: IDataPointModel[]
     dataPointComments: string[]
 }

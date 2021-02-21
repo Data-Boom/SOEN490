@@ -5,7 +5,7 @@ import { Category } from "../entities/Category";
 import { Composition } from "../entities/Composition";
 import { selectAllDataPointCommentsQuery } from "../entities/Datapointcomments";
 import { selectDataPointsQuery } from "../entities/Datapoints";
-import { selectDatasetIdsQuery, selectAllDatasetsQuery } from "../entities/Dataset";
+import { selectDatasetIdsQuery, selectDatasetsQuery } from "../entities/Dataset";
 import { selectAllMaterialQuery } from "../entities/Material";
 import { Publications, selectPublicationsQuery } from "../entities/Publications";
 import { Subcategory } from "../entities/Subcategory";
@@ -221,7 +221,9 @@ export class DataQueryModel {
         this.parseDataPoints(datapointData)
         let datapointComments = await selectAllDataPointCommentsQuery(this.connection, id) || {}
         this.parseDataPointComments(datapointComments)
-        let completeDatasetData = await selectAllDatasetsQuery(this.connection, id)
+        let completeDatasetData = await selectDatasetsQuery(this.connection)
+            .whereInIds(id)
+            .getRawMany();
         let allData = [publicationData, authorData, completeDatasetData, materialData, datapointData, datapointComments]
         return allData;
     }

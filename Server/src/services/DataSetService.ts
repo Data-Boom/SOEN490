@@ -192,11 +192,11 @@ export class DataSetService {
             let allDataSets: Array<IClientDatasetModel> = [];
             let currentDataset: number = 0
             for (let index = 0; index < selectedDatasetIds.length; index++) {
-                currentDataset = rawData[2][index].dataset_id
+                currentDataset = rawData[2][index].id
                 datasetInfo = {
-                    name: rawData[2][index]?.name,
+                    dataset_name: rawData[2][index]?.dataset_name,
                     comments: rawData[2][index]?.comments,
-                    datasetDataType: rawData[2][index]?.datasetdatatype,
+                    data_type: rawData[2][index]?.data_type,
                     category: rawData[2][index]?.category,
                     subcategory: rawData[2][index]?.subcategory
                 }
@@ -259,9 +259,9 @@ export class DataSetService {
 
                 singleDataSet = {
                     reference: publication,
-                    dataset_id: currentDataset,
+                    id: currentDataset,
                     dataset_info: datasetInfo,
-                    materials: allMaterialData,
+                    material: allMaterialData,
                     dataPoints: allDataPointData,
                     dataPointComments: dataPointComments
                 }
@@ -386,11 +386,11 @@ export class DataSetService {
         for (let i = 0; i < incompletDatasets.length; i++) {
             compiledDataset = {
                 reference: incompletDatasets[i].reference,
-                dataset_id: incompletDatasets[i].dataset_id,
+                id: incompletDatasets[i].id,
                 dataset_info: incompletDatasets[i].dataset_info,
                 datasetIsFlagged: approvalData[i].isFlagged,
                 datasetFlaggedComment: approvalData[i].flaggedComment,
-                materials: incompletDatasets[i].materials,
+                material: incompletDatasets[i].material,
                 dataPoints: incompletDatasets[i].dataPoints,
                 dataPointComments: incompletDatasets[i].dataPointComments
             }

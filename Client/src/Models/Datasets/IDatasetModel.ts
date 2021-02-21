@@ -14,8 +14,6 @@ export const newAuthor: IAuthor = {
 export interface IReference {
   type: string,
   doi?: string,
-  dateAccessed?: Date,
-  datePublished?: Date,
   publisher: string,
   authors: IAuthor[],
   title: string,
@@ -33,14 +31,14 @@ export interface IMaterial {
 
 export interface IVariable {
   name: string,
-  repr: string,
-  units: string,
+  unitId: number,
+  dimensionId: number
 }
 
 export const newVariable: IVariable = {
   name: '',
-  repr: '',
-  units: '',
+  unitId: 0,
+  dimensionId: 0,
 }
 
 export interface IContent {
