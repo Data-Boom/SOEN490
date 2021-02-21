@@ -82,7 +82,7 @@ export class DimensionModel {
   private async validateUnitInUseDatapoint(unit: Units) {
     let foundUnit = await Datapoints.find({ where: { "unitsId": unit.id } })
     if (foundUnit.length != 0) {
-      throw new BadRequest(`Can't remove a unit since it is already in use in datapoints`);
+      throw new BadRequest(`Can't remove a unit as it is used by one or more data points`);
     }
   }
 
