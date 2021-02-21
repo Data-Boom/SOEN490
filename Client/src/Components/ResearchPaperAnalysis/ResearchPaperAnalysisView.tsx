@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from '@material-ui/core'
 import React, { useState } from 'react'
 
-import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
+import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
@@ -63,7 +63,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     <>
       {!analyzedDataset ?
         paperUploadSection() :
-        <DatasetUploadView initialDataset={analyzedDataset} />
+        <DatasetView initialDataset={analyzedDataset} />
       }
       <Loader
         type='Bars'

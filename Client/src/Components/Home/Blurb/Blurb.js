@@ -12,7 +12,7 @@ export default function Blurb() {
           <Link to={"graph"}><h1 className="Header">Graphs</h1></Link>
         </Grid>
         <Grid item sm={2}>
-          <Link to={"uploadDataset"}><h1 className="Header">Uploads</h1></Link>
+          <Link to={"dataset"}><h1 className="Header">Uploads</h1></Link>
         </Grid>
         <Grid item sm={2}>
           <Link to={"log-in"}><h1 className="Header">Accounts</h1></Link>
