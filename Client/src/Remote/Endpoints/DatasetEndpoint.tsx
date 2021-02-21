@@ -5,8 +5,7 @@ import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IRemoteApprovedDatasetModel } from "../../Models/Datasets/IRemoteApprovedDatasetModel"
 import { ISearchDatasetsFormModel } from "../../Components/Search/ISearchDatasetsFormModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
-
-//import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
+import { toLocalDatasets } from "../../Models/Datasets/IRemoteDatasetModel"
 
 const userUploadedDatasetsRoute = '/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets'
 const userSavedDatasetsRoute = '/api/v1/dataset/userSavedDatsets/:userSavedDatsets'
@@ -18,8 +17,8 @@ const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
 
 export const callGetDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
   const result = await get(datasetRoute).withQuery(query).json()
-  //const localDatasets = toLocalDatasets(result)
-  return result //localDatasets
+  const localDatasets = toLocalDatasets(result)
+  return localDatasets
 }
 
 export const callSaveDataset = async (dataset: IDatasetModel): Promise<number> => {
@@ -29,8 +28,8 @@ export const callSaveDataset = async (dataset: IDatasetModel): Promise<number> =
 
 export const getUnapprovedDatasets = async (): Promise<IRemoteApprovedDatasetModel[]> => {
   const remoteDatasets: IRemoteApprovedDatasetModel[] = await get(unapprovedDatasetsRoute).json()
-  // const localDatasets = toLocalApprovedDatasets(remoteDatasets)
-  return remoteDatasets //localDatasets
+  const localDatasets = toLocalApprovedDatasets(remoteDatasets)
+  return localDatasets
 }
 
 export const flagDataset = async (query: IFlaggedDatasetQuery) => {
