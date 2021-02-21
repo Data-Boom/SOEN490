@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { UnitForm } from './UnitForm'
 import { UnitValidationSchema } from './UnitsValidationSchema'
-import { callAddDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
+import { callAddDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
