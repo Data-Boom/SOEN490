@@ -28,6 +28,18 @@ describe('Fetch All Categories Materials Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
+    test('Invalid Remove Admin Permissions Request; user not an admin', async () => {
+        mockRequest = {
+            body: {
+                email: 'admin@potential.com',
+                operation: 'remove'
+            }
+        }
+        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("User does not have admin permissions!");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
     test('Valid Set User as Admin Request', async () => {
         mockRequest = {
             body: {
@@ -50,6 +62,18 @@ describe('Fetch All Categories Materials Controller ', () => {
         await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Admin permissions successfully revoked");
         expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Invalid Set User as Admin Request; user already admin', async () => {
+        mockRequest = {
+            body: {
+                email: 'j@kj.com',
+                operation: 'add'
+            }
+        }
+        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("User is already an administrator!");
+        expect(mockResponse.status).toBeCalledWith(400);
     });
 
     test('Invalid Admin Permissions Change; Invalid Operation', async () => {

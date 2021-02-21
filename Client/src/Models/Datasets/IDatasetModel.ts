@@ -20,7 +20,8 @@ export interface IReference {
   authors: IAuthor[],
   title: string,
   volume: number,
-  pages: number,
+  issue: number,
+  pages: string,
   year: number,
 }
 
@@ -79,11 +80,12 @@ export const defaultDatasetModel: IDatasetModel = {
   material: [],
   reference: {
     authors: [newAuthor],
-    pages: 0,
+    pages: null,
     publisher: '',
     title: '',
     type: '',
-    volume: 0,
+    volume: null,
+    issue: null,
     year: 0
   },
   subcategory: '',
@@ -315,7 +317,8 @@ export const exampleExportDatasetModel: IDatasetModel = {
     ],
     "title": "LASL shock Hugoniot data",
     "volume": 5,
-    "pages": 19,
+    "issue": 1,
+    "pages": "19",
     "year": 1980
   },
   "id": 1234,
@@ -354,7 +357,8 @@ export const example2: IDatasetModel = {
     ],
     "title": "LASL shock Hugoniot data",
     "volume": 5,
-    "pages": 19,
+    "issue": 1,
+    "pages": "19-25",
     "year": 1980
   },
   "id": 1234,
