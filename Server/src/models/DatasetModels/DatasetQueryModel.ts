@@ -7,7 +7,7 @@ import { selectAllDataPointCommentsQuery } from "../entities/Datapointcomments";
 import { selectDataPointsQuery } from "../entities/Datapoints";
 import { selectDatasetIdsQuery, selectAllDatasetsQuery } from "../entities/Dataset";
 import { selectAllMaterialQuery } from "../entities/Material";
-import { Publications, selectAllPublicationsQuery } from "../entities/Publications";
+import { Publications, selectPublicationsQuery } from "../entities/Publications";
 import { Subcategory } from "../entities/Subcategory";
 import { IDatasetIDModel, IDataPointModel } from "../interfaces/DatasetModelInterface";
 
@@ -210,7 +210,9 @@ export class DataQueryModel {
      * A data set ID: number
      */
     async getAllData(id: number[]): Promise<any> {
-        let publicationData = await selectAllPublicationsQuery(this.connection, id)
+        let publicationData = await selectPublicationsQuery(this.connection)
+            .whereInIds(id)
+            .getRawMany();
         let authorData = await selectAllAuthorsQuery(this.connection, id)
         let materialData = await selectAllMaterialQuery(this.connection, id)
         let datapointData: IDataPointModel[] = await selectDataPointsQuery(this.connection)

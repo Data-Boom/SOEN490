@@ -44,7 +44,7 @@ describe('data set service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.year).toEqual(1980);
+    expect(arrayOfData[0].reference.year).toEqual(1980);
     done()
   });
 
@@ -77,7 +77,7 @@ describe('data set service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.authors[0])
+    expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
@@ -93,7 +93,7 @@ describe('data set service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.authors[0])
+    expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
@@ -109,7 +109,7 @@ describe('data set service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.authors[0])
+    expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
@@ -155,7 +155,7 @@ describe('data set service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.year).toEqual(1980);
+    expect(arrayOfData[0].reference.year).toEqual(1980);
     expect(arrayOfData[0].materials[0])
       .toEqual(expect.objectContaining({ composition: "C" }));
     done()

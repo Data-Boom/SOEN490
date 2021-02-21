@@ -3,14 +3,14 @@ export interface IDatasetIDModel {
 }
 
 export interface IPublicationModel {
-    name: string
-    DOI: string
+    title: string
+    doi: string
     pages: number
     volume: number
     issue: number
     year: string
     publisher: string
-    publicationType: string
+    type: string
     authors: IAuthorModel[]
 }
 
@@ -43,7 +43,7 @@ export interface IDataPointModel {
 }
 
 export interface IClientDatasetModel {
-    publication: IPublicationModel
+    reference: IPublicationModel
     dataset_id: number
     dataset_info: IDatasetInfoModel
     materials: IMaterialModel[]

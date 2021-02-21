@@ -258,7 +258,7 @@ export class DataSetService {
                 }
 
                 singleDataSet = {
-                    publication: publication,
+                    reference: publication,
                     dataset_id: currentDataset,
                     dataset_info: datasetInfo,
                     materials: allMaterialData,
@@ -385,7 +385,7 @@ export class DataSetService {
         let compiledDataset: IApprovalDatasetModel
         for (let i = 0; i < incompletDatasets.length; i++) {
             compiledDataset = {
-                publication: incompletDatasets[i].publication,
+                reference: incompletDatasets[i].reference,
                 dataset_id: incompletDatasets[i].dataset_id,
                 dataset_info: incompletDatasets[i].dataset_info,
                 datasetIsFlagged: approvalData[i].isFlagged,
