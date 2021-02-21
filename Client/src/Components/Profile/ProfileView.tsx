@@ -12,7 +12,7 @@ import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import PermissionsTab from './PermissionsSection/PermissionsTab'
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
-import { listGraphStates, callDeleteGraphState } from '../../Remote/Endpoints/GraphStateEndpoint'
+import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
 
 
 // Tab code taken from: https://material-ui.com/components/tabs/

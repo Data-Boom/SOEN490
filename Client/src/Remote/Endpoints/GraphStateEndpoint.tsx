@@ -4,7 +4,6 @@ import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 
 //todo validate list graph states works
 const graphStateRoute = '/api/v1/graphState'
-const deleteGraphStateRoute = '/api/v1/graphState/:graphStateId'
 
 export const listGraphStates = async (): Promise<IGraphStateModel[]> => {
   const result: IGraphStateModel[] = await get(graphStateRoute).json()
