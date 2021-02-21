@@ -1,8 +1,8 @@
-import { ISignUpUserModel, IResetPasswordModel, IForgotPasswordModel, ILoginUserModel } from "../../Models/Authentication/ISignUpModel"
+import { IForgotPasswordModel, ILoginUserModel, IResetPasswordModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
-import { post } from "../FluentRequest"
 import { forgotPasswordRoute } from "../../Common/Consts/Routes"
+import { post } from "../FluentRequest"
 
 export const resetPasswordRoute = '/api/v1/resetPassword/:resetToken?'
 const signupRoute = '/api/v1/signup'
@@ -23,8 +23,8 @@ export const callLogIn = async (loginUser: ILoginUserModel): Promise<any> => {
 }
 
 export const callLogout = async (): Promise<any> => {
-  const result = await post(logoutRoute).json();
-  return result;
+  const result = await post(logoutRoute).json()
+  return result
 }
 
 export const callResetPassword = async (resetPasswordInfo: IResetPasswordModel): Promise<any> => {
