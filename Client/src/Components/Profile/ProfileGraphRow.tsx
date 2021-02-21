@@ -20,7 +20,6 @@ export const ProfileGraphRow = (props: IGraphModel) => {
         handleRemoveGraphSet(removeGraphSetID)
     }
 
-
     return (
         <Grid container justify="center" spacing={3}>
             <Grid item xs={3}>
@@ -32,19 +31,20 @@ export const ProfileGraphRow = (props: IGraphModel) => {
                     </Link>
                 </Box>
             </Grid>
-            <IconButton aria-label="delete" color="secondary" >
-                <CancelIcon onClick={() => setConfirmModalOpen(true)} />
-                {/**call delete dataset endpoint? */}
-            </IconButton>
-            <ConfirmationModal
-                title="Are you sure you want to remove this graph set?"
-                description="By clicking the Remove button the user will no longer be able to view the saved graph set"
-                acceptButton="Remove"
-                cancelButton="Cancel"
-                open={confirmModalOpen}
-                onClose={() => setConfirmModalOpen(false)}
-                onSubmit={() => onHandleRemoveGraphSet(graphset.id)}
-            />
+            <Grid>
+                <IconButton aria-label="delete" color="secondary" >
+                    <CancelIcon onClick={() => setConfirmModalOpen(true)} />
+                </IconButton>
+                <ConfirmationModal
+                    title="Are you sure you want to remove this graph set?"
+                    description="By clicking the Remove button the user will no longer be able to view the saved graph set"
+                    acceptButton="Remove"
+                    cancelButton="Cancel"
+                    open={confirmModalOpen}
+                    onClose={() => setConfirmModalOpen(false)}
+                    onSubmit={() => onHandleRemoveGraphSet(graphset.id)}
+                />
+            </Grid>
         </Grid >
     )
 }
