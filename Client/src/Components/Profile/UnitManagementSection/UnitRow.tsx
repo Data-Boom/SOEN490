@@ -1,5 +1,5 @@
-import { Box, Grid, IconButton, Tooltip } from "@material-ui/core"
-import { Equation, EquationEvaluate, EquationOptions, defaultErrorHandler } from "react-equation"
+import { EquationEvaluate, defaultErrorHandler } from "react-equation"
+import { Grid, IconButton } from "@material-ui/core"
 
 import ClearIcon from '@material-ui/icons/Clear'
 import { FastField } from "formik"
@@ -26,26 +26,24 @@ export const UnitRow = (props: IProps) => {
   }
 
   return (
-    <Box>
-      <Grid item container spacing={4}>
-        <Grid item>
-          <FastField name={`units[${index}].name`} label='Unit Name' component={MuiTextFieldFormik} />
-        </Grid>
-        <Grid item>
-          <FastField name={`units[${index}].conversionFormula`} label='Conversion to Base' component={MuiTextFieldFormik} />
-        </Grid>
-        <Grid item>
-
-          <EquationEvaluate
-            value={conversionFormula || 'u'}
-            variables={{ u: { type: 'number', value: 1 } }}
-            errorHandler={defaultErrorHandler}
-          />
-        </Grid>
-        <Grid item>
-          {removable ? removeButton() : null}
-        </Grid>
+    <Grid item container spacing={4} alignItems="center">
+      <Grid item>
+        <FastField name={`units[${index}].name`} label='Unit Name' component={MuiTextFieldFormik} />
       </Grid>
-    </Box>
+      <Grid item>
+        <FastField name={`units[${index}].conversionFormula`} label='Conversion to Base' component={MuiTextFieldFormik} />
+      </Grid>
+      <Grid item>
+
+        <EquationEvaluate
+          value={conversionFormula || 'u'}
+          variables={{ u: { type: 'number', value: 1 } }}
+          errorHandler={defaultErrorHandler}
+        />
+      </Grid>
+      <Grid item>
+        {removable ? removeButton() : null}
+      </Grid>
+    </Grid>
   )
 }
