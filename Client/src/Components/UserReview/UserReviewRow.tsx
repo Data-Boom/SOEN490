@@ -2,23 +2,25 @@ import { Box, Button, Grid } from "@material-ui/core"
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef, useState } from "react"
-import { adminApprovedDataset, callRejectDataset, submitEditedDataset } from "../../Remote/Endpoints/DatasetEndpoint"
+import { approvedDataset, callRejectDataset, submitEditedDataset } from "../../Remote/Endpoints/DatasetEndpoint"
 
 import { DatasetModal } from "./DatasetModal"
 import { FormikProps } from 'formik'
 import { IFormProps } from "../Forms/IFormikForm"
 
 interface IProps {
-  dataset: IApprovedDatasetModel,
+  dataset: IApprovedDatasetModel
 }
 
 export const UserReviewRow = (props: IProps) => {
 
   const [open, setOpen] = useState(false)
-  //const [dataset, setDataset] = useState<IDatasetModel>()
   const formikReference = useRef<FormikProps<unknown>>()
   const { dataset } = { ...props }
 
+  const reload = () => {
+    setTimeout(window.location.reload() as any, 200)
+  }
 
   const handleDeleteDataset = async () => {
     await callRejectDataset(dataset.id)
@@ -28,20 +30,16 @@ export const UserReviewRow = (props: IProps) => {
 
   const handleApproveDataset = async (datasetId: number) => {
     const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
-    await adminApprovedDataset(query)
+    await approvedDataset(query)
     setOpen(false)
     reload()
   }
 
-  const handleSubmitDataset = (formDataset: IDatasetModel) => {
+  const handleSubmitDataset = async (formDataset: IDatasetModel) => {
     const newAppovalDataset: IApprovedDatasetModel = { ...formDataset, datasetFlaggedComment: dataset.datasetFlaggedComment, datasetIsFlagged: dataset.datasetIsFlagged }
-    submitEditedDataset(newAppovalDataset)
+    await submitEditedDataset(newAppovalDataset)
     setOpen(false)
     reload()
-  }
-
-  const reload = () => {
-    window.location.reload()
   }
 
   return (

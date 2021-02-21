@@ -1,12 +1,9 @@
-import { Box, Grid, List, Paper, Table, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core"
-import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel";
+import { Grid, Paper, Table, TableContainer, TableRow, Typography } from "@material-ui/core"
 import React, { useEffect, useState } from 'react'
-import { adminApprovedDataset, callRejectDataset } from "../../Remote/Endpoints/DatasetEndpoint";
 
-import { DatasetModal } from "./DatasetModal";
-import { UserReviewList } from "./UserReviewList";
-import { classStyles } from "../../appTheme";
-import { getUserFlaggedDatasets } from "../../Remote/Endpoints/UserEndpoint";
+import { IApprovedDatasetModel } from "../../Models/Datasets/IApprovedDatasetModel"
+import { UserReviewList } from "./UserReviewList"
+import { getUserFlaggedDatasets } from "../../Remote/Endpoints/UserEndpoint"
 
 interface IProps {
   userDatasets: IApprovedDatasetModel[],

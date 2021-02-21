@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Link, Paper, Typography } from '@material-ui/core'
+import { Box, Grid, Paper, Typography } from '@material-ui/core'
 import React, { useEffect, useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
@@ -9,7 +9,6 @@ import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Modal from '@material-ui/core/Modal/Modal'
 import { ModalFooter } from './ModalFooter'
 import { ModalFooterApprove } from './ModalFooterApprove'
-import { callRejectDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
 import { fixPartialForform } from '../DatasetUpload/DatasetView'
 
@@ -55,7 +54,7 @@ export const DatasetModal = (props: IProps) => {
               <Grid item justify="flex-start">
                 <Typography variant="h5">
                   Dataset Review
-                                </Typography>
+                </Typography>
               </Grid>
               <Grid item justify="flex-end">
                 <CancelIcon color="primary" onClick={() => setOpen(false)} />

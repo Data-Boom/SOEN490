@@ -12,7 +12,7 @@ const userSavedDatasetsRoute = '/api/v1/dataset/userSavedDatsets/:userSavedDatse
 const dataUploadRoute = '/api/v1/dataUpload'
 const datasetRoute = '/api/v1/dataset'
 const flagDatasetRoute = '/api/v1/flagDataSet'
-const adminApprovedDatasetRoute = '/api/v1/approveDataset'
+const approvedDatasetRoute = '/api/v1/approveDataset'
 const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
 const submitEditedDatasetRoute = '/api/v1/dataUpload'
 
@@ -47,8 +47,8 @@ export const callRejectDataset = async (datasetId: number) => {
   }
 }
 
-export const adminApprovedDataset = async (query: IFlaggedDatasetQuery) => {
-  const result = await put(adminApprovedDatasetRoute).withQuery(query).json()
+export const approvedDataset = async (query: IFlaggedDatasetQuery) => {
+  const result = await put(approvedDatasetRoute).withQuery(query).json()
   if (result == 'Successfully approved new data set') {
     SnackbarUtils.success(`Dataset ${query.datasetId} was approved!`)
   }
