@@ -39,7 +39,7 @@ export class DimensionService {
         return this.requestResponse
       }
       catch (error) {
-        throw new Error("Error occured when adding dimension");
+        throw new BadRequest("Error occured when adding dimension");
       }
     }
   }
@@ -87,7 +87,7 @@ export class DimensionService {
       return this.requestResponse;
     }
     catch (error) {
-      throw new Error("Error occured when fetching all dimensions");
+      throw new BadRequest("Error occured when fetching all dimensions");
     }
   }
 
@@ -100,7 +100,7 @@ export class DimensionService {
       return this.dimensionModel.getDimensionUnits(dimensionId)
     }
     catch (error) {
-      throw new Error("Error occured when fetching all units of a dimension");
+      throw new BadRequest("Error occured when fetching all units of a dimension");
     }
   }
 }

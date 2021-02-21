@@ -66,8 +66,12 @@ export class DimensionsController {
   }
 
   async deleteDimension(request: Request, response: Response): Promise<Response> {
+    let requestParam = request.params.id;
+    let dimensionId = Number(requestParam);
+    if (isNaN(dimensionId)) {
+      return response.status(400).json("Invalid dimension ID entered");
+    }
     try {
-      let dimensionId = +request.params.id
       let requestResponse: any = await this.dimensionService.processDeleteDimension(dimensionId);
       return response.status(requestResponse.statusCode).json(requestResponse.message);
     } catch (error) {
@@ -94,7 +98,7 @@ export class DimensionsController {
       response.status(error.status).json(error.message);
     }
     else {
-      response.status(error.status).json("Something went Wrong");
+      response.status(error.status).json("Something went wrong with dimension operation");
     }
   }
 }
