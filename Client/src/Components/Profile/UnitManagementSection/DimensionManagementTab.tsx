@@ -1,11 +1,10 @@
-import { Box, Button, Grid, IconButton, Paper, Table, TableContainer, Typography } from '@material-ui/core'
+import { Box, Grid, IconButton, Typography } from '@material-ui/core'
 import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import React, { useEffect, useState } from 'react'
 
 import { AddIcon } from '@material-ui/data-grid'
 import { ArrayHelpers } from 'formik'
 import { DimensionForm } from './DimensionForm'
-import { IExampleDimenstions } from '../../../Models/Profile/IDimensionModel'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 
@@ -23,8 +22,21 @@ export const DimensionManagementTab = () => {
   // TODO: Have a "New" button that renders a Dimenstion Form with no initial values.
 
 
+
+  const newUnit: IUnitModel = {
+    conversionFormula: '{u}',
+    name: ''
+  }
+
+  const newDimension: IDimensionModel = {
+    name: '',
+    units: [newUnit]
+  }
+
   const addNewDimension = () => {
-    console.log("add new dimension")
+    const dimensionsCopy = [...dimensions]
+    dimensionsCopy.push(newDimension)
+    setDimensions(dimensionsCopy)
   }
 
   useEffect(() => {
@@ -40,8 +52,8 @@ export const DimensionManagementTab = () => {
     <>
       <Box className={classStyles().defaultBorder} style={{ width: "100%" }} >
         <Typography variant='h6' align="left">System Wide Dimensions</Typography>
-        {dimensions && dimensions.map(dimension => (
-          <DimensionForm dimension={dimension} />
+        {dimensions && dimensions.map((dimension, index) => (
+          <DimensionForm key={index} dimension={dimension} />
         ))}
         <Grid item>
           <IconButton color="primary" aria-label="add unit" onClick={addNewDimension}>

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const DimensionForm = (props: IProps) => {
 
-  const dimension = props.dimension
+  const { dimension } = { ...props }
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const handleExpandClick = () => {
