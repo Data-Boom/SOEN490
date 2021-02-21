@@ -5,23 +5,19 @@ import React, { useState } from 'react'
 import { classStyles } from '../../appTheme'
 import CancelIcon from '@material-ui/icons/Cancel';
 import { ConfirmationModal } from '../Authentication/ConfirmationModal';
-import { callDeleteGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
 
 interface IGraphModel {
     graphset: IGraphStateModel,
-    handleRemoveGraphSet: (graphState: IGraphStateModel) => void,
-    userID: number
+    handleRemoveGraphSet: (graphsetID: string) => void
 }
 
 export const ProfileGraphRow = (props: IGraphModel) => {
-    const { graphset, userID } = { ...props }
+    const { graphset, handleRemoveGraphSet } = { ...props }
     const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
-    const onHandleRemoveGraphSet = async (removeGraphSetID: IGraphStateModel, userId: number) => {
+    const onHandleRemoveGraphSet = async (removeGraphSetID: string) => {
         setConfirmModalOpen(true)
-        console.log(graphset.id + ' returning graph set ' + userId + ' and user id')
-        await callDeleteGraphState(graphset, userId)
-        window.location.reload()
+        handleRemoveGraphSet(removeGraphSetID)
     }
 
     return (
@@ -46,20 +42,9 @@ export const ProfileGraphRow = (props: IGraphModel) => {
                     cancelButton="Cancel"
                     open={confirmModalOpen}
                     onClose={() => setConfirmModalOpen(false)}
-                    onSubmit={() => onHandleRemoveGraphSet(graphset, userID)}
+                    onSubmit={() => onHandleRemoveGraphSet(graphset.id)}
                 />
             </Grid>
         </Grid >
     )
 }
-
-/**
- * export const submitEditedDataset = async (updatedDataset: IApprovedDatasetModel) => {
-  const result = await put(submitEditedDatasetRoute + '/' + updatedDataset.id).withBody(updatedDataset).json()
-  if (result == 'Dataset Updated!') {
-    SnackbarUtils.success(Dataset ${updatedDataset.id} was updated!)
-  }
-  else
-    SnackbarUtils.error(Dataset ${updatedDataset.id} could not be updated!)
-}
- */
