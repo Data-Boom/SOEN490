@@ -75,11 +75,9 @@ export const DimensionForm = (props: IProps) => {
 
   const handleDeleteDimension = async () => {
     await callDeleteDimension(dimension.id)
-    console.log("dimension deleted")
   }
 
   const handleCreateDimension = async (formValues: IDimensionModel) => {
-
     await callAddDimension(dimension)
   }
 

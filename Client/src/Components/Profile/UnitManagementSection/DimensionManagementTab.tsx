@@ -21,8 +21,6 @@ export const DimensionManagementTab = () => {
   // TODO: For each dimenstionm, render a new Dimension Form using its values as the initial values.
   // TODO: Have a "New" button that renders a Dimenstion Form with no initial values.
 
-
-
   const newUnit: IUnitModel = {
     conversionFormula: '{u}',
     name: ''
