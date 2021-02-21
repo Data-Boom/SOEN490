@@ -9,7 +9,6 @@ import { Publications } from "../entities/Publications";
 import { Publicationtype } from "../entities/Publicationtype";
 import { Publisher } from "../entities/Publisher";
 import { Representations } from "../entities/Representations";
-import { Units } from "../entities/Units";
 import { DatasetCommonModel } from "./DatasetCommonModel";
 
 
@@ -31,11 +30,6 @@ export class DatasetDeleteModel {
             .addSelect('datapoints.representationsId', 'representationsId')
             .where('datapoints.datasetId = :id', { id: id })
             .getRawMany();
-
-    private selectOneUseOfUnitQuery = (id: number) =>
-        this.connection.createQueryBuilder(Datapoints, 'datapoints')
-            .where("datapoints.unitsId = :id", { id: id })
-            .getOne();
 
     private selectOneUseOfRepresentationQuery = (id: number) =>
         this.connection.createQueryBuilder(Datapoints, 'datapoints')
@@ -72,13 +66,6 @@ export class DatasetDeleteModel {
         this.connection.createQueryBuilder(Dataset, 'dataset')
             .where("dataset.datatypeId = :id", { id: id })
             .getOne();
-
-    private deletUnitsQuery = (idArray: number[]) =>
-        this.connection.createQueryBuilder()
-            .delete()
-            .from(Units)
-            .whereInIds(idArray)
-            .execute();
 
     private deletRepresentationsQuery = (idArray: number[]) =>
         this.connection.createQueryBuilder()
@@ -150,22 +137,14 @@ export class DatasetDeleteModel {
             .where("id = :id", { id: id })
             .execute();
 
-    private async deleteUnitsRepresentationsOfDataPoints(rawDataPointFK: any) {
+    private async deleteRepresentationsOfDataPoints(rawDataPointFK: any) {
         let isVariableInUse: any
-        let unitsToDelete: number[] = []
         let reprToDelete: number[] = []
         for (let index = 0; index < rawDataPointFK.length; index++) {
-            isVariableInUse = await this.selectOneUseOfUnitQuery(rawDataPointFK[index].unitsId)
-            if (isVariableInUse == undefined) {
-                unitsToDelete.push(rawDataPointFK[index].unitsId)
-            }
             isVariableInUse = await this.selectOneUseOfRepresentationQuery(rawDataPointFK[index].representationsId)
             if (isVariableInUse == undefined) {
                 reprToDelete.push(rawDataPointFK[index].representationsId)
             }
-        }
-        if (unitsToDelete.length > 0) {
-            await this.deletUnitsQuery(unitsToDelete)
         }
         if (reprToDelete.length > 0) {
             await this.deletRepresentationsQuery(reprToDelete)
@@ -175,7 +154,7 @@ export class DatasetDeleteModel {
     async deleteDataPointsOfDataset(datasetId: number) {
         let rawDataPointFK = await this.selectDataPointFKViaDatasetIdQuery(datasetId)
         await this.deleteDatapointsQuery(datasetId)
-        await this.deleteUnitsRepresentationsOfDataPoints(rawDataPointFK)
+        await this.deleteRepresentationsOfDataPoints(rawDataPointFK)
     }
 
     async deleteMaterialsOfDataset(datasetId: number) {
