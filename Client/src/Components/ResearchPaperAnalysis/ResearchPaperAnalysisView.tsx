@@ -5,7 +5,8 @@ import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
-import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
+
+//import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 interface IProps {
 
@@ -22,21 +23,23 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     analyzePaper(researchPaper)
   }
 
+  //TODO Fix the exampleExportDatasetModel to stop the errors on this page
+
   const analyzePaper = async (researchPaper: File): Promise<void> => {
-    setIsProcessingPaper(true)
-    const fetchedDataset = await fetchDataset()
-    setIsProcessingPaper(false)
-    setAnalyzedDataset(fetchedDataset)
+    // setIsProcessingPaper(true)
+    // const fetchedDataset = await fetchDataset()
+    // setIsProcessingPaper(false)
+    // setAnalyzedDataset(fetchedDataset)
   }
 
-  const fetchDataset = (): Promise<IDatasetModel> => {
-    //todo make an actual API call providing a research paper and then resolve with an actual parsed dataset
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(exampleExportDatasetModel)
-      }, 2000)
-    })
-  }
+  // const fetchDataset = (): Promise<IDatasetModel> => {
+  //   //todo make an actual API call providing a research paper and then resolve with an actual parsed dataset
+  //   return new Promise(resolve => {
+  //     setTimeout(() => {
+  //       resolve(exampleExportDatasetModel)
+  //     }, 2000)
+  //   })
+  // }
 
   const validateUploadedFile = (file: File) => {
     return file && true //True because we are always accepting all file formats
