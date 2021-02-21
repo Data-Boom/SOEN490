@@ -3,6 +3,7 @@ import { IDimensionModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
 import { Datapoints } from "./entities/Datapoints";
+import { getConnection } from "typeorm";
 
 /**
  * This model contains all methods required for obtaining data from the Dimensions
@@ -23,6 +24,8 @@ export class DimensionModel {
     if (dimensionInfo.units.length != 0) {
       let unitsToBeAdded = Units.convertToUnits(dimensionInfo.units, dimensionModel.id);
       let units = await Units.save(unitsToBeAdded);
+      dimensionModel.baseUnitId = unitsToBeAdded[0].id;
+      dimensionModel = await Dimension.save(dimensionModel);
       dimensionInfo = Dimension.convertToModel(dimensionModel, units);
     }
     return dimensionInfo;
@@ -35,6 +38,14 @@ export class DimensionModel {
   async verifyIfNameExists(name: string): Promise<boolean> {
     return await Dimension.findOne({ where: { name: name } }).then((value) => value !== undefined)
   }
+
+  private selectOneUseOfUnitQuery = (id: number) =>
+    getConnection().createQueryBuilder(Dimension, 'dimension')
+      .select('units.name', 'units')
+      .innerJoin(Units, 'units', 'units.dimensionId = dimension.id')
+      .innerJoin(Datapoints, 'datapoints', 'datapoints.unitsId = units.id')
+      .where('dimension.id = :id', { id: id })
+      .getRawOne();
 
   /**
   * This method deletes an existing dimension but keeps its units in the database
