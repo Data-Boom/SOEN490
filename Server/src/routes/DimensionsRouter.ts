@@ -12,7 +12,7 @@ let dimensionsController = new DimensionsController();
  * **IMPORTANT**
  * These routes are temporarily unprotected, but later need to be uncommented
  */
-router.post('/api/v1/dimensions', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
+router.post('/api/v1/dimensions', (request: Request, response: Response) => {
   dimensionsController.createDimension(request, response);
 });
 
@@ -20,7 +20,7 @@ router.get('/api/v1/dimensions', (request: Request, response: Response) => {
   dimensionsController.retrieveDimensions(response);
 });
 
-router.put('/api/v1/dimensions', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
+router.put('/api/v1/dimensions', (request: Request, response: Response) => {
   dimensionsController.updateDimension(request, response);
 });
 

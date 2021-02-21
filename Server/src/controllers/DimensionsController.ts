@@ -33,7 +33,7 @@ export class DimensionsController {
   }
 
   private validateCreateDimensionRequest(request: Request): boolean {
-    return request.body.name === null || request.body.units[0].name === null;
+    return request.body.name || request.body.units[0].name;
   }
 
   async retrieveDimensions(response: Response): Promise<Response> {
@@ -80,7 +80,7 @@ export class DimensionsController {
   }
 
   private validateUpdateDimension(request: Request): boolean {
-    return request.body.id === null || this.validateCreateDimensionRequest(request) || request.body.baseUnitId === null;
+    return request.body.id || this.validateCreateDimensionRequest(request) || request.body.baseUnitId;
   }
 
   private validateDimensionInfo(dimension: IDimensionModel): boolean {
