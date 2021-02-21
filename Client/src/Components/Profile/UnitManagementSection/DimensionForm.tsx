@@ -1,20 +1,22 @@
 import { Box, Button, Collapse, Grid, IconButton, Theme, Typography, createStyles, makeStyles } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
-import { callChangeDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
+import { callAddDimension, callChangeDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { UnitForm } from './UnitForm'
 import { UnitValidationSchema } from './UnitsValidationSchema'
-import { callAddDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
 //import { IDimensionModel } from '../../../Models/Profile/IDimensionModel'
 
 interface IProps {
-  dimension: IDimensionModel
+  dimension: IDimensionModel,
+  onUpdate(formValues: IDimensionModel): void,
+  onDelete(dimensionId: number): void,
+  onCreate(formValues: IDimensionModel): void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const DimensionForm = (props: IProps) => {
 
-  const { dimension } = { ...props }
+  const { dimension, onUpdate, onDelete, onCreate } = { ...props }
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const handleExpandClick = () => {
@@ -62,23 +64,15 @@ export const DimensionForm = (props: IProps) => {
   const handleSubmit = (formValues: IDimensionModel) => {
     console.log(formValues)
     if (formValues.id) {
-      handleUpdateDimension(formValues)
+      onUpdate(formValues)
     }
     else {
-      handleCreateDimension(formValues)
+      onCreate(formValues)
     }
-  }
-
-  const handleUpdateDimension = async (formValues: IDimensionModel) => {
-    await callChangeDimension(formValues)
   }
 
   const handleDeleteDimension = async () => {
-    await callDeleteDimension(dimension.id)
-  }
-
-  const handleCreateDimension = async (formValues: IDimensionModel) => {
-    await callAddDimension(formValues)
+    onDelete(dimension.id)
   }
 
   const renderHeader = () => {

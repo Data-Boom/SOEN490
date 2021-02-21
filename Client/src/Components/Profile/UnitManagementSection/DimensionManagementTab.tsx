@@ -1,6 +1,7 @@
 import { Box, Grid, IconButton, Typography } from '@material-ui/core'
 import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import React, { useEffect, useState } from 'react'
+import { callAddDimension, callChangeDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 
 import { AddIcon } from '@material-ui/data-grid'
 import { ArrayHelpers } from 'formik'
@@ -38,20 +39,36 @@ export const DimensionManagementTab = () => {
   }
 
   useEffect(() => {
-    const getDimensions = async () => {
-      const databaseDimensions = await callGetAllDimensions()
-      console.log(databaseDimensions)
-      setDimensions(databaseDimensions)
-    }
     getDimensions()
   }, [])
+
+
+  const getDimensions = async () => {
+    const databaseDimensions = await callGetAllDimensions()
+    console.log(databaseDimensions)
+    setDimensions(databaseDimensions)
+  }
+  const handleUpdateDimension = async (formValues: IDimensionModel) => {
+    await callChangeDimension(formValues)
+    getDimensions()
+  }
+
+  const handleDeleteDimension = async (id: number) => {
+    await callDeleteDimension(id)
+    getDimensions()
+  }
+
+  const handleCreateDimension = async (formValues: IDimensionModel) => {
+    await callAddDimension(formValues)
+    getDimensions()
+  }
 
   return (
     <>
       <Box className={classStyles().defaultBorder} style={{ width: "100%" }} >
         <Typography variant='h6' align="left">System Wide Dimensions</Typography>
         {dimensions && dimensions.map((dimension, index) => (
-          <DimensionForm key={index} dimension={dimension} />
+          <DimensionForm key={index} dimension={dimension} onUpdate={handleUpdateDimension} onDelete={handleDeleteDimension} onCreate={handleCreateDimension} />
         ))}
         <Grid item>
           <IconButton color="primary" aria-label="add unit" onClick={addNewDimension}>
