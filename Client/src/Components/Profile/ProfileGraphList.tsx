@@ -6,11 +6,12 @@ import { ProfileGraphRow } from '../Profile/ProfileGraphRow'
 
 interface IGraphDatasetListProps {
     graphDataset: IGraphStateModel[],
-    handleRemoveGraphSet: (graphsetID: string) => void
+    userID: number,
+    handleRemoveGraphSet: (graphState: IGraphStateModel) => void
 }
 
 export const ProfileGraphStateList = (props: IGraphDatasetListProps) => {
-    const { graphDataset, handleRemoveGraphSet } = { ...props }
+    const { graphDataset, handleRemoveGraphSet, userID } = { ...props }
 
     const renderGraphListRows = () => {
         return graphDataset && graphDataset.map(graphDSet => {
@@ -19,6 +20,7 @@ export const ProfileGraphStateList = (props: IGraphDatasetListProps) => {
                     graphset={graphDSet}
                     key={graphDSet.id}
                     handleRemoveGraphSet={handleRemoveGraphSet}
+                    userID={userID}
                 />
             )
         })

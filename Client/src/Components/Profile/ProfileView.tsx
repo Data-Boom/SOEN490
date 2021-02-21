@@ -10,8 +10,9 @@ import { ProfileGraphStateList } from './ProfileGraphList'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
-import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
+import { listGraphStates, callDeleteGraphState } from '../../Remote/Endpoints/GraphStateEndpoint'
 import PermissionsTab from './PermissionsSection/PermissionsTab'
+import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -131,7 +132,12 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
   )
 }
 
-export function ProfileView() {
+interface graphProps {
+  handleRemoveGraphSet: (graphState: IGraphStateModel) => void
+  userID: number
+}
+export function ProfileView(props: graphProps) {
+  const { handleRemoveGraphSet } = { ...props }
 
   const { user, setUser } = useContext(UserContext)
   useEffect(() => {
@@ -143,6 +149,7 @@ export function ProfileView() {
   }, [])
 
   const [savedGraphState, setSavedGraphState] = useState([])
+
 
   useEffect(() => {
     const callListSavedGraphStates = async () => {
@@ -191,6 +198,8 @@ export function ProfileView() {
                 <TableBody >
                   <ProfileGraphStateList
                     graphDataset={savedGraphState}
+                    handleRemoveGraphSet={handleRemoveGraphSet}
+                    userID={user.orcID}
                   />
                 </TableBody>
               </Table>
