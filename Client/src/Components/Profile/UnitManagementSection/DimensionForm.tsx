@@ -10,8 +10,6 @@ import { UnitValidationSchema } from './UnitsValidationSchema'
 import { classStyles } from '../../../appTheme'
 import clsx from 'clsx'
 
-//import { IDimensionModel } from '../../../Models/Profile/IDimensionModel'
-
 interface IProps {
   dimension: IDimensionModel,
   onUpdate(formValues: IDimensionModel): void,
