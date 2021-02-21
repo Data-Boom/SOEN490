@@ -6,6 +6,7 @@ import { classStyles } from '../../appTheme'
 import CancelIcon from '@material-ui/icons/Cancel'
 import { ConfirmationModal } from '../Authentication/ConfirmationModal'
 import { callDeleteGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
+import SnackbarUtils from '../../Components/Utils/SnackbarUtils'
 
 
 interface IGraphModel {
@@ -20,8 +21,8 @@ export const ProfileGraphRow = (props: IGraphModel) => {
 
     const onHandleRemoveGraphSet = async (removeGraphSetID: IGraphStateModel, userId: number) => {
         setConfirmModalOpen(true)
-        console.log(graphset.id + ' returning graph set ' + userId + ' and user id')
         await callDeleteGraphState(graphset, userId)
+        SnackbarUtils.success('Saved graph successfully deleted!')
         window.location.reload()
     }
 
