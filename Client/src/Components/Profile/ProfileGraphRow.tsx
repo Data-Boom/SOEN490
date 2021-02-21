@@ -3,21 +3,26 @@ import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
 import { classStyles } from '../../appTheme'
-import CancelIcon from '@material-ui/icons/Cancel';
-import { ConfirmationModal } from '../Authentication/ConfirmationModal';
+import CancelIcon from '@material-ui/icons/Cancel'
+import { ConfirmationModal } from '../Authentication/ConfirmationModal'
+import { callDeleteGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
+
 
 interface IGraphModel {
     graphset: IGraphStateModel,
-    handleRemoveGraphSet: (graphsetID: string) => void
+    handleRemoveGraphSet: (graphState: IGraphStateModel) => void,
+    userID: number
 }
 
 export const ProfileGraphRow = (props: IGraphModel) => {
-    const { graphset, handleRemoveGraphSet } = { ...props }
+    const { graphset, userID } = { ...props }
     const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
-    const onHandleRemoveGraphSet = async (removeGraphSetID: string) => {
+    const onHandleRemoveGraphSet = async (removeGraphSetID: IGraphStateModel, userId: number) => {
         setConfirmModalOpen(true)
-        handleRemoveGraphSet(removeGraphSetID)
+        console.log(graphset.id + ' returning graph set ' + userId + ' and user id')
+        await callDeleteGraphState(graphset, userId)
+        window.location.reload()
     }
 
     return (
@@ -42,8 +47,7 @@ export const ProfileGraphRow = (props: IGraphModel) => {
                     cancelButton="Cancel"
                     open={confirmModalOpen}
                     onClose={() => setConfirmModalOpen(false)}
-                    onSubmit={() => onHandleRemoveGraphSet(graphset.id)}
-                />
+                    onSubmit={() => onHandleRemoveGraphSet(graphset, userID)} />
             </Grid>
         </Grid >
     )
