@@ -29,4 +29,5 @@ export const callDeleteDimension = async (dimensionId: number): Promise<any> => 
 
 export const callGetAllDimensions = async (): Promise<any> => {
   const result: IDimensionModel[] = await get(dimensionRoute).json()
+  return result
 }

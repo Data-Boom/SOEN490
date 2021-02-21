@@ -5,8 +5,7 @@ import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
-
-//import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 interface IProps {
 

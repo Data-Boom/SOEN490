@@ -2,7 +2,6 @@ import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datase
 import { _delete, get, post, put } from "../FluentRequest"
 
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
-import { IRemoteApprovedDatasetModel } from "../../Models/Datasets/IRemoteApprovedDatasetModel"
 import { ISearchDatasetsFormModel } from "../../Components/Search/ISearchDatasetsFormModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 

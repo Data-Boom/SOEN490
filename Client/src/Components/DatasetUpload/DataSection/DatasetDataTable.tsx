@@ -6,19 +6,36 @@ import { IContent, IData, IVariable, newVariable } from '../../../Models/Dataset
 import React, { useState } from 'react'
 
 import { EditVariableHeader } from './EditVariableHeader'
+import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
+import { listCategories } from '../../../Remote/Endpoints/CategoryEndpoint'
 import { useEffect } from 'react'
 
 interface IProps {
   data: IData,
   onDataChange: (newData: IData) => void,
-  editable: boolean
+  editable: boolean,
 }
 
 export const DatasetDataTable = (props: IProps): any => {
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
   const editable = props.editable
+  const [dimensions, setDimensions] = useState([])
+  const [units, setUnits] = useState([])
 
+
+  useEffect(() => {
+    const callListDimensions = async () => {
+      const dimensions = await callGetAllDimensions()
+      setDimensions(dimensions)
+    }
+    const callListUnits = async () => {
+      const units = await listCategories()
+      setUnits(units)
+    }
+    callListDimensions()
+
+  }, [])
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
     setEditedVariableIndex(indexOfClickedHeader)
   }
@@ -94,6 +111,8 @@ export const DatasetDataTable = (props: IProps): any => {
             onEditModalClose={closeEditVariableModal}
             onVariableUpdate={handleVariableUpdate}
             onVariableRemove={handleVariableRemove}
+            dimensions={dimensions}
+            singleDimension={dimensions[0]}
           />
         }
       )
