@@ -17,7 +17,7 @@ interface IProps {
   singleDataset: IApprovedDatasetModel,
   handleApproveDataset: (datasetId: number) => void,
   handleDeleteDataset: () => void,
-  handleSubmitDataset: () => void,
+  handleSubmitDataset: (formDataset: IDatasetModel) => void,
   setOpen: (value: boolean) => void
   open: boolean
 }
@@ -66,7 +66,7 @@ export const DatasetModal = (props: IProps) => {
               </Grid>
             </Grid>
             <DatasetForm
-              onSubmit={handleClose}
+              onSubmit={handleSubmitDataset}
               initialDataset={dataset}
               editable={editable}
               formikReference={formikReference}
@@ -84,6 +84,7 @@ export const DatasetModal = (props: IProps) => {
                   dataset={dataset}
                   handleSubmitDataset={handleSubmitDataset}
                   handleCancelDataset={handleEditDataset}
+                  formikReference={formikReference}
                 />
               }
             </Grid>
