@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection, BaseEntity } from "typeorm";
 import { Dataset } from "./Dataset";
+import { Dimension } from "./Dimension";
 import { Representations } from "./Representations";
 import { Units } from "./Units";
 
@@ -65,9 +66,11 @@ export const selectDataPointsQuery = (connection: Connection) =>
     connection.createQueryBuilder(Dataset, 'dataset')
         .select('datapoints.name', 'name')
         .addSelect('datapoints.values', 'values')
-        .addSelect('units.name', 'units')
+        .addSelect('units.id', 'unitId')
+        .addSelect('dimension.id', 'dimensionId')
         .addSelect('representations.repr', 'representation')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Datapoints, 'datapoints', 'datapoints.datasetId = dataset.id')
         .innerJoin(Units, 'units', 'datapoints.unitsId = units.id')
+        .innerJoin(Dimension, 'dimension', 'units.dimensionId = dimension.id')
         .innerJoin(Representations, 'representations', 'datapoints.representationsId = representations.id')

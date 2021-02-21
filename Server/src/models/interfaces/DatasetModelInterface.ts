@@ -36,7 +36,8 @@ export interface IMaterialModel {
 export interface IDataPointModel {
     type: string
     values: number[]
-    units: string
+    unitId: number
+    dimensionId: number
     representation: string
     dataset_id: number
 }
