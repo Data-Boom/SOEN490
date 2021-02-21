@@ -37,10 +37,6 @@ export const DatasetModal = (props: IProps) => {
     console.log(mappedDataset)
   }, [])
 
-  const handleClose = () => {
-    setOpen(false)
-  }
-
   const handleEditDataset = () => {
     steEditOn(!editOn)
     setEditable(!editable)

@@ -2,7 +2,7 @@ import { Box, Button, Grid } from "@material-ui/core"
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef, useState } from "react"
-import { approvedDataset, callRejectDataset } from "../../Remote/Endpoints/DatasetEndpoint"
+import { adminApprovedDataset, callRejectDataset, submitEditedDataset } from "../../Remote/Endpoints/DatasetEndpoint"
 
 import { DatasetModal } from "./DatasetModal"
 import { FormikProps } from 'formik'
@@ -28,19 +28,16 @@ export const UserReviewRow = (props: IProps) => {
 
   const handleApproveDataset = async (datasetId: number) => {
     const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
-    await approvedDataset(query)
+    await adminApprovedDataset(query)
     setOpen(false)
     reload()
   }
 
   const handleSubmitDataset = (formDataset: IDatasetModel) => {
     const newAppovalDataset: IApprovedDatasetModel = { ...formDataset, datasetFlaggedComment: dataset.datasetFlaggedComment, datasetIsFlagged: dataset.datasetIsFlagged }
-    const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
-
-  }
-
-  const handleCheck = () => {
-    setOpen(true)
+    submitEditedDataset(newAppovalDataset)
+    setOpen(false)
+    reload()
   }
 
   const reload = () => {
