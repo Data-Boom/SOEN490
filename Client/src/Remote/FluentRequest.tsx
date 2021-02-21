@@ -52,12 +52,12 @@ export class FluentRequest {
     return this
   }
 
-  public withQuery(queryObject: any): FluentRequest {
+  public withQuery(queryObject: unknown): FluentRequest {
     this.query = stringify(queryObject, { arrayFormat: 'bracket' })
     return this
   }
 
-  public withBody(data: any): FluentRequest {
+  public withBody(data: unknown): FluentRequest {
     this.requestInit.body = JSON.stringify(data)
     return this
   }

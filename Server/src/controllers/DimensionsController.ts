@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
+import { BadRequest } from '@tsed/exceptions';
 import { DimensionService } from '../services/DimensionService';
 import { IDimensionModel } from '../models/interfaces/IDimension'
-import { BadRequest } from '@tsed/exceptions';
 
 /**
  * This controller is responsible for verifying the user request has correct parameters input.
@@ -33,7 +33,7 @@ export class DimensionsController {
   }
 
   private validateCreateDimensionRequest(request: Request): boolean {
-    return request.body.name === null || request.body.units[0].name === null;
+    return !request.body.name || !request.body.units[0].name;
   }
 
   async retrieveDimensions(response: Response): Promise<Response> {
@@ -66,8 +66,12 @@ export class DimensionsController {
   }
 
   async deleteDimension(request: Request, response: Response): Promise<Response> {
+    let requestParam = request.params.id;
+    let dimensionId = Number(requestParam);
+    if (isNaN(dimensionId)) {
+      return response.status(400).json("Invalid dimension ID entered");
+    }
     try {
-      let dimensionId = +request.params.id
       let requestResponse: any = await this.dimensionService.processDeleteDimension(dimensionId);
       return response.status(requestResponse.statusCode).json(requestResponse.message);
     } catch (error) {
@@ -76,7 +80,7 @@ export class DimensionsController {
   }
 
   private validateUpdateDimension(request: Request): boolean {
-    return request.body.id === null || this.validateCreateDimensionRequest(request) || request.body.baseUnitId === null;
+    return !request.body.id || this.validateCreateDimensionRequest(request) || !request.body.baseUnitId;
   }
 
   private validateDimensionInfo(dimension: IDimensionModel): boolean {
@@ -94,7 +98,7 @@ export class DimensionsController {
       response.status(error.status).json(error.message);
     }
     else {
-      response.status(error.status).json("Something went Wrong");
+      response.status(error.status).json("Something went wrong with dimension operation");
     }
   }
 }

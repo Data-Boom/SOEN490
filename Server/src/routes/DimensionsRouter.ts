@@ -12,22 +12,19 @@ let dimensionsController = new DimensionsController();
  * **IMPORTANT**
  * These routes are temporarily unprotected, but later need to be uncommented
  */
-// router.post('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
-router.post('/api/v1/dimensions', async (request: Request, response: Response, next: NextFunction) => {
+router.post('/api/v1/dimensions', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
   dimensionsController.createDimension(request, response);
 });
 
-router.get('/api/v1/dimensions', (request: Request, response: Response, next: NextFunction) => {
+router.get('/api/v1/dimensions', (request: Request, response: Response) => {
   dimensionsController.retrieveDimensions(response);
 });
 
-// router.put('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
-router.put('/api/v1/dimensions', async (request: Request, response: Response, next: NextFunction) => {
+router.put('/api/v1/dimensions', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
   dimensionsController.updateDimension(request, response);
 });
 
-// router.delete('/api/v1/dimensions', JWTAuthenticator.verifyRoot, async (request: Request, response: Response, next: NextFunction) => {
-router.delete('/api/v1/dimensions/:id?', async (request: Request, response: Response, next: NextFunction) => {
+router.delete('/api/v1/dimensions/:id?', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
   dimensionsController.deleteDimension(request, response);
 });
 

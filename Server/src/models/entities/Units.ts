@@ -52,4 +52,15 @@ export class Units extends BaseEntity {
             return unit;
         });
     }
+
+    static convertToNewUnits(unitModel: IUnitModel[], dimensionId: number): Units[] {
+        return unitModel.map(eachUnit => {
+            let unit = new Units();
+            unit.id;
+            unit.name = eachUnit.name;
+            unit.dimensionId = dimensionId;
+            unit.conversionFormula = eachUnit.conversionFormula;
+            return unit;
+        });
+    }
 }
