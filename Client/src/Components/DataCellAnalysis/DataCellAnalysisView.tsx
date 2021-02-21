@@ -14,6 +14,7 @@ interface IProps {
 
 const fileFormat = 'image/png'
 
+//todo remove this view and fix all dependencies as we are probably not going to have this feature
 export const DataCellAnalysisView = (props: IProps) => {
 
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)

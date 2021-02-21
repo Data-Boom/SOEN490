@@ -97,48 +97,48 @@ export const tempData: IData = {
   "variables": [
     {
       "name": "initial density",
-      "repr": "rho_0",
-      "units": "g/cc"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "initial temperature",
-      "repr": "T_0",
-      "units": "K"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "initial pressure",
-      "repr": "P_0",
-      "units": "GPa"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "shock velocity",
-      "repr": "U_s",
-      "units": "km/s"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "particle velocity",
-      "repr": "U_p",
-      "units": "km/s"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "pressure",
-      "repr": "P",
-      "units": "GPa"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "specific volume",
-      "repr": "v",
-      "units": "cc/g"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "density",
-      "repr": "rho",
-      "units": "g/cc"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "compression ratio",
-      "repr": "v/v_0",
-      "units": ""
+      "dimensionId": 0,
+      "unitId": 0
     }
   ],
   "contents": [
