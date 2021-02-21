@@ -17,15 +17,13 @@ import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
-import { Units } from "../models/entities/Units";
+import { Datapointcomments } from "../models/entities/Datapointcomments";
+import { Dimension } from "../models/entities/Dimension";
 
 export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
-
-    //TODO: Apply changes directly to DB before merge and remove statement
-    // await queryRunner.query('ALTER TABLE publications DROP COLUMN dateAccessed, DROP COLUMN datePublished, ADD COLUMN issue int(11)');
-
+    
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
@@ -480,57 +478,65 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     // Units below this line
 
-    let unitsNone = new Units();
-    unitsNone.id;
-    unitsNone.name = "No Units";
-    unitsNone.units = "No Units";
-    await connection.manager.save(unitsNone);
+    let temperatureDimension = new Dimension();
+    temperatureDimension.id = 1;
+    temperatureDimension.name = "Temperature";
+
+    let densityDimension = new Dimension();
+    densityDimension.id = 2;
+    densityDimension.name = "Density";
 
     let unitsGCC = new Units();
     unitsGCC.id;
     unitsGCC.name = "g/cc";
-    unitsGCC.units = "g/cc";
-    await connection.manager.save(unitsGCC);
+
+    let unitsNone = new Units();
+    unitsNone.id;
+    unitsNone.name = "No Units";
 
     let unitsCCG = new Units();
     unitsCCG.id;
     unitsCCG.name = "cc/g";
-    unitsCCG.units = "cc/g";
-    await connection.manager.save(unitsCCG);
 
     let unitsKelvin = new Units();
     unitsKelvin.id;
     unitsKelvin.name = "Kelvin";
-    unitsKelvin.units = "K";
-    await connection.manager.save(unitsKelvin);
 
     let unitsGigapascal = new Units();
     unitsGigapascal.id;
     unitsGigapascal.name = "Gigapascal";
-    unitsGigapascal.units = "GPa";
-    await connection.manager.save(unitsGigapascal);
 
     let unitsKMPS = new Units();
     unitsKMPS.id;
     unitsKMPS.name = "Kilometers per Second";
-    unitsKMPS.units = "km/s";
-    await connection.manager.save(unitsKMPS);
 
     let unitsToDelete = new Units();
     unitsToDelete.id;
     unitsToDelete.name = "Deleted";
-    unitsToDelete.units = "Deleted";
-    await connection.manager.save(unitsToDelete);
 
     let reprNone = new Representations();
     reprNone.id;
     reprNone.repr = "N/A";
-    await connection.manager.save(reprNone);
 
     let reprToDelete = new Representations();
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
+
+    densityDimension.baseUnitId = unitsGCC.id;
+    temperatureDimension.baseUnitId = unitsKelvin.id;
+
+    await connection.manager.save(unitsNone);
+    await connection.manager.save(unitsCCG);
+    await connection.manager.save(unitsGCC);
     await connection.manager.save(reprToDelete);
+    await connection.manager.save(reprNone);
+    await connection.manager.save(unitsToDelete);
+    await connection.manager.save(unitsKMPS);
+    await connection.manager.save(unitsGigapascal);
+    await connection.manager.save(unitsKelvin);
+
+    await connection.manager.save(temperatureDimension);
+    await connection.manager.save(densityDimension);
 
     // Data points below this line. 
 
@@ -664,6 +670,17 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
+    // Unlink baseUnitId from Dimension
+    let temperatureDimension = new Dimension();
+    temperatureDimension.id = 1;
+    temperatureDimension.name = "Temperature";
+    temperatureDimension.baseUnitId = null;
+    let densityDimension = new Dimension();
+    densityDimension.id = 2;
+    densityDimension.name = "Density";
+    densityDimension.baseUnitId = null;
+    await Dimension.save([temperatureDimension, densityDimension]);
+
     await queryRunner.query('DELETE FROM graphstate');
     await queryRunner.query('DELETE FROM unapproveddatasets');
     await queryRunner.query('DELETE FROM dataset_materials_material');
@@ -672,6 +689,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM datapointcomments');
     await queryRunner.query('DELETE FROM datapoints');
     await queryRunner.query('DELETE FROM units');
+    await queryRunner.query('DELETE FROM dimension');
     await queryRunner.query('DELETE FROM representations');
     await queryRunner.query('DELETE FROM authors');
     await queryRunner.query('DELETE FROM dataset');
@@ -685,9 +703,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
-
-    //TODO: Apply changes directly to DB before merge and remove statement
-    await queryRunner.query('ALTER TABLE publications ADD COLUMN dateAccessed datetime, ADD COLUMN datePublished datetime, DROP COLUMN issue');
   }
 
 }
