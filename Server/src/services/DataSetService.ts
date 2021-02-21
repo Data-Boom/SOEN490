@@ -193,13 +193,6 @@ export class DataSetService {
             let currentDataset: number = 0
             for (let index = 0; index < selectedDatasetIds.length; index++) {
                 currentDataset = rawData[2][index].id
-                datasetInfo = {
-                    dataset_name: rawData[2][index]?.dataset_name,
-                    comments: rawData[2][index]?.comments,
-                    data_type: rawData[2][index]?.data_type,
-                    category: rawData[2][index]?.category,
-                    subcategory: rawData[2][index]?.subcategory
-                }
 
                 //Sort through publications, grab the one desired
                 for (let publicationIndex = 0; publicationIndex < rawData[0].length; publicationIndex++) {
@@ -260,7 +253,12 @@ export class DataSetService {
                 singleDataSet = {
                     reference: publication,
                     id: currentDataset,
-                    dataset_info: datasetInfo,
+                    dataset_name: rawData[2][index].dataset_name,
+                    //move comments to new Ivalues model
+                    comments: rawData[2][index]?.comments,
+                    data_type: rawData[2][index]?.data_type,
+                    category: rawData[2][index]?.category,
+                    subcategory: rawData[2][index]?.subcategory,
                     material: allMaterialData,
                     dataPoints: allDataPointData,
                     dataPointComments: dataPointComments

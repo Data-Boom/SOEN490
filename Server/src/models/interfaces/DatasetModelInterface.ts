@@ -45,7 +45,11 @@ export interface IDataPointModel {
 export interface IClientDatasetModel {
     reference: IPublicationModel
     id: number
-    dataset_info: IDatasetInfoModel
+    dataset_name: string
+    comments: string
+    data_type: string
+    category: string
+    subcategory: string
     material: IMaterialModel[]
     dataPoints: IDataPointModel[]
     dataPointComments: string[]
