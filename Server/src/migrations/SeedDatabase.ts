@@ -478,11 +478,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     // Units below this line
 
     let temperatureDimension = new Dimension();
-    temperatureDimension.id;
+    temperatureDimension.id = 1;
     temperatureDimension.name = "Temperature";
 
     let densityDimension = new Dimension();
-    densityDimension.id;
+    densityDimension.id = 2;
     densityDimension.name = "Density";
 
     let unitsGCC = new Units();
@@ -521,10 +521,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
 
-    densityDimension.baseUnit = unitsGCC;
     densityDimension.baseUnitId = unitsGCC.id;
-
-    temperatureDimension.baseUnit = unitsKelvin;
     temperatureDimension.baseUnitId = unitsKelvin.id;
 
     await connection.manager.save(unitsNone);
@@ -672,6 +669,17 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
+    // Unlink baseUnitId from Dimension
+    let temperatureDimension = new Dimension();
+    temperatureDimension.id = 1;
+    temperatureDimension.name = "Temperature";
+    temperatureDimension.baseUnitId = null;
+    let densityDimension = new Dimension();
+    densityDimension.id = 2;
+    densityDimension.name = "Density";
+    densityDimension.baseUnitId = null;
+    await Dimension.save([temperatureDimension, densityDimension]);
+
     await queryRunner.query('DELETE FROM graphstate');
     await queryRunner.query('DELETE FROM unapproveddatasets');
     await queryRunner.query('DELETE FROM dataset_materials_material');
@@ -680,6 +688,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM datapointcomments');
     await queryRunner.query('DELETE FROM datapoints');
     await queryRunner.query('DELETE FROM units');
+    await queryRunner.query('DELETE FROM dimension');
     await queryRunner.query('DELETE FROM representations');
     await queryRunner.query('DELETE FROM authors');
     await queryRunner.query('DELETE FROM dataset');
