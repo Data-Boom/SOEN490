@@ -125,7 +125,7 @@ describe('data set service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset_info.category).toEqual("cell size");
+    expect(arrayOfData[0].category).toEqual("cell size");
     done()
   });
 
@@ -140,7 +140,7 @@ describe('data set service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = 2;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset_info.subcategory).toEqual("width");
+    expect(arrayOfData[0].subcategory).toEqual("width");
     done()
   });
 

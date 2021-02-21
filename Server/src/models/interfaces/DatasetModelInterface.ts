@@ -39,19 +39,34 @@ export interface IDataPointModel {
     unitId: number
     dimensionId: number
     representation: string
-    dataset_id: number
+}
+
+export interface IVariable {
+    name: string,
+    unitId: number,
+    dimensionId: number
+}
+
+export interface IContent {
+    point: number[],
+    comments?: string,
+}
+
+export interface IData {
+    variables: IVariable[],
+    contents: IContent[],
+    comments: string,
 }
 
 export interface IClientDatasetModel {
     reference: IPublicationModel
     id: number
     dataset_name: string
-    comments: string
     data_type: string
     category: string
     subcategory: string
     material: IMaterialModel[]
-    dataPoints: IDataPointModel[]
+    data: IData
     dataPointComments: string[]
 }
 

@@ -5,7 +5,7 @@ import { DatasetCommonModel } from "../models/DatasetModels/DatasetCommonModel";
 import { DatasetDeleteModel } from "../models/DatasetModels/DatasetDeleteModel";
 import { DataQueryModel } from "../models/DatasetModels/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
-import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel } from "../models/interfaces/DatasetModelInterface";
+import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel, IContent, IData, IVariable } from "../models/interfaces/DatasetModelInterface";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
@@ -181,13 +181,16 @@ export class DataSetService {
             let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
             let publication: IPublicationModel
             let dataPointComments: string[]
-            let datasetInfo: IDatasetInfoModel
             let singleAuthorData: IAuthorModel
             let allAuthorData: IAuthorModel[] = []
             let singleMaterialData: IMaterialModel
             let allMaterialData: IMaterialModel[]
             let singleDataPointData: IDataPointModel
-            let allDataPointData: IDataPointModel[]
+            let allDataPointData: IData
+            let singleVariableData: IVariable
+            let allVariableData: IVariable[]
+            let singleContentData: IContent
+            let allContentData: IContent[]
             let singleDataSet: IClientDatasetModel
             let allDataSets: Array<IClientDatasetModel> = [];
             let currentDataset: number = 0
@@ -230,14 +233,29 @@ export class DataSetService {
                 }
 
                 //Sort through data points, then group them accordingly
-                allDataPointData = []
+                allVariableData = []
+                allContentData = []
+                allDataPointData = null
                 for (let dataPointIndex = 0; dataPointIndex < rawData[4].length; dataPointIndex++) {
                     if (rawData[4][dataPointIndex].dataset_id == currentDataset) {
-                        singleDataPointData = rawData[4][dataPointIndex]
-                        allDataPointData.push(singleDataPointData)
+                        singleVariableData = {
+                            name: rawData[4][dataPointIndex].name,
+                            unitId: rawData[4][dataPointIndex].unitId,
+                            dimensionId: rawData[4][dataPointIndex].dimensionId
+                        }
+                        allVariableData.push(singleVariableData)
+                        singleContentData = {
+                            point: rawData[4][dataPointIndex].values
+                        }
+                        allContentData.push(singleContentData)
                         rawData[4].splice(dataPointIndex, 1)
                         dataPointIndex--
                     }
+                }
+                allDataPointData = {
+                    variables: allVariableData,
+                    contents: allContentData,
+                    comments: rawData[2][index]?.comments
                 }
 
                 //Sort through data point comments, grab the ones desired
@@ -254,13 +272,11 @@ export class DataSetService {
                     reference: publication,
                     id: currentDataset,
                     dataset_name: rawData[2][index].dataset_name,
-                    //move comments to new Ivalues model
-                    comments: rawData[2][index]?.comments,
                     data_type: rawData[2][index]?.data_type,
                     category: rawData[2][index]?.category,
                     subcategory: rawData[2][index]?.subcategory,
                     material: allMaterialData,
-                    dataPoints: allDataPointData,
+                    data: allDataPointData,
                     dataPointComments: dataPointComments
                 }
 
