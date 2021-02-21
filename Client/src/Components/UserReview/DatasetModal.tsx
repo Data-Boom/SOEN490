@@ -1,91 +1,85 @@
-import { Box, Grid, Paper, Typography } from '@material-ui/core'
-import React, { useEffect, useRef, useState } from 'react'
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Typography } from '@material-ui/core'
+import { FormikProps, FormikValues } from 'formik'
+import React, { useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import { DatasetForm } from '../DatasetUpload/DatasetForm'
-import { FormikProps } from 'formik'
+import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import Modal from '@material-ui/core/Modal/Modal'
 import { ModalFooter } from './ModalFooter'
-import { ModalFooterApprove } from './ModalFooterApprove'
-import { classStyles } from '../../appTheme'
-import { fixPartialForform } from '../DatasetUpload/DatasetView'
 
 interface IProps {
-  singleDataset: IApprovedDatasetModel,
+  open: boolean
+  dataset: IApprovedDatasetModel,
+  setOpen: (value: boolean) => void
   handleApproveDataset: (datasetId: number) => void,
   handleDeleteDataset: () => void,
   handleSubmitDataset: (formDataset: IDatasetModel) => void,
-  setOpen: (value: boolean) => void
-  open: boolean
 }
 
 export const DatasetModal = (props: IProps) => {
-
-  const { open, setOpen } = { ...props }
-  const [dataset, setDataset] = useState<IDatasetModel>()
-  const [editable, setEditable] = useState(false)
-  const mappedDataset: IDatasetModel = { ...props.singleDataset }
-  const { handleApproveDataset, handleDeleteDataset, handleSubmitDataset } = { ...props }
-  const [editOn, steEditOn] = useState(true)
+  const { open, dataset, setOpen, handleApproveDataset, handleDeleteDataset, handleSubmitDataset } = { ...props }
+  const [isEditMode, setEditMode] = useState(false)
   const formikReference = useRef<FormikProps<unknown>>()
 
-  useEffect(() => {
-    setDataset(fixPartialForform(mappedDataset))
-    console.log(mappedDataset)
-  }, [])
+  const renderHeader = () => {
+    return (
+      <DialogTitle id="confirmation-dialog-title">
+        <Grid container justify="space-between">
+          <Typography variant="h6">
+            Dataset Review
+          </Typography>
+          <CancelIcon color="primary" onClick={() => setOpen(false)} />
+        </Grid>
+      </DialogTitle>
+    )
+  }
 
-  const handleEditDataset = () => {
-    steEditOn(!editOn)
-    setEditable(!editable)
+  const handleFormCancel = (formikReference: React.MutableRefObject<FormikValues>) => {
+    formikReference.current.resetForm()
+    setEditMode(false)
+  }
+
+  const renderFooter = () => {
+    return (
+      <DialogActions>
+        {isEditMode ?
+          <DefaultFormFooter
+            formikReference={formikReference}
+            justify="flex-end"
+            onCancel={handleFormCancel}
+          />
+          :
+          <ModalFooter
+            dataset={dataset}
+            handleApproveDataset={handleApproveDataset}
+            handleDeleteDataset={handleDeleteDataset}
+            handleEditDataset={() => setEditMode(true)}
+          />
+        }
+      </DialogActions>
+    )
   }
 
   return (
     <>
-      <Modal open={open}
+      <Dialog
+        open={open}
         onClose={() => setOpen(false)}
-        className={classStyles().modalsearch}
-        style={{ paddingLeft: "240px", height: "80%", marginTop: "100px" }}
+        maxWidth="lg"
       >
-        <Paper elevation={3} style={{ width: "80%", height: "100%" }}>
-          <Box m={5}>
-            <Grid container justify="space-between">
-              <Grid item justify="flex-start">
-                <Typography variant="h5">
-                  Dataset Review
-                </Typography>
-              </Grid>
-              <Grid item justify="flex-end">
-                <CancelIcon color="primary" onClick={() => setOpen(false)} />
-              </Grid>
-            </Grid>
-            <DatasetForm
-              onSubmit={handleSubmitDataset}
-              initialDataset={dataset}
-              editable={editable}
-              formikReference={formikReference}
-            />
-          </Box>
-          <Grid container justify="flex-end" alignItems="center">
-            <Grid item>
-              {editOn ? <ModalFooter
-                dataset={dataset}
-                handleApproveDataset={handleApproveDataset}
-                handleDeleteDataset={handleDeleteDataset}
-                handleEditDataset={handleEditDataset}
-              /> :
-                <ModalFooterApprove
-                  dataset={dataset}
-                  handleSubmitDataset={handleSubmitDataset}
-                  handleCancelDataset={handleEditDataset}
-                  formikReference={formikReference}
-                />
-              }
-            </Grid>
-          </Grid>
-        </Paper>
-      </Modal>
+        {renderHeader()}
+        <DialogContent dividers>
+          <DatasetForm
+            onSubmit={handleSubmitDataset}
+            initialDataset={dataset}
+            editable={isEditMode}
+            formikReference={formikReference}
+          />
+        </DialogContent>
+        {renderFooter()}
+      </Dialog>
     </>
   )
 }

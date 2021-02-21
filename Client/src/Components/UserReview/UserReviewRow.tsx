@@ -1,12 +1,11 @@
-import { Box, Button, Grid } from "@material-ui/core"
+import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
-import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { approvedDataset, callRejectDataset, submitEditedDataset } from "../../Remote/Endpoints/DatasetEndpoint"
 
 import { DatasetModal } from "./DatasetModal"
-import { FormikProps } from 'formik'
-import { IFormProps } from "../Forms/IFormikForm"
+import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { classStyles } from "../../appTheme"
 
 interface IProps {
   dataset: IApprovedDatasetModel
@@ -15,7 +14,6 @@ interface IProps {
 export const UserReviewRow = (props: IProps) => {
 
   const [open, setOpen] = useState(false)
-  const formikReference = useRef<FormikProps<unknown>>()
   const { dataset } = { ...props }
 
   const reload = () => {
@@ -43,16 +41,25 @@ export const UserReviewRow = (props: IProps) => {
   }
 
   return (
-    <Box>
-      <Grid item>
-        <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">{dataset.dataset_name} </Button>
-      </Grid>
-      <Grid item>
-        <p> {dataset.datasetFlaggedComment} </p>
-      </Grid>
-      <Grid style={{ padding: '3px 10px', margin: '5px 0' }}>
-        < DatasetModal
-          singleDataset={dataset}
+    <Box className={classStyles().defaultBorder}>
+      <Grid container spacing={3} alignItems="center">
+        <Grid item>
+          <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">Review</Button>
+        </Grid>
+        <Grid item>
+          <Typography>Dataset Name:</Typography>
+        </Grid>
+        <Grid item>
+          <Typography>{dataset.dataset_name}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography>Comment:</Typography>
+        </Grid>
+        <Grid item>
+          <Typography>{dataset.datasetFlaggedComment}</Typography>
+        </Grid>
+        <DatasetModal
+          dataset={dataset}
           handleApproveDataset={handleApproveDataset}
           handleDeleteDataset={handleDeleteDataset}
           handleSubmitDataset={handleSubmitDataset}
