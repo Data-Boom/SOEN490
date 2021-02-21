@@ -1,23 +1,24 @@
-import { getConnection, MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner, getConnection } from "typeorm";
+
 import { Accounts } from "../models/entities/Accounts";
+import { AuthenticationService } from '../services/authenticationService';
 import { Authors } from "../models/entities/Authors";
 import { Category } from "../models/entities/Category";
 import { Composition } from "../models/entities/Composition";
+import { Datapointcomments } from "../models/entities/Datapointcomments";
 import { Datapoints } from "../models/entities/Datapoints";
 import { Dataset } from "../models/entities/Dataset";
 import { Datasetdatatype } from "../models/entities/Datasetdatatype";
+import { Graphstate } from "../models/entities/Graphstate";
 import { Material } from "../models/entities/Material";
 import { Publications } from "../models/entities/Publications";
 import { Publicationtype } from "../models/entities/Publicationtype";
 import { Publisher } from "../models/entities/Publisher";
 import { Representations } from "../models/entities/Representations";
-import { Graphstate } from "../models/entities/Graphstate";
 import { Subcategory } from "../models/entities/Subcategory";
-import { Units } from "../models/entities/Units";
-import { AuthenticationService } from '../services/authenticationService';
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
-import { Datapointcomments } from "../models/entities/Datapointcomments";
 import { Dimension } from "../models/entities/Dimension";
+import { Units } from "../models/entities/Units";
 
 export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -478,11 +479,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     // Units below this line
 
     let temperatureDimension = new Dimension();
-    temperatureDimension.id;
+    temperatureDimension.id = 1;
     temperatureDimension.name = "Temperature";
 
     let densityDimension = new Dimension();
-    densityDimension.id;
+    densityDimension.id = 2;
     densityDimension.name = "Density";
 
     let unitsGCC = new Units();
@@ -521,10 +522,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     reprToDelete.id;
     reprToDelete.repr = "Deleted";
 
-    densityDimension.baseUnit = unitsGCC;
     densityDimension.baseUnitId = unitsGCC.id;
-
-    temperatureDimension.baseUnit = unitsKelvin;
     temperatureDimension.baseUnitId = unitsKelvin.id;
 
     await connection.manager.save(unitsNone);
@@ -672,6 +670,17 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
+    // Unlink baseUnitId from Dimension
+    let temperatureDimension = new Dimension();
+    temperatureDimension.id = 1;
+    temperatureDimension.name = "Temperature";
+    temperatureDimension.baseUnitId = null;
+    let densityDimension = new Dimension();
+    densityDimension.id = 2;
+    densityDimension.name = "Density";
+    densityDimension.baseUnitId = null;
+    await Dimension.save([temperatureDimension, densityDimension]);
+
     await queryRunner.query('DELETE FROM graphstate');
     await queryRunner.query('DELETE FROM unapproveddatasets');
     await queryRunner.query('DELETE FROM dataset_materials_material');
@@ -680,6 +689,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM datapointcomments');
     await queryRunner.query('DELETE FROM datapoints');
     await queryRunner.query('DELETE FROM units');
+    await queryRunner.query('DELETE FROM dimension');
     await queryRunner.query('DELETE FROM representations');
     await queryRunner.query('DELETE FROM authors');
     await queryRunner.query('DELETE FROM dataset');

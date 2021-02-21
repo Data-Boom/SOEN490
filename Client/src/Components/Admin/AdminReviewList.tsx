@@ -6,36 +6,36 @@ import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetMod
 import { getUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
 
 interface IAdminListprops {
-    datasets: IApprovedDatasetModel[]
-    onChange(formDataset: IApprovedDatasetModel): void
-    update: number
+  datasets: IApprovedDatasetModel[]
+  onChange(formDataset: IApprovedDatasetModel): void
+  update: number
 }
 export const AdminReviewList = (props: IAdminListprops) => {
 
-    const [datasets, setDatasets] = useState(props.datasets)
+  const [datasets, setDatasets] = useState(props.datasets)
 
-    useEffect(() => {
-        const callListDatasetStates = async () => {
-            const datasetState = await getUnapprovedDatasets()
-            setDatasets(datasetState)
-        }
-        callListDatasetStates()
-    }, [props.update])
-
-    const renderAdminDatasetRows = () => {
-        return datasets && datasets.map(datasets => {
-            return (
-                <AdminReviewRow
-                    dataset={datasets}
-                    key={datasets.id}
-                    onChange={props.onChange}
-                />
-            )
-        })
+  useEffect(() => {
+    const callListDatasetStates = async () => {
+      const datasetState = await getUnapprovedDatasets()
+      setDatasets(datasetState)
     }
-    return (
-        <Grid container direction='column' spacing={1}>
-            {renderAdminDatasetRows()}
-        </Grid>
-    )
+    callListDatasetStates()
+  }, [props.update])
+
+  const renderAdminDatasetRows = () => {
+    return datasets && datasets.map(datasets => {
+      return (
+        <AdminReviewRow
+          dataset={datasets}
+          key={datasets.id}
+          onChange={props.onChange}
+        />
+      )
+    })
+  }
+  return (
+    <Grid container direction='column' spacing={1}>
+      {renderAdminDatasetRows()}
+    </Grid>
+  )
 }

@@ -35,11 +35,11 @@ export class DimensionService {
       try {
         let createdDimension = await this.dimensionModel.insertDimension(dimensionInfo);
         this.requestResponse.message = createdDimension as any;
-        this.requestResponse.statusCode = 200;
+        this.requestResponse.statusCode = 201;
         return this.requestResponse
       }
       catch (error) {
-        throw new BadRequest(error.message);
+        throw new BadRequest("Error occured when adding dimension");
       }
     }
   }
@@ -87,7 +87,7 @@ export class DimensionService {
       return this.requestResponse;
     }
     catch (error) {
-      throw new BadRequest(error.message);
+      throw new BadRequest("Error occured when fetching all dimensions");
     }
   }
 
@@ -100,7 +100,7 @@ export class DimensionService {
       return this.dimensionModel.getDimensionUnits(dimensionId)
     }
     catch (error) {
-      throw new BadRequest(error.message);
+      throw new BadRequest("Error occured when fetching all units of a dimension");
     }
   }
 }

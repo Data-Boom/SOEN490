@@ -5,8 +5,6 @@ import { IData } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
 import { shouldComponentUpdate } from '../../Forms/ComponentUpdate'
-import { useEffect } from 'react'
-import { useState } from 'react'
 
 interface IProps {
   editable: boolean
@@ -14,10 +12,6 @@ interface IProps {
 
 export const DataForm = (props: IProps) => {
   const { editable } = props
-
-  useEffect(() => {
-
-  }, [props.editable])
 
   const FormikDatasetDataTable = ({ field, form, ...props }) => {
     return <DatasetDataTable editable={editable} data={field.value} onDataChange={(newData: IData) => form.setFieldValue(field.name, newData)} />

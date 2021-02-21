@@ -3,6 +3,7 @@ import { IDimensionModel } from './interfaces/IDimension';
 import { Dimension } from './entities/Dimension';
 import { Units } from './entities/Units';
 import { Datapoints } from "./entities/Datapoints";
+import { getConnection } from "typeorm";
 
 /**
  * This model contains all methods required for obtaining data from the Dimensions
@@ -21,8 +22,10 @@ export class DimensionModel {
     dimensionModel = await Dimension.save(dimensionModel);
 
     if (dimensionInfo.units.length != 0) {
-      let unitsToBeAdded = Units.convertToUnits(dimensionInfo.units, dimensionModel.id);
+      let unitsToBeAdded = Units.convertToNewUnits(dimensionInfo.units, dimensionModel.id);
       let units = await Units.save(unitsToBeAdded);
+      dimensionModel.baseUnitId = unitsToBeAdded[0].id;
+      dimensionModel = await Dimension.save(dimensionModel);
       dimensionInfo = Dimension.convertToModel(dimensionModel, units);
     }
     return dimensionInfo;
@@ -82,7 +85,7 @@ export class DimensionModel {
   private async validateUnitInUseDatapoint(unit: Units) {
     let foundUnit = await Datapoints.find({ where: { "unitsId": unit.id } })
     if (foundUnit.length != 0) {
-      throw new BadRequest(`Can't remove a unit since it is already in use in datapoints`);
+      throw new BadRequest(`Can't remove a unit as it is used by one or more data points`);
     }
   }
 
