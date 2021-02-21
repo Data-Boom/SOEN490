@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection, BaseEntity } from "typeorm";
 import { Dataset } from "./Dataset";
 import { Representations } from "./Representations";
 import { Units } from "./Units";
@@ -8,7 +8,7 @@ import { Units } from "./Units";
  * The entity annotation indicates that a table is being created
  */
 @Entity()
-export class Datapoints {
+export class Datapoints extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -65,7 +65,7 @@ export const selectDataPointsQuery = (connection: Connection) =>
     connection.createQueryBuilder(Dataset, 'dataset')
         .select('datapoints.name', 'name')
         .addSelect('datapoints.values', 'values')
-        .addSelect('units.units', 'units')
+        .addSelect('units.name', 'units')
         .addSelect('representations.repr', 'representation')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Datapoints, 'datapoints', 'datapoints.datasetId = dataset.id')
