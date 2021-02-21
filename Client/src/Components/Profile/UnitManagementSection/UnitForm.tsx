@@ -1,17 +1,36 @@
 import { Box, Button, Divider, Grid, ThemeProvider } from '@material-ui/core'
+import { FastField, FieldArray } from 'formik'
 
-import { FieldArray } from 'formik'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React from 'react'
 import { UnitList } from './UnitList'
 import { classStyles } from '../../../appTheme'
 import { disabledTheme } from '../../Forms/ComponentUpdate'
 
-export const UnitForm = () => {
+interface IProps {
+  id?: number
+}
+
+export const UnitForm = (props: IProps) => {
+
+  const id = props.id
+
+  const renderDimensionNameForm = () => {
+    console.log(id)
+    if (!id) {
+      return (
+        <FastField name={`name`} label='Dimension Name' component={MuiTextFieldFormik} />
+      )
+    }
+  }
 
   return (
     <>
       <Box pb={2}>
         <Grid container direction="column" spacing={4}>
+          <Grid item>
+            {renderDimensionNameForm()}
+          </Grid>
           <Grid item>
             <Divider className={classStyles().divider} variant="fullWidth" />
           </Grid>

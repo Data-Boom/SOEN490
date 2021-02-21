@@ -78,7 +78,7 @@ export const DimensionForm = (props: IProps) => {
   }
 
   const handleCreateDimension = async (formValues: IDimensionModel) => {
-    await callAddDimension(dimension)
+    await callAddDimension(formValues)
   }
 
   const renderHeader = () => {
@@ -95,6 +95,7 @@ export const DimensionForm = (props: IProps) => {
           >
             <ExpandMoreIcon />
           </IconButton>
+
           <Typography align="left">{dimension.name}</Typography>
         </Grid>
         <Grid item xs={6}>
@@ -126,7 +127,7 @@ export const DimensionForm = (props: IProps) => {
                   onSubmit={handleSubmit}
                 >
                   <Form>
-                    <UnitForm />
+                    <UnitForm id={dimension.id} />
                   </Form>
                 </Formik>
               </Grid>

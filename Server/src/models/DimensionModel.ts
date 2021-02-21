@@ -99,16 +99,12 @@ export class DimensionModel {
   */
   async getAllDimensions(): Promise<IDimensionModel[]> {
     let dimensions = await Dimension.find();
-    console.log(dimensions)
     let units = await Units.find();
-    //console.log(units)
-    //console.log("Here 2!")
     let dimensionModels = dimensions.map(dimension => {
       let filteredUnits = units.filter(value => value.dimensionId == dimension.id)
       let dimensionModel = Dimension.convertToModel(dimension, filteredUnits);
       return dimensionModel;
     })
-    console.log(dimensionModels)
     return dimensionModels;
   }
 }
