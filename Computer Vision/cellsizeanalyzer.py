@@ -1,7 +1,6 @@
 import cv2 as cv
 import numpy as np
 import math
-import sys
 
 global img
 global pointarray
@@ -21,7 +20,6 @@ def cellpnginput (imgsrc, length) :
     previousImg = []
     cv.namedWindow('image')
     cv.setMouseCallback('image',draw_circle)
-    
 
     while(1):
         cv.imshow('image',img)
@@ -29,8 +27,10 @@ def cellpnginput (imgsrc, length) :
         k = cv.waitKey(2) & 0xFF
         if k == 27:
             break
+        # Print current cell sizes and corresponding IDs
         elif k == ord('a'):
             print (cellsizeidarray)
+        # Remove last drawn point or line
         elif k == ord('b'):
             if len(previousImg) != 0 :
                 if previousImg[len(previousImg)-1][1] == "circle" :
@@ -41,6 +41,7 @@ def cellpnginput (imgsrc, length) :
                     pointarray[len(pointarray)-2][2] = True
                 img = np.array(previousImg[len(previousImg)-1][0])
                 previousImg.pop()
+        # Draw and compute current line between last two points
         elif k == ord('c'):
             if len(pointarray) > 1 :
                 if pointarray[len(pointarray)-2][2] :
@@ -74,6 +75,5 @@ def draw_circle(event,x,y,flags,param):
         mouseX,mouseY = x,y
         pointarray.append([mouseX,mouseY,True])
 
-
-cellpnginput("C:/Users/Jessi/Desktop/SOEN490/Server/src/services/pythonScripts/fig-3-4c.ppm", 80)
-#print(sys.argv[1], sys.argv[2])
+# Set path of image to be drawn
+cellpnginput("E:/repos/SOEN490/Computer Vision/fig-3-4c.ppm", 80)
