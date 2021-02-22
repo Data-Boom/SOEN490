@@ -1,3 +1,4 @@
+import { passwordSchema, emailSchema } from './../services/helpers/validationSchema';
 import { IForgotPasswordInformation, ILoginInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { NextFunction, Request, Response } from 'express';
 
@@ -11,6 +12,7 @@ import { IUpdateUserDetail } from './../genericInterfaces/AuthenticationInterfac
  * This controller is responsible for verifying the user request has correct parameters input.
  * After request is verified, the appropriate service can be called to fulfill user signup or login
  */
+
 export class AuthenticationController {
   private authenticationService: AuthenticationService;
   private invalidResponse: boolean;
@@ -23,11 +25,22 @@ export class AuthenticationController {
     if (this.invalidResponse) {
       return response.status(400).json("Request is invalid. Missing attributes")
     }
+    if (!emailSchema.isValidSync(request.body.email)) {
+      return response.status(400).json("Incorrect email format detected. Email must contain @ and . symbols")
+    }
+    if (!passwordSchema.isValidSync(request.body.password)) {
+      return response.status(400).json("Incorrect password format detected. Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+    }
     else {
       let requestParams: any = { ...request.body };
       let signUpInfo: ISignUpInformation = requestParams;
-      let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
-      return res;
+      try {
+        let res: any = await this.callServiceForSignUp(signUpInfo, response, next);
+        return res;
+      }
+      catch (error) {
+
+      }
     }
   }
 
@@ -49,6 +62,12 @@ export class AuthenticationController {
     }
   }
 
+  async createLogoutRequest(request: Request, response: Response, next: NextFunction) {
+    response.clearCookie('token', { path: '/' });
+    response.end();
+    return response;
+  }
+
   async createForgotPasswordRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {
     this.invalidResponse = this.validateForgotPasswordRequest(request);
     if (this.invalidResponse) {
@@ -67,7 +86,14 @@ export class AuthenticationController {
     if (this.invalidResponse) {
       return response.status(400).json("User was not found");
     }
+    if (!passwordSchema.isValidSync(request.body.password)) {
+      return response.status(400).json("Incorrect password format detected. Password must contain in between 8 to 30 characters, one uppercase, one number and one special case character")
+    }
+    if (!this.passwordConfirmationRequest(request)) {
+      return response.status(400).json("The entered password and confirmation password don't match. Try again")
+    }
     else {
+      console.log("proceeding with reset now")
       let requestParams: any = { ...request.body };
       let resetPasswordInfo: IResetPasswordInformation = requestParams;
       let res: any = await this.callServiceForResetPassword(resetPasswordInfo, response, next);
@@ -80,7 +106,13 @@ export class AuthenticationController {
   }
 
   private validateUpdatePasswordRequest(request: Request): boolean {
-    return !request.body.password && !request.body.passwordConfirmation && request.body.password === request.body.passwordConfirmation;
+    return !request.body.password && !request.body.passwordConfirmation;
+  }
+
+  private passwordConfirmationRequest(request: Request): boolean {
+    if (request.body.password === request.body.passwordConfirmation) {
+      return true
+    }
   }
 
   private validateForgotPasswordRequest(request: Request): boolean {
@@ -88,8 +120,7 @@ export class AuthenticationController {
   }
 
   private validateSignUpRequest(request: Request): boolean {
-    if (request.body.email && request.body.password && request.body.firstName
-      && request.body.lastName && request.body.organizationName) {
+    if (request.body.email && request.body.password && request.body.firstName && request.body.lastName && request.body.organizationName) {
       return false;
     }
     else {
@@ -109,8 +140,9 @@ export class AuthenticationController {
   private validateUserDetailRequest(request: Request): boolean {
     if (request.body.hasOwnProperty('password') || request.body.hasOwnProperty('organizationName')) {
       return true;
-    } else
+    } else {
       return false;
+    }
   }
 
   async updateUserDetailRequest(request: Request, response: Response, next: NextFunction): Promise<Response> {

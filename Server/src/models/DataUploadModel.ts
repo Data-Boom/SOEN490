@@ -197,7 +197,7 @@ export class DataUploadModel {
      * @param referenceDOI 
      * DOI: string
      * @param referencePages 
-     * Pages of the reference: number
+     * Pages of the reference: string
      * @param referenceTypeId 
      * ID of Publication type: Number
      * @param publisherNameId 
@@ -206,14 +206,19 @@ export class DataUploadModel {
      * Publication year: number
      * @param referenceVolume 
      * Publication volume: number
-     * @param referenceDatePublished 
-     * Date that the reference was published: Date
-     * @param referenceDateAccessed 
-     * Date that the reference was accessed: Date
+     * @param referenceIssue
+     * Publication issue: number
      * @param referenceAuthors 
      * Array of all Authors table entries to be linked to this publication: any[]
      */
-    async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: number, referenceTypeId: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceDatePublished: Date, referenceDateAccessed: Date, referenceAuthors: Authors[]): Promise<number> {
+    async insertPublication(referenceTitle: string, referenceDOI: string, referencePages: string, referenceTypeId: number, publisherNameId: number, referenceYear: number, referenceVolume: number, referenceIssue: number, referenceAuthors: Authors[]): Promise<number> {
+        //Need to check for "" being sent instead of null
+        if (referencePages == "")
+            referencePages = null
+        if (!referenceVolume)
+            referenceVolume = null
+        if (!referenceIssue)
+            referenceIssue = null
         let publication = new Publications();
         publication.id;
         publication.name = referenceTitle;
@@ -223,8 +228,7 @@ export class DataUploadModel {
         publication.publisherId = publisherNameId;
         publication.year = referenceYear;
         publication.volume = referenceVolume;
-        publication.datePublished = referenceDatePublished;
-        publication.dateAccessed = referenceDateAccessed;
+        publication.issue = referenceIssue;
         publication.authors = referenceAuthors;
         await this.connection.manager.save(publication);
         return publication.id;
@@ -459,7 +463,6 @@ export class DataUploadModel {
         let units = new Units();
         units.id;
         units.name = unitReceived;
-        units.units = unitReceived;
         let unitsExists: any;
         unitsExists = await this.selectUnitsIdQuery(unitReceived);
         if (unitsExists != undefined) {

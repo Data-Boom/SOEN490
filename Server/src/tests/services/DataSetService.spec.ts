@@ -1,12 +1,10 @@
+import { createConnection, getConnection } from 'typeorm';
+
 import { DataSetService } from "../../services/DataSetService";
+import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 
-import { createConnection, getConnection } from 'typeorm';
-import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
-import { BadRequest, NotFound } from "@tsed/exceptions";
-
-
-describe('data service test', () => {
+describe('data set service test', () => {
   let retrieveDataObject: DataSetService;
   jest.setTimeout(60000)
 
@@ -30,7 +28,7 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(arrayOfData[0].id).toEqual(1);
     done()
   });
 
@@ -45,7 +43,7 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.year).toEqual(1980);
+    expect(arrayOfData[0].reference.year).toEqual(1980);
     done()
   });
 
@@ -60,9 +58,9 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].materials[1])
+    expect(arrayOfData[0].material[1])
       .toEqual(expect.objectContaining({ composition: "O2", details: "Oxygen" }));
-    expect(arrayOfData[0].materials[0])
+    expect(arrayOfData[0].material[0])
       .toEqual(expect.objectContaining({ composition: "C", details: "carbon, graphite, pressed graphite" }));
     done()
   });
@@ -78,7 +76,7 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.authors[0])
+    expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
@@ -94,7 +92,7 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.authors[0])
+    expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
@@ -110,7 +108,7 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.authors[0])
+    expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
     done()
   });
@@ -126,7 +124,7 @@ describe('data service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset_info.category).toEqual("cell size");
+    expect(arrayOfData[0].category).toEqual("cell size");
     done()
   });
 
@@ -141,7 +139,7 @@ describe('data service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = 2;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].dataset_info.subcategory).toEqual("width");
+    expect(arrayOfData[0].subcategory).toEqual("width");
     done()
   });
 
@@ -156,8 +154,8 @@ describe('data service test', () => {
     testData.categoryId = undefined;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].publication.year).toEqual(1980);
-    expect(arrayOfData[0].materials[0])
+    expect(arrayOfData[0].reference.year).toEqual(1980);
+    expect(arrayOfData[0].material[0])
       .toEqual(expect.objectContaining({ composition: "C" }));
     done()
   });
@@ -192,45 +190,47 @@ describe('data service test', () => {
     done()
   });
 
-  test('Feeds the email of account ID of 3 and expects to see an uploaded data set with ID of 2 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("tester@123.com")
-    expect(arrayOfData[1][0].dataset_id).toEqual(2);
+  test('Feeds account ID of 3 and expects to see an uploaded data set with ID of 2 returned', async done => {
+    let response = await retrieveDataObject.getUserUploadedDatasets(3)
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].id).toEqual(2);
     done()
   });
 
   test('Feeds an account ID of 1 and expects to see a favorited data set IDs of 2 returned', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(1)
-    expect(arrayOfData[1][0].dataset_id).toEqual(2);
+    let response = await retrieveDataObject.getUserFavoriteDatasets(1)
+    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    expect(arrayOfData[0].id).toEqual(2);
     done()
   });
 
   test('Feeds an invalid email and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserUploadedDatasets("nothing")
-    expect(arrayOfData[1]).toEqual("Invalid user email provided");
+    let response = await retrieveDataObject.getUserUploadedDatasets(-1)
+    expect(response.message).toEqual([])
     done()
   });
 
-  test('Feeds an invalid account and expects to see an error message', async done => {
-    let arrayOfData = await retrieveDataObject.getUserFavoriteDatasets(-1)
-    expect(arrayOfData[0].dataset_id).toBeUndefined()
+  test('Feeds an invalid account and expects to see an empty return', async done => {
+    let response = await retrieveDataObject.getUserFavoriteDatasets(-1)
+    expect(response.message).toEqual([])
     done()
   });
 
   test('Sets data set with ID 5 as a favorite of account ID 1', async done => {
-    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
-    expect(response[1]).toEqual("Favorite data set successfully saved")
+    let response = await retrieveDataObject.addUserFavoriteDataset(1, 5)
+    expect(response.message).toEqual("Favorite data set successfully saved")
     done()
   });
 
   test('Sets data set with ID 5 as a favorite of account ID 1 a second time', async done => {
-    let response = await retrieveDataObject.addUserFavoriteDataset("j.comkj", 5)
-    expect(response[1]).toEqual("Favorite data set is already saved")
+    let response = await retrieveDataObject.addUserFavoriteDataset(1, 5)
+    expect(response.message).toEqual("Favorite data set is already saved")
     done()
   });
 
   test('Removes data set with ID 5 as a favorite of account ID 1', async done => {
     let response = await retrieveDataObject.removeUserFavoriteDataset(1, 5)
-    expect(response.message).toEqual("User favorite successfully removed")
+    expect(response.message).toEqual("User favorite data set successfully removed")
     done()
   });
 
@@ -245,7 +245,7 @@ describe('data service test', () => {
   test('Asks for all flagged data sets expects a data set with ID of 1', async done => {
     let response = await retrieveDataObject.getAllFlaggedDatasets()
     let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
-    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(arrayOfData[0].id).toEqual(1);
     expect(response.statusCode).toEqual(200);
     done()
   });
@@ -253,15 +253,16 @@ describe('data service test', () => {
   test('Asks for all flagged data sets of account ID 1, expects a data set with ID of 1', async done => {
     let response = await retrieveDataObject.getUserFlaggedDatasets(1)
     let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
-    expect(arrayOfData[0].dataset_id).toEqual(1);
+    expect(arrayOfData[0].id).toEqual(1);
     expect(response.statusCode).toEqual(200);
     done()
   });
 
-  test('Asks for all flagged data sets of non-existant user, expects an error', async () => {
-    await expect(retrieveDataObject.getUserFlaggedDatasets(0))
-      .rejects
-      .toThrow("No Flagged Unapproved Datasets in database for this user");
+  test('Asks for all flagged data sets of non-existant user, expects an error', async done => {
+    let response = await retrieveDataObject.getUserFlaggedDatasets(0)
+    expect(response.message).toEqual([]);
+    expect(response.statusCode).toEqual(200);
+    done()
   });
 
   test('Flag an unapproved data set, with no additional comments', async done => {
@@ -286,20 +287,26 @@ describe('data service test', () => {
   });
 
   test('Invalid reject an unapproved data set', async () => {
-    await expect(retrieveDataObject.rejectDataSet(0))
+    await expect(retrieveDataObject.adminRejectDataSet(0))
       .rejects
       .toThrow("No such data set exists");
   });
 
+  test('Invalid reject an unapproved data set', async () => {
+    await expect(retrieveDataObject.userRejectDataSet(0, 0))
+      .rejects
+      .toThrow("No such unapproved data set exists!");
+  });
+
   test('Reject an unapproved data set', async done => {
-    let response = await retrieveDataObject.rejectDataSet(7)
+    let response = await retrieveDataObject.adminRejectDataSet(7)
     expect(response.message).toEqual("Successfully removed data set");
     expect(response.statusCode).toEqual(200);
     done()
   });
 
   test('Reject an unapproved data set', async done => {
-    let response = await retrieveDataObject.rejectDataSet(70)
+    let response = await retrieveDataObject.adminRejectDataSet(70)
     expect(response.message).toEqual("Successfully removed data set");
     expect(response.statusCode).toEqual(200);
     done()
@@ -329,6 +336,6 @@ describe('data service test', () => {
   test('Invalid user approves a data set request', async () => {
     await expect(retrieveDataObject.userApprovedDataset(0, 2))
       .rejects
-      .toThrow("User ID does not match uploader ID!");
+      .toThrow("No such unapproved data set exists!");
   });
 })

@@ -11,11 +11,13 @@ export default abstract class AbstractUploadService {
     protected parsedFileData: any
     protected datasetId: number
     protected userId: number
+    protected clearFlag: boolean
 
-    constructor(parsedFileData: IDataSetModel, datasetId: any = {}, userId: any = {}) {
+    constructor(parsedFileData: IDataSetModel, datasetId: any = {}, userId: any = {}, clearFlag: any = {}) {
         this.parsedFileData = parsedFileData
         this.datasetId = datasetId
         this.userId = userId
+        this.clearFlag = clearFlag
         this.uploadModel = new DataUploadModel()
     }
 
@@ -43,20 +45,6 @@ export default abstract class AbstractUploadService {
             let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
             return contentsArrayInfo;
         }
-    }
-
-    protected async insertUnitsData(uploadModel: DataUploadModel, units: string) {
-        let unitsId: number
-        try {
-            if (units == undefined)
-                unitsId = 1;
-            else {
-                unitsId = await uploadModel.insertUnits(units);
-            }
-        } catch (err) {
-            console.log('rejected request for referenceTypeID');
-        }
-        return unitsId
     }
 
     protected async insertRepData(uploadModel: DataUploadModel, repr: string): Promise<number> {
@@ -110,9 +98,9 @@ export default abstract class AbstractUploadService {
         }
     }
 
-    protected async insertPublicationData(uploadModel, referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors): Promise<number> {
+    protected async insertPublicationData(uploadModel, referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceIssue, allAuthors): Promise<number> {
         try {
-            let publicationID = await uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors);
+            let publicationID = await uploadModel.insertPublication(referenceTitle, referenceDOI, referencePages, referenceTypeID, publisherNameId, referenceYear, referenceVolume, referenceIssue, allAuthors);
             return publicationID
         } catch (err) {
             console.log('publicationID was not received......rejecting request');

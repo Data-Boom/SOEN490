@@ -56,66 +56,64 @@ describe('Data Set Controller ', () => {
         done()
     });
 
-    //TODO: Readd later
-    /**
-    test('Valid Save Data Set Request', async () => {
+    test('Valid Add Favorite Data Set Request', async () => {
         mockRequest = {
+            body: {
+                user: {
+                    account_id: '4'
+                }
+            },
             params: {
                 datasetId: '1'
             }
         }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToAddUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Favorite data set successfully saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    test('Save Data Set Request, Data Set Already Saved', async () => {
+    test('Add Favorite Data Set Request, Data Set Already Saved', async () => {
         mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            },
             params: {
-                userEmail: 'j.comkj',
                 datasetId: '2'
             }
         }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToAddUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Favorite data set is already saved");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    test('Invalid Save Data Set Request', async () => {
+    test('Invalid Add Favorite Data Set Request', async () => {
         mockRequest = {
+            body: {
+                user: {
+                    account_id: '1'
+                }
+            },
             params: {
-                userEmail: 'fake@email.com',
-                datasetId: '1'
-            }
-        }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Invalid user email provided");
-        expect(mockResponse.status).toBeCalledWith(400);
-    });
-
-    test('Invalid Save Data Set Request', async () => {
-        mockRequest = {
-            params: {
-                userEmail: 'j.comkj',
                 datasetId: "wrtrterterte"
             }
         }
-        await GetDataControllerController.createRequestForAddingSavedDataset(mockRequest as Request, mockResponse as Response)
+        await GetDataControllerController.createRequestToAddUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
         expect(mockResponse.status).toBeCalledWith(400);
     });
-    */
 
     test('Valid Get User Uploaded Data Sets Request', async () => {
         mockRequest = {
             body: {
                 user: {
-                    account_id: 'tester@123.com'
+                    account_id: '3'
                 }
             }
         }
         await GetDataControllerController.createRequestForUserUploadedDatasets(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith([true, oneFavoriteDataset]);
+        expect(mockResponse.json).toBeCalledWith(oneFavoriteDataset);
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
@@ -128,7 +126,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestForUserFavoriteDatsets(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith([true, oneFavoriteDataset]);
+        expect(mockResponse.json).toBeCalledWith(oneFavoriteDataset);
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
@@ -145,7 +143,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
+        expect(mockResponse.json).toBeCalledWith("User favorite data set successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
@@ -161,7 +159,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("User favorite successfully removed");
+        expect(mockResponse.json).toBeCalledWith("User favorite data set successfully removed");
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
@@ -200,6 +198,12 @@ describe('Data Set Controller ', () => {
 
     test('Valid Reject Data Set Request', async () => {
         mockRequest = {
+            body: {
+                user: {
+                    account_id: '1',
+                    account_admin: '1'
+                }
+            },
             params: {
                 datasetId: 10
             }
@@ -251,7 +255,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("You cannot approve a data set until it passes initial screening!");
+        expect(mockResponse.json).toBeCalledWith("You cannot approve or reject a data set until it passes initial screening!");
         expect(mockResponse.status).toBeCalledWith(400);
     });
 
@@ -296,7 +300,8 @@ describe('Data Set Controller ', () => {
         mockRequest = {
             body: {
                 user: {
-                    account_id: '1'
+                    account_id: '1',
+                    account_admin: '1'
                 }
             },
             params: {
@@ -312,7 +317,8 @@ describe('Data Set Controller ', () => {
         mockRequest = {
             body: {
                 user: {
-                    account_id: '1'
+                    account_id: '1',
+                    account_admin: '1'
                 }
             },
             params: {

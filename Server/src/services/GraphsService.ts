@@ -51,11 +51,6 @@ export class GraphsService {
     async fetchUserSavedGraphs(userID: number) {
         try {
             let graphData = await this.dataQuery.fetchSavedGraphs(userID)
-            if (graphData.length == 0) {
-                this.requestResponse.statusCode = 200
-                this.requestResponse.message = "You don't have any saved graphs!"
-                return this.requestResponse
-            }
             this.requestResponse.statusCode = 200
             this.requestResponse.message = graphData as any
             return this.requestResponse

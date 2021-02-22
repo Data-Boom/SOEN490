@@ -20,8 +20,8 @@ export class Accounts {
     @Column()
     lastName: string
 
-    @Column()
-    dateOfBirth: Date
+    @Column({ type: "bigint" })
+    orcID: number
 
     @Column()
     organizationName: string
@@ -33,7 +33,7 @@ export class Accounts {
     updatedAt: Date;
 
     @Column({ default: 0 })
-    admin: boolean
+    admin: number
 
     @Column({ nullable: true })
     resetToken: string;
@@ -55,5 +55,6 @@ export class Accounts {
 export const selectAccountIdFromEmailQuery = (connection: Connection, email: string) =>
     connection.createQueryBuilder(Accounts, 'account')
         .select('account.id', 'id')
+        .addSelect('account.admin', 'permissionLevel')
         .where('account.email = :email', { email: email })
         .getRawOne();

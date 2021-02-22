@@ -19,19 +19,11 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let referenceTitle: string = this.parsedFileData.reference.title;
         let referenceDOI: string = this.parsedFileData.reference.doi;
-        let referencePages: number = this.parsedFileData.reference.pages;
+        let referencePages: string = this.parsedFileData.reference.pages;
         let referenceYear: number = this.parsedFileData.reference.year;
         let referenceVolume: number = this.parsedFileData.reference.volume;
-
-        let referenceDatePublished: Date = null;
-        let referenceDateAccessed: Date = null;
-
-        if (this.parsedFileData.reference.datePublished !== undefined)
-            referenceDatePublished = this.parsedFileData.reference.datePublished;
-        if (this.parsedFileData.reference.dateAccessed !== undefined)
-            referenceDateAccessed = this.parsedFileData.reference.dateAccessed;
-
-        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
+        let referenceIssue: number = this.parsedFileData.reference.issue;
+        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceIssue, allAuthors)
 
         let allMaterials: any[] = await this.insertMaterialsData(this.uploadModel, this.parsedFileData.material)
 
@@ -55,7 +47,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
             let dataVariableName = this.parsedFileData.data.variables[i].name;
 
-            let unitsID: number = await this.insertUnitsData(this.uploadModel, this.parsedFileData.data.variables[i].units)
+            let unitsID: number = this.parsedFileData.data.variables[i].unitId
 
             let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
 

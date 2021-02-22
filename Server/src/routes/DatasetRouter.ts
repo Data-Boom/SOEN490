@@ -11,17 +11,24 @@ import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
 let router = Router();
 let dataSetController = new DataSetController();
 
-//Note to Self: Verify which of these routes are protected 
-// JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin
-router.get('/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets', (request: Request, response: Response) => {
+router.get('/api/v1/uploadedDatasets', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataSetController.createRequestForUserUploadedDatasets(request, response);
 });
 
-router.get('/api/v1/dataset/userSavedDatsets/:userSavedDatsets', (request: Request, response: Response) => {
+router.get('/api/v1/favoriteDatasets', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataSetController.createRequestForUserFavoriteDatsets(request, response);
 });
 
-router.get('/api/v1/dataset/fetchUnapprovedDatasets$', (request: Request, response: Response) => {
+router.post('/api/v1/favoriteDatasets/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+    dataSetController.createRequestToAddUserFavoriteDataSet(request, response);
+});
+
+router.delete('/api/v1/favoriteDatasets/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
+    dataSetController.createRequestToDeleteUserFavoriteDataSet(request, response);
+});
+
+//TODO: Rename route name to /api/v1/unapprovedDatasets to bring it in line with current standard
+router.get('/api/v1/dataset/fetchUnapprovedDatasets$', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
     dataSetController.createRequestForUnapprovedDatsets(request, response);
 });
 
@@ -29,7 +36,7 @@ router.get('/api/v1/dataset*', (request: Request, response: Response) => {
     dataSetController.createRequestForData(request, response);
 });
 
-router.delete('/api/v1/dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.delete('/api/v1/dataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataSetController.createRequestToRejectDataset(request, response)
 })
 

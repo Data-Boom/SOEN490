@@ -3,15 +3,14 @@ export interface IDatasetIDModel {
 }
 
 export interface IPublicationModel {
-    name: string
-    DOI: string
+    title: string
+    doi: string
     pages: number
     volume: number
-    year: number
-    datePublished: Date
-    dateAccessed: Date
+    issue: number
+    year: string
     publisher: string
-    publicationType: string
+    type: string
     authors: IAuthorModel[]
 }
 
@@ -22,9 +21,9 @@ export interface IAuthorModel {
 }
 
 export interface IDatasetInfoModel {
-    name: string
+    dataset_name: string
     comments: string
-    datasetDataType: string
+    data_type: string
     category: string
     subcategory: string
 }
@@ -37,18 +36,37 @@ export interface IMaterialModel {
 export interface IDataPointModel {
     type: string
     values: number[]
-    units: string
+    unitId: number
+    dimensionId: number
     representation: string
-    dataset_id: number
+}
+
+export interface IVariable {
+    name: string,
+    unitId: number,
+    dimensionId: number
+}
+
+export interface IContent {
+    point: number[]
+}
+
+export interface IData {
+    variables: IVariable[],
+    contents: IContent[],
+    dataPointComments?: string[],
+    comments?: string,
 }
 
 export interface IClientDatasetModel {
-    publication: IPublicationModel
-    dataset_id: number
-    dataset_info: IDatasetInfoModel
-    materials: IMaterialModel[]
-    dataPoints: IDataPointModel[]
-    dataPointComments: string[]
+    reference: IPublicationModel
+    id: number
+    dataset_name: string
+    data_type: string
+    category: string
+    subcategory: string
+    material: IMaterialModel[]
+    data: IData
 }
 
 export interface IApprovalDatasetModel extends IClientDatasetModel {

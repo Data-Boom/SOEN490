@@ -18,9 +18,9 @@ export interface ISignUpInformation {
   password: string,
   firstName: string,
   lastName: string,
-  dateOfBirth: Date,
+  orcID: number,
   organizationName: string,
-  isAdmin?: boolean
+  isAdmin?: number
 }
 
 export interface IJwtParams {
@@ -39,6 +39,6 @@ export interface IFetchUserDetail {
   email: string,
   firstName: string,
   lastName: string,
-  dateOfBirth: Date,
+  orcID: number,
   organizationName: string,
 }

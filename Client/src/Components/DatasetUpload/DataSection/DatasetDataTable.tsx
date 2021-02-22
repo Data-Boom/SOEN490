@@ -6,18 +6,30 @@ import { IContent, IData, IVariable, newVariable } from '../../../Models/Dataset
 import React, { useState } from 'react'
 
 import { EditVariableHeader } from './EditVariableHeader'
+import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { useEffect } from 'react'
 
 interface IProps {
   data: IData,
   onDataChange: (newData: IData) => void,
-  editable: boolean
+  editable: boolean,
 }
 
 export const DatasetDataTable = (props: IProps): any => {
+  const { data, onDataChange, editable } = { ...props }
+
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const editable = props.editable
+  const [dimensions, setDimensions] = useState([])
+
+  useEffect(() => {
+    const callListDimensions = async () => {
+      const dimensions = await callGetAllDimensions()
+      setDimensions(dimensions)
+    }
+
+    callListDimensions()
+  }, [])
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
     setEditedVariableIndex(indexOfClickedHeader)
@@ -28,22 +40,22 @@ export const DatasetDataTable = (props: IProps): any => {
   }
 
   const handleVariableUpdate = (variable: IVariable, index: number): void => {
-    const copyData = { ...props.data }
+    const copyData = { ...data }
     copyData.variables[index] = variable
-    props.onDataChange(copyData)
+    onDataChange(copyData)
 
     closeEditVariableModal()
   }
 
   const handleVariableRemove = (index: number): void => {
-    const copyData = { ...props.data }
+    const copyData = { ...data }
     copyData.variables.splice(index, 1)
 
-    const copyContents: IContent[] = [...props.data.contents]
+    const copyContents: IContent[] = [...data.contents]
     removeColumnPoints(copyContents, index)
     copyData.contents = copyContents
 
-    props.onDataChange(copyData)
+    onDataChange(copyData)
     closeEditVariableModal()
   }
 
@@ -56,24 +68,24 @@ export const DatasetDataTable = (props: IProps): any => {
   }
 
   const handleAddColumn = (): void => {
-    const copyData = { ...props.data }
+    const copyData = { ...data }
     copyData.variables.push(newVariable)
-    props.onDataChange(copyData)
+    onDataChange(copyData)
 
     setEditedVariableIndex(copyData.variables.length - 1)
   }
 
   const handleRemoveSelectedRows = (): void => {
-    const copyData = { ...props.data }
+    const copyData = { ...data }
     copyData.contents = copyData.contents.filter((row, index) => !selectedRows.has(index))
-    props.onDataChange(copyData)
+    onDataChange(copyData)
 
     resetSelection()
   }
 
   const handleAddRow = (): void => {
     const copyData = { ...props.data }
-    copyData.contents.push({ comments: '', point: new Array(props.data.variables.length).fill(0) })
+    copyData.contents.push({ point: new Array(props.data.variables.length).fill(0) })
     props.onDataChange(copyData)
   }
 
@@ -82,19 +94,21 @@ export const DatasetDataTable = (props: IProps): any => {
   }
 
   const getColumns = (): any[] => {
-    const columns = props.data.variables.map((variable, index) => {
+    const columns = data.variables.map((variable, index) => {
       return (
         {
-          key: `${index}`, name: variable.name, editable: editable, editor: TextEditor, headerRenderer: (): any => <EditVariableHeader
-            variable={variable}
-            index={index}
-            editMode={editedVariableIndex === index}
-            editable={editable}
-            onHeaderClick={handleHeaderClick}
-            onEditModalClose={closeEditVariableModal}
-            onVariableUpdate={handleVariableUpdate}
-            onVariableRemove={handleVariableRemove}
-          />
+          key: `${index}`, name: variable.name, editable: editable, editor: TextEditor, headerRenderer: (): any =>
+            <EditVariableHeader
+              variable={variable}
+              index={index}
+              editMode={editedVariableIndex === index}
+              editable={editable}
+              onHeaderClick={handleHeaderClick}
+              onEditModalClose={closeEditVariableModal}
+              onVariableUpdate={handleVariableUpdate}
+              onVariableRemove={handleVariableRemove}
+              dimensions={dimensions}
+            />
         }
       )
     })
@@ -103,19 +117,19 @@ export const DatasetDataTable = (props: IProps): any => {
   }
 
   const getRows = (): number[][] => {
-    return props.data.contents.map(content => content.point)
+    return data.contents.map(content => content.point)
   }
 
   const handleRowChange = (changedRows: number[][]): void => {
-    const copyData = { ...props.data }
+    const copyData = { ...data }
     // changedRows is the rows after user input, we need to update copyData's contents via a map with an index:
     copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
     // and then callback with updated data
-    props.onDataChange(copyData)
+    onDataChange(copyData)
   }
 
   const rowKeyGetter = (row: any): number => {
-    return props.data.contents.findIndex(suchRow => suchRow.point == row)
+    return data.contents.findIndex(suchRow => suchRow.point == row)
   }
 
   const renderTopButtons = (): any => {

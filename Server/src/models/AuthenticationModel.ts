@@ -24,9 +24,9 @@ export class AuthenticationModel {
     signUpInformation.password = signUpInfo.password;
     signUpInformation.firstName = signUpInfo.firstName;
     signUpInformation.lastName = signUpInfo.lastName;
-    signUpInformation.dateOfBirth = signUpInfo.dateOfBirth;
+    signUpInformation.orcID = signUpInfo.orcID;
     signUpInformation.organizationName = signUpInfo.organizationName;
-    signUpInformation.admin = !!signUpInfo.isAdmin;
+    signUpInformation.admin = signUpInfo.isAdmin;
     await connection.manager.save(signUpInformation);
   }
 
@@ -145,7 +145,8 @@ export class AuthenticationModel {
       .addSelect('account.firstName', 'account_firstName')
       .addSelect('account.lastName', 'account_lastName')
       .addSelect('account.organizationName', 'account_organizationName')
-      .addSelect('account.dateOfBirth', 'account_dateOfBirth')
+      .addSelect('account.orcID', 'account_orcID')
+      .addSelect('account.admin', 'account_permissions')
       .where('account.email = :email', { email: userEmail })
       .getRawMany();
     return userInfo[0];

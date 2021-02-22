@@ -3,7 +3,7 @@
 export interface IUser {
   name: string,
   email: string,
-  dateOfBirth: string,
+  orcID: number,
   organization: string,
   password: string
 }

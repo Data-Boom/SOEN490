@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from '@material-ui/core'
 import React, { useState } from 'react'
 
-import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
+import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
@@ -13,6 +13,7 @@ interface IProps {
 
 const fileFormat = '*'
 
+//todo remove this view and fix all dependencies as we are probably not going to have this feature
 export const ResearchPaperAnalysisView = (props: IProps) => {
 
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
@@ -21,6 +22,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
   const handleSubmit = async (researchPaper: File): Promise<void> => {
     analyzePaper(researchPaper)
   }
+
 
   const analyzePaper = async (researchPaper: File): Promise<void> => {
     setIsProcessingPaper(true)
@@ -63,7 +65,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     <>
       {!analyzedDataset ?
         paperUploadSection() :
-        <DatasetUploadView initialDataset={analyzedDataset} />
+        <DatasetView initialDataset={analyzedDataset} />
       }
       <Loader
         type='Bars'

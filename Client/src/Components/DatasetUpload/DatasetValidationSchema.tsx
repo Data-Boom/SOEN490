@@ -10,8 +10,10 @@ const requiredMessage = (fieldName: string): string => {
 
 const referenceValidationSchema = Yup.object().shape({
   year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
-  volume: Yup.number().integer(integerMessage('Volume')).required(requiredMessage('Volume')),
-  pages: Yup.number().integer(integerMessage('Pages')).required(requiredMessage('Pages')),
+  doi: Yup.string().trim().nullable(),
+  volume: Yup.number().nullable().integer(integerMessage('Volume')),
+  issue: Yup.number().nullable().integer(integerMessage('Issue')),
+  pages: Yup.string().trim().matches(new RegExp(/^(?:\d+$|\d+-\d+$|)$/), "Pages must be a single number or two numbers separated by a hyphen if included"),
   title: Yup.string().trim().required(requiredMessage('Title')),
   type: Yup.string().trim().required(requiredMessage('Type')),
   publisher: Yup.string().trim().required(requiredMessage('Publisher')),
@@ -19,7 +21,7 @@ const referenceValidationSchema = Yup.object().shape({
     Yup.object().shape(
       {
         firstName: Yup.string().trim().required('First Name is a required field'),
-        middleName: Yup.string(),
+        middleName: Yup.string().nullable(),
         lastName: Yup.string().trim().required('Last Name is a required field')
       }
     )
@@ -29,8 +31,8 @@ const referenceValidationSchema = Yup.object().shape({
 export const variableValidationSchema = Yup.object().shape(
   {
     name: Yup.string().trim().required(requiredMessage('Name')),
-    repr: Yup.string().trim().required(requiredMessage('Representation')),
-    units: Yup.string().trim().required(requiredMessage('Units'))
+    dimensionId: Yup.number().required(requiredMessage('Dimensions')),
+    unitId: Yup.number().required(requiredMessage('Units'))
   }
 )
 

@@ -31,18 +31,18 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Success";
         mockRequest = {
             body: {
-                email: 'j.comkj23r23r23r23r2',
-                password: '123',
+                email: 'j@k.com',
+                password: 'Abc12345!',
                 isAdmin: 'false',
                 organizationName: 'Mugiwara',
-                dateOfBirth: '1980-01-01',
+                orcID: '123456789876543',
                 firstName: 'Ace',
                 lastName: 'FireFist'
             }
         }
         await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(200);
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.status).toBeCalledWith(200);
     });
 
     test('Invalid SignUp Request due to missing parameters - Error 400', async () => {
@@ -62,11 +62,11 @@ describe('Authentication Controller', () => {
         const expectedResponse = "Email already exists! Please enter a different email address";
         mockRequest = {
             body: {
-                email: 'j.comkj',
-                password: '123',
+                email: 'j@kj.com',
+                password: 'Abc12345!',
                 isAdmin: 'false',
                 organizationName: 'Mugiwara',
-                dateOfBirth: '1980-01-01',
+                orcID: '123456789876543',
                 firstName: 'Ace',
                 lastName: 'FireFist'
             }
@@ -107,15 +107,16 @@ describe('Authentication Controller', () => {
 
     test('Valid Request to get UserDetails', async () => {
         const expectedResponse = {
-            "account_email": "j.comkj",
+            "account_email": "j@kj.com",
             "account_firstName": "Ace",
             "account_lastName": "FireFist",
-            "account_dateOfBirth": "1980-01-01T00:00:00.000Z",
-            "account_organizationName": "Mugiwara"
+            "account_orcID": "123456789876543",
+            "account_organizationName": "Mugiwara",
+            "account_permissions": 1
         }
         mockRequest = {
             query: {
-                email: 'j.comkj',
+                email: 'j@kj.com',
             }
         }
         await authenticationController.createFetchUserDetailsRequest(mockRequest as Request, mockResponse as Response);
