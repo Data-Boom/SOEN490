@@ -48,14 +48,14 @@ export interface IVariable {
 }
 
 export interface IContent {
-    point: number[],
-    comments?: string,
+    point: number[]
 }
 
 export interface IData {
     variables: IVariable[],
     contents: IContent[],
-    comments: string,
+    dataPointComments?: string[],
+    comments?: string,
 }
 
 export interface IClientDatasetModel {
@@ -67,7 +67,6 @@ export interface IClientDatasetModel {
     subcategory: string
     material: IMaterialModel[]
     data: IData
-    dataPointComments: string[]
 }
 
 export interface IApprovalDatasetModel extends IClientDatasetModel {

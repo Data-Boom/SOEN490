@@ -252,20 +252,22 @@ export class DataSetService {
                         dataPointIndex--
                     }
                 }
-                allDataPointData = {
-                    variables: allVariableData,
-                    contents: allContentData,
-                    comments: rawData[2][index]?.comments
-                }
 
                 //Sort through data point comments, grab the ones desired
-                dataPointComments = undefined
+                dataPointComments = null
                 for (let commentIndex = 0; commentIndex < rawData[5].length; commentIndex++) {
                     if (rawData[5][commentIndex]?.dataset_id == currentDataset) {
                         dataPointComments = rawData[5][commentIndex]?.datapointcomments
                         rawData[5].splice(commentIndex, 1)
                         break;
                     }
+                }
+
+                allDataPointData = {
+                    variables: allVariableData,
+                    contents: allContentData,
+                    dataPointComments: dataPointComments,
+                    comments: rawData[2][index]?.comments
                 }
 
                 singleDataSet = {
@@ -276,8 +278,7 @@ export class DataSetService {
                     category: rawData[2][index]?.category,
                     subcategory: rawData[2][index]?.subcategory,
                     material: allMaterialData,
-                    data: allDataPointData,
-                    dataPointComments: dataPointComments
+                    data: allDataPointData
                 }
 
                 allDataSets.push(singleDataSet);
@@ -401,12 +402,14 @@ export class DataSetService {
             compiledDataset = {
                 reference: incompletDatasets[i].reference,
                 id: incompletDatasets[i].id,
-                dataset_info: incompletDatasets[i].dataset_info,
+                dataset_name: incompletDatasets[i].dataset_name,
                 datasetIsFlagged: approvalData[i].isFlagged,
                 datasetFlaggedComment: approvalData[i].flaggedComment,
+                data_type: incompletDatasets[i].data_type,
+                category: incompletDatasets[i].category,
+                subcategory: incompletDatasets[i].subcategory,
                 material: incompletDatasets[i].material,
-                dataPoints: incompletDatasets[i].dataPoints,
-                dataPointComments: incompletDatasets[i].dataPointComments
+                data: incompletDatasets[i].data
             }
             setOfData.push(compiledDataset)
         }
