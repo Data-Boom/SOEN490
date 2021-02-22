@@ -23,6 +23,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     analyzePaper(researchPaper)
   }
 
+
   const analyzePaper = async (researchPaper: File): Promise<void> => {
     setIsProcessingPaper(true)
     const fetchedDataset = await fetchDataset()
