@@ -15,4 +15,4 @@ export const loginRoute = '/log-in'
 export const signUpRoute = '/sign-up'
 export const forgotPasswordRoute = '/api/v1/forgotPassword'
 
-export const cellSizeAnalysisRoute = '/cellSizeAnalysis'
+export const dataCellAnalysisRoute = '/cellSizeAnalysis'
