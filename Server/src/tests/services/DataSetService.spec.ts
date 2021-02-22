@@ -1,9 +1,8 @@
-import { DataSetService } from "../../services/DataSetService";
-import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
-
 import { createConnection, getConnection } from 'typeorm';
-import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
 
+import { DataSetService } from "../../services/DataSetService";
+import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
+import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 
 describe('data set service test', () => {
   let retrieveDataObject: DataSetService;
