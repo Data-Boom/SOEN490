@@ -16,7 +16,6 @@ export const UnitForm = (props: IProps) => {
   const id = props.id
 
   const renderDimensionNameForm = () => {
-    console.log(id)
     if (!id) {
       return (
         <FastField name={`name`} label='Dimension Name' component={MuiTextFieldFormik} />
