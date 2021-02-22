@@ -1,7 +1,7 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import React, { useRef, useState } from 'react'
-import { adminApprovedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { approvedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
 import { DatasetForm } from '../DatasetUpload/DatasetForm'
@@ -35,7 +35,7 @@ export function AdminReviewView() {
   //todo datasetId is passed but not used? looks like it should be used
   const handleApproveDataset = async (datasetId: IApprovedDatasetModel) => {
     const query: IFlaggedDatasetQuery = { datasetId: dataset.id, additionalComments: comment }
-    await adminApprovedDataset(query)
+    await approvedDataset(query)
     setUpdate(update + 1)
     handleDatasetChange(null)
   }
