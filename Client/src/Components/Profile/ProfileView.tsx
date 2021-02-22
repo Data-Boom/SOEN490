@@ -1,7 +1,6 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
-import { fetchAllAdmins, updatePermissions } from '../../Remote/Endpoints/PermissionsEndpoint'
 
 import { DimensionManagementTab } from './UnitManagementSection/DimensionManagementTab'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
@@ -134,8 +133,8 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 }
 
 export function ProfileView() {
-
   const { user, setUser } = useContext(UserContext)
+
   useEffect(() => {
     const fetchUser = async () => {
       const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
@@ -232,3 +231,4 @@ export function ProfileView() {
     </>
   )
 }
+
