@@ -24,7 +24,7 @@ export const DatasetRow = (props: IProps) => {
 
   return (
     <Grid item>
-      <Box className={classStyles().datasetBorder}>
+      <Box className={classStyles().fitBorder}>
         <Grid container alignItems='center' justify='space-between'>
           <Grid item container justify='flex-start' xs={3}>
             <Typography variant="body2" noWrap>

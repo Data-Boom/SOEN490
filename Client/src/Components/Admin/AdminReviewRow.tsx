@@ -19,7 +19,7 @@ export const AdminReviewRow = (props: IAdminReviewModel) => {
 
   return (
     <Grid item xs={12}>
-      <Box className={classStyles().datasetBorder}>
+      <Box className={classStyles().fitBorder}>
         <Grid container alignItems='center' justify='space-between'>
           <Grid item container justify='flex-start' xs={10}>
             <Typography variant="body2" noWrap>

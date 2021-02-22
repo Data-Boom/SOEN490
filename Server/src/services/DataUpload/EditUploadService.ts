@@ -60,7 +60,7 @@ export default class EditUploadService extends AbstractUploadService {
         for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
             let dataPointValues = this.getDataInformationFromContentsArray(this.parsedFileData.data.contents, i);
             let dataVariableName = this.parsedFileData.data.variables[i].name;
-            let unitsID: number = await this.insertUnitsData(this.uploadModel, this.parsedFileData.data.variables[i].units)
+            let unitsID: number = this.parsedFileData.data.variables[i].unitId
             let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
             await this.uploadModel.insertDataPointsOfSet(this.datasetId, dataVariableName, dataPointValues[0], unitsID, reprID)
             individualDataSetComments = dataPointValues[1];
