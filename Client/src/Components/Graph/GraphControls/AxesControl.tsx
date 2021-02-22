@@ -7,6 +7,8 @@ import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { classStyles } from "../../../appTheme"
+import { IDimensionModel } from "../../../../../Server/src/models/interfaces/IDimension"
+import { callGetAllDimensions } from "../../../Remote/Endpoints/DimensionsEndpoint"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -14,6 +16,8 @@ interface IProps {
   onAxesChange: (axes: IAxisStateModel[]) => void
 }
 
+//TODO: call to get all dimensions on page load
+//TODO: call to get units on page load
 const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
   const variables: IVariable[] = []
 
@@ -25,12 +29,14 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
     })
   })
 
+  //alert(variables)
   return variables
 }
 
 export const AxesControl = (props: IProps) => {
   const { datasets, axes, onAxesChange } = { ...props }
   const classes = classStyles()
+  const [dimensions, setDimensions] = useState<IDimensionModel[]>()
 
   //todo unhardcode the variables
   const [showSettings, setSettingsToggle] = useState(true)
@@ -40,6 +46,18 @@ export const AxesControl = (props: IProps) => {
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
   const [variables, setVariables] = useState<IVariable[]>([])
+
+  const getDimensions = async () => {
+    const databaseDimensions = await callGetAllDimensions()
+    console.log(databaseDimensions)
+    //alert(databaseDimensions)
+    setDimensions(databaseDimensions)
+  }
+
+  useEffect(() => {
+    getDimensions()
+  }, [])
+
 
   useEffect(() => {
     setVariables(buildVariableList(datasets))
