@@ -29,7 +29,8 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
     })
   })
 
-  //alert(variables)
+  console.log("variables:" + variables)
+  console.log("datasets: " + datasets)
   return variables
 }
 
@@ -52,6 +53,7 @@ export const AxesControl = (props: IProps) => {
     console.log(databaseDimensions)
     //alert(databaseDimensions)
     setDimensions(databaseDimensions)
+
   }
 
   useEffect(() => {
