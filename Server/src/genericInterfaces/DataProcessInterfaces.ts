@@ -30,7 +30,8 @@ export interface IMaterial {
 export interface IVariable {
     name: string;
     repr: string;
-    units: string;
+    units?: string;
+    unitId?: string;
 }
 
 export const defaultVariable: IVariable = {

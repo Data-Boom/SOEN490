@@ -13,6 +13,7 @@ interface IProps {
 
 const fileFormat = '*'
 
+//todo remove this view and fix all dependencies as we are probably not going to have this feature
 export const ResearchPaperAnalysisView = (props: IProps) => {
 
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
