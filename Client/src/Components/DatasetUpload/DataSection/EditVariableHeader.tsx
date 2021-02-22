@@ -97,9 +97,7 @@ export const EditVariableHeader = (props: IProps) => {
                         onChange={(value) => handleDimensionsChanged(formProps, value)} />
                     </Grid>
                     <Grid item sm={4}>
-                      {/* todo disable if dimensionid not selected */}
-                      {/* add an empty option with null value*/}
-                      <Field name="unitId" label='Units' disabled={!editable} component={MuiSelectFormik} options={getUnitsOptions(getUnits(selectedDimensionId))} />
+                      <Field name="unitId" label='Units' disabled={!editable || !selectedDimensionId} component={MuiSelectFormik} options={getUnitsOptions(getUnits(selectedDimensionId))} />
                     </Grid>
                   </Grid>
                   <Grid container spacing={4} justify="flex-end">
