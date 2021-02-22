@@ -1,6 +1,7 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newDatasetRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute } from '../Common/Consts/Routes'
+
+import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newDatasetRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute, userReviewRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
@@ -28,6 +29,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
 import SignUpView from "./Authentication/SignUpView"
 import { resetPasswordRoute } from "../Remote/Endpoints/AuthenticationEndpoint"
+import { UserReviewView } from './UserReview/UserReviewView';
 
 interface IProps {
   id: string;
@@ -84,6 +86,7 @@ export const ListRouter = () => {
           <ListItemLink id="profile-menu" to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
           <ListItemLink id="about-menu" to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
           <ListItemLink id="admin-review" to={adminReviewRoute} primary="Admin Review (#)" icon={<MessageIcon />} />
+          <ListItemLink id="user-review" to={userReviewRoute} primary="Flagged Datasets (#)" icon={<MessageIcon />} />
         </List>
       </Paper>
     </div>
@@ -99,7 +102,7 @@ export const getRoutedViews = () => {
       <Route path={searchRoute} component={SearchView} />
       <Route path={newDatasetRoute} component={DatasetView} />
       <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
-      <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
+      <Route path={cellSizeAnalysisRoute} component={CellSizeAnalysisView} />
       <Route path={aboutRoute} component={AboutView} />
       <Route path={profileRoute} component={ProfileView} />
       <Route path={loginRoute} component={LoginView} />
@@ -107,6 +110,7 @@ export const getRoutedViews = () => {
       <Route path={adminReviewRoute} component={AdminReviewView} />
       <Route path={forgotPasswordRoute} component={ForgotPasswordView} />
       <Route path={resetPasswordRoute} component={ResetPasswordView} />
+      <Route path={userReviewRoute} component={UserReviewView} />
     </>
   )
 }

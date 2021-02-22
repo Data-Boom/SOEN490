@@ -29,7 +29,7 @@ export const ProfileGraphRow = (props: IGraphModel) => {
     return (
         <Grid container justify="center" spacing={3}>
             <Grid item xs={3}>
-                <Box className={classStyles().datasetBorder}>
+                <Box className={classStyles().fitBorder}>
                     <Link to={'/graph/' + graphset.id} >
                         <Typography>
                             {graphset.name}

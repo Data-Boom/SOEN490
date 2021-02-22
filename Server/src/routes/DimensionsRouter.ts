@@ -29,4 +29,3 @@ router.delete('/api/v1/dimensions/:id?', [JWTAuthenticator.verifyJWT, JWTAuthent
 });
 
 export { router as dimensionsRouter }
-
