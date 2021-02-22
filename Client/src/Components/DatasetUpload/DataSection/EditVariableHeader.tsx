@@ -46,6 +46,7 @@ export const EditVariableHeader = (props: IProps) => {
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (
       <>
+        <option value={null}></option>
         {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
       </>
     )
@@ -54,6 +55,7 @@ export const EditVariableHeader = (props: IProps) => {
   const getUnitsOptions = (options: IUnitModel[]): any => {
     return (
       <>
+        <option value={null}></option>
         {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
       </>
     )
