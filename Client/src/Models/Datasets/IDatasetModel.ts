@@ -42,13 +42,13 @@ export const newVariable: IVariable = {
 }
 
 export interface IContent {
-  point: number[],
-  comments: string,
+  point: number[]
 }
 
 export interface IData {
   variables: IVariable[],
   contents: IContent[],
+  dataPointComments?: string[],
   comments: string,
 }
 
