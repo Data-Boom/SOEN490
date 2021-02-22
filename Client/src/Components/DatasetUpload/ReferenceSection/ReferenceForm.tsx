@@ -36,7 +36,10 @@ export const ReferenceForm = (props: IProps) => {
           <Grid item sm={4}>
             <FastField name="reference.pages" label='Pages' disabled={!editable} shouldUpdate={shouldComponentUpdate} component={MuiTextFieldFormik} />
           </Grid>
-          <Grid item sm={4}>
+          <Grid item sm={2}>
+            <FastField name="reference.issue" label='Issue' disabled={!editable} shouldUpdate={shouldComponentUpdate} component={MuiTextFieldFormik} />
+          </Grid>
+          <Grid item sm={2}>
             <FastField name="reference.year" label='Year' disabled={!editable} shouldUpdate={shouldComponentUpdate} component={MuiTextFieldFormik} />
           </Grid>
         </Grid>

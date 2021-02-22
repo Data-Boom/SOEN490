@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from '@material-ui/core'
 import React, { useState } from 'react'
 
-import { DatasetUploadView } from '../DatasetUpload/DatasetUploadView'
+import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
@@ -11,52 +11,49 @@ interface IProps {
 
 }
 
-const fileFormat = 'image/ppm'
+const fileFormat = 'image/png'
 
-export const CellSizeAnalysisView = (props: IProps) => {
+export const DataCellAnalysisView = (props: IProps) => {
 
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
-  const [isProcessingCellSize, setIsProcessingCellSize] = useState(false)
+  const [isProcessingDataCell, setIsProcessingDataCell] = useState(false)
 
-  const handleSubmit = async (cell: File): Promise<void> => {
-    console.log("handle submit")
-    analyzeCellSize(cell)
+  const handleSubmit = async (dataCell: File): Promise<void> => {
+    analyzeDataCell(dataCell)
   }
 
-  const analyzeCellSize = async (cell: File): Promise<void> => {
-    console.log("analyze cell size")
-    setIsProcessingCellSize(true)
+  const analyzeDataCell = async (dataCell: File): Promise<void> => {
+    setIsProcessingDataCell(true)
     const fetchedDataset = await fetchDataset()
-    setIsProcessingCellSize(false)
+    setIsProcessingDataCell(false)
     setAnalyzedDataset(fetchedDataset)
   }
 
   const fetchDataset = (): Promise<IDatasetModel> => {
-    console.log("Fetch dataset")
-    //todo make an actual API call providing a cell
+    //todo make an actual API call providing a data cell 
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(exampleExportDatasetModel)
       }, 2000)
     })
   }
-  const validatePPM = (file: File) => {
-    console.log(file.type)
+  const validatePNG = (file: File) => {
     return file && file.type === fileFormat
   }
   const theme = useTheme()
 
-  const cellUploadSection = (): any => {
+  const dataCellUploadSection = (): any => {
     return (
       <>
         <Box pt={5}>
-          <Typography>Cell Size Analysis</Typography>
+          <Typography>Data Cell Analysis Upload Page</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            isValidFile={validatePPM}
+            isValidFile={validatePNG}
             acceptFileFormat={fileFormat}
           />
         </Box>
+        <image >test </image>
       </>
     )
   }
@@ -64,15 +61,15 @@ export const CellSizeAnalysisView = (props: IProps) => {
   return (
     <>
       {!analyzedDataset ?
-        cellUploadSection() :
-        <DatasetUploadView initialDataset={analyzedDataset} />
+        dataCellUploadSection() :
+        <DatasetView initialDataset={analyzedDataset} />
       }
       <Loader
         type='Bars'
         color={theme.palette.secondary.main}
         height={100}
         width={100}
-        visible={isProcessingCellSize}
+        visible={isProcessingDataCell}
       />
     </>
   )

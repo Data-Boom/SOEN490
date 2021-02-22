@@ -36,7 +36,7 @@ router.get('/api/v1/dataset*', (request: Request, response: Response) => {
     dataSetController.createRequestForData(request, response);
 });
 
-router.delete('/api/v1/dataset/:datasetId', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.delete('/api/v1/dataset/:datasetId', JWTAuthenticator.verifyJWT, (request: Request, response: Response) => {
     dataSetController.createRequestToRejectDataset(request, response)
 })
 

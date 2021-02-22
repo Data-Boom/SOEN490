@@ -17,11 +17,11 @@ describe('Authentication Model Methods', () => {
 
     test('Inserting new user into database by SignUp - Pass', async () => {
         let signUpInfo: ISignUpInformation = {
-            email: 'j.com',
-            password: '123',
+            email: 'j@kj.com',
+            password: 'Abc12345!',
             isAdmin: 0,
             organizationName: 'Mugiwara',
-            dateOfBirth: '1980-01-01' as any,
+            orcID: 123456789876543,
             firstName: 'Ace',
             lastName: 'FireFist'
         }
@@ -49,7 +49,7 @@ describe('Authentication Model Methods', () => {
     });
 
     test('Checking Database if User is Admin - false', async () => {
-        let email: string = 'j.com'
+        let email: string = 'test@t.com'
         let res = await AuthenticationModel.isAdminStatus(email);
         expect(res).toBe(0);
     });

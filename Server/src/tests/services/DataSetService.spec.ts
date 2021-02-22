@@ -1,9 +1,8 @@
-import { DataSetService } from "../../services/DataSetService";
-import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
-
 import { createConnection, getConnection } from 'typeorm';
-import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
 
+import { DataSetService } from "../../services/DataSetService";
+import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
+import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 
 describe('data set service test', () => {
   let retrieveDataObject: DataSetService;
@@ -288,20 +287,26 @@ describe('data set service test', () => {
   });
 
   test('Invalid reject an unapproved data set', async () => {
-    await expect(retrieveDataObject.rejectDataSet(0))
+    await expect(retrieveDataObject.adminRejectDataSet(0))
       .rejects
       .toThrow("No such data set exists");
   });
 
+  test('Invalid reject an unapproved data set', async () => {
+    await expect(retrieveDataObject.userRejectDataSet(0, 0))
+      .rejects
+      .toThrow("No such unapproved data set exists!");
+  });
+
   test('Reject an unapproved data set', async done => {
-    let response = await retrieveDataObject.rejectDataSet(7)
+    let response = await retrieveDataObject.adminRejectDataSet(7)
     expect(response.message).toEqual("Successfully removed data set");
     expect(response.statusCode).toEqual(200);
     done()
   });
 
   test('Reject an unapproved data set', async done => {
-    let response = await retrieveDataObject.rejectDataSet(70)
+    let response = await retrieveDataObject.adminRejectDataSet(70)
     expect(response.message).toEqual("Successfully removed data set");
     expect(response.statusCode).toEqual(200);
     done()
@@ -331,6 +336,6 @@ describe('data set service test', () => {
   test('Invalid user approves a data set request', async () => {
     await expect(retrieveDataObject.userApprovedDataset(0, 2))
       .rejects
-      .toThrow("User ID does not match uploader ID!");
+      .toThrow("No such unapproved data set exists!");
   });
 })
