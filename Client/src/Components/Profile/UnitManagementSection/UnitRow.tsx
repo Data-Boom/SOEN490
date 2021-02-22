@@ -9,7 +9,7 @@ import React from 'react'
 interface IProps {
   index: number,
   onRemoveUnitClick: (index: number) => void,
-  conversionFormula?: string,
+  conversionFormula: string,
   removable: boolean
 }
 
