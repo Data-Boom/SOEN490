@@ -60,7 +60,6 @@ export const DimensionForm = (props: IProps) => {
   }
 
   const handleSubmit = (formValues: IDimensionModel) => {
-    console.log(formValues)
     if (formValues.id) {
       onUpdate(formValues)
     }
