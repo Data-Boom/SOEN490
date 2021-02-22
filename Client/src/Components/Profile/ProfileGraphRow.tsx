@@ -6,12 +6,12 @@ import { classStyles } from '../../appTheme'
 import CancelIcon from '@material-ui/icons/Cancel'
 import { ConfirmationModal } from '../Authentication/ConfirmationModal'
 import { callDeleteGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
-import SnackbarUtils from '../../Components/Utils/SnackbarUtils'
+//import SnackbarUtils from '../../Components/Utils/SnackbarUtils'
 
 
 interface IGraphModel {
     graphset: IGraphStateModel,
-    handleRemoveGraphSet: (graphState: IGraphStateModel) => void,
+    handleRemoveGraphState: (graphState: IGraphStateModel) => void,
     userID: number
 }
 
@@ -19,10 +19,10 @@ export const ProfileGraphRow = (props: IGraphModel) => {
     const { graphset, userID } = { ...props }
     const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
-    const onHandleRemoveGraphSet = async (removeGraphSetID: IGraphStateModel, userId: number) => {
+    const onHandleRemoveGraphState = async (removeGraphSetID: IGraphStateModel, userId: number) => {
         setConfirmModalOpen(true)
         await callDeleteGraphState(graphset, userId)
-        SnackbarUtils.success('Saved graph successfully deleted!')
+        //SnackbarUtils.success('Saved graph successfully deleted!')
         window.location.reload()
     }
 
@@ -48,7 +48,7 @@ export const ProfileGraphRow = (props: IGraphModel) => {
                     cancelButton="Cancel"
                     open={confirmModalOpen}
                     onClose={() => setConfirmModalOpen(false)}
-                    onSubmit={() => onHandleRemoveGraphSet(graphset, userID)} />
+                    onSubmit={() => onHandleRemoveGraphState(graphset, userID)} />
             </Grid>
         </Grid >
     )

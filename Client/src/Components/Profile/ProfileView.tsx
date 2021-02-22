@@ -133,11 +133,11 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
   )
 }
 interface graphProps {
-  handleRemoveGraphSet: (graphState: IGraphStateModel) => void
+  handleRemoveGraphState: (graphState: IGraphStateModel) => void
   userID: number
 }
 export function ProfileView(props: graphProps) {
-  const { handleRemoveGraphSet } = { ...props }
+  const { handleRemoveGraphState } = { ...props }
 
   const { user, setUser } = useContext(UserContext)
   useEffect(() => {
@@ -197,7 +197,7 @@ export function ProfileView(props: graphProps) {
                 <TableBody >
                   <ProfileGraphStateList
                     graphDataset={savedGraphState}
-                    handleRemoveGraphSet={handleRemoveGraphSet}
+                    handleRemoveGraphState={handleRemoveGraphState}
                     userID={user.orcID}
                   />
                 </TableBody>
