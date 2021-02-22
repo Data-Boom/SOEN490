@@ -1,4 +1,4 @@
-import { get, post, put, _delete } from "../FluentRequest"
+import { _delete, get, post, put } from "../FluentRequest"
 
 import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
@@ -26,8 +26,8 @@ export const callUpdateGraphState = async (graphState: IGraphStateModel): Promis
   return result
 }
 
-export const callDeleteGraphState = async (graphState: IGraphStateModel, userID: number) => {
-  const result = await _delete(graphStateRoute + '/' + graphState.id).withBody({}).json()
+export const callDeleteGraphState = async (graphState: IGraphStateModel) => {
+  const result = await _delete(graphStateRoute + '/' + graphState.id).json()
   SnackbarUtils.success('Saved graph successfully deleted!')
   return result
 

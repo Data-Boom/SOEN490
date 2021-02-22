@@ -1,7 +1,6 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
-import { fetchAllAdmins, updatePermissions } from '../../Remote/Endpoints/PermissionsEndpoint'
 
 import { DimensionManagementTab } from './UnitManagementSection/DimensionManagementTab'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
@@ -13,9 +12,7 @@ import { ProfileGraphStateList } from './ProfileGraphList'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
-import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
-
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -134,14 +131,10 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
     </React.Fragment >
   )
 }
-interface graphProps {
-  handleRemoveGraphState: (graphState: IGraphStateModel) => void
-  userID: number
-}
-export function ProfileView(props: graphProps) {
-  const { handleRemoveGraphState } = { ...props }
 
+export function ProfileView() {
   const { user, setUser } = useContext(UserContext)
+
   useEffect(() => {
     const fetchUser = async () => {
       const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
@@ -200,8 +193,6 @@ export function ProfileView(props: graphProps) {
                 <TableBody >
                   <ProfileGraphStateList
                     graphDataset={savedGraphState}
-                    handleRemoveGraphState={handleRemoveGraphState}
-                    userID={user.orcID}
                   />
                 </TableBody>
               </Table>

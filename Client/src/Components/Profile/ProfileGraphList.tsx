@@ -1,36 +1,30 @@
 import { Grid } from "@material-ui/core"
-import React from 'react'
-
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
 import { ProfileGraphRow } from '../Profile/ProfileGraphRow'
+import React from 'react'
 
 interface IGraphDatasetListProps {
-    graphDataset: IGraphStateModel[],
-    userID: number,
-    handleRemoveGraphState: (graphState: IGraphStateModel) => void
+  graphDataset: IGraphStateModel[]
 }
 
 export const ProfileGraphStateList = (props: IGraphDatasetListProps) => {
-    const { graphDataset, handleRemoveGraphState, userID } = { ...props }
+  const { graphDataset } = { ...props }
 
-    const renderGraphListRows = () => {
-        return graphDataset && graphDataset.map(graphDSet => {
-            return (
-                < ProfileGraphRow
-                    graphset={graphDSet}
-                    key={graphDSet.id}
-                    handleRemoveGraphState={handleRemoveGraphState}
-                    userID={userID}
-
-                />
-            )
-        })
-    }
-    return (
-        <Grid>
-            {renderGraphListRows()}
-        </Grid>
-    )
+  const renderGraphListRows = () => {
+    return graphDataset && graphDataset.map(graphDataset => {
+      return (
+        <ProfileGraphRow
+          graphDataset={graphDataset}
+          key={graphDataset.id}
+        />
+      )
+    })
+  }
+  return (
+    <Grid>
+      {renderGraphListRows()}
+    </Grid>
+  )
 
 }
 
