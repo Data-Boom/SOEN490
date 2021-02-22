@@ -47,7 +47,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
             let dataVariableName = this.parsedFileData.data.variables[i].name;
 
-            let unitsID: number = await this.insertUnitsData(this.uploadModel, this.parsedFileData.data.variables[i].units)
+            let unitsID: number = this.parsedFileData.data.variables[i].unitId
 
             let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
 

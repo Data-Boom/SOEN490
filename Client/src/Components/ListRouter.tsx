@@ -1,6 +1,5 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-
 import { aboutRoute, adminReviewRoute, dataCellAnalysisRoute, datasetRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newDatasetRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute, userReviewRoute } from '../Common/Consts/Routes'
 
 import { AboutView } from "./Home/AboutView"
@@ -28,8 +27,8 @@ import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "./Search/SearchView"
 import SignUpView from "./Authentication/SignUpView"
+import { UserReviewView } from './UserReview/UserReviewView'
 import { resetPasswordRoute } from "../Remote/Endpoints/AuthenticationEndpoint"
-import { UserReviewView } from './UserReview/UserReviewView';
 
 interface IProps {
   id: string;

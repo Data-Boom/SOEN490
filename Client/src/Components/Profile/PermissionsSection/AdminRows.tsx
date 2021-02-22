@@ -1,8 +1,8 @@
 import { Button, Grid, Paper, Table, TableContainer } from '@material-ui/core'
 import React, { useState } from 'react'
-import { classStyles } from '../../../appTheme'
 
 import { ConfirmationModal } from '../../Authentication/ConfirmationModal'
+import { classStyles } from '../../../appTheme'
 
 interface IProps {
   adminEmail: string,
