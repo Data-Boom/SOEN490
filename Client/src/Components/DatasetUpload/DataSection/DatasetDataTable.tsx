@@ -73,7 +73,7 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const handleAddRow = (): void => {
     const copyData = { ...props.data }
-    copyData.contents.push({ comments: '', point: new Array(props.data.variables.length).fill(0) })
+    copyData.contents.push({ point: new Array(props.data.variables.length).fill(0) })
     props.onDataChange(copyData)
   }
 
