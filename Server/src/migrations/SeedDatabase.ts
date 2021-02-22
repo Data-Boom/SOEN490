@@ -486,32 +486,43 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     densityDimension.id = 2;
     densityDimension.name = "Density";
 
+    let deleteDimension = new Dimension();
+    deleteDimension.id = 3;
+    deleteDimension.name = "Delete";
+
     let unitsGCC = new Units();
-    unitsGCC.id;
+    unitsGCC.id = 1;
+    unitsGCC.dimensionId = 2;
     unitsGCC.name = "g/cc";
 
     let unitsNone = new Units();
-    unitsNone.id;
+    unitsNone.id = 2;
+    unitsNone.dimensionId = 1;
     unitsNone.name = "No Units";
 
     let unitsCCG = new Units();
-    unitsCCG.id;
+    unitsCCG.id = 3;
+    unitsCCG.dimensionId = 2;
     unitsCCG.name = "cc/g";
 
     let unitsKelvin = new Units();
-    unitsKelvin.id;
-    unitsKelvin.name = "Kelvin";
+    unitsKelvin.id = 4;
+    unitsKelvin.dimensionId = 1;
+    unitsKelvin.name = "K";
 
     let unitsGigapascal = new Units();
-    unitsGigapascal.id;
-    unitsGigapascal.name = "Gigapascal";
+    unitsGigapascal.id = 5;
+    unitsGigapascal.dimensionId = 2;
+    unitsGigapascal.name = "GPa";
 
     let unitsKMPS = new Units();
-    unitsKMPS.id;
-    unitsKMPS.name = "Kilometers per Second";
+    unitsKMPS.id = 6;
+    unitsKMPS.dimensionId = 2;
+    unitsKMPS.name = "km/s";
 
     let unitsToDelete = new Units();
-    unitsToDelete.id;
+    unitsToDelete.id = 7;
+    unitsToDelete.dimensionId = 3;
     unitsToDelete.name = "Deleted";
 
     let reprNone = new Representations();
@@ -524,6 +535,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     densityDimension.baseUnitId = unitsGCC.id;
     temperatureDimension.baseUnitId = unitsKelvin.id;
+    deleteDimension.baseUnitId = unitsToDelete.id;
 
     await connection.manager.save(unitsNone);
     await connection.manager.save(unitsCCG);

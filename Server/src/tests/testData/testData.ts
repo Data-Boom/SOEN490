@@ -39,47 +39,47 @@ export const validTestData = {
             {
                 "name": "initial density",
                 "repr": "rho_0",
-                "units": "g/cc"
+                "unitId": 1
             },
             {
                 "name": "initial temperature",
                 "repr": "T_0",
-                "units": "K"
+                "unitId": 4
             },
             {
                 "name": "initial pressure",
                 "repr": "P_0",
-                "units": "GPa"
+                "unitId": 5
             },
             {
                 "name": "shock velocity",
                 "repr": "U_s",
-                "units": "km/s"
+                "unitId": 6
             },
             {
                 "name": "particle velocity",
                 "repr": "U_p",
-                "units": "km/s"
+                "unitId": 6
             },
             {
                 "name": "pressure",
                 "repr": "P",
-                "units": "GPa"
+                "unitId": 5
             },
             {
                 "name": "specific volume",
                 "repr": "v",
-                "units": "cc/g"
+                "unitId": 3
             },
             {
                 "name": "density",
                 "repr": "rho",
-                "units": "g/cc"
+                "unitId": 1
             },
             {
                 "name": "compression ratio",
                 "repr": "v/v_0",
-                "units": ""
+                "unitId": 2
             }
         ],
         "contents": [
@@ -286,47 +286,47 @@ export const inValidTestData = {
             {
                 "name": "initial density",
                 "repr": "rho_0",
-                "units": "g/cc"
+                "unitId": 1
             },
             {
                 "name": "initial temperature",
                 "repr": "T_0",
-                "units": "K"
+                "unitId": 4
             },
             {
                 "name": "initial pressure",
                 "repr": "P_0",
-                "units": "GPa"
+                "unitId": 5
             },
             {
                 "name": "shock velocity",
                 "repr": "U_s",
-                "units": "km/s"
+                "unitId": 6
             },
             {
                 "name": "particle velocity",
                 "repr": "U_p",
-                "units": "km/s"
+                "unitId": 6
             },
             {
                 "name": "pressure",
                 "repr": "P",
-                "units": "GPa"
+                "unitId": 5
             },
             {
                 "name": "specific volume",
                 "repr": "v",
-                "units": "cc/g"
+                "unitId": 3
             },
             {
                 "name": "density",
                 "repr": "rho",
-                "units": "g/cc"
+                "unitId": 1
             },
             {
                 "name": "compression ratio",
                 "repr": "v/v_0",
-                "units": ""
+                "unitId": 2
             }
         ],
         "contents": [
