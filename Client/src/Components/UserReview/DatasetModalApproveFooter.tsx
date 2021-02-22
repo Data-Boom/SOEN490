@@ -9,7 +9,7 @@ interface IProps {
   handleEditDataset(): void
 }
 
-export const ModalFooter = (props: IProps) => {
+export const DatasetModalApproveFooter = (props: IProps) => {
   const { handleApproveDataset, handleDeleteDataset, handleEditDataset } = { ...props }
 
   return (

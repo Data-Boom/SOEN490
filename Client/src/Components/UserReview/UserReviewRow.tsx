@@ -26,7 +26,7 @@ export const UserReviewRow = (props: IProps) => {
     reload()
   }
 
-  const handleApproveDataset = async (datasetId: number) => {
+  const handleApproveDataset = async () => {
     const query: IFlaggedDatasetQuery = { datasetId: dataset.id }
     await approvedDataset(query)
     setOpen(false)

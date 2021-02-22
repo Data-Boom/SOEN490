@@ -7,7 +7,7 @@ import { DatasetForm } from '../DatasetUpload/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import { ModalFooter } from './ModalFooter'
+import { DatasetModalApproveFooter } from './DatasetModalApproveFooter'
 
 interface IProps {
   open: boolean
@@ -25,7 +25,7 @@ export const DatasetModal = (props: IProps) => {
 
   const renderHeader = () => {
     return (
-      <DialogTitle id="confirmation-dialog-title">
+      <DialogTitle>
         <Grid container justify="space-between">
           <Typography variant="h6">
             Dataset Review
@@ -51,7 +51,7 @@ export const DatasetModal = (props: IProps) => {
             onCancel={handleFormCancel}
           />
           :
-          <ModalFooter
+          <DatasetModalApproveFooter
             dataset={dataset}
             handleApproveDataset={handleApproveDataset}
             handleDeleteDataset={handleDeleteDataset}
