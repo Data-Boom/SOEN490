@@ -102,7 +102,7 @@ export const getRoutedViews = () => {
       <Route path={searchRoute} component={SearchView} />
       <Route path={newDatasetRoute} component={DatasetView} />
       <Route path={researchPaperAnalysisRoute} component={ResearchPaperAnalysisView} />
-      <Route path={dataCellAnalysisRoute} component={DataCellAnalysisView} />
+      <Route path={cellSizeAnalysisRoute} component={CellSizeAnalysisView} />
       <Route path={aboutRoute} component={AboutView} />
       <Route path={profileRoute} component={ProfileView} />
       <Route path={loginRoute} component={LoginView} />
