@@ -76,35 +76,17 @@ export class Publications {
     authors: Authors[];
 }
 
-export const selectPublicationsQuery = (connection: Connection, dataset: number) =>
+export const selectPublicationsQuery = (connection: Connection) =>
     connection.createQueryBuilder(Dataset, 'dataset')
-        .select('publication.name', 'name')
-        .addSelect('publication.doi', 'DOI')
+        .select('publication.name', 'title')
+        .addSelect('publication.doi', 'doi')
         .addSelect('publication.pages', 'pages')
         .addSelect('publication.volume', 'volume')
         .addSelect('publication.issue', 'issue')
         .addSelect('publication.year', 'year')
         .addSelect('publisher.name', 'publisher')
-        .addSelect('publicationtype.name', 'publicationType')
-        .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
-        .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
-        .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
-        .where('dataset.id = :datasetId', { datasetId: dataset })
-        .getRawOne();
-
-export const selectAllPublicationsQuery = (connection: Connection, datasets: number[]) =>
-    connection.createQueryBuilder(Dataset, 'dataset')
-        .select('publication.name', 'name')
-        .addSelect('publication.doi', 'DOI')
-        .addSelect('publication.pages', 'pages')
-        .addSelect('publication.volume', 'volume')
-        .addSelect('publication.issue', 'issue')
-        .addSelect('publication.year', 'year')
-        .addSelect('publisher.name', 'publisher')
-        .addSelect('publicationtype.name', 'publicationType')
+        .addSelect('publicationtype.name', 'type')
         .addSelect('dataset.id', 'dataset_id')
         .innerJoin(Publications, 'publication', 'publication.id = dataset.publicationId')
         .innerJoin(Publisher, 'publisher', 'publication.publisherId = publisher.id')
         .innerJoin(Publicationtype, 'publicationtype', 'publication.publicationtypeId = publicationtype.id')
-        .whereInIds(datasets)
-        .getRawMany();
