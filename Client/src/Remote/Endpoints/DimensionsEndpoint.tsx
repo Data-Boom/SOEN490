@@ -3,7 +3,7 @@ import { _delete, get, post, put } from "../FluentRequest"
 import { IDimensionModel } from "../../../../Server/src/models/interfaces/IDimension"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 
-const dimensionRoute = '/api/v1/dimension'
+const dimensionRoute = '/api/v1/dimensions'
 
 export const callAddDimension = async (dimensionModel: IDimensionModel): Promise<IDimensionModel> => {
   const result: IDimensionModel = await post(dimensionRoute).withBody(dimensionModel).json()
