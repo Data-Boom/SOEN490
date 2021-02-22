@@ -5,7 +5,7 @@ import { DatasetCommonModel } from "../models/DatasetModels/DatasetCommonModel";
 import { DatasetDeleteModel } from "../models/DatasetModels/DatasetDeleteModel";
 import { DataQueryModel } from "../models/DatasetModels/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
-import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel } from "../models/interfaces/DatasetModelInterface";
+import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel, IContent, IData, IVariable } from "../models/interfaces/DatasetModelInterface";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
@@ -181,25 +181,21 @@ export class DataSetService {
             let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
             let publication: IPublicationModel
             let dataPointComments: string[]
-            let datasetInfo: IDatasetInfoModel
             let singleAuthorData: IAuthorModel
             let allAuthorData: IAuthorModel[] = []
             let singleMaterialData: IMaterialModel
             let allMaterialData: IMaterialModel[]
             let singleDataPointData: IDataPointModel
-            let allDataPointData: IDataPointModel[]
+            let allDataPointData: IData
+            let singleVariableData: IVariable
+            let allVariableData: IVariable[]
+            let singleContentData: IContent
+            let allContentData: IContent[]
             let singleDataSet: IClientDatasetModel
             let allDataSets: Array<IClientDatasetModel> = [];
             let currentDataset: number = 0
             for (let index = 0; index < selectedDatasetIds.length; index++) {
-                currentDataset = rawData[2][index].dataset_id
-                datasetInfo = {
-                    name: rawData[2][index]?.name,
-                    comments: rawData[2][index]?.comments,
-                    datasetDataType: rawData[2][index]?.datasetdatatype,
-                    category: rawData[2][index]?.category,
-                    subcategory: rawData[2][index]?.subcategory
-                }
+                currentDataset = rawData[2][index].id
 
                 //Sort through publications, grab the one desired
                 for (let publicationIndex = 0; publicationIndex < rawData[0].length; publicationIndex++) {
@@ -237,18 +233,28 @@ export class DataSetService {
                 }
 
                 //Sort through data points, then group them accordingly
-                allDataPointData = []
+                allVariableData = []
+                allContentData = []
+                allDataPointData = null
                 for (let dataPointIndex = 0; dataPointIndex < rawData[4].length; dataPointIndex++) {
                     if (rawData[4][dataPointIndex].dataset_id == currentDataset) {
-                        singleDataPointData = rawData[4][dataPointIndex]
-                        allDataPointData.push(singleDataPointData)
+                        singleVariableData = {
+                            name: rawData[4][dataPointIndex].name,
+                            unitId: rawData[4][dataPointIndex].unitId,
+                            dimensionId: rawData[4][dataPointIndex].dimensionId
+                        }
+                        allVariableData.push(singleVariableData)
+                        singleContentData = {
+                            point: rawData[4][dataPointIndex].values
+                        }
+                        allContentData.push(singleContentData)
                         rawData[4].splice(dataPointIndex, 1)
                         dataPointIndex--
                     }
                 }
 
                 //Sort through data point comments, grab the ones desired
-                dataPointComments = undefined
+                dataPointComments = null
                 for (let commentIndex = 0; commentIndex < rawData[5].length; commentIndex++) {
                     if (rawData[5][commentIndex]?.dataset_id == currentDataset) {
                         dataPointComments = rawData[5][commentIndex]?.datapointcomments
@@ -257,13 +263,22 @@ export class DataSetService {
                     }
                 }
 
+                allDataPointData = {
+                    variables: allVariableData,
+                    contents: allContentData,
+                    dataPointComments: dataPointComments,
+                    comments: rawData[2][index]?.comments
+                }
+
                 singleDataSet = {
-                    publication: publication,
-                    dataset_id: currentDataset,
-                    dataset_info: datasetInfo,
-                    materials: allMaterialData,
-                    dataPoints: allDataPointData,
-                    dataPointComments: dataPointComments
+                    reference: publication,
+                    id: currentDataset,
+                    dataset_name: rawData[2][index].dataset_name,
+                    data_type: rawData[2][index]?.data_type,
+                    category: rawData[2][index]?.category,
+                    subcategory: rawData[2][index]?.subcategory,
+                    material: allMaterialData,
+                    data: allDataPointData
                 }
 
                 allDataSets.push(singleDataSet);
@@ -385,14 +400,16 @@ export class DataSetService {
         let compiledDataset: IApprovalDatasetModel
         for (let i = 0; i < incompletDatasets.length; i++) {
             compiledDataset = {
-                publication: incompletDatasets[i].publication,
-                dataset_id: incompletDatasets[i].dataset_id,
-                dataset_info: incompletDatasets[i].dataset_info,
+                reference: incompletDatasets[i].reference,
+                id: incompletDatasets[i].id,
+                dataset_name: incompletDatasets[i].dataset_name,
                 datasetIsFlagged: approvalData[i].isFlagged,
                 datasetFlaggedComment: approvalData[i].flaggedComment,
-                materials: incompletDatasets[i].materials,
-                dataPoints: incompletDatasets[i].dataPoints,
-                dataPointComments: incompletDatasets[i].dataPointComments
+                data_type: incompletDatasets[i].data_type,
+                category: incompletDatasets[i].category,
+                subcategory: incompletDatasets[i].subcategory,
+                material: incompletDatasets[i].material,
+                data: incompletDatasets[i].data
             }
             setOfData.push(compiledDataset)
         }
