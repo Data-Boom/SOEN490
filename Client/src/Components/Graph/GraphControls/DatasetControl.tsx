@@ -51,14 +51,7 @@ export const DatasetControl = (props: IProps) => {
   }
 
   const handleRemoveAllDatasets = () => {
-    while (completeDatasets.length) {
-      completeDatasets.pop()
-      datasetStates.pop()
-    }
-
-    //onDatasetStatesChange(datasetStates)
-    handleCompleteDatasetsUpdated(completeDatasets)
-
+    onCompleteDatasetsChange([])
   }
 
   return (
@@ -69,8 +62,14 @@ export const DatasetControl = (props: IProps) => {
         </Grid>
         {completeDatasets && completeDatasets[0] ?
           <Grid item>
-            <ExportDatasetsButton datasets={completeDatasets} />
-            <Button id="remove-all-datasets" onClick={handleRemoveAllDatasets} color="primary" variant="contained">Remove Datasets</Button>
+            <Grid container spacing={4}>
+              <Grid item>
+                <ExportDatasetsButton datasets={completeDatasets} />
+              </Grid>
+              <Grid item >
+                <Button id="remove-all-datasets" onClick={handleRemoveAllDatasets} color="secondary" variant="contained">Remove Datasets</Button>
+              </Grid>
+            </Grid>
           </Grid> : null
         }
       </Grid>
