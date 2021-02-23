@@ -9,6 +9,8 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { classStyles } from "../../../appTheme"
 import { IDimensionModel } from "../../../../../Server/src/models/interfaces/IDimension"
 import { callGetAllDimensions } from "../../../Remote/Endpoints/DimensionsEndpoint"
+import { variance } from "d3"
+import { datasetRoute } from "../../../Common/Consts/Routes"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -18,6 +20,7 @@ interface IProps {
 
 //TODO: call to get all dimensions on page load
 //TODO: call to get units on page load
+//TODO: 
 const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
   const variables: IVariable[] = []
 
@@ -29,8 +32,6 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
     })
   })
 
-  console.log("variables:" + variables)
-  console.log("datasets: " + datasets)
   return variables
 }
 
@@ -48,11 +49,45 @@ export const AxesControl = (props: IProps) => {
   const [yUnits, setYUnits] = useState([])
   const [variables, setVariables] = useState<IVariable[]>([])
 
+
+  const sampleVariable1: IVariable = {
+    name: "initial pressure", unitId: 2, dimensionId: 32
+  }
+
+
+  const sampleVariable2: IVariable = {
+    name: "initial temperature", unitId: 3, dimensionId: 32
+  }
+
+  const sampleVariable3: IVariable = {
+    name: "equivalence ratio", unitId: 1, dimensionId: 32
+  }
+
+  //1999
+  const sampleVariable4: IVariable = {
+    name: "percent n2", unitId: 1, dimensionId: 32
+  }
+
   const getDimensions = async () => {
     const databaseDimensions = await callGetAllDimensions()
-    console.log(databaseDimensions)
-    //alert(databaseDimensions)
     setDimensions(databaseDimensions)
+
+    console.log("datasets: " + datasets)
+    getVariableDimensions(datasets, sampleVariable4.name)
+
+    /*for (var i = 0; i < datasets.length; i++) {
+      console.log(datasets[i])
+    }*/
+
+    //console.log(datasets[0].data.variables)
+
+    /*for (var i = 0; i < datasets.length; i++) {
+      for (var j = 0; j < datasets[i].data.variables.length; j++) {
+        if (datasets[i].data.variables[j].name == sampleVariable4.name)
+          console.log(datasets[i].data.variables[j])
+      }
+    }*/
+
 
   }
 
@@ -64,6 +99,40 @@ export const AxesControl = (props: IProps) => {
   useEffect(() => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
+
+  //test 1999 dataset
+  const getVariableDimensions = (datasets: IDatasetModel[], variableName) => {
+
+
+    const dictionary = {}
+    const matchingDatasetID = []
+    let count = 0;
+    /*datasets.forEach(dataset => {
+      //this variable is the variable of the dataset with chosen variable name
+
+
+      const variable: IVariable = dataset.data.variables.find(variable => variable.name == variableName)
+      matchingDatasets.push(dataset)
+      //count++
+      //dictionary[variable.dimensionId] = dataset.id
+    })*/
+
+    for (var i = 0; i < datasets.length; i++) {
+      for (var j = 0; j < datasets[i].data.variables.length; j++) {
+        if (datasets[i].data.variables[j].name == variableName) {
+          console.log(datasets[i].data.variables[j])
+          matchingDatasetID.push(datasets[i].id)
+          dictionary[datasets[i].data.variables[j].dimensionId] = matchingDatasetID
+        }
+      }
+    }
+
+    console.log(matchingDatasetID)
+    console.log(dictionary)
+    return dictionary
+
+
+  }
 
   const updateXAxis = (axis: IAxisStateModel) => {
     onAxesChange([{ ...axis }, { ...axes[1] }])
