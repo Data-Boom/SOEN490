@@ -1,9 +1,10 @@
+import { Button, Grid } from '@material-ui/core'
+import React, { useState } from 'react'
+
 import { DatasetList } from '../DatasetList/DatasetList'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
-import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
-import React from 'react'
 import { SearchViewModal } from '../../Search/SearchViewModal'
 import { toDatasetRows } from '../GraphFunctions'
 
@@ -49,6 +50,17 @@ export const DatasetControl = (props: IProps) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
+  const handleRemoveAllDatasets = () => {
+    while (completeDatasets.length) {
+      completeDatasets.pop()
+      datasetStates.pop()
+    }
+
+    //onDatasetStatesChange(datasetStates)
+    handleCompleteDatasetsUpdated(completeDatasets)
+
+  }
+
   return (
     <>
       <Grid container spacing={3}>
@@ -58,6 +70,7 @@ export const DatasetControl = (props: IProps) => {
         {completeDatasets && completeDatasets[0] ?
           <Grid item>
             <ExportDatasetsButton datasets={completeDatasets} />
+            <Button id="remove-all-datasets" onClick={handleRemoveAllDatasets} color="primary" variant="contained">Remove Datasets</Button>
           </Grid> : null
         }
       </Grid>
