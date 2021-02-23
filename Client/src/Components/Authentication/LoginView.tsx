@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
-import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
+import { IUserAccountModel, IUserSessionModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
@@ -16,6 +16,8 @@ import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+
+import moment from 'moment';
 
 function Copyright() {
   return (
@@ -72,9 +74,12 @@ export default function LoginView() {
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
-    await callLogIn(loginUserInfo)
-    const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
+    let loginResponse = await callLogIn(loginUserInfo)
+    let userAccount: IUserSessionModel = await getUserDetails({ email: loginUserInfo.email })
+    userAccount.sessionExpiration = loginResponse.ValidFor
     setUser(userAccount)
+    let timeRemaining = moment().endOf(loginResponse.ValidFor).fromNow()
+    console.log(timeRemaining, 'this is the time left')
   }
 
   return (

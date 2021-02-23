@@ -14,6 +14,10 @@ export interface IUserAccountModel {
   organizationName: string,
 }
 
+export interface IUserSessionModel extends IUserAccountModel {
+  sessionExpiration?: number
+}
+
 export interface IUserDetailsModel extends IUserAccountModel {
   password?: string
 }

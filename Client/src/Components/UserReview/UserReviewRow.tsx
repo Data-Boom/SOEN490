@@ -1,14 +1,28 @@
 import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { approvedDataset, callRejectDataset, submitEditedDataset } from "../../Remote/Endpoints/DatasetEndpoint"
 
 import { DatasetModal } from "./DatasetModal"
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { classStyles } from "../../appTheme"
+import { UserContext } from "../../App"
 
 interface IProps {
   dataset: IApprovedDatasetModel
+}
+
+export const CheckRemainingSessiontime = () => {
+  const { user, setUser } = useContext(UserContext)
+
+  return (
+    <>
+      {user.sessionExpiration ?
+        < Button > The answer is {user.sessionExpiration}.</Button> :
+        < div > Login here.</div>
+      }
+    </>
+  )
 }
 
 export const UserReviewRow = (props: IProps) => {
@@ -39,6 +53,8 @@ export const UserReviewRow = (props: IProps) => {
     setOpen(false)
     reload()
   }
+
+
 
   return (
     <Box className={classStyles().defaultBorder}>
