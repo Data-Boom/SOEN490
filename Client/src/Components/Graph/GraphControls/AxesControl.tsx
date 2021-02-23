@@ -1,5 +1,6 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
+import { IDimensionModel, IUnitModel } from "../../../../../Server/src/models/interfaces/IDimension"
 import React, { useEffect, useState } from "react"
 
 import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
@@ -7,17 +8,14 @@ import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { classStyles } from "../../../appTheme"
-import { IDimensionModel } from "../../../../../Server/src/models/interfaces/IDimension"
-import { callGetAllDimensions } from "../../../Remote/Endpoints/DimensionsEndpoint"
 
 interface IProps {
   datasets: IDatasetModel[],
   axes: IAxisStateModel[],
+  dimensions: IDimensionModel[],
   onAxesChange: (axes: IAxisStateModel[]) => void
 }
 
-//TODO: call to get all dimensions on page load
-//TODO: call to get units on page load
 const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
   const variables: IVariable[] = []
 
@@ -35,9 +33,8 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
 }
 
 export const AxesControl = (props: IProps) => {
-  const { datasets, axes, onAxesChange } = { ...props }
+  const { datasets, axes, onAxesChange, dimensions } = { ...props }
   const classes = classStyles()
-  const [dimensions, setDimensions] = useState<IDimensionModel[]>()
 
   //todo unhardcode the variables
   const [showSettings, setSettingsToggle] = useState(true)
@@ -47,19 +44,6 @@ export const AxesControl = (props: IProps) => {
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
   const [variables, setVariables] = useState<IVariable[]>([])
-
-  const getDimensions = async () => {
-    const databaseDimensions = await callGetAllDimensions()
-    console.log(databaseDimensions)
-    //alert(databaseDimensions)
-    setDimensions(databaseDimensions)
-
-  }
-
-  useEffect(() => {
-    getDimensions()
-  }, [])
-
 
   useEffect(() => {
     setVariables(buildVariableList(datasets))
@@ -93,6 +77,20 @@ export const AxesControl = (props: IProps) => {
     return measurement
   }
 
+  const modifyUnits = (variable: string, dimensionId: number): IUnitModel => {
+    let measurement: IUnitModel;
+    const targetDimension: IDimensionModel = dimensions.find(dimension => dimension.id == dimensionId)
+    if (variable == 'x') {
+      setXUnits(targetDimension.units)
+      measurement = targetDimension.units[0]
+    }
+    else if (variable == 'y') {
+      setYUnits(targetDimension.units)
+      measurement = targetDimension.units[0]
+    }
+    return measurement
+  }
+
   const handleSettingsClick = () => {
     setSettingsToggle(!showSettings)
   }
@@ -112,7 +110,6 @@ export const AxesControl = (props: IProps) => {
       //todo should not do magic updates
       updateYAxis({ ...axes[1], variableName: tempVariable, units: yUnit })
     }
-
     updateXAxis({ ...axes[0], variableName: event.target.value as string, units: xUnit })
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -138,6 +135,14 @@ export const AxesControl = (props: IProps) => {
   const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     updateYAxis({ ...axes[1], units: event.target.value as string })
   }
+  /*
+  const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    updateXAxis({ ...axes[0], units: event.target.value as IUnitModel })
+  }
+  const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    updateYAxis({ ...axes[1], units: event.target.value as IUnitModel })
+  }
+  */
 
   const checkXVariablesExist = (type: string, datasets: IDatasetModel[]) => {
     const missingDatasets = []

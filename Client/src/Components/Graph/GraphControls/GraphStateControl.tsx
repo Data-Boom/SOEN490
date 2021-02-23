@@ -7,8 +7,10 @@ import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetControl } from './DatasetControl'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
+import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { SaveGraphStateForm } from './SaveGraphStateForm'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
+import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { callGetDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
@@ -20,6 +22,7 @@ interface IProps {
 export const GraphStateControl = (props: IProps) => {
   const { graphState, onGraphStateChange } = { ...props }
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
+  const [dimensions, setDimensions] = useState<IDimensionModel[]>([])
   const [loadingDatasets, setIsLoadinDatasets] = useState(false)
 
   useEffect(() => {
@@ -43,6 +46,17 @@ export const GraphStateControl = (props: IProps) => {
       getGraphState(parseInt(graphState.id))
     }
   }, [])
+
+  const getDimensions = async () => {
+    const databaseDimensions = await callGetAllDimensions()
+    setDimensions(databaseDimensions)
+
+  }
+
+  useEffect(() => {
+    getDimensions()
+  }, [])
+
 
   const handleCompleteDatasetsChange = (datasets: IDatasetModel[]) => {
     setCompleteDatasets(datasets)
@@ -83,7 +97,7 @@ export const GraphStateControl = (props: IProps) => {
           {completeDatasets && completeDatasets[0] ?
             <Grid container direction="column">
               <Grid item>
-                <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
+                <AxesControl datasets={completeDatasets} axes={graphState.axes} dimensions={dimensions} onAxesChange={handleAxesChanged} />
               </Grid>
               <Grid item>
                 <SaveGraphStateForm
