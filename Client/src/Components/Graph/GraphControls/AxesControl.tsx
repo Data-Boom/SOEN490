@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core"
-import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
+import { IData, IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
 import { IDimensionModel, IUnitModel } from "../../../../../Server/src/models/interfaces/IDimension"
 import React, { useEffect, useState } from "react"
 
@@ -8,7 +8,6 @@ import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { classStyles } from "../../../appTheme"
-import { IDimensionModel } from "../../../../../Server/src/models/interfaces/IDimension"
 import { callGetAllDimensions } from "../../../Remote/Endpoints/DimensionsEndpoint"
 import { variance } from "d3"
 import { datasetRoute } from "../../../Common/Consts/Routes"
@@ -49,12 +48,15 @@ export const AxesControl = (props: IProps) => {
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
   const [variables, setVariables] = useState<IVariable[]>([])
-
+  //const [dimensions, setDimensions] = useState<IDimensionModel[]>([])
 
   const sampleVariable1: IVariable = {
     name: "initial pressure", unitId: 2, dimensionId: 32
   }
 
+  const sampleVariable: IVariable = {
+    name: "initial pressure", unitId: 3, dimensionId: 36
+  }
 
   const sampleVariable2: IVariable = {
     name: "initial temperature", unitId: 3, dimensionId: 32
@@ -69,18 +71,86 @@ export const AxesControl = (props: IProps) => {
     name: "percent n2", unitId: 1, dimensionId: 32
   }
 
+  const sampleVariable6: IVariable = {
+    name: "percent n2", unitId: 1, dimensionId: 40
+  }
+
+  const data1: IData = {
+    variables: [sampleVariable, sampleVariable1],
+    contents: null,
+    comments: " "
+  }
+
+  const data2: IData = {
+    variables: [sampleVariable, sampleVariable1, sampleVariable3],
+    contents: null,
+    comments: " "
+  }
+
+  const dataset1: IDatasetModel = {
+    reference: null,
+    dataset_name: "dataset1",
+    material: null,
+    category: " ",
+    subcategory: " ",
+    data_type: " ",
+    data: data1,
+    id: 1,
+  }
+
+  const dataset2: IDatasetModel = {
+    reference: null,
+    dataset_name: "dataset2",
+    material: null,
+    category: " ",
+    subcategory: " ",
+    data_type: " ",
+    data: data1,
+    id: 2,
+  }
+
+  const dataset3: IDatasetModel = {
+    reference: null,
+    dataset_name: "dataset3",
+    material: null,
+    category: " ",
+    subcategory: " ",
+    data_type: " ",
+    data: data1,
+    id: 3,
+  }
+
+  const dataset4: IDatasetModel = {
+    reference: null,
+    dataset_name: "dataset4",
+    material: null,
+    category: " ",
+    subcategory: " ",
+    data_type: " ",
+    data: data1,
+    id: 4,
+  }
+
+  const dataset5: IDatasetModel = {
+    reference: null,
+    dataset_name: "dataset5",
+    material: null,
+    category: " ",
+    subcategory: " ",
+    data_type: " ",
+    data: data1,
+    id: 5,
+  }
+
+
+  const sampleDatasets = [dataset1, dataset2, dataset3, dataset4, dataset5]
   const getDimensions = async () => {
     const databaseDimensions = await callGetAllDimensions()
-    setDimensions(databaseDimensions)
+    //setDimensions(databaseDimensions)
 
-    console.log("datasets: " + datasets)
+
     getVariableDimensions(datasets, sampleVariable4.name)
 
-    /*for (var i = 0; i < datasets.length; i++) {
-      console.log(datasets[i])
-    }*/
-
-    //console.log(datasets[0].data.variables)
 
     /*for (var i = 0; i < datasets.length; i++) {
       for (var j = 0; j < datasets[i].data.variables.length; j++) {
@@ -93,6 +163,10 @@ export const AxesControl = (props: IProps) => {
   }
 
   useEffect(() => {
+    getDimensions()
+  }, [])
+
+  useEffect(() => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
 
@@ -100,9 +174,11 @@ export const AxesControl = (props: IProps) => {
   const getVariableDimensions = (datasets: IDatasetModel[], variableName) => {
 
 
+    //when we pick variable name, get list of dimensions associated with that variable name for each datasets
     const dictionary = {}
     const matchingDatasetID = []
     let count = 0;
+    const dimensionID = []
     /*datasets.forEach(dataset => {
       //this variable is the variable of the dataset with chosen variable name
 
@@ -113,18 +189,26 @@ export const AxesControl = (props: IProps) => {
       //dictionary[variable.dimensionId] = dataset.id
     })*/
 
+
+
+    for (var i = 0; i < datasets.length; i++) {
+      console.log("dataset: " + datasets[i])
+    }
+
     for (var i = 0; i < datasets.length; i++) {
       for (var j = 0; j < datasets[i].data.variables.length; j++) {
         if (datasets[i].data.variables[j].name == variableName) {
-          console.log(datasets[i].data.variables[j])
+          dimensionID.push(datasets[i].data.variables[j].dimensionId)
+          //console.log(datasets[i].data.variables[j])
           matchingDatasetID.push(datasets[i].id)
           dictionary[datasets[i].data.variables[j].dimensionId] = matchingDatasetID
         }
       }
     }
 
-    console.log(matchingDatasetID)
-    console.log(dictionary)
+    console.log("dimensionId: " + dimensionID)
+    console.log("dataset id: " + matchingDatasetID)
+    console.log("dictionary: ", dictionary)
     return dictionary
 
 
