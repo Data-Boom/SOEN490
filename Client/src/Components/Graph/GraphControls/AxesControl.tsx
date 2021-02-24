@@ -4,9 +4,9 @@ import { IDimensionModel, IUnitModel } from "../../../../../Server/src/models/in
 import React, { useEffect, useState } from "react"
 
 import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
-import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import SnackbarUtils from "../../Utils/SnackbarUtils"
 import { classStyles } from "../../../appTheme"
 import SnackbarUtils from "../../Utils/SnackbarUtils"
 
@@ -35,7 +35,6 @@ export const AxesControl = (props: IProps) => {
   const { datasets, axes, onAxesChange, dimensions } = { ...props }
   const classes = classStyles()
 
-  //todo unhardcode the variables
   const [showSettings, setSettingsToggle] = useState(true)
 
   const [xVariableMissing, setXVariableMissing] = useState([])
@@ -48,7 +47,6 @@ export const AxesControl = (props: IProps) => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
 
-  //test 1999 dataset
   const getVariableDimensions = (datasets: IDatasetModel[], variableName): number => {
 
     const dictionary = {}
@@ -73,6 +71,18 @@ export const AxesControl = (props: IProps) => {
       if (dictionary[key].length > size) {
         index = key
       }
+    }
+    const incorrectDatasets = []
+    for (let key in dictionary) {
+      if (key != index) {
+        for (let id in dictionary[key]) {
+          const data = datasets.find(dataset => dataset.id == Number(id))
+          incorrectDatasets.push(data.dataset_name)
+        }
+      }
+    }
+    if (incorrectDatasets.length > 0) {
+      SnackbarUtils.warning('The following datasets have the incorrect IDs: ' + incorrectDatasets.toString())
     }
     return Number(index)
   }
