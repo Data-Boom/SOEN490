@@ -19,9 +19,6 @@ interface IProps {
   onAxesChange: (axes: IAxisStateModel[]) => void
 }
 
-//TODO: call to get all dimensions on page load
-//TODO: call to get units on page load
-//TODO: 
 const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
   const variables: IVariable[] = []
 
@@ -48,14 +45,9 @@ export const AxesControl = (props: IProps) => {
   const [xUnits, setXUnits] = useState([])
   const [yUnits, setYUnits] = useState([])
   const [variables, setVariables] = useState<IVariable[]>([])
-  //const [dimensions, setDimensions] = useState<IDimensionModel[]>([])
 
   const sampleVariable1: IVariable = {
     name: "initial pressure", unitId: 2, dimensionId: 32
-  }
-
-  const sampleVariable: IVariable = {
-    name: "initial pressure", unitId: 3, dimensionId: 36
   }
 
   const sampleVariable2: IVariable = {
@@ -66,99 +58,14 @@ export const AxesControl = (props: IProps) => {
     name: "equivalence ratio", unitId: 1, dimensionId: 32
   }
 
-  //1999
   const sampleVariable4: IVariable = {
     name: "percent n2", unitId: 1, dimensionId: 32
   }
 
-  const sampleVariable6: IVariable = {
-    name: "percent n2", unitId: 1, dimensionId: 40
-  }
-
-  const data1: IData = {
-    variables: [sampleVariable, sampleVariable1],
-    contents: null,
-    comments: " "
-  }
-
-  const data2: IData = {
-    variables: [sampleVariable, sampleVariable1, sampleVariable3],
-    contents: null,
-    comments: " "
-  }
-
-  const dataset1: IDatasetModel = {
-    reference: null,
-    dataset_name: "dataset1",
-    material: null,
-    category: " ",
-    subcategory: " ",
-    data_type: " ",
-    data: data1,
-    id: 1,
-  }
-
-  const dataset2: IDatasetModel = {
-    reference: null,
-    dataset_name: "dataset2",
-    material: null,
-    category: " ",
-    subcategory: " ",
-    data_type: " ",
-    data: data1,
-    id: 2,
-  }
-
-  const dataset3: IDatasetModel = {
-    reference: null,
-    dataset_name: "dataset3",
-    material: null,
-    category: " ",
-    subcategory: " ",
-    data_type: " ",
-    data: data1,
-    id: 3,
-  }
-
-  const dataset4: IDatasetModel = {
-    reference: null,
-    dataset_name: "dataset4",
-    material: null,
-    category: " ",
-    subcategory: " ",
-    data_type: " ",
-    data: data1,
-    id: 4,
-  }
-
-  const dataset5: IDatasetModel = {
-    reference: null,
-    dataset_name: "dataset5",
-    material: null,
-    category: " ",
-    subcategory: " ",
-    data_type: " ",
-    data: data1,
-    id: 5,
-  }
-
-
-  const sampleDatasets = [dataset1, dataset2, dataset3, dataset4, dataset5]
   const getDimensions = async () => {
     const databaseDimensions = await callGetAllDimensions()
-    //setDimensions(databaseDimensions)
 
-
-    getVariableDimensions(datasets, sampleVariable4.name)
-
-
-    /*for (var i = 0; i < datasets.length; i++) {
-      for (var j = 0; j < datasets[i].data.variables.length; j++) {
-        if (datasets[i].data.variables[j].name == sampleVariable4.name)
-          console.log(datasets[i].data.variables[j])
-      }
-    }*/
-
+    getVariableDimensions(datasets, sampleVariable1.name)
 
   }
 
@@ -173,41 +80,33 @@ export const AxesControl = (props: IProps) => {
   //test 1999 dataset
   const getVariableDimensions = (datasets: IDatasetModel[], variableName) => {
 
-
-    //when we pick variable name, get list of dimensions associated with that variable name for each datasets
     const dictionary = {}
     const matchingDatasetID = []
-    let count = 0;
     const dimensionID = []
-    /*datasets.forEach(dataset => {
-      //this variable is the variable of the dataset with chosen variable name
 
+    /* datasets.forEach(dataset => {
+ 
+       const variable: IVariable = dataset.data.variables.find(variable => variable.name == variableName)
+ 
+       //console.log("matching variable ", variable)
+       //dimensionID.push(variable.dimensionId)
+       matchingDatasetID.push(dataset.id)
+ 
+       dictionary[variable.dimensionId] = matchingDatasetID
+     })*/
 
-      const variable: IVariable = dataset.data.variables.find(variable => variable.name == variableName)
-      matchingDatasets.push(dataset)
-      //count++
-      //dictionary[variable.dimensionId] = dataset.id
-    })*/
-
-
-
-    for (var i = 0; i < datasets.length; i++) {
-      console.log("dataset: " + datasets[i])
-    }
 
     for (var i = 0; i < datasets.length; i++) {
       for (var j = 0; j < datasets[i].data.variables.length; j++) {
         if (datasets[i].data.variables[j].name == variableName) {
+
           dimensionID.push(datasets[i].data.variables[j].dimensionId)
-          //console.log(datasets[i].data.variables[j])
           matchingDatasetID.push(datasets[i].id)
           dictionary[datasets[i].data.variables[j].dimensionId] = matchingDatasetID
         }
       }
     }
 
-    console.log("dimensionId: " + dimensionID)
-    console.log("dataset id: " + matchingDatasetID)
     console.log("dictionary: ", dictionary)
     return dictionary
 
