@@ -8,7 +8,6 @@ import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { classStyles } from "../../../appTheme"
-import { callGetAllDimensions } from "../../../Remote/Endpoints/DimensionsEndpoint"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -44,39 +43,12 @@ export const AxesControl = (props: IProps) => {
   const [yUnits, setYUnits] = useState([])
   const [variables, setVariables] = useState<IVariable[]>([])
 
-  const sampleVariable1: IVariable = {
-    name: "initial pressure", unitId: 2, dimensionId: 32
-  }
-
-  const sampleVariable2: IVariable = {
-    name: "initial temperature", unitId: 3, dimensionId: 32
-  }
-
-  const sampleVariable3: IVariable = {
-    name: "equivalence ratio", unitId: 1, dimensionId: 32
-  }
-
-  const sampleVariable4: IVariable = {
-    name: "percent n2", unitId: 1, dimensionId: 32
-  }
-
-  const getDimensions = async () => {
-    const databaseDimensions = await callGetAllDimensions()
-
-    getVariableDimensions(datasets, sampleVariable1.name)
-
-  }
-
-  useEffect(() => {
-    getDimensions()
-  }, [])
-
   useEffect(() => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
 
   //test 1999 dataset
-  const getVariableDimensions = (datasets: IDatasetModel[], variableName) => {
+  const getVariableDimensions = (datasets: IDatasetModel[], variableName): string => {
 
     const dictionary = {}
     const matchingDatasetID = []
@@ -92,7 +64,14 @@ export const AxesControl = (props: IProps) => {
         }
       }
     }
-    return dictionary
+    let index = '';
+    let size = -1;
+    for (let key in dictionary) {
+      if (dictionary[key].length > size) {
+        index = key
+      }
+    }
+    return index
   }
 
   const updateXAxis = (axis: IAxisStateModel) => {
@@ -147,9 +126,11 @@ export const AxesControl = (props: IProps) => {
     if (axes[1].variableName == (event.target.value as string)) {
       tempVariable = axes[0].variableName
       sameVariable = true
+      getVariableDimensions(datasets, tempVariable)
       yUnit = setUnitType('y', tempVariable)
       checkYVariablesExist(tempVariable, datasets)
     }
+    console.log(getVariableDimensions(datasets, (event.target.value as string)))
     xUnit = setUnitType('x', event.target.value as string)
     checkXVariablesExist(event.target.value as string, datasets)
     if (sameVariable == true) {
