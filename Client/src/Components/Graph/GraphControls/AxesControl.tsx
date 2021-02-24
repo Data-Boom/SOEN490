@@ -8,6 +8,7 @@ import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { classStyles } from "../../../appTheme"
+import SnackbarUtils from "../../Utils/SnackbarUtils"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -53,8 +54,10 @@ export const AxesControl = (props: IProps) => {
     const dictionary = {}
     const matchingDatasetID = []
     const dimensionID = []
+    const incorrectDatasets = []
 
     for (var i = 0; i < datasets.length; i++) {
+
       for (var j = 0; j < datasets[i].data.variables.length; j++) {
         if (datasets[i].data.variables[j].name == variableName) {
 
