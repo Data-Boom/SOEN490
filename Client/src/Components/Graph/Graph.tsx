@@ -77,7 +77,8 @@ export default function Graph(props: IProps) {
   }
 
   const pullRemovedDatasets = (chart: am4charts.XYChart) => {
-    chart.series.values.forEach(series => {
+    const seriesCopy = [...chart.series.values]
+    seriesCopy.forEach(series => {
       if (!datasets.find(dataset => getSeriesName(dataset) == series.name)) {
         chart.series.removeValue(series)
       }

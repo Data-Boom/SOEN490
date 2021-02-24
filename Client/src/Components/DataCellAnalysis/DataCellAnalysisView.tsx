@@ -23,6 +23,7 @@ export const DataCellAnalysisView = (props: IProps) => {
     analyzeDataCell(dataCell)
   }
 
+
   const analyzeDataCell = async (dataCell: File): Promise<void> => {
     setIsProcessingDataCell(true)
     const fetchedDataset = await fetchDataset()

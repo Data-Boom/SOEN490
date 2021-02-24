@@ -3,8 +3,6 @@ import { get, post } from "../FluentRequest"
 
 import { IApprovedDatasetModel } from "../../Models/Datasets/IApprovedDatasetModel"
 
-//import { toLocalApprovedDatasets } from "../../Models/Datasets/IRemoteApprovedDatasetModel"
-
 const updateUserInfoRoute = '/api/v1/updateUserInfo'
 const userDetailsRoute = '/api/v1/userDetails'
 
@@ -25,7 +23,6 @@ export const getUserDetails = async (userDetailsQuery: IUserDetailsQuery): Promi
 }
 
 export const getUserFlaggedDatasets = async (): Promise<IApprovedDatasetModel[]> => {
-  const remoteDatasets = await get(userFlaggedDatasetsRoute).json()
-  //const localDatasets = toLocalApprovedDatasets(remoteDatasets) Unsure if this is needed anymore.
-  return remoteDatasets
+  const localDatasets = await get(userFlaggedDatasetsRoute).json()
+  return localDatasets
 }

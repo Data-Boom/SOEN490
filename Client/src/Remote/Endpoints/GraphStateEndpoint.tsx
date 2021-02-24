@@ -1,6 +1,7 @@
-import { get, post, put } from "../FluentRequest"
+import { _delete, get, post, put } from "../FluentRequest"
 
 import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
+import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 
 //todo validate list graph states works
 const graphStateRoute = '/api/v1/graphState'
@@ -23,4 +24,11 @@ export const callCreateGraphState = async (graphState: IGraphStateModel): Promis
 export const callUpdateGraphState = async (graphState: IGraphStateModel): Promise<string> => {
   const result = await put(graphStateRoute).withBody(graphState).json()
   return result
+}
+
+export const callDeleteGraphState = async (graphState: IGraphStateModel) => {
+  const result = await _delete(graphStateRoute + '/' + graphState.id).json()
+  SnackbarUtils.success('Saved graph successfully deleted!')
+  return result
+
 }

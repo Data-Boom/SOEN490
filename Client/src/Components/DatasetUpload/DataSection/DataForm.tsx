@@ -7,7 +7,7 @@ import { classStyles } from '../../../appTheme'
 import { shouldComponentUpdate } from '../../Forms/ComponentUpdate'
 
 interface IProps {
-  editable: boolean
+  editable: boolean,
 }
 
 export const DataForm = (props: IProps) => {
