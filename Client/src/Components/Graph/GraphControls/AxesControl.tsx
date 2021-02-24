@@ -78,6 +78,7 @@ export const AxesControl = (props: IProps) => {
   }
 
   const updateXAxis = (axis: IAxisStateModel) => {
+    console.log(axis)
     onAxesChange([{ ...axis }, { ...axes[1] }])
   }
 
@@ -87,9 +88,7 @@ export const AxesControl = (props: IProps) => {
 
   const modifyUnits = (variable: string, dimensionId: number): number => {
     let measurement: IUnitModel;
-    console.log(dimensionId)
     const targetDimension: IDimensionModel = dimensions.find(dimension => dimension.id == dimensionId)
-    console.log(targetDimension)
     if (variable == 'x') {
       setXUnits(targetDimension.units)
       measurement = targetDimension.units[0]
@@ -108,7 +107,7 @@ export const AxesControl = (props: IProps) => {
   //todo remove all the as strings and value: string should be, if works
   const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     let sameVariable = false, tempVariable = '', xUnit = 0, yUnit = 0
-    if (axes[1].variableName == (event.target.value as string)) {
+    if (axes[1].variableName == (event.target.value as string) && axes[0].variableName != '') {
       tempVariable = axes[0].variableName
       sameVariable = true
       yUnit = modifyUnits('y', getVariableDimensions(datasets, tempVariable))
@@ -124,7 +123,7 @@ export const AxesControl = (props: IProps) => {
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     let sameVariable = false, tempVariable = '', xUnit = 0, yUnit = 0
-    if (axes[0].variableName == (event.target.value as string)) {
+    if (axes[0].variableName == (event.target.value as string) && axes[1].variableName != '') {
       tempVariable = axes[1].variableName
       sameVariable = true
       xUnit = modifyUnits('x', getVariableDimensions(datasets, tempVariable))
@@ -136,7 +135,6 @@ export const AxesControl = (props: IProps) => {
     if (sameVariable == true) {
       updateXAxis({ ...axes[1], variableName: tempVariable, units: xUnit })
     }
-
     updateYAxis({ ...axes[0], variableName: event.target.value as string, units: yUnit })
   }
   const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -145,14 +143,6 @@ export const AxesControl = (props: IProps) => {
   const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     updateYAxis({ ...axes[1], units: event.target.value as number })
   }
-  /*
-  const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    updateXAxis({ ...axes[0], units: event.target.value as IUnitModel })
-  }
-  const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    updateYAxis({ ...axes[1], units: event.target.value as IUnitModel })
-  }
-  */
 
   const checkXVariablesExist = (type: string, datasets: IDatasetModel[]) => {
     const missingDatasets = []
