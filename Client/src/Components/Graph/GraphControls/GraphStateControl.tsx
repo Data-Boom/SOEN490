@@ -10,19 +10,18 @@ import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { SaveGraphStateForm } from './SaveGraphStateForm'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
-import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { callGetDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
 interface IProps {
   graphState: IGraphStateModel,
+  dimensions: IDimensionModel[],
   onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => void,
 }
 
 export const GraphStateControl = (props: IProps) => {
-  const { graphState, onGraphStateChange } = { ...props }
+  const { graphState, dimensions, onGraphStateChange } = { ...props }
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
-  const [dimensions, setDimensions] = useState<IDimensionModel[]>([])
   const [loadingDatasets, setIsLoadinDatasets] = useState(false)
 
   useEffect(() => {
@@ -46,17 +45,6 @@ export const GraphStateControl = (props: IProps) => {
       getGraphState(parseInt(graphState.id))
     }
   }, [])
-
-  const getDimensions = async () => {
-    const databaseDimensions = await callGetAllDimensions()
-    setDimensions(databaseDimensions)
-
-  }
-
-  useEffect(() => {
-    getDimensions()
-  }, [])
-
 
   const handleCompleteDatasetsChange = (datasets: IDatasetModel[]) => {
     setCompleteDatasets(datasets)
