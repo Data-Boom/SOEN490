@@ -9,8 +9,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { classStyles } from "../../../appTheme"
 import { callGetAllDimensions } from "../../../Remote/Endpoints/DimensionsEndpoint"
-import { variance } from "d3"
-import { datasetRoute } from "../../../Common/Consts/Routes"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -84,18 +82,6 @@ export const AxesControl = (props: IProps) => {
     const matchingDatasetID = []
     const dimensionID = []
 
-    /* datasets.forEach(dataset => {
- 
-       const variable: IVariable = dataset.data.variables.find(variable => variable.name == variableName)
- 
-       //console.log("matching variable ", variable)
-       //dimensionID.push(variable.dimensionId)
-       matchingDatasetID.push(dataset.id)
- 
-       dictionary[variable.dimensionId] = matchingDatasetID
-     })*/
-
-
     for (var i = 0; i < datasets.length; i++) {
       for (var j = 0; j < datasets[i].data.variables.length; j++) {
         if (datasets[i].data.variables[j].name == variableName) {
@@ -106,11 +92,7 @@ export const AxesControl = (props: IProps) => {
         }
       }
     }
-
-    console.log("dictionary: ", dictionary)
     return dictionary
-
-
   }
 
   const updateXAxis = (axis: IAxisStateModel) => {
