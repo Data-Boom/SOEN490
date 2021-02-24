@@ -13,13 +13,12 @@ export interface IAxisStateModel {
   logarithmic: boolean,
   zoomStartIndex: number,
   zoomEndIndex: number,
-  units: string
-  //units: IUnitModel
+  units: number
 }
 
 export const newAxisState: IAxisStateModel = {
   logarithmic: false,
-  units: '',
+  units: 0,
   variableName: '',
   zoomStartIndex: null,
   zoomEndIndex: null,

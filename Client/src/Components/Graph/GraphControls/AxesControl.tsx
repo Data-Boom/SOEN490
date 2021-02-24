@@ -39,8 +39,8 @@ export const AxesControl = (props: IProps) => {
 
   const [xVariableMissing, setXVariableMissing] = useState([])
   const [yVariableMissing, setYVariableMissing] = useState([])
-  const [xUnits, setXUnits] = useState([])
-  const [yUnits, setYUnits] = useState([])
+  const [xUnits, setXUnits] = useState<IUnitModel[]>([])
+  const [yUnits, setYUnits] = useState<IUnitModel[]>([])
   const [variables, setVariables] = useState<IVariable[]>([])
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const AxesControl = (props: IProps) => {
   }, [datasets])
 
   //test 1999 dataset
-  const getVariableDimensions = (datasets: IDatasetModel[], variableName): string => {
+  const getVariableDimensions = (datasets: IDatasetModel[], variableName): number => {
 
     const dictionary = {}
     const matchingDatasetID = []
@@ -71,7 +71,7 @@ export const AxesControl = (props: IProps) => {
         index = key
       }
     }
-    return index
+    return Number(index)
   }
 
   const updateXAxis = (axis: IAxisStateModel) => {
@@ -82,29 +82,11 @@ export const AxesControl = (props: IProps) => {
     onAxesChange([{ ...axes[0] }, { ...axis }])
   }
 
-  const setUnitType = (variable: string, type: string): string => {
-    let measurement = ''
-    IVariableUnits.forEach(variables => {
-      const units = variables.units
-      variables.variableNames.forEach(name => {
-        if (type == name) {
-          if (variable == 'x') {
-            setXUnits(units)
-            measurement = units[0]
-          }
-          else if (variable == 'y') {
-            setYUnits(units)
-            measurement = units[0]
-          }
-        }
-      })
-    })
-    return measurement
-  }
-
-  const modifyUnits = (variable: string, dimensionId: number): IUnitModel => {
+  const modifyUnits = (variable: string, dimensionId: number): number => {
     let measurement: IUnitModel;
+    console.log(dimensionId)
     const targetDimension: IDimensionModel = dimensions.find(dimension => dimension.id == dimensionId)
+    console.log(targetDimension)
     if (variable == 'x') {
       setXUnits(targetDimension.units)
       measurement = targetDimension.units[0]
@@ -113,7 +95,7 @@ export const AxesControl = (props: IProps) => {
       setYUnits(targetDimension.units)
       measurement = targetDimension.units[0]
     }
-    return measurement
+    return measurement.id
   }
 
   const handleSettingsClick = () => {
@@ -122,16 +104,14 @@ export const AxesControl = (props: IProps) => {
 
   //todo remove all the as strings and value: string should be, if works
   const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
+    let sameVariable = false, tempVariable = '', xUnit = 0, yUnit = 0
     if (axes[1].variableName == (event.target.value as string)) {
       tempVariable = axes[0].variableName
       sameVariable = true
-      getVariableDimensions(datasets, tempVariable)
-      yUnit = setUnitType('y', tempVariable)
+      yUnit = modifyUnits('y', getVariableDimensions(datasets, tempVariable))
       checkYVariablesExist(tempVariable, datasets)
     }
-    console.log(getVariableDimensions(datasets, (event.target.value as string)))
-    xUnit = setUnitType('x', event.target.value as string)
+    xUnit = modifyUnits('x', getVariableDimensions(datasets, (event.target.value as string)))
     checkXVariablesExist(event.target.value as string, datasets)
     if (sameVariable == true) {
       //todo should not do magic updates
@@ -140,14 +120,14 @@ export const AxesControl = (props: IProps) => {
     updateXAxis({ ...axes[0], variableName: event.target.value as string, units: xUnit })
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
+    let sameVariable = false, tempVariable = '', xUnit = 0, yUnit = 0
     if (axes[0].variableName == (event.target.value as string)) {
       tempVariable = axes[1].variableName
       sameVariable = true
-      xUnit = setUnitType('x', tempVariable)
+      xUnit = modifyUnits('x', getVariableDimensions(datasets, tempVariable))
       checkXVariablesExist(tempVariable, datasets)
     }
-    yUnit = setUnitType('y', event.target.value as string)
+    yUnit = modifyUnits('y', getVariableDimensions(datasets, (event.target.value as string)))
     checkYVariablesExist(event.target.value as string, datasets)
     //todo should not do magic updates
     if (sameVariable == true) {
@@ -157,10 +137,10 @@ export const AxesControl = (props: IProps) => {
     updateYAxis({ ...axes[0], variableName: event.target.value as string, units: yUnit })
   }
   const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    updateXAxis({ ...axes[0], units: event.target.value as string })
+    updateXAxis({ ...axes[0], units: event.target.value as number })
   }
   const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    updateYAxis({ ...axes[1], units: event.target.value as string })
+    updateYAxis({ ...axes[1], units: event.target.value as number })
   }
   /*
   const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -243,8 +223,8 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleXUnitChange}
                       >
-                        {xUnits.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
+                        {xUnits.map(unit => (
+                          <MenuItem value={unit.id}>{unit.name}</MenuItem>
                         ))}
                       </Select>
                     </FormControl>
@@ -280,8 +260,8 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleYUnitChange}
                       >
-                        {yUnits.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
+                        {yUnits.map(unit => (
+                          <MenuItem value={unit.id}>{unit.name}</MenuItem>
                         ))}
                       </Select>
                     </FormControl>
