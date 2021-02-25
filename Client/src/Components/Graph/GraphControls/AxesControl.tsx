@@ -8,7 +8,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import SnackbarUtils from "../../Utils/SnackbarUtils"
 import { classStyles } from "../../../appTheme"
-import SnackbarUtils from "../../Utils/SnackbarUtils"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -52,7 +51,6 @@ export const AxesControl = (props: IProps) => {
     const dictionary = {}
     const matchingDatasetID = []
     const dimensionID = []
-    const incorrectDatasets = []
 
     for (var i = 0; i < datasets.length; i++) {
 
@@ -62,6 +60,7 @@ export const AxesControl = (props: IProps) => {
           dimensionID.push(datasets[i].data.variables[j].dimensionId)
           matchingDatasetID.push(datasets[i].id)
           dictionary[datasets[i].data.variables[j].dimensionId] = matchingDatasetID
+          console.log(matchingDatasetID)
         }
       }
     }
