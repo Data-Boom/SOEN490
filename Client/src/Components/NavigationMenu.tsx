@@ -77,7 +77,7 @@ export default function NavigationMenu() {
                 </Grid>
               </ClickAwayListener>
               <Grid item>
-                <img src={universitylogo} />
+                <a href="https://concordia.ca"><img src={universitylogo} /></a>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
                 <Typography variant="h6" color="inherit">
