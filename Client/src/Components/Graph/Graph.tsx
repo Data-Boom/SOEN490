@@ -105,7 +105,6 @@ export default function Graph(props: IProps) {
     const bullet = datasetSeries.bullets.push(new am4core.Circle())
     const xUnitName = getUnitName(axes[0].units)
     const yUnitName = getUnitName(axes[1].units)
-    console.log(xUnitName + ' ' + yUnitName)
     bullet.radius = 5
     bullet.tooltipText = `${dataset.name}
         ${axes[0].variableName}: {x} ${xUnitName}
