@@ -69,6 +69,7 @@ export const AxesControl = (props: IProps) => {
     for (let key in dictionary) {
       if (dictionary[key].length > size) {
         index = key
+        size = dictionary[key].length
       }
     }
     const incorrectDatasets = []
