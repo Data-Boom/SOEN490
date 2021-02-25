@@ -46,17 +46,15 @@ export const AxesControl = (props: IProps) => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
 
-  const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
+  export const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
 
     const dictionary = {}
     const matchingDatasetID = []
     const dimensionID = []
 
     for (let i = 0; i < datasets.length; i++) {
-
       for (let j = 0; j < datasets[i].data.variables.length; j++) {
         if (datasets[i].data.variables[j].name == variableName) {
-
           dimensionID.push(datasets[i].data.variables[j].dimensionId)
           matchingDatasetID.push(datasets[i].id)
           dictionary[datasets[i].data.variables[j].dimensionId] = matchingDatasetID
