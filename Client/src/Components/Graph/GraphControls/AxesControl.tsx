@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core"
-import { IData, IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
-import { IDimensionModel, IUnitModel } from "../../../../../Server/src/models/interfaces/IDimension"
+import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
+import { IDimensionModel, IUnitModel } from "../../../Models/Dimensions/IDimensionModel"
 import React, { useEffect, useState } from "react"
 
 import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
@@ -52,9 +52,9 @@ export const AxesControl = (props: IProps) => {
     const matchingDatasetID = []
     const dimensionID = []
 
-    for (var i = 0; i < datasets.length; i++) {
+    for (let i = 0; i < datasets.length; i++) {
 
-      for (var j = 0; j < datasets[i].data.variables.length; j++) {
+      for (let j = 0; j < datasets[i].data.variables.length; j++) {
         if (datasets[i].data.variables[j].name == variableName) {
 
           dimensionID.push(datasets[i].data.variables[j].dimensionId)
@@ -64,18 +64,18 @@ export const AxesControl = (props: IProps) => {
         }
       }
     }
-    let index = '';
-    let size = -1;
-    for (let key in dictionary) {
+    let index = ''
+    let size = -1
+    for (const key in dictionary) {
       if (dictionary[key].length > size) {
         index = key
         size = dictionary[key].length
       }
     }
     const incorrectDatasets = []
-    for (let key in dictionary) {
+    for (const key in dictionary) {
       if (key != index) {
-        for (let id in dictionary[key]) {
+        for (const id in dictionary[key]) {
           const data = datasets.find(dataset => dataset.id == Number(id))
           incorrectDatasets.push(data.dataset_name)
         }
@@ -97,7 +97,7 @@ export const AxesControl = (props: IProps) => {
   }
 
   const modifyUnits = (variable: string, dimensionId: number): number => {
-    let measurement: IUnitModel;
+    let measurement: IUnitModel
     const targetDimension: IDimensionModel = dimensions.find(dimension => dimension.id == dimensionId)
     if (variable == 'x') {
       setXUnits(targetDimension.units)

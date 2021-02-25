@@ -3,7 +3,7 @@ import * as faker from "faker"
 
 import { IAuthor, IContent, IData, IDatasetModel, IMaterial, IReference, IVariable } from "../../../Models/Datasets/IDatasetModel"
 
-import { NumberFactory } from './FactoryHelpers'
+import { getRandomNumbers } from "../FactoryHelpers"
 
 export const AuthorFactory = Factory.Sync.makeFactory<IAuthor>({
   firstName: faker.name.firstName(),
@@ -23,7 +23,7 @@ export const ReferenceFactory = Factory.Sync.makeFactory<IReference>({
 })
 
 export const ContentFactory = Factory.Sync.makeFactory<IContent>({
-  point: NumberFactory.buildList(8)
+  point: getRandomNumbers(10)
 })
 
 export const VariableFactory = Factory.Sync.makeFactory<IVariable>({
