@@ -34,10 +34,10 @@ The Detonation Database System concerns the development of a file format and the
 #### Step 8: Navigate to localhost:4000 to find backend & localhost:4500 for frontend. You can test with the endpoint localhost:4500/note to see the connection to backend
 <br>
 
-### Common Docker Commands you will need:
+### Common Docker Commands you will need if using docker:
 #### docker-compose up -d ->** This will start build and run the front & backend in containers
 #### docker-compose down ->** This will shut down your containers
 #### docker-compose down -v ->** If you need to wipe the saved data (frontend/backend) and shut down
 #### docker-compose logs ->** Allows you to check logs
-#### docker logs --follow (name of service) ->** Lets you tail a specific servic \e
+#### docker logs --follow (name of service) ->** Lets you tail a specific servic \
 
