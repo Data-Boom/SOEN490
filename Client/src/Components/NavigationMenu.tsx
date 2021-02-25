@@ -55,7 +55,7 @@ export default function NavigationMenu() {
     return user && user.firstName ?
       (
         <Typography>
-          Hello, {user.firstName} {user.lastName}
+          {user.firstName} {user.lastName}&nbsp;&nbsp;&nbsp;
           <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
         </Typography>
       ) : (
