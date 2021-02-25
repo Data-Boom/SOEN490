@@ -16,6 +16,7 @@ interface IProps2 {
 }
 
 export const SearchResults = (props: IProps) => {
+  const { datasetResults } = { ...props }
   const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
@@ -59,7 +60,7 @@ export const SearchResults = (props: IProps) => {
       <Grid container spacing={3}>
         <Grid item container>
           <div style={{ height: 400, width: '100%' }}>
-            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 20, 30, 50, 100]} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
+            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 20, 30, 50, datasetResults.length]} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>
