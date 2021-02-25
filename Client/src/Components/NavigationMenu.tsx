@@ -15,6 +15,7 @@ import { loginRoute } from "../Common/Consts/Routes"
 import { removeUserInStorage } from '../Common/Storage'
 import universitylogo from './universitylogo.png'
 import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
+import { FormatLineSpacing } from "@material-ui/icons"
 
 const drawerWidth = linkWidth
 
@@ -55,8 +56,14 @@ export default function NavigationMenu() {
     return user && user.firstName ?
       (
         <Typography>
-          {user.firstName} {user.lastName}&nbsp;&nbsp;&nbsp;
-          <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
+          <Grid container spacing={2}>
+            <Grid item>
+              {user.firstName} {user.lastName}
+            </Grid>
+            <Grid>
+              <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
+            </Grid>
+          </Grid>
         </Typography>
       ) : (
         <Button component={Link} to={loginRoute} id='LogIn' variant="contained">Log in</Button>
