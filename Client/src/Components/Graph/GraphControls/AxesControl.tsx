@@ -46,7 +46,7 @@ export const AxesControl = (props: IProps) => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
 
-  const getVariableDimensions = (datasets: IDatasetModel[], variableName): number => {
+  const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
 
     const dictionary = {}
     const matchingDatasetID = []
@@ -119,10 +119,10 @@ export const AxesControl = (props: IProps) => {
     if (axes[1].variableName == (event.target.value as string) && axes[0].variableName != '') {
       tempVariable = axes[0].variableName
       sameVariable = true
-      yUnit = modifyUnits('y', getVariableDimensions(datasets, tempVariable))
+      yUnit = modifyUnits('y', getVariableDimension(datasets, tempVariable))
       checkYVariablesExist(tempVariable, datasets)
     }
-    xUnit = modifyUnits('x', getVariableDimensions(datasets, (event.target.value as string)))
+    xUnit = modifyUnits('x', getVariableDimension(datasets, (event.target.value as string)))
     checkXVariablesExist(event.target.value as string, datasets)
     if (sameVariable == true) {
       //todo should not do magic updates
@@ -135,10 +135,10 @@ export const AxesControl = (props: IProps) => {
     if (axes[0].variableName == (event.target.value as string) && axes[1].variableName != '') {
       tempVariable = axes[1].variableName
       sameVariable = true
-      xUnit = modifyUnits('x', getVariableDimensions(datasets, tempVariable))
+      xUnit = modifyUnits('x', getVariableDimension(datasets, tempVariable))
       checkXVariablesExist(tempVariable, datasets)
     }
-    yUnit = modifyUnits('y', getVariableDimensions(datasets, (event.target.value as string)))
+    yUnit = modifyUnits('y', getVariableDimension(datasets, (event.target.value as string)))
     checkYVariablesExist(event.target.value as string, datasets)
     //todo should not do magic updates
     if (sameVariable == true) {
