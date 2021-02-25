@@ -60,7 +60,7 @@ export const SearchResults = (props: IProps) => {
       <Grid container spacing={3}>
         <Grid item container>
           <div style={{ height: 400, width: '100%' }}>
-            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 20, 30, 50, datasetResults.length]} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
+            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 20, 30, 50, datasetResults.length].sort((a, b) => a - b)} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>
