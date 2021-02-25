@@ -1,6 +1,8 @@
+import { DatasetFactory } from "../../Factories/Datasets/IDatasetModelFactory"
+
 export { }
 
 test('dummy dummy boi', () => {
-  const actual = null
-  expect(actual).toBe(1)
+  const test = DatasetFactory.buildList(2)
+  console.log(test)
 })
