@@ -14,7 +14,7 @@ The Detonation Database System concerns the development of a file format and the
 <br>
 ### Option 1
 
-####**Step 1:** Clone the Repo into directory of choice
+####Step 1:** Clone the Repo into directory of choice
 ####**Step 2:** Change into your project directory inside the Server folder and run "NPM install"
 ####**Step 3:** Go back one directory level and go inside the Client folder and run "NPM install"
 ####**Step 4:** Insert the .env inside the Server folder.
