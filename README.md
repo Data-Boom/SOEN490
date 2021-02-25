@@ -11,11 +11,11 @@ The Detonation Database System concerns the development of a file format and the
 
 ### How to setup Development Environment:
 ##### We use a local .env containing all our env variables. To run our project, you must be given access to this .env through one of the contributors.
-<br>
+
 ### Option 1
 
-####Step 1:** Clone the Repo into directory of choice
-####**Step 2:** Change into your project directory inside the Server folder and run "NPM install"
+#### Step 1: Clone the Repo into directory of choice
+#### Step 2:** Change into your project directory inside the Server folder and run "NPM install"
 ####**Step 3:** Go back one directory level and go inside the Client folder and run "NPM install"
 ####**Step 4:** Insert the .env inside the Server folder.
 ####**Step 5:** Run "npm run dev" inside Server folder (This will run the backend and connect to the database)
@@ -24,8 +24,8 @@ The Detonation Database System concerns the development of a file format and the
 
 ### Option 2
 
-####**Step 1:** Clone the Repo into directory of choice
-####**Step 2:** Install Docker for your OS from https://docs.docker.com/get-docker/
+** Step 1:** Clone the Repo into directory of choice
+** Step 2:** Install Docker for your OS from https://docs.docker.com/get-docker/
 ####**Step 3:** Start Docker
 ####**Step 4:** Change into your project directory -> Server and run NPM install
 ####**Step 5:** Insert the .env inside the Server folder.
