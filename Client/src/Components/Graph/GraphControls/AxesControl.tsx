@@ -30,6 +30,42 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
   return variables
 }
 
+export const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
+
+  const dictionary = {}
+
+  datasets.forEach(dataset => {
+    const foundVariable = dataset.data.variables.find(variable => variable.name == variableName)
+    if (foundVariable) {
+      const datasetIds = dictionary[foundVariable.dimensionId] || []
+      datasetIds.push(dataset.id)
+      dictionary[foundVariable.dimensionId] = datasetIds
+    }
+  })
+
+  let index = ''
+  let size = -1
+  for (const key in dictionary) {
+    if (dictionary[key].length > size) {
+      index = key
+      size = dictionary[key].length
+    }
+  }
+  const incorrectDatasets = []
+  for (const key in dictionary) {
+    if (key != index) {
+      for (const id in dictionary[key]) {
+        const data = datasets.find(dataset => dataset.id == Number(id))
+        incorrectDatasets.push(data.dataset_name)
+      }
+    }
+  }
+  if (incorrectDatasets.length > 0) {
+    SnackbarUtils.warning('The following datasets have the incorrect IDs: ' + incorrectDatasets.toString())
+  }
+  return Number(index)
+}
+
 export const AxesControl = (props: IProps) => {
   const { datasets, axes, onAxesChange, dimensions } = { ...props }
   const classes = classStyles()
@@ -45,42 +81,6 @@ export const AxesControl = (props: IProps) => {
   useEffect(() => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
-
-  export const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
-
-    const dictionary = {}
-
-    datasets.forEach(dataset => {
-      const foundVariable = dataset.data.variables.find(variable => variable.name == variableName)
-      if (foundVariable) {
-        const datasetIds = dictionary[foundVariable.dimensionId] || []
-        datasetIds.push(dataset.id)
-        dictionary[foundVariable.dimensionId] = datasetIds
-      }
-    })
-
-    let index = '';
-    let size = -1;
-    for (let key in dictionary) {
-      if (dictionary[key].length > size) {
-        index = key
-        size = dictionary[key].length
-      }
-    }
-    const incorrectDatasets = []
-    for (const key in dictionary) {
-      if (key != index) {
-        for (const id in dictionary[key]) {
-          const data = datasets.find(dataset => dataset.id == Number(id))
-          incorrectDatasets.push(data.dataset_name)
-        }
-      }
-    }
-    if (incorrectDatasets.length > 0) {
-      SnackbarUtils.warning('The following datasets have the incorrect IDs: ' + incorrectDatasets.toString())
-    }
-    return Number(index)
-  }
 
   const updateXAxis = (axis: IAxisStateModel) => {
     console.log(axis)

@@ -1,12 +1,7 @@
-import { IDimensionModel } from "../../../../../Server/src/models/interfaces/IDimension"
-import { createMock } from 'ts-auto-mock'
-import { mock } from 'intermock'
+import { IDimensionModel } from "../../../Models/Dimensions/IDimensionModel"
+import { createHydratedMock } from 'ts-auto-mock'
 
 test('dummy dummy boi', () => {
-  const dimension1 = createMock<IDimensionModel>()
-  const dimension2 = mock({
-    interfaces: ['IDimensionModel'],
-    output: "object"
-  })
-  const x = 5
+  const dimension1 = createHydratedMock<IDimensionModel>()
+  console.log(JSON.stringify(dimension1, null, 2))
 })

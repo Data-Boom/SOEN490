@@ -10,3 +10,8 @@ export interface IUnitModel {
   id?: number,
   conversionFormula: string
 }
+
+export const newUnit: IUnitModel = {
+  conversionFormula: '',
+  name: ''
+}

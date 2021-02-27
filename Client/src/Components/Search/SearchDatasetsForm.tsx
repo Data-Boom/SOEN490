@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from '@material-ui/core'
 import { Field, FieldArray, Form, Formik } from 'formik'
-import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
+import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
 
@@ -101,7 +101,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
             </Grid>
           </Grid>
           <Grid container spacing={4}>
-            <Grid item sm={2}>
+            <Grid item>
               <Button id="search-database" variant="contained" color="primary" type="submit"> Search Database </Button>
             </Grid>
           </Grid>
