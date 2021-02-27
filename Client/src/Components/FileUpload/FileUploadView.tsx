@@ -4,7 +4,7 @@ import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
 import React from 'react'
 import SnackbarUtils from '../Utils/SnackbarUtils'
-import { datasetUploadRoute } from '../../Common/Consts/Routes'
+import { datasetRoute } from '../../Common/Consts/Routes'
 import { extractDatasetFromFile } from '../../Remote/Endpoints/FileUploadEndpoint'
 import { rm } from "../../Assets/readMeMessage"
 import { useHistory } from 'react-router-dom'
@@ -29,7 +29,7 @@ export const FileUploadView = () => {
       }
 
       history.push({
-        pathname: datasetUploadRoute,
+        pathname: datasetRoute,
         state: extractedDataset
       })
     }

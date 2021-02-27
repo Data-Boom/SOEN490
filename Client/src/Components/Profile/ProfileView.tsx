@@ -1,17 +1,18 @@
-import { AppBar, Box, Button, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
-import { fetchAllAdmins, updatePermissions } from '../../Remote/Endpoints/PermissionsEndpoint'
+
+import { DimensionManagementTab } from './UnitManagementSection/DimensionManagementTab'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
+import PermissionsTab from './PermissionsSection/PermissionsTab'
 import { ProfileGraphStateList } from './ProfileGraphList'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
-import PermissionsTab from './PermissionsSection/PermissionsTab'
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -132,8 +133,8 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 }
 
 export function ProfileView() {
-
   const { user, setUser } = useContext(UserContext)
+
   useEffect(() => {
     const fetchUser = async () => {
       const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
@@ -167,6 +168,7 @@ export function ProfileView() {
             <Tab label="View Favourites" {...a11yProps(1)} />
             <Tab label="Permissions" {...a11yProps(2)} />
             <Tab label="View Uploads" {...a11yProps(3)} />
+            <Tab label="Manage Units" {...a11yProps(4)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -221,8 +223,12 @@ export function ProfileView() {
               </Table>
             </TableContainer>
           </TabPanel>
+          <TabPanel value={tab} index={4}>
+            <DimensionManagementTab />
+          </TabPanel>
         </Container>
       </div>
     </>
   )
 }
+

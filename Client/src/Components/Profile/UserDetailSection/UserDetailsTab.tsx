@@ -81,7 +81,7 @@ export default function UserDetailsTab(props: IProps) {
                       <Typography variant="body1" align="left">{`Email: ${user.email}`}</Typography>
                     </Grid>
                     <Grid item>
-                      <Typography variant="body1" align="left">{`Date of Birth: ${user.dateOfBirth}`}</Typography>
+                      <Typography variant="body1" align="left">{`OrcID: ${user.orcID}`}</Typography>
                     </Grid>
                     <Grid item>
                       {readOnly ?

@@ -5,20 +5,20 @@ import { DatasetCommonModel } from "../models/DatasetModels/DatasetCommonModel";
 import { DatasetDeleteModel } from "../models/DatasetModels/DatasetDeleteModel";
 import { DataQueryModel } from "../models/DatasetModels/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
-import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel } from "../models/interfaces/DatasetModelInterface";
+import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel, IContent, IData, IVariable } from "../models/interfaces/DatasetModelInterface";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;
-    private approvalModel: DatasetApprovalModel
-    private deleteModel: DatasetDeleteModel
+    private datasetApprovalModel: DatasetApprovalModel
+    private datasetDeleteModel: DatasetDeleteModel
+    private datasetCommonModel: DatasetCommonModel
     private requestResponse: IResponse
-    private commonModel: DatasetCommonModel
 
     constructor() {
         this.dataQuery = new DataQueryModel();
-        this.deleteModel = new DatasetDeleteModel()
-        this.approvalModel = new DatasetApprovalModel()
-        this.commonModel = new DatasetCommonModel();
+        this.datasetDeleteModel = new DatasetDeleteModel()
+        this.datasetApprovalModel = new DatasetApprovalModel()
+        this.datasetCommonModel = new DatasetCommonModel();
         this.requestResponse = {} as any
     }
 
@@ -181,25 +181,21 @@ export class DataSetService {
             let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
             let publication: IPublicationModel
             let dataPointComments: string[]
-            let datasetInfo: IDatasetInfoModel
             let singleAuthorData: IAuthorModel
             let allAuthorData: IAuthorModel[] = []
             let singleMaterialData: IMaterialModel
             let allMaterialData: IMaterialModel[]
             let singleDataPointData: IDataPointModel
-            let allDataPointData: IDataPointModel[]
+            let allDataPointData: IData
+            let singleVariableData: IVariable
+            let allVariableData: IVariable[]
+            let singleContentData: IContent
+            let allContentData: IContent[]
             let singleDataSet: IClientDatasetModel
             let allDataSets: Array<IClientDatasetModel> = [];
             let currentDataset: number = 0
             for (let index = 0; index < selectedDatasetIds.length; index++) {
-                currentDataset = rawData[2][index].dataset_id
-                datasetInfo = {
-                    name: rawData[2][index]?.name,
-                    comments: rawData[2][index]?.comments,
-                    datasetDataType: rawData[2][index]?.datasetdatatype,
-                    category: rawData[2][index]?.category,
-                    subcategory: rawData[2][index]?.subcategory
-                }
+                currentDataset = rawData[2][index].id
 
                 //Sort through publications, grab the one desired
                 for (let publicationIndex = 0; publicationIndex < rawData[0].length; publicationIndex++) {
@@ -237,18 +233,28 @@ export class DataSetService {
                 }
 
                 //Sort through data points, then group them accordingly
-                allDataPointData = []
+                allVariableData = []
+                allContentData = []
+                allDataPointData = null
                 for (let dataPointIndex = 0; dataPointIndex < rawData[4].length; dataPointIndex++) {
                     if (rawData[4][dataPointIndex].dataset_id == currentDataset) {
-                        singleDataPointData = rawData[4][dataPointIndex]
-                        allDataPointData.push(singleDataPointData)
+                        singleVariableData = {
+                            name: rawData[4][dataPointIndex].name,
+                            unitId: rawData[4][dataPointIndex].unitId,
+                            dimensionId: rawData[4][dataPointIndex].dimensionId
+                        }
+                        allVariableData.push(singleVariableData)
+                        singleContentData = {
+                            point: rawData[4][dataPointIndex].values
+                        }
+                        allContentData.push(singleContentData)
                         rawData[4].splice(dataPointIndex, 1)
                         dataPointIndex--
                     }
                 }
 
                 //Sort through data point comments, grab the ones desired
-                dataPointComments = undefined
+                dataPointComments = null
                 for (let commentIndex = 0; commentIndex < rawData[5].length; commentIndex++) {
                     if (rawData[5][commentIndex]?.dataset_id == currentDataset) {
                         dataPointComments = rawData[5][commentIndex]?.datapointcomments
@@ -257,13 +263,22 @@ export class DataSetService {
                     }
                 }
 
+                allDataPointData = {
+                    variables: allVariableData,
+                    contents: allContentData,
+                    dataPointComments: dataPointComments,
+                    comments: rawData[2][index]?.comments
+                }
+
                 singleDataSet = {
-                    publication: publication,
-                    dataset_id: currentDataset,
-                    dataset_info: datasetInfo,
-                    materials: allMaterialData,
-                    dataPoints: allDataPointData,
-                    dataPointComments: dataPointComments
+                    reference: publication,
+                    id: currentDataset,
+                    dataset_name: rawData[2][index].dataset_name,
+                    data_type: rawData[2][index]?.data_type,
+                    category: rawData[2][index]?.category,
+                    subcategory: rawData[2][index]?.subcategory,
+                    material: allMaterialData,
+                    data: allDataPointData
                 }
 
                 allDataSets.push(singleDataSet);
@@ -385,14 +400,16 @@ export class DataSetService {
         let compiledDataset: IApprovalDatasetModel
         for (let i = 0; i < incompletDatasets.length; i++) {
             compiledDataset = {
-                publication: incompletDatasets[i].publication,
-                dataset_id: incompletDatasets[i].dataset_id,
-                dataset_info: incompletDatasets[i].dataset_info,
+                reference: incompletDatasets[i].reference,
+                id: incompletDatasets[i].id,
+                dataset_name: incompletDatasets[i].dataset_name,
                 datasetIsFlagged: approvalData[i].isFlagged,
                 datasetFlaggedComment: approvalData[i].flaggedComment,
-                materials: incompletDatasets[i].materials,
-                dataPoints: incompletDatasets[i].dataPoints,
-                dataPointComments: incompletDatasets[i].dataPointComments
+                data_type: incompletDatasets[i].data_type,
+                category: incompletDatasets[i].category,
+                subcategory: incompletDatasets[i].subcategory,
+                material: incompletDatasets[i].material,
+                data: incompletDatasets[i].data
             }
             setOfData.push(compiledDataset)
         }
@@ -402,7 +419,7 @@ export class DataSetService {
     private async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
         let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
         let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
-        let approvalData = await this.approvalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
+        let approvalData = await this.datasetApprovalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
         let setOfData = await this.getDataFromUnapprovedDatasetIds(incompletDatasets, approvalData);
         return setOfData
     }
@@ -414,7 +431,7 @@ export class DataSetService {
      */
     async getUnapprovedAllDatasets() {
         try {
-            let rawDatasetIds = await this.approvalModel.getUnapprovedDatasets();
+            let rawDatasetIds = await this.datasetApprovalModel.getUnapprovedDatasets();
             let response: IApprovalDatasetModel[] = [];
             if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -434,7 +451,7 @@ export class DataSetService {
 
     async getUserFlaggedDatasets(userId: number) {
         try {
-            let rawDatasetIds = await this.approvalModel.selectUserFlaggedDatasets(userId);
+            let rawDatasetIds = await this.datasetApprovalModel.selectUserFlaggedDatasets(userId);
             let response: IApprovalDatasetModel[] = [];
             if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -454,7 +471,7 @@ export class DataSetService {
 
     async getAllFlaggedDatasets() {
         try {
-            let rawDatasetIds = await this.approvalModel.selectAllFlaggedDatasets();
+            let rawDatasetIds = await this.datasetApprovalModel.selectAllFlaggedDatasets();
             let response: IApprovalDatasetModel[];
             if (rawDatasetIds.length > 0) {
                 response = await this.compileUnapprovedDatasetArray(rawDatasetIds);
@@ -472,13 +489,33 @@ export class DataSetService {
         }
     }
 
-    async rejectDataSet(datasetId: number) {
+    async adminRejectDataSet(datasetId: number) {
         try {
-            let response = await this.commonModel.verifyDatasetExists(datasetId)
+            let response = await this.datasetCommonModel.verifyDatasetExists(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No such data set exists")
             }
-            response = await this.deleteModel.rejectDataset(datasetId)
+            response = await this.datasetDeleteModel.rejectDataset(datasetId)
+            this.requestResponse.statusCode = 200
+            this.requestResponse.message = response
+            return this.requestResponse
+        } catch (error) {
+            if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
+            }
+            else {
+                throw new Error("Something went wrong deleting this Data Set. Try again later")
+            }
+        }
+    }
+
+    async userRejectDataSet(datasetId: number, userId: number) {
+        try {
+            let verifyUploader = await this.datasetCommonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
+            if (verifyUploader != true) {
+                throw new BadRequest(verifyUploader)
+            }
+            let response = await this.datasetDeleteModel.rejectDataset(datasetId)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
@@ -494,7 +531,7 @@ export class DataSetService {
 
     async flagNewDataset(datasetId: number, flaggedComment?: string, additionalComment?: string) {
         try {
-            let response = await this.approvalModel.flagDataSet(datasetId, flaggedComment, additionalComment)
+            let response = await this.datasetApprovalModel.flagDataSet(datasetId, flaggedComment, additionalComment)
             if (response == undefined || response == null) {
                 throw new BadRequest("Could not flag this Dataset")
             }
@@ -513,11 +550,11 @@ export class DataSetService {
 
     async adminApprovedDataset(datasetId: number, datasetCommentsToAppend?: string) {
         try {
-            let response = await this.approvalModel.approveDataset(datasetId)
+            let response = await this.datasetApprovalModel.approveDataset(datasetId)
             if (response == undefined || response == null) {
                 throw new BadRequest("No dataset under this ID")
             }
-            await this.approvalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
+            await this.datasetApprovalModel.updateDatasetComments(datasetId, datasetCommentsToAppend)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse
@@ -533,11 +570,11 @@ export class DataSetService {
 
     async userApprovedDataset(datasetId: number, userId: number) {
         try {
-            let verifyUploader = await this.approvalModel.verifyUnapprovedDatasetUploader(datasetId, userId)
+            let verifyUploader = await this.datasetCommonModel.verifyUnapprovedDatasetUploader(datasetId, userId)
             if (verifyUploader != true) {
                 throw new BadRequest(verifyUploader)
             }
-            let response = await this.approvalModel.approveDataset(datasetId)
+            let response = await this.datasetApprovalModel.approveDataset(datasetId)
             this.requestResponse.statusCode = 200
             this.requestResponse.message = response
             return this.requestResponse

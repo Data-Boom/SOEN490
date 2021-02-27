@@ -10,16 +10,16 @@ import { getConnection } from "typeorm"
 
 export default class EditUploadService extends AbstractUploadService {
     async uploadData(): Promise<IResponse> {
-        let deleteModel = new DatasetDeleteModel()
-        let commonModel = new DatasetCommonModel()
+        let datasetDeleteModel = new DatasetDeleteModel()
+        let datasetCommonModel = new DatasetCommonModel()
         let connection = getConnection()
         let requestResponse: IResponse = {} as any
 
         // First clear tables that need dataset ID
-        let rawDatasetFKs = await commonModel.selectDatasetFKQuery(this.datasetId);
-        await commonModel.deleteDatapointCommentsQuery(this.datasetId)
-        await deleteModel.deleteDataPointsOfDataset(this.datasetId)
-        await deleteModel.deleteMaterialsOfDataset(this.datasetId)
+        let rawDatasetFKs = await datasetCommonModel.selectDatasetFKQuery(this.datasetId);
+        await datasetCommonModel.deleteDatapointCommentsQuery(this.datasetId)
+        await datasetDeleteModel.deleteDataPointsOfDataset(this.datasetId)
+        await datasetDeleteModel.deleteMaterialsOfDataset(this.datasetId)
 
         // Generate and link new materials
         let allMaterials: any[] = await this.insertMaterialsData(this.uploadModel, this.parsedFileData.material)
@@ -35,18 +35,13 @@ export default class EditUploadService extends AbstractUploadService {
 
         let referenceTitle: string = this.parsedFileData.reference.title;
         let referenceDOI: string = this.parsedFileData.reference.doi;
-        let referencePages: number = this.parsedFileData.reference.pages;
+        let referencePages: string = this.parsedFileData.reference.pages;
         let referenceYear: number = this.parsedFileData.reference.year;
         let referenceVolume: number = this.parsedFileData.reference.volume;
-        let referenceDatePublished: Date = null;
-        let referenceDateAccessed: Date = null;
-        if (this.parsedFileData.reference.datePublished !== undefined)
-            referenceDatePublished = this.parsedFileData.reference.datePublished;
-        if (this.parsedFileData.reference.dateAccessed !== undefined)
-            referenceDateAccessed = this.parsedFileData.reference.dateAccessed;
+        let referenceIssue: number = this.parsedFileData.reference.issue;
 
         // Grab other 3 FK of data set
-        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceDatePublished, referenceDateAccessed, allAuthors)
+        let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceIssue, allAuthors)
         let categoryIDs: number[] = await this.uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
         let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData.data_type)
 
@@ -65,7 +60,7 @@ export default class EditUploadService extends AbstractUploadService {
         for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
             let dataPointValues = this.getDataInformationFromContentsArray(this.parsedFileData.data.contents, i);
             let dataVariableName = this.parsedFileData.data.variables[i].name;
-            let unitsID: number = await this.insertUnitsData(this.uploadModel, this.parsedFileData.data.variables[i].units)
+            let unitsID: number = this.parsedFileData.data.variables[i].unitId
             let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
             await this.uploadModel.insertDataPointsOfSet(this.datasetId, dataVariableName, dataPointValues[0], unitsID, reprID)
             individualDataSetComments = dataPointValues[1];
@@ -73,11 +68,14 @@ export default class EditUploadService extends AbstractUploadService {
         await this.uploadModel.insertCommentsForDataSet(this.datasetId, individualDataSetComments)
 
         // Delete remaining old data set data
-        await deleteModel.deleteDatasetDataType(rawDatasetFKs.datatypeId)
-        await deleteModel.deleteAuthorsOfPublication(rawDatasetFKs.publicationId)
-        await deleteModel.deletePublication(rawDatasetFKs.publicationId)
-        await deleteModel.deletePublisher(rawDatasetFKs.publisherId)
-        await deleteModel.deletePublicationType(rawDatasetFKs.publicationTypeId)
+        await datasetDeleteModel.deleteDatasetDataType(rawDatasetFKs.datatypeId)
+        await datasetDeleteModel.deleteAuthorsOfPublication(rawDatasetFKs.publicationId)
+        await datasetDeleteModel.deletePublication(rawDatasetFKs.publicationId)
+        await datasetDeleteModel.deletePublisher(rawDatasetFKs.publisherId)
+        await datasetDeleteModel.deletePublicationType(rawDatasetFKs.publicationTypeId)
+
+        if (this.clearFlag)
+            await datasetCommonModel.clearDataSetFlag(this.datasetId)
 
         requestResponse.message = "Dataset Updated!"
         requestResponse.statusCode = 201;

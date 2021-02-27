@@ -890,7 +890,7 @@
         ["css=.MuiButtonBase-root:nth-child(7) > a", "css:finder"],
         ["xpath=//a[contains(text(),'Dataset Upload')]", "xpath:link"],
         ["xpath=//div[@id='root']/div/div/div/ul/div[7]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/uploadDataset')]", "xpath:href"],
+        ["xpath=//a[contains(@href, '#/dataset')]", "xpath:href"],
         ["xpath=//div[7]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Dataset Upload')]", "xpath:innerText"]
       ],
@@ -1585,7 +1585,7 @@
         ["css=.MuiButtonBase-root:nth-child(7) > a", "css:finder"],
         ["xpath=//a[contains(text(),'Dataset Upload')]", "xpath:link"],
         ["xpath=//div[@id='root']/div/div/div/ul/div[7]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/uploadDataset')]", "xpath:href"],
+        ["xpath=//a[contains(@href, '#/dataset')]", "xpath:href"],
         ["xpath=//div[7]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Dataset Upload')]", "xpath:innerText"]
       ],

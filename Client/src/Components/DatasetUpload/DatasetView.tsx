@@ -1,9 +1,11 @@
 import { Box, Container } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
-import { DatasetUploadForm } from './DatasetUploadForm'
-import React from 'react'
+import { DatasetForm } from './DatasetForm'
+import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
+import { FormikProps } from 'formik'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -17,6 +19,7 @@ interface IDatasetViewParams {
   datasetID: string
 }
 
+//todo im not sure this works at the end of the day need to find a better solution to some fields being undefined instead of default
 export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
   const dataset: IDatasetModel = {
     reference: partialDataset.reference || defaultDatasetModel.reference,
@@ -32,14 +35,15 @@ export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IData
   return dataset
 }
 
-export const DatasetUploadView = (props: IProps) => {
+export const DatasetView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
+  const formikReference = useRef<FormikProps<unknown>>()
 
   const location = useLocation()
   const initialSentDataset = location.state as IDatasetModel
+  //todo not sure if this should be a state variable
   const [initialValues, setInitialValues] = useState(props.initialDataset || initialSentDataset || defaultDatasetModel)
   const [editable, setEditable] = useState(true)
-  //initialValues = fixPartialForform(initialValues)
 
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
@@ -59,16 +63,16 @@ export const DatasetUploadView = (props: IProps) => {
     await callSaveDataset(formDataset)
   }
 
-
   return (
     <Container>
       <Box pt={4} pb={4}>
-        <DatasetUploadForm
+        <DatasetForm
           onSubmit={handleSubmitForm}
           editable={editable}
-          buttonName="Save Dataset"
           initialDataset={initialValues}
+          formikReference={formikReference}
         />
+        <DefaultFormFooter formikReference={formikReference} />
       </Box>
     </Container>
   )

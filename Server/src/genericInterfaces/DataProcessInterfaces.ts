@@ -16,6 +16,7 @@ export interface IReference {
     authors: IAuthor[];
     title: string;
     volume: number;
+    issue: number;
     pages: number;
     year: number;
 }
@@ -29,7 +30,8 @@ export interface IMaterial {
 export interface IVariable {
     name: string;
     repr: string;
-    units: string;
+    units?: string;
+    unitId?: string;
 }
 
 export const defaultVariable: IVariable = {

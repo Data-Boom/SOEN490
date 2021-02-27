@@ -1,3 +1,5 @@
+![CI Build](https://github.com/Data-Boom/SOEN490/workflows/CI%20Build/badge.svg)
+
 # SOEN490
 
 Databoom is a team created by 10 Concordia University students for their Capstone Final Year Project. 
@@ -38,3 +40,4 @@ The Detonation Database System concerns the development of a file format and the
 **docker-compose down -v ->** If you need to wipe the saved data (frontend/backend) and shut down
 **docker-compose logs ->** Allows you to check logs
 **docker logs --follow (name of service) ->** Lets you tail a specific service
+

@@ -20,7 +20,8 @@ export interface IReference {
   authors: IAuthor[],
   title: string,
   volume: number,
-  pages: number,
+  issue: number,
+  pages: string,
   year: number,
 }
 
@@ -32,24 +33,24 @@ export interface IMaterial {
 
 export interface IVariable {
   name: string,
-  repr: string,
-  units: string,
+  dimensionId: number,
+  unitId: number,
 }
 
 export const newVariable: IVariable = {
   name: '',
-  repr: '',
-  units: '',
+  dimensionId: null,
+  unitId: null,
 }
 
 export interface IContent {
-  point: number[],
-  comments: string,
+  point: number[]
 }
 
 export interface IData {
   variables: IVariable[],
   contents: IContent[],
+  dataPointComments?: string[],
   comments: string,
 }
 
@@ -79,63 +80,65 @@ export const defaultDatasetModel: IDatasetModel = {
   material: [],
   reference: {
     authors: [newAuthor],
-    pages: 0,
+    pages: null,
     publisher: '',
     title: '',
     type: '',
-    volume: 0,
+    volume: null,
+    issue: null,
     year: 0
   },
   subcategory: '',
   id: undefined
 }
 
+
 export const tempData: IData = {
   "variables": [
     {
       "name": "initial density",
-      "repr": "rho_0",
-      "units": "g/cc"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "initial temperature",
-      "repr": "T_0",
-      "units": "K"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "initial pressure",
-      "repr": "P_0",
-      "units": "GPa"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "shock velocity",
-      "repr": "U_s",
-      "units": "km/s"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "particle velocity",
-      "repr": "U_p",
-      "units": "km/s"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "pressure",
-      "repr": "P",
-      "units": "GPa"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "specific volume",
-      "repr": "v",
-      "units": "cc/g"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "density",
-      "repr": "rho",
-      "units": "g/cc"
+      "dimensionId": 0,
+      "unitId": 0
     },
     {
       "name": "compression ratio",
-      "repr": "v/v_0",
-      "units": ""
+      "dimensionId": 0,
+      "unitId": 0
     }
   ],
   "contents": [
@@ -150,8 +153,7 @@ export const tempData: IData = {
         0.3805,
         2.628,
         0.804
-      ],
-      "comments": "im1"
+      ]
     },
     {
       "point": [
@@ -164,8 +166,7 @@ export const tempData: IData = {
         0.3629,
         2.755,
         0.770
-      ],
-      "comments": "im2"
+      ]
     },
     {
       "point": [
@@ -178,8 +179,7 @@ export const tempData: IData = {
         0.3241,
         3.086,
         0.688
-      ],
-      "comments": "im3364363636"
+      ]
     },
     {
       "point": [
@@ -192,8 +192,7 @@ export const tempData: IData = {
         0.2809,
         3.560,
         0.602
-      ],
-      "comments": "im234234234"
+      ]
     },
     {
       "point": [
@@ -206,8 +205,7 @@ export const tempData: IData = {
         0.2735,
         3.657,
         0.585
-      ],
-      "comments": "im644"
+      ]
     },
     {
       "point": [
@@ -220,8 +218,7 @@ export const tempData: IData = {
         0.2687,
         3.722,
         0.577
-      ],
-      "comments": "im125235252"
+      ]
     },
     {
       "point": [
@@ -234,8 +231,7 @@ export const tempData: IData = {
         0.2672,
         3.743,
         0.572
-      ],
-      "comments": "im5756756751"
+      ]
     },
     {
       "point": [
@@ -248,8 +244,7 @@ export const tempData: IData = {
         0.2670,
         3.745,
         0.570
-      ],
-      "comments": "im6786786874361"
+      ]
     },
     {
       "point": [
@@ -262,8 +257,7 @@ export const tempData: IData = {
         0.2676,
         3.737,
         0.571
-      ],
-      "comments": "im1i676i57u4y3"
+      ]
     },
     {
       "point": [
@@ -276,8 +270,7 @@ export const tempData: IData = {
         0.2669,
         3.746,
         0.570
-      ],
-      "comments": "im23r23t2463461"
+      ]
     },
     {
       "point": [
@@ -290,8 +283,7 @@ export const tempData: IData = {
         0.2582,
         3.873,
         0.552
-      ],
-      "comments": "i45y4y4y45ym1"
+      ]
     }
   ],
   "comments": "References 5,6,14\nAverage density = 2.134 g/cc"
@@ -315,7 +307,8 @@ export const exampleExportDatasetModel: IDatasetModel = {
     ],
     "title": "LASL shock Hugoniot data",
     "volume": 5,
-    "pages": 19,
+    "issue": 1,
+    "pages": "19",
     "year": 1980
   },
   "id": 1234,
@@ -354,7 +347,8 @@ export const example2: IDatasetModel = {
     ],
     "title": "LASL shock Hugoniot data",
     "volume": 5,
-    "pages": 19,
+    "issue": 1,
+    "pages": "19-25",
     "year": 1980
   },
   "id": 1234,

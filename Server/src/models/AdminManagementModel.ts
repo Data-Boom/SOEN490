@@ -1,4 +1,4 @@
-import { NotFound } from "@tsed/exceptions";
+import { BadRequest, NotFound } from "@tsed/exceptions";
 import { Connection, getConnection } from "typeorm";
 import { Accounts, selectAccountIdFromEmailQuery } from "./entities/Accounts";
 
@@ -15,7 +15,7 @@ export class AdminManagementModel {
         if (!userRawData)
             throw new NotFound("No such user exists")
         else
-            return userRawData.id
+            return userRawData
     }
 
     async fetchAllAdminEmails(): Promise<any[]> {
@@ -38,12 +38,17 @@ export class AdminManagementModel {
 
     async addAdminPermissions(userEmail: string) {
         try {
-            let userID = await this.fetchAccountIdFromEmail(userEmail)
-            await this.addAdminPermissionsQuery(userID)
+            let user = await this.fetchAccountIdFromEmail(userEmail)
+            if (user.permissionLevel == 1)
+                throw new BadRequest("User is already an administrator!")
+            await this.addAdminPermissionsQuery(user.id)
             return "User successfully given admin permissions"
         } catch (error) {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
+            }
+            else if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
             }
             else {
                 throw new Error("Something went wrong when adding admin permissions. Try again later")
@@ -61,12 +66,17 @@ export class AdminManagementModel {
 
     async removeAdminPermissions(userEmail: string) {
         try {
-            let userID = await this.fetchAccountIdFromEmail(userEmail)
-            await this.removeAdminPermissionsQuery(userID)
+            let user = await this.fetchAccountIdFromEmail(userEmail)
+            if (user.permissionLevel == 0)
+                throw new BadRequest("User does not have admin permissions!")
+            await this.removeAdminPermissionsQuery(user.id)
             return "Admin permissions successfully revoked"
         } catch (error) {
             if (error instanceof NotFound) {
                 throw new NotFound(error.message)
+            }
+            else if (error instanceof BadRequest) {
+                throw new BadRequest(error.message)
             }
             else {
                 throw new Error("Something went wrong when removing admin permissions. Try again later")
