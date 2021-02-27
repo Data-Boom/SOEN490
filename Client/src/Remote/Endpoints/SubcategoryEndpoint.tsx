@@ -1,6 +1,6 @@
 import { get } from "../FluentRequest"
 
-interface ISubcategoryModel {
+export interface ISubcategoryModel {
   id: number,
   name: string
 }

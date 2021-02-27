@@ -58,8 +58,8 @@ export interface IDatasetModel {
   reference: IReference,
   dataset_name: string,
   material: IMaterial[],
-  category: string,
-  subcategory: string,
+  category: number,
+  subcategory: number,
   data_type: string,
   data: IData,
   id: number | undefined,
@@ -69,7 +69,7 @@ export interface IDatasetModel {
 export type IDatasetMeta = Omit<IDatasetModel, 'reference' | 'data'>
 
 export const defaultDatasetModel: IDatasetModel = {
-  category: '',
+  category: 0,
   data: {
     comments: '',
     contents: [],
@@ -88,7 +88,7 @@ export const defaultDatasetModel: IDatasetModel = {
     issue: null,
     year: 0
   },
-  subcategory: '',
+  subcategory: 0,
   id: undefined
 }
 
@@ -323,8 +323,8 @@ export const exampleExportDatasetModel: IDatasetModel = {
       "details": "Oxygen", "id": 1
     }
   ],
-  "category": "cell size",
-  "subcategory": "width",
+  "category": 0,
+  "subcategory": 0,
   "data_type": "hugoniot",
   "data": tempData
 }
@@ -363,8 +363,8 @@ export const example2: IDatasetModel = {
       "details": "Oxygen", "id": 1
     }
   ],
-  "category": "cell size",
-  "subcategory": "width",
+  "category": 0,
+  "subcategory": 0,
   "data_type": "hugoniot",
   "data": tempData
 }
