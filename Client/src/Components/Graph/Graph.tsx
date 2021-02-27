@@ -22,9 +22,8 @@ const getSeriesName = (dataset: IGraphDatasetModel) => {
 }
 
 export default function Graph(props: IProps) {
-  const { datasets, dimensions, axes } = { ...props }
+  const { datasets, axes } = { ...props }
   const chartRef = useRef<am4charts.XYChart>()
-
 
   useEffect(() => initiateGraph(), [])
   useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units])
@@ -79,36 +78,20 @@ export default function Graph(props: IProps) {
   }
 
   const pullRemovedDatasets = (chart: am4charts.XYChart) => {
-    const seriesCopy = [...chart.series.values]
-    seriesCopy.forEach(series => {
+    chart.series.values.forEach(series => {
       if (!datasets.find(dataset => getSeriesName(dataset) == series.name)) {
         chart.series.removeValue(series)
       }
     })
   }
 
-  const getUnitName = (unitId: number): string => {
-    let name = ''
-    dimensions.forEach(dimension => {
-      dimension.units.forEach(unit => {
-        if (unit.id == unitId) {
-          name = unit.name
-          return name
-        }
-      })
-    })
-    return name
-  }
-
   const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.XYSeries => {
     const datasetSeries = chart.series.push(new am4charts.XYSeries())
     const bullet = datasetSeries.bullets.push(new am4core.Circle())
-    const xUnitName = getUnitName(axes[0].units)
-    const yUnitName = getUnitName(axes[1].units)
     bullet.radius = 5
     bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {x} ${xUnitName}
-        ${axes[1].variableName}: {y} ${yUnitName}`
+        ${axes[0].variableName}: {x} ${axes[0].units}
+        ${axes[1].variableName}: {y} ${axes[1].units}`
 
     datasetSeries.dataFields.valueX = `x`
     datasetSeries.dataFields.valueY = `y`
@@ -130,14 +113,12 @@ export default function Graph(props: IProps) {
   }
 
   const updateAxis = (xAxis: any, yAxis: any) => {
-    const xUnitName = getUnitName(axes[0].units)
-    const yUnitName = getUnitName(axes[1].units)
-    xAxis.title.text = `${axes[0].variableName}, ${xUnitName}`
+    xAxis.title.text = `${axes[0].variableName}, ${axes[0].units}`
     xAxis.logarithmic = axes[0].logarithmic || false
     xAxis.renderer.minGridDistance = 40
     xAxis.keepSelection = true
 
-    yAxis.title.text = `${axes[1].variableName}, ${yUnitName}`
+    yAxis.title.text = `${axes[1].variableName}, ${axes[1].units}`
     yAxis.logarithmic = axes[1].logarithmic || false
     yAxis.keepSelection = true
   }
