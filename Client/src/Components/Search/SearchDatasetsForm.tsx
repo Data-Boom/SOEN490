@@ -67,26 +67,27 @@ export const SearchDatasetsForm = (props: IProps): any => {
         <Form>
           <Typography variant='h4' align="left">Search</Typography>
           <Grid container spacing={4}>
-            <Grid item sm={2}>
+            <Grid item>
               <Field name="firstName" label='First Name' component={MuiTextFieldFormik} />
             </Grid>
 
-            <Grid item sm={2}>
+            <Grid item>
               <Field name="lastName" label='Last Name' component={MuiTextFieldFormik} />
             </Grid>
 
-            <Grid item sm={2}>
+            <Grid item>
               <Field name="year" label='Year' component={MuiTextFieldFormik} />
             </Grid>
 
-            <Grid item sm={2}>
+            <Grid item>
               <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
             </Grid>
 
-            <Grid item sm={2}>
+            <Grid item>
               <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
             </Grid>
-
+          </Grid>
+          <Grid container spacing={4}>
             <Grid item sm={12}>
               <FieldArray name='material' >
                 {({ form, ...fieldArrayHelpers }) => {

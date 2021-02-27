@@ -15,7 +15,7 @@ export const eachRandomNumber = () => {
 }
 
 export const eachUniqueId = (): any => {
-  each(() => uniqueId())
+  return each(() => uniqueId())
 }
 
 export const each = (callback: (i: number) => any): any => {

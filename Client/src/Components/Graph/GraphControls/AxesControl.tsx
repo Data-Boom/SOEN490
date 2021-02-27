@@ -31,7 +31,6 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
 }
 
 export const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
-
   const dictionary = {}
 
   datasets.forEach(dataset => {

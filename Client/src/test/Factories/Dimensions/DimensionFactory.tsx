@@ -14,7 +14,7 @@ export const DimensionFactory = Factory.Sync.makeFactory<IDimensionModel>({
   baseUnitId: eachUniqueId(),
   id: eachUniqueId(),
   units: UnitFactory.buildList(10)
-})
+}).withDerivation("baseUnitId", dimension => dimension.units[0].id)
 
 export const getCorrectDimension = () => {
   const dimension = DimensionFactory.build()

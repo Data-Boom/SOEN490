@@ -1,56 +1,54 @@
 import * as Factory from "factory.ts"
-import * as faker from "faker"
 
 import { IAuthor, IContent, IData, IDatasetModel, IMaterial, IReference, IVariable } from "../../../Models/Datasets/IDatasetModel"
-
-import { getRandomNumbers } from "../FactoryHelpers"
+import { eachRandomNumber, eachRandomWord, eachUniqueId, getRandomNumbers } from "../FactoryHelpers"
 
 export const AuthorFactory = Factory.Sync.makeFactory<IAuthor>({
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  middleName: faker.name.middleName()
+  firstName: eachRandomWord(),
+  lastName: eachRandomWord(),
+  middleName: eachRandomWord()
 })
 
 export const ReferenceFactory = Factory.Sync.makeFactory<IReference>({
   authors: AuthorFactory.buildList(3),
-  issue: faker.random.number(),
-  pages: `${faker.random.number()}-${faker.random.number()}`,
-  publisher: faker.name.title(),
-  title: faker.name.title(),
-  type: faker.random.alpha(),
-  volume: faker.random.number(),
-  year: faker.random.number(),
+  issue: eachRandomNumber(),
+  pages: `${eachRandomNumber()}-${eachRandomNumber()}`,
+  publisher: eachRandomWord(),
+  title: eachRandomWord(),
+  type: eachRandomWord(),
+  volume: eachRandomNumber(),
+  year: eachRandomNumber(),
 })
 
 export const ContentFactory = Factory.Sync.makeFactory<IContent>({
-  point: getRandomNumbers(10)
+  point: Factory.Sync.each(i => getRandomNumbers(10))
 })
 
 export const VariableFactory = Factory.Sync.makeFactory<IVariable>({
-  dimensionId: Factory.each(i => i),
-  name: faker.name.firstName(),
-  unitId: Factory.each(i => i)
+  dimensionId: eachUniqueId(),
+  name: eachRandomWord(),
+  unitId: eachUniqueId()
 })
 
 export const DataFactory = Factory.Sync.makeFactory<IData>({
-  comments: faker.random.alpha(),
+  comments: eachRandomWord(),
   contents: ContentFactory.buildList(10),
   variables: VariableFactory.buildList(8)
 })
 
 export const MaterialFactory = Factory.Sync.makeFactory<IMaterial>({
-  composition: faker.random.alpha(),
-  details: faker.random.alpha(),
-  id: Factory.each(i => i)
+  composition: eachRandomWord(),
+  details: eachRandomWord(),
+  id: eachUniqueId()
 })
 
 export const DatasetFactory = Factory.Sync.makeFactory<IDatasetModel>({
-  category: faker.name.title(),
-  subcategory: faker.random.alpha(),
+  category: eachRandomWord(),
+  subcategory: eachRandomWord(),
   reference: ReferenceFactory.build(),
   data: DataFactory.build(),
-  data_type: faker.random.alpha(),
-  dataset_name: faker.name.title(),
-  id: Factory.each(i => i),
+  data_type: eachRandomWord(),
+  dataset_name: eachRandomWord(),
+  id: eachUniqueId(),
   material: MaterialFactory.buildList(10)
 })
