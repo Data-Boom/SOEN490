@@ -178,7 +178,6 @@ export class GraphsModel {
         newGraph.axisZoomEnd = graph.axisZoomEnd;
         newGraph.axisUnits = graph.axisUnits;
         await this.connection.manager.save(newGraph);
-        //return graph successfully saved"
         return newGraph.id;
     }
 
@@ -196,8 +195,8 @@ export class GraphsModel {
      */
     async saveGraph(graph: IGraphStateModel, userId: number): Promise<string> {
         let processGraphInput = await this.processGraphInput(graph)
-        let statusMessage = await this.sendSavedGraphToDatabase(userId, processGraphInput)
-        return statusMessage
+        await this.sendSavedGraphToDatabase(userId, processGraphInput)
+        return "Graph successfully saved"
     }
 
     async verifyGraphOwner(graphId: number, userId: number): Promise<any> {
