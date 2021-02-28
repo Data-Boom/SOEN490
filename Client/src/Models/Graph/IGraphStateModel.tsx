@@ -1,4 +1,5 @@
 import { IGraphDatasetState } from "./IGraphDatasetModel"
+import { IUnitModel } from "../../../../Server/src/models/interfaces/IDimension"
 
 export interface IGraphStateModel {
   datasets: IGraphDatasetState[],
@@ -12,12 +13,12 @@ export interface IAxisStateModel {
   logarithmic: boolean,
   zoomStartIndex: number,
   zoomEndIndex: number,
-  units: string
+  units: number
 }
 
 export const newAxisState: IAxisStateModel = {
   logarithmic: false,
-  units: '',
+  units: 0,
   variableName: '',
   zoomStartIndex: null,
   zoomEndIndex: null,

@@ -38,7 +38,6 @@ export const DimensionManagementTab = () => {
     getDimensions()
   }, [])
 
-
   const getDimensions = async () => {
     const databaseDimensions = await callGetAllDimensions()
     setDimensions(databaseDimensions)
