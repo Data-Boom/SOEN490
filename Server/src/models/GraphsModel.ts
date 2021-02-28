@@ -163,7 +163,7 @@ export class GraphsModel {
      * @param axisUnits 
      * Axis unit types: string[]
      */
-    private async sendSavedGraphToDatabase(accountId: number, graph: IUploadGraphModel): Promise<string> {
+    private async sendSavedGraphToDatabase(accountId: number, graph: IUploadGraphModel): Promise<number> {
         let newGraph = new Graphstate();
         newGraph.id;
         newGraph.accountId = accountId;
@@ -178,7 +178,8 @@ export class GraphsModel {
         newGraph.axisZoomEnd = graph.axisZoomEnd;
         newGraph.axisUnits = graph.axisUnits;
         await this.connection.manager.save(newGraph);
-        return "Graph successfully saved"
+        //return graph successfully saved"
+        return newGraph.id;
     }
 
     /**
