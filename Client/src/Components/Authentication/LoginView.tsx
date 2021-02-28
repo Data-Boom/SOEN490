@@ -76,10 +76,10 @@ export default function LoginView() {
     //sets JWT in cookies
     let loginResponse = await callLogIn(loginUserInfo)
     let userAccount: IUserSessionModel = await getUserDetails({ email: loginUserInfo.email })
-    userAccount.sessionExpiration = loginResponse.ValidFor
+    console.log(loginResponse.ValidFor, 'validfor')
+    userAccount.sessionExpiration = moment.duration(loginResponse.ValidFor).asMilliseconds()
+    console.log(userAccount, 'chekcing user')
     setUser(userAccount)
-    let timeRemaining = moment().endOf(loginResponse.ValidFor).fromNow()
-    console.log(timeRemaining, 'this is the time left')
   }
 
   return (

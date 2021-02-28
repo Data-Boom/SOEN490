@@ -1,3 +1,5 @@
+import { Duration } from "@material-ui/core"
+
 export interface IUserAccountRemoteModel {
   account_orcID: number,
   account_email: string,
@@ -15,7 +17,7 @@ export interface IUserAccountModel {
 }
 
 export interface IUserSessionModel extends IUserAccountModel {
-  sessionExpiration?: number
+  sessionExpiration?: any
 }
 
 export interface IUserDetailsModel extends IUserAccountModel {
