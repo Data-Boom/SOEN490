@@ -21,7 +21,7 @@ export const SessionTimeOut = () => {
         if (seconds === 1) {
             redirectToLogin()
         }
-        else if (seconds < 10) {
+        else if (seconds < 30) {
             setOpen(true)
         }
         setSeconds(seconds - 1)
