@@ -3,21 +3,19 @@ import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
 import React, { useContext, useState } from 'react'
+import { Redirect, useHistory } from 'react-router'
+import { homeRoute, userReviewRoute } from '../../Common/Consts/Routes'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
-import { Redirect, useHistory } from 'react-router'
 import { UserContext } from '../../App'
 import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
-import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-
-
 import moment from 'moment';
 
 function Copyright() {
@@ -84,6 +82,7 @@ export default function LoginView() {
 
     setUser(userAccount)
   }
+
 
   return (
     <>

@@ -8,16 +8,13 @@ import React, { useContext, useState } from 'react'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuIcon from '@material-ui/icons/Menu'
+import { SessionTimeOut } from "./SessionTimeout"
 import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import { loginRoute } from "../Common/Consts/Routes"
-import { removeUserInStorage } from '../Common/Storage'
-import universitylogo from './universitylogo.png'
-import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
 import { logout } from '../Common/GenericHelpers'
-import { SessionTimeOut } from "./SessionTimeout"
-
+import universitylogo from './universitylogo.png'
 
 const drawerWidth = linkWidth
 
@@ -87,12 +84,11 @@ export default function NavigationMenu() {
               </Grid>
             </Grid>
           </Toolbar>
+          {user.sessionExpiration !== null &&
+            <SessionTimeOut />
+          }
         </AppBar>
-
         {drawer()}
-        {user.sessionExpiration !== null &&
-          <SessionTimeOut />
-        }
         <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>

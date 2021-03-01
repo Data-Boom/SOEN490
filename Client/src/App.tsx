@@ -19,8 +19,6 @@ export const UserContext = React.createContext<Partial<IUserContextProps>>({})
 export const App = () => {
   const [user, setUser] = useState<IUserAccountModel>(getUserFromStorage())
 
-  //const WrappedApp = SessionWrapper(NavigationMenu)
-
   const setStateAndStorage = (user: IUserAccountModel): void => {
     setUser(user)
     putUserInStorage(user)
