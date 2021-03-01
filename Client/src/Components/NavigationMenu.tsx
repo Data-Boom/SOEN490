@@ -15,6 +15,9 @@ import { loginRoute } from "../Common/Consts/Routes"
 import { removeUserInStorage } from '../Common/Storage'
 import universitylogo from './universitylogo.png'
 import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
+import { logout } from '../Common/GenericHelpers'
+import { SessionTimeOut } from "./SessionTimeout"
+
 
 const drawerWidth = linkWidth
 
@@ -23,18 +26,13 @@ export default function NavigationMenu() {
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
 
   const handleDrawerClose = () => {
     setOpen(false)
-  }
-
-  function logout() {
-    removeUserInStorage()
-    window.location.replace("/")
-    callLogout();
   }
 
   const drawer = (): any => {
@@ -90,7 +88,11 @@ export default function NavigationMenu() {
             </Grid>
           </Toolbar>
         </AppBar>
+
         {drawer()}
+        {user.sessionExpiration !== null &&
+          <SessionTimeOut />
+        }
         <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
