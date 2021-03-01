@@ -6,16 +6,17 @@ import React, { useContext, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
-import { IUserAccountModel, IUserSessionModel } from '../../Models/Authentication/IUserAccountModel'
+import { IUserAccountModel, defaultUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
-import { Redirect } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { UserContext } from '../../App'
 import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+
 
 import moment from 'moment';
 
@@ -64,6 +65,8 @@ export default function LoginView() {
 
   const [openModal, setOpen] = useState(false)
 
+  const history = useHistory()
+
   const handleOpen = () => {
     setOpen(true)
   }
@@ -75,10 +78,10 @@ export default function LoginView() {
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
     let loginResponse = await callLogIn(loginUserInfo)
-    let userAccount: IUserSessionModel = await getUserDetails({ email: loginUserInfo.email })
-    console.log(loginResponse.ValidFor, 'validfor')
+
+    let userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
     userAccount.sessionExpiration = moment.duration(loginResponse.ValidFor).asMilliseconds()
-    console.log(userAccount, 'chekcing user')
+
     setUser(userAccount)
   }
 

@@ -14,9 +14,6 @@ export interface IUserAccountModel {
   firstName: string,
   lastName: string,
   organizationName: string,
-}
-
-export interface IUserSessionModel extends IUserAccountModel {
   sessionExpiration?: any
 }
 
@@ -44,5 +41,6 @@ export const defaultUserAccountModel: IUserAccountModel = {
   email: '',
   firstName: '',
   lastName: '',
-  organizationName: ''
+  organizationName: '',
+  sessionExpiration: null
 }
