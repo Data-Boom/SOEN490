@@ -1,22 +1,23 @@
 /* eslint-disable react/display-name */
 
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import { HashRouter, Link } from 'react-router-dom'
+import { HashRouter, Link, Redirect, useHistory } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
 import React, { useContext, useState } from 'react'
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuIcon from '@material-ui/icons/Menu'
-import { SessionTimeOut } from "./SessionTimeout"
+import { SessionTimeOut } from './SessionTimeout'
 import { UserContext } from "../App"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import { loginRoute } from "../Common/Consts/Routes"
-import { logout } from '../Common/GenericHelpers'
 import universitylogo from './universitylogo.png'
-import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
 import { FormatLineSpacing } from "@material-ui/icons"
+import { removeUserInStorage } from "../Common/Storage"
+import { defaultUserAccountModel } from "../Models/Authentication/IUserAccountModel"
+import { logout } from "../Common/AuthenticationHelper"
 
 const drawerWidth = linkWidth
 
@@ -25,6 +26,8 @@ export default function NavigationMenu() {
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
+  const history = useHistory()
+
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -32,6 +35,14 @@ export default function NavigationMenu() {
 
   const handleDrawerClose = () => {
     setOpen(false)
+  }
+
+  const redirectToLogin = async () => {
+    setUser(defaultUserAccountModel)
+    logout()
+    history.push({
+      pathname: loginRoute
+    })
   }
 
   const drawer = (): any => {
@@ -57,7 +68,7 @@ export default function NavigationMenu() {
               {user.firstName} {user.lastName}
             </Grid>
             <Grid>
-              <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
+              <Button id="SignOut" variant="contained" onClick={redirectToLogin}>Sign out</Button>
             </Grid>
           </Grid>
         </Typography>
@@ -92,7 +103,7 @@ export default function NavigationMenu() {
               </Grid>
             </Grid>
           </Toolbar>
-          {user.sessionExpiration !== null &&
+          {user && user.sessionExpiration !== null &&
             <SessionTimeOut />
           }
         </AppBar>

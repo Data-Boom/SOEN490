@@ -15,7 +15,6 @@ interface IUserContextProps {
 
 export const UserContext = React.createContext<Partial<IUserContextProps>>({})
 
-
 export const App = () => {
   const [user, setUser] = useState<IUserAccountModel>(getUserFromStorage())
 
