@@ -1,5 +1,3 @@
-import { Duration } from "@material-ui/core"
-
 export interface IUserAccountRemoteModel {
   account_orcID: number,
   account_email: string,

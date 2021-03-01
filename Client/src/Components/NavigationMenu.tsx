@@ -25,9 +25,7 @@ export default function NavigationMenu() {
   const { user, setUser } = useContext(UserContext)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
-
   const history = useHistory()
-
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -112,7 +110,6 @@ export default function NavigationMenu() {
           {getRoutedViews()}
         </Box>
       </HashRouter>
-
     </>
   )
 }

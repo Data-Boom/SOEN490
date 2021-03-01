@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from "../../Models/Datasets/IApprovedDatasetModel"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { approvedDataset, callRejectDataset, submitEditedDataset } from "../../Remote/Endpoints/DatasetEndpoint"
 
 import { DatasetModal } from "./DatasetModal"
