@@ -1,16 +1,18 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core"
-import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
+import { IData, IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
+import { IDimensionModel, IUnitModel } from "../../../../../Server/src/models/interfaces/IDimension"
 import React, { useEffect, useState } from "react"
 
 import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
-import { IVariableUnits } from '../../../Models/Datasets/IVariableModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import SnackbarUtils from "../../Utils/SnackbarUtils"
 import { classStyles } from "../../../appTheme"
 
 interface IProps {
   datasets: IDatasetModel[],
   axes: IAxisStateModel[],
+  dimensions: IDimensionModel[],
   onAxesChange: (axes: IAxisStateModel[]) => void
 }
 
@@ -29,23 +31,59 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
 }
 
 export const AxesControl = (props: IProps) => {
-  const { datasets, axes, onAxesChange } = { ...props }
+  const { datasets, axes, onAxesChange, dimensions } = { ...props }
   const classes = classStyles()
 
-  //todo unhardcode the variables
   const [showSettings, setSettingsToggle] = useState(true)
 
   const [xVariableMissing, setXVariableMissing] = useState([])
   const [yVariableMissing, setYVariableMissing] = useState([])
-  const [xUnits, setXUnits] = useState([])
-  const [yUnits, setYUnits] = useState([])
+  const [xUnits, setXUnits] = useState<IUnitModel[]>([])
+  const [yUnits, setYUnits] = useState<IUnitModel[]>([])
   const [variables, setVariables] = useState<IVariable[]>([])
 
   useEffect(() => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
 
+  const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
+
+    const dictionary = {}
+
+    datasets.forEach(dataset => {
+      const foundVariable = dataset.data.variables.find(variable => variable.name == variableName)
+      if (foundVariable) {
+        const datasetIds = dictionary[foundVariable.dimensionId] || []
+        datasetIds.push(dataset.id)
+        dictionary[foundVariable.dimensionId] = datasetIds
+      }
+    })
+
+    let index = '';
+    let size = -1;
+    for (let key in dictionary) {
+      if (dictionary[key].length > size) {
+        index = key
+        size = dictionary[key].length
+      }
+    }
+    const incorrectDatasets = []
+    for (let key in dictionary) {
+      if (key != index) {
+        for (let id in dictionary[key]) {
+          const data = datasets.find(dataset => dataset.id == Number(id))
+          incorrectDatasets.push(data.dataset_name)
+        }
+      }
+    }
+    if (incorrectDatasets.length > 0) {
+      SnackbarUtils.warning('The following datasets have the incorrect IDs: ' + incorrectDatasets.toString())
+    }
+    return Number(index)
+  }
+
   const updateXAxis = (axis: IAxisStateModel) => {
+    console.log(axis)
     onAxesChange([{ ...axis }, { ...axes[1] }])
   }
 
@@ -53,24 +91,18 @@ export const AxesControl = (props: IProps) => {
     onAxesChange([{ ...axes[0] }, { ...axis }])
   }
 
-  const setUnitType = (variable: string, type: string): string => {
-    let measurement = ''
-    IVariableUnits.forEach(variables => {
-      const units = variables.units
-      variables.variableNames.forEach(name => {
-        if (type == name) {
-          if (variable == 'x') {
-            setXUnits(units)
-            measurement = units[0]
-          }
-          else if (variable == 'y') {
-            setYUnits(units)
-            measurement = units[0]
-          }
-        }
-      })
-    })
-    return measurement
+  const modifyUnits = (variable: string, dimensionId: number): number => {
+    let measurement: IUnitModel;
+    const targetDimension: IDimensionModel = dimensions.find(dimension => dimension.id == dimensionId)
+    if (variable == 'x') {
+      setXUnits(targetDimension.units)
+      measurement = targetDimension.units[0]
+    }
+    else if (variable == 'y') {
+      setYUnits(targetDimension.units)
+      measurement = targetDimension.units[0]
+    }
+    return measurement.id
   }
 
   const handleSettingsClick = () => {
@@ -79,44 +111,42 @@ export const AxesControl = (props: IProps) => {
 
   //todo remove all the as strings and value: string should be, if works
   const handleXVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
-    if (axes[1].variableName == (event.target.value as string)) {
+    let sameVariable = false, tempVariable = '', xUnit = 0, yUnit = 0
+    if (axes[1].variableName == (event.target.value as string) && axes[0].variableName != '') {
       tempVariable = axes[0].variableName
       sameVariable = true
-      yUnit = setUnitType('y', tempVariable)
+      yUnit = modifyUnits('y', getVariableDimension(datasets, tempVariable))
       checkYVariablesExist(tempVariable, datasets)
     }
-    xUnit = setUnitType('x', event.target.value as string)
+    xUnit = modifyUnits('x', getVariableDimension(datasets, (event.target.value as string)))
     checkXVariablesExist(event.target.value as string, datasets)
     if (sameVariable == true) {
       //todo should not do magic updates
       updateYAxis({ ...axes[1], variableName: tempVariable, units: yUnit })
     }
-
     updateXAxis({ ...axes[0], variableName: event.target.value as string, units: xUnit })
   }
   const handleYVariableChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    let sameVariable = false, tempVariable = '', xUnit = '', yUnit = ''
-    if (axes[0].variableName == (event.target.value as string)) {
+    let sameVariable = false, tempVariable = '', xUnit = 0, yUnit = 0
+    if (axes[0].variableName == (event.target.value as string) && axes[1].variableName != '') {
       tempVariable = axes[1].variableName
       sameVariable = true
-      xUnit = setUnitType('x', tempVariable)
+      xUnit = modifyUnits('x', getVariableDimension(datasets, tempVariable))
       checkXVariablesExist(tempVariable, datasets)
     }
-    yUnit = setUnitType('y', event.target.value as string)
+    yUnit = modifyUnits('y', getVariableDimension(datasets, (event.target.value as string)))
     checkYVariablesExist(event.target.value as string, datasets)
     //todo should not do magic updates
     if (sameVariable == true) {
       updateXAxis({ ...axes[1], variableName: tempVariable, units: xUnit })
     }
-
     updateYAxis({ ...axes[0], variableName: event.target.value as string, units: yUnit })
   }
   const handleXUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    updateXAxis({ ...axes[0], units: event.target.value as string })
+    updateXAxis({ ...axes[0], units: event.target.value as number })
   }
   const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    updateYAxis({ ...axes[1], units: event.target.value as string })
+    updateYAxis({ ...axes[1], units: event.target.value as number })
   }
 
   const checkXVariablesExist = (type: string, datasets: IDatasetModel[]) => {
@@ -191,8 +221,8 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleXUnitChange}
                       >
-                        {xUnits.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
+                        {xUnits.map(unit => (
+                          <MenuItem value={unit.id}>{unit.name}</MenuItem>
                         ))}
                       </Select>
                     </FormControl>
@@ -228,8 +258,8 @@ export const AxesControl = (props: IProps) => {
                         autoWidth={true}
                         onChange={handleYUnitChange}
                       >
-                        {yUnits.map(type => (
-                          <MenuItem value={type}>{type}</MenuItem>
+                        {yUnits.map(unit => (
+                          <MenuItem value={unit.id}>{unit.name}</MenuItem>
                         ))}
                       </Select>
                     </FormControl>
