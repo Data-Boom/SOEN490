@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import { getUserFromStorage, putUserInStorage } from './Common/Storage'
 
-import { defaultUserAccountModel, IUserAccountModel } from './Models/Authentication/IUserAccountModel'
+import { IUserAccountModel } from './Models/Authentication/IUserAccountModel'
 import NavigationMenu from './Components/NavigationMenu';
 import { SnackbarProvider } from 'notistack'
 import { SnackbarUtilsConfigurator } from './Components/Utils/SnackbarUtils'
 import { ThemeProvider } from '@material-ui/core'
 import { theme } from './appTheme'
-import { SessionTimeOut } from './Components/SessionTimeout';
-import { SessionWrapper } from './Components/SessionWrapper';
-import { useEffect } from 'react';
 
 interface IUserContextProps {
   user: IUserAccountModel

@@ -1,6 +1,6 @@
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Redirect, useHistory } from 'react-router';
 import { UserContext } from "../App";
 import useInterval from 'react-useinterval';
@@ -14,6 +14,7 @@ export const SessionTimeOut = () => {
 
     const { user, setUser } = useContext(UserContext);
     const [seconds, setSeconds] = React.useState(10);
+    //const [seconds, setSeconds] = React.useState(user.sessionExpiration);
     const [open, setOpen] = useState<boolean>(false)
 
     const history = useHistory()
@@ -25,7 +26,6 @@ export const SessionTimeOut = () => {
         }
         else if (seconds < 10) {
             setOpen(true)
-            setSeconds(seconds - 1)
         }
         setSeconds(seconds - 1)
     }, 1000)

@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
-import { IUserAccountModel, defaultUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
+import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect, useHistory } from 'react-router'
