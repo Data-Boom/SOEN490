@@ -3,7 +3,7 @@ import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
 import React, { useContext, useState } from 'react'
-import { Redirect, useHistory } from 'react-router'
+import { Redirect } from 'react-router'
 import { homeRoute, userReviewRoute } from '../../Common/Consts/Routes'
 
 import CancelIcon from "@material-ui/icons/Cancel"
@@ -62,8 +62,6 @@ export default function LoginView() {
   const classes = useStyles()
 
   const [openModal, setOpen] = useState(false)
-
-  const history = useHistory()
 
   const handleOpen = () => {
     setOpen(true)

@@ -7,7 +7,7 @@ export const putUserInStorage = (user: IUserAccountModel) => {
 
 export const getUserFromStorage = (): IUserAccountModel => {
   let user = JSON.parse(sessionStorage.getItem('user'))
-  if (user) {
+  if (!user) {
     return defaultUserAccountModel
   }
   return user
@@ -15,5 +15,4 @@ export const getUserFromStorage = (): IUserAccountModel => {
 
 export const removeUserInStorage = () => {
   sessionStorage.removeItem('user')
-  console.log(getUserFromStorage())
 }

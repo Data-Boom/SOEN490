@@ -4,13 +4,18 @@ import { Alert } from '@material-ui/lab';
 import { Snackbar } from '@material-ui/core';
 import { UserContext } from "../App";
 import { defaultUserAccountModel } from '../Models/Authentication/IUserAccountModel';
+
 import useInterval from 'react-useinterval';
+import { endUserSession } from "../Common/GenericHelpers";
+import { useHistory } from "react-router";
+import { loginRoute } from "../Common/Consts/Routes";
 
 export const SessionTimeOut = () => {
 
     const { user, setUser } = useContext(UserContext);
     const [seconds, setSeconds] = React.useState(user.sessionExpiration);
     const [open, setOpen] = useState<boolean>(false)
+    const history = useHistory()
 
     useInterval(() => {
         if (seconds === 1) {
@@ -24,7 +29,10 @@ export const SessionTimeOut = () => {
 
     const redirectToLogin = async () => {
         setUser(defaultUserAccountModel)
-        redirectToLogin()
+        endUserSession()
+        history.push({
+            pathname: loginRoute
+        })
     }
 
     return (

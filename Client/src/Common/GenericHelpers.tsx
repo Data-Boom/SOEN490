@@ -7,7 +7,7 @@ export const logout = () => {
     callLogout();
 }
 
-export const redirectToLogin = async () => {
+export const endUserSession = async () => {
     removeUserInStorage()
-    await callLogout();
+    await callLogout()
 }
