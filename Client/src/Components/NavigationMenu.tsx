@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import { HashRouter, Link, Redirect, useHistory } from 'react-router-dom'
+import { HashRouter, Link, useHistory } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
 import React, { useContext, useState } from 'react'
 
@@ -10,22 +10,19 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuIcon from '@material-ui/icons/Menu'
 import { SessionTimeOut } from './SessionTimeout'
 import { UserContext } from "../App"
+import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
 import clsx from "clsx"
+import { defaultUserAccountModel } from "../Models/Authentication/IUserAccountModel"
 import { linkWidth } from './ListRouter'
 import { loginRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
-import { FormatLineSpacing } from "@material-ui/icons"
-import { removeUserInStorage } from "../Common/Storage"
-import { defaultUserAccountModel } from "../Models/Authentication/IUserAccountModel"
-import { logout } from "../Common/AuthenticationHelper"
 
 const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUserContext } = useContext(UserContext)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
-  const history = useHistory()
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -35,13 +32,7 @@ export default function NavigationMenu() {
     setOpen(false)
   }
 
-  const redirectToLogin = async () => {
-    setUser(defaultUserAccountModel)
-    logout()
-    history.push({
-      pathname: loginRoute
-    })
-  }
+
 
   const drawer = (): any => {
     return (
@@ -57,7 +48,17 @@ export default function NavigationMenu() {
     )
   }
 
-  const renderGreeting = () => {
+  const Greeting = () => {
+    const history = useHistory()
+
+    const redirectToLogin = async () => {
+      setUserContext(defaultUserAccountModel)
+      await callLogout()
+      history.push({
+        pathname: loginRoute
+      })
+    }
+
     return user && user.firstName ?
       (
         <Typography>
@@ -97,7 +98,7 @@ export default function NavigationMenu() {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                {renderGreeting()}
+                <Greeting />
               </Grid>
             </Grid>
           </Toolbar>

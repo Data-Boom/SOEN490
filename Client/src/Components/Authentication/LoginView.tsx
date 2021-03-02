@@ -3,20 +3,20 @@ import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
 import React, { useContext, useState } from 'react'
-import { Redirect } from 'react-router'
-import { homeRoute, userReviewRoute } from '../../Common/Consts/Routes'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
 import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
+import { Redirect } from 'react-router'
 import { UserContext } from '../../App'
 import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
+import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import moment from 'moment';
+import moment from 'moment'
 
 function Copyright() {
   return (
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginView() {
 
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUserContext } = useContext(UserContext)
   const classes = useStyles()
 
   const [openModal, setOpen] = useState(false)
@@ -73,12 +73,12 @@ export default function LoginView() {
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
-    let loginResponse = await callLogIn(loginUserInfo)
+    const loginResponse = await callLogIn(loginUserInfo)
 
-    let userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
+    const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
     userAccount.sessionExpiration = moment.duration(loginResponse.ValidFor).asMilliseconds()
 
-    setUser(userAccount)
+    setUserContext(userAccount)
   }
 
 
