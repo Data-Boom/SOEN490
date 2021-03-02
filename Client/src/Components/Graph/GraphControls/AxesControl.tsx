@@ -47,11 +47,13 @@ export const AxesControl = (props: IProps) => {
   }, [datasets])
 
   useEffect(() => {
-    if (axes[0].variableName && datasets) {
-      checkXVariablesExist(axes[0].variableName, datasets)
-    }
-    if (axes[1].variableName && datasets) {
-      checkYVariablesExist(axes[1].variableName, datasets)
+    if (datasets) {
+      if (axes[0].variableName) {
+        checkXVariablesExist(axes[0].variableName, datasets)
+      }
+      if (axes[1].variableName) {
+        checkYVariablesExist(axes[1].variableName, datasets)
+      }
     }
   }, [])
 
