@@ -13,6 +13,7 @@ import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
+import { CategoryManagementTab } from './CategoryManagementSection/CategoryManagementTab';
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -137,8 +138,10 @@ export function ProfileView() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
-      setUser(newUser)
+      const newUser: IUserAccountModel = await getUserDetails({ email: user.email })
+      if (newUser) {
+        setUser(newUser)
+      }
     }
     fetchUser()
   }, [])
@@ -148,7 +151,7 @@ export function ProfileView() {
   useEffect(() => {
     const callListSavedGraphStates = async () => {
       const savedGraphState = await listGraphStates()
-      setSavedGraphState(savedGraphState.reverse())
+      // setSavedGraphState(savedGraphState.reverse())
     }
     callListSavedGraphStates()
   }, [])
@@ -169,6 +172,7 @@ export function ProfileView() {
             <Tab label="Permissions" {...a11yProps(2)} />
             <Tab label="View Uploads" {...a11yProps(3)} />
             <Tab label="Manage Units" {...a11yProps(4)} />
+            <Tab label="Manage Categories" {...a11yProps(5)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -225,6 +229,9 @@ export function ProfileView() {
           </TabPanel>
           <TabPanel value={tab} index={4}>
             <DimensionManagementTab />
+          </TabPanel>
+          <TabPanel value={tab} index={5}>
+            <CategoryManagementTab />
           </TabPanel>
         </Container>
       </div>
