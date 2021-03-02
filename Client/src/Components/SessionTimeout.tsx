@@ -13,7 +13,7 @@ export const SessionTimeOut = () => {
 
   const { user, setUserContext } = useContext(UserContext)
   const [seconds, setSeconds] = React.useState(user.sessionExpiration)
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(false)
   const history = useHistory()
 
   useInterval(() => {
