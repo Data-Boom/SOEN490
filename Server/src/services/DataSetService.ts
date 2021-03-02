@@ -109,7 +109,6 @@ export class DataSetService {
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
         if (lastNameReceived) {
-
             paramsEntered++
             if (firstNameReceived) {
                 rawData = await this.dataQuery.getDatasetIDFromAuthor(firstNameReceived, lastNameReceived);
@@ -326,8 +325,8 @@ export class DataSetService {
         try {
             let rawData = await this.dataQuery.getFavoriteDatasetIDOfUser(userReceived);
             if (rawData) {
-                let setOfData = await this.getDatasetsFromRawData(rawData);
-                this.requestResponse.message = setOfData as any
+                let selectedDatasetIds = await this.createDatasetIdArray(rawData);
+                this.requestResponse.message = selectedDatasetIds as any
             }
             else {
                 this.requestResponse.message = [] as any

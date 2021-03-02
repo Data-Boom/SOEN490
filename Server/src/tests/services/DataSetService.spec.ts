@@ -199,8 +199,7 @@ describe('data set service test', () => {
 
   test('Feeds an account ID of 1 and expects to see a favorited data set IDs of 2 returned', async done => {
     let response = await retrieveDataObject.getUserFavoriteDatasets(1)
-    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
-    expect(arrayOfData[0].id).toEqual(2);
+    expect(response.message).toEqual([2])
     done()
   });
 

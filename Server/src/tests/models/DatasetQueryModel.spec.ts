@@ -82,7 +82,7 @@ describe('data query model test', () => {
 
     test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
         let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(1)
-        expect(arrayOfData[0].dataset_id).toEqual(2);
+        expect(arrayOfData).toEqual([{ "dataset_id": 2 }])
         done()
     });
 
