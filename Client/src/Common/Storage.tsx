@@ -1,4 +1,4 @@
-import { IUserAccountModel } from "../Models/Authentication/IUserAccountModel"
+import { IUserAccountModel, defaultUserAccountModel } from '../Models/Authentication/IUserAccountModel'
 
 //todo implement 'remember me' by putting the user into local storage
 export const putUserInStorage = (user: IUserAccountModel) => {
@@ -6,7 +6,11 @@ export const putUserInStorage = (user: IUserAccountModel) => {
 }
 
 export const getUserFromStorage = (): IUserAccountModel => {
-  return JSON.parse(sessionStorage.getItem('user'))
+  let user = JSON.parse(sessionStorage.getItem('user'))
+  if (!user) {
+    return defaultUserAccountModel
+  }
+  return user
 }
 
 export const removeUserInStorage = () => {
