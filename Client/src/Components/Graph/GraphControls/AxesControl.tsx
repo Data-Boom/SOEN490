@@ -46,6 +46,15 @@ export const AxesControl = (props: IProps) => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
 
+  useEffect(() => {
+    if (axes[0].variableName && datasets) {
+      checkXVariablesExist(axes[0].variableName, datasets)
+    }
+    if (axes[1].variableName && datasets) {
+      checkYVariablesExist(axes[1].variableName, datasets)
+    }
+  }, [])
+
   const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
 
     const dictionary = {}
