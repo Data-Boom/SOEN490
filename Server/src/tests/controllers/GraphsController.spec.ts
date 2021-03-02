@@ -1,7 +1,9 @@
+import { Graphstate } from './../../models/entities/Graphstate';
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 import { GraphsController } from '../../controllers/GraphsController';
 import { validGraphStateData1, validGraphStateData2 } from '../testData/testData';
+import { number } from 'yup/lib/locale';
 
 describe('Graphs State Controller ', () => {
   let mockRequest;
@@ -101,7 +103,6 @@ describe('Graphs State Controller ', () => {
   });
 
   test('Valid Graph Insert Request', async () => {
-    let expectedResponse = "Graph successfully saved"
     mockRequest = {
       body: {
         "datasets": [
@@ -139,7 +140,7 @@ describe('Graphs State Controller ', () => {
       }
     }
     await SavedGraphsController.createRequestForAddingGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.json).toBeCalledWith(expect.any(Number));
     expect(mockResponse.status).toBeCalledWith(201);
   });
 

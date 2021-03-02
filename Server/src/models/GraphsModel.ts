@@ -193,10 +193,10 @@ export class GraphsModel {
      * @param userEmail 
      * User email address: string
      */
-    async saveGraph(graph: IGraphStateModel, userId: number): Promise<string> {
+    async saveGraph(graph: IGraphStateModel, userId: number): Promise<number> {
         let processGraphInput = await this.processGraphInput(graph)
-        await this.sendSavedGraphToDatabase(userId, processGraphInput)
-        return "Graph successfully saved"
+        let statusID = await this.sendSavedGraphToDatabase(userId, processGraphInput)
+        return statusID
     }
 
     async verifyGraphOwner(graphId: number, userId: number): Promise<any> {
