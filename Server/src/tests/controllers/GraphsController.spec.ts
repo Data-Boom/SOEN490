@@ -1,9 +1,7 @@
-import { Graphstate } from './../../models/entities/Graphstate';
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 import { GraphsController } from '../../controllers/GraphsController';
 import { validGraphStateData1, validGraphStateData2 } from '../testData/testData';
-import { number } from 'yup/lib/locale';
 
 describe('Graphs State Controller ', () => {
   let mockRequest;
