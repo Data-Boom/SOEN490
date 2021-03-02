@@ -63,7 +63,7 @@ const getVariableDimension = (datasets: IDatasetModel[], variableName: string): 
   return Number(index)
 }
 
-const checkXVariablesExist = (type: string, datasets: IDatasetModel[]): string[] => {
+const checkVariablesExist = (type: string, datasets: IDatasetModel[]): string[] => {
   const missingDatasets = []
   datasets.forEach(dataset => {
     let exists = false
@@ -78,23 +78,6 @@ const checkXVariablesExist = (type: string, datasets: IDatasetModel[]): string[]
   })
   return missingDatasets
 }
-
-const checkYVariablesExist = (type: string, datasets: IDatasetModel[]): string[] => {
-  const missingDatasets = []
-  datasets.forEach(dataset => {
-    let exists = false
-    dataset.data.variables.forEach(variableName => {
-      if (variableName.name == type) {
-        exists = true
-      }
-    })
-    if (exists == false) {
-      missingDatasets.push(dataset.dataset_name)
-    }
-  })
-  return missingDatasets
-}
-
 
 export const AxesControl = (props: IProps) => {
   const { datasets, axes, onAxesChange, dimensions } = { ...props }
@@ -114,10 +97,10 @@ export const AxesControl = (props: IProps) => {
 
   useEffect(() => {
     if (axes[0].variableName && datasets) {
-      setXVariableMissing(checkXVariablesExist(axes[0].variableName, datasets))
+      setXVariableMissing(checkVariablesExist(axes[0].variableName, datasets))
     }
     if (axes[1].variableName && datasets) {
-      setYVariableMissing(checkYVariablesExist(axes[1].variableName, datasets))
+      setYVariableMissing(checkVariablesExist(axes[1].variableName, datasets))
     }
   }, [])
 
@@ -155,10 +138,10 @@ export const AxesControl = (props: IProps) => {
       tempVariable = axes[0].variableName
       sameVariable = true
       yUnit = modifyUnits('y', getVariableDimension(datasets, tempVariable))
-      setYVariableMissing(checkYVariablesExist(tempVariable, datasets))
+      setYVariableMissing(checkVariablesExist(tempVariable, datasets))
     }
     xUnit = modifyUnits('x', getVariableDimension(datasets, (event.target.value as string)))
-    setXVariableMissing(checkXVariablesExist(event.target.value as string, datasets))
+    setXVariableMissing(checkVariablesExist(event.target.value as string, datasets))
     if (sameVariable == true) {
       //todo should not do magic updates
       updateYAxis({ ...axes[1], variableName: tempVariable, units: yUnit })
@@ -171,10 +154,10 @@ export const AxesControl = (props: IProps) => {
       tempVariable = axes[1].variableName
       sameVariable = true
       xUnit = modifyUnits('x', getVariableDimension(datasets, tempVariable))
-      setXVariableMissing(checkXVariablesExist(tempVariable, datasets))
+      setXVariableMissing(checkVariablesExist(tempVariable, datasets))
     }
     yUnit = modifyUnits('y', getVariableDimension(datasets, (event.target.value as string)))
-    setYVariableMissing(checkYVariablesExist(event.target.value as string, datasets))
+    setYVariableMissing(checkVariablesExist(event.target.value as string, datasets))
     //todo should not do magic updates
     if (sameVariable == true) {
       updateXAxis({ ...axes[1], variableName: tempVariable, units: xUnit })
