@@ -21,7 +21,7 @@ export class Category extends BaseEntity {
     @UpdateDateColumn()
     updated: Date
 
-    static convertToModel(category: Category, subcategories?: Subcategory[]): ICategory {
+    static convertToModel(category: Category, subcategories: Subcategory[]): ICategory {
         return {
             id: category.id,
             name: category.name,
@@ -32,6 +32,12 @@ export class Category extends BaseEntity {
                     categoryId: category.id
                 }
             })
+        }
+    }
+    static convertToModelNoSubs(category: Category): ICategory {
+        return {
+            id: category.id,
+            name: category.name
         }
     }
 

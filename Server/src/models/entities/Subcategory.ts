@@ -44,6 +44,16 @@ export class Subcategory extends BaseEntity {
         });
     }
 
+    static convertToNewSubcategory(subcategoryModel: ISubcategory[], categoryId: number): Subcategory[] {
+        return subcategoryModel.map(eachSubcategory => {
+            let subcategory = new Subcategory();
+            subcategory.id;
+            subcategory.name = eachSubcategory.name;
+            subcategory.categoryId = categoryId;
+            return subcategory;
+        });
+    }
+
     static convertToSubcategory(subcategoryModel: ISubcategory[], categoryId: number): Subcategory[] {
         return subcategoryModel.map(eachSubcategory => {
             let subcategory = new Subcategory();

@@ -16,9 +16,25 @@ export class CategoryService {
         this.categoryModel = new CategoryModel()
     }
 
-    /**
-    * This method calls the database for all the existing categories
-    */
+    async processAddCategory(categoryInfo: ICategory): Promise<IResponse> {
+        let name: boolean
+        name = await this.categoryModel.verifyIfNameExists(categoryInfo.name);
+        if (name) {
+            throw new BadRequest("This category already exists! Please use a different name");
+        }
+        else {
+            try {
+                let newCategory = await this.categoryModel.insertCategory(categoryInfo);
+                this.requestResponse.message = newCategory as any;
+                this.requestResponse.statusCode = 201;
+                return this.requestResponse
+            }
+            catch (error) {
+                throw new BadRequest("Error occured when creating new category");
+            }
+        }
+    }
+
     async processGetAllCategories() {
         try {
             let categories = await this.categoryModel.getAllCategories()

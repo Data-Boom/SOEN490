@@ -12,6 +12,23 @@ export class CategoryController {
     constructor() {
     }
 
+    async createCategory(request: Request, response: Response): Promise<Response> {
+        // this.invalidResponse = this.validateCreateDimensionRequest(request);
+        // if (this.invalidResponse) {
+        //   return response.status(400).json("Request is invalid. Missing attributes")
+        // } else {
+        try {
+            let requestParams: any = { ...request.body };
+            let categoryInfo: ICategory = requestParams;
+            this.categoryService = new CategoryService();
+            let requestResponse: any = await this.categoryService.processAddCategory(categoryInfo);
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
+        } catch (error) {
+            this.handleError(response, error);
+        }
+        // }
+    }
+
     async retrieveCategories(response: Response): Promise<Response> {
         try {
             this.categoryService = new CategoryService();

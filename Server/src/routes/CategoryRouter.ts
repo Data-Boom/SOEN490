@@ -6,9 +6,9 @@ let router = Router();
 
 let categoryController = new CategoryController();
 
-// router.post('/api/v1/category', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
-//     categoryController.createCategory(request, response);
-// });
+router.post('/api/v1/category', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
+    categoryController.createCategory(request, response);
+});
 
 router.get('/api/v1/category', (request: Request, response: Response) => {
     categoryController.retrieveCategories(response);

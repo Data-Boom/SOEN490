@@ -11,6 +11,28 @@ export class CategoryModel {
     }
 
     /**
+     * Method to verify if a name for category exists. Returns undefined if nothing exists
+     * and an actual Category if one does
+     * 
+     * @param name
+     * Category name: string
+     */
+    async verifyIfNameExists(name: string): Promise<any> {
+        return await Category.findOne({ where: { name: name } })
+    }
+
+    async insertCategory(categoryInfo: ICategory): Promise<ICategory> {
+        let categoryModel = new Category();
+        categoryModel.name = categoryInfo.name;
+        categoryModel = await Category.save(categoryModel);
+
+        let subcategoriesToBeAdded = Subcategory.convertToNewSubcategory(categoryInfo.subcategories, categoryModel.id);
+        let subcategories = await Subcategory.save(subcategoriesToBeAdded);
+        categoryInfo = Category.convertToModel(categoryModel, subcategories);
+        return categoryInfo;
+    }
+
+    /**
     * This method will return all existing dimensions
     */
     async getAllCategories(): Promise<ICategory[]> {
