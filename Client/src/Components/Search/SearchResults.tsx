@@ -68,6 +68,7 @@ export const SearchResults = (props: IProps) => {
             {props.button}
           </Grid>
         </Grid> : null}
-      </Grid></>
+      </Grid>
+    </>
   )
 }

@@ -177,13 +177,15 @@ export class AuthenticationService {
   private async generateJwtToken(jwtPayload: IJwtParams): Promise<string> {
 
     let token: string;
+    let tokenInformation;
     let jwtExpiry: number = 3000;
     const jwtAccessKey = process.env.ACCESS_SECRET_KEY;
 
     token = await jwt.sign({ jwtPayload }, jwtAccessKey, {
       expiresIn: jwtExpiry
     })
-    return token;
+    tokenInformation = [token, jwtExpiry]
+    return tokenInformation;
   }
 
   async validateUserDetails(userDetailUpdater: IUpdateUserDetail): Promise<IResponse> {
