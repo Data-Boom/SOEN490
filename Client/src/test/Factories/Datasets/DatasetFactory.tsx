@@ -1,7 +1,7 @@
 import * as Factory from "factory.ts"
 
 import { IAuthor, IContent, IData, IDatasetModel, IMaterial, IReference, IVariable } from "../../../Models/Datasets/IDatasetModel"
-import { eachRandomNumber, eachRandomWord, eachUniqueId, getRandomNumbers } from "../FactoryHelpers"
+import { each, eachRandomNumber, eachRandomWord, eachUniqueId, getRandomNumbers } from "../FactoryHelpers"
 
 export const AuthorFactory = Factory.Sync.makeFactory<IAuthor>({
   firstName: eachRandomWord(),
@@ -10,7 +10,7 @@ export const AuthorFactory = Factory.Sync.makeFactory<IAuthor>({
 })
 
 export const ReferenceFactory = Factory.Sync.makeFactory<IReference>({
-  authors: AuthorFactory.buildList(3),
+  authors: each(() => AuthorFactory.buildList(3)),
   issue: eachRandomNumber(),
   pages: `${eachRandomNumber()}-${eachRandomNumber()}`,
   publisher: eachRandomWord(),
@@ -21,7 +21,7 @@ export const ReferenceFactory = Factory.Sync.makeFactory<IReference>({
 })
 
 export const ContentFactory = Factory.Sync.makeFactory<IContent>({
-  point: Factory.Sync.each(i => getRandomNumbers(10))
+  point: each(() => getRandomNumbers(10))
 })
 
 export const VariableFactory = Factory.Sync.makeFactory<IVariable>({
@@ -32,8 +32,8 @@ export const VariableFactory = Factory.Sync.makeFactory<IVariable>({
 
 export const DataFactory = Factory.Sync.makeFactory<IData>({
   comments: eachRandomWord(),
-  contents: ContentFactory.buildList(10),
-  variables: VariableFactory.buildList(8)
+  contents: each(() => ContentFactory.buildList(10)),
+  variables: each(() => VariableFactory.buildList(8))
 })
 
 export const MaterialFactory = Factory.Sync.makeFactory<IMaterial>({
@@ -45,10 +45,10 @@ export const MaterialFactory = Factory.Sync.makeFactory<IMaterial>({
 export const DatasetFactory = Factory.Sync.makeFactory<IDatasetModel>({
   category: eachRandomWord(),
   subcategory: eachRandomWord(),
-  reference: ReferenceFactory.build(),
-  data: DataFactory.build(),
+  reference: each(() => ReferenceFactory.build()),
+  data: each(() => DataFactory.build()),
   data_type: eachRandomWord(),
   dataset_name: eachRandomWord(),
   id: eachUniqueId(),
-  material: MaterialFactory.buildList(10)
+  material: each(() => MaterialFactory.buildList(10))
 })

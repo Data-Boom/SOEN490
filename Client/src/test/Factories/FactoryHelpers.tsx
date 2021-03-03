@@ -6,6 +6,8 @@ export const getRandomNumbers = (length: number): number[] => {
   return new Array(length).fill(null).map(e => random.number())
 }
 
+export const randomIndex = (upto: number) => random.number({ min: 0, max: upto })
+
 export const eachRandomWord = () => {
   return each(() => random.word())
 }

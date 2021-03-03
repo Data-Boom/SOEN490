@@ -29,7 +29,7 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
   return variables
 }
 
-const getVariableDimension = (datasets: IDatasetModel[], variableName: string): number => {
+export const getVariableDimension = (datasets: IDatasetModel[], variableName: string): number => {
   const dictionary = {}
   datasets.forEach(dataset => {
     const foundVariable = dataset.data.variables.find(variable => variable.name == variableName)
@@ -40,18 +40,18 @@ const getVariableDimension = (datasets: IDatasetModel[], variableName: string): 
     }
   })
 
-  let index = '';
-  let size = -1;
-  for (let key in dictionary) {
+  let index = ''
+  let size = -1
+  for (const key in dictionary) {
     if (dictionary[key].length > size) {
       index = key
       size = dictionary[key].length
     }
   }
   const incorrectDatasets = []
-  for (let key in dictionary) {
+  for (const key in dictionary) {
     if (key != index) {
-      for (let id in dictionary[key]) {
+      for (const id in dictionary[key]) {
         const data = datasets.find(dataset => dataset.id == Number(id))
         incorrectDatasets.push(data.dataset_name)
       }

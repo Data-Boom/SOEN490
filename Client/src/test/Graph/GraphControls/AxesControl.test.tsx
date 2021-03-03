@@ -1,19 +1,32 @@
-import { DatasetFactory } from "../../Factories/Datasets/DatasetModelFactory"
+import { DatasetFactory, VariableFactory } from "../../Factories/Datasets/DatasetFactory"
+
 import { DimensionFactory } from "../../Factories/Dimensions/DimensionFactory"
-import { IDatasetModel } from "../../../Models/Datasets/IDatasetModel"
-import { IDimensionModel } from "../../../Models/Dimensions/IDimensionModel"
+import { getVariableDimension } from '../../../Components/Graph/GraphControls/AxesControl'
+import { randomIndex } from "../../Factories/FactoryHelpers"
 
 describe('getVariableDimension', () => {
-  it('should return false', () => {
-    const { dimensions, datasets }: { dimensions: IDimensionModel[], datasets: IDatasetModel[] } = getTestData()
+  it('should return valid variable representation', () => {
+    const { dimensions, validVariables, datasets } = getTestData()
 
-    expect(datasets[0].data.variables[0].name).toBe(datasets[1].data.variables[0].name)
+    const expectedDictionary = {}
+    expectedDictionary[validVariables[0].dimensionId] = datasets.map(dataset => dataset.id)
+
+    expect(getVariableDimension(datasets, validVariables[0].name)).toBe(expectedDictionary)
   })
 })
 
-const getTestData = (): { dimensions: IDimensionModel[], datasets: IDatasetModel[] } => {
+const getTestData = () => {
   const dimensions = DimensionFactory.buildList(5)
   const datasets = DatasetFactory.buildList(10)
+  const validVariables = VariableFactory.buildList(datasets[0].data.variables.length)
 
-  return { dimensions, datasets }
+  validVariables.forEach(variable => {
+    const randomDimension = dimensions[randomIndex(dimensions.length)]
+    variable.dimensionId = randomDimension.id
+    variable.unitId = randomDimension.units[randomIndex(randomDimension.units.length)].id
+  })
+
+  datasets.forEach(dataset => dataset.data.variables = [...validVariables])
+
+  return { dimensions, validVariables, datasets }
 }
