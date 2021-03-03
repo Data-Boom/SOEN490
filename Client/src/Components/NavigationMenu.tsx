@@ -1,26 +1,26 @@
 /* eslint-disable react/display-name */
 
 import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import { HashRouter, Link } from 'react-router-dom'
+import { HashRouter, Link, useHistory } from 'react-router-dom'
 import { ListRouter, getRoutedViews } from "./ListRouter"
 import React, { useContext, useState } from 'react'
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuIcon from '@material-ui/icons/Menu'
+import { SessionTimeOut } from './SessionTimeout'
 import { UserContext } from "../App"
+import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
 import clsx from "clsx"
+import { defaultUserAccountModel } from "../Models/Authentication/IUserAccountModel"
 import { linkWidth } from './ListRouter'
 import { loginRoute } from "../Common/Consts/Routes"
-import { removeUserInStorage } from '../Common/Storage'
 import universitylogo from './universitylogo.png'
-import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
-import { FormatLineSpacing } from "@material-ui/icons"
 
 const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUserContext } = useContext(UserContext)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
@@ -32,11 +32,7 @@ export default function NavigationMenu() {
     setOpen(false)
   }
 
-  function logout() {
-    removeUserInStorage()
-    window.location.replace("/")
-    callLogout();
-  }
+
 
   const drawer = (): any => {
     return (
@@ -52,7 +48,17 @@ export default function NavigationMenu() {
     )
   }
 
-  const renderGreeting = () => {
+  const Greeting = () => {
+    const history = useHistory()
+
+    const redirectToLogin = async () => {
+      setUserContext(defaultUserAccountModel)
+      await callLogout()
+      history.push({
+        pathname: loginRoute
+      })
+    }
+
     return user && user.firstName ?
       (
         <Typography>
@@ -61,7 +67,7 @@ export default function NavigationMenu() {
               {user.firstName} {user.lastName}
             </Grid>
             <Grid>
-              <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
+              <Button id="SignOut" variant="contained" onClick={redirectToLogin}>Sign out</Button>
             </Grid>
           </Grid>
         </Typography>
@@ -92,17 +98,19 @@ export default function NavigationMenu() {
                 </Typography>
               </Grid>
               <Grid container item xs={4} justify="flex-end">
-                {renderGreeting()}
+                <Greeting />
               </Grid>
             </Grid>
           </Toolbar>
+          {user && user.sessionExpiration !== null &&
+            <SessionTimeOut />
+          }
         </AppBar>
         {drawer()}
         <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
       </HashRouter>
-
     </>
   )
 }
