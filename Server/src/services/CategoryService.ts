@@ -31,6 +31,18 @@ export class CategoryService {
         }
     }
 
+    async processUpdateCategory(categoryInfo: ICategory): Promise<IResponse> {
+        try {
+            let updatedCategory = await this.categoryModel.updateCategory(categoryInfo);
+            this.requestResponse.message = updatedCategory as any;
+            this.requestResponse.statusCode = 200;
+            return this.requestResponse
+        }
+        catch (error) {
+            throw new BadRequest(error.message);
+        }
+    }
+
     /**
     * This method calls the database to remove an existing category
     * @param categoryId 

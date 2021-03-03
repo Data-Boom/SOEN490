@@ -14,9 +14,9 @@ router.get('/api/v1/category', (request: Request, response: Response) => {
     categoryController.retrieveCategories(response);
 });
 
-// router.put('/api/v1/category', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
-//     categoryController.updateCategory(request, response);
-// });
+router.put('/api/v1/category', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
+    categoryController.updateCategory(request, response);
+});
 
 router.delete('/api/v1/category/:id', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
     categoryController.deleteCategory(request, response);

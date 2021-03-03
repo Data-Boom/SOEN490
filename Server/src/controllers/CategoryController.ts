@@ -10,16 +10,33 @@ export class CategoryController {
     private categoryService: CategoryService;
 
     constructor() {
-        this.categoryService = new CategoryService();
     }
 
     async retrieveCategories(response: Response): Promise<Response> {
         try {
+            this.categoryService = new CategoryService();
             let requestResponse = await this.categoryService.processGetAllCategories();
             return response.status(requestResponse.statusCode).json(requestResponse.message)
         } catch (error) {
             this.handleError(response, error);
         }
+    }
+
+    async updateCategory(request: Request, response: Response): Promise<Response> {
+        // this.invalidResponse = this.validateUpdateDimension(request);
+        // if (this.invalidResponse) {
+        //   return response.status(400).json("Request is invalid. Missing attributes")
+        // } else {
+        try {
+            let requestParams: any = { ...request.body };
+            let categoryInfo: ICategory = requestParams;
+            this.categoryService = new CategoryService();
+            let requestResponse: any = await this.categoryService.processUpdateCategory(categoryInfo);
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
+        } catch (error) {
+            this.handleError(response, error);
+        }
+        // }
     }
 
     async deleteCategory(request: Request, response: Response): Promise<Response> {
@@ -29,6 +46,7 @@ export class CategoryController {
             return response.status(400).json("Invalid category ID entered");
         }
         try {
+            this.categoryService = new CategoryService();
             let requestResponse: any = await this.categoryService.processDeleteCategory(categoryId);
             return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {

@@ -34,4 +34,11 @@ export class Category extends BaseEntity {
             })
         }
     }
+
+    static convertToCategory(categoryModel: ICategory): Category {
+        let category = new Category();
+        category.id = categoryModel.id;
+        category.name = categoryModel.name;
+        return category;
+    }
 }

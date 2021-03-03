@@ -33,4 +33,24 @@ export class Subcategory extends BaseEntity {
 
     @UpdateDateColumn()
     updated: Date
+
+    static convertToModel(subcategories: Subcategory[]): ISubcategory[] {
+        return subcategories.map(eachSubcategory => {
+            return {
+                id: eachSubcategory.id,
+                name: eachSubcategory.name,
+                categoryId: eachSubcategory.categoryId
+            };
+        });
+    }
+
+    static convertToSubcategory(subcategoryModel: ISubcategory[], categoryId: number): Subcategory[] {
+        return subcategoryModel.map(eachSubcategory => {
+            let subcategory = new Subcategory();
+            subcategory.id = eachSubcategory.id;
+            subcategory.name = eachSubcategory.name;
+            subcategory.categoryId = categoryId;
+            return subcategory;
+        });
+    }
 }
