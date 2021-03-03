@@ -1,6 +1,6 @@
 import * as Factory from "factory.ts"
 
-import { IDimensionModel, IUnitModel } from "../../../Models/Dimensions/IDimensionModel"
+import { IDimensionModel, IUnitModel } from "../../../src/Models/Dimensions/IDimensionModel"
 import { each, eachRandomWord, eachUniqueId } from "../FactoryHelpers"
 
 export const UnitFactory = Factory.Sync.makeFactory<IUnitModel>({

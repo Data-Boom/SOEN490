@@ -1,6 +1,6 @@
 import * as Factory from "factory.ts"
 
-import { IAuthor, IContent, IData, IDatasetModel, IMaterial, IReference, IVariable } from "../../../Models/Datasets/IDatasetModel"
+import { IAuthor, IContent, IData, IDatasetModel, IMaterial, IReference, IVariable } from "../../../src/Models/Datasets/IDatasetModel"
 import { each, eachRandomNumber, eachRandomWord, eachUniqueId, getRandomNumbers } from "../FactoryHelpers"
 
 export const AuthorFactory = Factory.Sync.makeFactory<IAuthor>({

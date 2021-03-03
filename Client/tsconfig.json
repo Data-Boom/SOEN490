@@ -30,6 +30,7 @@
     "jsx": "react"
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "test"
   ]
 }

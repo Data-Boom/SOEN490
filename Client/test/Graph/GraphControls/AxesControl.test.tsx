@@ -1,17 +1,17 @@
 import { DatasetFactory, VariableFactory } from "../../Factories/Datasets/DatasetFactory"
 
 import { DimensionFactory } from "../../Factories/Dimensions/DimensionFactory"
-import { getVariableDimension } from '../../../Components/Graph/GraphControls/AxesControl'
+import { getVariableDimensionRepresentation } from "../../../src/Common/Helpers/DimensionHelpers"
 import { randomIndex } from "../../Factories/FactoryHelpers"
 
-describe('getVariableDimension', () => {
-  it('should return valid variable representation', () => {
+describe('getVariableDimensionRepresentation', () => {
+  it('returns one dimension represented with 10 datasets', () => {
     const { dimensions, validVariables, datasets } = getTestData()
 
     const expectedDictionary = {}
     expectedDictionary[validVariables[0].dimensionId] = datasets.map(dataset => dataset.id)
 
-    expect(getVariableDimension(datasets, validVariables[0].name)).toBe(expectedDictionary)
+    expect(getVariableDimensionRepresentation(datasets, validVariables[0].name)).toStrictEqual(expectedDictionary)
   })
 })
 

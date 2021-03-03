@@ -30,7 +30,7 @@
     "formik": "^2.2.6",
     "immutable": "^4.0.0-rc.12",
     "intermock": "^0.2.5",
-    "jest": "24.9.0",
+    "jest": "^26.6.3",
     "jest-ts-auto-mock": "^2.0.0",
     "lodash": "^4.17.20",
     "mocha": "^8.2.1",
