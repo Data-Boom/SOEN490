@@ -15,10 +15,9 @@ export class VariableModel {
       .getRawMany();
 
     let variableModel = variables.map(variable => {
-      let variableModel: IVariableNameModel = {
+      return {
         name: variable.name
       }
-      return variableModel;
     })
     return variableModel;
   }
