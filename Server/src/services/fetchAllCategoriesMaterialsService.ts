@@ -1,5 +1,4 @@
 import { FetchAllCategoriesMaterialsModel } from "../models/FetchAllCategoriesMaterialsModel";
-import { ICategory } from "../models/interfaces/CategoryInterface";
 import { IMaterial } from "../models/interfaces/MaterialInterface";
 import { ISubcategory } from "../models/interfaces/SubcategoryInterface";
 
@@ -10,7 +9,7 @@ export class fetchAllCategoriesMaterialsService {
         this.dataQuery = new FetchAllCategoriesMaterialsModel();
     }
     async getBasicCategoryDataService() {
-        let categoryData: ICategory[] = await this.dataQuery.getBasicCategoryDataQuery()
+        let categoryData = await this.dataQuery.getBasicCategoryDataQuery()
         return categoryData;
     }
 

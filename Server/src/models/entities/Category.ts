@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
+import { Subcategory } from "./Subcategory";
 
 
 /**
@@ -19,4 +20,18 @@ export class Category extends BaseEntity {
 
     @UpdateDateColumn()
     updated: Date
+
+    static convertToModel(category: Category, subcategories?: Subcategory[]): ICategory {
+        return {
+            id: category.id,
+            name: category.name,
+            subcategories: subcategories.map(eachSubcategory => {
+                return {
+                    id: eachSubcategory.id,
+                    name: eachSubcategory.name,
+                    categoryId: category.id
+                }
+            })
+        }
+    }
 }

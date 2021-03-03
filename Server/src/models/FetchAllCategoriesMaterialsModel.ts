@@ -3,7 +3,6 @@ import { Category } from "./entities/Category";
 import { Composition } from "./entities/Composition";
 import { Material } from "./entities/Material";
 import { Subcategory } from "./entities/Subcategory";
-import { ICategory } from "./interfaces/CategoryInterface";
 import { IMaterial } from "./interfaces/MaterialInterface";
 import { ISubcategory } from "./interfaces/SubcategoryInterface";
 
@@ -12,8 +11,8 @@ export class FetchAllCategoriesMaterialsModel {
     constructor() {
         this.connection = getConnection();
     }
-    async getBasicCategoryDataQuery(): Promise<ICategory[]> {
-        let categoryData: ICategory[] =
+    async getBasicCategoryDataQuery(): Promise<any[]> {
+        let categoryData =
             await this.connection.createQueryBuilder(Category, 'category')
                 .select('category.name', 'name')
                 .addSelect('category.id', 'id')
