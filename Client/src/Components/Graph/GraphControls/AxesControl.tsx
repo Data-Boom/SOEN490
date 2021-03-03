@@ -26,13 +26,11 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
       }
     })
   })
-
   return variables
 }
 
-export const getVariableDimension = (datasets: IDatasetModel[], variableName): number => {
+const getVariableDimension = (datasets: IDatasetModel[], variableName: string): number => {
   const dictionary = {}
-
   datasets.forEach(dataset => {
     const foundVariable = dataset.data.variables.find(variable => variable.name == variableName)
     if (foundVariable) {
@@ -42,18 +40,18 @@ export const getVariableDimension = (datasets: IDatasetModel[], variableName): n
     }
   })
 
-  let index = ''
-  let size = -1
-  for (const key in dictionary) {
+  let index = '';
+  let size = -1;
+  for (let key in dictionary) {
     if (dictionary[key].length > size) {
       index = key
       size = dictionary[key].length
     }
   }
   const incorrectDatasets = []
-  for (const key in dictionary) {
+  for (let key in dictionary) {
     if (key != index) {
-      for (const id in dictionary[key]) {
+      for (let id in dictionary[key]) {
         const data = datasets.find(dataset => dataset.id == Number(id))
         incorrectDatasets.push(data.dataset_name)
       }
@@ -63,6 +61,22 @@ export const getVariableDimension = (datasets: IDatasetModel[], variableName): n
     SnackbarUtils.warning('The following datasets have the incorrect IDs: ' + incorrectDatasets.toString())
   }
   return Number(index)
+}
+
+const checkVariablesExist = (type: string, datasets: IDatasetModel[]): string[] => {
+  const missingDatasets = []
+  datasets.forEach(dataset => {
+    let exists = false
+    dataset.data.variables.forEach(variableName => {
+      if (variableName.name == type) {
+        exists = true
+      }
+    })
+    if (exists == false) {
+      missingDatasets.push(dataset.dataset_name)
+    }
+  })
+  return missingDatasets
 }
 
 export const AxesControl = (props: IProps) => {
@@ -80,6 +94,15 @@ export const AxesControl = (props: IProps) => {
   useEffect(() => {
     setVariables(buildVariableList(datasets))
   }, [datasets])
+
+  useEffect(() => {
+    if (axes[0].variableName && datasets) {
+      setXVariableMissing(checkVariablesExist(axes[0].variableName, datasets))
+    }
+    if (axes[1].variableName && datasets) {
+      setYVariableMissing(checkVariablesExist(axes[1].variableName, datasets))
+    }
+  }, [])
 
   const updateXAxis = (axis: IAxisStateModel) => {
     console.log(axis)
@@ -115,10 +138,10 @@ export const AxesControl = (props: IProps) => {
       tempVariable = axes[0].variableName
       sameVariable = true
       yUnit = modifyUnits('y', getVariableDimension(datasets, tempVariable))
-      checkYVariablesExist(tempVariable, datasets)
+      setYVariableMissing(checkVariablesExist(tempVariable, datasets))
     }
     xUnit = modifyUnits('x', getVariableDimension(datasets, (event.target.value as string)))
-    checkXVariablesExist(event.target.value as string, datasets)
+    setXVariableMissing(checkVariablesExist(event.target.value as string, datasets))
     if (sameVariable == true) {
       //todo should not do magic updates
       updateYAxis({ ...axes[1], variableName: tempVariable, units: yUnit })
@@ -131,10 +154,10 @@ export const AxesControl = (props: IProps) => {
       tempVariable = axes[1].variableName
       sameVariable = true
       xUnit = modifyUnits('x', getVariableDimension(datasets, tempVariable))
-      checkXVariablesExist(tempVariable, datasets)
+      setXVariableMissing(checkVariablesExist(tempVariable, datasets))
     }
     yUnit = modifyUnits('y', getVariableDimension(datasets, (event.target.value as string)))
-    checkYVariablesExist(event.target.value as string, datasets)
+    setYVariableMissing(checkVariablesExist(event.target.value as string, datasets))
     //todo should not do magic updates
     if (sameVariable == true) {
       updateXAxis({ ...axes[1], variableName: tempVariable, units: xUnit })
@@ -146,38 +169,6 @@ export const AxesControl = (props: IProps) => {
   }
   const handleYUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     updateYAxis({ ...axes[1], units: event.target.value as number })
-  }
-
-  const checkXVariablesExist = (type: string, datasets: IDatasetModel[]) => {
-    const missingDatasets = []
-    datasets.forEach(dataset => {
-      let exists = false
-      dataset.data.variables.forEach(variableName => {
-        if (variableName.name == type) {
-          exists = true
-        }
-      })
-      if (exists == false) {
-        missingDatasets.push(dataset.dataset_name)
-      }
-    })
-    setXVariableMissing(missingDatasets)
-  }
-
-  const checkYVariablesExist = (type: string, datasets: IDatasetModel[]) => {
-    const missingDatasets = []
-    datasets.forEach(dataset => {
-      let exists = false
-      dataset.data.variables.forEach(variableName => {
-        if (variableName.name == type) {
-          exists = true
-        }
-      })
-      if (exists == false) {
-        missingDatasets.push(dataset.dataset_name)
-      }
-    })
-    setYVariableMissing(missingDatasets)
   }
 
   return (
