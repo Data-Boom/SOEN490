@@ -26,6 +26,8 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     // Accounts Data
     let authenticationService = new AuthenticationService();
+    await queryRunner.query('ALTER TABLE subcategory ADD COLUMN categoryId int(11) NOT NULL DEFAULT 1 AFTER name');
+    await queryRunner.query('ALTER TABLE subcategory ADD CONSTRAINT FK_3fc84b9483bdd736f728dbf95b2 FOREIGN KEY (categoryId) REFERENCES category(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
 
     let user1 = new Accounts();
     user1.id = 1;
@@ -708,12 +710,15 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM datasetdatatype');
     await queryRunner.query('DELETE FROM material');
     await queryRunner.query('DELETE FROM composition');
-    await queryRunner.query('DELETE FROM category');
     await queryRunner.query('DELETE FROM subcategory');
+    await queryRunner.query('DELETE FROM category');
     await queryRunner.query('DELETE FROM publisher');
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
+
+    await queryRunner.query('ALTER TABLE subcategory DROP FOREIGN KEY FK_3fc84b9483bdd736f728dbf95b2');
+    await queryRunner.query('ALTER TABLE subcategory DROP COLUMN categoryId');
   }
 
 }
