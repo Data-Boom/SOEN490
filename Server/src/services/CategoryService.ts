@@ -17,8 +17,8 @@ export class CategoryService {
     }
 
     /**
-     * This method calls the database for all the existing categories
-     */
+    * This method calls the database for all the existing categories
+    */
     async processGetAllCategories() {
         try {
             let categories = await this.categoryModel.getAllCategories()
@@ -29,5 +29,22 @@ export class CategoryService {
         catch (error) {
             throw new BadRequest("Error occured when fetching all categories");
         }
+    }
+
+    /**
+    * This method calls the database to remove an existing category
+    * @param categoryId 
+    * A category ID: number
+    */
+    async processDeleteCategory(categoryId: number): Promise<IResponse> {
+        try {
+            await this.categoryModel.deleteCategory(categoryId);
+        }
+        catch (error) {
+            throw new BadRequest(error.message);
+        }
+        this.requestResponse.message = "Success";
+        this.requestResponse.statusCode = 200;
+        return this.requestResponse;
     }
 }

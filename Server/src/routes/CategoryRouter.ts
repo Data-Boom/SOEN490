@@ -18,8 +18,8 @@ router.get('/api/v1/category', (request: Request, response: Response) => {
 //     categoryController.updateCategory(request, response);
 // });
 
-// router.delete('/api/v1/category/:id?', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
-//     categoryController.deleteCategory(request, response);
-// });
+router.delete('/api/v1/category/:id', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
+    categoryController.deleteCategory(request, response);
+});
 
 export { router as CategoryRouter }

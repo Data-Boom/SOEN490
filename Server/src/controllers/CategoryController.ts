@@ -22,6 +22,20 @@ export class CategoryController {
         }
     }
 
+    async deleteCategory(request: Request, response: Response): Promise<Response> {
+        let requestParam = request.params.id;
+        let categoryId = Number(requestParam);
+        if (isNaN(categoryId)) {
+            return response.status(400).json("Invalid category ID entered");
+        }
+        try {
+            let requestResponse: any = await this.categoryService.processDeleteCategory(categoryId);
+            return response.status(requestResponse.statusCode).json(requestResponse.message);
+        } catch (error) {
+            this.handleError(response, error)
+        }
+    }
+
     private handleError(response: Response, error: any) {
         if (error instanceof BadRequest) {
             response.status(error.status).json(error.message);
