@@ -30,7 +30,6 @@
     "jsx": "react"
   },
   "include": [
-    "./src/**/*",
-    "config.ts"
+    "./src/**/*"
   ]
 }
