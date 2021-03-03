@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { BadRequest } from "@tsed/exceptions";
 import { CategoryModel } from '../models/CategoryModel';
 import { IResponse } from '../genericInterfaces/ResponsesInterface'
+import { ICategory } from '../models/interfaces/CategoryInterface';
 
 /**
  * This class handles requests related to dimensions and units and also

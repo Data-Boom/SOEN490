@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
 import { Subcategory } from "./Subcategory";
+import { ICategory } from "./../interfaces/CategoryInterface";
 
 
 /**

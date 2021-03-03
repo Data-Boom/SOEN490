@@ -3,6 +3,7 @@ import { Connection, getConnection } from "typeorm";
 import { Category } from "./entities/Category";
 import { Dataset } from "./entities/Dataset";
 import { Subcategory } from "./entities/Subcategory";
+import { ICategory } from "./interfaces/CategoryInterface";
 
 export class CategoryModel {
     private connection: Connection;
