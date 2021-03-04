@@ -25,7 +25,7 @@ export class dataExtractionController {
       let requestResponse: any = this.callDataExtractionService(this.filePathOfUpload, this.fileExtension, response);
       return requestResponse
     }
-  };
+  }
 
 
   private async callDataExtractionService(filePath: string, extension: string, response: Response): Promise<Response> {
@@ -36,7 +36,7 @@ export class dataExtractionController {
       return response.status(extractDataResponse.statusCode).json(extractDataResponse.message);
     } catch (error) {
       return response.status(error.status).json(error.message);
-    };
+    }
   }
 
 }

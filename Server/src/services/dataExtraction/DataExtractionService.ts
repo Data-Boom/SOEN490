@@ -1,7 +1,7 @@
 import { JsonFileExtractorFactory } from './JsonFileHandlerFactory';
 import { IResponse } from '../../genericInterfaces/ResponsesInterface';
 import { BadRequest } from '@tsed/exceptions';
-import { AbstractFileExtractor, FileExtractorFactory } from './FileHandlerFactory';
+import { FileExtractorFactory } from './FileHandlerFactory';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 

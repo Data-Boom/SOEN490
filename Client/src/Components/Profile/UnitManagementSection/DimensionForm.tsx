@@ -1,7 +1,6 @@
 import { Box, Button, Collapse, Grid, IconButton, Theme, Typography, createStyles, makeStyles } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import React, { useState } from 'react'
-import { callAddDimension, callChangeDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
