@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { BadRequest } from '@tsed/exceptions';
 import { CategoryService } from '../services/CategoryService';
+import { ICategory } from '../models/interfaces/CategoryInterface';
 
 /**
  * This controller is responsible for verifying the user request has correct parameters input.
