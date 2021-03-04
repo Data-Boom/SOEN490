@@ -3,9 +3,13 @@ import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Dat
 import React, { useEffect, useState } from 'react'
 
 import { DataForm } from './DataSection/DataForm'
+import { Grid } from '@material-ui/core'
 import { IFormProps } from '../Forms/IFormikForm'
+import { IconButton } from 'material-ui'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
+import StarBorderIcon from "@material-ui/icons/StarBorder"
+import StarIcon from "@material-ui/icons/Star"
 import { datasetValidationSchema } from './DatasetValidationSchema'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
@@ -29,6 +33,7 @@ export const DatasetForm = (props: IProps): any => {
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
   const [materials, setMaterials] = useState([])
+  const [savedDataset, setSavedDataset] = useState(false)
 
   useEffect(() => {
     const callListCategories = async () => {
@@ -56,6 +61,11 @@ export const DatasetForm = (props: IProps): any => {
     onSubmit(dataset)
   }
 
+  const handleSaveDataset = () => {
+    setSavedDataset(!savedDataset)
+
+  }
+
   const meta: IDatasetMeta = initialDataset
   const reference: IReference = initialDataset.reference
   const data: IData = initialDataset.data
@@ -70,6 +80,11 @@ export const DatasetForm = (props: IProps): any => {
       innerRef={formikReference}
     >
       <Form>
+        <Grid>
+          {savedDataset ? <StarIcon color="primary" fontSize="large" onClick={handleSaveDataset} /> :
+            <StarBorderIcon color="primary" fontSize="large" onClick={handleSaveDataset} />
+          }
+        </Grid>
         <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />
