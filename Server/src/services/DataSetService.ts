@@ -49,9 +49,10 @@ export class DataSetService {
         let yearReceived = receivedData.year;
         let categoryReceived = receivedData.categoryId;
         let subcategoryReceived = receivedData.subcategoryId;
+        let datapointReceived = receivedData.datapoints; //new
         let selectedDatasetIds = datasetReceived;
         if (datasetReceived == undefined) {
-            selectedDatasetIds = await this.getDatasetIdsFromParams(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived)
+            selectedDatasetIds = await this.getDatasetIdsFromParams(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived, datapointReceived)
         }
         let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
         return setOfData;
@@ -91,7 +92,7 @@ export class DataSetService {
      * @param subcategoryReceived 
      * A subcategory ID: number
      */
-    private async getDatasetIdsFromParams(materialReceived: string[], yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number) {
+    private async getDatasetIdsFromParams(materialReceived: string[], yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number, datapointReceived: string[]) {
         let rawData;
         let paramsEntered = 0;
         let rawDatasetIds = [];
@@ -108,6 +109,16 @@ export class DataSetService {
             rawData = await this.dataQuery.getDatasetIDFromYear(yearReceived);
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
+
+        //for datapoints 
+        if (datapointReceived) {
+            for (let i = 0; i < datapointReceived.length; i++) {
+                paramsEntered++
+                rawData = await this.dataQuery.getDatasetIDFromDatapoint(datapointReceived[i]);
+                rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
+            }
+        }
+
         if (lastNameReceived) {
 
             paramsEntered++

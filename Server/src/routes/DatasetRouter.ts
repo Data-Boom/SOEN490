@@ -56,7 +56,7 @@ router.put('/api/v1/approveDataset', [JWTAuthenticator.verifyJWT, JWTAuthenticat
     dataSetController.createAdminApprovedDatasetRequest(request, response)
 })
 //router for fetching datapoint names
-router.get('/api/v1/datapointNames', (request: Request, response: Response) => {
+router.get('/api/v1/datapointName s', (request: Request, response: Response) => {
     //add controller method for datapoints
 })
 

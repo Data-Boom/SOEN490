@@ -1,3 +1,4 @@
+import { Datapoints } from './../entities/Datapoints';
 import { Connection, getConnection } from "typeorm";
 import { Accounts, selectAccountIdFromEmailQuery } from "../entities/Accounts";
 import { selectAllAuthorsQuery } from "../entities/Authors";
@@ -58,6 +59,13 @@ export class DataQueryModel {
         return yearDatasetData;
     }
 
+    async getDatasetIDFromDatapoint(datapoint: string): Promise<IDatasetIDModel[]> {
+        let datapointDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+            .innerJoin(Datapoints, 'datapoints', 'dataset.id = datapoints.datasetId')
+            .where('datapoints.name = :name', { name: datapoint })
+            .getRawMany();
+        return datapointDatasetData;
+    }
     /**
      * This method will run a query find all the data set IDs based on an entered author's name
      * and return a raw data packet containing that information. 
