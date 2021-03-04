@@ -50,16 +50,21 @@ export const approvedDataset = async (query: IFlaggedDatasetQuery) => {
   }
 }
 
+export const callGetUserFavouriteDatasets = async () => {
+  const result = await get(userSavedDatasetsRoute).json()
+  return result
+}
+
 export const userSaveFavouriteDataset = async (datasetId: number) => {
   const result = await post(userSavedDatasetsRoute + '/' + datasetId).json()
-  if (result == 'Successfully approved new data set') {
+  if (result == 'Favorite data set successfully saved') {
     SnackbarUtils.success(`Dataset ${datasetId} was saved in favourites!`)
   }
 }
 
 export const userDeleteFavouriteDataset = async (datasetId: number) => {
   const result = await _delete(userSavedDatasetsRoute + '/' + datasetId).json()
-  if (result == 'Successfully approved new data set') {
+  if (result == 'User favorite data set successfully removed') {
     SnackbarUtils.success(`Dataset ${datasetId} was removed from favourites!`)
   }
 }
