@@ -1,11 +1,11 @@
+import { Button, Grid } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
+import { callGetUserFavouriteDatasets, userDeleteFavouriteDataset, userSaveFavouriteDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { DataForm } from './DataSection/DataForm'
-import { Grid } from '@material-ui/core'
 import { IFormProps } from '../Forms/IFormikForm'
-import { IconButton } from 'material-ui'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
 import StarBorderIcon from "@material-ui/icons/StarBorder"
@@ -33,7 +33,7 @@ export const DatasetForm = (props: IProps): any => {
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
   const [materials, setMaterials] = useState([])
-  const [savedDataset, setSavedDataset] = useState(false)
+  const [favoriteDataset, setFavoriteDataset] = useState(false)
 
   useEffect(() => {
     const callListCategories = async () => {
@@ -61,9 +61,30 @@ export const DatasetForm = (props: IProps): any => {
     onSubmit(dataset)
   }
 
-  const handleSaveDataset = () => {
-    setSavedDataset(!savedDataset)
+  const getListFavoriteDatasets = async () => {
+    const favoriteList: number[] = await callGetUserFavouriteDatasets()
+    return favoriteList
+  }
 
+  const checkIfFavorite = async () => {
+    const favoritesList = await getListFavoriteDatasets()
+    if (favoritesList.includes(initialDataset.id)) {
+      setFavoriteDataset(true)
+      return true
+    } else {
+      setFavoriteDataset(false)
+      return false
+    }
+  }
+
+  const handlefavoriteDataset = async () => {
+    if (!favoriteDataset) {
+      setFavoriteDataset(true)
+      userSaveFavouriteDataset(initialDataset.id)
+    } else {
+      setFavoriteDataset(false)
+      userDeleteFavouriteDataset(initialDataset.id)
+    }
   }
 
   const meta: IDatasetMeta = initialDataset
@@ -81,8 +102,12 @@ export const DatasetForm = (props: IProps): any => {
     >
       <Form>
         <Grid>
-          {savedDataset ? <StarIcon color="primary" fontSize="large" onClick={handleSaveDataset} /> :
-            <StarBorderIcon color="primary" fontSize="large" onClick={handleSaveDataset} />
+          {initialDataset.id ?
+            <Button onClick={handlefavoriteDataset} > {
+              checkIfFavorite() && favoriteDataset ?
+                <StarIcon color="primary" fontSize="large" /> :
+                <StarBorderIcon color="primary" fontSize="large" />
+            }</Button> : null
           }
         </Grid>
         <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
