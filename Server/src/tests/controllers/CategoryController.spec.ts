@@ -1,42 +1,12 @@
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 import { CategoryController } from '../../controllers/CategoryController';
+import { validUploadData, invalidUpdateData1, validUpdateData1, validUpdateData2 } from '../testData/categoryTestData';
 
 describe('Category Controller', () => {
     let mockRequest;
     let mockResponse;
     let controller: CategoryController;
-    let validUploadData = {
-        "name": "new category",
-        "subcategories": [
-            {
-                "name": "created subcategory"
-            }
-        ]
-    }
-    let invalidUpdateData1 =
-    {
-        "id": 2,
-        "name": "cell size",
-        "subcategories": [
-        ]
-    }
-    let validUpdateData1 =
-    {
-        "id": 3,
-        "name": "category",
-        "subcategories": [{
-            "id": 3,
-            "name": "updated subcategory",
-            "categoryId": 3
-        }]
-    }
-    let validUpdateData2 =
-    {
-        "id": 3,
-        "name": "category",
-        "subcategories": []
-    }
 
     beforeEach(async () => {
         await createConnection();
@@ -74,6 +44,14 @@ describe('Category Controller', () => {
         }
         await controller.createCategory(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Request is invalid. Please enter a category name");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+    test('Invalid Create Category Request; category exists', async () => {
+        mockRequest = {
+            body: { name: "cell size" }
+        }
+        await controller.createCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("This category already exists! Please use a different name");
         expect(mockResponse.status).toBeCalledWith(400);
     });
 
