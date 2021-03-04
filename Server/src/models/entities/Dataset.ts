@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
+import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';

@@ -3,7 +3,6 @@ import { Datapoints } from "./entities/Datapoints";
 import { Dimension } from './entities/Dimension';
 import { IDimensionModel } from './interfaces/IDimension';
 import { Units } from './entities/Units';
-import { getConnection } from "typeorm";
 
 /**
  * This model contains all methods required for obtaining data from the Dimensions

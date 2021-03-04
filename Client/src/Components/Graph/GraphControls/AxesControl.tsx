@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core"
-import { IData, IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
-import { IDimensionModel, IUnitModel } from "../../../../../Server/src/models/interfaces/IDimension"
+import { IDatasetModel, IVariable } from "../../../Models/Datasets/IDatasetModel"
+import { IDimensionModel, IUnitModel } from "../../../Models/Dimensions/IDimensionModel"
 import React, { useEffect, useState } from "react"
 
 import { IAxisStateModel } from '../../../Models/Graph/IGraphStateModel'
@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import SnackbarUtils from "../../Utils/SnackbarUtils"
 import { classStyles } from "../../../appTheme"
+import { getVariableDimensionRepresentation } from "../../../Common/Helpers/DimensionHelpers"
 
 interface IProps {
   datasets: IDatasetModel[],
@@ -29,29 +30,22 @@ const buildVariableList = (datasets: IDatasetModel[]): IVariable[] => {
   return variables
 }
 
-const getVariableDimension = (datasets: IDatasetModel[], variableName: string): number => {
-  const dictionary = {}
-  datasets.forEach(dataset => {
-    const foundVariable = dataset.data.variables.find(variable => variable.name == variableName)
-    if (foundVariable) {
-      const datasetIds = dictionary[foundVariable.dimensionId] || []
-      datasetIds.push(dataset.id)
-      dictionary[foundVariable.dimensionId] = datasetIds
-    }
-  })
+export const getVariableDimensionId = (datasets: IDatasetModel[], variableName: string): number => {
+  const variableDimensions = getVariableDimensionRepresentation(datasets, variableName)
 
-  let index = '';
-  let size = -1;
-  for (let key in dictionary) {
-    if (dictionary[key].length > size) {
+  let index = ''
+  let size = -1
+  for (const key in variableDimensions) {
+    if (variableDimensions[key].length > size) {
       index = key
-      size = dictionary[key].length
+      size = variableDimensions[key].length
     }
   }
+
   const incorrectDatasets = []
-  for (let key in dictionary) {
+  for (const key in variableDimensions) {
     if (key != index) {
-      for (let id in dictionary[key]) {
+      for (const id in variableDimensions[key]) {
         const data = datasets.find(dataset => dataset.id == Number(id))
         incorrectDatasets.push(data.dataset_name)
       }
@@ -114,7 +108,7 @@ export const AxesControl = (props: IProps) => {
   }
 
   const modifyUnits = (variable: string, dimensionId: number): number => {
-    let measurement: IUnitModel;
+    let measurement: IUnitModel
     const targetDimension: IDimensionModel = dimensions.find(dimension => dimension.id == dimensionId)
     if (variable == 'x') {
       setXUnits(targetDimension.units)
@@ -137,10 +131,10 @@ export const AxesControl = (props: IProps) => {
     if (axes[1].variableName == (event.target.value as string) && axes[0].variableName != '') {
       tempVariable = axes[0].variableName
       sameVariable = true
-      yUnit = modifyUnits('y', getVariableDimension(datasets, tempVariable))
+      yUnit = modifyUnits('y', getVariableDimensionId(datasets, tempVariable))
       setYVariableMissing(checkVariablesExist(tempVariable, datasets))
     }
-    xUnit = modifyUnits('x', getVariableDimension(datasets, (event.target.value as string)))
+    xUnit = modifyUnits('x', getVariableDimensionId(datasets, (event.target.value as string)))
     setXVariableMissing(checkVariablesExist(event.target.value as string, datasets))
     if (sameVariable == true) {
       //todo should not do magic updates
@@ -153,10 +147,10 @@ export const AxesControl = (props: IProps) => {
     if (axes[0].variableName == (event.target.value as string) && axes[1].variableName != '') {
       tempVariable = axes[1].variableName
       sameVariable = true
-      xUnit = modifyUnits('x', getVariableDimension(datasets, tempVariable))
+      xUnit = modifyUnits('x', getVariableDimensionId(datasets, tempVariable))
       setXVariableMissing(checkVariablesExist(tempVariable, datasets))
     }
-    yUnit = modifyUnits('y', getVariableDimension(datasets, (event.target.value as string)))
+    yUnit = modifyUnits('y', getVariableDimensionId(datasets, (event.target.value as string)))
     setYVariableMissing(checkVariablesExist(event.target.value as string, datasets))
     //todo should not do magic updates
     if (sameVariable == true) {

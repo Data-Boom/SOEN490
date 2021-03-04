@@ -1,5 +1,5 @@
 import { Connection, getConnection } from "typeorm";
-import { Accounts, selectAccountIdFromEmailQuery } from "../entities/Accounts";
+import { Accounts } from "../entities/Accounts";
 import { selectAllAuthorsQuery } from "../entities/Authors";
 import { Category } from "../entities/Category";
 import { Composition } from "../entities/Composition";
