@@ -8,7 +8,7 @@ import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IDimensionModel } from "../../../../Server/src/models/interfaces/IDimension"
 import { IGraphDatasetModel } from '../../Models/Graph/IGraphDatasetModel'
 import { callGetAllDimensions } from "../../Remote/Endpoints/DimensionsEndpoint"
-import { getGraphDatasets } from "./GraphFunctions"
+import { getGraphDatasets } from "../../Common/Helpers/GraphHelpers"
 import { useParams } from "react-router"
 
 interface IGraphViewParams {
