@@ -51,8 +51,7 @@ export const approvedDataset = async (query: IFlaggedDatasetQuery) => {
 }
 
 export const callGetUserFavouriteDatasets = async (): Promise<number[]> => {
-  const result = await get(userSavedDatasetsRoute).json()
-  return result
+  return await get(userSavedDatasetsRoute).json()
 }
 
 export const userSaveFavouriteDataset = async (datasetId: number) => {
