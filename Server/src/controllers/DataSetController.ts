@@ -156,7 +156,7 @@ export class DataSetController {
     private validateInputData(request: Request) {
         if (request.query.hasOwnProperty('datasetId') || request.query.hasOwnProperty('material')
             || request.query.hasOwnProperty('year') || request.query.hasOwnProperty('categoryId')
-            || request.query.hasOwnProperty('lastName')) { return true }
+            || request.query.hasOwnProperty('lastName') || request.query.hasOwnProperty('datapoints')) { return true }
         else {
             return false
         }
@@ -243,16 +243,6 @@ export class DataSetController {
             let userId: number = request.body.user.account_id
             let requestResponse = await this.dataSetService.userApprovedDataset(datasetId, userId)
             return response.status(requestResponse.statusCode).json(requestResponse.message);
-        } catch (error) {
-            response.status(error.status).json(error.message);
-        }
-    }
-    //controller method for fething datapoints
-    async createRequestForDatapoints(request: Request, response: Response) {
-        try {
-            //  this.dataSetService = new DataSetService();
-            //  let requestResponse = await this.dataSetService.getDatapoints(...)
-            //  return response.status(requestResponse.statusCode).json(requestResponse.message);
         } catch (error) {
             response.status(error.status).json(error.message);
         }
