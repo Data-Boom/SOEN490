@@ -31,8 +31,7 @@ export const validTestData = {
             "details": "Chaos"
         }
     ],
-    "category": "cell size",
-    "subcategory": "width",
+    "subcategory": 1,
     "data_type": "HUGoniot",
     "data": {
         "variables": [
@@ -278,8 +277,7 @@ export const inValidTestData = {
             "details": "Chaos"
         }
     ],
-    "category": "cell size",
-    "subcategory": "width",
+    "subcategory": 1,
     "data_type": "HUGoniot",
     "data": {
         "variables": [
