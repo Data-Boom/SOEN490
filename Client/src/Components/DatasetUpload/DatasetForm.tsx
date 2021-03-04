@@ -87,6 +87,17 @@ export const DatasetForm = (props: IProps): any => {
     }
   }
 
+  const constructFavoriteButton = () => {
+    return (<Button onClick={handlefavoriteDataset} > {
+      checkIfFavorite() && favoriteDataset ?
+        <Tooltip title="Remove dataset from favorites">
+          <StarIcon color="primary" fontSize="large" /></Tooltip> :
+        <Tooltip title="Add dataset to favorites">
+          <StarBorderIcon color="primary" fontSize="large" /></Tooltip>
+    }</Button>
+    )
+  }
+
   const meta: IDatasetMeta = initialDataset
   const reference: IReference = initialDataset.reference
   const data: IData = initialDataset.data
@@ -103,13 +114,7 @@ export const DatasetForm = (props: IProps): any => {
       <Form>
         <Grid>
           {initialDataset.id ?
-            <Button onClick={handlefavoriteDataset} > {
-              checkIfFavorite() && favoriteDataset ?
-                <Tooltip title="Remove dataset from favorites">
-                  <StarIcon color="primary" fontSize="large" /></Tooltip> :
-                <Tooltip title="Add dataset to favorites">
-                  <StarBorderIcon color="primary" fontSize="large" /></Tooltip>
-            }</Button> : null
+            constructFavoriteButton() : null
           }
         </Grid>
         <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
