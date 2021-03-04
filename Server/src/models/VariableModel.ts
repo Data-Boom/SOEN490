@@ -8,7 +8,7 @@ export class VariableModel {
   * This method will return all existing variables or datapoints in the format of IVariableModel
   */
   async getAllVariables(): Promise<IVariableNameModel[]> {
-    let variables = await getManager()
+    let variables = await getConnection()
       .createQueryBuilder(Datapoints, 'Datapoints')
       .select('name')
       .distinct(true)
