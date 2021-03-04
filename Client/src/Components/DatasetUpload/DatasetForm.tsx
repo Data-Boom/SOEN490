@@ -1,4 +1,4 @@
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid, Tooltip } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
@@ -105,8 +105,10 @@ export const DatasetForm = (props: IProps): any => {
           {initialDataset.id ?
             <Button onClick={handlefavoriteDataset} > {
               checkIfFavorite() && favoriteDataset ?
-                <StarIcon color="primary" fontSize="large" /> :
-                <StarBorderIcon color="primary" fontSize="large" />
+                <Tooltip title="Remove dataset from favorites">
+                  <StarIcon color="primary" fontSize="large" /></Tooltip> :
+                <Tooltip title="Add dataset to favorites">
+                  <StarBorderIcon color="primary" fontSize="large" /></Tooltip>
             }</Button> : null
           }
         </Grid>
