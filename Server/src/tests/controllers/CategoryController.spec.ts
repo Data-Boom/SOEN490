@@ -14,6 +14,29 @@ describe('Category Controller', () => {
             }
         ]
     }
+    let invalidUpdateData1 =
+    {
+        "id": 2,
+        "name": "cell size",
+        "subcategories": [
+        ]
+    }
+    let validUpdateData1 =
+    {
+        "id": 3,
+        "name": "category",
+        "subcategories": [{
+            "id": 3,
+            "name": "updated subcategory",
+            "categoryId": 3
+        }]
+    }
+    let validUpdateData2 =
+    {
+        "id": 3,
+        "name": "category",
+        "subcategories": []
+    }
 
     beforeEach(async () => {
         await createConnection();
@@ -71,4 +94,59 @@ describe('Category Controller', () => {
         expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing attributes");
         expect(mockResponse.status).toBeCalledWith(400);
     });
+
+    test('Invalid Update Category Request; delete in-use subcategory', async () => {
+        mockRequest = {
+            body: invalidUpdateData1
+        }
+        await controller.updateCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Can't remove a subcategory as it in use by one or more data sets");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Valid Update Category Request; no subcategory deletion', async () => {
+        mockRequest = {
+            body: validUpdateData1
+        }
+        await controller.updateCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(validUpdateData1);
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Valid Update Category Request; delete a subcategory', async () => {
+        mockRequest = {
+            body: validUpdateData2
+        }
+        await controller.updateCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith(validUpdateData2);
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Valid Delete Category Request', async () => {
+        mockRequest = {
+            params: { "id": 4 }
+        }
+        await controller.deleteCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Success");
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Valid Delete Category Request; category ID does not exist', async () => {
+        mockRequest = {
+            params: { "id": 4 }
+        }
+        await controller.deleteCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Success");
+        expect(mockResponse.status).toBeCalledWith(200);
+    });
+
+    test('Invalid Delete Category Request', async () => {
+        mockRequest = {
+            params: { "id": 1 }
+        }
+        await controller.deleteCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Can't remove a category as it in use by one or more data sets");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
 })
