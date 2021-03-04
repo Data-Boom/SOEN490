@@ -48,7 +48,7 @@ export class CategoryModel {
     }
 
     async updateCategory(categoryInfo: ICategory): Promise<ICategory> {
-        let newCategory: ICategory
+        let categoryReturn: ICategory
         let subcategoryIds: number[] = categoryInfo.subcategories.map(value => value.id);
         let foundSubcategories = await Subcategory.find({ where: { categoryId: categoryInfo.id } });
         let subcategoryIdsToDelete: number[] = []
@@ -69,14 +69,14 @@ export class CategoryModel {
         let subcategories = Subcategory.convertToSubcategory(categoryInfo.subcategories, categoryInfo.id)
         let savedSubcategories = await Subcategory.save(subcategories);
         let newSubcategories = Subcategory.convertToModel(savedSubcategories);
-        newCategory = {
+        categoryReturn = {
             id: categoryInfo.id,
             name: categoryInfo.name,
             subcategories: newSubcategories
         }
         let category = Category.convertToCategory(categoryInfo);
         await Category.save(category);
-        return newCategory;
+        return categoryReturn;
     }
 
     private selectOneUseOfSubcategoriesQuery = (idArray: number[]) =>

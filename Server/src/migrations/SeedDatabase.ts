@@ -232,6 +232,16 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     category.name = "cell size";
     await connection.manager.save(category);
 
+    let categoryToEdit = new Category();
+    categoryToEdit.id = 3;
+    categoryToEdit.name = "category";
+    await connection.manager.save(categoryToEdit);
+
+    let categoryToDelete = new Category();
+    categoryToDelete.id = 4;
+    categoryToDelete.name = "delete this category";
+    await connection.manager.save(categoryToDelete);
+
     let subcategory1 = new Subcategory();
     subcategory1.id = 1;
     subcategory1.name = "None Entered";
@@ -243,6 +253,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     subcategory.name = "width";
     subcategory.categoryId = 2;
     await connection.manager.save(subcategory);
+
+    let subcategoryToEdit = new Subcategory();
+    subcategoryToEdit.id = 3;
+    subcategoryToEdit.name = "subcategory";
+    subcategoryToEdit.categoryId = 3;
+    await connection.manager.save(subcategoryToEdit);
 
     let datasetdatatypeNone = new Datasetdatatype();
     datasetdatatypeNone.id;
