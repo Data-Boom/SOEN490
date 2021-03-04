@@ -53,4 +53,22 @@ describe('Category Controller', () => {
         expect(mockResponse.json).toBeCalledWith("Request is invalid. Please enter a category name");
         expect(mockResponse.status).toBeCalledWith(400);
     });
+
+    test('Invalid Update Category Request; no id', async () => {
+        mockRequest = {
+            body: { "name": "name only" }
+        }
+        await controller.updateCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing attributes");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Invalid Update Category Request; no name', async () => {
+        mockRequest = {
+            body: { "id": 1 }
+        }
+        await controller.updateCategory(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing attributes");
+        expect(mockResponse.status).toBeCalledWith(400);
+    });
 })
