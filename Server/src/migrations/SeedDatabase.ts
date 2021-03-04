@@ -28,6 +28,8 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let authenticationService = new AuthenticationService();
 
     //TODO apply to DB directly
+    await queryRunner.query('ALTER TABLE dataset DROP FOREIGN KEY FK_2b2dac06a80879ed471a6c365f6');
+    await queryRunner.query('ALTER TABLE dataset DROP COLUMN categoryId');
     await queryRunner.query('ALTER TABLE subcategory ADD COLUMN categoryId int(11) NOT NULL DEFAULT 1 AFTER name');
     await queryRunner.query('ALTER TABLE subcategory ADD CONSTRAINT FK_3fc84b9483bdd736f728dbf95b2 FOREIGN KEY (categoryId) REFERENCES category(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
 
@@ -726,6 +728,8 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     //TODO apply to DB directly
     await queryRunner.query('ALTER TABLE subcategory DROP FOREIGN KEY FK_3fc84b9483bdd736f728dbf95b2');
     await queryRunner.query('ALTER TABLE subcategory DROP COLUMN categoryId');
+    await queryRunner.query('ALTER TABLE dataset ADD COLUMN categoryId int(11) NOT NULL DEFAULT 1 AFTER publicationId');
+    await queryRunner.query('ALTER TABLE dataset ADD CONSTRAINT FK_2b2dac06a80879ed471a6c365f6 FOREIGN KEY (categoryId) REFERENCES category(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
   }
 
 }
