@@ -3,6 +3,8 @@ import * as Factory from "factory.ts"
 import { IAuthor, IContent, IData, IDatasetModel, IMaterial, IReference, IVariable } from "../../../src/Models/Datasets/IDatasetModel"
 import { each, eachRandomNumber, eachRandomWord, eachUniqueId, getRandomNumbers } from "../FactoryHelpers"
 
+import { random } from "faker"
+
 export const AuthorFactory = Factory.Sync.makeFactory<IAuthor>({
   firstName: eachRandomWord(),
   lastName: eachRandomWord(),
@@ -12,7 +14,7 @@ export const AuthorFactory = Factory.Sync.makeFactory<IAuthor>({
 export const ReferenceFactory = Factory.Sync.makeFactory<IReference>({
   authors: each(() => AuthorFactory.buildList(3)),
   issue: eachRandomNumber(),
-  pages: `${eachRandomNumber()}-${eachRandomNumber()}`,
+  pages: Factory.Sync.each(() => `${random.number()}-${random.number()}`),
   publisher: eachRandomWord(),
   title: eachRandomWord(),
   type: eachRandomWord(),

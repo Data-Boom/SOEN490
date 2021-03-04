@@ -27,17 +27,6 @@ describe('getVariableDimensionRepresentation', () => {
   })
 })
 
-describe('getVariableDimensionId', () => {
-  it('returns right dimension when there is only one choice', () => {
-    const { dimensions, validVariables, datasets } = getTestData()
-
-    const expectedDictionary = {}
-    expectedDictionary[validVariables[0].dimensionId] = datasets.map(dataset => dataset.id)
-
-    expect(getVariableDimensionRepresentation(datasets, validVariables[0].name)).toStrictEqual(expectedDictionary)
-  })
-})
-
 const getTestData = () => {
   const dimensions = DimensionFactory.buildList(5)
   const datasets = DatasetFactory.buildList(10)

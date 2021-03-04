@@ -7,15 +7,6 @@
       "es6",
       "dom"
     ],
-    "plugins": [
-      {
-        "transform": "ts-auto-mock/transformer",
-        "cacheBetweenTests": false,
-        "features": [
-          "random"
-        ]
-      }
-    ],
     "skipLibCheck": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
