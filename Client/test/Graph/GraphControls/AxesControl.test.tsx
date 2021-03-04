@@ -9,6 +9,29 @@ describe('getVariableDimensionRepresentation', () => {
     const { dimensions, validVariables, datasets } = getTestData()
 
     const expectedDictionary = {}
+    expectedDictionary[datasets[0].data.variables[0].dimensionId] = datasets.map(dataset => dataset.id)
+
+    expect(getVariableDimensionRepresentation(datasets, datasets[0].data.variables[0].name)).toStrictEqual(expectedDictionary)
+  })
+
+  it('returns 2 dimensions 9 and 1 datasets each', () => {
+    const { dimensions, validVariables, datasets } = getTestData()
+
+    datasets[1].data.variables[0].dimensionId = 1234
+
+    const expectedDictionary = {}
+    expectedDictionary[datasets[0].data.variables[0].dimensionId] = datasets.filter(dataset => dataset.id != datasets[1].id).map(dataset => dataset.id)
+    expectedDictionary[datasets[1].data.variables[0].dimensionId] = [datasets[1].id]
+
+    expect(getVariableDimensionRepresentation(datasets, datasets[0].data.variables[0].name)).toStrictEqual(expectedDictionary)
+  })
+})
+
+describe('getVariableDimensionId', () => {
+  it('returns right dimension when there is only one choice', () => {
+    const { dimensions, validVariables, datasets } = getTestData()
+
+    const expectedDictionary = {}
     expectedDictionary[validVariables[0].dimensionId] = datasets.map(dataset => dataset.id)
 
     expect(getVariableDimensionRepresentation(datasets, validVariables[0].name)).toStrictEqual(expectedDictionary)
@@ -26,7 +49,7 @@ const getTestData = () => {
     variable.unitId = randomDimension.units[randomIndex(randomDimension.units.length)].id
   })
 
-  datasets.forEach(dataset => dataset.data.variables = [...validVariables])
+  datasets.forEach(dataset => dataset.data.variables = JSON.parse(JSON.stringify(validVariables)))
 
   return { dimensions, validVariables, datasets }
 }

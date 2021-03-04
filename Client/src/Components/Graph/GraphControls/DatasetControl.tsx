@@ -1,14 +1,13 @@
 import { Button, Grid } from '@material-ui/core'
-import React, { useState } from 'react'
 
 import { DatasetList } from '../DatasetList/DatasetList'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
+import React from 'react'
 import { SearchViewModal } from '../../Search/SearchViewModal'
-import { toDatasetRows } from '../GraphFunctions'
+import { toDatasetRows } from '../../../Common/Helpers/GraphHelpers'
 
-//todo either refactor or delete this file
 interface IProps {
   datasetStates: IGraphDatasetState[],
   completeDatasets: IDatasetModel[],

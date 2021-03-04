@@ -41,6 +41,7 @@ export const getVariableDimensionId = (datasets: IDatasetModel[], variableName: 
       size = variableDimensions[key].length
     }
   }
+
   const incorrectDatasets = []
   for (const key in variableDimensions) {
     if (key != index) {
