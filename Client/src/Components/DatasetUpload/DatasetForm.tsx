@@ -61,14 +61,9 @@ export const DatasetForm = (props: IProps): any => {
     onSubmit(dataset)
   }
 
-  const getListFavoriteDatasets = async () => {
-    const favoriteList: number[] = await callGetUserFavouriteDatasets()
-    return favoriteList
-  }
-
   const checkIfFavorite = async () => {
-    const favoritesList = await getListFavoriteDatasets()
-    if (favoritesList.includes(initialDataset.id)) {
+    const isFavorite = (await callGetUserFavouriteDatasets()).includes(initialDataset.id)
+    if (isFavorite) {
       setFavoriteDataset(true)
       return true
     } else {
