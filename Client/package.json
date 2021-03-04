@@ -55,7 +55,7 @@
     "start": "react-scripts start",
     "ui": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:4000",
