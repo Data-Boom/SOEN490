@@ -22,18 +22,6 @@ describe('Fetch All Categories Materials Controller ', () => {
         await getConnection().close();
     });
 
-    test('Valid Get All Categories Request; expect at least one entry in return', async () => {
-        await controller.createRequestForAllCategories(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json[0]).not.toBeUndefined;
-        expect(mockResponse.status).toBeCalledWith(200);
-    });
-
-    test('Valid Get All Subategories Request; expect at least one entry in return', async () => {
-        await controller.createRequestForAllSubcategories(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json[0]).not.toBeUndefined;
-        expect(mockResponse.status).toBeCalledWith(200);
-    });
-
     test('Valid Get All Materials Request; expect at least one entry in return', async () => {
         await controller.createRequestForAllMaterials(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json[0]).not.toBeUndefined;

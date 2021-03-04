@@ -46,13 +46,6 @@ export class Dataset {
     publication?: Publications
 
     @Column({ default: 1 })
-    categoryId: number
-
-    @ManyToOne(type => Category)
-    @JoinColumn()
-    category?: Category
-
-    @Column({ default: 1 })
     subcategoryId: number
 
     @ManyToOne(type => Subcategory)
@@ -120,8 +113,8 @@ export const selectDatasetsQuery = (connection: Connection) =>
         .addSelect('subcategory.name', 'subcategory')
         .addSelect('dataset.comments', 'comments')
         .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
-        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
 
 export const selectDatasetIdsBasedOnApprovalStatusQuery = (connection: Connection, isApproved: number) =>
     connection.createQueryBuilder(Dataset, 'dataset')

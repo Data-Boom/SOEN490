@@ -105,7 +105,8 @@ export class DataQueryModel {
      */
     async getDatasetIDFromCategory(category: number): Promise<IDatasetIDModel[]> {
         let categoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-            .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+            .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+            .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
             .where('category.id = :categoryId', { categoryId: category })
             .getRawMany();
         return categoryDatasetData;
@@ -120,12 +121,10 @@ export class DataQueryModel {
      * @param subcategory 
      * A subcategory ID: number
      */
-    async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetIDModel[]> {
+    async getDatasetIDFromSubcategory(subcategory: number): Promise<IDatasetIDModel[]> {
         let subcategoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-            .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
             .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-            .where('category.id = :categoryId', { categoryId: category })
-            .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+            .where('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
             .getRawMany();
         return subcategoryDatasetData;
     }

@@ -118,14 +118,14 @@ export class DataSetService {
             }
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
-        if (categoryReceived) {
+        if (subcategoryReceived) {
             paramsEntered++
-            if (subcategoryReceived) {
-                rawData = await this.dataQuery.getDatasetIDFromSubcategory(categoryReceived, subcategoryReceived);
-            }
-            else {
-                rawData = await this.dataQuery.getDatasetIDFromCategory(categoryReceived);
-            }
+            rawData = await this.dataQuery.getDatasetIDFromSubcategory(subcategoryReceived);
+            rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
+        }
+        else if (categoryReceived) {
+            paramsEntered++
+            rawData = await this.dataQuery.getDatasetIDFromCategory(categoryReceived);
             rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
         }
         let selectedDatasetIds = await this.selectDatasetIds(paramsEntered, rawDatasetIds)

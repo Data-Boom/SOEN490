@@ -65,8 +65,7 @@ export const validationSchema = Yup.object().shape({
     material: Yup.array().of(referenceMaterialSchema),
     data_type: Yup.string().strict().required(requiredMessage('Dataset Type')),
     data: dataValidationSchema,
-    category: Yup.string().strict(),
-    subcategory: Yup.string().strict()
+    subcategory: Yup.number().nullable().integer(integerMessage('Subcategory [ID]'))
 })
 
 export const passwordSchema = Yup.string()
