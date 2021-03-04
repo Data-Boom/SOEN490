@@ -6,7 +6,7 @@ import { ISearchDatasetsFormModel } from "../../Components/Search/ISearchDataset
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 
 const userUploadedDatasetsRoute = '/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets'
-const userSavedDatasetsRoute = '/api/v1/dataset/userSavedDatsets/:userSavedDatsets'
+const userSavedDatasetsRoute = '/api/v1/favoriteDatasets'
 const dataUploadRoute = '/api/v1/dataUpload'
 const datasetRoute = '/api/v1/dataset'
 const flagDatasetRoute = '/api/v1/flagDataSet'
@@ -49,6 +49,14 @@ export const approvedDataset = async (query: IFlaggedDatasetQuery) => {
     SnackbarUtils.success(`Dataset ${query.datasetId} was approved!`)
   }
 }
+
+export const userSaveDataset = async (datasetId: number) => {
+  const result = await put(userSavedDatasetsRoute).withBody(datasetId).json()
+  if (result == 'Successfully approved new data set') {
+    SnackbarUtils.success(`Dataset ${datasetId} was saved!`)
+  }
+}
+
 export const submitEditedDataset = async (updatedDataset: IApprovedDatasetModel) => {
   const result = await put(submitEditedDatasetRoute + '/' + updatedDataset.id).withBody(updatedDataset).json()
   if (result == 'Dataset Updated!') {
