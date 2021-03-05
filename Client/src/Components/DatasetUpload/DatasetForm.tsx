@@ -83,13 +83,14 @@ export const DatasetForm = (props: IProps): any => {
   }
 
   const constructFavoriteButton = () => {
-    return (<Button onClick={handlefavoriteDataset} > {
-      checkIfFavorite() && favoriteDataset ?
-        <Tooltip title="Remove dataset from favorites">
-          <StarIcon color="primary" fontSize="large" /></Tooltip> :
-        <Tooltip title="Add dataset to favorites">
-          <StarBorderIcon color="primary" fontSize="large" /></Tooltip>
-    }</Button>
+    return (
+      <Button onClick={handlefavoriteDataset} > {
+        checkIfFavorite() && favoriteDataset ?
+          <Tooltip title="Remove dataset from favorites">
+            <StarIcon color="primary" fontSize="large" /></Tooltip> :
+          <Tooltip title="Add dataset to favorites">
+            <StarBorderIcon color="primary" fontSize="large" /></Tooltip>
+      }</Button>
     )
   }
 
