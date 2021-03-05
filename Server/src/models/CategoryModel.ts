@@ -41,8 +41,7 @@ export class CategoryModel {
         let subcategories = await Subcategory.find();
         return categories.map(category => {
             let filteredSubcategories = subcategories.filter(value => value.categoryId == category.id)
-            let categoryModel = Category.convertToModel(category, filteredSubcategories);
-            return categoryModel;
+            return Category.convertToModel(category, filteredSubcategories);
         })
     }
 

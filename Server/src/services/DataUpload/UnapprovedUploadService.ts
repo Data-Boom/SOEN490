@@ -66,7 +66,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
     protected async insertDataset(uploadModel: DataUploadModel, arrayOfDatasetInfo: any): Promise<number> {
         try {
-            return uploadModel.insertFullDataSet(arrayOfDatasetInfo)
+            return await uploadModel.insertFullDataSet(arrayOfDatasetInfo)
         } catch (err) {
             console.log('error receiving datasetID....request rejected');
         }
