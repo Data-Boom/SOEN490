@@ -5,7 +5,7 @@ import { DatasetCommonModel } from "../models/DatasetModels/DatasetCommonModel";
 import { DatasetDeleteModel } from "../models/DatasetModels/DatasetDeleteModel";
 import { DataQueryModel } from "../models/DatasetModels/DatasetQueryModel";
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
-import { IPublicationModel, IDatasetInfoModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel, IContent, IData, IVariable } from "../models/interfaces/DatasetModelInterface";
+import { IPublicationModel, IAuthorModel, IMaterialModel, IDataPointModel, IClientDatasetModel, IDatasetIDModel, IApprovalDatasetModel, IContent, IData, IVariable } from "../models/interfaces/DatasetModelInterface";
 
 export class DataSetService {
     private dataQuery: DataQueryModel;

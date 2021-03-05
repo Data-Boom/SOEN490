@@ -14,6 +14,7 @@ import { GraphsRouter } from '../routes/GraphsRouter';
 import { DataSetRouter } from '../routes/DatasetRouter';
 import { AdminManagementRouter } from '../routes/AdminManagementRouter';
 import { dimensionsRouter } from '../routes/DimensionsRouter';
+import { variableRouter } from '../routes/VariableRouter';
 
 const cookieParser = require('cookie-parser');
 
@@ -72,6 +73,7 @@ export class LoadStartupProcess {
     this.app.use('/', GraphsRouter)
     this.app.use('/', AdminManagementRouter)
     this.app.use('/', dimensionsRouter)
+    this.app.use('/', variableRouter)
 
     this.config = {
       "type": process.env.DB_TYPE,

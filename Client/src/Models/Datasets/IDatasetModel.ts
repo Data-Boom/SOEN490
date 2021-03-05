@@ -1,4 +1,3 @@
-
 export interface IAuthor {
   firstName: string,
   middleName: string,
@@ -91,7 +90,6 @@ export const defaultDatasetModel: IDatasetModel = {
   subcategory: '',
   id: undefined
 }
-
 
 export const tempData: IData = {
   "variables": [

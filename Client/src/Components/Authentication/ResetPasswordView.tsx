@@ -1,4 +1,4 @@
-import { FastField, Field, Form, Formik } from 'formik'
+import { FastField, Form, Formik } from 'formik'
 import { IResetPasswordModel, defaultResetPasswordModel } from '../../Models/Authentication/ISignUpModel'
 
 import Avatar from '@material-ui/core/Avatar'
