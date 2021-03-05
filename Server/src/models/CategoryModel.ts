@@ -18,7 +18,7 @@ export class CategoryModel {
      * @param name
      * Category name: string
      */
-    async verifyIfNameExists(name: string): Promise<any> {
+    async verifyIfCategoryExists(name: string): Promise<any> {
         return await Category.findOne({ where: { name: name } })
     }
 

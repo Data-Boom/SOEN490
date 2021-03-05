@@ -60,7 +60,7 @@ describe('Category Controller', () => {
             body: { "name": "name only" }
         }
         await controller.updateCategory(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing attributes");
+        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing category name and/or category id");
         expect(mockResponse.status).toBeCalledWith(400);
     });
 
@@ -69,7 +69,7 @@ describe('Category Controller', () => {
             body: { "id": 1 }
         }
         await controller.updateCategory(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing attributes");
+        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing category name and/or category id");
         expect(mockResponse.status).toBeCalledWith(400);
     });
 
