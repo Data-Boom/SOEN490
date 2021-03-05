@@ -9,8 +9,6 @@ import { ICategory } from '../models/interfaces/CategoryInterface';
  */
 export class CategoryController {
     private categoryService: CategoryService;
-    constructor() {
-    }
 
     async createCategory(request: Request, response: Response): Promise<Response> {
         let invalidResponse = this.validateCreateCategoryRequest(request);

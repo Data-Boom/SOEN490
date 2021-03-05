@@ -19,7 +19,7 @@ export class CategoryModel {
      * Category name: string
      */
     async verifyIfCategoryExists(name: string): Promise<any> {
-        return await Category.findOne({ where: { name: name } })
+        return Category.findOne({ where: { name: name } })
     }
 
     async insertCategory(categoryInfo: ICategory): Promise<ICategory> {
@@ -39,12 +39,11 @@ export class CategoryModel {
     async getAllCategories(): Promise<ICategory[]> {
         let categories = await Category.find();
         let subcategories = await Subcategory.find();
-        let categoryModels = categories.map(category => {
+        return categories.map(category => {
             let filteredSubcategories = subcategories.filter(value => value.categoryId == category.id)
             let categoryModel = Category.convertToModel(category, filteredSubcategories);
             return categoryModel;
         })
-        return categoryModels;
     }
 
     async updateCategory(categoryInfo: ICategory): Promise<ICategory> {

@@ -19,7 +19,6 @@ export class Subcategory extends BaseEntity {
     @Column({ default: 1 })
     categoryId: number
 
-    // FK_3fc84b9483bdd736f728dbf95b2
     /*
     * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
     * is storing a Foreign Key reference to an entry in the Category table.

@@ -109,9 +109,9 @@ describe('Category Controller', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    test('Valid Delete Category Request; category ID does not exist', async () => {
+    test('Valid Delete Category Request; category does not exist', async () => {
         mockRequest = {
-            params: { "id": 4 }
+            params: { "id": 0 }
         }
         await controller.deleteCategory(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Success");

@@ -348,16 +348,16 @@ export class DataUploadModel {
         return datasetdatatype.id;
     }
 
-    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, subcategoryID: number, allMaterials: any[], dataSetComments: string, userId: number): Promise<number> {
+    async insertFullDataSet(arrayOfDatasetInfo: any[]): Promise<number> {
         let dataset = new Dataset();
         dataset.id;
-        dataset.name = dataSetName;
-        dataset.datatypeId = dataSetDataTypeID;
-        dataset.publicationId = publicationID;
-        dataset.subcategoryId = subcategoryID;
-        dataset.materials = allMaterials;
-        dataset.comments = dataSetComments;
-        dataset.uploaderId = userId;
+        dataset.name = arrayOfDatasetInfo[0];
+        dataset.datatypeId = arrayOfDatasetInfo[1];
+        dataset.publicationId = arrayOfDatasetInfo[2];
+        dataset.subcategoryId = arrayOfDatasetInfo[3];
+        dataset.materials = arrayOfDatasetInfo[4];
+        dataset.comments = arrayOfDatasetInfo[5];
+        dataset.uploaderId = arrayOfDatasetInfo[6];
         await this.connection.manager.save(dataset);
         return dataset.id;
     }
