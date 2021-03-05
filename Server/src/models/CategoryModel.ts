@@ -111,4 +111,12 @@ export class CategoryModel {
             .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
             .where('category.id = :id', { id: id })
             .getRawOne()
+
+    findCategoryIDFromSubcategoryID(id: number): Promise<any> {
+        return this.connection.createQueryBuilder(Subcategory, 'subcategory')
+            .select('category.id', 'id')
+            .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
+            .where('subcategory.id = :id', { id: id })
+            .getRawOne()
+    }
 }
