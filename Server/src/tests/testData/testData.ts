@@ -563,8 +563,8 @@ export const oneFavoriteDataset = [
         id: 2,
         dataset_name: "Someone's Favorite",
         data_type: 'Not Specified',
-        category: 'None Entered',
-        subcategory: 'None Entered',
+        category: 1,
+        subcategory: 1,
         material: [],
         data: {
             comments: "",
