@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-
 import { DataSetService } from '../services/DataSetService';
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
@@ -157,7 +156,7 @@ export class DataSetController {
   private validateInputData(request: Request) {
     if (request.query.hasOwnProperty('datasetId') || request.query.hasOwnProperty('material')
       || request.query.hasOwnProperty('year') || request.query.hasOwnProperty('categoryId')
-      || request.query.hasOwnProperty('lastName')) { return true }
+      || request.query.hasOwnProperty('subcategoryId') || request.query.hasOwnProperty('lastName')) { return true }
     else {
       return false
     }

@@ -50,8 +50,8 @@ describe('data query model test', () => {
         done()
     });
 
-    test('Input a category ID and subcategory ID of 2, expect to find at least one dataset id', async done => {
-        let id = await dataQueryModel.getDatasetIDFromSubcategory(2, 2);
+    test('Input a subcategory ID of 2, expect to find at least one dataset id', async done => {
+        let id = await dataQueryModel.getDatasetIDFromSubcategory(2);
         expect(id[0].dataset_id).not.toBeUndefined()
         done()
     });

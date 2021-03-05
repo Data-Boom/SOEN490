@@ -9,16 +9,6 @@ import { fetchAllCategoriesMaterialsController } from '../controllers/fetchAllCa
 
 let router = Router();
 
-router.get('/category$', (request: Request, response: Response) => {
-    let fetchAllCategoriesMaterialsControllerObject = new fetchAllCategoriesMaterialsController();
-    fetchAllCategoriesMaterialsControllerObject.createRequestForAllCategories(request, response);
-});
-
-router.get('/subcategory$', (request: Request, response: Response) => {
-    let fetchAllCategoriesMaterialsControllerObject = new fetchAllCategoriesMaterialsController();
-    fetchAllCategoriesMaterialsControllerObject.createRequestForAllSubcategories(request, response);
-});
-
 router.get('/material$', (request: Request, response: Response) => {
     let fetchAllCategoriesMaterialsControllerObject = new fetchAllCategoriesMaterialsController();
     fetchAllCategoriesMaterialsControllerObject.createRequestForAllMaterials(request, response);
