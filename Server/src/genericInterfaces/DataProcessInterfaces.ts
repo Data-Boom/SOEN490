@@ -55,8 +55,8 @@ export interface IDataSetModel {
     reference: IReference;
     dataset_name: string;
     material: IMaterial[];
-    category: number;
-    subcategory: number;
+    category: string;
+    subcategory: string;
     data_type: string;
     data: IData;
 }

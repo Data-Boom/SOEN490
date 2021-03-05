@@ -24,13 +24,14 @@ export class JsonFileExtractor extends AbstractFileExtractor {
     async parseFile(): Promise<Partial<IDataSetModel>> {
         try {
             let parsedFileData: Partial<IDataSetModel> = JSON.parse(fileSystem.readFileSync(this.filePath))
-            let categoryID = await this.categoryModel.findCategoryIDFromSubcategoryID(parsedFileData.subcategory)
-            if (!categoryID) {
+            let categoryInfo = await this.categoryModel.findCategoryIDsFromNames(parsedFileData.category, parsedFileData.subcategory)
+            if (!categoryInfo) {
                 parsedFileData.category = null
                 parsedFileData.subcategory = null
             }
             else {
-                parsedFileData.category = categoryID.id
+                parsedFileData.category = categoryInfo.category_id
+                parsedFileData.subcategory = categoryInfo.subcategory_id
             }
             return parsedFileData
         } catch (err) {
