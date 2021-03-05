@@ -1,5 +1,5 @@
 import { IDatasetModel, IVariable } from "../../Models/Datasets/IDatasetModel"
-import { IGraphDatasetModel, IGraphDatasetState, IGraphPoint, newGraphDataset, toGraphDatasetState } from "../../Models/Graph/IGraphDatasetModel"
+import { IGraphDatasetModel, IGraphDatasetState, IGraphPoint } from "../../Models/Graph/IGraphDatasetModel"
 
 import { IDatasetRowModel } from "../../Models/Datasets/IDatasetRowModel"
 import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"

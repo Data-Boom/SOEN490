@@ -124,7 +124,7 @@ describe('data set service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].category).toEqual("cell size");
+    expect(arrayOfData[0].category).toEqual(2);
     done()
   });
 
@@ -139,7 +139,7 @@ describe('data set service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = 2;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].subcategory).toEqual("width");
+    expect(arrayOfData[0].subcategory).toEqual(2);
     done()
   });
 
@@ -157,21 +157,6 @@ describe('data set service test', () => {
     expect(arrayOfData[0].reference.year).toEqual(1980);
     expect(arrayOfData[0].material[0])
       .toEqual(expect.objectContaining({ composition: "C" }));
-    done()
-  });
-
-  test('Feeds subcategory of 2 and expects to see an empty array returned', async done => {
-    let testData: IDataRequestModel;
-    testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = 2;
-    let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData).toEqual(expect.arrayContaining([]));
     done()
   });
 
@@ -199,8 +184,7 @@ describe('data set service test', () => {
 
   test('Feeds an account ID of 1 and expects to see a favorited data set IDs of 2 returned', async done => {
     let response = await retrieveDataObject.getUserFavoriteDatasets(1)
-    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
-    expect(arrayOfData[0].id).toEqual(2);
+    expect(response.message).toEqual([2])
     done()
   });
 

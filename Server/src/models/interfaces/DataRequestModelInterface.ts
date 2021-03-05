@@ -6,5 +6,5 @@ export interface IDataRequestModel {
     year: number
     categoryId: number
     subcategoryId: number
-    datapoints: string[]
+    datapoint: string[]
 }

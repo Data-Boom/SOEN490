@@ -1,6 +1,6 @@
 import { Datapoints } from './../entities/Datapoints';
 import { Connection, getConnection } from "typeorm";
-import { Accounts, selectAccountIdFromEmailQuery } from "../entities/Accounts";
+import { Accounts } from "../entities/Accounts";
 import { selectAllAuthorsQuery } from "../entities/Authors";
 import { Category } from "../entities/Category";
 import { Composition } from "../entities/Composition";
@@ -36,12 +36,11 @@ export class DataQueryModel {
             compositionId = compositionIdRaw[0].id;
         }
 
-        let materialDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin('dataset.materials', 'material')
             .where("(material.compositionId = :compositionRef OR material.details = :materialDetails)")
             .setParameters({ compositionRef: compositionId, materialDetails: material })
             .getRawMany();
-        return materialDatasetData;
     }
 
     /**
@@ -52,19 +51,17 @@ export class DataQueryModel {
      * Publication year: number
      */
     async getDatasetIDFromYear(year: number): Promise<IDatasetIDModel[]> {
-        let yearDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .where('publication.year = :yearRef', { yearRef: year })
             .getRawMany();
-        return yearDatasetData;
     }
 
     async getDatasetIDFromDatapoint(datapoint: string): Promise<IDatasetIDModel[]> {
-        let datapointDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin(Datapoints, 'datapoints', 'dataset.id = datapoints.datasetId')
             .where('datapoints.name = :name', { name: datapoint })
             .getRawMany();
-        return datapointDatasetData;
     }
     /**
      * This method will run a query find all the data set IDs based on an entered author's name
@@ -78,14 +75,13 @@ export class DataQueryModel {
      * The last name of an author: string
      */
     async getDatasetIDFromAuthor(firstName: string, lastName: string): Promise<IDatasetIDModel[]> {
-        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where("(author.lastName = :firstNameRef OR author.lastName = :lastNameRef)")
             .andWhere("(author.firstName = :firstNameRef OR author.firstName = :lastNameRef)")
             .setParameters({ firstNameRef: firstName, lastNameRef: lastName })
             .getRawMany();
-        return authorDatasetData;
     }
 
     /**
@@ -96,12 +92,11 @@ export class DataQueryModel {
      * The last name of an author: string
      */
     async getDatasetIDFromAuthorLastName(lastName: string): Promise<IDatasetIDModel[]> {
-        let authorDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin(Publications, 'publication', 'dataset.publicationId = publication.id')
             .innerJoin('publication.authors', 'author')
             .where('author.lastName = :lastNameRef', { lastNameRef: lastName })
             .getRawMany();
-        return authorDatasetData;
     }
 
     /**
@@ -112,11 +107,11 @@ export class DataQueryModel {
      * A category ID: number
      */
     async getDatasetIDFromCategory(category: number): Promise<IDatasetIDModel[]> {
-        let categoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-            .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+        return selectDatasetIdsQuery(this.connection)
+            .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+            .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
             .where('category.id = :categoryId', { categoryId: category })
             .getRawMany();
-        return categoryDatasetData;
     }
 
     /**
@@ -128,14 +123,11 @@ export class DataQueryModel {
      * @param subcategory 
      * A subcategory ID: number
      */
-    async getDatasetIDFromSubcategory(category: number, subcategory: number): Promise<IDatasetIDModel[]> {
-        let subcategoryDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
-            .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
+    async getDatasetIDFromSubcategory(subcategory: number): Promise<IDatasetIDModel[]> {
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
-            .where('category.id = :categoryId', { categoryId: category })
-            .andWhere('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
+            .where('subcategory.id = :subcategoryId', { subcategoryId: subcategory })
             .getRawMany();
-        return subcategoryDatasetData;
     }
 
     /**
@@ -145,12 +137,11 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getUploadedDatasetIDOfUser(userID: number): Promise<any[]> {
-        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+    async getUploadedDatasetIDOfUser(userID: number): Promise<IDatasetIDModel[]> {
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
             .where('account.id = :idRef', { idRef: userID })
             .getRawMany();
-        return idDatasetData;
     }
 
     /**
@@ -160,12 +151,11 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getFavoriteDatasetIDOfUser(userID: number): Promise<any[]> {
-        let idDatasetData: IDatasetIDModel[] = await selectDatasetIdsQuery(this.connection)
+    async getFavoriteDatasetIDOfUser(userID: number): Promise<IDatasetIDModel[]> {
+        return selectDatasetIdsQuery(this.connection)
             .innerJoin('dataset.accounts', 'account')
             .where('account.id = :idRef', { idRef: userID })
             .getRawMany();
-        return idDatasetData;
     }
 
     /**

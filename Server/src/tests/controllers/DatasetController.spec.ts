@@ -126,7 +126,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestForUserFavoriteDatsets(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith(oneFavoriteDataset);
+        expect(mockResponse.json).toBeCalledWith([2]);
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
