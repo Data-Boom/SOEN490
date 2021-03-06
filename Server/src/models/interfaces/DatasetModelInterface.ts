@@ -63,8 +63,8 @@ export interface IClientDatasetModel {
     id: number
     dataset_name: string
     data_type: string
-    category: string
-    subcategory: string
+    category: number
+    subcategory: number
     material: IMaterialModel[]
     data: IData
 }

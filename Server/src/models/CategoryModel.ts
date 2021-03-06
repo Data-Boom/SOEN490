@@ -18,8 +18,8 @@ export class CategoryModel {
      * @param name
      * Category name: string
      */
-    async verifyIfNameExists(name: string): Promise<any> {
-        return await Category.findOne({ where: { name: name } })
+    async verifyIfCategoryExists(name: string): Promise<any> {
+        return Category.findOne({ where: { name: name } })
     }
 
     async insertCategory(categoryInfo: ICategory): Promise<ICategory> {
@@ -39,16 +39,14 @@ export class CategoryModel {
     async getAllCategories(): Promise<ICategory[]> {
         let categories = await Category.find();
         let subcategories = await Subcategory.find();
-        let categoryModels = categories.map(category => {
+        return categories.map(category => {
             let filteredSubcategories = subcategories.filter(value => value.categoryId == category.id)
-            let categoryModel = Category.convertToModel(category, filteredSubcategories);
-            return categoryModel;
+            return Category.convertToModel(category, filteredSubcategories);
         })
-        return categoryModels;
     }
 
     async updateCategory(categoryInfo: ICategory): Promise<ICategory> {
-        let newCategory: ICategory
+        let categoryReturn: ICategory
         let subcategoryIds: number[] = categoryInfo.subcategories.map(value => value.id);
         let foundSubcategories = await Subcategory.find({ where: { categoryId: categoryInfo.id } });
         let subcategoryIdsToDelete: number[] = []
@@ -69,14 +67,14 @@ export class CategoryModel {
         let subcategories = Subcategory.convertToSubcategory(categoryInfo.subcategories, categoryInfo.id)
         let savedSubcategories = await Subcategory.save(subcategories);
         let newSubcategories = Subcategory.convertToModel(savedSubcategories);
-        newCategory = {
+        categoryReturn = {
             id: categoryInfo.id,
             name: categoryInfo.name,
             subcategories: newSubcategories
         }
         let category = Category.convertToCategory(categoryInfo);
         await Category.save(category);
-        return newCategory;
+        return categoryReturn;
     }
 
     private selectOneUseOfSubcategoriesQuery = (idArray: number[]) =>
@@ -113,4 +111,17 @@ export class CategoryModel {
             .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
             .where('category.id = :id', { id: id })
             .getRawOne()
+
+    findCategoryIDsFromNames(category: string, subcategory: string): Promise<any> {
+        if (!subcategory) {
+            subcategory = "N/A"
+        }
+        return this.connection.createQueryBuilder(Subcategory, 'subcategory')
+            .select('category.id', 'category_id')
+            .addSelect('subcategory.id', 'subcategory_id')
+            .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
+            .where('category.name = :catName', { catName: category })
+            .andWhere('subcategory.name = :subcatName', { subcatName: subcategory })
+            .getRawOne()
+    }
 }

@@ -68,7 +68,6 @@ export interface IDatasetModel {
 export type IDatasetMeta = Omit<IDatasetModel, 'reference' | 'data'>
 
 export const defaultDatasetModel: IDatasetModel = {
-  category: 0,
   data: {
     comments: '',
     contents: [],
@@ -87,7 +86,8 @@ export const defaultDatasetModel: IDatasetModel = {
     issue: null,
     year: 0
   },
-  subcategory: 0,
+  category: null,
+  subcategory: null,
   id: undefined
 }
 
@@ -321,48 +321,8 @@ export const exampleExportDatasetModel: IDatasetModel = {
       "details": "Oxygen", "id": 1
     }
   ],
-  "category": 0,
-  "subcategory": 0,
-  "data_type": "hugoniot",
-  "data": tempData
-}
-
-export const example2: IDatasetModel = {
-  "reference": {
-    "type": "novel",
-    "publisher": "University of Dakota Press",
-    "authors": [
-      {
-        "firstName": "Stanley",
-        "middleName": "P.",
-        "lastName": "Marsh"
-      },
-      {
-        "firstName": "John",
-        "middleName": "L.",
-        "lastName": "Mclain"
-      }
-    ],
-    "title": "LASL shock Hugoniot data",
-    "volume": 5,
-    "issue": 1,
-    "pages": "19-25",
-    "year": 1980
-  },
-  "id": 1234,
-  "dataset_name": "CARBON_graphite,pressed, Initial density = 2.13 g/cc",
-  "material": [
-    {
-      "composition": "C",
-      "details": "carbon, graphite, pressed graphite", "id": 0
-    },
-    {
-      "composition": "O2",
-      "details": "Oxygen", "id": 1
-    }
-  ],
-  "category": 0,
-  "subcategory": 0,
+  "category": 2,
+  "subcategory": 2,
   "data_type": "hugoniot",
   "data": tempData
 }

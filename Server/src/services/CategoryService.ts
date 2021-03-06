@@ -19,7 +19,7 @@ export class CategoryService {
 
     async processAddCategory(categoryInfo: ICategory): Promise<IResponse> {
         let name: boolean
-        name = await this.categoryModel.verifyIfNameExists(categoryInfo.name);
+        name = await this.categoryModel.verifyIfCategoryExists(categoryInfo.name);
         if (name) {
             throw new BadRequest("This category already exists! Please use a different name");
         }

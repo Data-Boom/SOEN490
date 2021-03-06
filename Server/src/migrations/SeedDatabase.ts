@@ -27,10 +27,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
-    //TODO apply to DB directly
-    await queryRunner.query('ALTER TABLE subcategory ADD COLUMN categoryId int(11) NOT NULL DEFAULT 1 AFTER name');
-    await queryRunner.query('ALTER TABLE subcategory ADD CONSTRAINT FK_3fc84b9483bdd736f728dbf95b2 FOREIGN KEY (categoryId) REFERENCES category(id) ON DELETE NO ACTION ON UPDATE NO ACTION');
-
     let user1 = new Accounts();
     user1.id = 1;
     user1.email = 'j@kj.com';
@@ -232,6 +228,16 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     category.name = "cell size";
     await connection.manager.save(category);
 
+    let categoryToEdit = new Category();
+    categoryToEdit.id = 3;
+    categoryToEdit.name = "category";
+    await connection.manager.save(categoryToEdit);
+
+    let categoryToDelete = new Category();
+    categoryToDelete.id = 4;
+    categoryToDelete.name = "delete this category";
+    await connection.manager.save(categoryToDelete);
+
     let subcategory1 = new Subcategory();
     subcategory1.id = 1;
     subcategory1.name = "None Entered";
@@ -243,6 +249,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     subcategory.name = "width";
     subcategory.categoryId = 2;
     await connection.manager.save(subcategory);
+
+    let subcategoryToEdit = new Subcategory();
+    subcategoryToEdit.id = 3;
+    subcategoryToEdit.name = "subcategory";
+    subcategoryToEdit.categoryId = 3;
+    await connection.manager.save(subcategoryToEdit);
 
     let datasetdatatypeNone = new Datasetdatatype();
     datasetdatatypeNone.id;
@@ -706,10 +718,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
-
-    //TODO apply to DB directly
-    await queryRunner.query('ALTER TABLE subcategory DROP FOREIGN KEY FK_3fc84b9483bdd736f728dbf95b2');
-    await queryRunner.query('ALTER TABLE subcategory DROP COLUMN categoryId');
   }
 
 }

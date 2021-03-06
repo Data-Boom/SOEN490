@@ -9,8 +9,6 @@ import { ICategory } from '../models/interfaces/CategoryInterface';
  */
 export class CategoryController {
     private categoryService: CategoryService;
-    constructor() {
-    }
 
     async createCategory(request: Request, response: Response): Promise<Response> {
         let invalidResponse = this.validateCreateCategoryRequest(request);
@@ -46,7 +44,7 @@ export class CategoryController {
     async updateCategory(request: Request, response: Response): Promise<Response> {
         let invalidResponse = this.validateUpdateCategoryRequest(request);
         if (invalidResponse) {
-            return response.status(400).json("Request is invalid. Missing attributes")
+            return response.status(400).json("Request is invalid. Missing category name and/or category id")
         } else {
             try {
                 let requestParams: any = { ...request.body };
