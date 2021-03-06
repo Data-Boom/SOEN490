@@ -1,32 +1,50 @@
 import { Box, Grid, ThemeProvider, Typography } from '@material-ui/core'
-import { FastField, Field, FieldArray } from 'formik'
+import { FastField, Field, FieldArray, FormikProps } from 'formik'
+import { ICategoryModel, ISubcategoryModel } from '../../../Remote/Endpoints/CategoryEndpoint'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
 import { disabledTheme, shouldComponentUpdate } from '../../Forms/ComponentUpdate'
+import { get, values } from 'lodash'
 
 import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
 import React from 'react'
 import { classStyles } from '../../../appTheme'
-import { get } from 'lodash'
+import { useState } from 'react'
 
 interface IProps {
   materials: IMaterial[],
-  categories: any[],
-  subcategories: any[],
-  editable: boolean
+  categories: ICategoryModel[],
+  editable: boolean,
 }
 
 const getOptions = (options: any[]): any => {
   //todo revert value from id to option.name once backend is able to consume ids for categories
-  return (
-    <>
-      {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
-    </>
-  )
+  if (options) {
+    return (
+      <>
+        {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+      </>
+    )
+  }
 }
 
 export const MetaForm = (props: IProps) => {
-  const { materials, categories, subcategories, editable } = props
+  const { materials, categories, editable } = props
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
+
+  const getSubCategories = (categoryId: number): ISubcategoryModel[] => {
+    const foundCategory = categories.find(category => category.id == categoryId)
+    if (!foundCategory) {
+      return []
+    }
+    return foundCategory.subcategories
+  }
+
+  const handleCategoryChange = (formProps, value: any) => {
+    const dimensionId = value.target.value
+    formProps.setFieldValue('meta.category', dimensionId)
+    setSelectedCategoryId(dimensionId)
+  }
 
   return (
     <Box className={classStyles().defaultBorder}>
@@ -41,9 +59,10 @@ export const MetaForm = (props: IProps) => {
           </Grid>
           <Grid item sm={3}>
             <Field name="meta.category" label='Category' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(categories)} />
+
           </Grid>
           <Grid item sm={3}>
-            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(subcategories)} />
+            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(categories)} />
           </Grid>
           <Grid item sm={12}>
             <FieldArray name='meta.material' >
