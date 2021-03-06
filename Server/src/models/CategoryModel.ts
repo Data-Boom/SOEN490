@@ -111,4 +111,17 @@ export class CategoryModel {
             .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
             .where('category.id = :id', { id: id })
             .getRawOne()
+
+    findCategoryIDsFromNames(category: string, subcategory: string): Promise<any> {
+        if (!subcategory) {
+            subcategory = "N/A"
+        }
+        return this.connection.createQueryBuilder(Subcategory, 'subcategory')
+            .select('category.id', 'category_id')
+            .addSelect('subcategory.id', 'subcategory_id')
+            .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
+            .where('category.name = :catName', { catName: category })
+            .andWhere('subcategory.name = :subcatName', { subcatName: subcategory })
+            .getRawOne()
+    }
 }
