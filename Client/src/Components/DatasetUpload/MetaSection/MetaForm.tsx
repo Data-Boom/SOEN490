@@ -1,20 +1,19 @@
 import { Box, Grid, ThemeProvider, Typography } from '@material-ui/core'
-import { FastField, Field, FieldArray } from 'formik'
+import { FastField, Field, FieldArray, useFormikContext } from 'formik'
 import { ICategoryModel, ISubcategoryModel } from '../../../Remote/Endpoints/CategoryEndpoint'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
+import React, { useState } from 'react'
 import { disabledTheme, shouldComponentUpdate } from '../../Forms/ComponentUpdate'
 import { get, values } from 'lodash'
 
 import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
-import React, { useState } from 'react'
 import { classStyles } from '../../../appTheme'
 
 interface IProps {
   materials: IMaterial[],
   categories: ICategoryModel[],
   editable: boolean,
-  formProps
 }
 
 const getOptions = (options: any[]): any => {
@@ -29,7 +28,8 @@ const getOptions = (options: any[]): any => {
 }
 
 export const MetaForm = (props: IProps) => {
-  const { materials, categories, editable, formProps } = props
+  const { materials, categories, editable } = props
+  const { setFieldValue } = useFormikContext();
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
   const getSubCategories = (categoryId: number): ISubcategoryModel[] => {
@@ -42,7 +42,7 @@ export const MetaForm = (props: IProps) => {
 
   const handleCategoryChange = (value: any) => {
     const categoryId = value.target.value
-    formProps.setFieldValue('meta.category', categoryId)
+    setFieldValue('meta.category', categoryId)
     setSelectedCategoryId(categoryId)
   }
 

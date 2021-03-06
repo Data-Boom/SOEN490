@@ -99,18 +99,17 @@ export const DatasetForm = (props: IProps): any => {
       onSubmit={handleSubmit}
       innerRef={formikReference}
     >
-      {formProps =>
-        <Form>
-          <Grid>
-            {initialDataset.id ?
-              constructFavoriteButton() : null
-            }
-          </Grid>
-          <MetaForm materials={materials} editable={editable} categories={categories} formProps={formProps} />
-          <ReferenceForm editable={editable} />
-          <DataForm editable={editable} />
-        </Form>
-      }
+      <Form>
+        <Grid>
+          {initialDataset.id ?
+            constructFavoriteButton() : null
+          }
+        </Grid>
+        <MetaForm materials={materials} editable={editable} categories={categories} />
+        <ReferenceForm editable={editable} />
+        <DataForm editable={editable} />
+      </Form>
+
     </Formik>
   )
 }
