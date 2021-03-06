@@ -15,6 +15,7 @@ interface IProps {
   materials: IMaterial[],
   categories: ICategoryModel[],
   editable: boolean,
+  formProps
 }
 
 const getOptions = (options: any[]): any => {
@@ -29,7 +30,7 @@ const getOptions = (options: any[]): any => {
 }
 
 export const MetaForm = (props: IProps) => {
-  const { materials, categories, editable } = props
+  const { materials, categories, editable, formProps } = props
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
   const getSubCategories = (categoryId: number): ISubcategoryModel[] => {
@@ -40,10 +41,10 @@ export const MetaForm = (props: IProps) => {
     return foundCategory.subcategories
   }
 
-  const handleCategoryChange = (formProps, value: any) => {
-    const dimensionId = value.target.value
-    formProps.setFieldValue('meta.category', dimensionId)
-    setSelectedCategoryId(dimensionId)
+  const handleCategoryChange = (value: any) => {
+    const categoryId = value.target.value
+    formProps.setFieldValue('meta.category', categoryId)
+    setSelectedCategoryId(categoryId)
   }
 
   return (
@@ -58,11 +59,11 @@ export const MetaForm = (props: IProps) => {
             <FastField name="meta.data_type" label='Data Type' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiTextFieldFormik} />
           </Grid>
           <Grid item sm={3}>
-            <Field name="meta.category" label='Category' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(categories)} />
+            <Field name="meta.category" label='Category' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(categories)} onChange={(value) => handleCategoryChange(value)} />
 
           </Grid>
           <Grid item sm={3}>
-            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(categories)} />
+            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(getSubCategories(selectedCategoryId))} />
           </Grid>
           <Grid item sm={12}>
             <FieldArray name='meta.material' >

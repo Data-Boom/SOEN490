@@ -36,7 +36,6 @@ export const DatasetForm = (props: IProps): any => {
   useEffect(() => {
     const callListCategories = async () => {
       const categories = await listCategories()
-      console.log(categories)
       setCategories(categories)
     }
 
@@ -100,17 +99,18 @@ export const DatasetForm = (props: IProps): any => {
       onSubmit={handleSubmit}
       innerRef={formikReference}
     >
-
-      <Form>
-        <Grid>
-          {initialDataset.id ?
-            constructFavoriteButton() : null
-          }
-        </Grid>
-        <MetaForm materials={materials} editable={editable} categories={categories}/>
-        <ReferenceForm editable={editable} />
-        <DataForm editable={editable} />
-      </Form>
+      {formProps =>
+        <Form>
+          <Grid>
+            {initialDataset.id ?
+              constructFavoriteButton() : null
+            }
+          </Grid>
+          <MetaForm materials={materials} editable={editable} categories={categories} formProps={formProps} />
+          <ReferenceForm editable={editable} />
+          <DataForm editable={editable} />
+        </Form>
+      }
     </Formik>
   )
 }
