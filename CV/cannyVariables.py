@@ -1,4 +1,5 @@
-from libraries import *
+import tkinter as tk
+from tkinter import *
 from PIL import Image, ImageTk
 import cv2
 import settings

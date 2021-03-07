@@ -1,7 +1,9 @@
-from libraries import *
+
 from tkinter import messagebox
 import os.path
 from os import path
+import tkinter as tk
+from tkinter import *
 import settings
 import cannyVariables
 

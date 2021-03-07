@@ -1,5 +1,3 @@
-from libraries import *
-
 #this initializes all the global variables needed throughout the files
 
 def init ():
