@@ -51,7 +51,6 @@ export const DatasetView = (props: IProps) => {
       const dataset = datasetArray[0]
       setInitialValues(fixPartialForform(dataset))
       setEditable(false)
-      console.log(dataset)
     }
 
     if (datasetID) {
