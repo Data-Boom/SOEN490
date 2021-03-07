@@ -134,11 +134,9 @@ export class DataSetService {
       rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
     }
     if (datapointsReceived) {
-      //for (let i = 0; i < datapointsReceived.length; i++) {
       paramsEntered++
       rawData = await this.dataQuery.getDatasetIDFromDatapoint(datapointsReceived);
       rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
-      //}
     }
     let selectedDatasetIds = await this.selectDatasetIds(paramsEntered, rawDatasetIds)
     return selectedDatasetIds
