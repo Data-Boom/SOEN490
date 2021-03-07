@@ -1,5 +1,6 @@
 import { Button, Grid, Tooltip } from '@material-ui/core'
 import { Form, Formik } from 'formik'
+import { ICategoryModel, listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 import { callGetUserFavouriteDatasets, userDeleteFavouriteDataset, userSaveFavouriteDataset } from '../../Remote/Endpoints/DatasetEndpoint'
@@ -11,9 +12,7 @@ import { ReferenceForm } from './ReferenceSection/ReferenceForm'
 import StarBorderIcon from "@material-ui/icons/StarBorder"
 import StarIcon from "@material-ui/icons/Star"
 import { datasetValidationSchema } from './DatasetValidationSchema'
-import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
-import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
 
 interface IProps extends IFormProps {
   initialDataset: IDatasetModel,
@@ -30,8 +29,7 @@ interface DatasetUploadFormValues {
 export const DatasetForm = (props: IProps): any => {
   const { initialDataset, onSubmit, editable, formikReference } = props
 
-  const [categories, setCategories] = useState([])
-  const [subcategories, setSubcategories] = useState([])
+  const [categories, setCategories] = useState<ICategoryModel[]>([])
   const [materials, setMaterials] = useState([])
   const [favoriteDataset, setFavoriteDataset] = useState(false)
 
@@ -41,18 +39,12 @@ export const DatasetForm = (props: IProps): any => {
       setCategories(categories)
     }
 
-    const callListSubcategory = async () => {
-      const subcategories = await listSubcategories()
-      setSubcategories(subcategories)
-    }
-
     const callListMaterials = async () => {
       const materials = await listMaterials()
       setMaterials(materials)
     }
 
     callListCategories()
-    callListSubcategory()
     callListMaterials()
   }, [])
 
@@ -113,10 +105,11 @@ export const DatasetForm = (props: IProps): any => {
             constructFavoriteButton() : null
           }
         </Grid>
-        <MetaForm materials={materials} editable={editable} categories={categories} subcategories={subcategories} />
+        <MetaForm materials={materials} editable={editable} categories={categories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />
       </Form>
+
     </Formik>
   )
 }
