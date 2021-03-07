@@ -1,4 +1,6 @@
 from libraries import *
+from PIL import Image, ImageTk
+import cv2
 import settings
 
 def change_sigma (sigma) :

@@ -1,4 +1,3 @@
-from libraries import *
 import settings
 import homepage
 import cannyVariables
