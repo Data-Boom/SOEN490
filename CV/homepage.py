@@ -7,7 +7,7 @@ def next () :
         settings.imagepath = settings.inputs["imagepath"].get()
         settings.imagelength = settings.inputs["imagelength"].get()
         settings.frames["homepage"].destroy()
-        cannyVariables.startCanny()
+        cannyVariables.start_canny()
     elif settings.inputs["imagepath"].get() != "" and not os.path.isfile(settings.inputs["imagepath"].get()):
         messagebox.showerror( "Error", "Path does not exist.")
     elif settings.inputs["imagelength"].get() != "" and not settings.inputs["imagelength"].get().isnumeric():

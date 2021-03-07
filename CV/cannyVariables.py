@@ -1,7 +1,7 @@
 from libraries import *
 import settings
 
-def changeSigma (sigma) :
+def change_sigma (sigma) :
     settings.thresholdVariables["currentsigma"] = float(sigma)
     gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
     edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
@@ -11,7 +11,7 @@ def changeSigma (sigma) :
     settings.imagelabels["altered"].image = edges
     settings.images["edges"] = edges
 
-def changeLowThreshold (lt) :
+def change_low_threshold (lt) :
     settings.thresholdVariables["currentlt"] = int(lt)
     if settings.thresholdVariables["currentlt"] >= settings.thresholdVariables["currentht"] :
         settings.thresholdVariables["currentht"] = settings.thresholdVariables["currentlt"] + 1
@@ -25,7 +25,7 @@ def changeLowThreshold (lt) :
     settings.images["edges"] = edges
     
 
-def changeHighThreshold (ht) :
+def change_high_threshold (ht) :
     settings.thresholdVariables["currentht"] = int(ht)
     if settings.thresholdVariables["currentht"] <= settings.thresholdVariables["currentlt"] :
         settings.thresholdVariables["currentlt"] = settings.thresholdVariables["currentht"] - 1
@@ -70,7 +70,7 @@ def frames () :
     settings.frames["endCannyframe"] = tk.Frame(master=settings.m, background="white")
 
 
-def startCanny() :
+def start_canny() :
     settings.thresholdVariables["currentlt"] = 0
     settings.thresholdVariables["currentht"] = 0
     settings.thresholdVariables["currentsigma"] = 0
@@ -94,16 +94,16 @@ def startCanny() :
     settings.frames["sliderframe"].grid(row=0, column=4, sticky="n", rowspan=2)
 
     settings.frames["sigmasliderframe"].grid(row=0, padx=(5, 5), pady=(5, 5))
-    sigmaslider = Scale(master=settings.frames["sigmasliderframe"], label="Sigma", from_=0, to=10, orient=HORIZONTAL, length=300, width=40, command=changeSigma, background="white")
+    sigmaslider = Scale(master=settings.frames["sigmasliderframe"], label="Sigma", from_=0, to=10, orient=HORIZONTAL, length=300, width=40, command=change_sigma, background="white")
     sigmaslider.pack()
 
 
     settings.frames["lowthresholdsliderframe"].grid(row=1,padx=(5, 5), pady=(5, 5))
-    lowthresholdslider = Scale(master=settings.frames["lowthresholdsliderframe"], label="Low Threshold", from_=0, to=255, orient=HORIZONTAL, length=300, width=40, command=changeLowThreshold, background="white")
+    lowthresholdslider = Scale(master=settings.frames["lowthresholdsliderframe"], label="Low Threshold", from_=0, to=255, orient=HORIZONTAL, length=300, width=40, command=change_low_threshold, background="white")
     lowthresholdslider.pack()
 
     settings.frames["highthresholdsliderframe"].grid(row=2, padx=(5, 5), pady=(5, 5))
-    highthresholdslider = Scale(master=settings.frames["highthresholdsliderframe"], label="High Threshold", from_=0, to=255, orient=HORIZONTAL, length=300, width=40, command=changeHighThreshold, background="white")
+    highthresholdslider = Scale(master=settings.frames["highthresholdsliderframe"], label="High Threshold", from_=0, to=255, orient=HORIZONTAL, length=300, width=40, command=change_high_threshold, background="white")
     highthresholdslider.pack()
 
     settings.sliders["lowthresholdslider"] = lowthresholdslider
@@ -111,8 +111,8 @@ def startCanny() :
 
     settings.frames["endCannyframe"].grid(row=2, column=4, sticky="n", rowspan=2)
 
-    endCannyButton = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Original Image", width=30, height=2, padx=5, pady=5, background="white")
-    endCannyButton.pack()
+    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Original Image", width=30, height=2, padx=5, pady=5, background="white")
+    end_canny.pack()
     
-    endCannyButton = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Canny Image", width=30, height=2, padx=5, pady=5, background="white")
-    endCannyButton.pack()
+    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Canny Image", width=30, height=2, padx=5, pady=5, background="white")
+    end_canny.pack()
