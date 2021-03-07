@@ -1,4 +1,5 @@
 #this initializes all the global variables needed throughout the files
+import tkinter as tk
 
 def init ():
 

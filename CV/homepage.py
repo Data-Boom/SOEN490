@@ -52,4 +52,4 @@ def start () :
 
     settings.buttons["submit"].grid(row=5, column=1, columnspan=2, padx=30, pady=30)
 
-    mainloop ()
+    tk.mainloop ()
