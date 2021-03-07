@@ -32,19 +32,31 @@ export default function NavigationMenu() {
     setOpen(false)
   }
 
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    //setOpen({ open });
+  };
+
+
 
 
   const drawer = (): any => {
     return (
-      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
-        <div className={classes.drawerHeader}>
-          <IconButton id='Close' onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        {ListRouter()}
-      </ Drawer>
+      <React.Fragment key='left'>
+        <div><Drawer variant="persistent" anchor="left" open={open} onClose={() => setOpen(false)} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
+          <div className={classes.drawerHeader}>
+            {<IconButton id='Close' onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>}
+          </div>
+          <Divider />
+          {ListRouter()}
+        </ Drawer></div>
+
+      </React.Fragment>
     )
   }
 
