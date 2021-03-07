@@ -96,7 +96,7 @@ export class DataSetService {
    * @param datapointsReceived
    * An array of data point variable names: string[]
    */
-  private async getDatasetIdsFromParams(materialReceived: string[], yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number, datapointsReceived: string[]) {
+  private async getDatasetIdsFromParams(materialReceived: string[], yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number, datapointsReceived: string) {
     let rawData;
     let paramsEntered = 0;
     let rawDatasetIds = [];
@@ -134,11 +134,11 @@ export class DataSetService {
       rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
     }
     if (datapointsReceived) {
-      for (let i = 0; i < datapointsReceived.length; i++) {
-        paramsEntered++
-        rawData = await this.dataQuery.getDatasetIDFromDatapoint(datapointsReceived[i]);
-        rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
-      }
+      //for (let i = 0; i < datapointsReceived.length; i++) {
+      paramsEntered++
+      rawData = await this.dataQuery.getDatasetIDFromDatapoint(datapointsReceived);
+      rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
+      //}
     }
     let selectedDatasetIds = await this.selectDatasetIds(paramsEntered, rawDatasetIds)
     return selectedDatasetIds
