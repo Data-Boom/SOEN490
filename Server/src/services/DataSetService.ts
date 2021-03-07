@@ -41,6 +41,7 @@ export class DataSetService {
    * Publication year: number
    * A category ID: number
    * A subcategory ID: number
+   * An array of data point variable names: string[]
    */
   async getArrayOfDatasets(receivedData: IDataRequestModel) {
     let datasetReceived = receivedData.datasetId;
@@ -50,9 +51,10 @@ export class DataSetService {
     let yearReceived = receivedData.year;
     let categoryReceived = receivedData.categoryId;
     let subcategoryReceived = receivedData.subcategoryId;
+    let datapointsReceived = receivedData.datapoint;
     let selectedDatasetIds = datasetReceived;
     if (datasetReceived == undefined) {
-      selectedDatasetIds = await this.getDatasetIdsFromParams(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived)
+      selectedDatasetIds = await this.getDatasetIdsFromParams(materialReceived, yearReceived, firstNameReceived, lastNameReceived, categoryReceived, subcategoryReceived, datapointsReceived)
     }
     let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds)
     return setOfData;
@@ -91,8 +93,10 @@ export class DataSetService {
    * A category ID: number
    * @param subcategoryReceived 
    * A subcategory ID: number
+   * @param datapointsReceived
+   * An array of data point variable names: string[]
    */
-  private async getDatasetIdsFromParams(materialReceived: string[], yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number) {
+  private async getDatasetIdsFromParams(materialReceived: string[], yearReceived: number, firstNameReceived: string, lastNameReceived: string, categoryReceived: number, subcategoryReceived: number, datapointsReceived: string) {
     let rawData;
     let paramsEntered = 0;
     let rawDatasetIds = [];
@@ -127,6 +131,11 @@ export class DataSetService {
     else if (categoryReceived) {
       paramsEntered++
       rawData = await this.dataQuery.getDatasetIDFromCategory(categoryReceived);
+      rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
+    }
+    if (datapointsReceived) {
+      paramsEntered++
+      rawData = await this.dataQuery.getDatasetIDFromDatapoint(datapointsReceived);
       rawDatasetIds = rawDatasetIds.concat(await this.createDatasetIdArray(rawData));
     }
     let selectedDatasetIds = await this.selectDatasetIds(paramsEntered, rawDatasetIds)

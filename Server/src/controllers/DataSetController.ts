@@ -156,7 +156,8 @@ export class DataSetController {
   private validateInputData(request: Request) {
     if (request.query.hasOwnProperty('datasetId') || request.query.hasOwnProperty('material')
       || request.query.hasOwnProperty('year') || request.query.hasOwnProperty('categoryId')
-      || request.query.hasOwnProperty('subcategoryId') || request.query.hasOwnProperty('lastName')) { return true }
+      || request.query.hasOwnProperty('subcategoryId') || request.query.hasOwnProperty('lastName')
+      || request.query.hasOwnProperty('datapoint')) { return true }
     else {
       return false
     }
@@ -247,5 +248,4 @@ export class DataSetController {
       response.status(error.status).json(error.message);
     }
   }
-
 }

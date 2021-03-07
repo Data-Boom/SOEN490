@@ -1,3 +1,4 @@
+import { Datapoints } from './../entities/Datapoints';
 import { Connection, getConnection } from "typeorm";
 import { Accounts } from "../entities/Accounts";
 import { selectAllAuthorsQuery } from "../entities/Authors";
@@ -56,6 +57,12 @@ export class DataQueryModel {
             .getRawMany();
     }
 
+    async getDatasetIDFromDatapoint(datapoint: string): Promise<IDatasetIDModel[]> {
+        return selectDatasetIdsQuery(this.connection)
+            .innerJoin(Datapoints, 'datapoints', 'dataset.id = datapoints.datasetId')
+            .where('datapoints.name = :name', { name: datapoint })
+            .getRawMany();
+    }
     /**
      * This method will run a query find all the data set IDs based on an entered author's name
      * and return a raw data packet containing that information. 

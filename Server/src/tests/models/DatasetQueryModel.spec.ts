@@ -98,4 +98,10 @@ describe('data query model test', () => {
             .toThrow("Something went wrong adding a favorite data set. Try later");
     });
 
+    //test for datapoint
+    test('Input datapoint containing Density, expect to find at least one dataset id', async done => {
+        let id = await dataQueryModel.getDatasetIDFromDatapoint("Density");
+        expect(id[0].dataset_id).not.toBeUndefined()
+        done()
+    });
 })
