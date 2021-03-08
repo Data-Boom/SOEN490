@@ -32,7 +32,6 @@ export const SearchDatasetsForm = (props: IProps): any => {
       setMaterials(materials || [])
     }
 
-      const subCategories = await listSubcategories()
     callListMaterials()
   }, [])
 
