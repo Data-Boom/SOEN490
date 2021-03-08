@@ -34,17 +34,14 @@ export default abstract class AbstractUploadService {
     }
 
     protected getDataInformationFromContentsArray(dataContentArray: any, index: number) {
-
         let dataPointsForVariable = [];
         let dataSetComments = [];
-
         for (let i = 0; i < dataContentArray.length; i++) {
             dataPointsForVariable.push(dataContentArray[i].point[index]);
             dataSetComments.push(dataContentArray[i].comments);
-
-            let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
-            return contentsArrayInfo;
         }
+        let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
+        return contentsArrayInfo;
     }
 
     protected async insertRepData(uploadModel: DataUploadModel, repr: string): Promise<number> {
