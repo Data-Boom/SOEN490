@@ -134,7 +134,6 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 
 export function ProfileView() {
   const { user, setUserContext } = useContext(UserContext)
-
   useEffect(() => {
     const fetchUser = async () => {
       const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
@@ -150,7 +149,8 @@ export function ProfileView() {
       const savedGraphState = await listGraphStates()
       setSavedGraphState(savedGraphState.reverse())
     }
-    callListSavedGraphStates()
+    if (user && user.email)
+      callListSavedGraphStates()
   }, [])
 
   const classes = useStyles()
