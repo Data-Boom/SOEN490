@@ -1,6 +1,6 @@
 import { Button, Grid } from '@material-ui/core'
 
-import { DatasetList } from '../DatasetList/DatasetList'
+import { DatasetPagination } from '../DatasetList/DatasetPagination'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
@@ -72,7 +72,7 @@ export const DatasetControl = (props: IProps) => {
           </Grid> : null
         }
       </Grid>
-      <DatasetList
+      <DatasetPagination
         datasets={toDatasetRows(completeDatasets, datasetStates)}
         onRemoveDatasetClick={handleDatasetRemoved}
         onHideDatasetSwitch={onHideDatasetSwitch}
