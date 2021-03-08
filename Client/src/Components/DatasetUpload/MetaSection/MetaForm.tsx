@@ -62,7 +62,7 @@ export const MetaForm = (props: IProps) => {
 
           </Grid>
           <Grid item sm={3}>
-            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(getSubCategories(selectedCategoryId))} />
+            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable || !selectedCategoryId} component={MuiSelectFormik} options={getOptions(getSubCategories(selectedCategoryId))} />
           </Grid>
           <Grid item sm={12}>
             <FieldArray name='meta.material' >

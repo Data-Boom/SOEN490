@@ -1,5 +1,5 @@
 import { Box, Button, Container } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { ISearchDatasetsFormModel } from './ISearchDatasetsFormModel'
@@ -7,6 +7,7 @@ import { SearchDatasetsForm } from './SearchDatasetsForm'
 import { SearchResults } from './SearchResults'
 import { SelectionChangeParams } from '@material-ui/data-grid'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 
 interface IProps {
   handleDatasetsSelected?: (datasets: IDatasetModel[]) => void
@@ -19,6 +20,16 @@ export default function SearchView(props: IProps) {
 
   // array of selected ids
   const [selection, setSelection] = useState<SelectionChangeParams>({ rowIds: [] })
+
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    const callListCategories = async () => {
+      const categories = await listCategories()
+      setCategories(categories || [])
+    }
+    callListCategories()
+  }, [])
 
   const handleSearchClick = async (query: ISearchDatasetsFormModel) => {
     const datasets = await callGetDatasets(query) || []
@@ -51,11 +62,13 @@ export default function SearchView(props: IProps) {
       <Box pt={4}>
         <SearchDatasetsForm
           handleSubmit={handleSearchClick}
+          categories={categories}
         />
       </Box>
       <Box pt={4}>
         <SearchResults
           datasetResults={foundDatasets}
+          categories={categories}
           handleSelectionChanged={handleSelectionChanged}
           button={addToGraphButton}
         />

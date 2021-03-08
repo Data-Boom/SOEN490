@@ -1,4 +1,5 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
+import { ICategoryModel, ISubcategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 import React, { useState } from 'react'
 
@@ -9,6 +10,7 @@ interface IProps {
   datasetResults: IDatasetModel[],
   handleSelectionChanged: (selection: SelectionChangeParams) => void,
   button?: any,
+  categories: ICategoryModel[]
 }
 
 interface IProps2 {
@@ -16,7 +18,7 @@ interface IProps2 {
 }
 
 export const SearchResults = (props: IProps) => {
-  const { datasetResults } = { ...props }
+  const { datasetResults, categories } = { ...props }
   const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
@@ -37,6 +39,12 @@ export const SearchResults = (props: IProps) => {
     return `${reference.year}`
   }
 
+  const getCategoryId = (params: ValueGetterParams) => {
+    const category_id = params.getValue('subcategory') as number
+    console.log('getting cat value')
+    return 'wow'
+  }
+
   const [open, setOpen] = useState(false)
 
   const getNameLink = (params: ValueGetterParams) => {
@@ -49,7 +57,7 @@ export const SearchResults = (props: IProps) => {
   const columns: ColDef[] = [
     { field: 'dataset_name', headerName: 'Name', width: width, renderCell: getNameLink },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
-    { field: 'category', headerName: 'Category', width: width },
+    { field: 'category', headerName: 'Category', width: width, valueGetter: getCategoryId },
     { field: 'subcategory', headerName: 'SubCategory', width: width },
     { field: 'author', headerName: 'Author', width: width, valueGetter: getAuthor },
     { field: 'year', headerName: 'Year', width: width, valueGetter: getYear },
