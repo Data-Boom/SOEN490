@@ -1,9 +1,10 @@
 import { Button, Grid } from '@material-ui/core'
 
-import { DatasetPagination } from '../DatasetList/DatasetPagination'
+import { DatasetRow } from '../DatasetList/DatasetRow'
 import { ExportDatasetsButton } from './ExportDatasetsButton'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
+import { PaginatedList } from '../../Utils/PaginatedList'
 import React from 'react'
 import { SearchViewModal } from '../../Search/SearchViewModal'
 import { toDatasetRows } from '../../../Common/Helpers/GraphHelpers'
@@ -72,7 +73,8 @@ export const DatasetControl = (props: IProps) => {
           </Grid> : null
         }
       </Grid>
-      <DatasetPagination
+      <PaginatedList
+        RowComponent={DatasetRow}
         datasets={toDatasetRows(completeDatasets, datasetStates)}
         onRemoveDatasetClick={handleDatasetRemoved}
         onHideDatasetSwitch={onHideDatasetSwitch}
