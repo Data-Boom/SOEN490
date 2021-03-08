@@ -36,9 +36,9 @@ export default abstract class AbstractUploadService {
     protected getDataInformationFromContentsArray(dataContentArray: any, index: number) {
         let dataPointsForVariable = [];
         let dataSetComments = [];
-        for (let i = 0; i < dataContentArray.length; i++) {
-            dataPointsForVariable.push(dataContentArray[i].point[index]);
-            dataSetComments.push(dataContentArray[i].comments);
+        for (let value of dataContentArray) {
+            dataPointsForVariable.push(value.point[index]);
+            dataSetComments.push(value.comments);
         }
         let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
         return contentsArrayInfo;
