@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from '@material-ui/core'
-import { Field, FieldArray, Form, Formik, useFormikContext } from 'formik'
-import { ICategoryModel, ISubcategoryModel, listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+import { Field, FieldArray, Form, Formik } from 'formik'
+import { ICategoryModel, ISubcategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'

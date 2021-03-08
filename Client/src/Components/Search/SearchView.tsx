@@ -25,8 +25,8 @@ export default function SearchView(props: IProps) {
 
   useEffect(() => {
     const callListCategories = async () => {
-      const categories = await listCategories()
-      setCategories(categories || [])
+      const getCategories = await listCategories()
+      setCategories(getCategories || [])
     }
     callListCategories()
   }, [])

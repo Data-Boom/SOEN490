@@ -1,10 +1,10 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
-import { ICategoryModel, ISubcategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 import React, { useState } from 'react'
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
 import { Grid } from '@material-ui/core'
+import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 
 interface IProps {
   datasetResults: IDatasetModel[],
