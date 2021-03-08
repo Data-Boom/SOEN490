@@ -1,12 +1,14 @@
-import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
+import { Box, Button, Grid, Modal, Paper, TextField } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
 import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
+import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
+import { Autocomplete } from '@material-ui/lab'
 
 interface IProps {
   variable: IVariable,
@@ -25,6 +27,22 @@ export const EditVariableHeader = (props: IProps) => {
 
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
 
+  /*useEffect(() => {
+
+    const callListVariables = async () => {
+      const variables = await getVariableNames()
+      console.log("variables ", variables)
+
+
+
+      //return variables
+
+    }
+    callListVariables()
+
+  }, [])*/
+
+
   const handleRemove = () => {
     if (editable) {
       onVariableRemove(index)
@@ -42,6 +60,19 @@ export const EditVariableHeader = (props: IProps) => {
       onHeaderClick(index)
     }
   }
+
+
+  const callListVariables = async () => {
+    const variables = await getVariableNames()
+    console.log("variables ", variables)
+
+
+
+    //setVariables(variables)
+
+  }
+
+  const testarray = ['abc', 'jkadbks', 'jdsjk', 'bomb', 'cab']
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (
@@ -85,7 +116,16 @@ export const EditVariableHeader = (props: IProps) => {
                 <Form>
                   <Grid container spacing={4}>
                     <Grid item sm={4}>
-                      <Field name="name" label='Name' component={MuiTextFieldFormik} />
+
+                      {<Autocomplete
+                        id="combo-box-demo"
+                        options={testarray}
+                        //getOptionLabel={(option) => option.title}
+                        style={{ width: 130 }}
+                        renderInput={(params) => <TextField {...params} label="Name" variant="outlined" />}
+                      />}
+
+                      {/*<Field name="name" label='Name' component={MuiTextFieldFormik} />*/}
                     </Grid>
                     <Grid item sm={4}>
                       <Field

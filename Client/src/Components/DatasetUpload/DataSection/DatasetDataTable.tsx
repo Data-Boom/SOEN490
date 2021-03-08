@@ -34,8 +34,18 @@ export const DatasetDataTable = (props: IProps): any => {
 
     const callListVariables = async () => {
       const variables = await getVariableNames()
-      //console.log("variables ", variables)
-      setVariables(variables)
+      console.log("variables ", variables)
+      //console.log("type of " + typeof variables)
+
+      //console.log("length " + variables.name.length)
+      //const variableName: IVariableNameModel[] 
+      for (var i = 0; i < 39; i++) {
+        //variableName[i] = variables[i].name
+
+      }
+
+
+      //setVariables(variables)
 
     }
     callListVariables()
