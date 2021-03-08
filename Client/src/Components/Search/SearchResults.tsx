@@ -40,9 +40,17 @@ export const SearchResults = (props: IProps) => {
   }
 
   const getCategoryId = (params: ValueGetterParams) => {
-    const category_id = params.getValue('subcategory') as number
-    console.log('getting cat value')
-    return 'wow'
+    const categoryId = params.row.category
+    const foundCategory = categories.find(category => category.id == categoryId)
+    return `${foundCategory.name}`
+  }
+
+  const getSubcategoryId = (params: ValueGetterParams) => {
+    const subcategoryId = params.row.subcategory
+    const categoryId = params.row.category
+    const foundCategory = categories.find(category => category.id == categoryId)
+    const foundSubcategory = foundCategory.subcategories.find(subcategory => subcategory.id == subcategoryId)
+    return `${foundSubcategory.name}`
   }
 
   const [open, setOpen] = useState(false)
@@ -58,7 +66,7 @@ export const SearchResults = (props: IProps) => {
     { field: 'dataset_name', headerName: 'Name', width: width, renderCell: getNameLink },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
     { field: 'category', headerName: 'Category', width: width, valueGetter: getCategoryId },
-    { field: 'subcategory', headerName: 'SubCategory', width: width },
+    { field: 'subcategory', headerName: 'SubCategory', width: width, valueGetter: getSubcategoryId },
     { field: 'author', headerName: 'Author', width: width, valueGetter: getAuthor },
     { field: 'year', headerName: 'Year', width: width, valueGetter: getYear },
   ]
