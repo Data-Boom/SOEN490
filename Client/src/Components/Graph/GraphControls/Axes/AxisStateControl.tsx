@@ -1,4 +1,4 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core"
+import { FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, Switch, Typography } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../../../Models/Datasets/IDatasetModel"
 import { IDimensionModel, IUnitModel } from "../../../../Models/Dimensions/IDimensionModel"
 import React, { useState } from "react"
@@ -104,7 +104,7 @@ export const AxisStateControl = (props: IProps) => {
   }
 
   return (
-    <Grid container spacing={4} justify='space-between'>
+    <Grid container spacing={4} justify='space-between' alignItems="center">
       <Grid item>
         <FormControl>
           <InputLabel id={`${axisName}VariableLabel`}>{axisName} Variable</InputLabel>
@@ -143,6 +143,18 @@ export const AxisStateControl = (props: IProps) => {
           Datasets Missing {axisName}: {datasetsMissingVariable.toString()}
         </Typography>
       </Grid>}
+      <Grid item>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={axisState.logarithmic}
+              onChange={(event) => onAxisChange({ ...axisState, logarithmic: event.target.checked })}
+              color="primary"
+            />
+          }
+          label="Log Scale"
+        />
+      </Grid>
     </Grid>
   )
 }
