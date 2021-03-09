@@ -80,7 +80,7 @@ export const ListRouter = () => {
           <ListItemLink id="search-menu" to={searchRoute} primary="Search" icon={<SearchIcon />} />
           <ListItemLink id="fileupload-menu" to={fileUploadRoute} primary="File Upload" icon={<CloudUploadIcon />} />
           <ListItemLink id="dataset-menu" to={datasetRoute} primary="Dataset Upload" icon={<CloudUploadIcon />} />
-          <ListItemLink id="cellanalysis-menu" to={cellSizeAnalysisRoute} primary="Data Cell Analysis" icon={<DonutSmallIcon />} />
+          <ListItemLink id="cellanalysis-menu" to={cellSizeAnalysisRoute} primary="Cell Size Analysis" icon={<DonutSmallIcon />} />
           <ListItemLink id="research-menu" to={researchPaperAnalysisRoute} primary="Research Analysis" icon={<ImageSearchIcon />} />
           <ListItemLink id="profile-menu" to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />
           <ListItemLink id="about-menu" to={aboutRoute} primary="About Databoom" icon={<InfoIcon />} />

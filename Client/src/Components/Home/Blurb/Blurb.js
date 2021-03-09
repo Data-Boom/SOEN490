@@ -21,7 +21,7 @@ export default function Blurb() {
           <Link to={"search"}><h1 className="Header">Discover</h1></Link>
         </Grid>
         <Grid item sm={2} >
-          <Link to={"dataCellAnalysis"}><h1 className="Header">Cell Size Analysis</h1></Link>
+          <Link to={"cellSizeAnalysis"}><h1 className="Header">Cell Size Analysis</h1></Link>
         </Grid>
       </Grid>
       <Grid container item direction="row" justify="space-evenly" alignItems="top center">
