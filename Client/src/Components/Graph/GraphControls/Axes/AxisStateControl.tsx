@@ -16,6 +16,10 @@ interface IProps {
 }
 
 export const getVariableDimensionId = (datasets: IDatasetModel[], variableName: string): number => {
+  if (!datasets || datasets.length == 0 || !variableName) {
+    return null
+  }
+
   const variableDimensions = getVariableDimensionRepresentation(datasets, variableName)
 
   let index = ''
@@ -71,30 +75,30 @@ export const getMissingDatasetNames = (type: string, datasets: IDatasetModel[]):
   return missingDatasets
 }
 
+const getUnitsFromVariableName = (newVariableName: string, datasets: IDatasetModel[], dimensions: IDimensionModel[]): IUnitModel[] => {
+  const dimensionId = getVariableDimensionId(datasets, newVariableName)
+  if (!dimensionId) {
+    return []
+  }
+
+  const dimension = dimensions.find(dimension => dimension.id == dimensionId)
+  return dimension.units
+}
+
 export const AxisStateControl = (props: IProps) => {
   const { axisName, axisState, dimensions, datasets, onAxisChange } = props
-  const [units, setUnits] = useState<IUnitModel[]>([])
+  const [units, setUnits] = useState<IUnitModel[]>(getUnitsFromVariableName(axisState.variableName, datasets, dimensions))
   const [datasetsMissingVariable, setMissingDatasets] = useState<string[]>(getMissingDatasetNames(axisState.variableName, datasets))
   const variables = buildVariableList(datasets)
+  const isVariableSelected = !!axisState.variableName
 
   const handleUnitChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     onAxisChange({ ...axisState, units: event.target.value as number })
   }
 
-  const updateUnitsState = (newVariableName: string) => {
-    const dimensionId = getVariableDimensionId(datasets, newVariableName)
-    if (!dimensionId) {
-      SnackbarUtils.error(`was not able to identify the dimension of the ${newVariableName} varaible`)
-      return
-    }
-
-    const dimension = dimensions.find(dimension => dimension.id == dimensionId)
-    setUnits(dimension.units)
-  }
-
   const handleVariableChange = (event: React.ChangeEvent<{ value: string }>) => {
     const newSelectedVariable = event.target.value
-    updateUnitsState(newSelectedVariable)
+    setUnits(getUnitsFromVariableName(newSelectedVariable, datasets, dimensions))
     setMissingDatasets(getMissingDatasetNames(event.target.value, datasets))
     onAxisChange({ ...axisState, variableName: newSelectedVariable })
   }
@@ -126,6 +130,7 @@ export const AxisStateControl = (props: IProps) => {
             value={axisState.units}
             autoWidth={true}
             onChange={handleUnitChange}
+            disabled={!isVariableSelected}
           >
             {units.map(unit => (
               <MenuItem key={unit.name} value={unit.id}>{unit.name}</MenuItem>
@@ -133,11 +138,11 @@ export const AxisStateControl = (props: IProps) => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item>
+      {isVariableSelected && <Grid item>
         <Typography align="center">
           Datasets Missing {axisName}: {datasetsMissingVariable.toString()}
         </Typography>
-      </Grid>
+      </Grid>}
     </Grid>
   )
 }

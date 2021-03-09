@@ -41,7 +41,7 @@ export const AxesControl = (props: IProps) => {
             <Box className={classes.defaultBorder}>
               <Grid container spacing={4}>
                 <AxisStateControl axisName='x' axisState={axes[0]} onAxisChange={axis => onAxesChange([{ ...axis }, { ...axes[1] }])} datasets={datasets} dimensions={dimensions} />
-                <AxisStateControl axisName='y' axisState={axes[0]} onAxisChange={axis => onAxesChange([{ ...axes[0] }, { ...axis }])} datasets={datasets} dimensions={dimensions} />
+                <AxisStateControl axisName='y' axisState={axes[1]} onAxisChange={axis => onAxesChange([{ ...axes[0] }, { ...axis }])} datasets={datasets} dimensions={dimensions} />
               </Grid>
             </Box>
           </Grid>
