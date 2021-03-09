@@ -1,8 +1,7 @@
 import { Box, Typography } from '@material-ui/core'
-import React from 'react'
-import { Link } from 'react-router-dom'
 import Download from '@axetroy/react-download'
-
+import { Link } from 'react-router-dom'
+import React from 'react'
 
 export const CellSizeAnalysisView = () => {
   return (
@@ -14,8 +13,8 @@ export const CellSizeAnalysisView = () => {
         <Typography>Small sigma values allow detect of small sharp lines and fine features. High sigma detects large edges.</Typography>
         <Typography> Low and high thresholds determine which gradient edge pixels are kept. </Typography>
         <h2>Installation</h2>
-        <Typography>Downloada the installer below supported on: Windows, Mac OS, Linux. </Typography>
-        <a href="./python-3.9.2-amd64.exe" download>Download CellSizeAnalyzer.exe</a><br></br>
+        <Typography>Download the installer below supported on: Windows, Mac OS, Linux. </Typography>
+        <a href="../../Assets/python-3.9.2-amd64.exe" download>Download CellSizeAnalyzer.exe</a><br></br>
         <Link to="./python-3.9.2-amd64.exe" target="_blank" download>Download CellSizeAnalyzer.exe</Link>
         <Download file="CellSizeAnalyzer.exe" content={require("./python-3.9.2-amd64.exe")}>
           <button type="button">Download CellSizeAnalyzer.exe</button>
