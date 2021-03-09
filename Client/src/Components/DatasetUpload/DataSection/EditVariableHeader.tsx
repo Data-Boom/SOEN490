@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Modal, Paper, TextField } from '@material-ui/core'
-import { Field, Form, Formik } from 'formik'
+import { ArrayHelpers, Field, Form, Formik } from 'formik'
 import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
@@ -9,6 +9,8 @@ import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
 import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
 import { Autocomplete } from '@material-ui/lab'
+import { IVariableNameModel } from '../../../Models/IVariableNameModel'
+import { SearchResults } from '../../Search/SearchResults'
 
 interface IProps {
   variable: IVariable,
@@ -20,27 +22,47 @@ interface IProps {
   onVariableUpdate: (variable: IVariable, index: number) => void,
   onVariableRemove: (index: number) => void
   dimensions: IDimensionModel[]
+  variableOption: IVariableNameModel[]
+  //fieldArrayHelpers: ArrayHelpers
+
 }
 
 export const EditVariableHeader = (props: IProps) => {
-  const { variable, editMode, editable, index, onHeaderClick, onEditModalClose, onVariableUpdate, onVariableRemove, dimensions } = { ...props }
-
+  const { variable, editMode, editable, index, onHeaderClick, onEditModalClose, onVariableUpdate, onVariableRemove, dimensions, variableOption } = { ...props }
+  //const [fieldArrayHelpers] = use
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
+
+  const [open, setOpen] = React.useState(false);
+  const [options, setOptions] = React.useState([]);
+  const loading = open && options.length === 0;
+
 
   /*useEffect(() => {
 
+    let active = true;
+
+    if (!loading) {
+      return undefined;
+    }
     const callListVariables = async () => {
       const variables = await getVariableNames()
+      const variableStr = JSON.stringify(variables)
+
+      if (active) {
+        setOptions(Object.keys(variableStr).map((key) => variableStr[key].item[0]));
+      }
       console.log("variables ", variables)
 
-
+      return () => {
+        active = false;
+      };
 
       //return variables
 
     }
     callListVariables()
 
-  }, [])*/
+  }, [loading])*/
 
 
   const handleRemove = () => {
@@ -62,17 +84,32 @@ export const EditVariableHeader = (props: IProps) => {
   }
 
 
-  const callListVariables = async () => {
+  /*const callListVariables = async () => {
     const variables = await getVariableNames()
+    console.log(JSON.stringify(variables));
+
+
+    const result = Object.keys(variables).map((key) => variables[key]);
     console.log("variables ", variables)
+    console.log("result: ", result)
+
+    return variables
 
 
-
-    //setVariables(variables)
-
-  }
+  }*/
 
   const testarray = ['abc', 'jkadbks', 'jdsjk', 'bomb', 'cab']
+
+  const getVariableOptions = (options: any[]): any => {
+    //todo revert value from id to option.name once backend is able to consume ids for categories
+    if (options) {
+      return (
+        <>
+          {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+        </>
+      )
+    }
+  }
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (
@@ -119,8 +156,8 @@ export const EditVariableHeader = (props: IProps) => {
 
                       {<Autocomplete
                         id="combo-box-demo"
-                        options={testarray}
-                        //getOptionLabel={(option) => option.title}
+                        options={variableOption}
+                        getOptionLabel={(variableOption) => variableOption.name}
                         style={{ width: 130 }}
                         renderInput={(params) => <TextField {...params} label="Name" variant="outlined" />}
                       />}

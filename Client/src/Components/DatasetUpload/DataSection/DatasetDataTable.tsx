@@ -24,7 +24,7 @@ export const DatasetDataTable = (props: IProps): any => {
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
   const [dimensions, setDimensions] = useState([])
-  const [variables, setVariables] = useState<IVariableNameModel>()
+  const [variables, setVariables] = useState([])
 
   useEffect(() => {
     const callListDimensions = async () => {
@@ -34,15 +34,15 @@ export const DatasetDataTable = (props: IProps): any => {
 
     const callListVariables = async () => {
       const variables = await getVariableNames()
+      setVariables(variables)
       console.log("variables ", variables)
+      console.log("length " + variables.length)
+      //setVariables(variables)
       //console.log("type of " + typeof variables)
 
       //console.log("length " + variables.name.length)
       //const variableName: IVariableNameModel[] 
-      for (var i = 0; i < 39; i++) {
-        //variableName[i] = variables[i].name
 
-      }
 
 
       //setVariables(variables)
@@ -129,6 +129,8 @@ export const DatasetDataTable = (props: IProps): any => {
               onVariableUpdate={handleVariableUpdate}
               onVariableRemove={handleVariableRemove}
               dimensions={dimensions}
+              variableOption={variables}
+            //fieldArrayHelpers={fieldArrayHelpers}
             />
         }
       )
