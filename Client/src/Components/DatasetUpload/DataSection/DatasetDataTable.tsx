@@ -9,8 +9,6 @@ import { EditVariableHeader } from './EditVariableHeader'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { useEffect } from 'react'
 import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
-import { any } from '@amcharts/amcharts4/.internal/core/utils/Array'
-import { IVariableNameModel } from '../../../Models/IVariableNameModel'
 
 interface IProps {
   data: IData,

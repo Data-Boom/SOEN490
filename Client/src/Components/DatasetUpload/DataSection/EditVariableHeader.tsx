@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Modal, Paper, TextField } from '@material-ui/core'
-import { ArrayHelpers, Field, Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react'
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
-import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
 import { Autocomplete } from '@material-ui/lab'
 import { IVariableNameModel } from '../../../Models/IVariableNameModel'
 import { SearchResults } from '../../Search/SearchResults'
@@ -24,7 +23,6 @@ interface IProps {
   dimensions: IDimensionModel[]
   variableOption: IVariableNameModel[]
 }
-
 export const EditVariableHeader = (props: IProps) => {
   const { variable, editMode, editable, index, onHeaderClick, onEditModalClose, onVariableUpdate, onVariableRemove, dimensions, variableOption } = { ...props }
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
@@ -58,7 +56,6 @@ export const EditVariableHeader = (props: IProps) => {
       )
     }
   }
-
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (
       <>
@@ -76,7 +73,6 @@ export const EditVariableHeader = (props: IProps) => {
       </>
     )
   }
-
   const getUnits = (dimensionId: number): IUnitModel[] => {
     const foundDimension = dimensions.find(dimension => dimension.id == dimensionId)
     if (!foundDimension) {
