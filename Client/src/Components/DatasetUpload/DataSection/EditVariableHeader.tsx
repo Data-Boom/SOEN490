@@ -52,6 +52,7 @@ export const EditVariableHeader = (props: IProps) => {
     if (options) {
       return (
         <>
+          <option value={null}></option>
           {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
         </>
       )
@@ -102,6 +103,7 @@ export const EditVariableHeader = (props: IProps) => {
                     <Grid item sm={4}>
                       {<Field name="name"
                         label='Name'
+                        disabled={!editable}
                         component={MuiSelectFormik}
                         options={getVariableOptions(variableOption)}
                         getOptionLabel={(variableOption) => variableOption.name}
