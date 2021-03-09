@@ -27,7 +27,7 @@ export default function Graph(props: IProps) {
 
 
   useEffect(() => initiateGraph(), [])
-  useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units])
+  useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units, axes[0].variableName, axes[1].variableName])
   useEffect(() => chartRef.current && handleDatasetsUpdated(), [datasets])
 
   const handleUnitsUpdated = () => {

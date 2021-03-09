@@ -4,11 +4,13 @@ import React, { useState } from 'react'
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
 import { Grid } from '@material-ui/core'
+import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 
 interface IProps {
   datasetResults: IDatasetModel[],
   handleSelectionChanged: (selection: SelectionChangeParams) => void,
   button?: any,
+  categories: ICategoryModel[]
 }
 
 interface IProps2 {
@@ -16,7 +18,7 @@ interface IProps2 {
 }
 
 export const SearchResults = (props: IProps) => {
-  const { datasetResults } = { ...props }
+  const { datasetResults, categories } = { ...props }
   const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
@@ -37,6 +39,20 @@ export const SearchResults = (props: IProps) => {
     return `${reference.year}`
   }
 
+  const getCategoryId = (params: ValueGetterParams) => {
+    const categoryId = params.row.category
+    const foundCategory = categories.find(category => category.id == categoryId)
+    return `${foundCategory.name}`
+  }
+
+  const getSubcategoryId = (params: ValueGetterParams) => {
+    const subcategoryId = params.row.subcategory
+    const categoryId = params.row.category
+    const foundCategory = categories.find(category => category.id == categoryId)
+    const foundSubcategory = foundCategory.subcategories.find(subcategory => subcategory.id == subcategoryId)
+    return `${foundSubcategory.name}`
+  }
+
   const [open, setOpen] = useState(false)
 
   const getNameLink = (params: ValueGetterParams) => {
@@ -49,8 +65,8 @@ export const SearchResults = (props: IProps) => {
   const columns: ColDef[] = [
     { field: 'dataset_name', headerName: 'Name', width: width, renderCell: getNameLink },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
-    { field: 'category', headerName: 'Category', width: width },
-    { field: 'subcategory', headerName: 'SubCategory', width: width },
+    { field: 'category', headerName: 'Category', width: width, valueGetter: getCategoryId },
+    { field: 'subcategory', headerName: 'SubCategory', width: width, valueGetter: getSubcategoryId },
     { field: 'author', headerName: 'Author', width: width, valueGetter: getAuthor },
     { field: 'year', headerName: 'Year', width: width, valueGetter: getYear },
   ]

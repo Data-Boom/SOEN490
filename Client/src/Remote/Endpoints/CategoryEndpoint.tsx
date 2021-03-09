@@ -1,10 +1,16 @@
 import { get } from "../FluentRequest"
 
-const categoryRoute = '/category'
+const categoryRoute = '/api/v1/category'
 
-interface ICategoryModel {
-  id: number,
+export interface ICategoryModel {
   name: string
+  id?: number
+  subcategories?: ISubcategoryModel[]
+}
+export interface ISubcategoryModel {
+  name: string
+  id?: number
+  categoryId?: number
 }
 
 export const listCategories = async (): Promise<ICategoryModel[]> => {

@@ -1,7 +1,6 @@
-import { get } from "../FluentRequest"
-
+import { IVariableNameModel } from "../../Models/Variables/IVariableNameModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
-import { IVariableNameModel } from "../../Models/IVariableNameModel"
+import { get } from "../FluentRequest"
 
 const variableRoute = '/api/v1/variables'
 
