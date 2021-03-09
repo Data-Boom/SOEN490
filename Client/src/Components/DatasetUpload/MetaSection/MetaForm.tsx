@@ -21,6 +21,7 @@ const getOptions = (options: any[]): any => {
   if (options) {
     return (
       <>
+        <option value={null}></option>
         {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
       </>
     )
