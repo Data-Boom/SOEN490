@@ -1,15 +1,13 @@
-import { Box, Button, Grid, Modal, Paper, TextField } from '@material-ui/core'
+import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
 import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
-import { Autocomplete } from '@material-ui/lab'
 import { IVariableNameModel } from '../../../Models/IVariableNameModel'
-import { SearchResults } from '../../Search/SearchResults'
 
 interface IProps {
   variable: IVariable,
@@ -102,7 +100,7 @@ export const EditVariableHeader = (props: IProps) => {
                         disabled={!editable}
                         component={MuiSelectFormik}
                         options={getVariableOptions(variableOption)}
-                        getOptionLabel={(variableOption) => variableOption.name}
+                        getOptionLabel={(variable) => variable.name}
                       />}
                     </Grid>
                     <Grid item sm={4}>

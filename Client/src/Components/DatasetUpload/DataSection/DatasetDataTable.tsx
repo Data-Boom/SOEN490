@@ -31,8 +31,8 @@ export const DatasetDataTable = (props: IProps): any => {
     }
 
     const callListVariables = async () => {
-      const variables = await getVariableNames()
-      setVariables(variables)
+      const variableList = await getVariableNames()
+      setVariables(variableList)
     }
     callListVariables()
     callListDimensions()
