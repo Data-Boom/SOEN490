@@ -13,7 +13,6 @@ export interface IDatasetRowProps {
   onHideDatasetSwitch: (datasetId: number) => void,
 }
 
-//todo try out the | syntax
 export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>) => {
   const { row: datasetRow, onRemoveDatasetClick, onHideDatasetSwitch } = { ...props }
   const [isHidden, setIsHidden] = useState(datasetRow.isInitiallyHidden)
