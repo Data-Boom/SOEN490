@@ -3,23 +3,23 @@ import React, { useState } from 'react'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import { IDatasetRowModel } from "../../../Models/Datasets/IDatasetRowModel"
+import { IRowProps } from "../../Utils/List"
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { classStyles } from "../../../appTheme"
 
-interface IProps {
-  dataset: IDatasetRowModel,
+export interface IDatasetRowProps {
   onRemoveDatasetClick: (datasetId: number) => void,
   onHideDatasetSwitch: (datasetId: number) => void,
 }
 
-export const DatasetRow = (props: IProps) => {
-  const { dataset, onRemoveDatasetClick, onHideDatasetSwitch } = { ...props }
-  const [isHidden, setIsHidden] = useState(dataset.isInitiallyHidden)
+export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>) => {
+  const { row: datasetRow, onRemoveDatasetClick, onHideDatasetSwitch } = { ...props }
+  const [isHidden, setIsHidden] = useState(datasetRow.isInitiallyHidden)
 
   const handleHiddenSwitch = () => {
     setIsHidden(!isHidden)
-    onHideDatasetSwitch(dataset.id)
+    onHideDatasetSwitch(datasetRow.id)
   }
 
   return (
@@ -28,7 +28,7 @@ export const DatasetRow = (props: IProps) => {
         <Grid container alignItems='center' justify='space-between'>
           <Grid item container justify='flex-start' xs={3}>
             <Typography variant="body2" noWrap>
-              {dataset.name}
+              {datasetRow.name}
             </Typography>
           </Grid>
           <Grid item xs={7}>
@@ -39,11 +39,10 @@ export const DatasetRow = (props: IProps) => {
                 {isHidden ? <VisibilityOffIcon color='primary' /> : <VisibilityIcon color='primary' />}
               </IconButton>
             </Tooltip>
-
           </Grid>
           <Grid item xs={1}>
             <Tooltip title="Remove dataset">
-              <IconButton id="RemoveDataset" onClick={() => onRemoveDatasetClick(dataset.id)}>
+              <IconButton id="RemoveDataset" onClick={() => onRemoveDatasetClick(datasetRow.id)}>
                 <DeleteIcon color='primary' />
               </IconButton>
             </Tooltip>
