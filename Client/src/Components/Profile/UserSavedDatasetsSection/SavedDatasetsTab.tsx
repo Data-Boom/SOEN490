@@ -15,7 +15,6 @@ export const SavedDatasetsTab = () => {
   const width = 160
 
   const getDatasetInfo = async (ids: number[]) => {
-    console.log(datasetIds)
     const datasetArray = await callGetDatasets({ datasetId: ids })
     setDatasets(datasetArray)
   }
