@@ -66,7 +66,7 @@ export const DatasetControl = (props: IProps) => {
               <Grid item>
                 <ExportDatasetsButton datasets={completeDatasets} />
               </Grid>
-              <Grid item >
+              <Grid item>
                 <Button id="remove-all-datasets" onClick={handleRemoveAllDatasets} color="secondary" variant="contained">Remove Datasets</Button>
               </Grid>
             </Grid>
