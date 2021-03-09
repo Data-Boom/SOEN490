@@ -36,7 +36,8 @@ export const DatasetDataTable = (props: IProps): any => {
       const variables = await getVariableNames()
       setVariables(variables)
       console.log("variables ", variables)
-      console.log("length " + variables.length)
+      //console.log("length " + variables.length)
+      //console.log("typeof " + typeof variables[0].name)
     }
     callListVariables()
     callListDimensions()

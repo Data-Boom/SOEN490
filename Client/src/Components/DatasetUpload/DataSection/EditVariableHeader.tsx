@@ -100,16 +100,12 @@ export const EditVariableHeader = (props: IProps) => {
                 <Form>
                   <Grid container spacing={4}>
                     <Grid item sm={4}>
-
-                      {<Autocomplete
-                        id="combo-box-demo"
-                        options={variableOption}
+                      {<Field name="name"
+                        label='Name'
+                        component={MuiSelectFormik}
+                        options={getVariableOptions(variableOption)}
                         getOptionLabel={(variableOption) => variableOption.name}
-                        style={{ width: 130 }}
-                        renderInput={(params) => <TextField {...params} label="Name" variant="outlined" />}
                       />}
-
-                      {/*<Field name="name" label='Name' component={MuiTextFieldFormik} />*/}
                     </Grid>
                     <Grid item sm={4}>
                       <Field
