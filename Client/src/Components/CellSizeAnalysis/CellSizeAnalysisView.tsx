@@ -1,7 +1,7 @@
 import { Box, Typography } from '@material-ui/core'
-import Download from '@axetroy/react-download'
-import { Link } from 'react-router-dom'
+
 import React from 'react'
+import cellSizeAnalyzerExecutable from '../../Assets/python-3.9.2-amd64.exe'
 
 export const CellSizeAnalysisView = () => {
   return (
@@ -14,11 +14,7 @@ export const CellSizeAnalysisView = () => {
         <Typography> Low and high thresholds determine which gradient edge pixels are kept. </Typography>
         <h2>Installation</h2>
         <Typography>Download the installer below supported on: Windows, Mac OS, Linux. </Typography>
-        <a href="../../Assets/python-3.9.2-amd64.exe" download>Download CellSizeAnalyzer.exe</a><br></br>
-        <Link to="../../Assets/python-3.9.2-amd64.exe" target="_blank" download>Download CellSizeAnalyzer.exe</Link>
-        <Download file="CellSizeAnalyzer.exe" content={require("../../Assets/python-3.9.2-amd64.exe")}>
-          <button type="button">Download CellSizeAnalyzer.exe</button>
-        </Download>
+        <a href={cellSizeAnalyzerExecutable} download="Cell Size Analyzer.exe"> Download Here </a>
       </Box>
     </>
   )
