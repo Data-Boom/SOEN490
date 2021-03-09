@@ -3,17 +3,18 @@ import React, { useState } from 'react'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import { IDatasetRowModel } from "../../../Models/Datasets/IDatasetRowModel"
-import { IRowProps } from "../../Utils/PaginatedList"
+import { IRowProps } from "../../Utils/List"
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { classStyles } from "../../../appTheme"
 
-interface IProps extends IRowProps<IDatasetRowModel> {
+export interface IDatasetRowProps {
   onRemoveDatasetClick: (datasetId: number) => void,
   onHideDatasetSwitch: (datasetId: number) => void,
 }
 
-export const DatasetRow = (props: IProps) => {
+//todo try out the | syntax
+export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>) => {
   const { row: datasetRow, onRemoveDatasetClick, onHideDatasetSwitch } = { ...props }
   const [isHidden, setIsHidden] = useState(datasetRow.isInitiallyHidden)
 
@@ -39,7 +40,6 @@ export const DatasetRow = (props: IProps) => {
                 {isHidden ? <VisibilityOffIcon color='primary' /> : <VisibilityIcon color='primary' />}
               </IconButton>
             </Tooltip>
-
           </Grid>
           <Grid item xs={1}>
             <Tooltip title="Remove dataset">
