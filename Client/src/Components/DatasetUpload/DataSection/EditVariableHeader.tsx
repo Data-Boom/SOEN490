@@ -44,7 +44,6 @@ export const EditVariableHeader = (props: IProps) => {
   }
 
   const getVariableOptions = (options: any[]): any => {
-    //todo revert value from id to option.name once backend is able to consume ids for categories
     if (options) {
       return (
         <>
