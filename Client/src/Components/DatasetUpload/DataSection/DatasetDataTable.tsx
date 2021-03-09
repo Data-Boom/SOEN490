@@ -37,16 +37,6 @@ export const DatasetDataTable = (props: IProps): any => {
       setVariables(variables)
       console.log("variables ", variables)
       console.log("length " + variables.length)
-      //setVariables(variables)
-      //console.log("type of " + typeof variables)
-
-      //console.log("length " + variables.name.length)
-      //const variableName: IVariableNameModel[] 
-
-
-
-      //setVariables(variables)
-
     }
     callListVariables()
     callListDimensions()
@@ -130,7 +120,6 @@ export const DatasetDataTable = (props: IProps): any => {
               onVariableRemove={handleVariableRemove}
               dimensions={dimensions}
               variableOption={variables}
-            //fieldArrayHelpers={fieldArrayHelpers}
             />
         }
       )

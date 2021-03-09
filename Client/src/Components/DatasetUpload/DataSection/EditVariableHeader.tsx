@@ -23,47 +23,11 @@ interface IProps {
   onVariableRemove: (index: number) => void
   dimensions: IDimensionModel[]
   variableOption: IVariableNameModel[]
-  //fieldArrayHelpers: ArrayHelpers
-
 }
 
 export const EditVariableHeader = (props: IProps) => {
   const { variable, editMode, editable, index, onHeaderClick, onEditModalClose, onVariableUpdate, onVariableRemove, dimensions, variableOption } = { ...props }
-  //const [fieldArrayHelpers] = use
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
-
-  const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const loading = open && options.length === 0;
-
-
-  /*useEffect(() => {
-
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-    const callListVariables = async () => {
-      const variables = await getVariableNames()
-      const variableStr = JSON.stringify(variables)
-
-      if (active) {
-        setOptions(Object.keys(variableStr).map((key) => variableStr[key].item[0]));
-      }
-      console.log("variables ", variables)
-
-      return () => {
-        active = false;
-      };
-
-      //return variables
-
-    }
-    callListVariables()
-
-  }, [loading])*/
-
 
   const handleRemove = () => {
     if (editable) {
@@ -82,23 +46,6 @@ export const EditVariableHeader = (props: IProps) => {
       onHeaderClick(index)
     }
   }
-
-
-  /*const callListVariables = async () => {
-    const variables = await getVariableNames()
-    console.log(JSON.stringify(variables));
-
-
-    const result = Object.keys(variables).map((key) => variables[key]);
-    console.log("variables ", variables)
-    console.log("result: ", result)
-
-    return variables
-
-
-  }*/
-
-  const testarray = ['abc', 'jkadbks', 'jdsjk', 'bomb', 'cab']
 
   const getVariableOptions = (options: any[]): any => {
     //todo revert value from id to option.name once backend is able to consume ids for categories
