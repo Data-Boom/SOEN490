@@ -1,5 +1,4 @@
 import { IGraphDatasetState } from "./IGraphDatasetModel"
-import { IUnitModel } from "../../../../Server/src/models/interfaces/IDimension"
 
 export interface IGraphStateModel {
   datasets: IGraphDatasetState[],
