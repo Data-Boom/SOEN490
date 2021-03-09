@@ -15,8 +15,8 @@ export const CellSizeAnalysisView = () => {
         <h2>Installation</h2>
         <Typography>Download the installer below supported on: Windows, Mac OS, Linux. </Typography>
         <a href="../../Assets/python-3.9.2-amd64.exe" download>Download CellSizeAnalyzer.exe</a><br></br>
-        <Link to="./python-3.9.2-amd64.exe" target="_blank" download>Download CellSizeAnalyzer.exe</Link>
-        <Download file="CellSizeAnalyzer.exe" content={require("./python-3.9.2-amd64.exe")}>
+        <Link to="../../Assets/python-3.9.2-amd64.exe" target="_blank" download>Download CellSizeAnalyzer.exe</Link>
+        <Download file="CellSizeAnalyzer.exe" content={require("../../Assets/python-3.9.2-amd64.exe")}>
           <button type="button">Download CellSizeAnalyzer.exe</button>
         </Download>
       </Box>
