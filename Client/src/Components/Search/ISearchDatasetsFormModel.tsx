@@ -7,7 +7,8 @@ export interface ISearchDatasetsFormModel {
   lastName?: string,
   year?: number,
   categoryId?: number,
-  subcategoryId?: number
+  subcategoryId?: number,
+  datapointId?: number
 }
 
 export interface ICategory {
@@ -26,7 +27,8 @@ export const defaultSearchDatasetsModel: ISearchDatasetsFormModel = {
   lastName: undefined,
   year: undefined,
   categoryId: undefined,
-  subcategoryId: undefined
+  subcategoryId: undefined,
+  datapointId: undefined
 }
 
 //todo complete Yup validation
