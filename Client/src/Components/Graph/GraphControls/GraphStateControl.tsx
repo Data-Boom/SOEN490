@@ -22,11 +22,11 @@ interface IProps {
 export const GraphStateControl = (props: IProps) => {
   const { graphState, dimensions, onGraphStateChange } = { ...props }
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
-  const [loadingDatasets, setIsLoadinDatasets] = useState(false)
+  const [loadingDatasets, setIsLoadingDatasets] = useState(false)
 
   useEffect(() => {
     const getGraphState = async (id: number) => {
-      setIsLoadinDatasets(true)
+      setIsLoadingDatasets(true)
       const remoteGraphState = await callGetGraphState(id)
 
       if (!remoteGraphState) {
@@ -38,7 +38,7 @@ export const GraphStateControl = (props: IProps) => {
         onGraphStateChange(remoteGraphState, datasets)
       }
 
-      setIsLoadinDatasets(false)
+      setIsLoadingDatasets(false)
     }
 
     if (graphState.id) {
