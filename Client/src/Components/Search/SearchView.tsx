@@ -24,7 +24,7 @@ export default function SearchView(props: IProps) {
 
   const [categories, setCategories] = useState([])
 
-  const [datapoints, setDatapoints] = useState([])
+  const [datapoint, setDatapoints] = useState([])
 
   useEffect(() => {
     const callListCategories = async () => {
@@ -74,7 +74,7 @@ export default function SearchView(props: IProps) {
         <SearchDatasetsForm
           handleSubmit={handleSearchClick}
           categories={categories}
-          datapoints={datapoints}
+          datapoint={datapoint}
         />
       </Box>
       <Box pt={4}>

@@ -12,16 +12,15 @@ import { IDatapointModel } from '../../Remote/Endpoints/DatapointEndpoint'
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void,
   categories: ICategoryModel[],
-  datapoints: IDatapointModel[]
+  datapoint: IDatapointModel[]
 }
 
 export const SearchDatasetsForm = (props: IProps): any => {
   const [materials, setMaterials] = useState([])
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
-  const [selectDatapointId, setSelectedDatapointId] = useState<number | null>(null)
 
 
-  const { handleSubmit, categories, datapoints } = { ...props }
+  const { handleSubmit, categories, datapoint } = { ...props }
 
   const transformAndSubmit = (formValues: ISearchDatasetsFormModel) => {
     let newMaterials = formValues.material as any[] || []
@@ -63,8 +62,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
   }
   const handleDatapointChange = (formProps, value: any) => {
     const datapointId = value.target.value
-    formProps.setFieldValue('datapointId', datapointId)
-    setSelectedDatapointId(datapointId)
+    formProps.setFieldValue('datapoint', datapointId)
   }
 
   return (
@@ -99,7 +97,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
               </Grid>
 
               <Grid item>
-                <Field name="datapointId" label='Datapoint' component={MuiSelectFormik} options={getOptions(datapoints)} onChange={(value) => handleDatapointChange(formProps, value)} />
+                <Field name="datapoint" label='Datapoint' component={MuiSelectFormik} options={getOptions(datapoint)} onChange={(value) => handleDatapointChange(formProps, value)} />
               </Grid>
 
             </Grid>
