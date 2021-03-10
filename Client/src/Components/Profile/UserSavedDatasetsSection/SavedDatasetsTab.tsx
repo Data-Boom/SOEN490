@@ -11,7 +11,6 @@ export const SavedDatasetsTab = () => {
   const [categories, setCategories] = useState<ICategoryModel[]>([])
   const [datasetIds, setDatasetIds] = useState<number[]>([])
   const [datasets, setDatasets] = useState<IDatasetModel[]>([])
-  const width = 160
 
   const getDatasetInfo = async (ids: number[]) => {
     const datasetArray = await callGetDatasets({ datasetId: ids })
@@ -46,6 +45,7 @@ export const SavedDatasetsTab = () => {
         <SearchResults
           datasetResults={datasets}
           categories={categories}
+          displayCheckbox={false}
         />
       </Box>
     </Container>

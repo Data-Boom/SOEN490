@@ -9,7 +9,6 @@ import { get, values } from 'lodash'
 import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
 import { classStyles } from '../../../appTheme'
-import { number } from 'yup/lib/locale'
 
 interface IProps {
   materials: IMaterial[],
