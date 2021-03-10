@@ -8,7 +8,7 @@ import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 
 interface IProps {
   datasetResults: IDatasetModel[],
-  handleSelectionChanged: (selection: SelectionChangeParams) => void,
+  handleSelectionChanged?: (selection: SelectionChangeParams) => void,
   button?: any,
   categories: ICategoryModel[]
 }
