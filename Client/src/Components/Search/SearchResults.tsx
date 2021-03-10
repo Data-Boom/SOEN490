@@ -19,7 +19,7 @@ interface IProps2 {
 }
 
 export const SearchResults = (props: IProps) => {
-  const { datasetResults, categories, displayCheckbox } = { ...props }
+  const { categories, displayCheckbox } = { ...props }
   const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
