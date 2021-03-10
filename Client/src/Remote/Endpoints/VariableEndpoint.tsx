@@ -4,7 +4,7 @@ import { get } from "../FluentRequest"
 
 const variableRoute = '/api/v1/variables'
 
-export const getVariableNames = async (): Promise<IVariableNameModel> => {
+export const getVariableNames = async (): Promise<IVariableNameModel[]> => {
   const result = await get(variableRoute).json()
   if (result as IVariableNameModel[]) {
     return result

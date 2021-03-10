@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { EditVariableHeader } from './EditVariableHeader'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { useEffect } from 'react'
+import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
 
 interface IProps {
   data: IData,
@@ -21,6 +22,7 @@ export const DatasetDataTable = (props: IProps): any => {
   const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
   const [dimensions, setDimensions] = useState([])
+  const [variables, setVariables] = useState([])
 
   useEffect(() => {
     const callListDimensions = async () => {
@@ -28,6 +30,11 @@ export const DatasetDataTable = (props: IProps): any => {
       setDimensions(dimensions)
     }
 
+    const callListVariables = async () => {
+      const variableList = await getVariableNames()
+      setVariables(variableList)
+    }
+    callListVariables()
     callListDimensions()
   }, [])
 
@@ -108,6 +115,7 @@ export const DatasetDataTable = (props: IProps): any => {
               onVariableUpdate={handleVariableUpdate}
               onVariableRemove={handleVariableRemove}
               dimensions={dimensions}
+              variableOption={variables}
             />
         }
       )
