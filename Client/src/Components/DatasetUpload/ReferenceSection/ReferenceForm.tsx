@@ -20,7 +20,7 @@ export const ReferenceForm = (props: IProps) => {
     <Box className={classStyles().defaultBorder}>
       <ThemeProvider theme={disabledTheme}>
         <Typography variant='h6' align="left">Reference</Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           <Grid item sm={4}>
             <FastField name="reference.title" label='Title' disabled={!editable} shouldUpdate={shouldComponentUpdate} component={MuiTextFieldFormik} />
           </Grid>
@@ -43,12 +43,10 @@ export const ReferenceForm = (props: IProps) => {
             <FastField name="reference.year" label='Year' disabled={!editable} shouldUpdate={shouldComponentUpdate} component={MuiTextFieldFormik} />
           </Grid>
         </Grid>
-        <Grid container spacing={4}>
-          <FieldArray name='reference.authors' >
-            {({ form, ...fieldArrayHelpers }) => <AuthorsList editable={editable} authors={get(form.values, 'reference.authors')} fieldArrayHelpers={fieldArrayHelpers} />}
-          </FieldArray>
-        </Grid>
+        <FieldArray name='reference.authors' >
+          {({ form, ...fieldArrayHelpers }) => <AuthorsList editable={editable} authors={get(form.values, 'reference.authors')} fieldArrayHelpers={fieldArrayHelpers} />}
+        </FieldArray>
       </ThemeProvider>
     </Box >
   )
-} 
+}

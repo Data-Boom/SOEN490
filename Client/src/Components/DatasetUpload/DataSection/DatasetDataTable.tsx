@@ -5,7 +5,8 @@ import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
 import { IContent, IData, IVariable, newVariable } from '../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
-import { EditVariableHeader } from './EditVariableHeader'
+import { EditVaraibleModal } from './EditVariableModal'
+import { VariableHeader } from './VariableHeader'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { useEffect } from 'react'
 
@@ -13,12 +14,23 @@ interface IProps {
   data: IData,
   onDataChange: (newData: IData) => void,
   editable: boolean,
+  errors: any,
 }
 
+interface IEditedVariableModel {
+  variable: IVariable
+  index: number
+  isNew: boolean
+}
+
+const noEditedVariable: IEditedVariableModel = { variable: null, index: -1, isNew: false }
+
 export const DatasetDataTable = (props: IProps): any => {
+  //todo handle errors on the form
+  console.log(props.errors.data)
   const { data, onDataChange, editable } = { ...props }
 
-  const [editedVariableIndex, setEditedVariableIndex] = useState(-1)
+  const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
   const [dimensions, setDimensions] = useState([])
 
@@ -32,31 +44,33 @@ export const DatasetDataTable = (props: IProps): any => {
   }, [])
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
-    setEditedVariableIndex(indexOfClickedHeader)
+    editable && setEditedVariable({ variable: { ...data.variables[indexOfClickedHeader] }, index: indexOfClickedHeader, isNew: false })
   }
 
-  const closeEditVariableModal = (): any => {
-    setEditedVariableIndex(-1)
-  }
-
-  const handleVariableUpdate = (variable: IVariable, index: number): void => {
+  const handleVariableUpdate = (variable: IVariable): void => {
     const copyData = { ...data }
+    let index = editedVariable.index
+
+    if (index == -1) {
+      index = copyData.variables.length
+    }
+
     copyData.variables[index] = variable
     onDataChange(copyData)
 
-    closeEditVariableModal()
+    setEditedVariable(noEditedVariable)
   }
 
-  const handleVariableRemove = (index: number): void => {
+  const handleVariableRemove = (): void => {
     const copyData = { ...data }
-    copyData.variables.splice(index, 1)
+    copyData.variables.splice(editedVariable.index, 1)
 
     const copyContents: IContent[] = [...data.contents]
-    removeColumnPoints(copyContents, index)
+    removeColumnPoints(copyContents, editedVariable.index)
     copyData.contents = copyContents
 
     onDataChange(copyData)
-    closeEditVariableModal()
+    setEditedVariable(noEditedVariable)
   }
 
   const removeColumnPoints = (copyContents: IContent[], columnIndex: number): void => {
@@ -65,14 +79,6 @@ export const DatasetDataTable = (props: IProps): any => {
         return index !== columnIndex
       })
     }
-  }
-
-  const handleAddColumn = (): void => {
-    const copyData = { ...data }
-    copyData.variables.push(newVariable)
-    onDataChange(copyData)
-
-    setEditedVariableIndex(copyData.variables.length - 1)
   }
 
   const handleRemoveSelectedRows = (): void => {
@@ -97,16 +103,11 @@ export const DatasetDataTable = (props: IProps): any => {
     const columns = data.variables.map((variable, index) => {
       return (
         {
-          key: `${index}`, name: variable.name, editable: editable, editor: TextEditor, headerRenderer: (): any =>
-            <EditVariableHeader
+          key: `${index}`, name: `${variable.name}`, editable: editable, editor: TextEditor, resizable: true, headerRenderer: (): any =>
+            <VariableHeader
               variable={variable}
               index={index}
-              editMode={editedVariableIndex === index}
-              editable={editable}
               onHeaderClick={handleHeaderClick}
-              onEditModalClose={closeEditVariableModal}
-              onVariableUpdate={handleVariableUpdate}
-              onVariableRemove={handleVariableRemove}
               dimensions={dimensions}
             />
         }
@@ -135,16 +136,20 @@ export const DatasetDataTable = (props: IProps): any => {
   const renderTopButtons = (): any => {
     return (
       <>
-        <Grid item>
-          <Button variant="contained" color="primary" onClick={handleAddRow} disabled={!editable}>Add row</Button>
-        </Grid>
+        {!!data.variables.length &&
+          <>
+            <Grid item>
+              <Button variant="outlined" color="primary" onClick={handleAddRow} disabled={!editable}>Add row</Button>
+            </Grid>
+
+            <Grid item>
+              <Button variant="outlined" color="secondary" onClick={handleRemoveSelectedRows} disabled={!editable}>Remove selected rows</Button>
+            </Grid>
+          </>
+        }
 
         <Grid item>
-          <Button variant="contained" color="primary" onClick={handleAddColumn} disabled={!editable}>New variable</Button>
-        </Grid>
-
-        <Grid item>
-          <Button variant="contained" color="secondary" onClick={handleRemoveSelectedRows} disabled={!editable}>Remove selected</Button>
+          <Button variant="contained" color="primary" onClick={() => setEditedVariable({ index: -1, isNew: true, variable: newVariable })} disabled={!editable}>New variable</Button>
         </Grid>
       </>
     )
@@ -158,15 +163,24 @@ export const DatasetDataTable = (props: IProps): any => {
             <Typography variant='h6' align="left">Data</Typography>
           </Grid>
         </Grid>
-
         <Grid item container sm={6} spacing={2} justify='flex-end'>
           {renderTopButtons()}
         </Grid>
       </Grid>
-
+      {!!editedVariable.variable && <EditVaraibleModal
+        dimensions={dimensions}
+        initialValues={editedVariable.variable}
+        onCancel={() => setEditedVariable(noEditedVariable)}
+        isOpen={!!editedVariable.variable}
+        editable={editable}
+        onDelete={handleVariableRemove}
+        onVariableUpdate={handleVariableUpdate}
+        isNewVariable={editedVariable.isNew}
+      />}
       <Box width='100%' mt={4}>
         <DataGrid
           rowKeyGetter={rowKeyGetter}
+          headerRowHeight={72}
           columns={getColumns()}
           rows={getRows()}
           onRowsChange={handleRowChange}

@@ -14,7 +14,7 @@ export const DataForm = (props: IProps) => {
   const { editable } = props
 
   const FormikDatasetDataTable = ({ field, form, ...props }) => {
-    return <DatasetDataTable editable={editable} data={field.value} onDataChange={(newData: IData) => form.setFieldValue(field.name, newData)} />
+    return <DatasetDataTable errors={form.errors} editable={editable} data={field.value} onDataChange={(newData: IData) => form.setFieldValue(field.name, newData)} />
   }
 
   return (

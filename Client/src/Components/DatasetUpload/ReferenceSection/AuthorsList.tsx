@@ -44,7 +44,7 @@ export const AuthorsList = (props: IProps) => {
 
   return (
     <>
-      <Grid item container direction='column' spacing={4} alignItems="flex-start">
+      <Grid container direction='column' spacing={2} alignItems="flex-start">
         <Grid item>
           <Typography variant='h6' align="left">Authors</Typography>
         </Grid>
