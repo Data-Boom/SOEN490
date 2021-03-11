@@ -49,9 +49,11 @@ export const AuthorsList = (props: IProps) => {
           {renderAuthorRows()}
         </Grid>
       </Grid>
-      <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!editable}>
-        <AddIcon />
-      </IconButton>
+      <Grid container>
+        <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!editable}>
+          <AddIcon />
+        </IconButton>
+      </Grid>
     </>
   )
 }
