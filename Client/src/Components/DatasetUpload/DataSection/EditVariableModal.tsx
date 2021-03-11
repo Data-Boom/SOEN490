@@ -1,10 +1,11 @@
 import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
 import { IDimensionModel, IUnitModel } from '../../../Models/Dimensions/IDimensionModel'
-import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
+import { MuiAutocompleteFormik, MuiSelectFormik } from '../../Forms/FormikFields'
 import React, { useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
+import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
 
@@ -17,10 +18,11 @@ interface IProps {
   editable: boolean
   isOpen: boolean
   isNewVariable: boolean
+  variables: IVariableNameModel[]
 }
 
 export const EditVaraibleModal = (props: IProps) => {
-  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, dimensions, isOpen, isNewVariable } = props
+  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, dimensions, isOpen, isNewVariable, variables } = props
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
@@ -32,6 +34,7 @@ export const EditVaraibleModal = (props: IProps) => {
     )
   }
 
+  // todo poor duplicated code with options everywhere
   const getUnitsOptions = (options: IUnitModel[]): any => {
     return (
       <>
@@ -62,9 +65,16 @@ export const EditVaraibleModal = (props: IProps) => {
           <Formik initialValues={initialValues} validationSchema={variableValidationSchema} onSubmit={onVariableUpdate}>
             {formProps =>
               <Form>
+                {console.log(formProps.errors)}
                 <Grid container spacing={4}>
                   <Grid item sm={4}>
-                    <Field name="name" label='Name' component={MuiTextFieldFormik} />
+                    {<Field name="name"
+                      label='Name'
+                      disabled={!editable}
+                      component={MuiAutocompleteFormik}
+                      options={variables.map(variable => variable.name)}
+                      onChange={(event, newOption) => console.log(newOption, 'eventwow')}
+                    />}
                   </Grid>
                   <Grid item sm={4}>
                     <Field
@@ -91,13 +101,13 @@ export const EditVaraibleModal = (props: IProps) => {
                     </>
                     : <>
                       <Grid item>
+                        <Button variant="contained" color="secondary" onClick={onDelete}>Remove Variable</Button>
+                      </Grid>
+                      <Grid item>
                         <Button variant="outlined" color="primary" onClick={onCancel}>Cancel</Button>
                       </Grid>
                       <Grid item>
                         <Button variant="contained" color="primary" type="submit">Update</Button>
-                      </Grid>
-                      <Grid item>
-                        <Button variant="contained" color="secondary" onClick={onDelete}>Remove Variable</Button>
                       </Grid>
                     </>
                   }

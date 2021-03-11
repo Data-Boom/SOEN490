@@ -4,9 +4,9 @@ import { get } from "../FluentRequest"
 
 const variableRoute = '/api/v1/variables'
 
-export const getVariableNames = async (): Promise<IVariableNameModel> => {
+export const getVariableNames = async (): Promise<IVariableNameModel[]> => {
   const result = await get(variableRoute).json()
-  if (result as IVariableNameModel[]) {
+  if (result) {
     return result
   } else {
     SnackbarUtils.error(`Could not get all variables`)

@@ -8,9 +8,10 @@ import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 
 interface IProps {
   datasetResults: IDatasetModel[],
-  handleSelectionChanged: (selection: SelectionChangeParams) => void,
+  handleSelectionChanged?: (selection: SelectionChangeParams) => void,
   button?: any,
-  categories: ICategoryModel[]
+  categories: ICategoryModel[],
+  displayCheckbox: boolean
 }
 
 interface IProps2 {
@@ -18,7 +19,7 @@ interface IProps2 {
 }
 
 export const SearchResults = (props: IProps) => {
-  const { datasetResults, categories } = { ...props }
+  const { categories, displayCheckbox } = { ...props }
   const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
@@ -57,18 +58,18 @@ export const SearchResults = (props: IProps) => {
 
   const getNameLink = (params: ValueGetterParams) => {
     const datasetId = params.getValue('id')
-    const datasetName = params.getValue('dataset_name')
 
-    return (<DatasetFormModal datasetId={datasetId.toString()} datasetName={datasetName.toString()} />)
+    return (<DatasetFormModal datasetId={datasetId.toString()} />)
   }
 
   const columns: ColDef[] = [
-    { field: 'dataset_name', headerName: 'Name', width: width, renderCell: getNameLink },
+    { field: 'dataset_name', headerName: 'Name', width: width },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
     { field: 'category', headerName: 'Category', width: width, valueGetter: getCategoryId },
     { field: 'subcategory', headerName: 'SubCategory', width: width, valueGetter: getSubcategoryId },
     { field: 'author', headerName: 'Author', width: width, valueGetter: getAuthor },
     { field: 'year', headerName: 'Year', width: width, valueGetter: getYear },
+    { field: 'dataset_button', headerName: 'View', width: width * 1.2, renderCell: getNameLink },
   ]
 
   return (
@@ -76,7 +77,7 @@ export const SearchResults = (props: IProps) => {
       <Grid container spacing={3}>
         <Grid item container>
           <div style={{ height: 400, width: '100%' }}>
-            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} checkboxSelection onSelectionChange={props.handleSelectionChanged} />
+            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} checkboxSelection={displayCheckbox} onSelectionChange={props.handleSelectionChanged} />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>

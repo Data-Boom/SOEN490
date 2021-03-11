@@ -6,8 +6,10 @@ import { IContent, IData, IVariable, newVariable } from '../../../Models/Dataset
 import React, { useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
+import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 import { VariableHeader } from './VariableHeader'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
+import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
 import { useEffect } from 'react'
 
 interface IProps {
@@ -33,6 +35,7 @@ export const DatasetDataTable = (props: IProps): any => {
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
   const [dimensions, setDimensions] = useState([])
+  const [variables, setVariables] = useState<IVariableNameModel[]>([])
 
   useEffect(() => {
     const callListDimensions = async () => {
@@ -40,6 +43,11 @@ export const DatasetDataTable = (props: IProps): any => {
       setDimensions(dimensions)
     }
 
+    const callListVariables = async () => {
+      const variableList = await getVariableNames()
+      setVariables(variableList)
+    }
+    callListVariables()
     callListDimensions()
   }, [])
 
@@ -48,6 +56,7 @@ export const DatasetDataTable = (props: IProps): any => {
   }
 
   const handleVariableUpdate = (variable: IVariable): void => {
+    console.log('got here')
     const copyData = { ...data }
     let index = editedVariable.index
 
@@ -176,6 +185,7 @@ export const DatasetDataTable = (props: IProps): any => {
         onDelete={handleVariableRemove}
         onVariableUpdate={handleVariableUpdate}
         isNewVariable={editedVariable.isNew}
+        variables={variables}
       />}
       <Box width='100%' mt={4}>
         <DataGrid

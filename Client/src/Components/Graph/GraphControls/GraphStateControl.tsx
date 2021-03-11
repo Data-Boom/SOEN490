@@ -2,7 +2,7 @@ import { IAxisStateModel, IGraphStateModel } from '../../../Models/Graph/IGraphS
 import { IGraphDatasetState, newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
 import React, { useEffect, useState } from 'react'
 
-import { AxesControl } from './AxesControl'
+import { AxesControl } from './Axes/AxesControl'
 import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetControl } from './DatasetControl'
 import { Grid } from '@material-ui/core'
