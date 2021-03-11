@@ -14,6 +14,10 @@ import StarIcon from "@material-ui/icons/Star"
 import { datasetValidationSchema } from './DatasetValidationSchema'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 
+import GetAppIcon from '@material-ui/icons/GetApp';
+import TimelineIcon from '@material-ui/icons/Timeline';
+import PublishIcon from '@material-ui/icons/Publish';
+
 interface IProps extends IFormProps {
   initialDataset: IDatasetModel,
   editable: boolean,
@@ -91,6 +95,24 @@ export const DatasetForm = (props: IProps): any => {
   const data: IData = initialDataset.data
   const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
+  const renderTopButtons = (): any => {
+    return (
+      <>
+        <Grid item>
+          <Button variant="contained" color="primary" startIcon={< GetAppIcon />}>Download</Button>
+        </Grid>
+
+        <Grid item>
+          <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
+        </Grid>
+
+        <Grid item>
+          <Button variant="contained" color="primary" startIcon={<PublishIcon />}>Upload Dataset</Button>
+        </Grid>
+      </>
+    )
+  }
+
   return (
     <Formik
       enableReinitialize={true}
@@ -105,6 +127,11 @@ export const DatasetForm = (props: IProps): any => {
             constructFavoriteButton() : null
           }
         </Grid>
+
+        <Grid item container sm={12} spacing={2} justify='flex-end'>
+          {renderTopButtons()}
+        </Grid>
+
         <MetaForm materials={materials} editable={editable} categories={categories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />
