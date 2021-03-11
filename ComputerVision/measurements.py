@@ -47,7 +47,7 @@ def undo () :
         settings.images["imagetomeasure"] = np.array(settings.previousImgs[len(settings.previousImgs)-1][0])
         settings.previousImgs.pop()
         settings.previousImgsWithoutIDs.pop()
-        changeImage()
+        change_image()
     else :
         messagebox.showerror( "Error", "There is nothing to undo.")
 
@@ -57,9 +57,9 @@ def hide_ids () :
     else :
         settings.buttons['hideIDsButton'].configure(text="Unhide IDs")
     settings.hideids = not settings.hideids
-    changeImage()
+    change_image()
         
-def changeImage () :
+def change_image () :
     if settings.hideids :
         img = Image.fromarray(settings.previousImgsWithoutIDs[len(settings.previousImgsWithoutIDs)-1][0])
         img = ImageTk.PhotoImage(image = img)
@@ -103,7 +103,7 @@ def calculate () :
             settings.images["imagetomeasure"] = cv2.putText(settings.images["imagetomeasure"], str(settings.variables['cellid']), (x3, y3), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (255, 0, 0), 2, cv2.LINE_AA)
             calculate_length(x1,x2,y1,y2)  
             settings.variables['cellid'] += 1
-            changeImage()
+            change_image()
         else :
             messagebox.showerror( "Error", "There is already a line here.")
     else :
@@ -129,7 +129,7 @@ def draw_circle (x, y) :
     settings.images["imagetomeasure"] = cv2.circle(settings.images["imagetomeasure"],(x-2,y-2),5,(255,0,0),-1)
     img = cv2.circle(settings.previousImgsWithoutIDs[len(settings.previousImgsWithoutIDs)-1][0],(x-2,y-2),5,(255,0,0),-1)
     settings.previousImgsWithoutIDs.append([img])
-    changeImage()
+    change_image()
 
     settings.points.append([x-2, y-2, True])
 
@@ -151,7 +151,7 @@ def measures_with_canny () :
 
     settings.frames["sliderframe"].destroy()
     settings.frames["endCannyframe"].destroy()
-    changeImage()
+    change_image()
     add_measurement_buttons()
 
 def measures_with_original () :
@@ -166,5 +166,5 @@ def measures_with_original () :
     settings.frames["sliderframe"].destroy()
     settings.frames["endCannyframe"].destroy()
 
-    changeImage()
+    change_image()
     add_measurement_buttons()
