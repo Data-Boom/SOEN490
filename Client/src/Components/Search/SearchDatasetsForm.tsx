@@ -7,17 +7,20 @@ import React, { useEffect, useState } from 'react'
 
 import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
+import { IDatapointModel } from '../../Remote/Endpoints/DatapointEndpoint'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void,
-  categories: ICategoryModel[]
+  categories: ICategoryModel[],
+  datapoint: IDatapointModel[]
 }
 
 export const SearchDatasetsForm = (props: IProps): any => {
   const [materials, setMaterials] = useState([])
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
-  const { handleSubmit, categories } = { ...props }
+
+  const { handleSubmit, categories, datapoint } = { ...props }
 
   const transformAndSubmit = (formValues: ISearchDatasetsFormModel) => {
     let newMaterials = formValues.material as any[] || []
@@ -57,6 +60,10 @@ export const SearchDatasetsForm = (props: IProps): any => {
     formProps.setFieldValue('categoryId', categoryId)
     setSelectedCategoryId(categoryId)
   }
+  const handleDatapointChange = (formProps, value: any) => {
+    const datapointId = value.target.value
+    formProps.setFieldValue('datapoint', datapointId)
+  }
 
   return (
     <>
@@ -85,9 +92,14 @@ export const SearchDatasetsForm = (props: IProps): any => {
                 <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} onChange={(value) => handleCategoryChange(formProps, value)} />
               </Grid>
 
-              <Grid item>
+              <Grid item sm={2}>
                 <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} disabled={!selectedCategoryId} options={getOptions(getSubCategories(selectedCategoryId))} />
               </Grid>
+
+              <Grid item>
+                <Field name="datapoint" label='Datapoint' component={MuiSelectFormik} options={getOptions(datapoint)} onChange={(value) => handleDatapointChange(formProps, value)} />
+              </Grid>
+
             </Grid>
             <Grid container spacing={4}>
               <Grid item sm={12}>

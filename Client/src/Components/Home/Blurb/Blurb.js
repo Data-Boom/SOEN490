@@ -26,7 +26,7 @@ export default function Blurb() {
       </Grid>
       <Grid container item direction="row" justify="space-evenly" alignItems="top center">
         <Grid item sm={2}>
-          <p className="Paragraph">Interactive Graphs! Add/delete datasets, switch between scales, zoom in and out for clarify, download personal snapshots, and save a graph to revist. Enjoy seeing the database without limits!</p>
+          <p className="Paragraph">Interactive Graphs! Add/delete datasets, switch between scales, zoom in and out for clarify, download personal snapshots, and save a graph to revisit. Enjoy seeing the database without limits!</p>
         </Grid>
         <Grid item top={1} sm={2}>
           <p className="Paragraph">Want to see a specific dataset in our database? Simple upload a dataset via JSON file, excel, or just filling out our easy to use form.</p>
