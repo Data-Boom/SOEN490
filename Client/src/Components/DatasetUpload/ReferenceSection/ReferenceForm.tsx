@@ -43,9 +43,12 @@ export const ReferenceForm = (props: IProps) => {
             <FastField name="reference.year" label='Year' disabled={!editable} shouldUpdate={shouldComponentUpdate} component={MuiTextFieldFormik} />
           </Grid>
         </Grid>
-        <FieldArray name='reference.authors' >
-          {({ form, ...fieldArrayHelpers }) => <AuthorsList editable={editable} authors={get(form.values, 'reference.authors')} fieldArrayHelpers={fieldArrayHelpers} />}
-        </FieldArray>
+        <Box mt={1}>
+          <Typography variant='h6' align="left">Authors</Typography>
+          <FieldArray name='reference.authors' >
+            {({ form, ...fieldArrayHelpers }) => <AuthorsList editable={editable} authors={get(form.values, 'reference.authors')} fieldArrayHelpers={fieldArrayHelpers} />}
+          </FieldArray>
+        </Box>
       </ThemeProvider>
     </Box >
   )
