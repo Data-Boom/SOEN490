@@ -1,4 +1,3 @@
-
 from tkinter import messagebox
 import os.path
 from os import path
@@ -9,7 +8,7 @@ import cannyVariables
 def next () :
     if  os.path.isfile(settings.inputs["imagepath"].get()) and settings.inputs["imagelength"].get().isnumeric() :
         settings.imagepath = settings.inputs["imagepath"].get()
-        settings.imagelength = settings.inputs["imagelength"].get()
+        settings.imagelength = float(settings.inputs["imagelength"].get())
         settings.frames["homepage"].destroy()
         cannyVariables.start_canny()
     elif settings.inputs["imagepath"].get() != "" and not os.path.isfile(settings.inputs["imagepath"].get()):
@@ -20,11 +19,14 @@ def next () :
         messagebox.showerror( "Error", "Both filepath and length are required.")
 
 def start () :
-
+    
     settings.m.title('Cell Size Analysis')
     settings.m.configure(bg='white')
-    
-    homepage = tk.Frame(master=settings.m, background="white", relief=tk.RAISED, borderwidth=1)
+
+    screen_width = settings.m.winfo_screenwidth()
+    screen_height = settings.m.winfo_screenheight()
+    print(screen_height, screen_width)
+    homepage = tk.Frame(master=settings.m, background="white", height=screen_height, width=screen_width)
     settings.frames["homepage"] = homepage
 
     settings.frames["homepage"].grid(row=0, column=0, sticky="n")
@@ -52,3 +54,4 @@ def start () :
     settings.buttons["submit"].grid(row=5, column=1, columnspan=2, padx=30, pady=30)
 
     tk.mainloop ()
+    

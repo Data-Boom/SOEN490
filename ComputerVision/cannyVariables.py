@@ -2,11 +2,13 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import cv2
 import settings
+import measurements
 
 def change_sigma (sigma) :
     settings.thresholdVariables["currentsigma"] = float(sigma)
     gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
     edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
+    settings.images["latestCanny"] = edges
     edges = Image.fromarray(edges)
     edges = ImageTk.PhotoImage(image = edges)
     settings.imagelabels["altered"].configure(image=edges)
@@ -20,6 +22,7 @@ def change_low_threshold (lt) :
         settings.sliders["highthresholdslider"].set(settings.thresholdVariables["currentht"])
     gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
     edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
+    settings.images["latestCanny"] = edges
     edges = Image.fromarray(edges)
     edges = ImageTk.PhotoImage(image = edges)
     settings.imagelabels["altered"].configure(image=edges)
@@ -34,6 +37,7 @@ def change_high_threshold (ht) :
         settings.sliders["lowthresholdslider"].set(settings.thresholdVariables["currentlt"])
     gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
     edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
+    settings.images["latestCanny"] = edges
     edges = Image.fromarray(edges)
     edges = ImageTk.PhotoImage(image = edges)
     settings.imagelabels["altered"].configure(image=edges)
@@ -51,6 +55,7 @@ def images () :
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     edges = cv2.Canny(cv2.GaussianBlur(image, (5,5), settings.thresholdVariables["currentsigma"]),settings.thresholdVariables["currentlt"],settings.thresholdVariables["currentht"])
+    settings.images["latestCanny"] = edges
     edges = Image.fromarray(edges)
     edges = ImageTk.PhotoImage(image = edges)
 
@@ -113,8 +118,8 @@ def start_canny() :
 
     settings.frames["endCannyframe"].grid(row=2, column=4, sticky="n", rowspan=2)
 
-    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Original Image", width=30, height=2, padx=5, pady=5, background="white")
+    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Original Image", width=30, height=2, padx=5, pady=5, background="white", command=measurements.measures_with_original)
     end_canny.pack()
     
-    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Canny Image", width=30, height=2, padx=5, pady=5, background="white")
+    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Canny Image", width=30, height=2, padx=5, pady=5, background="white", command=measurements.measures_with_canny)
     end_canny.pack()
