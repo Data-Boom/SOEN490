@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
+import { IVariableNameModel } from '../../../Models/IVariableNameModel'
 
 interface IProps {
   variable: IVariable,
@@ -18,11 +19,10 @@ interface IProps {
   onVariableUpdate: (variable: IVariable, index: number) => void,
   onVariableRemove: (index: number) => void
   dimensions: IDimensionModel[]
+  variableOption: IVariableNameModel[]
 }
-
 export const EditVariableHeader = (props: IProps) => {
-  const { variable, editMode, editable, index, onHeaderClick, onEditModalClose, onVariableUpdate, onVariableRemove, dimensions } = { ...props }
-
+  const { variable, editMode, editable, index, onHeaderClick, onEditModalClose, onVariableUpdate, onVariableRemove, dimensions, variableOption } = { ...props }
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
 
   const handleRemove = () => {
@@ -43,6 +43,16 @@ export const EditVariableHeader = (props: IProps) => {
     }
   }
 
+  const getVariableOptions = (options: any[]): any => {
+    if (options) {
+      return (
+        <>
+          <option value={null}></option>
+          {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+        </>
+      )
+    }
+  }
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (
       <>
@@ -60,7 +70,6 @@ export const EditVariableHeader = (props: IProps) => {
       </>
     )
   }
-
   const getUnits = (dimensionId: number): IUnitModel[] => {
     const foundDimension = dimensions.find(dimension => dimension.id == dimensionId)
     if (!foundDimension) {
@@ -85,7 +94,13 @@ export const EditVariableHeader = (props: IProps) => {
                 <Form>
                   <Grid container spacing={4}>
                     <Grid item sm={4}>
-                      <Field name="name" label='Name' component={MuiTextFieldFormik} />
+                      {<Field name="name"
+                        label='Name'
+                        disabled={!editable}
+                        component={MuiSelectFormik}
+                        options={getVariableOptions(variableOption)}
+                        getOptionLabel={(variable) => variable.name}
+                      />}
                     </Grid>
                     <Grid item sm={4}>
                       <Field
