@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
-import { IVariableNameModel } from '../../../Models/IVariableNameModel'
+import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 
 interface IProps {
   variable: IVariable,
