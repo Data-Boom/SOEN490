@@ -92,7 +92,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
                 <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} onChange={(value) => handleCategoryChange(formProps, value)} />
               </Grid>
 
-              <Grid item>
+              <Grid item sm={2}>
                 <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} disabled={!selectedCategoryId} options={getOptions(getSubCategories(selectedCategoryId))} />
               </Grid>
 
