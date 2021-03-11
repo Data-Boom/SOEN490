@@ -47,6 +47,13 @@ export const MetaForm = (props: IProps) => {
     setSelectedCategoryId(categoryId)
   }
 
+  const handleSubcategoryChange = (value: any) => {
+    const subcategoryId = value.target.value
+    if (subcategoryId) {
+      setFieldValue('meta.subcategory', subcategoryId)
+    }
+  }
+
   return (
     <Box className={classStyles().defaultBorder}>
       <ThemeProvider theme={disabledTheme}>
@@ -60,10 +67,9 @@ export const MetaForm = (props: IProps) => {
           </Grid>
           <Grid item sm={3}>
             <Field name="meta.category" label='Category' shouldUpdate={shouldComponentUpdate} disabled={!editable} component={MuiSelectFormik} options={getOptions(categories)} onChange={(value) => handleCategoryChange(value)} />
-
           </Grid>
           <Grid item sm={3}>
-            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable || !selectedCategoryId} component={MuiSelectFormik} options={getOptions(getSubCategories(selectedCategoryId))} />
+            <Field name="meta.subcategory" label='Subcategory' shouldUpdate={shouldComponentUpdate} disabled={!editable || !selectedCategoryId} component={MuiSelectFormik} options={getOptions(getSubCategories(selectedCategoryId))} onChange={(value) => handleSubcategoryChange(value)} />
           </Grid>
           <Grid item sm={12}>
             <FieldArray name='meta.material' >

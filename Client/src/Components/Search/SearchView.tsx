@@ -71,6 +71,7 @@ export default function SearchView(props: IProps) {
           categories={categories}
           handleSelectionChanged={handleSelectionChanged}
           button={addToGraphButton}
+          displayCheckbox={true}
         />
       </Box>
     </Container>
