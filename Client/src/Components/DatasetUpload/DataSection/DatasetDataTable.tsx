@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
 import { VariableHeader } from './VariableHeader'
+import { getFirstContentError } from '../../../Common/Helpers/ValidationHelpers'
 import { useFormikContext } from 'formik'
 
 interface IProps {
@@ -36,7 +37,6 @@ export const DatasetDataTable = (props: IProps): any => {
   }
 
   const handleVariableUpdate = (variable: IVariable): void => {
-    console.log('got here')
     const copyData = { ...data }
     let index = editedVariable.index
 
@@ -111,7 +111,7 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const handleRowChange = (changedRows: number[][]): void => {
     const copyData = { ...data }
-    // changedRows is the rows after user input, we need to update the contents
+    // changedRows is the rows after user input, we need to update the data contents
     copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
     onDataChange(copyData)
   }
@@ -142,11 +142,10 @@ export const DatasetDataTable = (props: IProps): any => {
     )
   }
 
-  const displayError = () => {
-    const castedErrors = errors as any
-    return (
-      <Typography>{castedErrors && JSON.stringify(castedErrors.data)}</ Typography>
-    )
+  const getFirstValidationError = () => {
+    const castedErrors = (errors as any)?.data as IData
+    console.log(castedErrors)
+    return getFirstContentError(castedErrors?.contents) || 'no error'
   }
 
   return (
@@ -157,6 +156,13 @@ export const DatasetDataTable = (props: IProps): any => {
         </Grid>
         <Grid item>
           {renderTopButtons()}
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item>
+          <Typography>
+            {getFirstValidationError()}
+          </Typography>
         </Grid>
       </Grid>
       {!!editedVariable.variable && <EditVaraibleModal

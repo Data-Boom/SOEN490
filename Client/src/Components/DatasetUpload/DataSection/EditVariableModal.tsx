@@ -67,7 +67,6 @@ export const EditVaraibleModal = (props: IProps) => {
           <Formik initialValues={initialValues} validationSchema={variableValidationSchema} onSubmit={onVariableUpdate}>
             {formProps =>
               <Form>
-                {console.log(formProps.errors)}
                 <Grid container spacing={4}>
                   <Grid item sm={4}>
                     <Field name="name"
@@ -75,7 +74,6 @@ export const EditVaraibleModal = (props: IProps) => {
                       disabled={!editable}
                       component={MuiAutocompleteFormik}
                       options={variableNames.map(variable => variable.name)}
-                      onChange={(event, newOption) => console.log(newOption, 'eventwow')}
                       disableClearable
                     />
                   </Grid>
