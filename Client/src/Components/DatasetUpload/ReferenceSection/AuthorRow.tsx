@@ -25,7 +25,7 @@ export const AuthorRow = (props: IProps) => {
   }
 
   return (
-    <Grid item container spacing={2} alignItems="center">
+    <Grid item container spacing={2} alignItems="flex-start">
       <Grid item>
         <FastField name={`reference.authors[${index}].firstName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='First Name' component={MuiTextFieldFormik} />
       </Grid>
