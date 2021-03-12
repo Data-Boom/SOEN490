@@ -2,12 +2,12 @@ import 'react-data-grid/dist/react-data-grid.css'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
-import { ErrorMessage, useFormikContext } from 'formik'
 import { IContent, IData, IVariable, newVariable } from '../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
 import { VariableHeader } from './VariableHeader'
+import { useFormikContext } from 'formik'
 
 interface IProps {
   data: IData,
@@ -111,7 +111,7 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const handleRowChange = (changedRows: number[][]): void => {
     const copyData = { ...data }
-    // changedRows is the rows after user input, we need to update copyData's contents via a map with an index:
+    // changedRows is the rows after user input, we need to update the contents
     copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
     onDataChange(copyData)
   }
@@ -123,20 +123,20 @@ export const DatasetDataTable = (props: IProps): any => {
   const renderTopButtons = (): any => {
     return (
       <>
-        {!!data.variables.length &&
-          <>
-            <Grid item>
-              <Button variant="outlined" color="primary" onClick={handleAddRow} disabled={!editable}>Add row</Button>
-            </Grid>
-
-            <Grid item>
-              <Button variant="outlined" color="secondary" onClick={handleRemoveSelectedRows} disabled={!editable}>Remove selected rows</Button>
-            </Grid>
-          </>
-        }
-
-        <Grid item>
-          <Button variant="contained" color="primary" onClick={() => setEditedVariable({ index: -1, isNew: true, variable: newVariable })} disabled={!editable}>New variable</Button>
+        <Grid container spacing={2}>
+          {!!data.variables.length &&
+            <>
+              <Grid item>
+                <Button variant="outlined" color="secondary" onClick={handleRemoveSelectedRows} disabled={!editable}>Remove selected rows</Button>
+              </Grid>
+              <Grid item>
+                <Button variant="outlined" color="primary" onClick={handleAddRow} disabled={!editable}>Add row</Button>
+              </Grid>
+            </>
+          }
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={() => setEditedVariable({ index: -1, isNew: true, variable: newVariable })} disabled={!editable}>New variable</Button>
+          </Grid>
         </Grid>
       </>
     )
@@ -151,14 +151,11 @@ export const DatasetDataTable = (props: IProps): any => {
 
   return (
     <>
-      <Grid container>
-        <ErrorMessage name="data.contents" />
-        <Grid item container sm={6}>
-          <Grid item>
-            <Typography variant='h6' align="left">Data</Typography>
-          </Grid>
+      <Grid container justify="space-between">
+        <Grid item>
+          <Typography variant='h6' align="left">Data</Typography>
         </Grid>
-        <Grid item container sm={6} spacing={2} justify='flex-end'>
+        <Grid item>
           {renderTopButtons()}
         </Grid>
       </Grid>

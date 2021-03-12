@@ -70,14 +70,14 @@ export const EditVaraibleModal = (props: IProps) => {
                 {console.log(formProps.errors)}
                 <Grid container spacing={4}>
                   <Grid item sm={4}>
-                    {<Field name="name"
+                    <Field name="name"
                       label='Name'
                       disabled={!editable}
                       component={MuiAutocompleteFormik}
                       options={variableNames.map(variable => variable.name)}
                       onChange={(event, newOption) => console.log(newOption, 'eventwow')}
                       disableClearable
-                    />}
+                    />
                   </Grid>
                   <Grid item sm={4}>
                     <Field
