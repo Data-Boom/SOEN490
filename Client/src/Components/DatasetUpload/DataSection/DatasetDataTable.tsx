@@ -2,16 +2,15 @@ import 'react-data-grid/dist/react-data-grid.css'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
+import { ErrorMessage, useFormikContext } from 'formik'
 import { IContent, IData, IVariable, newVariable } from '../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
 import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 import { VariableHeader } from './VariableHeader'
-import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
 import { useEffect } from 'react'
-import { useFormikContext } from 'formik'
 
 interface IProps {
   data: IData,
@@ -32,23 +31,16 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const [dimensions, setDimensions] = useState([])
   const [variables, setVariables] = useState<IVariableNameModel[]>([])
 
   const { errors } = useFormikContext()
 
   useEffect(() => {
-    const callListDimensions = async () => {
-      const dimensions = await callGetAllDimensions()
-      setDimensions(dimensions)
-    }
-
     const callListVariables = async () => {
       const variableList = await getVariableNames()
       setVariables(variableList)
     }
     callListVariables()
-    callListDimensions()
   }, [])
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
@@ -117,7 +109,6 @@ export const DatasetDataTable = (props: IProps): any => {
               variable={variable}
               index={index}
               onHeaderClick={handleHeaderClick}
-              dimensions={dimensions}
             />
         }
       )
@@ -173,6 +164,7 @@ export const DatasetDataTable = (props: IProps): any => {
   return (
     <>
       <Grid container>
+        <ErrorMessage name="data.contents" />
         <Grid item container sm={6}>
           <Grid item>
             <Typography variant='h6' align="left">Data</Typography>
@@ -183,7 +175,6 @@ export const DatasetDataTable = (props: IProps): any => {
         </Grid>
       </Grid>
       {!!editedVariable.variable && <EditVaraibleModal
-        dimensions={dimensions}
         initialValues={editedVariable.variable}
         onCancel={() => setEditedVariable(noEditedVariable)}
         isOpen={!!editedVariable.variable}
@@ -194,7 +185,6 @@ export const DatasetDataTable = (props: IProps): any => {
         variables={variables}
       />}
       <Box width='100%' mt={4}>
-        {displayError()}
         <DataGrid
           rowKeyGetter={rowKeyGetter}
           headerRowHeight={72}

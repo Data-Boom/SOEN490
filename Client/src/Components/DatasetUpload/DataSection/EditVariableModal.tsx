@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 import { classStyles } from '../../../appTheme'
+import { useDimensions } from '../../Utils/Hooks/FetchHooks'
 import { variableValidationSchema } from '../DatasetValidationSchema'
 
 interface IProps {
@@ -14,7 +15,6 @@ interface IProps {
   onVariableUpdate: (newVariable: IVariable) => void
   onCancel: () => void
   onDelete: () => void
-  dimensions: IDimensionModel[]
   editable: boolean
   isOpen: boolean
   isNewVariable: boolean
@@ -22,8 +22,10 @@ interface IProps {
 }
 
 export const EditVaraibleModal = (props: IProps) => {
-  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, dimensions, isOpen, isNewVariable, variables } = props
+  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, isOpen, isNewVariable, variables } = props
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
+  const { dimensions } = useDimensions()
+
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (

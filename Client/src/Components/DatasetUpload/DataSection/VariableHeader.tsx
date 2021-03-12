@@ -1,20 +1,19 @@
 import { Box, Typography } from '@material-ui/core'
 import { getDimensionNameById, getUnitNameById } from '../../../Common/Helpers/DimensionHelpers'
 
-import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
+import { useDimensions } from '../../Utils/Hooks/FetchHooks'
 
 interface IProps {
   variable: IVariable,
   index: number,
-  onHeaderClick: (index: number) => void,
-  dimensions: IDimensionModel[]
+  onHeaderClick: (index: number) => void
 }
 
 export const VariableHeader = (props: IProps) => {
-  const { variable, index, onHeaderClick, dimensions } = { ...props }
-
+  const { variable, index, onHeaderClick } = { ...props }
+  const { dimensions } = useDimensions()
   return (
     <Box onClick={() => onHeaderClick(index)}>
       <Typography>
