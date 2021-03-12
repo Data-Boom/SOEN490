@@ -5,9 +5,9 @@ import { MuiAutocompleteFormik, MuiSelectFormik } from '../../Forms/FormikFields
 import React, { useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
-import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 import { classStyles } from '../../../appTheme'
-import { useDimensions } from '../../Utils/Hooks/FetchHooks'
+import { useDimensions } from '../../Utils/Hooks/useDimensions'
+import { useVariableNames } from '../../Utils/Hooks/useVariableNames'
 import { variableValidationSchema } from '../DatasetValidationSchema'
 
 interface IProps {
@@ -18,13 +18,13 @@ interface IProps {
   editable: boolean
   isOpen: boolean
   isNewVariable: boolean
-  variables: IVariableNameModel[]
 }
 
 export const EditVaraibleModal = (props: IProps) => {
-  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, isOpen, isNewVariable, variables } = props
+  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, isOpen, isNewVariable } = props
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
   const { dimensions } = useDimensions()
+  const { variableNames } = useVariableNames()
 
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
@@ -74,7 +74,7 @@ export const EditVaraibleModal = (props: IProps) => {
                       label='Name'
                       disabled={!editable}
                       component={MuiAutocompleteFormik}
-                      options={variables.map(variable => variable.name)}
+                      options={variableNames.map(variable => variable.name)}
                       onChange={(event, newOption) => console.log(newOption, 'eventwow')}
                       disableClearable
                     />}

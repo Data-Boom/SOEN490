@@ -7,10 +7,7 @@ import { IContent, IData, IVariable, newVariable } from '../../../Models/Dataset
 import React, { useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
-import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 import { VariableHeader } from './VariableHeader'
-import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
-import { useEffect } from 'react'
 
 interface IProps {
   data: IData,
@@ -31,17 +28,8 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const [variables, setVariables] = useState<IVariableNameModel[]>([])
 
   const { errors } = useFormikContext()
-
-  useEffect(() => {
-    const callListVariables = async () => {
-      const variableList = await getVariableNames()
-      setVariables(variableList)
-    }
-    callListVariables()
-  }, [])
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
     editable && setEditedVariable({ variable: { ...data.variables[indexOfClickedHeader] }, index: indexOfClickedHeader, isNew: false })
@@ -182,7 +170,6 @@ export const DatasetDataTable = (props: IProps): any => {
         onDelete={handleVariableRemove}
         onVariableUpdate={handleVariableUpdate}
         isNewVariable={editedVariable.isNew}
-        variables={variables}
       />}
       <Box width='100%' mt={4}>
         <DataGrid

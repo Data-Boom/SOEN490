@@ -3,7 +3,7 @@ import { getDimensionNameById, getUnitNameById } from '../../../Common/Helpers/D
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
 import React from 'react'
-import { useDimensions } from '../../Utils/Hooks/FetchHooks'
+import { useDimensions } from '../../Utils/Hooks/useDimensions'
 
 interface IProps {
   variable: IVariable,
