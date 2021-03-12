@@ -1,4 +1,4 @@
-import { Button, Grid, Tooltip } from '@material-ui/core'
+import { Button, Grid, IconButton, Tooltip } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import { ICategoryModel, listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
@@ -17,6 +17,9 @@ import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 import GetAppIcon from '@material-ui/icons/GetApp';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import PublishIcon from '@material-ui/icons/Publish';
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
+
+import { UploadDatasetModal } from './UploadDatasetModal';
 
 interface IProps extends IFormProps {
   initialDataset: IDatasetModel,
@@ -36,6 +39,8 @@ export const DatasetForm = (props: IProps): any => {
   const [categories, setCategories] = useState<ICategoryModel[]>([])
   const [materials, setMaterials] = useState([])
   const [favoriteDataset, setFavoriteDataset] = useState(false)
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
+
 
   useEffect(() => {
     const callListCategories = async () => {
@@ -95,9 +100,19 @@ export const DatasetForm = (props: IProps): any => {
   const data: IData = initialDataset.data
   const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
+  const handleUploadDSClick = () => {
+    setConfirmModalOpen(true)
+
+  }
   const renderTopButtons = (): any => {
     return (
       <>
+        <Grid>
+          <IconButton aria-label="favorite" color="primary">
+            <StarOutlineIcon />
+          </IconButton>
+        </Grid>
+
         <Grid item>
           <Button variant="contained" color="primary" startIcon={< GetAppIcon />}>Download</Button>
         </Grid>
@@ -107,8 +122,15 @@ export const DatasetForm = (props: IProps): any => {
         </Grid>
 
         <Grid item>
-          <Button variant="contained" color="primary" startIcon={<PublishIcon />}>Upload Dataset</Button>
+          <Button variant="contained" color="primary" onClick={() => setConfirmModalOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
         </Grid>
+        <UploadDatasetModal
+          csvTxtButton="Upload CSV/TXT"
+          jsonButton="Upload JSON"
+          open={confirmModalOpen}
+          onClose={() => setConfirmModalOpen(false)}
+          onSubmitCT={() => alert("CSV/TXT upload")}
+          onSubmitJS={() => alert("JSON upload")} />
       </>
     )
   }
