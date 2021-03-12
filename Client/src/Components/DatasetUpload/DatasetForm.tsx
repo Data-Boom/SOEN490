@@ -127,6 +127,8 @@ export const DatasetForm = (props: IProps): any => {
         <UploadDatasetModal
           csvTxtButton="Upload CSV/TXT"
           jsonButton="Upload JSON"
+          ctDescription=" Upload dataset points data represented in CSV/TXT format. For an example, click here."
+          jsDescription=" Upload a dataset represented in JSON format, for the example of the dataset structure download any existing dataset."
           open={confirmModalOpen}
           onClose={() => setConfirmModalOpen(false)}
           onSubmitCT={() => alert("CSV/TXT upload")}
