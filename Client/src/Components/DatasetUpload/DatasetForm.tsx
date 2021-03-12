@@ -20,6 +20,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 
 import { UploadDatasetModal } from './UploadDatasetModal';
+import { JsonUploadModal } from './JsonUploadModal'
 
 interface IProps extends IFormProps {
   initialDataset: IDatasetModel,
@@ -40,6 +41,8 @@ export const DatasetForm = (props: IProps): any => {
   const [materials, setMaterials] = useState([])
   const [favoriteDataset, setFavoriteDataset] = useState(false)
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
+  const [confirmJSModalOpen, setConfirmJSModalOpen] = useState(false)
+
 
 
   useEffect(() => {
@@ -100,9 +103,10 @@ export const DatasetForm = (props: IProps): any => {
   const data: IData = initialDataset.data
   const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
-  const handleUploadDSClick = () => {
-    setConfirmModalOpen(true)
-
+  const handleJSONUploadClick = () => {
+    setConfirmModalOpen(false)
+    setConfirmJSModalOpen(true)
+    console.log("something happening?")
   }
   const renderTopButtons = (): any => {
     return (
@@ -125,14 +129,14 @@ export const DatasetForm = (props: IProps): any => {
           <Button variant="contained" color="primary" onClick={() => setConfirmModalOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
         </Grid>
         <UploadDatasetModal
-          csvTxtButton="Upload CSV/TXT"
-          jsonButton="Upload JSON"
-          ctDescription=" Upload dataset points data represented in CSV/TXT format. For an example, click here."
-          jsDescription=" Upload a dataset represented in JSON format, for the example of the dataset structure download any existing dataset."
           open={confirmModalOpen}
           onClose={() => setConfirmModalOpen(false)}
           onSubmitCT={() => alert("CSV/TXT upload")}
-          onSubmitJS={() => alert("JSON upload")} />
+          onSubmitJS={handleJSONUploadClick} />
+        <JsonUploadModal
+          open={confirmJSModalOpen}
+          onClose={() => setConfirmJSModalOpen(false)}
+        />
       </>
     )
   }

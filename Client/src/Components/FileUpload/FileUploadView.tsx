@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core'
+import { Box, Button, Container } from '@material-ui/core'
 
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
@@ -39,7 +39,7 @@ export const FileUploadView = () => {
   }
 
   return (
-    <>
+    <Container>
       <FileUploadForm
         acceptFileFormat={fileFormat}
         onSubmit={handleSubmit}
@@ -53,6 +53,6 @@ export const FileUploadView = () => {
           <a href="http://localhost:3000/#/uploadFile"> Download JSON file submission instructions </a>
         </Download>
       </Box>
-    </>
+    </Container>
   )
 }

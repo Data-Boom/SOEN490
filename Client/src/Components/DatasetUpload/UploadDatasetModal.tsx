@@ -3,17 +3,13 @@ import React from 'react'
 import { classStyles } from "../../appTheme"
 
 interface IProps {
-    csvTxtButton: string,
-    ctDescription: string,
-    jsDescription: string,
-    jsonButton: string,
     open: boolean,
     onClose: () => void,
     onSubmitCT: () => void,
     onSubmitJS: () => void
 }
 export const UploadDatasetModal = (props: IProps) => {
-    const { csvTxtButton, jsonButton, open, ctDescription, jsDescription, onClose, onSubmitCT, onSubmitJS } = { ...props }
+    const { open, onClose, onSubmitCT, onSubmitJS } = { ...props }
     return (
         <>
             <Modal
@@ -25,19 +21,19 @@ export const UploadDatasetModal = (props: IProps) => {
                     <Box m={5}>
                         <Grid item container spacing={4} >
                             <Grid item>
-                                <Button id="submitConfirmation" onClick={onSubmitCT} variant='contained' color="primary" type="submit">{csvTxtButton}</Button>
+                                <Button id="submitConfirmation" onClick={onSubmitCT} variant='contained' color="primary" type="submit">Upload CSV/TXT</Button>
                             </Grid>
                             <Grid item >
-                                <Typography>{ctDescription}</Typography>
+                                <Typography>Upload dataset points data represented in CSV/TXT format. For an example, click here.</Typography>
                             </Grid>
                         </Grid>
                         <Box mt={2}>
                             <Grid item container spacing={4} >
                                 <Grid item>
-                                    <Button id="submitConfirmation" onClick={onSubmitJS} variant='contained' color="primary" type="submit">{jsonButton}</Button>
+                                    <Button id="submitConfirmation" onClick={onSubmitJS} variant='contained' color="primary" type="submit">Upload JSON</Button>
                                 </Grid>
                                 <Grid item>
-                                    <Typography>{jsDescription}</Typography>
+                                    <Typography>Upload a dataset represented in JSON format, for the example of the dataset structure download any existing dataset.</Typography>
                                 </Grid>
                             </Grid>
                         </Box>
