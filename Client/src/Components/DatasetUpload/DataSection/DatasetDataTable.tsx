@@ -11,12 +11,12 @@ import { VariableHeader } from './VariableHeader'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { getVariableNames } from '../../../Remote/Endpoints/VariableEndpoint'
 import { useEffect } from 'react'
+import { useFormikContext } from 'formik'
 
 interface IProps {
   data: IData,
   onDataChange: (newData: IData) => void,
   editable: boolean,
-  errors: any,
 }
 
 interface IEditedVariableModel {
@@ -28,14 +28,14 @@ interface IEditedVariableModel {
 const noEditedVariable: IEditedVariableModel = { variable: null, index: -1, isNew: false }
 
 export const DatasetDataTable = (props: IProps): any => {
-  //todo handle errors on the form
-  console.log(props.errors.data)
   const { data, onDataChange, editable } = { ...props }
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
   const [dimensions, setDimensions] = useState([])
   const [variables, setVariables] = useState<IVariableNameModel[]>([])
+
+  const { errors } = useFormikContext()
 
   useEffect(() => {
     const callListDimensions = async () => {
@@ -134,7 +134,6 @@ export const DatasetDataTable = (props: IProps): any => {
     const copyData = { ...data }
     // changedRows is the rows after user input, we need to update copyData's contents via a map with an index:
     copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
-    // and then callback with updated data
     onDataChange(copyData)
   }
 
@@ -164,6 +163,13 @@ export const DatasetDataTable = (props: IProps): any => {
     )
   }
 
+  const displayError = () => {
+    const castedErrors = errors as any
+    return (
+      <Typography>{castedErrors && JSON.stringify(castedErrors.data)}</ Typography>
+    )
+  }
+
   return (
     <>
       <Grid container>
@@ -188,6 +194,7 @@ export const DatasetDataTable = (props: IProps): any => {
         variables={variables}
       />}
       <Box width='100%' mt={4}>
+        {displayError()}
         <DataGrid
           rowKeyGetter={rowKeyGetter}
           headerRowHeight={72}
