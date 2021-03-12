@@ -144,6 +144,7 @@ def getorigin(eventorigin):
             break
     if draw :
         draw_circle(x, y)
+        
 
 def start_measurements (imagetouse, labeltouse, frametodestory) :
     screen_width = int(settings.m.winfo_screenwidth()/1.25)
