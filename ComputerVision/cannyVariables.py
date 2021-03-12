@@ -4,16 +4,19 @@ import cv2
 import settings
 import measurements
 
-def change_sigma (sigma) :
-    settings.thresholdVariables["currentsigma"] = float(sigma)
-    gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
-    edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
+def change_image (edges) :
     settings.images["latestCanny"] = edges
     edges = Image.fromarray(edges)
     edges = ImageTk.PhotoImage(image = edges)
     settings.imagelabels["altered"].configure(image=edges)
     settings.imagelabels["altered"].image = edges
     settings.images["edges"] = edges
+
+def change_sigma (sigma) :
+    settings.thresholdVariables["currentsigma"] = float(sigma)
+    gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
+    edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
+    change_image(edges)
 
 def change_low_threshold (lt) :
     settings.thresholdVariables["currentlt"] = int(lt)
@@ -22,12 +25,7 @@ def change_low_threshold (lt) :
         settings.sliders["highthresholdslider"].set(settings.thresholdVariables["currentht"])
     gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
     edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
-    settings.images["latestCanny"] = edges
-    edges = Image.fromarray(edges)
-    edges = ImageTk.PhotoImage(image = edges)
-    settings.imagelabels["altered"].configure(image=edges)
-    settings.imagelabels["altered"].image = edges
-    settings.images["edges"] = edges
+    change_image(edges)
     
 
 def change_high_threshold (ht) :
@@ -37,12 +35,7 @@ def change_high_threshold (ht) :
         settings.sliders["lowthresholdslider"].set(settings.thresholdVariables["currentlt"])
     gausimg = cv2.GaussianBlur(settings.images["originalphotowithCV"], (5,5), settings.thresholdVariables["currentsigma"])
     edges = cv2.Canny(gausimg, settings.thresholdVariables["currentlt"], settings.thresholdVariables["currentht"])
-    settings.images["latestCanny"] = edges
-    edges = Image.fromarray(edges)
-    edges = ImageTk.PhotoImage(image = edges)
-    settings.imagelabels["altered"].configure(image=edges)
-    settings.imagelabels["altered"].image = edges
-    settings.images["edges"] = edges
+    change_image(edges)
    
 
 def images () :
@@ -118,8 +111,8 @@ def start_canny() :
 
     settings.frames["endCannyframe"].grid(row=2, column=4, sticky="n", rowspan=2)
 
-    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Original Image", width=30, height=2, padx=5, pady=5, background="white", command=measurements.measures_with_original)
+    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Original Image", width=30, height=2, padx=5, pady=5, background="white", command=lambda: measurements.start_measurements(settings.images["originalphotowithCV"], settings.imagelabels["original"], settings.frames["alteredimage"]))
     end_canny.pack()
     
-    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Canny Image", width=30, height=2, padx=5, pady=5, background="white", command=measurements.measures_with_canny)
+    end_canny = tk.Button(master=settings.frames["endCannyframe"], text="Start Measurements with Canny Image", width=30, height=2, padx=5, pady=5, background="white", command=lambda: measurements.start_measurements(settings.images["latestCanny"], settings.imagelabels["altered"], settings.frames["originalimage"]))
     end_canny.pack()

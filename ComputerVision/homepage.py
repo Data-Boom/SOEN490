@@ -23,10 +23,7 @@ def start () :
     settings.m.title('Cell Size Analysis')
     settings.m.configure(bg='white')
 
-    screen_width = settings.m.winfo_screenwidth()
-    screen_height = settings.m.winfo_screenheight()
-    print(screen_height, screen_width)
-    homepage = tk.Frame(master=settings.m, background="white", height=screen_height, width=screen_width)
+    homepage = tk.Frame(master=settings.m, background="white")
     settings.frames["homepage"] = homepage
 
     settings.frames["homepage"].grid(row=0, column=0, sticky="n")
