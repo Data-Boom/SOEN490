@@ -7,6 +7,13 @@ def init ():
     global m
     m = tk.Tk()
 
+    global menubar
+    global filemenu
+
+    resetglobals() 
+
+def resetglobals () :
+    
     global frames
     frames = {}
 
@@ -29,3 +36,21 @@ def init ():
 
     global sliders
     sliders = {}
+
+    global previousImgs
+    previousImgs = []
+
+    global previousImgsWithoutIDs
+    previousImgsWithoutIDs = []
+
+    global points
+    points = []
+
+    global variables
+    variables = {}
+
+    global cellsizeidarray
+    cellsizeidarray = []
+
+    global hideids
+    hideids = False
