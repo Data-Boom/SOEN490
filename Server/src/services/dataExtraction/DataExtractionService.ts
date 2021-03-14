@@ -2,6 +2,8 @@ import { JsonFileExtractorFactory } from './JsonFileHandlerFactory';
 import { IResponse } from '../../genericInterfaces/ResponsesInterface';
 import { BadRequest } from '@tsed/exceptions';
 import { FileExtractorFactory } from './FileHandlerFactory';
+import parse from 'csv-parse';
+import { CSVFileExtractorFactory } from './CSVFileHandlerFactory';
 
 /**
  * The methods in this class are only responsible for processing uploaded files. Input will be parsed 
@@ -24,10 +26,16 @@ export class DataExtractionService {
         switch (this.dataType) {
             case 'json': {
                 this.factory = new JsonFileExtractorFactory()
+                break
             }
             //TODO: Implement when building new file modules
             case 'pdf':
             //this.factory = new PDFFileExtractorFactory()
+            case 'csv':
+            case 'txt': {
+                this.factory = new CSVFileExtractorFactory();
+                break
+            }
         }
         let fileHandler: any = await this.factory.getFileHandler(this.filePath)
         try {

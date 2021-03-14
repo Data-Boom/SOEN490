@@ -1,5 +1,5 @@
 import { Datapoints } from "./entities/Datapoints";
-import { IVariableNameModel } from "../../../Client/src/Models/IVariableNameModel"
+import { IVariableNameModel } from "../../../Client/src/Models/Variables/IVariableNameModel"
 import { getConnection, getManager } from "typeorm";
 
 

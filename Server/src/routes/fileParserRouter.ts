@@ -9,14 +9,15 @@ interface MulterRequest extends Request {
 }
 
 let upload = multer({ dest: 'upload', limits: { fileSize: 8000000 } });
-let router = Router();
 
 /**
  * This route will accept a file and forward to the router. It is first processed by multer middleware,
- * and the file is stored in a temporary directory called tmp/json. This route is referred for processing by 
+ * and the file is stored in a temporary directory called upload/. This route is referred for processing by 
  * the service.
  */
-router.post('/api/v1/dataExtract', [JWTAuthenticator.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
+let router = Router();
+
+router.post('/api/v1/fileParser', [JWTAuthenticator.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
   try {
     let dataExtract = new dataExtractionController(request.file.path, request.file.originalname);
     dataExtract.createRequest(request, response);
@@ -26,4 +27,4 @@ router.post('/api/v1/dataExtract', [JWTAuthenticator.verifyJWT, upload.single('f
   }
 })
 
-export { router as dataExtractionRouter };
+export { router as fileParserRoute };
