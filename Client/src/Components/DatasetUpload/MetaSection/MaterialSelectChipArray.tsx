@@ -50,7 +50,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
             options={options}
             multiple
             getOptionLabel={option => materialToString(option)}
-            renderInput={(params) => <TextField {...params} label="Material" variant="outlined" size="small" />}
+            renderInput={(params) => <TextField {...params} label="Material" variant="outlined" />}
           />
         </Grid>
       </Grid>
