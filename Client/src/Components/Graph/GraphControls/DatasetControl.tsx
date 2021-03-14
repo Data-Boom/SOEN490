@@ -1,13 +1,14 @@
-import { DatasetList } from '../DatasetList/DatasetList'
+import { Button, Grid } from '@material-ui/core'
+import { DatasetRow, IDatasetRowProps } from './DatasetRow'
+
 import { ExportDatasetsButton } from './ExportDatasetsButton'
-import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
 import { IGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
+import { List } from '../../Utils/List'
 import React from 'react'
 import { SearchViewModal } from '../../Search/SearchViewModal'
-import { toDatasetRows } from '../GraphFunctions'
+import { toDatasetRows } from '../../../Common/Helpers/GraphHelpers'
 
-//todo either refactor or delete this file
 interface IProps {
   datasetStates: IGraphDatasetState[],
   completeDatasets: IDatasetModel[],
@@ -49,6 +50,10 @@ export const DatasetControl = (props: IProps) => {
     return completeDatasets.findIndex(existingDataset => existingDataset.id === dataset.id) != -1
   }
 
+  const handleRemoveAllDatasets = () => {
+    onCompleteDatasetsChange([])
+  }
+
   return (
     <>
       <Grid container spacing={3}>
@@ -57,14 +62,22 @@ export const DatasetControl = (props: IProps) => {
         </Grid>
         {completeDatasets && completeDatasets[0] ?
           <Grid item>
-            <ExportDatasetsButton datasets={completeDatasets} />
+            <Grid container spacing={4}>
+              <Grid item>
+                <ExportDatasetsButton datasets={completeDatasets} />
+              </Grid>
+              <Grid item>
+                <Button id="remove-all-datasets" onClick={handleRemoveAllDatasets} color="secondary" variant="contained">Remove Datasets</Button>
+              </Grid>
+            </Grid>
           </Grid> : null
         }
       </Grid>
-      <DatasetList
-        datasets={toDatasetRows(completeDatasets, datasetStates)}
-        onRemoveDatasetClick={handleDatasetRemoved}
-        onHideDatasetSwitch={onHideDatasetSwitch}
+      <List
+        RowComponent={DatasetRow}
+        models={toDatasetRows(completeDatasets, datasetStates)}
+        rowProps={{ onRemoveDatasetClick: handleDatasetRemoved, onHideDatasetSwitch: onHideDatasetSwitch } as IDatasetRowProps}
+        withPagination
       />
     </>
   )

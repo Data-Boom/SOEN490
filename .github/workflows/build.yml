@@ -2,6 +2,7 @@ name: CI Build
 on: 
   pull_request:
     branches: [master, develop]
+    types: [opened, synchronize, reopened]
 defaults:
   run:
     working-directory: ./Server
@@ -18,8 +19,10 @@ jobs:
         run: |
             npm install 
             cd ../Client && npm install && cd ../Server
-      - name: Run tests
-        run: npm run test
+      - name: Run Client tests
+        run: cd ../Client && npm run test
+      - name: Run Server tests
+        run: cd ../Server && npm run test
         env:
           TEST_DB_NAME: ${{ secrets.TEST_DB_NAME }}
           TEST_DB_PORT: ${{ secrets.TEST_DB_PORT }}
@@ -33,3 +36,15 @@ jobs:
           MAILGUN_API: ${{ secrets.MAILGUN_API }}
           MAILGUN_FROM: ${{ secrets.MAILGUN_FROM }}
           MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

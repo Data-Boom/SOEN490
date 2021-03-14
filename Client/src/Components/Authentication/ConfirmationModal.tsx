@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Modal, Paper } from "@material-ui/core"
-import React, { useState } from 'react'
+import React from 'react'
 
 import { classStyles } from "../../appTheme"
 

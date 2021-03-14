@@ -9,24 +9,29 @@ import { ThemeProvider } from '@material-ui/core'
 import { theme } from './appTheme'
 
 interface IUserContextProps {
-  user: IUserAccountModel,
-  setUser: (user: IUserAccountModel) => void
+  user: IUserAccountModel
+  setUserContext: (user: IUserAccountModel) => void
 }
 
 export const UserContext = React.createContext<Partial<IUserContextProps>>({})
 
 export const App = () => {
-  const [user, setUser] = useState<IUserAccountModel>(getUserFromStorage())
+  const [userState, setUserState] = useState<IUserAccountModel>(getUserFromStorage())
 
-  const setStateAndStorage = (user: IUserAccountModel): void => {
-    setUser(user)
+  const setUserContext = (user: IUserAccountModel): void => {
+    setUserState(user)
     putUserInStorage(user)
+  }
+
+  const userContext: IUserContextProps = {
+    user: userState,
+    setUserContext: setUserContext
   }
 
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <UserContext.Provider value={{ user, setUser: setStateAndStorage }}>
+        <UserContext.Provider value={userContext}>
           <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}>
             <SnackbarUtilsConfigurator />
             <NavigationMenu />

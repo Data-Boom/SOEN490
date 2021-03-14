@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, Link, Typography } from '@material-ui/core'
+import { Avatar, Box, Button, Container, CssBaseline, Grid, Link, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
@@ -16,6 +16,7 @@ import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import moment from 'moment'
 
 function Copyright() {
   return (
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginView() {
 
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUserContext } = useContext(UserContext)
   const classes = useStyles()
 
   const [openModal, setOpen] = useState(false)
@@ -72,10 +73,14 @@ export default function LoginView() {
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
     //sets JWT in cookies
-    await callLogIn(loginUserInfo)
+    const loginResponse = await callLogIn(loginUserInfo)
+
     const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
-    setUser(userAccount)
+    userAccount.sessionExpiration = moment.duration(loginResponse.ValidFor).asMilliseconds()
+
+    setUserContext(userAccount)
   }
+
 
   return (
     <>
@@ -95,9 +100,7 @@ export default function LoginView() {
                       <CancelIcon color="primary" onClick={() => setOpen(false)} />
                     </Grid>
                   </Grid>
-                  <ForgotPasswordView
-
-                  />
+                  <ForgotPasswordView />
                 </Box>
               </Paper>
             </Grid>
@@ -139,10 +142,6 @@ export default function LoginView() {
                   autoComplete="current-password"
                   component={MuiTextFieldFormik}
                 />
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
                 <Button
                   type="submit"
                   fullWidth
@@ -168,9 +167,6 @@ export default function LoginView() {
               </Form>
             </Formik>
           </div>
-          <Box mt={8}>
-            <Copyright />
-          </Box>
         </Container>
       }
     </>

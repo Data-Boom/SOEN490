@@ -96,7 +96,7 @@ export class DimensionService {
    */
   async processGetDimensionUnits(dimensionId: number): Promise<Units[]> {
     try {
-      return this.dimensionModel.getDimensionUnits(dimensionId)
+      return await this.dimensionModel.getDimensionUnits(dimensionId)
     }
     catch (error) {
       throw new BadRequest("Error occured when fetching all units of a dimension");

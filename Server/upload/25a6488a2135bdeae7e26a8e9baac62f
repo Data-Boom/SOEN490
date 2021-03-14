@@ -19,7 +19,7 @@
     "pages": 19,
     "year": 1980
   },
-  "dataset name": "CARBON_graphite,pressed, Initial density = 2.13 g/cc",
+  "dataset_name": "CARBON_graphite,pressed, Initial density = 2.13 g/cc",
   "material": [
     {
       "composition": "C",
@@ -30,7 +30,8 @@
       "details": "Oxygen"
     }
   ],
-  "data type": "hugoniot",
+  "subcategory": 1,
+  "data_type": "hugoniot",
   "data": {
     "variables": [
       {

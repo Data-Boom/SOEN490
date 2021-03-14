@@ -42,11 +42,11 @@ export default class EditUploadService extends AbstractUploadService {
 
         // Grab other 3 FK of data set
         let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceIssue, allAuthors)
-        let categoryIDs: number[] = await this.uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
+        let subcategoryID: number = this.parsedFileData.subcategory;
         let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData.data_type)
 
         // Update data set
-        let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, categoryIDs, this.parsedFileData.data.comments]
+        let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, subcategoryID, this.parsedFileData.data.comments]
         await this.insertDataset(this.uploadModel, arrayOfDatasetInfo)
 
         // Run check on variable vs contents length to see if they're equal for data points and insert
@@ -60,7 +60,7 @@ export default class EditUploadService extends AbstractUploadService {
         for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
             let dataPointValues = this.getDataInformationFromContentsArray(this.parsedFileData.data.contents, i);
             let dataVariableName = this.parsedFileData.data.variables[i].name;
-            let unitsID: number = await this.insertUnitsData(this.uploadModel, this.parsedFileData.data.variables[i].units)
+            let unitsID: number = this.parsedFileData.data.variables[i].unitId
             let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
             await this.uploadModel.insertDataPointsOfSet(this.datasetId, dataVariableName, dataPointValues[0], unitsID, reprID)
             individualDataSetComments = dataPointValues[1];

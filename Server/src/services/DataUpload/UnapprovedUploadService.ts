@@ -27,11 +27,11 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let allMaterials: any[] = await this.insertMaterialsData(this.uploadModel, this.parsedFileData.material)
 
-        let categoryIDs: number[] = await this.uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
+        let subcategoryID: number = this.parsedFileData.subcategory;
 
         let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData.data_type)
 
-        let dataSetID: number = await this.insertDataset(this.uploadModel, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, this.parsedFileData.data.comments, this.userId)
+        let dataSetID: number = await this.insertDataset(this.uploadModel, [this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, subcategoryID, allMaterials, this.parsedFileData.data.comments, this.userId])
 
         //run check on variable vs contents length to see if they're equal
         if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
@@ -47,7 +47,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
             let dataVariableName = this.parsedFileData.data.variables[i].name;
 
-            let unitsID: number = await this.insertUnitsData(this.uploadModel, this.parsedFileData.data.variables[i].units)
+            let unitsID: number = this.parsedFileData.data.variables[i].unitId
 
             let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
 
@@ -64,10 +64,9 @@ export class UnapprovedUploadService extends AbstractUploadService {
         return requestResponse;
     }
 
-    protected async insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string, userId: number): Promise<number> {
+    protected async insertDataset(uploadModel: DataUploadModel, arrayOfDatasetInfo: any): Promise<number> {
         try {
-            let datasetID = await uploadModel.insertFullDataSet(dataSetName, dataSetDataTypeID, publicationID, categoryIDs, allMaterials, dataSetComments, userId)
-            return datasetID
+            return await uploadModel.insertFullDataSet(arrayOfDatasetInfo)
         } catch (err) {
             console.log('error receiving datasetID....request rejected');
         }

@@ -80,7 +80,7 @@ export class AuthenticationService {
       let jwtParams: IJwtParams;
       try {
         jwtParams = await AuthenticationModel.obtainJWTParams(userInformation.email);
-        accessToken = await this.generateJwtToken(jwtParams);
+        accessToken = this.generateJwtToken(jwtParams);
         await AuthenticationModel.isAdminStatus(userInformation.email);
       } catch (error) {
         throw new InternalServerError("Internal Server Issue. Please try again later", error.message)
@@ -123,7 +123,7 @@ export class AuthenticationService {
       let jwtParams: IJwtParams;
       try {
         jwtParams = await AuthenticationModel.obtainJWTParams(forgotPasswordInfo.email);
-        accessToken = await this.generateJwtToken(jwtParams);
+        accessToken = this.generateJwtToken(jwtParams);
         resetTokenChanged = await AuthenticationModel.resetPassword(forgotPasswordInfo.email, accessToken);
       } catch (error) {
         throw new InternalServerError("Internal server error", error.message);
@@ -174,16 +174,18 @@ export class AuthenticationService {
    * each request will contain an access token and its signature will be verified
    * @param jwtParams Parameters used to build JWT Token
    */
-  private async generateJwtToken(jwtPayload: IJwtParams): Promise<string> {
+  private generateJwtToken(jwtPayload: IJwtParams): string {
 
     let token: string;
+    let tokenInformation;
     let jwtExpiry: number = 3000;
     const jwtAccessKey = process.env.ACCESS_SECRET_KEY;
 
-    token = await jwt.sign({ jwtPayload }, jwtAccessKey, {
+    token = jwt.sign({ jwtPayload }, jwtAccessKey, {
       expiresIn: jwtExpiry
     })
-    return token;
+    tokenInformation = [token, jwtExpiry]
+    return tokenInformation;
   }
 
   async validateUserDetails(userDetailUpdater: IUpdateUserDetail): Promise<IResponse> {

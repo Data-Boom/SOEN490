@@ -1,11 +1,13 @@
 import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
-import { FastField, Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
+import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/interfaces/IDimension'
+import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
+import React, { useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
-import { MuiTextFieldFormik } from '../../Forms/FormikFields'
-import React from 'react'
 import { classStyles } from '../../../appTheme'
 import { variableValidationSchema } from '../DatasetValidationSchema'
+import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 
 interface IProps {
   variable: IVariable,
@@ -16,66 +18,121 @@ interface IProps {
   onEditModalClose: () => void,
   onVariableUpdate: (variable: IVariable, index: number) => void,
   onVariableRemove: (index: number) => void
+  dimensions: IDimensionModel[]
+  variableOption: IVariableNameModel[]
 }
-
 export const EditVariableHeader = (props: IProps) => {
-
-  const editable = props.editable
+  const { variable, editMode, editable, index, onHeaderClick, onEditModalClose, onVariableUpdate, onVariableRemove, dimensions, variableOption } = { ...props }
+  const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
 
   const handleRemove = () => {
     if (editable) {
-      props.onVariableRemove(props.index)
+      onVariableRemove(index)
     }
   }
 
   const handleClose = () => {
     if (editable) {
-      props.onEditModalClose()
+      onEditModalClose()
     }
   }
 
   const openEditVariableModal = () => {
     if (editable) {
-      props.onHeaderClick(props.index)
+      onHeaderClick(index)
     }
+  }
+
+  const getVariableOptions = (options: any[]): any => {
+    if (options) {
+      return (
+        <>
+          <option value={null}></option>
+          {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+        </>
+      )
+    }
+  }
+  const getDimensionsOptions = (options: IDimensionModel[]): any => {
+    return (
+      <>
+        <option value={null}></option>
+        {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+      </>
+    )
+  }
+
+  const getUnitsOptions = (options: IUnitModel[]): any => {
+    return (
+      <>
+        <option value={null}></option>
+        {options.map(option => <option key={option.id} value={option.id}> {option.name} </option>)}
+      </>
+    )
+  }
+  const getUnits = (dimensionId: number): IUnitModel[] => {
+    const foundDimension = dimensions.find(dimension => dimension.id == dimensionId)
+    if (!foundDimension) {
+      return []
+    }
+    return foundDimension.units
+  }
+
+  const handleDimensionsChanged = (formProps, value: any) => {
+    const dimensionId = value.target.value
+    formProps.setFieldValue('dimensionId', dimensionId)
+    setSelectedDimensionId(dimensionId)
   }
 
   return (
     <div>
-      <Modal open={props.editMode} onClose={handleClose} className={classStyles().modal}>
+      <Modal open={editMode} onClose={handleClose} className={classStyles().modal}>
         <Paper elevation={3}>
           <Box m={5}>
-            <Formik initialValues={props.variable} validationSchema={variableValidationSchema} onSubmit={values => { props.onVariableUpdate({ ...values }, props.index) }}>
-              <Form>
-                <Grid container spacing={4}>
-                  <Grid item sm={4}>
-                    <FastField name="name" label='Name' component={MuiTextFieldFormik} />
+            <Formik initialValues={variable} validationSchema={variableValidationSchema} onSubmit={values => { onVariableUpdate({ ...values }, index) }}>
+              {formProps =>
+                <Form>
+                  <Grid container spacing={4}>
+                    <Grid item sm={4}>
+                      {<Field name="name"
+                        label='Name'
+                        disabled={!editable}
+                        component={MuiSelectFormik}
+                        options={getVariableOptions(variableOption)}
+                        getOptionLabel={(variable) => variable.name}
+                      />}
+                    </Grid>
+                    <Grid item sm={4}>
+                      <Field
+                        name="dimensionId"
+                        label='Dimensions'
+                        disabled={!editable}
+                        component={MuiSelectFormik}
+                        options={getDimensionsOptions(dimensions)}
+                        onChange={(value) => handleDimensionsChanged(formProps, value)} />
+                    </Grid>
+                    <Grid item sm={4}>
+                      <Field name="unitId" label='Units' disabled={!editable || !selectedDimensionId} component={MuiSelectFormik} options={getUnitsOptions(getUnits(selectedDimensionId))} />
+                    </Grid>
                   </Grid>
-                  <Grid item sm={4}>
-                    <FastField name="units" label='Units' component={MuiTextFieldFormik} />
+                  <Grid container spacing={4} justify="flex-end">
+                    <Grid item>
+                      <Button variant="contained" onClick={handleClose}>Close</Button>
+                    </Grid>
+                    <Grid item>
+                      <Button variant="contained" type="submit">Update</Button>
+                    </Grid>
+                    <Grid item>
+                      <Button variant="contained" onClick={handleRemove}>Delete Column</Button>
+                    </Grid>
                   </Grid>
-                  <Grid item sm={4}>
-                    <FastField name="repr" label='Representation' component={MuiTextFieldFormik} />
-                  </Grid>
-                </Grid>
-
-                <Grid container spacing={4} justify="flex-end">
-                  <Grid item>
-                    <Button variant="contained" onClick={handleClose}>Close</Button>
-                  </Grid>
-                  <Grid item>
-                    <Button variant="contained" type="submit">Update</Button>
-                  </Grid>
-                  <Grid item>
-                    <Button variant="contained" onClick={handleRemove}>Delete Column</Button>
-                  </Grid>
-                </Grid>
-              </Form>
+                </Form>
+              }
             </Formik>
           </Box>
         </Paper>
       </Modal>
-      <Box height='35px' onClick={openEditVariableModal}>{props.variable.name}</Box>
-    </div>
+      <Box height='35px' onClick={openEditVariableModal}>{variable.name}</Box>
+    </div >
   )
 }

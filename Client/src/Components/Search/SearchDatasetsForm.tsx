@@ -1,24 +1,26 @@
 import { Button, Grid, Typography } from '@material-ui/core'
 import { Field, FieldArray, Form, Formik } from 'formik'
-import { ICategory, ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
+import { ICategoryModel, ISubcategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
+import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
 
 import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
-import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
-import { listSubcategories } from '../../Remote/Endpoints/SubcategoryEndpoint'
+import { IDatapointModel } from '../../Remote/Endpoints/DatapointEndpoint'
 
 interface IProps {
-  handleSubmit(formValues: ISearchDatasetsFormModel): void
+  handleSubmit(formValues: ISearchDatasetsFormModel): void,
+  categories: ICategoryModel[],
+  datapoint: IDatapointModel[]
 }
 
 export const SearchDatasetsForm = (props: IProps): any => {
-  const [categories, setCategories] = useState([])
-  const [subcategories, setSubcategories] = useState([])
   const [materials, setMaterials] = useState([])
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
-  const { handleSubmit } = { ...props }
+
+  const { handleSubmit, categories, datapoint } = { ...props }
 
   const transformAndSubmit = (formValues: ISearchDatasetsFormModel) => {
     let newMaterials = formValues.material as any[] || []
@@ -28,23 +30,11 @@ export const SearchDatasetsForm = (props: IProps): any => {
   }
 
   useEffect(() => {
-    const callListCategories = async () => {
-      const categories = await listCategories()
-      setCategories(categories || [])
-    }
-
     const callListMaterials = async () => {
       const materials = await listMaterials()
       setMaterials(materials || [])
     }
 
-    const callListSubcategory = async () => {
-      const subCategories = await listSubcategories()
-      setSubcategories(subCategories || [])
-    }
-
-    callListCategories()
-    callListSubcategory()
     callListMaterials()
   }, [])
 
@@ -57,6 +47,24 @@ export const SearchDatasetsForm = (props: IProps): any => {
     )
   }
 
+  const getSubCategories = (categoryId: number): ISubcategoryModel[] => {
+    const foundCategory = categories.find(category => category.id == categoryId)
+    if (!foundCategory) {
+      return []
+    }
+    return foundCategory.subcategories
+  }
+
+  const handleCategoryChange = (formProps, value: any) => {
+    const categoryId = value.target.value
+    formProps.setFieldValue('categoryId', categoryId)
+    setSelectedCategoryId(categoryId)
+  }
+  const handleDatapointChange = (formProps, value: any) => {
+    const datapointId = value.target.value
+    formProps.setFieldValue('datapoint', datapointId)
+  }
+
   return (
     <>
       <Formik
@@ -64,48 +72,56 @@ export const SearchDatasetsForm = (props: IProps): any => {
         validationSchema={searchDatasetsValidationSchema}
         onSubmit={transformAndSubmit}
       >
-        <Form>
-          <Typography variant='h4' align="left">Search</Typography>
-          <Grid container spacing={4}>
-            <Grid item sm={2}>
-              <Field name="firstName" label='First Name' component={MuiTextFieldFormik} />
-            </Grid>
+        {formProps =>
+          <Form>
+            <Typography variant='h4' align="left">Search</Typography>
+            <Grid container spacing={4}>
+              <Grid item>
+                <Field name="firstName" label='First Name' component={MuiTextFieldFormik} />
+              </Grid>
 
-            <Grid item sm={2}>
-              <Field name="lastName" label='Last Name' component={MuiTextFieldFormik} />
-            </Grid>
+              <Grid item>
+                <Field name="lastName" label='Last Name' component={MuiTextFieldFormik} />
+              </Grid>
 
-            <Grid item sm={2}>
-              <Field name="year" label='Year' component={MuiTextFieldFormik} />
-            </Grid>
+              <Grid item>
+                <Field name="year" label='Year' component={MuiTextFieldFormik} />
+              </Grid>
 
-            <Grid item sm={2}>
-              <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} />
-            </Grid>
+              <Grid item>
+                <Field name="categoryId" label='Category' component={MuiSelectFormik} options={getOptions(categories)} onChange={(value) => handleCategoryChange(formProps, value)} />
+              </Grid>
 
-            <Grid item sm={2}>
-              <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} options={getOptions(subcategories)} />
-            </Grid>
+              <Grid item sm={2}>
+                <Field name="subcategoryId" label='Subcategory' component={MuiSelectFormik} disabled={!selectedCategoryId} options={getOptions(getSubCategories(selectedCategoryId))} />
+              </Grid>
 
-            <Grid item sm={12}>
-              <FieldArray name='material' >
-                {({ form, ...fieldArrayHelpers }) => {
-                  return (<MaterialSelectChipArray
-                    value={form.values.material}
-                    fieldArrayHelpers={fieldArrayHelpers}
-                    options={materials}
-                    editable={true}
-                  />)
-                }}
-              </FieldArray>
+              <Grid item>
+                <Field name="datapoint" label='Datapoint' component={MuiSelectFormik} options={getOptions(datapoint)} onChange={(value) => handleDatapointChange(formProps, value)} />
+              </Grid>
+
             </Grid>
-          </Grid>
-          <Grid container spacing={4}>
-            <Grid item sm={2}>
-              <Button id="search-database" variant="contained" color="primary" type="submit"> Search Database </Button>
+            <Grid container spacing={4}>
+              <Grid item sm={12}>
+                <FieldArray name='material' >
+                  {({ form, ...fieldArrayHelpers }) => {
+                    return (<MaterialSelectChipArray
+                      value={form.values.material}
+                      fieldArrayHelpers={fieldArrayHelpers}
+                      options={materials}
+                      editable={true}
+                    />)
+                  }}
+                </FieldArray>
+              </Grid>
             </Grid>
-          </Grid>
-        </Form>
+            <Grid container spacing={4}>
+              <Grid item>
+                <Button id="search-database" variant="contained" color="primary" type="submit"> Search Database </Button>
+              </Grid>
+            </Grid>
+          </Form>
+        }
       </Formik>
     </>
   )

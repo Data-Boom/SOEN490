@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
+import { Subcategory } from "./Subcategory";
+import { ICategory } from "./../interfaces/CategoryInterface";
 
 
 /**
@@ -6,7 +8,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
  * This entity handles categories
  */
 @Entity()
-export class Category {
+export class Category extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -19,4 +21,31 @@ export class Category {
 
     @UpdateDateColumn()
     updated: Date
+
+    static convertToModel(category: Category, subcategories: Subcategory[]): ICategory {
+        return {
+            id: category.id,
+            name: category.name,
+            subcategories: subcategories.map(eachSubcategory => {
+                return {
+                    id: eachSubcategory.id,
+                    name: eachSubcategory.name,
+                    categoryId: category.id
+                }
+            })
+        }
+    }
+    static convertToModelNoSubs(category: Category): ICategory {
+        return {
+            id: category.id,
+            name: category.name
+        }
+    }
+
+    static convertToCategory(categoryModel: ICategory): Category {
+        let category = new Category();
+        category.id = categoryModel.id;
+        category.name = categoryModel.name;
+        return category;
+    }
 }

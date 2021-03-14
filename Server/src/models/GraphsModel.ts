@@ -1,5 +1,4 @@
 import { Connection, getConnection } from "typeorm";
-import { BadRequest } from '@tsed/exceptions';
 import { Accounts } from "./entities/Accounts";
 import { Graphstate, selectGraphOwnerQuery, selectGraphStateQuery } from "./entities/Graphstate";
 import { IAxisModel, IDisplayedDatasetModel, IGraphStateModel, IUploadGraphModel } from "./interfaces/GraphStateInterface";
@@ -163,7 +162,7 @@ export class GraphsModel {
      * @param axisUnits 
      * Axis unit types: string[]
      */
-    private async sendSavedGraphToDatabase(accountId: number, graph: IUploadGraphModel): Promise<string> {
+    private async sendSavedGraphToDatabase(accountId: number, graph: IUploadGraphModel): Promise<number> {
         let newGraph = new Graphstate();
         newGraph.id;
         newGraph.accountId = accountId;
@@ -178,7 +177,7 @@ export class GraphsModel {
         newGraph.axisZoomEnd = graph.axisZoomEnd;
         newGraph.axisUnits = graph.axisUnits;
         await this.connection.manager.save(newGraph);
-        return "Graph successfully saved"
+        return newGraph.id;
     }
 
     /**
@@ -193,10 +192,10 @@ export class GraphsModel {
      * @param userEmail 
      * User email address: string
      */
-    async saveGraph(graph: IGraphStateModel, userId: number): Promise<string> {
+    async saveGraph(graph: IGraphStateModel, userId: number): Promise<number> {
         let processGraphInput = await this.processGraphInput(graph)
-        let statusMessage = await this.sendSavedGraphToDatabase(userId, processGraphInput)
-        return statusMessage
+        let statusID = await this.sendSavedGraphToDatabase(userId, processGraphInput)
+        return statusID
     }
 
     async verifyGraphOwner(graphId: number, userId: number): Promise<any> {

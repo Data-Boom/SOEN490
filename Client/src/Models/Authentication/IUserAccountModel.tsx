@@ -12,6 +12,7 @@ export interface IUserAccountModel {
   firstName: string,
   lastName: string,
   organizationName: string,
+  sessionExpiration?: any
 }
 
 export interface IUserDetailsModel extends IUserAccountModel {
@@ -38,5 +39,6 @@ export const defaultUserAccountModel: IUserAccountModel = {
   email: '',
   firstName: '',
   lastName: '',
-  organizationName: ''
+  organizationName: '',
+  sessionExpiration: null
 }

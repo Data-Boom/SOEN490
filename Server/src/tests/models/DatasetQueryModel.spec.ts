@@ -50,8 +50,8 @@ describe('data query model test', () => {
         done()
     });
 
-    test('Input a category ID and subcategory ID of 2, expect to find at least one dataset id', async done => {
-        let id = await dataQueryModel.getDatasetIDFromSubcategory(2, 2);
+    test('Input a subcategory ID of 2, expect to find at least one dataset id', async done => {
+        let id = await dataQueryModel.getDatasetIDFromSubcategory(2);
         expect(id[0].dataset_id).not.toBeUndefined()
         done()
     });
@@ -82,7 +82,7 @@ describe('data query model test', () => {
 
     test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
         let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(1)
-        expect(arrayOfData[0].dataset_id).toEqual(2);
+        expect(arrayOfData).toEqual([{ "dataset_id": 2 }])
         done()
     });
 
@@ -98,4 +98,10 @@ describe('data query model test', () => {
             .toThrow("Something went wrong adding a favorite data set. Try later");
     });
 
+    //test for datapoint
+    test('Input datapoint containing Density, expect to find at least one dataset id', async done => {
+        let id = await dataQueryModel.getDatasetIDFromDatapoint("Density");
+        expect(id[0].dataset_id).not.toBeUndefined()
+        done()
+    });
 })
