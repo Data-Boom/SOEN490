@@ -51,8 +51,8 @@ export const DatasetForm = (props: IProps): any => {
 
   useEffect(() => {
     const setFavourite = async () => {
-      console.log(initialDataset.id, 'initDataset id')
-      const isFavorite = (await callGetUserFavouriteDatasets()).includes(initialDataset.id)
+      const userFavoriteDatasets = await callGetUserFavouriteDatasets() || []
+      const isFavorite = userFavoriteDatasets.includes(initialDataset.id)
       setFavoriteDataset(isFavorite)
     }
 

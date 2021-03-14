@@ -57,5 +57,12 @@ export const MuiAutocompleteFormik = ({ field, form: { touched, errors, setField
 export const getErrorAndHelper = (field, touched, errors) => {
   const error = get(touched, field.name) && !!get(errors, field.name)
   const helperText = get(touched, field.name) && get(errors, field.name)
+  console.log(touched, 'tocuhec')
+  // if (field.name == 'meta.dataset_name') {
+  //   console.log(error, helperText, touched, 'meta.dataset_name')
+  // }
+  // if (field.name == 'reference.title') {
+  //   console.log(error, helperText, touched, 'reference.title')
+  // }
   return [error, helperText]
 }
