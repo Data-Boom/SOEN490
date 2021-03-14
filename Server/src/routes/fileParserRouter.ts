@@ -27,14 +27,4 @@ router.post('/api/v1/fileParser', [JWTAuthenticator.verifyJWT, upload.single('fi
   }
 })
 
-router.post('/api/v1/dataExtract', [JWTAuthenticator.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
-  try {
-    let dataExtract = new dataExtractionController(request.file.path, request.file.originalname);
-    dataExtract.createRequest(request, response);
-  } catch (error) {
-    if (!request.file)
-      return response.json('Please select a file to upload');
-  }
-})
-
 export { router as fileParserRoute };
