@@ -7,7 +7,6 @@ import { connectDB } from '../database';
 import cors from 'cors';
 import express from 'express';
 import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
-import { dataExtractionRouter } from '../routes/dataExtractionRouter'
 import { dataUploadRouter } from '../routes/dataUploadRouter'
 import { getConnectionManager } from 'typeorm';
 import { GraphsRouter } from '../routes/GraphsRouter';
@@ -67,7 +66,6 @@ export class LoadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    this.app.use('/', dataExtractionRouter)
     this.app.use('/', authenticationRouter)
     this.app.use('/', DataSetRouter)
     this.app.use('/', fetchAllCategoriesMaterialsRouter)
