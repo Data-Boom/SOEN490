@@ -5,9 +5,8 @@ import { MuiAutocompleteFormik, MuiSelectFormik } from '../../Forms/FormikFields
 import React, { useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
+import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
 import { classStyles } from '../../../appTheme'
-import { useDimensions } from '../../Utils/Hooks/useDimensions'
-import { useVariableNames } from '../../Utils/Hooks/useVariableNames'
 import { variableValidationSchema } from '../DatasetValidationSchema'
 
 interface IProps {
@@ -15,17 +14,16 @@ interface IProps {
   onVariableUpdate: (newVariable: IVariable) => void
   onCancel: () => void
   onDelete: () => void
+  dimensions: IDimensionModel[]
   editable: boolean
   isOpen: boolean
   isNewVariable: boolean
+  variableNames: IVariableNameModel[]
 }
 
 export const EditVaraibleModal = (props: IProps) => {
-  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, isOpen, isNewVariable } = props
-  const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(null)
-  const { dimensions } = useDimensions()
-  const { variableNames } = useVariableNames()
-
+  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, dimensions, isOpen, isNewVariable, variableNames } = props
+  const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(initialValues?.dimensionId)
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (
@@ -60,6 +58,62 @@ export const EditVaraibleModal = (props: IProps) => {
     setSelectedDimensionId(dimensionId)
   }
 
+  const renderInputs = (formProps) => {
+    return (
+      <Grid container spacing={4}>
+        <Grid item sm={4}>
+          <Field name="name"
+            label='Name'
+            disabled={!editable}
+            component={MuiAutocompleteFormik}
+            options={variableNames.map(variable => variable.name)}
+            disableClearable
+          />
+        </Grid>
+        <Grid item sm={4}>
+          <Field
+            name="dimensionId"
+            label='Dimensions'
+            disabled={!editable}
+            component={MuiSelectFormik}
+            options={getDimensionsOptions(dimensions)}
+            onChange={(value) => handleDimensionsChanged(formProps, value)} />
+        </Grid>
+        <Grid item sm={4}>
+          <Field name="unitId" label='Units' disabled={!editable || !selectedDimensionId} component={MuiSelectFormik} options={getUnitsOptions(getUnits(selectedDimensionId))} />
+        </Grid>
+      </Grid>
+    )
+  }
+
+  const renderButtons = () => {
+    return (
+      <Grid container spacing={2} justify="flex-end">
+        {isNewVariable
+          ? <>
+            <Grid item>
+              <Button variant="outlined" color="primary" onClick={onCancel}>Cancel</Button>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" type="submit">Save</Button>
+            </Grid>
+          </>
+          : <>
+            <Grid item>
+              <Button variant="contained" color="secondary" onClick={onDelete}>Remove Variable</Button>
+            </Grid>
+            <Grid item>
+              <Button variant="outlined" color="primary" onClick={onCancel}>Cancel</Button>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" type="submit">Update</Button>
+            </Grid>
+          </>
+        }
+      </Grid>
+    )
+  }
+
   return (
     <Modal open={isOpen} onClose={onCancel} className={classStyles().modal}>
       <Paper elevation={3}>
@@ -67,51 +121,13 @@ export const EditVaraibleModal = (props: IProps) => {
           <Formik initialValues={initialValues} validationSchema={variableValidationSchema} onSubmit={onVariableUpdate}>
             {formProps =>
               <Form>
-                <Grid container spacing={4}>
-                  <Grid item sm={4}>
-                    <Field name="name"
-                      label='Name'
-                      disabled={!editable}
-                      component={MuiAutocompleteFormik}
-                      options={variableNames.map(variable => variable.name)}
-                      disableClearable
-                    />
+                <Grid container direction="column" spacing={4}>
+                  <Grid item>
+                    {renderInputs(formProps)}
                   </Grid>
-                  <Grid item sm={4}>
-                    <Field
-                      name="dimensionId"
-                      label='Dimensions'
-                      disabled={!editable}
-                      component={MuiSelectFormik}
-                      options={getDimensionsOptions(dimensions)}
-                      onChange={(value) => handleDimensionsChanged(formProps, value)} />
+                  <Grid item>
+                    {renderButtons()}
                   </Grid>
-                  <Grid item sm={4}>
-                    <Field name="unitId" label='Units' disabled={!editable || !selectedDimensionId} component={MuiSelectFormik} options={getUnitsOptions(getUnits(selectedDimensionId))} />
-                  </Grid>
-                </Grid>
-                <Grid container spacing={4} justify="flex-end">
-                  {isNewVariable
-                    ? <>
-                      <Grid item>
-                        <Button variant="outlined" color="primary" onClick={onCancel}>Cancel</Button>
-                      </Grid>
-                      <Grid item>
-                        <Button variant="contained" color="primary" type="submit">Save</Button>
-                      </Grid>
-                    </>
-                    : <>
-                      <Grid item>
-                        <Button variant="contained" color="secondary" onClick={onDelete}>Remove Variable</Button>
-                      </Grid>
-                      <Grid item>
-                        <Button variant="outlined" color="primary" onClick={onCancel}>Cancel</Button>
-                      </Grid>
-                      <Grid item>
-                        <Button variant="contained" color="primary" type="submit">Update</Button>
-                      </Grid>
-                    </>
-                  }
                 </Grid>
               </Form>
             }

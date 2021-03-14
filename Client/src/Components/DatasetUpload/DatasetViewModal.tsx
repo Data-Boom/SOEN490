@@ -7,7 +7,6 @@ import { FormikProps } from 'formik'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
-import { fixPartialForform } from './DatasetView'
 import { useEffect } from 'react'
 
 interface IProps {
@@ -23,7 +22,7 @@ export const DatasetFormModal = (props: IProps) => {
     const getDatasetInfo = async (id: number) => {
       const datasetArray = await callGetDatasets({ datasetId: [id] })
       const dataset = datasetArray[0]
-      setDataset(fixPartialForform(dataset))
+      setDataset(dataset)
     }
 
     if (datasetId) {

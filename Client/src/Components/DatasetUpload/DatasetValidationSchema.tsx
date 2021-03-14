@@ -25,8 +25,8 @@ const referenceValidationSchema = Yup.object().shape({
 export const variableValidationSchema = Yup.object().shape(
   {
     name: Yup.string().trim().required(requiredMessage('Name')),
-    dimensionId: Yup.number().required(requiredMessage('Dimensions')),
-    unitId: Yup.number().required(requiredMessage('Units'))
+    dimensionId: Yup.mixed().required(requiredMessage('Dimensions')),
+    unitId: Yup.mixed().required(requiredMessage('Units'))
   }
 )
 
@@ -45,7 +45,7 @@ const dataValidationSchema = Yup.object().shape({
 
 const metaValidationSchema = Yup.object().shape({
   dataset_name: Yup.string().required(requiredMessage('Dataset Name')),
-  data_type: Yup.string().required(requiredMessage('Dataset Type')),
+  data_type: Yup.string(),
   subcategory: Yup.number().nullable().integer(integerMessage('Subcategory [ID]')),
   material: Yup.array().required().min(1)
 })
