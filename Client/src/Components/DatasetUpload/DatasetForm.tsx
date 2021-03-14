@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, Tooltip } from '@material-ui/core'
+import { Button, Grid, Tooltip } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import { ICategoryModel, listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
@@ -13,14 +13,6 @@ import StarBorderIcon from "@material-ui/icons/StarBorder"
 import StarIcon from "@material-ui/icons/Star"
 import { datasetValidationSchema } from './DatasetValidationSchema'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
-
-import GetAppIcon from '@material-ui/icons/GetApp';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import PublishIcon from '@material-ui/icons/Publish';
-import StarOutlineIcon from '@material-ui/icons/StarOutline';
-
-import { UploadDatasetModal } from './UploadDatasetModal';
-import { JsonUploadModal } from './JsonUploadModal'
 
 interface IProps extends IFormProps {
   initialDataset: IDatasetModel,
@@ -40,10 +32,6 @@ export const DatasetForm = (props: IProps): any => {
   const [categories, setCategories] = useState<ICategoryModel[]>([])
   const [materials, setMaterials] = useState([])
   const [favoriteDataset, setFavoriteDataset] = useState(false)
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
-  const [confirmJSModalOpen, setConfirmJSModalOpen] = useState(false)
-
-
 
   useEffect(() => {
     const callListCategories = async () => {
@@ -103,44 +91,6 @@ export const DatasetForm = (props: IProps): any => {
   const data: IData = initialDataset.data
   const initialValues: DatasetUploadFormValues = { meta, reference, data }
 
-  const handleJSONUploadClick = () => {
-    setConfirmModalOpen(false)
-    setConfirmJSModalOpen(true)
-    console.log("something happening?")
-  }
-  const renderTopButtons = (): any => {
-    return (
-      <>
-        <Grid>
-          <IconButton aria-label="favorite" color="primary">
-            <StarOutlineIcon />
-          </IconButton>
-        </Grid>
-
-        <Grid item>
-          <Button variant="contained" color="primary" startIcon={< GetAppIcon />}>Download</Button>
-        </Grid>
-
-        <Grid item>
-          <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
-        </Grid>
-
-        <Grid item>
-          <Button variant="contained" color="primary" onClick={() => setConfirmModalOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
-        </Grid>
-        <UploadDatasetModal
-          open={confirmModalOpen}
-          onClose={() => setConfirmModalOpen(false)}
-          onSubmitCT={() => alert("CSV/TXT upload")}
-          onSubmitJS={handleJSONUploadClick} />
-        <JsonUploadModal
-          open={confirmJSModalOpen}
-          onClose={() => setConfirmJSModalOpen(false)}
-        />
-      </>
-    )
-  }
-
   return (
     <Formik
       enableReinitialize={true}
@@ -155,11 +105,6 @@ export const DatasetForm = (props: IProps): any => {
             constructFavoriteButton() : null
           }
         </Grid>
-
-        <Grid item container sm={12} spacing={2} justify='flex-end'>
-          {renderTopButtons()}
-        </Grid>
-
         <MetaForm materials={materials} editable={editable} categories={categories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />

@@ -1,11 +1,16 @@
-import { Box, Container } from '@material-ui/core'
+import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { DatasetForm } from './DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
+import { FileTypePromptModal } from './FileTypePromptModal'
+import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
+import GetAppIcon from "@material-ui/icons/GetApp"
+import PublishIcon from "@material-ui/icons/Publish"
+import TimelineIcon from "@material-ui/icons/Timeline"
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -35,15 +40,21 @@ export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IData
   return dataset
 }
 
+const jsonType = 'application/json'
+const csvType = '.csv, .txt'
+
 export const DatasetView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
   const formikReference = useRef<FormikProps<unknown>>()
 
   const location = useLocation()
   const initialSentDataset = location.state as IDatasetModel
-  //todo not sure if this should be a state variable
   const [initialValues, setInitialValues] = useState(props.initialDataset || initialSentDataset || defaultDatasetModel)
   const [editable, setEditable] = useState(true)
+
+  const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
+  const [fileUploadOpen, setFileUploadOpen] = useState(false)
+  const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
@@ -62,17 +73,61 @@ export const DatasetView = (props: IProps) => {
     await callSaveDataset(formDataset)
   }
 
+  const handleJSONFileTypeSelected = () => {
+    setFileUploadOpen(true)
+    setAcceptedFileType(jsonType)
+  }
+
+  const handleCSVTXTFileTypeSelected = () => {
+    setFileUploadOpen(true)
+    setAcceptedFileType(csvType)
+  }
+
+  const renderTopButtons = (): any => {
+    return (
+      <>
+        <Grid item container sm={12} spacing={2} justify='flex-end'>
+          <Grid item>
+            <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
+          </Grid>
+
+          <Grid item>
+            <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
+          </Grid>
+
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={() => setFileTypePromptOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
+          </Grid>
+        </Grid>
+      </>
+    )
+  }
+
   return (
-    <Container>
-      <Box pt={4} pb={4}>
-        <DatasetForm
-          onSubmit={handleSubmitForm}
-          editable={editable}
-          initialDataset={initialValues}
-          formikReference={formikReference}
-        />
-        <DefaultFormFooter formikReference={formikReference} />
-      </Box>
-    </Container>
+    <>
+      <Container>
+        <Box pt={4} pb={4}>
+          {renderTopButtons()}
+          <DatasetForm
+            onSubmit={handleSubmitForm}
+            editable={editable}
+            initialDataset={initialValues}
+            formikReference={formikReference}
+          />
+          <DefaultFormFooter formikReference={formikReference} />
+        </Box>
+      </Container>
+      <FileTypePromptModal
+        open={fileTypePromptOpen}
+        onClose={() => setFileTypePromptOpen(false)}
+        onSubmitCT={handleCSVTXTFileTypeSelected}
+        onSubmitJS={handleJSONFileTypeSelected}
+      />
+      <FileUploadModal
+        open={fileUploadOpen}
+        acceptedFileType={acceptedFileType}
+        onClose={() => setFileUploadOpen(false)}
+      />
+    </>
   )
 }
