@@ -1,6 +1,6 @@
 import { CSVFileExtractorFactory } from "../../services/dataExtraction/CSVFileHandlerFactory";
 
-describe('CSF Parser tests', () => {
+describe('CSV Parser tests', () => {
 
     let expectation = [{ "Initial Pressure": "101", "Initial Temperature": "293", "Cell Size": "12" }, { "Initial Pressure": "50", "Initial Temperature": "293", "Cell Size": "24" }, { "Initial Pressure": "25", "Initial Temperature": "293", "Cell Size": "48" }]
 
