@@ -1,7 +1,7 @@
-import { Button, Grid, Tooltip } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import { ICategoryModel, listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
+import { IconButton, Tooltip } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { callGetUserFavouriteDatasets, userDeleteFavouriteDataset, userSaveFavouriteDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
@@ -31,6 +31,7 @@ export const DatasetForm = (props: IProps): any => {
 
   const [categories, setCategories] = useState<ICategoryModel[]>([])
   const [materials, setMaterials] = useState([])
+
   const [favoriteDataset, setFavoriteDataset] = useState(false)
 
   useEffect(() => {
@@ -48,20 +49,19 @@ export const DatasetForm = (props: IProps): any => {
     callListMaterials()
   }, [])
 
+  useEffect(() => {
+    const setFavourite = async () => {
+      const userFavoriteDatasets = await callGetUserFavouriteDatasets() || []
+      const isFavorite = userFavoriteDatasets.includes(initialDataset.id)
+      setFavoriteDataset(isFavorite)
+    }
+
+    setFavourite()
+  }, [initialDataset])
+
   const handleSubmit = (values: DatasetUploadFormValues) => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
-  }
-
-  const checkIfFavorite = async () => {
-    const isFavorite = (await callGetUserFavouriteDatasets()).includes(initialDataset.id)
-    if (isFavorite) {
-      setFavoriteDataset(true)
-      return true
-    } else {
-      setFavoriteDataset(false)
-      return false
-    }
   }
 
   const handlefavoriteDataset = async () => {
@@ -76,13 +76,13 @@ export const DatasetForm = (props: IProps): any => {
 
   const constructFavoriteButton = () => {
     return (
-      <Button onClick={handlefavoriteDataset} > {
-        checkIfFavorite() && favoriteDataset ?
+      <IconButton size="small" onClick={handlefavoriteDataset} > {
+        favoriteDataset ?
           <Tooltip title="Remove dataset from favorites">
             <StarIcon color="primary" fontSize="large" /></Tooltip> :
           <Tooltip title="Add dataset to favorites">
             <StarBorderIcon color="primary" fontSize="large" /></Tooltip>
-      }</Button>
+      }</IconButton>
     )
   }
 
@@ -100,11 +100,7 @@ export const DatasetForm = (props: IProps): any => {
       innerRef={formikReference}
     >
       <Form>
-        <Grid>
-          {initialDataset.id ?
-            constructFavoriteButton() : null
-          }
-        </Grid>
+        {initialDataset.id && constructFavoriteButton()}
         <MetaForm materials={materials} editable={editable} categories={categories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />

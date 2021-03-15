@@ -1,4 +1,4 @@
-import { Grid, IconButton, Typography } from "@material-ui/core"
+import { Grid, IconButton } from "@material-ui/core"
 import { IAuthor, newAuthor } from "../../../Models/Datasets/IDatasetModel"
 
 import AddIcon from '@material-ui/icons/Add'
@@ -44,18 +44,15 @@ export const AuthorsList = (props: IProps) => {
 
   return (
     <>
-      <Grid item container direction='column' spacing={4} alignItems="flex-start">
-        <Grid item>
-          <Typography variant='h6' align="left">Authors</Typography>
-        </Grid>
+      <Grid container direction='column' spacing={2} alignItems="flex-start">
         <Grid item>
           {renderAuthorRows()}
         </Grid>
-        <Grid item>
-          <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!editable}>
-            <AddIcon />
-          </IconButton>
-        </Grid>
+      </Grid>
+      <Grid container>
+        <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!editable}>
+          <AddIcon />
+        </IconButton>
       </Grid>
     </>
   )

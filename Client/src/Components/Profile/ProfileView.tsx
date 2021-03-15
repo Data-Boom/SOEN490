@@ -137,24 +137,25 @@ export function ProfileView() {
   const { user, setUserContext } = useContext(UserContext)
   useEffect(() => {
     const fetchUser = async () => {
-      const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
-      setUserContext(newUser)
+      const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email }) || null
+      if (newUser)
+        setUserContext(newUser)
     }
-    fetchUser()
-  }, [])
 
-  const [savedGraphState, setSavedGraphState] = useState([])
-
-  useEffect(() => {
     const callListSavedGraphStates = async () => {
-      const savedGraphState = await listGraphStates()
+      const savedGraphState = await listGraphStates() || []
       setSavedGraphState(savedGraphState.reverse())
     }
+
+    fetchUser()
+
     if (user && user.email)
       callListSavedGraphStates()
   }, [])
 
   const classes = useStyles()
+
+  const [savedGraphState, setSavedGraphState] = useState([])
   const [tab, setTab] = React.useState(0)
 
   const handleChange = (event: React.ChangeEvent<{}>, newTab: number) => {
@@ -208,6 +209,7 @@ export function ProfileView() {
               </Grid>
             </Grid>
           </TabPanel>
+          {/* todo delete */}
           <TabPanel value={tab} index={3}>
             <Grid container spacing={2}>
               <Grid item xs={12}>

@@ -12,7 +12,7 @@ export abstract class AbstractFileExtractor {
     constructor(filePath: string) {
         this.filePath = filePath
     }
-    protected abstract parseFile()
+    abstract parseFile()
 
     //Optional Implementation for CSV, PNG, PDF & TXT files
     protected extractDataFromFileType?()
