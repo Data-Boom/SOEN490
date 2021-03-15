@@ -1,9 +1,9 @@
 import { createConnection, getConnection } from 'typeorm';
-import { DataExtractionService } from '../../services/dataExtraction/DataExtractionService'
+import { DataParserService } from '../../services/Parser/DataParserService'
 
-describe('Data Extraction Service', () => {
+describe('Data Parser Service', () => {
 
-    let extractionService: DataExtractionService
+    let dataParserService: DataParserService
     jest.setTimeout(60000)
 
     beforeAll(async () => {
@@ -17,8 +17,8 @@ describe('Data Extraction Service', () => {
     test('Valid - Request to Extract a JSON file', async () => {
         let extension = 'json'
         let filePath = 'upload/25a6488a2135bdeae7e26a8e9baac62f'
-        extractionService = new DataExtractionService(extension, filePath)
-        let response: any = await extractionService.extractData()
+        dataParserService = new DataParserService(extension, filePath)
+        let response: any = await dataParserService.parseData()
         expect(response.statusCode).toBe(200);
     })
 
@@ -26,10 +26,10 @@ describe('Data Extraction Service', () => {
         let res = "Cannot parse your file. Something is wrong with it"
         let extension = 'json'
         let filePath = ''
-        extractionService = new DataExtractionService(extension, filePath)
+        dataParserService = new DataParserService(extension, filePath)
         let response: any
         try {
-            response = await extractionService.extractData()
+            response = await dataParserService.parseData()
         } catch (error) {
             expect(error.message).toBe(res);
         }

@@ -5,9 +5,9 @@ import { FileUploadForm } from './FileUploadForm'
 import React from 'react'
 import SnackbarUtils from '../Utils/SnackbarUtils'
 import { datasetRoute } from '../../Common/Consts/Routes'
-import { extractDatasetFromFile } from '../../Remote/Endpoints/FileUploadEndpoint'
 import { rm } from "../../Assets/readMeMessage"
 import { useHistory } from 'react-router-dom'
+import { parseFromFile } from '../../Remote/Endpoints/FileParserEndpoint'
 
 const fileFormat = 'application/json'
 
@@ -21,7 +21,7 @@ export const FileUploadView = () => {
 
   const handleSubmit = async (jsonFile: File) => {
     try {
-      const extractedDataset = await extractDatasetFromFile(jsonFile)
+      const extractedDataset = await parseFromFile(jsonFile)
 
       if (!extractedDataset) {
         SnackbarUtils.warning('Server failed to parse dataset')
