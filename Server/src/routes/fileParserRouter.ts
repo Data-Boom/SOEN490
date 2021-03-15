@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
 import { JWTAuthenticator } from '../middleware/JWTAuthenticator';
-import { dataExtractionController } from '../controllers/dataExtractionController';
+import { FileParserController } from '../controllers/FileParserController';
 import multer from 'multer';
 
 interface MulterRequest extends Request {
@@ -19,7 +19,7 @@ let router = Router();
 
 router.post('/api/v1/fileParser', [JWTAuthenticator.verifyJWT, upload.single('file')], (request: MulterRequest, response: Response, next: NextFunction) => {
   try {
-    let dataExtract = new dataExtractionController(request.file.path, request.file.originalname);
+    let dataExtract = new FileParserController(request.file.path, request.file.originalname);
     dataExtract.createRequest(request, response);
   } catch (error) {
     if (!request.file)

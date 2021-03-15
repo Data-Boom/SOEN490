@@ -1,4 +1,4 @@
-import { CSVFileExtractorFactory } from "../../services/dataExtraction/CSVFileHandlerFactory";
+import { CSVFileExtractorFactory } from "../../services/Parser/CSVFileHandlerFactory";
 
 describe('CSV Parser tests', () => {
 
