@@ -2,12 +2,12 @@ import { Grid, TablePagination } from "@material-ui/core"
 import React, { useState } from 'react'
 
 export interface IRowProps<T> {
-  row: T
+  row?: T
 }
 
 interface IProps<T, ICustomRowProps> {
   RowComponent: React.ComponentType<IRowProps<T>>
-  models: T[]
+  models?: T[]
   rowProps: ICustomRowProps
   withPagination: boolean
 }

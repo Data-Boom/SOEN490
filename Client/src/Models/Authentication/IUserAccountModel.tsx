@@ -4,6 +4,7 @@ export interface IUserAccountRemoteModel {
   account_firstName: string,
   account_lastName: string,
   account_organizationName: string,
+  account_permissions: number
 }
 
 export interface IUserAccountModel {
@@ -12,7 +13,8 @@ export interface IUserAccountModel {
   firstName: string,
   lastName: string,
   organizationName: string,
-  sessionExpiration?: any
+  sessionExpiration?: any,
+  account_permissions: number
 }
 
 export interface IUserDetailsModel extends IUserAccountModel {
@@ -28,7 +30,8 @@ export const toLocalUserAccountModel = (remoteAccount: IUserAccountRemoteModel):
     email: remoteAccount.account_email,
     firstName: remoteAccount.account_firstName,
     lastName: remoteAccount.account_lastName,
-    organizationName: remoteAccount.account_organizationName
+    organizationName: remoteAccount.account_organizationName,
+    account_permissions: remoteAccount.account_permissions
   }
 
   return localAccountModel
@@ -40,5 +43,6 @@ export const defaultUserAccountModel: IUserAccountModel = {
   firstName: '',
   lastName: '',
   organizationName: '',
-  sessionExpiration: null
+  sessionExpiration: null,
+  account_permissions: 0
 }
