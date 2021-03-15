@@ -9,7 +9,7 @@ export const CellSizeAnalysisView = () => {
     <>
       <Box p={5}>
         <h1> Cell Size Analysis Tool </h1>
-        <h2>Installation</h2>
+        <h2>Installers</h2>
         <Typography>Windows executable </Typography>
         <a href={cellSizeAnalyzerExecutable} download="Cell Size Analyzer.exe"> CellSizeAnalyzer.exe </a>
         <Typography>Mac executable </Typography>
