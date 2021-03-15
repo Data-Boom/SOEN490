@@ -49,7 +49,6 @@ export const DataCellAnalysisView = (props: IProps) => {
           <Typography>Data Cell Analysis Upload Page</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            isValidFile={validatePNG}
             acceptFileFormat={fileFormat}
           />
         </Box>
