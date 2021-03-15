@@ -1,4 +1,4 @@
-import { Box, Button, Container } from '@material-ui/core'
+import { Box, Button } from '@material-ui/core'
 
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
@@ -9,15 +9,15 @@ import { rm } from "../../Assets/readMeMessage"
 import { useHistory } from 'react-router-dom'
 import { parseFromFile } from '../../Remote/Endpoints/FileParserEndpoint'
 
-const defaultFileFormat = 'application/json'
+const fileFormat = 'application/json'
 
-interface IProps {
-  acceptedFileType?: string
-}
 
-export const FileUploadView = (props: IProps) => {
-  const { acceptedFileType } = { ...props }
+export const FileUploadView = () => {
   const history = useHistory()
+
+  const isValidFile = (file: File) => {
+    return file && file.type === fileFormat
+  }
 
   const handleSubmit = async (jsonFile: File) => {
     try {
@@ -39,10 +39,11 @@ export const FileUploadView = (props: IProps) => {
   }
 
   return (
-    <Container>
+    <>
       <FileUploadForm
-        acceptFileFormat={acceptedFileType || defaultFileFormat}
+        acceptFileFormat={fileFormat}
         onSubmit={handleSubmit}
+        isValidFile={isValidFile}
       />
       <Box p={4}>
         <Download file="emptyJsonDataset.json" content={JSON.stringify("../../Assets/emptyJSFile.json", null, 2)}>
@@ -52,6 +53,6 @@ export const FileUploadView = (props: IProps) => {
           <a href="http://localhost:3000/#/uploadFile"> Download JSON file submission instructions </a>
         </Download>
       </Box>
-    </Container>
+    </>
   )
 }
