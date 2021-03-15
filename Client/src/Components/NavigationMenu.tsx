@@ -32,17 +32,6 @@ export default function NavigationMenu() {
     setOpen(false)
   }
 
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    //setOpen({ open });
-  };
-
-
-
-
   const drawer = (): any => {
     return (
       <React.Fragment key='left'>
@@ -137,14 +126,6 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-  },
-  appBarShift: {
-    /*width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),*/
   },
   menuButton: {
     marginRight: theme.spacing(2),
