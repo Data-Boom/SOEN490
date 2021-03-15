@@ -109,18 +109,19 @@ export const DatasetView = (props: IProps) => {
   const renderTopButtons = (): any => {
     return (
       <>
-        <Grid item container sm={12} spacing={2} justify='flex-end'>
-          <Grid item>
-            <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
-          </Grid>
-
-          <Grid item>
-            <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
-          </Grid>
-          {/* {buttonHideCheck()} */}
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={() => setFileTypePromptOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
-          </Grid>
+        <Grid container spacing={2} justify='flex-end'>
+          {initialValues.id
+            ? <>
+              <Grid item>
+                <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
+              </Grid>
+            </>
+            : <Grid item>
+              <Button variant="contained" color="primary" onClick={() => setFileTypePromptOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
+            </Grid>}
         </Grid>
       </>
     )
