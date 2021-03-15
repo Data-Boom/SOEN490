@@ -56,6 +56,9 @@ export const DatasetView = (props: IProps) => {
   const [fileUploadOpen, setFileUploadOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
+  // const { initialDataset } = { ...props }
+  //const [hideDLgraphButtons, setHideDLgraphButtons] = useState(false)
+
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
       const datasetArray = await callGetDatasets({ datasetId: [id] })
@@ -83,6 +86,26 @@ export const DatasetView = (props: IProps) => {
     setAcceptedFileType(csvType)
   }
 
+  // const buttonHideCheck = async () => {
+  //   
+  //   if (initialDataset.id) {
+  //     setHideDLgraphButtons(false)
+  //     return (
+  //       <Grid item container sm={12} spacing={2} justify='flex-end'>
+  //         <Grid item>
+  //           <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
+  //         </Grid>
+
+  //         <Grid item>
+  //           <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
+  //         </Grid>
+  //       </Grid>
+  //     )
+  //   } else {
+  //     setHideDLgraphButtons(true)
+  //     return
+  //   }
+  // }
   const renderTopButtons = (): any => {
     return (
       <>
@@ -94,7 +117,7 @@ export const DatasetView = (props: IProps) => {
           <Grid item>
             <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
           </Grid>
-
+          {/* {buttonHideCheck()} */}
           <Grid item>
             <Button variant="contained" color="primary" onClick={() => setFileTypePromptOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
           </Grid>
