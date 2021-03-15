@@ -1,6 +1,6 @@
 import { Datapoints } from "./entities/Datapoints";
-import { IVariableNameModel } from "../../../Client/src/Models/Variables/IVariableNameModel"
-import { getConnection, getManager } from "typeorm";
+import { IVariableNameModel } from "./interfaces/IVariableNameModel"
+import { getConnection } from "typeorm";
 
 
 export class VariableModel {
