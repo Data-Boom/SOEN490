@@ -91,7 +91,7 @@ export default function NavigationMenu() {
   return (
     <>
       <HashRouter>
-        <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
+        <AppBar position="fixed" className={clsx(classes.appBar)} color="primary">
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
               <ClickAwayListener onClickAway={handleDrawerClose}>
@@ -119,7 +119,7 @@ export default function NavigationMenu() {
           }
         </AppBar>
         {drawer()}
-        <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
+        <Box className={clsx(classes.appBar)} pt={16}>
           {getRoutedViews()}
         </Box>
       </HashRouter>
@@ -139,12 +139,12 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
+    /*width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
-    }),
+    }),*/
   },
   menuButton: {
     marginRight: theme.spacing(2),
