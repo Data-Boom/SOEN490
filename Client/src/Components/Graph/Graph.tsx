@@ -27,15 +27,23 @@ export default function Graph(props: IProps) {
 
 
   useEffect(() => initiateGraph(), [])
-  useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units])
+  useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units, axes[0].variableName, axes[1].variableName])
+  useEffect(() => chartRef.current && handleAxesScaleUpdated(), [axes[0].logarithmic, axes[1].logarithmic])
   useEffect(() => chartRef.current && handleDatasetsUpdated(), [datasets])
 
   const handleUnitsUpdated = () => {
-    //cleanup series used for old variables
+    //cleanup series used for old variables, no series will trigger points rebuild on axes update
     chartRef.current.series.clear()
     const xAxis = chartRef.current.xAxes.getIndex(0)
     const yAxis = chartRef.current.yAxes.getIndex(0)
     updateAxis(xAxis, yAxis)
+  }
+
+  const handleAxesScaleUpdated = () => {
+    const xAxis = chartRef.current.xAxes.getIndex(0) as any
+    const yAxis = chartRef.current.yAxes.getIndex(0) as any
+    xAxis.logarithmic = axes[0].logarithmic || false
+    yAxis.logarithmic = axes[1].logarithmic || false
   }
 
   const handleDatasetsUpdated = () => {

@@ -228,15 +228,33 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     category.name = "cell size";
     await connection.manager.save(category);
 
+    let categoryToEdit = new Category();
+    categoryToEdit.id = 3;
+    categoryToEdit.name = "category";
+    await connection.manager.save(categoryToEdit);
+
+    let categoryToDelete = new Category();
+    categoryToDelete.id = 4;
+    categoryToDelete.name = "delete this category";
+    await connection.manager.save(categoryToDelete);
+
     let subcategory1 = new Subcategory();
     subcategory1.id = 1;
     subcategory1.name = "None Entered";
+    subcategory1.categoryId = 1;
     await connection.manager.save(subcategory1);
 
     let subcategory = new Subcategory();
     subcategory.id = 2;
     subcategory.name = "width";
+    subcategory.categoryId = 2;
     await connection.manager.save(subcategory);
+
+    let subcategoryToEdit = new Subcategory();
+    subcategoryToEdit.id = 3;
+    subcategoryToEdit.name = "subcategory";
+    subcategoryToEdit.categoryId = 3;
+    await connection.manager.save(subcategoryToEdit);
 
     let datasetdatatypeNone = new Datasetdatatype();
     datasetdatatypeNone.id;
@@ -258,7 +276,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "CARBON, graphite, pressed, Initial density = 2.13 g/cc";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = 1;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments = "References 5,6,14\nAverage density = 2.134 g/cc";
     dataset.materials = [materialC, materialO2];
@@ -276,7 +293,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset2.name = "Someone's Favorite";
     dataset2.datatypeId = datasetdatatypeNone.id;
     dataset2.publicationId = publication2.id;
-    dataset2.categoryId = category1.id;
     dataset2.subcategoryId = subcategory1.id;
     dataset2.comments = "";
     dataset2.materials = [];
@@ -288,7 +304,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -304,7 +319,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -320,7 +334,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publicationToDelete2.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -336,7 +349,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatypeToDelete.id;
     dataset.publicationId = publicationToDelete.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [materialToDelete];
@@ -352,7 +364,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -368,7 +379,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -384,7 +394,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publicationToDelete3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -400,7 +409,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -416,7 +424,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -432,7 +439,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -448,7 +454,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -464,7 +469,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.name = "An unapproved dataset";
     dataset.datatypeId = datasetdatatype.id;
     dataset.publicationId = publication3.id;
-    dataset.categoryId = category.id;
     dataset.subcategoryId = subcategory.id;
     dataset.comments;
     dataset.materials = [];
@@ -708,8 +712,8 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM datasetdatatype');
     await queryRunner.query('DELETE FROM material');
     await queryRunner.query('DELETE FROM composition');
-    await queryRunner.query('DELETE FROM category');
     await queryRunner.query('DELETE FROM subcategory');
+    await queryRunner.query('DELETE FROM category');
     await queryRunner.query('DELETE FROM publisher');
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');

@@ -1,12 +1,6 @@
 import * as Yup from 'yup'
 
-const integerMessage = (fieldName: string): string => {
-  return `${fieldName} should be an integer`
-}
-
-const requiredMessage = (fieldName: string): string => {
-  return `${fieldName} is a required field`
-}
+import { integerMessage, requiredMessage } from '../../Common/Helpers/ValidationHelpers'
 
 const referenceValidationSchema = Yup.object().shape({
   year: Yup.number().integer(integerMessage('Year')).required(requiredMessage('Year')).test('len', 'Year must be exactly 4 characters', val => val && val.toString().length === 4),
@@ -31,8 +25,8 @@ const referenceValidationSchema = Yup.object().shape({
 export const variableValidationSchema = Yup.object().shape(
   {
     name: Yup.string().trim().required(requiredMessage('Name')),
-    dimensionId: Yup.number().required(requiredMessage('Dimensions')),
-    unitId: Yup.number().required(requiredMessage('Units'))
+    dimensionId: Yup.mixed().required(requiredMessage('Dimensions')),
+    unitId: Yup.mixed().required(requiredMessage('Units'))
   }
 )
 
@@ -51,9 +45,8 @@ const dataValidationSchema = Yup.object().shape({
 
 const metaValidationSchema = Yup.object().shape({
   dataset_name: Yup.string().required(requiredMessage('Dataset Name')),
-  data_type: Yup.string().required(requiredMessage('Dataset Type')),
-  category: Yup.string().required(requiredMessage('Category')),
-  subcategory: Yup.string().required(requiredMessage('Subcategory')),
+  data_type: Yup.string(),
+  subcategory: Yup.number().nullable().integer(integerMessage('Subcategory [ID]')),
   material: Yup.array().required().min(1)
 })
 

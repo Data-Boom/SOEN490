@@ -1,8 +1,18 @@
+import { createConnection, getConnection } from 'typeorm';
 import { DataExtractionService } from '../../services/dataExtraction/DataExtractionService'
 
 describe('Data Extraction Service', () => {
 
     let extractionService: DataExtractionService
+    jest.setTimeout(60000)
+
+    beforeAll(async () => {
+        await createConnection();
+    });
+
+    afterAll(async () => {
+        await getConnection().close();
+    });
 
     test('Valid - Request to Extract a JSON file', async () => {
         let extension = 'json'

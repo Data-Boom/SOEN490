@@ -1,5 +1,5 @@
 import { Box, Container } from '@material-ui/core'
-import { IDatasetModel, defaultDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
@@ -19,39 +19,22 @@ interface IDatasetViewParams {
   datasetID: string
 }
 
-//todo im not sure this works at the end of the day need to find a better solution to some fields being undefined instead of default
-export const fixPartialForform = (partialDataset: Partial<IDatasetModel>): IDatasetModel => {
-  const dataset: IDatasetModel = {
-    reference: partialDataset.reference || defaultDatasetModel.reference,
-    dataset_name: partialDataset.dataset_name || defaultDatasetModel.dataset_name,
-    material: partialDataset.material || defaultDatasetModel.material,
-    category: partialDataset.category || defaultDatasetModel.category,
-    subcategory: partialDataset.subcategory || defaultDatasetModel.subcategory,
-    data_type: partialDataset.data_type || defaultDatasetModel.data_type,
-    data: partialDataset.data || defaultDatasetModel.data,
-    id: partialDataset.id || defaultDatasetModel.id,
-  }
-
-  return dataset
-}
-
 export const DatasetView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
+  const { initialDataset } = { ...props }
   const formikReference = useRef<FormikProps<unknown>>()
 
   const location = useLocation()
-  const initialSentDataset = location.state as IDatasetModel
-  //todo not sure if this should be a state variable
-  const [initialValues, setInitialValues] = useState(props.initialDataset || initialSentDataset || defaultDatasetModel)
+
+  const [initialValues, setInitialValues] = useState({ ...newDatasetModel, ...initialDataset, ...(location.state as IDatasetModel) })
   const [editable, setEditable] = useState(true)
 
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
       const datasetArray = await callGetDatasets({ datasetId: [id] })
       const dataset = datasetArray[0]
-      setInitialValues(fixPartialForform(dataset))
+      setInitialValues({ ...newDatasetModel, ...dataset })
       setEditable(false)
-      console.log(dataset)
     }
 
     if (datasetID) {

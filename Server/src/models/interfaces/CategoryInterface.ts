@@ -1,4 +1,11 @@
 export interface ICategory {
     name: string
-    id: number
+    id?: number
+    subcategories?: ISubcategory[]
+}
+
+export interface ISubcategory {
+    name: string
+    id?: number
+    categoryId?: number
 }

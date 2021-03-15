@@ -2,7 +2,7 @@ import { IAxisStateModel, IGraphStateModel } from '../../../Models/Graph/IGraphS
 import { IGraphDatasetState, newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
 import React, { useEffect, useState } from 'react'
 
-import { AxesControl } from './AxesControl'
+import { AxesControl } from './Axes/AxesControl'
 import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetControl } from './DatasetControl'
 import { Grid } from '@material-ui/core'
@@ -22,11 +22,11 @@ interface IProps {
 export const GraphStateControl = (props: IProps) => {
   const { graphState, dimensions, onGraphStateChange } = { ...props }
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
-  const [loadingDatasets, setIsLoadinDatasets] = useState(false)
+  const [loadingDatasets, setIsLoadingDatasets] = useState(false)
 
   useEffect(() => {
     const getGraphState = async (id: number) => {
-      setIsLoadinDatasets(true)
+      setIsLoadingDatasets(true)
       const remoteGraphState = await callGetGraphState(id)
 
       if (!remoteGraphState) {
@@ -38,7 +38,7 @@ export const GraphStateControl = (props: IProps) => {
         onGraphStateChange(remoteGraphState, datasets)
       }
 
-      setIsLoadinDatasets(false)
+      setIsLoadingDatasets(false)
     }
 
     if (graphState.id) {

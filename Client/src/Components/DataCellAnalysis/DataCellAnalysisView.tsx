@@ -5,7 +5,6 @@ import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
-import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 interface IProps {
 
@@ -32,10 +31,9 @@ export const DataCellAnalysisView = (props: IProps) => {
   }
 
   const fetchDataset = (): Promise<IDatasetModel> => {
-    //todo make an actual API call providing a data cell 
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(exampleExportDatasetModel)
+        resolve(null)
       }, 2000)
     })
   }

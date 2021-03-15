@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton } from "@material-ui/core"
+import { Grid, IconButton } from "@material-ui/core"
 
 import ClearIcon from '@material-ui/icons/Clear'
 import { FastField } from "formik"
@@ -25,21 +25,19 @@ export const AuthorRow = (props: IProps) => {
   }
 
   return (
-    <Box>
-      <Grid item container spacing={4}>
-        <Grid item>
-          <FastField name={`reference.authors[${index}].firstName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='First Name' component={MuiTextFieldFormik} />
-        </Grid>
-        <Grid item>
-          <FastField name={`reference.authors[${index}].middleName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='Middle Name' component={MuiTextFieldFormik} />
-        </Grid>
-        <Grid item>
-          <FastField name={`reference.authors[${index}].lastName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='Last Name' component={MuiTextFieldFormik} />
-        </Grid>
-        <Grid item>
-          {removable ? removeButton() : null}
-        </Grid>
+    <Grid item container spacing={2} alignItems="flex-start">
+      <Grid item>
+        <FastField name={`reference.authors[${index}].firstName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='First Name' component={MuiTextFieldFormik} />
       </Grid>
-    </Box>
+      <Grid item>
+        <FastField name={`reference.authors[${index}].middleName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='Middle Name' component={MuiTextFieldFormik} />
+      </Grid>
+      <Grid item>
+        <FastField name={`reference.authors[${index}].lastName`} disabled={!editable} shouldUpdate={shouldComponentUpdate} label='Last Name' component={MuiTextFieldFormik} />
+      </Grid>
+      <Grid item>
+        {removable ? removeButton() : null}
+      </Grid>
+    </Grid>
   )
 }
