@@ -9,6 +9,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
 import PermissionsTab from './PermissionsSection/PermissionsTab'
 import { ProfileGraphStateList } from './ProfileGraphList'
+import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
 import { UserContext } from '../../App'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
@@ -136,24 +137,25 @@ export function ProfileView() {
   const { user, setUserContext } = useContext(UserContext)
   useEffect(() => {
     const fetchUser = async () => {
-      const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email })
-      setUserContext(newUser)
+      const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email }) || null
+      if (newUser)
+        setUserContext(newUser)
     }
-    fetchUser()
-  }, [])
 
-  const [savedGraphState, setSavedGraphState] = useState([])
-
-  useEffect(() => {
     const callListSavedGraphStates = async () => {
-      const savedGraphState = await listGraphStates()
+      const savedGraphState = await listGraphStates() || []
       setSavedGraphState(savedGraphState.reverse())
     }
+
+    fetchUser()
+
     if (user && user.email)
       callListSavedGraphStates()
   }, [])
 
   const classes = useStyles()
+
+  const [savedGraphState, setSavedGraphState] = useState([])
   const [tab, setTab] = React.useState(0)
 
   const handleChange = (event: React.ChangeEvent<{}>, newTab: number) => {
@@ -165,10 +167,11 @@ export function ProfileView() {
         <AppBar position="static">
           <Tabs value={tab} onChange={handleChange}>
             <Tab label="View Profile" {...a11yProps(0)} />
-            <Tab label="View Favourites" {...a11yProps(1)} />
-            <Tab label="Permissions" {...a11yProps(2)} />
-            <Tab label="View Uploads" {...a11yProps(3)} />
-            <Tab label="Manage Units" {...a11yProps(4)} />
+            <Tab label="View Saved Graphs" {...a11yProps(1)} />
+            <Tab label="View Saved Datasets" {...a11yProps(2)} />
+            <Tab label="Permissions" {...a11yProps(3)} />
+            <Tab label="View Uploads" {...a11yProps(4)} />
+            <Tab label="Manage Units" {...a11yProps(5)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -201,12 +204,21 @@ export function ProfileView() {
           <TabPanel value={tab} index={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                <SavedDatasetsTab
+                />
+              </Grid>
+            </Grid>
+          </TabPanel>
+          {/* todo delete */}
+          <TabPanel value={tab} index={3}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
                 <PermissionsTab
                 />
               </Grid>
             </Grid>
           </TabPanel>
-          <TabPanel value={tab} index={3}>
+          <TabPanel value={tab} index={4}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
                 <TableHead>Uploads
@@ -223,7 +235,7 @@ export function ProfileView() {
               </Table>
             </TableContainer>
           </TabPanel>
-          <TabPanel value={tab} index={4}>
+          <TabPanel value={tab} index={5}>
             <DimensionManagementTab />
           </TabPanel>
         </Container>

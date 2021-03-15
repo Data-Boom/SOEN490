@@ -1,27 +1,27 @@
-import { Box, Button } from '@material-ui/core'
+import { Box, Button, Container } from '@material-ui/core'
 
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
 import React from 'react'
 import SnackbarUtils from '../Utils/SnackbarUtils'
 import { datasetRoute } from '../../Common/Consts/Routes'
-import { extractDatasetFromFile } from '../../Remote/Endpoints/FileUploadEndpoint'
 import { rm } from "../../Assets/readMeMessage"
 import { useHistory } from 'react-router-dom'
+import { parseFromFile } from '../../Remote/Endpoints/FileParserEndpoint'
 
-const fileFormat = 'application/json'
+const defaultFileFormat = 'application/json'
 
+interface IProps {
+  acceptedFileType?: string
+}
 
-export const FileUploadView = () => {
+export const FileUploadView = (props: IProps) => {
+  const { acceptedFileType } = { ...props }
   const history = useHistory()
-
-  const isValidFile = (file: File) => {
-    return file && file.type === fileFormat
-  }
 
   const handleSubmit = async (jsonFile: File) => {
     try {
-      const extractedDataset = await extractDatasetFromFile(jsonFile)
+      const extractedDataset = await parseFromFile(jsonFile)
 
       if (!extractedDataset) {
         SnackbarUtils.warning('Server failed to parse dataset')
@@ -39,11 +39,10 @@ export const FileUploadView = () => {
   }
 
   return (
-    <>
+    <Container>
       <FileUploadForm
-        acceptFileFormat={fileFormat}
+        acceptFileFormat={acceptedFileType || defaultFileFormat}
         onSubmit={handleSubmit}
-        isValidFile={isValidFile}
       />
       <Box p={4}>
         <Download file="emptyJsonDataset.json" content={JSON.stringify("../../Assets/emptyJSFile.json", null, 2)}>
@@ -53,6 +52,6 @@ export const FileUploadView = () => {
           <a href="http://localhost:3000/#/uploadFile"> Download JSON file submission instructions </a>
         </Download>
       </Box>
-    </>
+    </Container>
   )
 }

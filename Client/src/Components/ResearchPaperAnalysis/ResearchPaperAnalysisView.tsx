@@ -5,7 +5,6 @@ import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import Loader from "react-loader-spinner"
-import { exampleExportDatasetModel } from '../../Models/Datasets/IDatasetModel'
 
 interface IProps {
 
@@ -35,13 +34,9 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     //todo make an actual API call providing a research paper and then resolve with an actual parsed dataset
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(exampleExportDatasetModel)
+        resolve(null)
       }, 2000)
     })
-  }
-
-  const validateUploadedFile = (file: File) => {
-    return file && true //True because we are always accepting all file formats
   }
 
   const theme = useTheme()
@@ -53,7 +48,6 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
           <Typography>Page description pretty much</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            isValidFile={validateUploadedFile}
             acceptFileFormat={fileFormat}
           />
         </Box>
