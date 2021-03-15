@@ -15,7 +15,6 @@ interface IProps {
 export const ReferenceForm = (props: IProps) => {
 
   const { editable } = props
-  console.log('ref rendered')
 
   return (
     <Box className={classStyles().defaultBorder}>

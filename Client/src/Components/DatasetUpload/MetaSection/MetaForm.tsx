@@ -29,7 +29,6 @@ const getOptions = (options: any[]): any => {
 }
 
 export const MetaForm = (props: IProps) => {
-  console.log('meta rendered')
   const { materials, categories, editable } = props
   const { setFieldValue } = useFormikContext()
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
