@@ -25,7 +25,7 @@ export default function Graph(props: IProps) {
   const { datasets, dimensions, axes } = { ...props }
   const chartRef = useRef<am4charts.XYChart>()
 
-
+  useEffect(() => { document.title = "Graph" })
   useEffect(() => initiateGraph(), [])
   useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units, axes[0].variableName, axes[1].variableName])
   useEffect(() => chartRef.current && handleAxesScaleUpdated(), [axes[0].logarithmic, axes[1].logarithmic])

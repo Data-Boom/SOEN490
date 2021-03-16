@@ -1,12 +1,15 @@
 import { Box, Container, Grid } from '@material-ui/core'
+import React, { useEffect } from 'react'
 
-import React from 'react'
-import { classStyles } from '../../appTheme'
-import profPic from '../universitylogo.png'
 import Avatar from '@material-ui/core/Avatar';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import { classStyles } from '../../appTheme'
+import profPic from '../universitylogo.png'
 
 export const AboutView = () => {
+
+  useEffect(() => { document.title = "About" })
+
   return (
     <Container>
       <Grid container>
