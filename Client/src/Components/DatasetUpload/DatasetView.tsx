@@ -11,6 +11,7 @@ import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
 import TimelineIcon from "@material-ui/icons/Timeline"
+import { rootStore } from '../Utils/Stores/RootStore'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -52,6 +53,9 @@ export const DatasetView = (props: IProps) => {
     if (datasetID) {
       getDatasetInfo(parseInt(datasetID))
     }
+
+    rootStore.dimensionsStore.loadDimensions()
+    rootStore.variablesStore.loadVariables()
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {

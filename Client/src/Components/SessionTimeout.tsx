@@ -2,7 +2,7 @@ import { Button, Snackbar } from '@material-ui/core'
 import React, { useContext, useState } from "react"
 
 import { Alert } from '@material-ui/lab'
-import { UserContext } from "../App"
+import { UserContext } from "../Context/UserContext"
 import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
 import { defaultUserAccountModel } from '../Models/Authentication/IUserAccountModel'
 import { loginRoute } from "../Common/Consts/Routes"

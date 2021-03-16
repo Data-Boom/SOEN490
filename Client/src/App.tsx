@@ -3,7 +3,7 @@ import React from 'react'
 import { SnackbarProvider } from 'notistack'
 import { SnackbarUtilsConfigurator } from './Components/Utils/SnackbarUtils'
 import { ThemeProvider } from '@material-ui/core'
-import { UserContext } from './UserContext'
+import { UserContextWrapper } from './Context/UserContext'
 import { theme } from './appTheme'
 
 export const App = () => {
@@ -11,12 +11,12 @@ export const App = () => {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <UserContext>
+        <UserContextWrapper>
           <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}>
             <SnackbarUtilsConfigurator />
             <NavigationMenu />
           </SnackbarProvider>
-        </UserContext>
+        </UserContextWrapper>
       </ThemeProvider>
     </div>
   )
