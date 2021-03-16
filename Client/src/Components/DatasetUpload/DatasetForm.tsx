@@ -58,7 +58,9 @@ export const DatasetForm = (props: IProps): any => {
       setFavoriteDataset(isFavorite)
     }
 
-    setFavourite()
+    if (user.email) {
+      setFavourite()
+    }
   }, [initialDataset])
 
   const handleSubmit = (values: DatasetUploadFormValues) => {
