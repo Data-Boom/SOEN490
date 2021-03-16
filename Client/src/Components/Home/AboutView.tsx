@@ -1,10 +1,10 @@
 import { Box, Container, Grid } from '@material-ui/core'
 import React, { useEffect } from 'react'
 
-import Avatar from '@material-ui/core/Avatar';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import Avatar from '@material-ui/core/Avatar'
+import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import { classStyles } from '../../appTheme'
-import profPic from '../universitylogo.png'
+import profPic from '../../Assets/universitylogo.png'
 
 export const AboutView = () => {
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { getUserFromStorage, putUserInStorage } from './Common/Storage'
 
 import { IUserAccountModel } from './Models/Authentication/IUserAccountModel'
-import NavigationMenu from './Components/NavigationMenu'
+import NavigationMenu from './Components/Navigation/NavigationMenu'
 import { SnackbarProvider } from 'notistack'
 import { SnackbarUtilsConfigurator } from './Components/Utils/SnackbarUtils'
 import { ThemeProvider } from '@material-ui/core'

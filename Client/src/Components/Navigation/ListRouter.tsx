@@ -1,34 +1,34 @@
 import { List, ListItem, ListItemIcon, ListItemText, Paper, makeStyles } from "@material-ui/core"
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom'
-import { aboutRoute, adminReviewRoute, cellSizeAnalysisRoute, datasetRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newDatasetRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute, userReviewRoute } from '../Common/Consts/Routes'
+import { aboutRoute, adminReviewRoute, cellSizeAnalysisRoute, datasetRoute, fileUploadRoute, forgotPasswordRoute, graphRoute, homeRoute, loginRoute, newDatasetRoute, newGraphRoute, profileRoute, researchPaperAnalysisRoute, searchRoute, signUpRoute, userReviewRoute } from '../../Common/Consts/Routes'
 
-import { AboutView } from "./Home/AboutView"
+import { AboutView } from "../Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import { AdminReviewView } from "./Admin/AdminReviewView"
+import { AdminReviewView } from "../Admin/AdminReviewView"
 import BarChartIcon from '@material-ui/icons/BarChart'
-import { CellSizeAnalysisView } from "./CellSizeAnalysis/CellSizeAnalysisView"
+import { CellSizeAnalysisView } from "../CellSizeAnalysis/CellSizeAnalysisView"
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import { DatasetView } from "./DatasetUpload/DatasetView"
+import { DatasetView } from "../DatasetUpload/DatasetView"
 import DonutSmallIcon from '@material-ui/icons/DonutSmall'
-import { FileUploadView } from "./FileUpload/FileUploadView"
-import ForgotPasswordView from "./Authentication/ForgotPasswordView"
-import GraphView from "./Graph/GraphView"
+import { FileUploadView } from "../FileUpload/FileUploadView"
+import ForgotPasswordView from "../Authentication/ForgotPasswordView"
+import GraphView from "../Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
-import HomeView from "./Home/HomeView"
+import HomeView from "../Home/HomeView"
 import ImageSearchIcon from '@material-ui/icons/ImageSearch'
 import InfoIcon from '@material-ui/icons/Info'
-import LoginView from "./Authentication/LoginView"
+import LoginView from "../Authentication/LoginView"
 import MessageIcon from '@material-ui/icons/Message'
-import { ProfileView } from "./Profile/ProfileView"
+import { ProfileView } from "../Profile/ProfileView"
 import React from 'react'
-import { ResearchPaperAnalysisView } from "./ResearchPaperAnalysis/ResearchPaperAnalysisView"
-import ResetPasswordView from "./Authentication/ResetPasswordView"
+import { ResearchPaperAnalysisView } from "../ResearchPaperAnalysis/ResearchPaperAnalysisView"
+import ResetPasswordView from "../Authentication/ResetPasswordView"
 import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
-import SearchView from "./Search/SearchView"
-import SignUpView from "./Authentication/SignUpView"
-import { UserReviewView } from './UserReview/UserReviewView'
-import { resetPasswordRoute } from "../Remote/Endpoints/AuthenticationEndpoint"
+import SearchView from "../Search/SearchView"
+import SignUpView from "../Authentication/SignUpView"
+import { UserReviewView } from '../UserReview/UserReviewView'
+import { resetPasswordRoute } from "../../Remote/Endpoints/AuthenticationEndpoint"
 
 interface IProps {
   id: string;
