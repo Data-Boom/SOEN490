@@ -1,9 +1,9 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
-import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
+import { Grid, List, ListItem, ListItemText } from '@material-ui/core'
+import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 import React, { useState } from 'react'
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
-import { Grid } from '@material-ui/core'
 import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 
 interface IProps {
@@ -54,9 +54,25 @@ export const SearchResults = (props: IProps) => {
     return `${foundSubcategory.name}`
   }
 
+  const getVariableList = (params: ValueGetterParams) => {
+    const data = params.getValue('data') as IData
+
+    return (
+      <List dense={true} disablePadding={true} style={{ maxHeight: '100%', overflow: 'auto', width: '100%' }}>
+        {data.variables.map(variable => (
+          <ListItem>
+            <ListItemText
+              primary={variable.name}
+            />
+          </ListItem>
+        ))}
+      </List>
+    )
+  }
+
   const [open, setOpen] = useState(false)
 
-  const getNameLink = (params: ValueGetterParams) => {
+  const linkToDataset = (params: ValueGetterParams) => {
     const datasetId = params.getValue('id')
 
     return (<DatasetFormModal datasetId={datasetId.toString()} />)
@@ -65,11 +81,12 @@ export const SearchResults = (props: IProps) => {
   const columns: ColDef[] = [
     { field: 'dataset_name', headerName: 'Name', width: width },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
-    { field: 'category', headerName: 'Category', width: width, valueGetter: getCategoryId },
-    { field: 'subcategory', headerName: 'SubCategory', width: width, valueGetter: getSubcategoryId },
+    { field: 'category', headerName: 'Category', width: width * 0.8, valueGetter: getCategoryId },
+    { field: 'subcategory', headerName: 'SubCategory', width: width * 0.8, valueGetter: getSubcategoryId },
     { field: 'author', headerName: 'Author', width: width, valueGetter: getAuthor },
-    { field: 'year', headerName: 'Year', width: width, valueGetter: getYear },
-    { field: 'dataset_button', headerName: 'View', width: width * 1.2, renderCell: getNameLink },
+    { field: 'year', headerName: 'Year', width: width * 0.5, valueGetter: getYear },
+    { field: 'variables', headerName: 'List Of Variables', width: width * 1.5, renderCell: getVariableList },
+    { field: 'dataset_button', headerName: 'View', width: width * 0.7, renderCell: linkToDataset },
   ]
 
   return (
