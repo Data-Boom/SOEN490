@@ -4,10 +4,10 @@ import { AppBar, Box, Divider, Drawer, Grid, IconButton, Toolbar, Typography, ma
 import { ListRouter, getRoutedViews } from "./ListRouter"
 import React, { useContext, useState } from 'react'
 
+import { BrowserRouter } from 'react-router-dom'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { Greeting } from "./Greeting"
-import { HashRouter } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
 import { SessionTimeOut } from '../SessionTimeout'
 import { UserContext } from "../../App"
@@ -46,7 +46,7 @@ export default function NavigationMenu() {
 
   return (
     <>
-      <HashRouter>
+      <BrowserRouter>
         <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
@@ -78,7 +78,7 @@ export default function NavigationMenu() {
         <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
-      </HashRouter>
+      </BrowserRouter>
     </>
   )
 }
