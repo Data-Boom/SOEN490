@@ -51,11 +51,5 @@ export const classStyles = () => {
     divider: {
       background: theme.palette.primary.light,
     },
-    muiSelectArrow: {
-      "& .MuiSelect-select.MuiSelect-select": {
-        paddingRight: "17px"
-      }
-    },
-
   })()
 }

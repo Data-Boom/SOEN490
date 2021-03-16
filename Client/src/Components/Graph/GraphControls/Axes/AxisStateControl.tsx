@@ -106,17 +106,16 @@ export const AxisStateControl = (props: IProps) => {
 
   return (
     <Grid container spacing={4} justify='space-between' alignItems="center">
-      <Grid item>
-        <FormControl>
+      <Grid item sm={4}>
+        <FormControl fullWidth>
           <InputLabel id={`${axisName}VariableLabel`}>{axisName} Variable</InputLabel>
           <Select
-            className={classStyles().muiSelectArrow}
             labelId={`${axisName}Variable`}
+            fullWidth
             id={`${axisName}Variable`}
             value={axisState.variableName}
             autoWidth={true}
             onChange={handleVariableChange}
-            disableUnderline
             label="Asynchronous"
           >
             {variables.map(variable => (
@@ -125,11 +124,12 @@ export const AxisStateControl = (props: IProps) => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item>
-        <FormControl>
+      <Grid item sm={2}>
+        <FormControl fullWidth>
           <InputLabel id={`${axisName}Units`}>{axisName} Units</InputLabel>
           <Select
             labelId={`${axisName}Units`}
+            fullWidth
             id={`${axisName}Units`}
             value={axisState.units}
             autoWidth={true}
