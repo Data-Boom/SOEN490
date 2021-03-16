@@ -24,6 +24,7 @@
     "formik": "^2.2.6",
     "jest": "^24.9.0",
     "lodash": "^4.17.20",
+    "mobx": "^6.1.8",
     "moment": "^2.29.1",
     "notistack": "^1.0.3",
     "query-string": "^4.3.4",
