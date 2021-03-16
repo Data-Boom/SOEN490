@@ -5,7 +5,6 @@ import React, { useState } from "react"
 
 import { IAxisStateModel } from '../../../../Models/Graph/IGraphStateModel'
 import SnackbarUtils from "../../../Utils/SnackbarUtils"
-import { classStyles } from '../../../../appTheme'
 import { getVariableDimensionRepresentation } from "../../../../Common/Helpers/DimensionHelpers"
 
 interface IProps {
@@ -116,7 +115,6 @@ export const AxisStateControl = (props: IProps) => {
             value={axisState.variableName}
             autoWidth={true}
             onChange={handleVariableChange}
-            label="Asynchronous"
           >
             {variables.map(variable => (
               <MenuItem key={variable.name} value={variable.name}>{variable.name}</MenuItem>
