@@ -42,6 +42,8 @@ export const DatasetView = (props: IProps) => {
   const [fileUploadOpen, setFileUploadOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
+  useEffect(() => { document.title = "Dataset Upload" }, [])
+
   const { store } = useContext(StoreContext)
 
   useEffect(() => {

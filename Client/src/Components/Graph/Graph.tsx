@@ -25,8 +25,6 @@ export default function Graph(props: IProps) {
   const { dimensions } = useContext(StoreContext).store.getPreloadedData()
   const chartRef = useRef<am4charts.XYChart>()
 
-
-  useEffect(() => initiateGraph(), [])
   useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units, axes[0].variableName, axes[1].variableName])
   useEffect(() => chartRef.current && handleAxesScaleUpdated(), [axes[0].logarithmic, axes[1].logarithmic])
   useEffect(() => chartRef.current && handleDatasetsUpdated(), [datasets])

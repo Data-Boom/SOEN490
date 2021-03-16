@@ -21,6 +21,7 @@ export default function GraphView() {
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState, id: graphStateId })
 
   const { store } = useContext(StoreContext)
+  useEffect(() => { document.title = "Graph" }, [])
 
   useEffect(() => { store.dimensionsStore.loadDimensions() }, [])
 
