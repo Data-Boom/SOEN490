@@ -493,7 +493,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     let deleteDimension = new Dimension();
     deleteDimension.id = 3;
     deleteDimension.name = "Delete";
-    await Dimension.save([temperatureDimension, densityDimension, deleteDimension]);
+
+    let deleteDimension2 = new Dimension();
+    deleteDimension2.id = 4;
+    deleteDimension2.name = "Delete No Units In Use";
+    await Dimension.save([temperatureDimension, densityDimension, deleteDimension, deleteDimension2]);
 
     let unitsGCC = new Units();
     unitsGCC.id = 1;
@@ -537,6 +541,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     unitsToDelete.dimensionId = 3;
     unitsToDelete.name = "Deleted";
 
+    let unitsToDelete2 = new Units();
+    unitsToDelete2.id = 10;
+    unitsToDelete2.conversionFormula = "{u}";
+    unitsToDelete2.dimensionId = 4;
+    unitsToDelete2.name = "To be deleted";
+
     let reprNone = new Representations();
     reprNone.id;
     reprNone.repr = "N/A";
@@ -547,7 +557,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await connection.manager.save(reprToDelete);
     await connection.manager.save(reprNone);
 
-    await Units.save([unitsNone, unitsCCG, unitsGCC, unitsToDelete, unitsKMPS, unitsGigapascal, unitsKelvin])
+    await Units.save([unitsNone, unitsCCG, unitsGCC, unitsToDelete, unitsKMPS, unitsGigapascal, unitsKelvin, unitsToDelete2])
     densityDimension.baseUnitId = unitsGCC.id;
     temperatureDimension.baseUnitId = unitsKelvin.id;
     deleteDimension.baseUnitId = unitsToDelete.id;

@@ -22,6 +22,9 @@ export default function GraphView() {
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState, id: graphStateId })
   const [dimensions, setDimensions] = useState<IDimensionModel[]>([])
 
+
+  useEffect(() => { document.title = "Graph" }, [])
+
   const getDimensions = async () => {
     const databaseDimensions = await callGetAllDimensions()
     setDimensions(databaseDimensions)

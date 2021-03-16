@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { DatasetView } from '../DatasetUpload/DatasetView'
 import { FileUploadForm } from '../FileUpload/FileUploadForm'
@@ -17,6 +17,8 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
 
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
   const [isProcessingPaper, setIsProcessingPaper] = useState(false)
+
+  useEffect(() => { document.title = "Research Analysis" }, [])
 
   const handleSubmit = async (researchPaper: File): Promise<void> => {
     analyzePaper(researchPaper)
@@ -39,10 +41,6 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
     })
   }
 
-  const validateUploadedFile = (file: File) => {
-    return file && true //True because we are always accepting all file formats
-  }
-
   const theme = useTheme()
 
   const paperUploadSection = (): any => {
@@ -52,7 +50,6 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
           <Typography>Page description pretty much</Typography>
           <FileUploadForm
             onSubmit={handleSubmit}
-            isValidFile={validateUploadedFile}
             acceptFileFormat={fileFormat}
           />
         </Box>
