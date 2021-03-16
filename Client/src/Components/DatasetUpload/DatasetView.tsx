@@ -24,24 +24,29 @@ interface IDatasetViewParams {
   datasetID: string
 }
 
+const jsonType = 'application/json'
+const csvType = '.csv, .txt'
+
 export const DatasetView = (props: IProps) => {
-  const { datasetID } = useParams<IDatasetViewParams>()
   const { initialDataset } = { ...props }
-  const formikReference = useRef<FormikProps<unknown>>()
-
-  const jsonType = 'application/json'
-  const csvType = '.csv, .txt'
-
+  const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
 
+  const formikReference = useRef<FormikProps<unknown>>()
   const [initialValues, setInitialValues] = useState({ ...newDatasetModel, ...initialDataset, ...(location.state as IDatasetModel) })
   const [editable, setEditable] = useState(true)
 
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
-  const [fileUploadOpen, setFileUploadOpen] = useState(false)
+  const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
   useEffect(() => { document.title = "Dataset Upload" }, [])
+
+  useEffect(() => {
+    setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
+    setFileUploadModalOpen(false)
+    setFileTypePromptOpen(false)
+  }, [location.state])
 
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
@@ -61,12 +66,12 @@ export const DatasetView = (props: IProps) => {
   }
 
   const handleJSONFileTypeSelected = () => {
-    setFileUploadOpen(true)
+    setFileUploadModalOpen(true)
     setAcceptedFileType(jsonType)
   }
 
   const handleCSVTXTFileTypeSelected = () => {
-    setFileUploadOpen(true)
+    setFileUploadModalOpen(true)
     setAcceptedFileType(csvType)
   }
   const renderTopButtons = (): any => {
@@ -113,7 +118,7 @@ export const DatasetView = (props: IProps) => {
       <FileUploadModal
         open={fileUploadOpen}
         acceptedFileType={acceptedFileType}
-        onClose={() => setFileUploadOpen(false)}
+        onClose={() => setFileUploadModalOpen(false)}
       />
     </>
   )
