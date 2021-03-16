@@ -1,6 +1,6 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { approvedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
@@ -15,6 +15,8 @@ export function AdminReviewView() {
   const [comment, setComment] = useState("")
   const [flaggedComment, setFlaggedComment] = useState("")
   const [update, setUpdate] = useState(0)
+
+  useEffect(() => { document.title = "Admin Review" }, [])
 
   const handleDeleteDataset = async () => {
     await callRejectDataset(dataset.id)

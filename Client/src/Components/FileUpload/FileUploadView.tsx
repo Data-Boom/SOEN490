@@ -1,13 +1,13 @@
 import { Box, Button, Container } from '@material-ui/core'
+import React, { useEffect } from 'react'
 
 import Download from '@axetroy/react-download'
 import { FileUploadForm } from './FileUploadForm'
-import React from 'react'
 import SnackbarUtils from '../Utils/SnackbarUtils'
 import { datasetRoute } from '../../Common/Consts/Routes'
+import { parseFromFile } from '../../Remote/Endpoints/FileParserEndpoint'
 import { rm } from "../../Assets/readMeMessage"
 import { useHistory } from 'react-router-dom'
-import { parseFromFile } from '../../Remote/Endpoints/FileParserEndpoint'
 
 const defaultFileFormat = 'application/json'
 
@@ -18,6 +18,8 @@ interface IProps {
 export const FileUploadView = (props: IProps) => {
   const { acceptedFileType } = { ...props }
   const history = useHistory()
+
+  useEffect(() => { document.title = "File Upload" }, [])
 
   const handleSubmit = async (jsonFile: File) => {
     try {
