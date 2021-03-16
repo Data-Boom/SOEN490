@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik'
 import { ICategoryModel, listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../Models/Datasets/IDatasetModel'
 import { IconButton, Tooltip } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { callGetUserFavouriteDatasets, userDeleteFavouriteDataset, userSaveFavouriteDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { DataForm } from './DataSection/DataForm'
@@ -11,6 +11,7 @@ import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
 import StarBorderIcon from "@material-ui/icons/StarBorder"
 import StarIcon from "@material-ui/icons/Star"
+import { UserContext } from '../../App'
 import { datasetValidationSchema } from './DatasetValidationSchema'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 
@@ -28,6 +29,7 @@ interface DatasetUploadFormValues {
 
 export const DatasetForm = (props: IProps): any => {
   const { initialDataset, onSubmit, editable, formikReference } = props
+  const { user } = useContext(UserContext)
 
   const [categories, setCategories] = useState<ICategoryModel[]>([])
   const [materials, setMaterials] = useState([])
@@ -100,7 +102,7 @@ export const DatasetForm = (props: IProps): any => {
       innerRef={formikReference}
     >
       <Form>
-        {initialDataset.id && constructFavoriteButton()}
+        {(initialDataset.id && user.email) && constructFavoriteButton()}
         <MetaForm materials={materials} editable={editable} categories={categories} />
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />
