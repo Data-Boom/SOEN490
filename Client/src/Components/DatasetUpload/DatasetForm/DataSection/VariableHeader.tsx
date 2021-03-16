@@ -1,8 +1,8 @@
 import { Box, Typography } from '@material-ui/core'
-import { getDimensionNameById, getUnitNameById } from '../../../Common/Helpers/DimensionHelpers'
+import { getDimensionNameById, getUnitNameById } from '../../../../Common/Helpers/DimensionHelpers'
 
-import { IDimensionModel } from '../../../Models/Dimensions/IDimensionModel'
-import { IVariable } from '../../../Models/Datasets/IDatasetModel'
+import { IDimensionModel } from '../../../../Models/Dimensions/IDimensionModel'
+import { IVariable } from '../../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 
 interface IProps {

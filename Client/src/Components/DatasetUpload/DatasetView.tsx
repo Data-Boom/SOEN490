@@ -1,9 +1,9 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
-import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { callGetDatasets, callGetUserFavouriteDatasets, callSaveDataset, userDeleteFavouriteDataset, userSaveFavouriteDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
-import { DatasetForm } from './DatasetForm'
+import { DatasetForm } from './DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FileTypePromptModal } from './FileTypePromptModal'
 import { FileUploadModal } from './FileUploadModal'
@@ -39,6 +39,7 @@ export const DatasetView = (props: IProps) => {
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
+  const [favoriteDataset, setFavoriteDataset] = useState(false)
 
   useEffect(() => { document.title = "Dataset Upload" }, [])
 
@@ -54,6 +55,12 @@ export const DatasetView = (props: IProps) => {
       const dataset = datasetArray[0]
       setInitialValues({ ...newDatasetModel, ...dataset })
       setEditable(false)
+
+      if (user.email) {
+        const userFavoriteDatasets = await callGetUserFavouriteDatasets() || []
+        const isFavorite = userFavoriteDatasets.includes(initialDataset.id)
+        setFavoriteDataset(isFavorite)
+      }
     }
 
     if (datasetID) {
@@ -74,12 +81,38 @@ export const DatasetView = (props: IProps) => {
     setFileUploadModalOpen(true)
     setAcceptedFileType(csvType)
   }
+
+  const handlefavoriteDataset = async () => {
+    if (!favoriteDataset) {
+      setFavoriteDataset(true)
+      userSaveFavouriteDataset(initialDataset.id)
+    } else {
+      setFavoriteDataset(false)
+      userDeleteFavouriteDataset(initialDataset.id)
+    }
+  }
+
+  const constructFavoriteButton = () => {
+    return (
+      <IconButton size="small" onClick={handlefavoriteDataset} > {
+        favoriteDataset ?
+          <Tooltip title="Remove dataset from favorites">
+            <StarIcon color="primary" fontSize="large" /></Tooltip> :
+          <Tooltip title="Add dataset to favorites">
+            <StarBorderIcon color="primary" fontSize="large" /></Tooltip>
+      }</IconButton>
+    )
+  }
+
   const renderTopButtons = (): any => {
     return (
       <>
         <Grid container spacing={2} justify='flex-end'>
           {initialValues.id
             ? <>
+              <Grid item>
+                {user.email && constructFavoriteButton()}
+              </Grid>
               <Grid item>
                 <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
               </Grid>

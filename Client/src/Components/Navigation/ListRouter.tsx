@@ -5,7 +5,6 @@ import { aboutRoute, adminReviewRoute, cellSizeAnalysisRoute, datasetRoute, forg
 import { AboutView } from "../Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import { AdminReviewView } from "../Admin/AdminReviewView"
-import BarChartIcon from '@material-ui/icons/BarChart'
 import { CellSizeAnalysisView } from "../CellSizeAnalysis/CellSizeAnalysisView"
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DatasetView } from "../DatasetUpload/DatasetView"
@@ -24,6 +23,7 @@ import { Route } from 'react-router'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "../Search/SearchView"
 import SignUpView from "../Authentication/SignUpView"
+import TimelineIcon from '@material-ui/icons/Timeline'
 import { UserReviewView } from '../UserReview/UserReviewView'
 import { resetPasswordRoute } from "../../Remote/Endpoints/AuthenticationEndpoint"
 
@@ -73,8 +73,8 @@ export const ListRouter = () => {
       <Paper elevation={0}>
         <List aria-label="main mailbox folders">
           <ListItemLink id="home-menu" to={homeRoute} primary="Home" icon={<HomeIcon />} />
-          <ListItemLink id="graph-menu" to={newGraphRoute} primary="Graph" icon={<BarChartIcon />} />
-          <ListItemLink id="search-menu" to={searchRoute} primary="Search" icon={<SearchIcon />} />
+          <ListItemLink id="graph-menu" to={newGraphRoute} primary="Graph" icon={<TimelineIcon />} />
+          <ListItemLink id="search-menu" to={searchRoute} primary="Search Datasets" icon={<SearchIcon />} />
           <ListItemLink id="dataset-menu" to={datasetRoute} primary="Dataset Upload" icon={<CloudUploadIcon />} />
           <ListItemLink id="cellanalysis-menu" to={cellSizeAnalysisRoute} primary="Cell Size Analysis" icon={<DonutSmallIcon />} />
           <ListItemLink id="profile-menu" to={profileRoute} primary="Profile" icon={<AccountBoxIcon />} />

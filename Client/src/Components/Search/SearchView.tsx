@@ -42,7 +42,7 @@ export default function SearchView(props: IProps) {
     callListDatapoints()
   }, [])
 
-  useEffect(() => { document.title = "Search" }, [])
+  useEffect(() => { document.title = "Search Datasets" }, [])
 
   const handleSearchClick = async (query: ISearchDatasetsFormModel) => {
     const datasets = await callGetDatasets(query) || []

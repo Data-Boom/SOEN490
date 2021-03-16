@@ -5,9 +5,9 @@ import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsVal
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
 
-import { MaterialSelectChipArray } from '../DatasetUpload/MetaSection/MaterialSelectChipArray'
-import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 import { IDatapointModel } from '../../Remote/Endpoints/DatapointEndpoint'
+import { MaterialSelectChipArray } from '../DatasetUpload/DatasetForm/MetaSection/MaterialSelectChipArray'
+import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void,
