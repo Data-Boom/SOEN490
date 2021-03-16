@@ -8,7 +8,7 @@ interface IStore {
   variableNames: IVariableNameModel[]
 }
 
-class RootStore {
+export class RootStore {
   dimensionsStore: DimensionsStore
   variablesStore: VariablesStore
 
@@ -24,5 +24,3 @@ class RootStore {
     }
   }
 }
-
-export const rootStore = new RootStore()

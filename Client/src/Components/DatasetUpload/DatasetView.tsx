@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { DatasetForm } from './DatasetForm'
@@ -10,8 +10,8 @@ import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
+import { StoreContext } from '../../Context/StoreContext'
 import TimelineIcon from "@material-ui/icons/Timeline"
-import { rootStore } from '../Utils/Stores/RootStore'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -42,6 +42,8 @@ export const DatasetView = (props: IProps) => {
   const [fileUploadOpen, setFileUploadOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
+  const { store } = useContext(StoreContext)
+
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
       const datasetArray = await callGetDatasets({ datasetId: [id] })
@@ -54,8 +56,8 @@ export const DatasetView = (props: IProps) => {
       getDatasetInfo(parseInt(datasetID))
     }
 
-    rootStore.dimensionsStore.loadDimensions()
-    rootStore.variablesStore.loadVariables()
+    store.dimensionsStore.loadDimensions()
+    store.variablesStore.loadVariables()
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {

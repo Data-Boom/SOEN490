@@ -2,11 +2,11 @@ import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
 import { IDimensionModel, IUnitModel } from '../../../Models/Dimensions/IDimensionModel'
 import { MuiAutocompleteFormik, MuiSelectFormik } from '../../Forms/FormikFields'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { IVariable } from '../../../Models/Datasets/IDatasetModel'
+import { StoreContext } from '../../../Context/StoreContext'
 import { classStyles } from '../../../appTheme'
-import { rootStore } from '../../Utils/Stores/RootStore'
 import { variableValidationSchema } from '../DatasetValidationSchema'
 
 interface IProps {
@@ -22,7 +22,7 @@ interface IProps {
 export const EditVaraibleModal = (props: IProps) => {
   const { initialValues, onCancel, onDelete, onVariableUpdate, editable, isOpen, isNewVariable } = props
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(initialValues?.dimensionId)
-  const { dimensions, variableNames } = rootStore.getPreloadedData()
+  const { dimensions, variableNames } = useContext(StoreContext).store.getPreloadedData()
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (
