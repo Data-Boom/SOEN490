@@ -8,7 +8,7 @@ import profPic from '../universitylogo.png'
 
 export const AboutView = () => {
 
-  useEffect(() => { document.title = "About" })
+  useEffect(() => { document.title = "About" }, [])
 
   return (
     <Container>

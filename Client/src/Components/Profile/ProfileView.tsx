@@ -25,7 +25,7 @@ interface TabPanelProps {
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
 
-  useEffect(() => { document.title = "Profile" })
+  useEffect(() => { document.title = "Profile" }, [])
 
   return (
     <div

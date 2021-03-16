@@ -18,7 +18,7 @@ export const ResearchPaperAnalysisView = (props: IProps) => {
   const [analyzedDataset, setAnalyzedDataset] = useState<IDatasetModel>(null)
   const [isProcessingPaper, setIsProcessingPaper] = useState(false)
 
-  useEffect(() => { document.title = "Research Analysis" })
+  useEffect(() => { document.title = "Research Analysis" }, [])
 
   const handleSubmit = async (researchPaper: File): Promise<void> => {
     analyzePaper(researchPaper)

@@ -16,7 +16,7 @@ export function AdminReviewView() {
   const [flaggedComment, setFlaggedComment] = useState("")
   const [update, setUpdate] = useState(0)
 
-  useEffect(() => { document.title = "Admin Review" })
+  useEffect(() => { document.title = "Admin Review" }, [])
 
   const handleDeleteDataset = async () => {
     await callRejectDataset(dataset.id)

@@ -6,7 +6,7 @@ import cellSizeDemoGif from '../../Assets/cell-size-analysis-demo.gif'
 
 export const CellSizeAnalysisView = () => {
 
-  useEffect(() => { document.title = "Cell Size Analysis" })
+  useEffect(() => { document.title = "Cell Size Analysis" }, [])
 
   return (
     <>

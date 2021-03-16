@@ -19,7 +19,7 @@ export const FileUploadView = (props: IProps) => {
   const { acceptedFileType } = { ...props }
   const history = useHistory()
 
-  useEffect(() => { document.title = "File Upload" })
+  useEffect(() => { document.title = "File Upload" }, [])
 
   const handleSubmit = async (jsonFile: File) => {
     try {

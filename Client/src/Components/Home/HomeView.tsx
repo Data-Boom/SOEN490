@@ -6,7 +6,7 @@ import Blurb from './Blurb/Blurb'
 import Splash from './Splash/Splash'
 
 export default function HomeView(): any {
-  useEffect(() => { document.title = "Home" })
+  useEffect(() => { document.title = "Home" }, [])
   return (
     <>
       <Splash />

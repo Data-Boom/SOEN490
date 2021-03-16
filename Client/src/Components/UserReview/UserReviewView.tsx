@@ -12,7 +12,7 @@ interface IProps {
 export const UserReviewView = (props: IProps) => {
   const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>([])
 
-  useEffect(() => { document.title = "Flagged Datasets" })
+  useEffect(() => { document.title = "Flagged Datasets" }, [])
 
   useEffect(() => {
     const fetchUserDatasets = async () => {
