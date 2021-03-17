@@ -68,7 +68,6 @@ export const DatasetForm = (props: IProps): any => {
         <ReferenceForm editable={editable} />
         <DataForm editable={editable} />
       </Form>
-
     </Formik>
   )
 }
