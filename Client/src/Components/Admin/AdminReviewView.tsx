@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { approvedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
-import { DatasetForm } from '../DatasetUpload/DatasetForm'
+import { DatasetForm } from '../DatasetUpload/DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FormikProps } from 'formik'
 
