@@ -32,8 +32,6 @@ export default function NavigationMenu() {
     setOpen(false)
   }
 
-
-
   const drawer = (): any => {
     return (
       <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
