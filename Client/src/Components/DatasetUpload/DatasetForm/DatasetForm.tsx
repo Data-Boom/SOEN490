@@ -7,7 +7,6 @@ import { DataForm } from './DataSection/DataForm'
 import { IFormProps } from '../../Forms/IFormikForm'
 import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
-import { UserContext } from '../../../App'
 import { datasetValidationSchema } from '../DatasetValidationSchema'
 import { listMaterials } from '../../../Remote/Endpoints/MaterialEndpoint'
 

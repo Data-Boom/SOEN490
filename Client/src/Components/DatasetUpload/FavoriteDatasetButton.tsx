@@ -4,7 +4,7 @@ import { callGetUserFavouriteDatasets, userDeleteFavouriteDataset, userSaveFavou
 
 import StarBorderIcon from "@material-ui/icons/StarBorder"
 import StarIcon from "@material-ui/icons/Star"
-import { UserContext } from '../../App'
+import { UserContext } from '../../Context/UserContext'
 
 interface IProps {
   datasetId: number

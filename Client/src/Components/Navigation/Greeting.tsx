@@ -2,7 +2,7 @@ import { Button, Grid, Typography } from "@material-ui/core"
 
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { UserContext } from "../../App"
+import { UserContext } from "../../Context/UserContext"
 import { callLogout } from "../../Remote/Endpoints/AuthenticationEndpoint"
 import { defaultUserAccountModel } from "../../Models/Authentication/IUserAccountModel"
 import { loginRoute } from "../../Common/Consts/Routes"

@@ -10,7 +10,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { Greeting } from "./Greeting"
 import MenuIcon from '@material-ui/icons/Menu'
 import { SessionTimeOut } from '../SessionTimeout'
-import { UserContext } from "../../App"
+import { UserContext } from "../../Context/UserContext"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import universitylogo from '../../Assets/universitylogo.png'

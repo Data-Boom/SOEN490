@@ -60,10 +60,6 @@ export const SearchDatasetsForm = (props: IProps): any => {
     formProps.setFieldValue('categoryId', categoryId)
     setSelectedCategoryId(categoryId)
   }
-  const handleDatapointChange = (formProps, value: any) => {
-    const datapointId = value.target.value
-    formProps.setFieldValue('datapoint', datapointId)
-  }
 
   return (
     <>
@@ -97,7 +93,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
               </Grid>
 
               <Grid item>
-                <Field name="datapoint" label='Datapoint' component={MuiSelectFormik} options={getOptions(datapoint)} onChange={(value) => handleDatapointChange(formProps, value)} />
+                <Field name="datapoint" label='Datapoint' component={MuiSelectFormik} options={getOptions(datapoint)} />
               </Grid>
 
             </Grid>
