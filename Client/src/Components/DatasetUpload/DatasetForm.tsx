@@ -11,7 +11,7 @@ import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
 import StarBorderIcon from "@material-ui/icons/StarBorder"
 import StarIcon from "@material-ui/icons/Star"
-import { UserContext } from '../../App'
+import { UserContext } from '../../Context/UserContext'
 import { datasetValidationSchema } from './DatasetValidationSchema'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
 

@@ -9,7 +9,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuIcon from '@material-ui/icons/Menu'
 import { SessionTimeOut } from './SessionTimeout'
-import { UserContext } from "../App"
+import { UserContext } from "../Context/UserContext"
 import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
 import clsx from "clsx"
 import { defaultUserAccountModel } from "../Models/Authentication/IUserAccountModel"
