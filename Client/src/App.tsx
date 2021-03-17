@@ -1,4 +1,4 @@
-import NavigationMenu from './Components/NavigationMenu'
+import NavigationMenu from './Components/Navigation/NavigationMenu'
 import React from 'react'
 import { SnackbarProvider } from 'notistack'
 import { SnackbarUtilsConfigurator } from './Components/Utils/SnackbarUtils'

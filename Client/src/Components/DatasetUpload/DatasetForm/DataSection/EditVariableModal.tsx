@@ -1,28 +1,29 @@
 import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
-import { IDimensionModel, IUnitModel } from '../../../Models/Dimensions/IDimensionModel'
-import { MuiAutocompleteFormik, MuiSelectFormik } from '../../Forms/FormikFields'
-import React, { useContext, useState } from 'react'
+import { IDimensionModel, IUnitModel } from '../../../../Models/Dimensions/IDimensionModel'
+import { MuiAutocompleteFormik, MuiSelectFormik } from '../../../Forms/FormikFields'
+import React, { useState } from 'react'
 
-import { IVariable } from '../../../Models/Datasets/IDatasetModel'
-import { StoreContext } from '../../../Context/StoreContext'
-import { classStyles } from '../../../appTheme'
-import { variableValidationSchema } from '../DatasetValidationSchema'
+import { IVariable } from '../../../../Models/Datasets/IDatasetModel'
+import { IVariableNameModel } from '../../../../Models/Variables/IVariableNameModel'
+import { classStyles } from '../../../../appTheme'
+import { variableValidationSchema } from '../../DatasetValidationSchema'
 
 interface IProps {
   initialValues: IVariable
   onVariableUpdate: (newVariable: IVariable) => void
   onCancel: () => void
   onDelete: () => void
+  dimensions: IDimensionModel[]
   editable: boolean
   isOpen: boolean
   isNewVariable: boolean
+  variableNames: IVariableNameModel[]
 }
 
 export const EditVaraibleModal = (props: IProps) => {
-  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, isOpen, isNewVariable } = props
+  const { initialValues, onCancel, onDelete, onVariableUpdate, editable, dimensions, isOpen, isNewVariable, variableNames } = props
   const [selectedDimensionId, setSelectedDimensionId] = useState<number | null>(initialValues?.dimensionId)
-  const { dimensions, variableNames } = useContext(StoreContext).store.getPreloadedData()
 
   const getDimensionsOptions = (options: IDimensionModel[]): any => {
     return (

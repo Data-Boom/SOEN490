@@ -1,10 +1,10 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
-import React, { useState } from 'react'
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
 import { Grid } from '@material-ui/core'
 import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
+import React from 'react'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -12,10 +12,6 @@ interface IProps {
   button?: any,
   categories: ICategoryModel[],
   displayCheckbox: boolean
-}
-
-interface IProps2 {
-  onDatasetsSelected: (foundDatasets: IDatasetModel[]) => void
 }
 
 export const SearchResults = (props: IProps) => {
@@ -53,8 +49,6 @@ export const SearchResults = (props: IProps) => {
     const foundSubcategory = foundCategory.subcategories.find(subcategory => subcategory.id == subcategoryId)
     return `${foundSubcategory.name}`
   }
-
-  const [open, setOpen] = useState(false)
 
   const getNameLink = (params: ValueGetterParams) => {
     const datasetId = params.getValue('id')

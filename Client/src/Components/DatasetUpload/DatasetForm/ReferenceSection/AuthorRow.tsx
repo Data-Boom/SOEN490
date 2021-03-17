@@ -2,9 +2,9 @@ import { Grid, IconButton } from "@material-ui/core"
 
 import ClearIcon from '@material-ui/icons/Clear'
 import { FastField } from "formik"
-import { MuiTextFieldFormik } from '../../Forms/FormikFields'
+import { MuiTextFieldFormik } from '../../../Forms/FormikFields'
 import React from 'react'
-import { shouldComponentUpdate } from '../../Forms/ComponentUpdate'
+import { shouldComponentUpdate } from '../../../Forms/ComponentUpdate'
 
 interface IProps {
   index: number,

@@ -2,7 +2,7 @@ import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
 import React, { useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
-import { DatasetForm } from './DatasetForm'
+import { DatasetForm } from './DatasetForm/DatasetForm'
 import { FormikProps } from 'formik'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
