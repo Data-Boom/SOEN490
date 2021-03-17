@@ -134,7 +134,7 @@ export const DatasetDataTable = (props: IProps): any => {
                 <Button variant="outlined" color="secondary" onClick={handleRemoveSelectedRows} disabled={!editable}>Remove selected rows</Button>
               </Grid>
               <Grid item>
-                <Button variant="outlined" color="primary" onClick={handleAddRow} disabled={!editable}>Add row</Button>
+                <Button variant="outlined" color="primary" onClick={handleAddRow} disabled={!editable}>Add Datapoint Entry</Button>
               </Grid>
             </>
           }
