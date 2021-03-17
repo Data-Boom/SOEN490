@@ -116,7 +116,7 @@ export const DatasetDataTable = (props: IProps): any => {
   const handleRowChange = (changedRows: number[][]): void => {
     const copyData = { ...data }
     // changedRows is the rows after user input, we need to update the data contents
-    copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
+    copyData.contents.forEach((row, index) => row.point = Object.values(changedRows[index]))
     onDataChange(copyData)
   }
 
