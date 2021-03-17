@@ -4,7 +4,6 @@ import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDataset
 import React, { useState } from 'react'
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
 import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
-import React from 'react'
 
 interface IProps {
   datasetResults: IDatasetModel[],
