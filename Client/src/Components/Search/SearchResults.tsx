@@ -1,5 +1,5 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
-import { Grid, List, ListItem, ListItemText } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 import React, { useState } from 'react'
 
@@ -58,15 +58,11 @@ export const SearchResults = (props: IProps) => {
     const data = params.getValue('data') as IData
 
     return (
-      <List dense={true} disablePadding={true} style={{ maxHeight: '100%', overflow: 'auto', width: '100%' }}>
+      <div>
         {data.variables.map(variable => (
-          <ListItem>
-            <ListItemText
-              primary={variable.name}
-            />
-          </ListItem>
+          <Typography>{variable.name}</Typography>
         ))}
-      </List>
+      </div>
     )
   }
 
@@ -93,8 +89,8 @@ export const SearchResults = (props: IProps) => {
     <>
       <Grid container spacing={3}>
         <Grid item container>
-          <div style={{ height: 400, width: '100%' }}>
-            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} checkboxSelection={displayCheckbox} onSelectionChange={props.handleSelectionChanged} />
+          <div style={{ height: 600, width: '100%' }}>
+            <DataGrid rows={props && props.datasetResults} rowHeight={120} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} checkboxSelection={displayCheckbox} onSelectionChange={props.handleSelectionChanged} />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>
