@@ -9,10 +9,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuIcon from '@material-ui/icons/Menu'
 import { SessionTimeOut } from './SessionTimeout'
-import { UserContext } from "../Context/UserContext"
-import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
+import { StoreContext } from "../Context/StoreContext"
 import clsx from "clsx"
-import { defaultUserAccountModel } from "../Models/Authentication/IUserAccountModel"
 import { linkWidth } from './ListRouter'
 import { loginRoute } from "../Common/Consts/Routes"
 import universitylogo from './universitylogo.png'
@@ -20,7 +18,8 @@ import universitylogo from './universitylogo.png'
 const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-  const { user, setUserContext } = useContext(UserContext)
+  const { store } = useContext(StoreContext)
+  const { user } = store.getPreloadedData()
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
@@ -50,8 +49,8 @@ export default function NavigationMenu() {
     const history = useHistory()
 
     const redirectToLogin = async () => {
-      setUserContext(defaultUserAccountModel)
-      await callLogout()
+      await store.userStore.logout()
+
       history.push({
         pathname: loginRoute
       })

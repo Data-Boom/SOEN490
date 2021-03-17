@@ -6,17 +6,13 @@ import React, { useContext, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
-import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
-import { UserContext } from '../../Context/UserContext'
-import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
-import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
+import { StoreContext } from '../../Context/StoreContext'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,8 +40,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function LoginView() {
+  const { store } = useContext(StoreContext)
+  const { user } = store.getPreloadedData()
 
-  const { user, setUserContext } = useContext(UserContext)
   const classes = useStyles()
 
   const [openModal, setOpen] = useState(false)
@@ -59,13 +56,7 @@ export default function LoginView() {
   }
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
-    //sets JWT in cookies
-    const loginResponse = await callLogIn(loginUserInfo)
-
-    const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
-    userAccount.sessionExpiration = moment.duration(loginResponse.ValidFor).asMilliseconds()
-
-    setUserContext(userAccount)
+    await store.userStore.login(loginUserInfo)
   }
 
 
