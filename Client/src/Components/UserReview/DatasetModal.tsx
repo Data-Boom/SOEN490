@@ -3,11 +3,11 @@ import { FormikProps, FormikValues } from 'formik'
 import React, { useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
-import { DatasetForm } from '../DatasetUpload/DatasetForm'
+import { DatasetForm } from '../DatasetUpload/DatasetForm/DatasetForm'
+import { DatasetModalApproveFooter } from './DatasetModalApproveFooter'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import { DatasetModalApproveFooter } from './DatasetModalApproveFooter'
 
 interface IProps {
   open: boolean

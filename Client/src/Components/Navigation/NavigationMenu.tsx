@@ -1,26 +1,24 @@
 /* eslint-disable react/display-name */
 
-import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
-import { HashRouter, Link, useHistory } from 'react-router-dom'
+import { AppBar, Box, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
 import { ListRouter, getRoutedViews } from "./ListRouter"
 import React, { useContext, useState } from 'react'
 
+import { BrowserRouter } from 'react-router-dom'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import { Greeting } from "./Greeting"
 import MenuIcon from '@material-ui/icons/Menu'
-import { SessionTimeOut } from './SessionTimeout'
-import { UserContext } from "../App"
-import { callLogout } from "../Remote/Endpoints/AuthenticationEndpoint"
+import { SessionTimeOut } from '../SessionTimeout'
+import { UserContext } from "../../Context/UserContext"
 import clsx from "clsx"
-import { defaultUserAccountModel } from "../Models/Authentication/IUserAccountModel"
 import { linkWidth } from './ListRouter'
-import { loginRoute } from "../Common/Consts/Routes"
-import universitylogo from './universitylogo.png'
+import universitylogo from '../../Assets/universitylogo.png'
 
 const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-  const { user, setUserContext } = useContext(UserContext)
+  const { user } = useContext(UserContext)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
@@ -31,8 +29,6 @@ export default function NavigationMenu() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
-
 
   const drawer = (): any => {
     return (
@@ -48,37 +44,9 @@ export default function NavigationMenu() {
     )
   }
 
-  const Greeting = () => {
-    const history = useHistory()
-
-    const redirectToLogin = async () => {
-      setUserContext(defaultUserAccountModel)
-      await callLogout()
-      history.push({
-        pathname: loginRoute
-      })
-    }
-
-    return user && user.firstName ?
-      (
-        <Typography>
-          <Grid container spacing={2}>
-            <Grid item>
-              {user.firstName} {user.lastName}
-            </Grid>
-            <Grid>
-              <Button id="SignOut" variant="contained" onClick={redirectToLogin}>Sign out</Button>
-            </Grid>
-          </Grid>
-        </Typography>
-      ) : (
-        <Button component={Link} to={loginRoute} id='LogIn' variant="contained">Log in</Button>
-      )
-  }
-
   return (
     <>
-      <HashRouter>
+      <BrowserRouter>
         <AppBar position="fixed" className={clsx(classes.appBar, { [classes.appBarShift]: open, })} color="primary">
           <Toolbar>
             <Grid container direction="row" justify="space-between" alignItems="center">
@@ -110,7 +78,7 @@ export default function NavigationMenu() {
         <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
-      </HashRouter>
+      </BrowserRouter>
     </>
   )
 }

@@ -2,15 +2,14 @@ import 'react-data-grid/dist/react-data-grid.css'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
-import { IContent, IData, IVariable, newVariable } from '../../../Models/Datasets/IDatasetModel'
-import React, { useState } from 'react'
+import { IContent, IData, IVariable, newVariable } from '../../../../Models/Datasets/IDatasetModel'
+import React, { useContext, useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
+import { StoreContext } from '../../../../Context/StoreContext'
 import { VariableHeader } from './VariableHeader'
-import { decorateDataErrors } from '../../../Common/Helpers/DatasetErrorDecorator'
-import { useDimensions } from '../../Utils/Hooks/useDimensions'
+import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
 import { useFormikContext } from 'formik'
-import { useVariableNames } from '../../Utils/Hooks/useVariableNames'
 
 interface IProps {
   data: IData,
@@ -31,8 +30,7 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const { dimensions } = useDimensions()
-  const { variableNames } = useVariableNames()
+  const { dimensions, variableNames } = useContext(StoreContext).store.getPreloadedData()
   const { errors } = useFormikContext()
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
@@ -116,7 +114,7 @@ export const DatasetDataTable = (props: IProps): any => {
   const handleRowChange = (changedRows: number[][]): void => {
     const copyData = { ...data }
     // changedRows is the rows after user input, we need to update the data contents
-    copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
+    copyData.contents.forEach((row, index) => row.point = Object.values(changedRows[index]))
     onDataChange(copyData)
   }
 

@@ -7,7 +7,6 @@ import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetControl } from './DatasetControl'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
-import { IDimensionModel } from '../../../../../Server/src/models/interfaces/IDimension'
 import { SaveGraphStateForm } from './SaveGraphStateForm'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { callGetDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
@@ -15,12 +14,12 @@ import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
 
 interface IProps {
   graphState: IGraphStateModel,
-  dimensions: IDimensionModel[],
   onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => void,
 }
 
 export const GraphStateControl = (props: IProps) => {
-  const { graphState, dimensions, onGraphStateChange } = { ...props }
+  const { graphState, onGraphStateChange } = { ...props }
+
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
   const [loadingDatasets, setIsLoadingDatasets] = useState(false)
 
@@ -85,7 +84,7 @@ export const GraphStateControl = (props: IProps) => {
           {completeDatasets && completeDatasets[0] ?
             <Grid container direction="column">
               <Grid item>
-                <AxesControl datasets={completeDatasets} axes={graphState.axes} dimensions={dimensions} onAxesChange={handleAxesChanged} />
+                <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
               </Grid>
               <Grid item>
                 <SaveGraphStateForm

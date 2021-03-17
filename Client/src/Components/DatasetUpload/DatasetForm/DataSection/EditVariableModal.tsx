@@ -1,13 +1,13 @@
 import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
 import { Field, Form, Formik } from 'formik'
-import { IDimensionModel, IUnitModel } from '../../../Models/Dimensions/IDimensionModel'
-import { MuiAutocompleteFormik, MuiSelectFormik } from '../../Forms/FormikFields'
+import { IDimensionModel, IUnitModel } from '../../../../Models/Dimensions/IDimensionModel'
+import { MuiAutocompleteFormik, MuiSelectFormik } from '../../../Forms/FormikFields'
 import React, { useState } from 'react'
 
-import { IVariable } from '../../../Models/Datasets/IDatasetModel'
-import { IVariableNameModel } from '../../../Models/Variables/IVariableNameModel'
-import { classStyles } from '../../../appTheme'
-import { variableValidationSchema } from '../DatasetValidationSchema'
+import { IVariable } from '../../../../Models/Datasets/IDatasetModel'
+import { IVariableNameModel } from '../../../../Models/Variables/IVariableNameModel'
+import { classStyles } from '../../../../appTheme'
+import { variableValidationSchema } from '../../DatasetValidationSchema'
 
 interface IProps {
   initialValues: IVariable
