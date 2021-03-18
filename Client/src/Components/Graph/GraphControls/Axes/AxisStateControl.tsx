@@ -1,12 +1,12 @@
 import { FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, Switch, Typography } from "@material-ui/core"
 import { IDatasetModel, IVariable } from "../../../../Models/Datasets/IDatasetModel"
 import { IDimensionModel, IUnitModel } from "../../../../Models/Dimensions/IDimensionModel"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 
 import { IAxisStateModel } from '../../../../Models/Graph/IGraphStateModel'
 import SnackbarUtils from "../../../Utils/SnackbarUtils"
-import { StoreContext } from "../../../../Context/StoreContext"
 import { getVariableDimensionRepresentation } from "../../../../Common/Helpers/DimensionHelpers"
+import { useDimensionsSelector } from "../../../../Stores/Slices/DimensionsSlice"
 
 interface IProps {
   axisName: string
@@ -87,7 +87,7 @@ const getUnitsFromVariableName = (newVariableName: string, datasets: IDatasetMod
 
 export const AxisStateControl = (props: IProps) => {
   const { axisName, axisState, datasets, onAxisChange } = props
-  const { dimensions } = useContext(StoreContext).store.getPreloadedData()
+  const dimensions = useDimensionsSelector()
 
   const [units, setUnits] = useState<IUnitModel[]>(getUnitsFromVariableName(axisState.variableName, datasets, dimensions))
   const [datasetsMissingVariable, setMissingDatasets] = useState<string[]>(getMissingDatasetNames(axisState.variableName, datasets))

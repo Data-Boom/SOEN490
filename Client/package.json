@@ -39,6 +39,7 @@
     "react-scripts": "3.4.3",
     "react-test-renderer": "^17.0.1",
     "react-useinterval": "^1.0.2",
+    "redux-persist": "^6.0.0",
     "save-svg-as-png": "^1.4.17",
     "selenium-webdriver": "^4.0.0-alpha.7",
     "source-map-loader": "^2.0.0",

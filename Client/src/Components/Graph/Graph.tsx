@@ -1,13 +1,13 @@
 import * as am4charts from "@amcharts/amcharts4/charts"
 import * as am4core from "@amcharts/amcharts4/core"
 
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { Box } from "@material-ui/core"
 import { IAxisStateModel } from "../../Models/Graph/IGraphStateModel"
 import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
-import { StoreContext } from "../../Context/StoreContext"
 import am4themes_material from "@amcharts/amcharts4/themes/animated"
+import { useDimensionsSelector } from "../../Stores/Slices/DimensionsSlice"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
@@ -20,9 +20,9 @@ const getSeriesName = (dataset: IGraphDatasetModel) => {
   return `${dataset.id}`
 }
 
-export default function Graph(props: IProps) {
+export const Graph = (props: IProps) => {
   const { datasets, axes } = { ...props }
-  const { dimensions } = useContext(StoreContext).store.getPreloadedData()
+  const dimensions = useDimensionsSelector()
   const chartRef = useRef<am4charts.XYChart>()
 
   useEffect(() => initiateGraph(), [])

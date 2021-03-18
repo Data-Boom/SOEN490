@@ -11,14 +11,14 @@ interface IDimensionsSliceState { dimensions: IDimensionModel[], status: string 
 const initialState = dimensionsAdapter.getInitialState({ dimensions: [], status: '' }) as IDimensionsSliceState
 
 export const useDimensionsSelector = () => useSelector(state => (state as any).dimensionsStore.dimensions)
-export const loadDimensionsThunkAction = createAsyncThunk(`${sliceName}/loadDimensions`, callGetAllDimensions)
+export const loadDimensionsThunk = createAsyncThunk(`${sliceName}/loadDimensions`, callGetAllDimensions)
 
 const dimensionsSlice = createSlice({
   name: sliceName,
   initialState: initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(loadDimensionsThunkAction.fulfilled, (state, action) => {
+    builder.addCase(loadDimensionsThunk.fulfilled, (state, action) => {
       state.dimensions = action.payload
     })
   }

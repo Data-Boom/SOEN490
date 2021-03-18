@@ -3,13 +3,14 @@ import 'react-data-grid/dist/react-data-grid.css'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
 import { IContent, IData, IVariable, newVariable } from '../../../../Models/Datasets/IDatasetModel'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
-import { StoreContext } from '../../../../Context/StoreContext'
 import { VariableHeader } from './VariableHeader'
 import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
+import { useDimensionsSelector } from '../../../../Stores/Slices/DimensionsSlice'
 import { useFormikContext } from 'formik'
+import { useVariablesSelector } from '../../../../Stores/Slices/VariablesSlice'
 
 interface IProps {
   data: IData,
@@ -30,7 +31,9 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const { dimensions, variableNames } = useContext(StoreContext).store.getPreloadedData()
+  const dimensions = useDimensionsSelector()
+  const variableNames = useVariablesSelector()
+
   const { errors } = useFormikContext()
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {

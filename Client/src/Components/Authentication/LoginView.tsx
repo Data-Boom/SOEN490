@@ -2,19 +2,18 @@ import { Avatar, Box, Button, Container, CssBaseline, Grid, Link, Typography } f
 import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
-import React, { useContext, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { loginAndLoadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
-import { StoreContext } from '../../Context/StoreContext'
 import { homeRoute } from '../../Common/Consts/Routes'
-import { loginAndLoadUserThunkAction } from '../../Stores/Slices/UserSlice'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,9 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function LoginView() {
-  const { store } = useContext(StoreContext)
   const dispatch = useDispatch()
-  const user = useSelector(state => (state as any).user.user)
+  const user = useUserSelector()
 
   const classes = useStyles()
 
@@ -59,7 +57,7 @@ export default function LoginView() {
   }
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
-    dispatch(loginAndLoadUserThunkAction(loginUserInfo))
+    dispatch(loginAndLoadUserThunk(loginUserInfo))
   }
 
   return (
