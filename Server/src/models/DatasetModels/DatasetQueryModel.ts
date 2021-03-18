@@ -137,8 +137,9 @@ export class DataQueryModel {
      * @param id 
      * Account ID: number
      */
-    async getUploadedDatasetIDOfUser(userID: number): Promise<IDatasetIDModel[]> {
+    async getUploadedDatasetIDOfUser(userID: number): Promise<any[]> {
         return selectDatasetIdsQuery(this.connection)
+            .addSelect('dataset.isApproved', 'isApproved')
             .innerJoin(Accounts, 'account', 'dataset.uploaderId = account.id')
             .where('account.id = :idRef', { idRef: userID })
             .getRawMany();

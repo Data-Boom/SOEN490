@@ -1,5 +1,5 @@
 import { BadRequest, NotFound } from "@tsed/exceptions";
-import { IApprovalDatasetModel, IAuthorModel, IClientDatasetModel, IContent, IData, IDataPointModel, IDatasetIDModel, IMaterialModel, IPublicationModel, IVariable } from "../models/interfaces/DatasetModelInterface";
+import { IApprovalDatasetModel, IAuthorModel, IClientDatasetModel, IContent, IData, IDataPointModel, IDatasetIDModel, IMaterialModel, IPublicationModel, IUserDatasets, IVariable } from "../models/interfaces/DatasetModelInterface";
 
 import { DataQueryModel } from "../models/DatasetModels/DatasetQueryModel";
 import { DatasetApprovalModel } from "../models/DatasetModels/DatasetApprovalModel";
@@ -309,13 +309,26 @@ export class DataSetService {
   async getUserUploadedDatasets(userReceived: number) {
     try {
       let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
+      let setOfIDs: IUserDatasets[] = []
       if (rawData) {
-        let setOfData = await this.getDatasetsFromRawData(rawData);
-        this.requestResponse.message = setOfData as any
+        let singleID: IUserDatasets
+        for (let value of rawData) {
+          if (value.isApproved == 0) {
+            singleID = {
+              datasetID: value.dataset_id,
+              approved: false
+            }
+          }
+          else {
+            singleID = {
+              datasetID: value.dataset_id,
+              approved: true
+            }
+          }
+          setOfIDs.push(singleID)
+        }
       }
-      else {
-        this.requestResponse.message = [] as any
-      }
+      this.requestResponse.message = setOfIDs as any
       this.requestResponse.statusCode = 200
       return this.requestResponse
     } catch (error) {
@@ -386,22 +399,6 @@ export class DataSetService {
     } catch (error) {
       throw new Error("Something went wrong removing a favorite data set. Try later")
     }
-  }
-
-
-  /**
-   * This method accepts an array of IDatasetIDModel models where each object has a data set ID that we wish to acquire
-   * the full data set of. It sends this information to the createDatasetIdArray method to acquire an array containing
-   * the aforementioned data set IDs. After it will then send this array of data set IDs to getDataFromDatasetIds 
-   * to get all of the data sets matching those data set IDs.
-   * 
-   * @param rawData 
-   * Array of IDatasetIDModel objects: IDatasetIDModel[]
-   */
-  private async getDatasetsFromRawData(rawData: IDatasetIDModel[]) {
-    let selectedDatasetIds = await this.createDatasetIdArray(rawData);
-    let setOfData = await this.getDataFromDatasetIds(selectedDatasetIds);
-    return setOfData;
   }
 
   private async getDataFromUnapprovedDatasetIds(incompletDatasets: IClientDatasetModel[], approvalData: any[]) {
