@@ -13,7 +13,7 @@ import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
 import { StoreContext } from '../../Context/StoreContext'
 import TimelineIcon from "@material-ui/icons/Timeline"
-import { loadDimensionsThunkAction } from '../../Stores/DimensionsSlice'
+import { loadDimensionsThunkAction } from '../../Stores/Slices/DimensionsSlice'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"

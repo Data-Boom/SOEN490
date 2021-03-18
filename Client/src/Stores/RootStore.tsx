@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { dimensionsReducer } from "./DimensionsSlice"
+import { dimensionsReducer } from "./Slices/DimensionsSlice"
+import { userReducer } from "./Slices/UserSlice"
 
 export const rootStore = configureStore({
   reducer: {
-    dimensions: dimensionsReducer
+    dimensionsStore: dimensionsReducer,
+    userStore: userReducer
   }
 })

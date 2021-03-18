@@ -3,6 +3,7 @@ import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
 import React, { useContext, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
@@ -11,6 +12,7 @@ import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
 import { StoreContext } from '../../Context/StoreContext'
 import { homeRoute } from '../../Common/Consts/Routes'
+import { loginAndLoadUserThunkAction } from '../../Stores/Slices/UserSlice'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -41,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginView() {
   const { store } = useContext(StoreContext)
-  const { user } = store.getPreloadedData()
+  const dispatch = useDispatch()
+  const user = useSelector(state => (state as any).user.user)
 
   const classes = useStyles()
 
@@ -56,9 +59,8 @@ export default function LoginView() {
   }
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
-    await store.userStore.login(loginUserInfo)
+    dispatch(loginAndLoadUserThunkAction(loginUserInfo))
   }
-
 
   return (
     <>
