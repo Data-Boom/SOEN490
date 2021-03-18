@@ -33,10 +33,12 @@ export const DatasetFormModal = (props: IProps) => {
 
   return (
     <>
-      <Grid item>
-        <IconButton color="primary">
-          <PageviewIcon fontSize="large" id="view-dataset" onClick={() => setOpen(true)} />
-        </IconButton>
+      <Grid container justify="center">
+        <Grid item>
+          <IconButton color="primary">
+            <PageviewIcon fontSize="large" id="view-dataset" onClick={() => setOpen(true)} />
+          </IconButton>
+        </Grid>
       </Grid>
       <Modal open={open}
         onClose={() => setOpen(false)}
