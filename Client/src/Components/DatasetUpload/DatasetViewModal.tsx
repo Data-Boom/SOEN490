@@ -5,7 +5,7 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import { DatasetForm } from './DatasetForm/DatasetForm'
 import { FormikProps } from 'formik'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import PageviewIcon from '@material-ui/icons/Pageview';
+import PageviewIcon from '@material-ui/icons/Pageview'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
 import { useEffect } from 'react'
@@ -35,7 +35,7 @@ export const DatasetFormModal = (props: IProps) => {
     <>
       <Grid item>
         <IconButton color="primary">
-          <PageviewIcon className={classStyles().largeButton} id="view-dataset" onClick={() => setOpen(true)} />
+          <PageviewIcon fontSize="large" id="view-dataset" onClick={() => setOpen(true)} />
         </IconButton>
       </Grid>
       <Modal open={open}

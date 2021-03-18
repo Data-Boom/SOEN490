@@ -8,7 +8,6 @@ import React, { useState } from 'react'
 import { EditVaraibleModal } from './EditVariableModal'
 import { VariableHeader } from './VariableHeader'
 import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
-import { useDimensionsSelector } from '../../../../Stores/Slices/DimensionsSlice'
 import { useFormikContext } from 'formik'
 import { useVariablesSelector } from '../../../../Stores/Slices/VariablesSlice'
 
@@ -31,7 +30,6 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const dimensions = useDimensionsSelector()
   const variableNames = useVariablesSelector()
 
   const { errors } = useFormikContext()
@@ -101,7 +99,6 @@ export const DatasetDataTable = (props: IProps): any => {
               variable={variable}
               index={index}
               onHeaderClick={handleHeaderClick}
-              dimensions={dimensions}
             />
         }
       )
@@ -170,7 +167,6 @@ export const DatasetDataTable = (props: IProps): any => {
         </Grid>
       </Grid>
       {!!editedVariable.variable && <EditVaraibleModal
-        dimensions={dimensions}
         initialValues={editedVariable.variable}
         onCancel={() => setEditedVariable(noEditedVariable)}
         isOpen={!!editedVariable.variable}
@@ -178,7 +174,6 @@ export const DatasetDataTable = (props: IProps): any => {
         onDelete={handleVariableRemove}
         onVariableUpdate={handleVariableUpdate}
         isNewVariable={editedVariable.isNew}
-        variableNames={variableNames}
       />}
       <Box width='100%' mt={4}>
         <DataGrid

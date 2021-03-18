@@ -50,10 +50,6 @@ export const classStyles = () => {
     },
     divider: {
       background: theme.palette.primary.light,
-    },
-    largeButton: {
-      width: 60,
-      height: 60
     }
   })()
 }

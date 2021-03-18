@@ -18,12 +18,13 @@ interface IGraphViewParams {
 
 export const GraphView = () => {
   useTitle("Graph")
+  useDispatchOnLoad(loadDimensionsThunk)
+
   const { graphStateId } = useParams<IGraphViewParams>()
 
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState, id: graphStateId })
 
-  useDispatchOnLoad(loadDimensionsThunk)
 
   const handleGraphStateChanged = (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => {
     const graphDatasets = getGraphDatasets(completeDatasets, graphState)
