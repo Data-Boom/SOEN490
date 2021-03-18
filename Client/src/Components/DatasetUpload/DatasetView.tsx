@@ -13,6 +13,8 @@ import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
 import { StoreContext } from '../../Context/StoreContext'
 import TimelineIcon from "@material-ui/icons/Timeline"
+import { loadDimensionsThunkAction } from '../../Stores/DimensionsSlice'
+import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -43,9 +45,10 @@ export const DatasetView = (props: IProps) => {
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
   useEffect(() => { document.title = "Dataset Upload" }, [])
-
+  const dispatch = useDispatch()
   const { store } = useContext(StoreContext)
 
+  useEffect(() => { dispatch(loadDimensionsThunkAction()) }, [])
   useEffect(() => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
     setFileUploadModalOpen(false)
