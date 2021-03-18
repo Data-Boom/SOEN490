@@ -2,21 +2,18 @@ import { Avatar, Box, Button, Container, CssBaseline, Grid, Link, Typography } f
 import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
+import { loginAndLoadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
-import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
-import { UserContext } from '../../Context/UserContext'
-import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
-import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import moment from 'moment'
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function LoginView() {
+  const dispatch = useDispatch()
+  const user = useUserSelector()
 
-  const { user, setUserContext } = useContext(UserContext)
   const classes = useStyles()
 
   const [openModal, setOpen] = useState(false)
@@ -59,15 +57,8 @@ export default function LoginView() {
   }
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
-    //sets JWT in cookies
-    const loginResponse = await callLogIn(loginUserInfo)
-
-    const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
-    userAccount.sessionExpiration = moment.duration(loginResponse.ValidFor).asMilliseconds()
-
-    setUserContext(userAccount)
+    dispatch(loginAndLoadUserThunk(loginUserInfo))
   }
-
 
   return (
     <>

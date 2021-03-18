@@ -10,7 +10,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { DatasetView } from "../DatasetUpload/DatasetView"
 import DonutSmallIcon from '@material-ui/icons/DonutSmall'
 import ForgotPasswordView from "../Authentication/ForgotPasswordView"
-import GraphView from "../Graph/GraphView"
+import { GraphView } from "../Graph/GraphView"
 import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "../Home/HomeView"
 import InfoIcon from '@material-ui/icons/Info'

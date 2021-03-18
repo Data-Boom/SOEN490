@@ -1,19 +1,19 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
+import { loadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
 import { DimensionManagementTab } from './UnitManagementSection/DimensionManagementTab'
-import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
 import PermissionsTab from './PermissionsSection/PermissionsTab'
 import { ProfileGraphStateList } from './ProfileGraphList'
 import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
-import { UserContext } from '../../Context/UserContext'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
-import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
+import { useDispatch } from 'react-redux'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -24,8 +24,6 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
-
-  useEffect(() => { document.title = "Profile" }, [])
 
   return (
     <div
@@ -136,20 +134,18 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 }
 
 export function ProfileView() {
-  const { user, setUserContext } = useContext(UserContext)
-  useEffect(() => {
-    const fetchUser = async () => {
-      const newUser: IUserAccountModel = user && await getUserDetails({ email: user.email }) || null
-      if (newUser)
-        setUserContext(newUser)
-    }
+  useTitle("Profile")
 
+  const user = useUserSelector()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
     const callListSavedGraphStates = async () => {
       const savedGraphState = await listGraphStates() || []
       setSavedGraphState(savedGraphState.reverse())
     }
 
-    fetchUser()
+    dispatch(loadUserThunk(user?.email))
 
     if (user && user.email)
       callListSavedGraphStates()
