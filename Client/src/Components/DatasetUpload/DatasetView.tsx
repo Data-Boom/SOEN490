@@ -13,7 +13,8 @@ import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
 import TimelineIcon from "@material-ui/icons/Timeline"
 import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
-import { useDispatch } from 'react-redux'
+import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
+import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
@@ -33,6 +34,8 @@ const csvType = '.csv, .txt'
 
 export const DatasetView = (props: IProps) => {
   useTitle("Dataset Upload")
+  useDispatchOnLoad(loadDimensionsThunk)
+  useDispatchOnLoad(loadVariablesThunk)
   const { initialDataset } = { ...props }
   const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
@@ -45,9 +48,6 @@ export const DatasetView = (props: IProps) => {
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
-  const dispatch = useDispatch()
-
-  useEffect(() => { dispatch(loadDimensionsThunk()) }, [])
   useEffect(() => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
     setFileUploadModalOpen(false)
@@ -65,7 +65,6 @@ export const DatasetView = (props: IProps) => {
     if (datasetID) {
       getDatasetInfo(parseInt(datasetID))
     }
-    dispatch(loadDimensionsThunk)
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
