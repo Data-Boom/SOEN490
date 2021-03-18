@@ -3,6 +3,7 @@ import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
 import React, { useState } from 'react'
+import { homeRoute, signUpRoute } from '../../Common/Consts/Routes'
 import { loginAndLoadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
 import CancelIcon from "@material-ui/icons/Cancel"
@@ -10,7 +11,6 @@ import ForgotPasswordView from './ForgotPasswordView'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
-import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch } from 'react-redux'
@@ -137,7 +137,7 @@ export default function LoginView() {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link id="SignUpForm" href="#/sign-up" variant="body2">
+                    <Link id="SignUpForm" href={signUpRoute} variant="body2">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

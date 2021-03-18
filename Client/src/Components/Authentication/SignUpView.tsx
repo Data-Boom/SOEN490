@@ -3,7 +3,6 @@ import { ISignUpUserModel, newSignUpUserModel } from '../../Models/Authenticatio
 import React, { Fragment } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
-import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -16,19 +15,6 @@ import { callSignUp } from '../../Remote/Endpoints/AuthenticationEndpoint'
 import { loginRoute } from '../../Common/Consts/Routes'
 import { makeStyles } from '@material-ui/core/styles'
 import { signupValidationSchema } from './AuthenticationValidationSchema'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -178,9 +164,6 @@ export default function SignUpView(props: any) {
             </Form>
           </Formik>
         </div>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
       </Container>
     </Fragment >
   )

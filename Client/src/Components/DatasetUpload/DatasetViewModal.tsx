@@ -59,7 +59,6 @@ export const DatasetFormModal = (props: IProps) => {
             />
           </Box>
         </Paper>
-
       </Modal>
     </>
   )
