@@ -5,11 +5,13 @@ import { ILoginUserModel } from "../../Models/Authentication/ISignUpModel"
 import { callLogIn } from "../../Remote/Endpoints/AuthenticationEndpoint"
 import { getUserDetails } from "../../Remote/Endpoints/UserEndpoint"
 import moment from "moment"
+import { useSelector } from "react-redux"
 
 interface IUserSliceState { user: IUserAccountModel }
 const initialState: IUserSliceState = { user: defaultUserAccountModel }
 const sliceName = 'user'
 
+export const useUserSelector = () => useSelector(state => (state as any).userStore.user)
 export const loginAndLoadUserThunkAction = createAsyncThunk(`${sliceName}/login`, async (loginUser: ILoginUserModel) => {
   const loginResponse = await callLogIn(loginUser)
 
