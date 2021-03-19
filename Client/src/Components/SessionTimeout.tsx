@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { logoutThunk, useUserSelector } from '../Stores/Slices/UserSlice'
 
 import { Alert } from '@material-ui/lab'
-import { loginRoute } from "../Common/Consts/Routes"
+import { routes } from "../Common/Consts/Routes"
 import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router"
 import useInterval from 'react-useinterval'
@@ -28,9 +28,7 @@ export const SessionTimeOut = () => {
 
   const redirectToLogin = async () => {
     dispatch(logoutThunk())
-    history.push({
-      pathname: loginRoute
-    })
+    history.push(routes.loginRoute.route)
   }
 
   const logoutButton = <Button variant='contained' size="small" color="primary" onClick={redirectToLogin}>Log in</Button>

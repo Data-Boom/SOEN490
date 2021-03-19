@@ -11,8 +11,8 @@ interface IProps {
 }
 
 export const FavoriteDatasetButton = (props: IProps) => {
-  const { datasetId } = { ...props }
   const user = useUserSelector()
+  const { datasetId } = { ...props }
   const [isFavorite, setFavorite] = useState(false)
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const FavoriteDatasetButton = (props: IProps) => {
     }
   }
 
-  return (
+  return user && user.email && (
     <IconButton size="small" onClick={handlefavoriteDataset} > {
       isFavorite ?
         <Tooltip title="Remove dataset from favorites">

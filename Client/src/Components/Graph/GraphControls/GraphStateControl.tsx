@@ -11,6 +11,7 @@ import { SaveGraphStateForm } from './SaveGraphStateForm'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { callGetDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
+import { useUserSelector } from '../../../Stores/Slices/UserSlice'
 
 interface IProps {
   graphState: IGraphStateModel,
@@ -18,6 +19,7 @@ interface IProps {
 }
 
 export const GraphStateControl = (props: IProps) => {
+  const user = useUserSelector()
   const { graphState, onGraphStateChange } = { ...props }
 
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
@@ -87,9 +89,9 @@ export const GraphStateControl = (props: IProps) => {
                 <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
               </Grid>
               <Grid item>
-                <SaveGraphStateForm
+                {user?.email && <SaveGraphStateForm
                   graphState={graphState}
-                />
+                />}
               </Grid>
             </Grid> :
             null
