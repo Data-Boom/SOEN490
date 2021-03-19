@@ -73,3 +73,8 @@ export interface IApprovalDatasetModel extends IClientDatasetModel {
     datasetIsFlagged: number
     datasetFlaggedComment: string
 }
+
+export interface IUserDatasets {
+    datasetId: number
+    approved: boolean
+}

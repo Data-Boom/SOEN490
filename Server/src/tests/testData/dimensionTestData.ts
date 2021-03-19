@@ -116,7 +116,7 @@ export const availableDBDimensions =
           "conversionFormula": "{u}",
           "dimensionId": 4,
           "id": 10,
-          "name": "To be deleted",
+          "name": "To delete",
         },
       ],
     }

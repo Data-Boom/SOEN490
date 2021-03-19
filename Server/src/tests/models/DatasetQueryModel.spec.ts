@@ -74,9 +74,10 @@ describe('data query model test', () => {
         done()
     });
 
-    test('Feeds the email of account ID of 1 and expects to see a data set ID of 1 returned', async done => {
+    test('Feeds account ID of 1 and expects to see a data set ID of 1 returned', async done => {
         let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser(1)
         expect(arrayOfData[0].dataset_id).toEqual(1);
+        expect(arrayOfData[0].isApproved).toEqual(0);
         done()
     });
 
