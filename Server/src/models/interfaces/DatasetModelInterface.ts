@@ -75,6 +75,6 @@ export interface IApprovalDatasetModel extends IClientDatasetModel {
 }
 
 export interface IUserDatasets {
-    datasetID: number
+    datasetId: number
     approved: boolean
 }

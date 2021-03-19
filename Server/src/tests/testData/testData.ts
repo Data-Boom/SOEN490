@@ -577,7 +577,7 @@ export const oneFavoriteDataset = [
 
 export const oneUploadedDatasetID = [
     {
-        "datasetID": 2,
+        "datasetId": 2,
         "approved": true
     }
 ]

@@ -309,26 +309,26 @@ export class DataSetService {
   async getUserUploadedDatasets(userReceived: number) {
     try {
       let rawData = await this.dataQuery.getUploadedDatasetIDOfUser(userReceived);
-      let setOfIDs: IUserDatasets[] = []
+      let setOfIds: IUserDatasets[] = []
       if (rawData) {
-        let singleID: IUserDatasets
+        let singleId: IUserDatasets
         for (let value of rawData) {
           if (value.isApproved == 0) {
-            singleID = {
-              datasetID: value.dataset_id,
+            singleId = {
+              datasetId: value.dataset_id,
               approved: false
             }
           }
           else {
-            singleID = {
-              datasetID: value.dataset_id,
+            singleId = {
+              datasetId: value.dataset_id,
               approved: true
             }
           }
-          setOfIDs.push(singleID)
+          setOfIds.push(singleId)
         }
       }
-      this.requestResponse.message = setOfIDs as any
+      this.requestResponse.message = setOfIds as any
       this.requestResponse.statusCode = 200
       return this.requestResponse
     } catch (error) {
