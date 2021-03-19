@@ -1,20 +1,30 @@
 import { IDataSetModel } from "../../genericInterfaces/DataProcessInterfaces"
 
+const fileSystem = require('fs');
+
 export abstract class FileExtractorFactory {
 
-    abstract getFileHandler(filePath?: string): AbstractFileExtractor
+  abstract getFileHandler(filePath?: string): AbstractFileExtractor
 }
 
 export abstract class AbstractFileExtractor {
-    filePath: string
-    parsedFileData: Partial<IDataSetModel>
+  filePath: string
+  parsedFileData: Partial<IDataSetModel>
 
-    constructor(filePath: string) {
-        this.filePath = filePath
-    }
-    abstract parseFile()
+  constructor(filePath: string) {
+    this.filePath = filePath
+  }
+  abstract parseFile()
 
-    //Optional Implementation for CSV, PNG, PDF & TXT files
-    protected extractDataFromFileType?()
-
+  async deleteFile(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      fileSystem.unlink(this.filePath, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
 }
