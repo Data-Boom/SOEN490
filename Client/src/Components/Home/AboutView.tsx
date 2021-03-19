@@ -1,14 +1,14 @@
 import { Box, Container, Grid } from '@material-ui/core'
-import React, { useEffect } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
+import React from 'react'
 import { classStyles } from '../../appTheme'
 import profPic from '../../Assets/universitylogo.png'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 export const AboutView = () => {
-
-  useEffect(() => { document.title = "About" }, [])
+  useTitle("About")
 
   return (
     <Container>

@@ -3,7 +3,7 @@ import { IDimensionModel, IUnitModel } from '../../../../../Server/src/models/in
 import React, { useEffect, useState } from 'react'
 import { callAddDimension, callChangeDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 
-import { AddIcon } from '@material-ui/data-grid'
+import AddIcon from '@material-ui/icons/Add'
 import { ArrayHelpers } from 'formik'
 import { DimensionForm } from './DimensionForm'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'

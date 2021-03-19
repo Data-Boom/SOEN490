@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import React, { useContext, useRef } from 'react'
+import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { DatasetForm } from './DatasetForm/DatasetForm'
@@ -11,12 +11,15 @@ import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
-import { StoreContext } from '../../Context/StoreContext'
 import TimelineIcon from "@material-ui/icons/Timeline"
+import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
+import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
+import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
 import { useState } from 'react'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 interface IProps {
   initialDataset?: IDatasetModel
@@ -30,6 +33,9 @@ const jsonType = 'application/json'
 const csvType = '.csv, .txt'
 
 export const DatasetView = (props: IProps) => {
+  useTitle("Dataset Upload")
+  useDispatchOnLoad(loadDimensionsThunk)
+  useDispatchOnLoad(loadVariablesThunk)
   const { initialDataset } = { ...props }
   const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
@@ -41,10 +47,6 @@ export const DatasetView = (props: IProps) => {
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
-
-  useEffect(() => { document.title = "Dataset Upload" }, [])
-
-  const { store } = useContext(StoreContext)
 
   useEffect(() => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
@@ -63,9 +65,6 @@ export const DatasetView = (props: IProps) => {
     if (datasetID) {
       getDatasetInfo(parseInt(datasetID))
     }
-
-    store.dimensionsStore.loadDimensions()
-    store.variablesStore.loadVariables()
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {

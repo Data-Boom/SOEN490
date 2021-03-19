@@ -2,7 +2,7 @@
 
 import { AppBar, Box, Divider, Drawer, Grid, IconButton, Toolbar, Typography, makeStyles } from "@material-ui/core"
 import { ListRouter, getRoutedViews } from "./ListRouter"
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import { BrowserRouter } from 'react-router-dom'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -10,15 +10,15 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { Greeting } from "./Greeting"
 import MenuIcon from '@material-ui/icons/Menu'
 import { SessionTimeOut } from '../SessionTimeout'
-import { UserContext } from "../../Context/UserContext"
 import clsx from "clsx"
 import { linkWidth } from './ListRouter'
 import universitylogo from '../../Assets/universitylogo.png'
+import { useUserSelector } from "../../Stores/Slices/UserSlice"
 
 const drawerWidth = linkWidth
 
 export default function NavigationMenu() {
-  const { user } = useContext(UserContext)
+  const user = useUserSelector()
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 

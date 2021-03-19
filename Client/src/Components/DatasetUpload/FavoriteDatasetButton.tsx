@@ -1,10 +1,10 @@
 import { IconButton, Tooltip } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { callGetUserFavouriteDatasets, userDeleteFavouriteDataset, userSaveFavouriteDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import StarBorderIcon from "@material-ui/icons/StarBorder"
 import StarIcon from "@material-ui/icons/Star"
-import { UserContext } from '../../Context/UserContext'
+import { useUserSelector } from '../../Stores/Slices/UserSlice'
 
 interface IProps {
   datasetId: number
@@ -12,7 +12,7 @@ interface IProps {
 
 export const FavoriteDatasetButton = (props: IProps) => {
   const { datasetId } = { ...props }
-  const { user } = useContext(UserContext)
+  const user = useUserSelector()
   const [isFavorite, setFavorite] = useState(false)
 
   useEffect(() => {

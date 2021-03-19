@@ -225,7 +225,7 @@ export class AuthenticationController {
       //todo put secure: true when we go https.
       response && response.cookie('token', serviceResponse.message[0], { httpOnly: true, sameSite: "strict" })
 
-      return response.status(serviceResponse.statusCode).json({ 'Status': 'Success', 'ValidFor': serviceResponse.message[1] });
+      return response.status(serviceResponse.statusCode).json({ 'Status': 'Success', 'validFor': serviceResponse.message[1] });
     } catch (error) {
       if (error instanceof BadRequest)
         return response.status(error.status).json(error.message);

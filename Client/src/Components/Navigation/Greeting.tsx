@@ -1,24 +1,20 @@
 import { Button, Grid, Typography } from "@material-ui/core"
+import { logoutThunk, useUserSelector } from "../../Stores/Slices/UserSlice"
 
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { UserContext } from "../../Context/UserContext"
-import { callLogout } from "../../Remote/Endpoints/AuthenticationEndpoint"
-import { defaultUserAccountModel } from "../../Models/Authentication/IUserAccountModel"
 import { loginRoute } from "../../Common/Consts/Routes"
-import { useContext } from "react"
+import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 
 export const Greeting = () => {
   const history = useHistory()
-  const { user, setUserContext } = useContext(UserContext)
+  const user = useUserSelector()
+  const dispatch = useDispatch()
 
-  const redirectToLogin = async () => {
-    setUserContext(defaultUserAccountModel)
-    await callLogout()
-    history.push({
-      pathname: loginRoute
-    })
+  const logout = async () => {
+    dispatch(logoutThunk())
+    history.push(loginRoute)
   }
 
   return user && user.firstName ?
@@ -29,7 +25,7 @@ export const Greeting = () => {
             {user.firstName} {user.lastName}
           </Grid>
           <Grid>
-            <Button id="SignOut" variant="contained" onClick={redirectToLogin}>Sign out</Button>
+            <Button id="SignOut" variant="contained" onClick={logout}>Sign out</Button>
           </Grid>
         </Grid>
       </Typography>

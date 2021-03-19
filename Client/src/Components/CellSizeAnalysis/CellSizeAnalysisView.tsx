@@ -1,12 +1,12 @@
 import { Box, Typography } from '@material-ui/core'
-import React, { useEffect } from 'react'
 
+import React from 'react'
 import cellSizeAnalyzerExecutable from '../../Assets/python-3.9.2-amd64.exe'
 import cellSizeDemoGif from '../../Assets/cell-size-analysis-demo.gif'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 export const CellSizeAnalysisView = () => {
-
-  useEffect(() => { document.title = "Cell Size Analysis" }, [])
+  useTitle("Cell Size Analysis")
 
   return (
     <>
