@@ -3,7 +3,7 @@ import { logoutThunk, useUserSelector } from "../../Stores/Slices/UserSlice"
 
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { loginRoute } from "../../Common/Consts/Routes"
+import { routes } from "../../Common/Consts/Routes"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 
@@ -14,7 +14,7 @@ export const Greeting = () => {
 
   const logout = async () => {
     dispatch(logoutThunk())
-    history.push(loginRoute)
+    history.push(routes.loginRoute.route)
   }
 
   return user && user.firstName ?
@@ -30,6 +30,6 @@ export const Greeting = () => {
         </Grid>
       </Typography>
     ) : (
-      <Button component={Link} to={loginRoute} id='LogIn' variant="contained">Log in</Button>
+      <Button component={Link} to={routes.loginRoute.route} id='LogIn' variant="contained">Log in</Button>
     )
 }

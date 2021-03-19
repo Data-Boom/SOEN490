@@ -3,7 +3,6 @@ import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
 import React, { useState } from 'react'
-import { homeRoute, signUpRoute } from '../../Common/Consts/Routes'
 import { loginAndLoadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
 import CancelIcon from "@material-ui/icons/Cancel"
@@ -13,6 +12,7 @@ import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
+import { routes } from '../../Common/Consts/Routes'
 import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function LoginView() {
+export const LoginView = () => {
   const dispatch = useDispatch()
   const user = useUserSelector()
 
@@ -63,7 +63,7 @@ export default function LoginView() {
   return (
     <>
       {user && user.firstName ?
-        <Redirect to={homeRoute} /> :
+        <Redirect to={routes.homeRoute.route} /> :
         <Container component="main" maxWidth="xs">
           <Modal
             open={openModal}
@@ -137,7 +137,7 @@ export default function LoginView() {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link id="SignUpForm" href={signUpRoute} variant="body2">
+                    <Link id="SignUpForm" href={routes.signUpRoute.route} variant="body2">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

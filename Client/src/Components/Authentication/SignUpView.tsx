@@ -12,8 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import Typography from '@material-ui/core/Typography'
 import { callSignUp } from '../../Remote/Endpoints/AuthenticationEndpoint'
-import { loginRoute } from '../../Common/Consts/Routes'
 import { makeStyles } from '@material-ui/core/styles'
+import { routes } from '../../Common/Consts/Routes'
 import { signupValidationSchema } from './AuthenticationValidationSchema'
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ export default function SignUpView(props: any) {
   const classes = useStyles()
   async function handleSignUpSubmit(user: ISignUpUserModel): Promise<void> {
     await callSignUp(user)
-    props.history.push(loginRoute)
+    props.history.push(routes.loginRoute.route)
   }
   return (
     <Fragment>
@@ -98,14 +98,10 @@ export default function SignUpView(props: any) {
                     component={MuiTextFieldFormik}
                     variant="outlined"
                     fullWidth
-                    required
                     id="orcID"
                     label="ORCID"
                     name="orcID"
                     type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -156,7 +152,7 @@ export default function SignUpView(props: any) {
               </Button>
               <Grid container justify="flex-end">
                 <Grid item>
-                  <Link href={loginRoute} variant="body2">
+                  <Link href={routes.loginRoute.route} variant="body2">
                     Already have an account? Log in
                   </Link>
                 </Grid>

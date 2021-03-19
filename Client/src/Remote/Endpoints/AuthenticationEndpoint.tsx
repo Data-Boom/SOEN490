@@ -1,10 +1,10 @@
 import { IForgotPasswordModel, ILoginUserModel, IResetPasswordModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
-import { forgotPasswordRoute } from "../../Common/Consts/Routes"
 import { post } from "../FluentRequest"
 
-export const resetPasswordRoute = '/api/v1/resetPassword/:resetToken?'
+const forgotPasswordRoute = '/api/v1/forgotPassword'
+const resetPasswordRoute = '/api/v1/resetPassword/:resetToken?'
 const signupRoute = '/api/v1/signup'
 const loginRoute = '/api/v1/login'
 const logoutRoute = '/api/v1/logout'

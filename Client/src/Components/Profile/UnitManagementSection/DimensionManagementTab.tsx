@@ -4,18 +4,11 @@ import React, { useEffect, useState } from 'react'
 import { callAddDimension, callChangeDimension, callDeleteDimension } from '../../../Remote/Endpoints/DimensionsEndpoint'
 
 import AddIcon from '@material-ui/icons/Add'
-import { ArrayHelpers } from 'formik'
 import { DimensionForm } from './DimensionForm'
 import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { classStyles } from '../../../appTheme'
 
-interface IProps {
-  units: IUnitModel[],
-  fieldArrayHelpers: ArrayHelpers,
-}
-
 export const DimensionManagementTab = () => {
-
   const [dimensions, setDimensions] = useState<IDimensionModel[]>()
 
   const newUnit: IUnitModel = {
@@ -72,5 +65,4 @@ export const DimensionManagementTab = () => {
       </Box>
     </>
   )
-
 }

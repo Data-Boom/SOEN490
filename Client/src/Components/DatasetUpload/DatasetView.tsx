@@ -62,7 +62,7 @@ export const DatasetView = (props: IProps) => {
       setEditable(false)
     }
 
-    if (datasetID) {
+    if (Number(datasetID)) {
       getDatasetInfo(parseInt(datasetID))
     }
   }, [])

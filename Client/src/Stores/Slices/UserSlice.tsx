@@ -11,7 +11,7 @@ interface IUserSliceState { user: IUserAccountModel }
 const initialState: IUserSliceState = { user: defaultUserAccountModel }
 const sliceName = 'user'
 
-export const useUserSelector = () => useSelector(state => (state as any).userStore.user)
+export const useUserSelector = (): IUserAccountModel => useSelector(state => (state as any).userStore.user)
 export const loginAndLoadUserThunk = createAsyncThunk(`${sliceName}/login`, async (loginUser: ILoginUserModel) => {
   const loginResponse = await callLogIn(loginUser)
 
