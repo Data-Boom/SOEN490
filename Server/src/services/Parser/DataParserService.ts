@@ -41,6 +41,7 @@ export class DataParserService {
             let parsedData = await fileHandler.parseFile()
             requestResponse.message = parsedData
             requestResponse.statusCode = 200;
+            return requestResponse;
         }
         catch (error) {
             if (error instanceof BadRequest) {
@@ -51,7 +52,6 @@ export class DataParserService {
             }
         } finally {
             await fileHandler.deleteFile()
-            return requestResponse;
         }
     }
 }
