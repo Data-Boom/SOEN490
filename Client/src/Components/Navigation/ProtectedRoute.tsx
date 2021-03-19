@@ -15,9 +15,16 @@ export const ProtectedRoute = (props: IProps) => {
   const user = useUserSelector()
   const { component, protectedRoute, exact } = { ...props }
 
-  const ProtectionMessage = () => {
+  const NotAuthorizedMessage = () => {
     return (
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '80vh' }}
+      >
         <Grid item>
           <Typography>You are not authorized to view this page</Typography>
         </Grid>
@@ -26,6 +33,6 @@ export const ProtectedRoute = (props: IProps) => {
   }
 
   return (
-    <Route path={protectedRoute.route} exact={exact} component={userCanView(user, protectedRoute.permission) ? component : ProtectionMessage} />
+    <Route path={protectedRoute.route} exact={exact} component={userCanView(user, protectedRoute.permission) ? component : NotAuthorizedMessage} />
   )
 }
