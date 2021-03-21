@@ -34,6 +34,11 @@ export const DatasetDataTable = (props: IProps): any => {
   const { dimensions } = useDimensions()
   const { variableNames } = useVariableNames()
   const { errors } = useFormikContext()
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1)
+  }
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
     editable && setEditedVariable({ variable: { ...data.variables[indexOfClickedHeader] }, index: indexOfClickedHeader, isNew: false })
@@ -83,7 +88,8 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const handleAddRow = (): void => {
     const copyData = { ...props.data }
-    copyData.contents.push({ point: new Array(props.data.variables.length).fill(0) })
+    increment()
+    copyData.contents.push({ point: new Array(props.data.variables.length).fill(count) })
     props.onDataChange(copyData)
   }
 
