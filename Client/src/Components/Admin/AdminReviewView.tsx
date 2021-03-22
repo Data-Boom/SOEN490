@@ -1,14 +1,14 @@
 import { AdminReviewRow, IAdminReviewRowProps } from './AdminReviewRow'
-import { Box, Button, Grid, List, TextField, Typography } from '@material-ui/core'
-import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
+import { IApprovedDatasetModel, IExampleApprovedArray, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
 import React, { useEffect, useRef, useState } from 'react'
 import { approvedDataset, callRejectDataset, flagDataset, getUnapprovedDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 
-import { AdminReviewList } from './AdminReviewList'
 import { DatasetForm } from '../DatasetUpload/DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FormikProps } from 'formik'
 import { IDatasetRowProps } from '../Graph/GraphControls/DatasetRow'
+import { List } from '../Utils/List'
 import { useTitle } from '../../Common/Hooks/useTitle'
 
 export function AdminReviewView() {
@@ -16,7 +16,7 @@ export function AdminReviewView() {
   const formikReference = useRef<FormikProps<unknown>>()
   const [editable, setEditable] = useState(false)
   const [dataset, setDataset] = useState<IApprovedDatasetModel>()
-  const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>()
+  const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>(IExampleApprovedArray)
   const [comment, setComment] = useState("")
   const [flaggedComment, setFlaggedComment] = useState("")
   const [update, setUpdate] = useState(0)
@@ -78,11 +78,6 @@ export function AdminReviewView() {
             models={datasets}
             rowProps={{ onChange: handleDatasetChange } as IAdminReviewRowProps}
             withPagination
-          />
-          <AdminReviewList
-            datasets={[]}
-            onChange={handleDatasetChange}
-            update={update}
           />
           <br></br>
           <Button id="toggleEditButton" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;

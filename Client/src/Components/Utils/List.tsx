@@ -17,7 +17,7 @@ export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
 
-  const rowModels = withPagination
+  const rowModels = (withPagination && models)
     ? models.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     : models
 
