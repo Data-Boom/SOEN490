@@ -25,11 +25,6 @@ export const AdminReviewList = (props: IAdminListprops) => {
   const renderAdminDatasetRows = () => {
     return datasets && datasets.map(datasets => {
       return (
-        <AdminReviewRow
-          dataset={datasets}
-          key={datasets.id}
-          onChange={props.onChange}
-        />
       )
     })
   }

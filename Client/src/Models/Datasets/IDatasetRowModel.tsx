@@ -13,3 +13,8 @@ export const newDatasetRow: IDatasetRowModel = {
   color: null,
   shape: null
 }
+
+export interface IAdmindReviewRowModel {
+  id: number,
+  dataset_name: string,
+}
