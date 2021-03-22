@@ -1,13 +1,13 @@
 import { Box, Grid, ThemeProvider, Typography } from '@material-ui/core'
 import { FastField, Field, FieldArray, useFormikContext } from 'formik'
-import { ICategoryModel, ISubcategoryModel } from '../../../Remote/Endpoints/CategoryEndpoint'
-import { MuiSelectFormik, MuiTextFieldFormik } from '../../Forms/FormikFields'
+import { ICategoryModel, ISubcategoryModel } from '../../../../Remote/Endpoints/CategoryEndpoint'
+import { MuiSelectFormik, MuiTextFieldFormik } from '../../../Forms/FormikFields'
 import React, { useState } from 'react'
-import { disabledTheme, shouldComponentUpdate } from '../../Forms/ComponentUpdate'
+import { disabledTheme, shouldComponentUpdate } from '../../../Forms/ComponentUpdate'
 
-import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
+import { IMaterial } from '../../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
-import { classStyles } from '../../../appTheme'
+import { classStyles } from '../../../../appTheme'
 import { get } from 'lodash'
 
 interface IProps {

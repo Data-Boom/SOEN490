@@ -4,7 +4,7 @@ import { Grid, TextField, Typography } from '@material-ui/core'
 
 import { ArrayHelpers } from 'formik'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { IMaterial } from '../../../Models/Datasets/IDatasetModel'
+import { IMaterial } from '../../../../Models/Datasets/IDatasetModel'
 import React from 'react'
 
 interface IProps {

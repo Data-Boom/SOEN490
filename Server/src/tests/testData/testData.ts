@@ -574,3 +574,10 @@ export const oneFavoriteDataset = [
         },
     }
 ]
+
+export const oneUploadedDatasetID = [
+    {
+        "datasetId": 2,
+        "approved": true
+    }
+]

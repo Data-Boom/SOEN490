@@ -5,13 +5,12 @@ import React, { useEffect, useRef } from 'react'
 
 import { Box } from "@material-ui/core"
 import { IAxisStateModel } from "../../Models/Graph/IGraphStateModel"
-import { IDimensionModel } from "../../../../Server/src/models/interfaces/IDimension"
 import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
 import am4themes_material from "@amcharts/amcharts4/themes/animated"
+import { useDimensionsSelector } from "../../Stores/Slices/DimensionsSlice"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
-  dimensions: IDimensionModel[],
   axes: IAxisStateModel[]
 }
 
@@ -21,10 +20,12 @@ const getSeriesName = (dataset: IGraphDatasetModel) => {
   return `${dataset.id}`
 }
 
-export default function Graph(props: IProps) {
-  const { datasets, dimensions, axes } = { ...props }
+export const Graph = (props: IProps) => {
+  const { datasets, axes } = { ...props }
+  const dimensions = useDimensionsSelector()
   const chartRef = useRef<am4charts.XYChart>()
 
+  useEffect(() => initiateGraph(), [])
   useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units, axes[0].variableName, axes[1].variableName])
   useEffect(() => chartRef.current && handleAxesScaleUpdated(), [axes[0].logarithmic, axes[1].logarithmic])
   useEffect(() => chartRef.current && handleDatasetsUpdated(), [datasets])

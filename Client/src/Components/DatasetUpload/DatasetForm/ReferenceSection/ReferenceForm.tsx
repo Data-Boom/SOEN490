@@ -1,11 +1,11 @@
 import { Box, Grid, ThemeProvider, Typography } from '@material-ui/core'
 import { FastField, FieldArray } from 'formik'
-import { disabledTheme, shouldComponentUpdate } from '../../Forms/ComponentUpdate'
+import { disabledTheme, shouldComponentUpdate } from '../../../Forms/ComponentUpdate'
 
 import { AuthorsList } from './AuthorsList'
-import { MuiTextFieldFormik } from '../../Forms/FormikFields'
+import { MuiTextFieldFormik } from '../../../Forms/FormikFields'
 import React from 'react'
-import { classStyles } from '../../../appTheme'
+import { classStyles } from '../../../../appTheme'
 import { get } from 'lodash'
 
 interface IProps {

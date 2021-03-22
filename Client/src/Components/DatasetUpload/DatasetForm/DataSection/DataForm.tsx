@@ -1,10 +1,10 @@
 import { Box } from '@material-ui/core'
 import { DatasetDataTable } from './DatasetDataTable'
 import { FastField } from 'formik'
-import { IData } from '../../../Models/Datasets/IDatasetModel'
+import { IData } from '../../../../Models/Datasets/IDatasetModel'
 import React from 'react'
-import { classStyles } from '../../../appTheme'
-import { shouldComponentUpdate } from '../../Forms/ComponentUpdate'
+import { classStyles } from '../../../../appTheme'
+import { shouldComponentUpdate } from '../../../Forms/ComponentUpdate'
 
 interface IProps {
   editable: boolean,

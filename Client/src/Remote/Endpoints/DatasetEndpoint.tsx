@@ -5,7 +5,7 @@ import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { ISearchDatasetsFormModel } from "../../Components/Search/ISearchDatasetsFormModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 
-const userUploadedDatasetsRoute = '/api/v1/dataset/userUploadedDatasets/:userUploadedDatasets'
+const userUploadedDatasetsRoute = '/api/v1/uploadedDatasets'
 const userSavedDatasetsRoute = '/api/v1/favoriteDatasets'
 const dataUploadRoute = '/api/v1/dataUpload'
 const datasetRoute = '/api/v1/dataset'
