@@ -11,6 +11,17 @@ import { decorateDataErrors } from '../../../Common/Helpers/DatasetErrorDecorato
 import { useDimensions } from '../../Utils/Hooks/useDimensions'
 import { useFormikContext } from 'formik'
 import { useVariableNames } from '../../Utils/Hooks/useVariableNames'
+import ReactDataGrid from 'react-data-grid'
+import PropTypes from "prop-types";
+
+/*const {
+  Draggable: {
+    Container: DraggableContainer,
+    RowActionsCell,
+    DropTargetRowContainer
+  },
+  Data: { Selectors }
+} = require("react-data-grid-addons");*/
 
 interface IProps {
   data: IData,
@@ -186,7 +197,7 @@ export const DatasetDataTable = (props: IProps): any => {
         variableNames={variableNames}
       />}
       <Box width='100%' mt={4}>
-        <DataGrid
+        <ReactDataGrid
           rowKeyGetter={rowKeyGetter}
           headerRowHeight={72}
           columns={getColumns()}
