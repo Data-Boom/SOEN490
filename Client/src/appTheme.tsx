@@ -15,7 +15,7 @@ export const theme = createMuiTheme({
       //main: '#7C524E',
       //main: '#677967',
       //main: '#3f50b5', //CURRENT ONE
-      main: '#7F95BB', //Jessica's suggestion
+      main: '#7F95BB', //Kiyanda's choice
       //main: '#1C7E4D', //greenish
       //main: '#673AB7', //purple
       //main: '#FF9800', //orangish
