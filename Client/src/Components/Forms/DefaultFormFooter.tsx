@@ -2,6 +2,7 @@ import { Button, Grid, GridJustification } from "@material-ui/core"
 
 import { FormikValues } from "formik"
 import React from 'react'
+import { useUserSelector } from "../../Stores/Slices/UserSlice"
 
 interface IProps {
   formikReference: React.MutableRefObject<FormikValues>
@@ -10,9 +11,10 @@ interface IProps {
 }
 
 export const DefaultFormFooter = (props: IProps) => {
+  const user = useUserSelector()
   const { formikReference, justify, onCancel } = { ...props }
 
-  return (
+  return user && user.email && (
     <Grid container spacing={3} justify={justify || "center"}>
       <Grid item>
         <Button id="form-submit" variant="outlined" color="primary" onClick={() => onCancel ? onCancel(formikReference) : formikReference.current.resetForm()}>

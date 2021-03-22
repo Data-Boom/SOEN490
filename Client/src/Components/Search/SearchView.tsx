@@ -1,5 +1,5 @@
 import { Box, Button, Container } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { ISearchDatasetsFormModel } from './ISearchDatasetsFormModel'
@@ -7,12 +7,16 @@ import { SearchDatasetsForm } from './SearchDatasetsForm'
 import { SearchResults } from './SearchResults'
 import { SelectionChangeParams } from '@material-ui/data-grid'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+import { listDatapoints } from '../../Remote/Endpoints/DatapointEndpoint'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 interface IProps {
   handleDatasetsSelected?: (datasets: IDatasetModel[]) => void
 }
 
 export default function SearchView(props: IProps) {
+  useTitle("Search Datasets")
   const { handleDatasetsSelected } = { ...props }
 
   const [foundDatasets, setFoundDatasets] = useState<IDatasetModel[]>([])
@@ -20,8 +24,28 @@ export default function SearchView(props: IProps) {
   // array of selected ids
   const [selection, setSelection] = useState<SelectionChangeParams>({ rowIds: [] })
 
+  const [categories, setCategories] = useState([])
+
+  const [datapoint, setDatapoints] = useState([])
+
+  useEffect(() => {
+    const callListCategories = async () => {
+      const getCategories = await listCategories()
+      setCategories(getCategories || [])
+    }
+    callListCategories()
+  }, [])
+
+  useEffect(() => {
+    const callListDatapoints = async () => {
+      const getDatapoints = await listDatapoints()
+      setDatapoints(getDatapoints || [])
+    }
+    callListDatapoints()
+  }, [])
+
   const handleSearchClick = async (query: ISearchDatasetsFormModel) => {
-    const datasets = await callGetDatasets(query)
+    const datasets = await callGetDatasets(query) || []
     setFoundDatasets(datasets)
   }
 
@@ -51,13 +75,17 @@ export default function SearchView(props: IProps) {
       <Box pt={4}>
         <SearchDatasetsForm
           handleSubmit={handleSearchClick}
+          categories={categories}
+          datapoint={datapoint}
         />
       </Box>
       <Box pt={4}>
         <SearchResults
           datasetResults={foundDatasets}
+          categories={categories}
           handleSelectionChanged={handleSelectionChanged}
           button={addToGraphButton}
+          displayCheckbox={true}
         />
       </Box>
     </Container>

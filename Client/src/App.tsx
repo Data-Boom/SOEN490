@@ -1,37 +1,26 @@
-import React, { useState } from 'react'
-import { getUserFromStorage, putUserInStorage } from './Common/Storage'
+import { persistor, rootStore } from './Stores/RootStore'
 
-import { IUserAccountModel } from './Models/Authentication/IUserAccountModel'
-import NavigationMenu from './Components/NavigationMenu'
+import NavigationMenu from './Components/Navigation/NavigationMenu'
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
+import React from 'react'
 import { SnackbarProvider } from 'notistack'
 import { SnackbarUtilsConfigurator } from './Components/Utils/SnackbarUtils'
 import { ThemeProvider } from '@material-ui/core'
 import { theme } from './appTheme'
 
-interface IUserContextProps {
-  user: IUserAccountModel,
-  setUser: (user: IUserAccountModel) => void
-}
-
-export const UserContext = React.createContext<Partial<IUserContextProps>>({})
-
 export const App = () => {
-  const [user, setUser] = useState<IUserAccountModel>(getUserFromStorage())
-
-  const setStateAndStorage = (user: IUserAccountModel): void => {
-    setUser(user)
-    putUserInStorage(user)
-  }
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <UserContext.Provider value={{ user, setUser: setStateAndStorage }}>
-          <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}>
-            <SnackbarUtilsConfigurator />
-            <NavigationMenu />
-          </SnackbarProvider>
-        </UserContext.Provider>
+        <Provider store={rootStore}>
+          <PersistGate loading={null} persistor={persistor}>
+            <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}>
+              <SnackbarUtilsConfigurator />
+              <NavigationMenu />
+            </SnackbarProvider>
+          </PersistGate>
+        </Provider>
       </ThemeProvider>
     </div>
   )

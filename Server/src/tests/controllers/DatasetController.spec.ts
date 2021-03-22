@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { createConnection, getConnection } from 'typeorm';
 import { DataSetController } from '../../controllers/DataSetController';
-import { oneFavoriteDataset } from '../testData/testData';
+import { oneFavoriteDataset, oneUploadedDatasetID } from '../testData/testData';
 
 describe('Data Set Controller ', () => {
     let mockRequest;
@@ -113,7 +113,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestForUserUploadedDatasets(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith(oneFavoriteDataset);
+        expect(mockResponse.json).toBeCalledWith(oneUploadedDatasetID);
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
@@ -126,7 +126,7 @@ describe('Data Set Controller ', () => {
             }
         }
         await GetDataControllerController.createRequestForUserFavoriteDatsets(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith(oneFavoriteDataset);
+        expect(mockResponse.json).toBeCalledWith([2]);
         expect(mockResponse.status).toBeCalledWith(200);
     });
 

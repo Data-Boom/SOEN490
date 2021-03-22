@@ -1,7 +1,7 @@
 import { createConnection, getConnection } from 'typeorm';
 
 import { DataSetService } from "../../services/DataSetService";
-import { IApprovalDatasetModel } from "../../models/interfaces/DatasetModelInterface";
+import { IApprovalDatasetModel, IUserDatasets } from "../../models/interfaces/DatasetModelInterface";
 import { IDataRequestModel } from "../../models/interfaces/DataRequestModelInterface";
 
 describe('data set service test', () => {
@@ -124,7 +124,7 @@ describe('data set service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].category).toEqual("cell size");
+    expect(arrayOfData[0].category).toEqual(2);
     done()
   });
 
@@ -139,7 +139,7 @@ describe('data set service test', () => {
     testData.categoryId = 2;
     testData.subcategoryId = 2;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData[0].subcategory).toEqual("width");
+    expect(arrayOfData[0].subcategory).toEqual(2);
     done()
   });
 
@@ -160,21 +160,6 @@ describe('data set service test', () => {
     done()
   });
 
-  test('Feeds subcategory of 2 and expects to see an empty array returned', async done => {
-    let testData: IDataRequestModel;
-    testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = 2;
-    let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
-    expect(arrayOfData).toEqual(expect.arrayContaining([]));
-    done()
-  });
-
   test('Feeds first name of Stanley and expects to see an empty array returned', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
@@ -190,17 +175,32 @@ describe('data set service test', () => {
     done()
   });
 
-  test('Feeds account ID of 3 and expects to see an uploaded data set with ID of 2 returned', async done => {
+  test('Feeds account ID of 3 and expects to see an approved uploaded data set with ID of 2 returned', async done => {
     let response = await retrieveDataObject.getUserUploadedDatasets(3)
-    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
-    expect(arrayOfData[0].id).toEqual(2);
+    let arrayOfData = response.message as IUserDatasets[]
+    expect(arrayOfData[0].datasetId).toEqual(2);
+    expect(arrayOfData[0].approved).toEqual(true);
+    done()
+  });
+
+  test('Feeds account ID of 1 and expects to see an unapproved uploaded data set with ID of 1 returned', async done => {
+    let response = await retrieveDataObject.getUserUploadedDatasets(1)
+    let arrayOfData = response.message as IUserDatasets[]
+    expect(arrayOfData[0].datasetId).toEqual(1);
+    expect(arrayOfData[0].approved).toEqual(false);
+    done()
+  });
+
+  test('Feeds non-existant account ID of -1 and expects to see a blank array returned', async done => {
+    let response = await retrieveDataObject.getUserUploadedDatasets(-1)
+    let arrayOfData = response.message
+    expect(arrayOfData).toEqual([]);
     done()
   });
 
   test('Feeds an account ID of 1 and expects to see a favorited data set IDs of 2 returned', async done => {
     let response = await retrieveDataObject.getUserFavoriteDatasets(1)
-    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
-    expect(arrayOfData[0].id).toEqual(2);
+    expect(response.message).toEqual([2])
     done()
   });
 
@@ -244,7 +244,7 @@ describe('data set service test', () => {
 
   test('Asks for all flagged data sets expects a data set with ID of 1', async done => {
     let response = await retrieveDataObject.getAllFlaggedDatasets()
-    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    let arrayOfData = response.message as IApprovalDatasetModel[]
     expect(arrayOfData[0].id).toEqual(1);
     expect(response.statusCode).toEqual(200);
     done()
@@ -252,7 +252,7 @@ describe('data set service test', () => {
 
   test('Asks for all flagged data sets of account ID 1, expects a data set with ID of 1', async done => {
     let response = await retrieveDataObject.getUserFlaggedDatasets(1)
-    let arrayOfData = response.message as unknown as IApprovalDatasetModel[]
+    let arrayOfData = response.message as IApprovalDatasetModel[]
     expect(arrayOfData[0].id).toEqual(1);
     expect(response.statusCode).toEqual(200);
     done()

@@ -4,13 +4,16 @@ import React, { useEffect, useState } from 'react'
 import { IApprovedDatasetModel } from "../../Models/Datasets/IApprovedDatasetModel"
 import { UserReviewList } from "./UserReviewList"
 import { getUserFlaggedDatasets } from "../../Remote/Endpoints/UserEndpoint"
+import { useTitle } from "../../Common/Hooks/useTitle"
 
 interface IProps {
   userDatasets: IApprovedDatasetModel[],
 }
 
 export const UserReviewView = (props: IProps) => {
+  useTitle("Flagged Datasets")
   const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>([])
+
 
   useEffect(() => {
     const fetchUserDatasets = async () => {

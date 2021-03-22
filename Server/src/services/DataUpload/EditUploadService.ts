@@ -42,11 +42,11 @@ export default class EditUploadService extends AbstractUploadService {
 
         // Grab other 3 FK of data set
         let publicationID: number = await this.insertPublicationData(this.uploadModel, referenceTitle, referenceDOI, referencePages, publicationTypeID, publisherNameId, referenceYear, referenceVolume, referenceIssue, allAuthors)
-        let categoryIDs: number[] = await this.uploadModel.insertCategories(this.parsedFileData.category, this.parsedFileData.subcategory);
+        let subcategoryID: number = this.parsedFileData.subcategory;
         let dataSetDataTypeID: number = await this.insertDataSetDataTypeData(this.uploadModel, this.parsedFileData.data_type)
 
         // Update data set
-        let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, categoryIDs, this.parsedFileData.data.comments]
+        let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, subcategoryID, this.parsedFileData.data.comments]
         await this.insertDataset(this.uploadModel, arrayOfDatasetInfo)
 
         // Run check on variable vs contents length to see if they're equal for data points and insert

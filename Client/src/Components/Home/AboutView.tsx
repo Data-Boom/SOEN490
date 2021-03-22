@@ -1,12 +1,15 @@
 import { Box, Container, Grid } from '@material-ui/core'
 
+import Avatar from '@material-ui/core/Avatar'
+import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import React from 'react'
 import { classStyles } from '../../appTheme'
-import profPic from '../universitylogo.png'
-import Avatar from '@material-ui/core/Avatar';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import profPic from '../../Assets/universitylogo.png'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 export const AboutView = () => {
+  useTitle("About")
+
   return (
     <Container>
       <Grid container>

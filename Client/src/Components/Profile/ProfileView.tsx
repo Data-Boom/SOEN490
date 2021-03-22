@@ -1,19 +1,21 @@
 import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
+import { loadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
 import { DimensionManagementTab } from './UnitManagementSection/DimensionManagementTab'
-import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
 import PermissionsTab from './PermissionsSection/PermissionsTab'
 import { ProfileGraphStateList } from './ProfileGraphList'
-import { UserContext } from '../../App'
+import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
-import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
 import { CategoryManagementTab } from './CategoryManagementSection/CategoryManagementTab';
+
+import { useDispatch } from 'react-redux'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -134,29 +136,26 @@ function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) 
 }
 
 export function ProfileView() {
-  const { user, setUser } = useContext(UserContext)
+  useTitle("Profile")
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const newUser: IUserAccountModel = await getUserDetails({ email: user.email })
-      if (newUser) {
-        setUser(newUser)
-      }
-    }
-    fetchUser()
-  }, [])
-
-  const [savedGraphState, setSavedGraphState] = useState([])
+  const user = useUserSelector()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const callListSavedGraphStates = async () => {
-      const savedGraphState = await listGraphStates()
-      // setSavedGraphState(savedGraphState.reverse())
+      const savedGraphState = await listGraphStates() || []
+      setSavedGraphState(savedGraphState.reverse())
     }
-    callListSavedGraphStates()
+
+    dispatch(loadUserThunk(user?.email))
+
+    if (user && user.email)
+      callListSavedGraphStates()
   }, [])
 
   const classes = useStyles()
+
+  const [savedGraphState, setSavedGraphState] = useState([])
   const [tab, setTab] = React.useState(0)
 
   const handleChange = (event: React.ChangeEvent<{}>, newTab: number) => {
@@ -168,11 +167,12 @@ export function ProfileView() {
         <AppBar position="static">
           <Tabs value={tab} onChange={handleChange}>
             <Tab label="View Profile" {...a11yProps(0)} />
-            <Tab label="View Favourites" {...a11yProps(1)} />
-            <Tab label="Permissions" {...a11yProps(2)} />
-            <Tab label="View Uploads" {...a11yProps(3)} />
-            <Tab label="Manage Units" {...a11yProps(4)} />
-            <Tab label="Manage Categories" {...a11yProps(5)} />
+            <Tab label="View Saved Graphs" {...a11yProps(1)} />
+            <Tab label="View Saved Datasets" {...a11yProps(2)} />
+            <Tab label="Permissions" {...a11yProps(3)} />
+            <Tab label="View Uploads" {...a11yProps(4)} />
+            <Tab label="Manage Units" {...a11yProps(5)} />
+            <Tab label="Manage Categories" {...a11yProps(6)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -205,12 +205,21 @@ export function ProfileView() {
           <TabPanel value={tab} index={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                <SavedDatasetsTab
+                />
+              </Grid>
+            </Grid>
+          </TabPanel>
+          {/* todo delete */}
+          <TabPanel value={tab} index={3}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
                 <PermissionsTab
                 />
               </Grid>
             </Grid>
           </TabPanel>
-          <TabPanel value={tab} index={3}>
+          <TabPanel value={tab} index={4}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
                 <TableHead>Uploads
@@ -227,7 +236,7 @@ export function ProfileView() {
               </Table>
             </TableContainer>
           </TabPanel>
-          <TabPanel value={tab} index={4}>
+          <TabPanel value={tab} index={5}>
             <DimensionManagementTab />
           </TabPanel>
           <TabPanel value={tab} index={5}>
@@ -238,4 +247,3 @@ export function ProfileView() {
     </>
   )
 }
-

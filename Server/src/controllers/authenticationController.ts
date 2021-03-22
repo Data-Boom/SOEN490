@@ -1,6 +1,6 @@
-import { passwordSchema, emailSchema } from './../services/helpers/validationSchema';
 import { IForgotPasswordInformation, ILoginInformation, IResetPasswordInformation } from '../genericInterfaces/AuthenticationInterfaces';
 import { NextFunction, Request, Response } from 'express';
+import { emailSchema, passwordSchema } from './../services/helpers/validationSchema';
 
 import { AuthenticationService } from '../services/authenticationService';
 import { BadRequest } from '@tsed/exceptions';
@@ -64,7 +64,7 @@ export class AuthenticationController {
 
   async createLogoutRequest(request: Request, response: Response, next: NextFunction) {
     response.clearCookie('token', { path: '/' });
-    response.end();
+    response.status(200).json('Logged out!');
     return response;
   }
 
@@ -223,9 +223,9 @@ export class AuthenticationController {
       serviceResponse = await this.authenticationService.checkLoginCredentials(LoginInfo);
 
       //todo put secure: true when we go https.
-      response && response.cookie('token', serviceResponse.message, { httpOnly: true, sameSite: "lax" })
+      response && response.cookie('token', serviceResponse.message[0], { httpOnly: true, sameSite: "strict" })
 
-      return response.status(serviceResponse.statusCode).json('Success');
+      return response.status(serviceResponse.statusCode).json({ 'Status': 'Success', 'validFor': serviceResponse.message[1] });
     } catch (error) {
       if (error instanceof BadRequest)
         return response.status(error.status).json(error.message);

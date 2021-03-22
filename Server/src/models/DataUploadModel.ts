@@ -65,8 +65,7 @@ export class DataUploadModel {
                 name: arrayOfDatasetInfo[1],
                 datatypeId: arrayOfDatasetInfo[2],
                 publicationId: arrayOfDatasetInfo[3],
-                categoryId: arrayOfDatasetInfo[4][0],
-                subcategoryId: arrayOfDatasetInfo[4][1],
+                subcategoryId: arrayOfDatasetInfo[4],
                 comments: arrayOfDatasetInfo[5]
             })
             .where("id = :id", { id: arrayOfDatasetInfo[0] })
@@ -319,86 +318,6 @@ export class DataUploadModel {
         return allMaterials;
     }
 
-    private selectCategoryIdQuery = (categoryReceived: string) =>
-        this.connection.createQueryBuilder(Category, 'category')
-            .select('category.id', 'id')
-            .where('LOWER(category.name) = LOWER(:categoryRef)', { categoryRef: categoryReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Category object and return it's ID. It will check if a  
-     * duplicate Category exists via a query and if it exists will set the
-     * Category object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Category table.
-     *
-     * @param category 
-     * Category: string
-     */
-    private async insertIndividualCategory(category: string): Promise<number> {
-        let someCategory = new Category();
-        someCategory.id;
-        someCategory.name = category;
-        let categoryExists: any;
-        categoryExists = await this.selectCategoryIdQuery(category);
-        if (categoryExists != undefined) {
-            someCategory.id = categoryExists.id;
-        }
-        else {
-            await this.connection.manager.save(someCategory);
-        }
-        return someCategory.id
-    }
-
-    private selectSubcategoryIdQuery = (subcategoryReceived: string) =>
-        this.connection.createQueryBuilder(Subcategory, 'subcategory')
-            .select('subcategory.id', 'id')
-            .where('LOWER(subcategory.name) = LOWER(:subcategoryRef)', { subcategoryRef: subcategoryReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Subcategory object and return it's ID. It will check if a  
-     * duplicate Subcategory exists via a query and if it exists will set the
-     * Subcategory object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Subcategory table.
-     *
-     * @param subcategory 
-     * Subcategory: string
-     */
-    private async insertIndividualSubcategory(subcategory: string): Promise<number> {
-        if (subcategory == undefined) { return 1 }
-        else {
-            let someSubcategory = new Subcategory();
-            someSubcategory.id;
-            someSubcategory.name = subcategory;
-            let subcategoryExists: any;
-            subcategoryExists = await this.selectSubcategoryIdQuery(subcategory);
-            if (subcategoryExists != undefined) {
-                someSubcategory.id = subcategoryExists.id;
-            }
-            else {
-                await this.connection.manager.save(someSubcategory);
-            }
-            return someSubcategory.id
-        }
-    }
-
-    /**
-     * This method will accept a category and subcategory call @insertIndividualCategory and
-     * @insertIndividualSubcategory respectfully to insert both entries and will then insert
-     * their respective IDs into an array named allCategoryIDs and return that.
-     * 
-     * @param category 
-     * Category: string
-     * @param subcategory 
-     * Subcategory: string
-     */
-    async insertCategories(category: string, subcategory: string): Promise<number[]> {
-        let categoryId = await this.insertIndividualCategory(category);
-        let subcategoryId = await this.insertIndividualSubcategory(subcategory);
-        let allCategoryIDs = [categoryId, subcategoryId];
-        return allCategoryIDs;
-    }
-
     private selectDataSetDataTypeIdQuery = (datasetdatatypeReceived: string) =>
         this.connection.createQueryBuilder(Datasetdatatype, 'datasetdatatype')
             .select('datasetdatatype.id', 'id')
@@ -429,49 +348,18 @@ export class DataUploadModel {
         return datasetdatatype.id;
     }
 
-    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any[], dataSetComments: string, userId: number): Promise<number> {
+    async insertFullDataSet(arrayOfDatasetInfo: any[]): Promise<number> {
         let dataset = new Dataset();
         dataset.id;
-        dataset.name = dataSetName;
-        dataset.datatypeId = dataSetDataTypeID;
-        dataset.publicationId = publicationID;
-        dataset.categoryId = categoryIDs[0];
-        dataset.subcategoryId = categoryIDs[1];
-        dataset.materials = allMaterials;
-        dataset.comments = dataSetComments;
-        dataset.uploaderId = userId;
+        dataset.name = arrayOfDatasetInfo[0];
+        dataset.datatypeId = arrayOfDatasetInfo[1];
+        dataset.publicationId = arrayOfDatasetInfo[2];
+        dataset.subcategoryId = arrayOfDatasetInfo[3];
+        dataset.materials = arrayOfDatasetInfo[4];
+        dataset.comments = arrayOfDatasetInfo[5];
+        dataset.uploaderId = arrayOfDatasetInfo[6];
         await this.connection.manager.save(dataset);
         return dataset.id;
-    }
-
-    private selectUnitsIdQuery = (unitsReceived: string) =>
-        this.connection.createQueryBuilder(Units, 'units')
-            .select('units.id', 'id')
-            .where('LOWER(units.name) = LOWER(:unitsRef)', { unitsRef: unitsReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Units object and return it's ID. It will check if a  
-     * duplicate Units exists via a query and if it exists will set the
-     * Units object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Units table.
-     *
-     * @param unitReceived 
-     * Units: string
-     */
-    async insertUnits(unitReceived: string): Promise<number> {
-        let units = new Units();
-        units.id;
-        units.name = unitReceived;
-        let unitsExists: any;
-        unitsExists = await this.selectUnitsIdQuery(unitReceived);
-        if (unitsExists != undefined) {
-            units.id = unitsExists.id;
-        }
-        else {
-            await this.connection.manager.save(units);
-        }
-        return units.id;
     }
 
     private selectRepresentationIdQuery = (reprReceived: string) =>

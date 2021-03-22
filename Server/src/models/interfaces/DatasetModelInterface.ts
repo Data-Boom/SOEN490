@@ -63,8 +63,8 @@ export interface IClientDatasetModel {
     id: number
     dataset_name: string
     data_type: string
-    category: string
-    subcategory: string
+    category: number
+    subcategory: number
     material: IMaterialModel[]
     data: IData
 }
@@ -72,4 +72,9 @@ export interface IClientDatasetModel {
 export interface IApprovalDatasetModel extends IClientDatasetModel {
     datasetIsFlagged: number
     datasetFlaggedComment: string
+}
+
+export interface IUserDatasets {
+    datasetId: number
+    approved: boolean
 }
