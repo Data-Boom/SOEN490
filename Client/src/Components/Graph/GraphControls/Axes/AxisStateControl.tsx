@@ -6,11 +6,11 @@ import React, { useState } from "react"
 import { IAxisStateModel } from '../../../../Models/Graph/IGraphStateModel'
 import SnackbarUtils from "../../../Utils/SnackbarUtils"
 import { getVariableDimensionRepresentation } from "../../../../Common/Helpers/DimensionHelpers"
+import { useDimensionsSelector } from "../../../../Stores/Slices/DimensionsSlice"
 
 interface IProps {
   axisName: string
   axisState: IAxisStateModel
-  dimensions: IDimensionModel[]
   datasets: IDatasetModel[]
   onAxisChange: (newAxis: IAxisStateModel) => void
 }
@@ -86,7 +86,9 @@ const getUnitsFromVariableName = (newVariableName: string, datasets: IDatasetMod
 }
 
 export const AxisStateControl = (props: IProps) => {
-  const { axisName, axisState, dimensions, datasets, onAxisChange } = props
+  const { axisName, axisState, datasets, onAxisChange } = props
+  const dimensions = useDimensionsSelector()
+
   const [units, setUnits] = useState<IUnitModel[]>(getUnitsFromVariableName(axisState.variableName, datasets, dimensions))
   const [datasetsMissingVariable, setMissingDatasets] = useState<string[]>(getMissingDatasetNames(axisState.variableName, datasets))
   const variables = buildVariableList(datasets)

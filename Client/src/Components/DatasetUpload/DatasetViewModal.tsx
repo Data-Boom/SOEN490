@@ -1,10 +1,11 @@
-import { Box, Button, Grid, Modal, Paper } from '@material-ui/core'
+import { Box, Grid, IconButton, Modal, Paper } from '@material-ui/core'
 import React, { useRef, useState } from 'react'
 
 import CancelIcon from "@material-ui/icons/Cancel"
-import { DatasetForm } from './DatasetForm'
+import { DatasetForm } from './DatasetForm/DatasetForm'
 import { FormikProps } from 'formik'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import PageviewIcon from '@material-ui/icons/Pageview'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { classStyles } from '../../appTheme'
 import { useEffect } from 'react'
@@ -32,8 +33,12 @@ export const DatasetFormModal = (props: IProps) => {
 
   return (
     <>
-      <Grid item>
-        <Button size="small" id="view-dataset" onClick={() => setOpen(true)} color="primary" variant="contained">View Dataset</Button>
+      <Grid container justify="center">
+        <Grid item>
+          <IconButton color="primary">
+            <PageviewIcon fontSize="large" id="view-dataset" onClick={() => setOpen(true)} />
+          </IconButton>
+        </Grid>
       </Grid>
       <Modal open={open}
         onClose={() => setOpen(false)}
@@ -54,7 +59,6 @@ export const DatasetFormModal = (props: IProps) => {
             />
           </Box>
         </Paper>
-
       </Modal>
     </>
   )

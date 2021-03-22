@@ -44,5 +44,5 @@ export const defaultUserAccountModel: IUserAccountModel = {
   lastName: '',
   organizationName: '',
   sessionExpiration: null,
-  account_permissions: 0
+  account_permissions: -1
 }

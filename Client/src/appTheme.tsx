@@ -50,6 +50,6 @@ export const classStyles = () => {
     },
     divider: {
       background: theme.palette.primary.light,
-    },
+    }
   })()
 }

@@ -3,18 +3,23 @@ import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetMo
 import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
-import { DatasetForm } from './DatasetForm'
+import { DatasetForm } from './DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
+import { FavoriteDatasetButton } from './FavoriteDatasetButton'
 import { FileTypePromptModal } from './FileTypePromptModal'
 import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
 import TimelineIcon from "@material-ui/icons/Timeline"
+import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
+import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
+import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
 import { useState } from 'react'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 interface IProps {
   initialDataset?: IDatasetModel
@@ -24,24 +29,30 @@ interface IDatasetViewParams {
   datasetID: string
 }
 
+const jsonType = 'application/json'
+const csvType = '.csv, .txt'
+
 export const DatasetView = (props: IProps) => {
-  const { datasetID } = useParams<IDatasetViewParams>()
+  useTitle("Dataset Upload")
+  useDispatchOnLoad(loadDimensionsThunk)
+  useDispatchOnLoad(loadVariablesThunk)
   const { initialDataset } = { ...props }
-  const formikReference = useRef<FormikProps<unknown>>()
-
-  const jsonType = 'application/json'
-  const csvType = '.csv, .txt'
-
+  const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
 
+  const formikReference = useRef<FormikProps<unknown>>()
   const [initialValues, setInitialValues] = useState({ ...newDatasetModel, ...initialDataset, ...(location.state as IDatasetModel) })
   const [editable, setEditable] = useState(true)
 
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
-  const [fileUploadOpen, setFileUploadOpen] = useState(false)
+  const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
-  useEffect(() => { document.title = "Dataset Upload" }, [])
+  useEffect(() => {
+    setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
+    setFileUploadModalOpen(false)
+    setFileTypePromptOpen(false)
+  }, [location.state])
 
   useEffect(() => {
     const getDatasetInfo = async (id: number) => {
@@ -51,7 +62,7 @@ export const DatasetView = (props: IProps) => {
       setEditable(false)
     }
 
-    if (datasetID) {
+    if (Number(datasetID)) {
       getDatasetInfo(parseInt(datasetID))
     }
   }, [])
@@ -61,20 +72,24 @@ export const DatasetView = (props: IProps) => {
   }
 
   const handleJSONFileTypeSelected = () => {
-    setFileUploadOpen(true)
+    setFileUploadModalOpen(true)
     setAcceptedFileType(jsonType)
   }
 
   const handleCSVTXTFileTypeSelected = () => {
-    setFileUploadOpen(true)
+    setFileUploadModalOpen(true)
     setAcceptedFileType(csvType)
   }
+
   const renderTopButtons = (): any => {
     return (
       <>
-        <Grid container spacing={2} justify='flex-end'>
+        <Grid container spacing={2} justify='flex-end' alignItems="center">
           {initialValues.id
             ? <>
+              <Grid item>
+                <FavoriteDatasetButton datasetId={initialValues.id} />
+              </Grid>
               <Grid item>
                 <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
               </Grid>
@@ -113,7 +128,7 @@ export const DatasetView = (props: IProps) => {
       <FileUploadModal
         open={fileUploadOpen}
         acceptedFileType={acceptedFileType}
-        onClose={() => setFileUploadOpen(false)}
+        onClose={() => setFileUploadModalOpen(false)}
       />
     </>
   )

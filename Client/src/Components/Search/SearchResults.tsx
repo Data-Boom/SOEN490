@@ -1,10 +1,10 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
-import { IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
-import React, { useState } from 'react'
+import { Grid, List, ListItem, ListItemText } from '@material-ui/core'
+import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
-import { Grid } from '@material-ui/core'
 import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
+import React from 'react'
 
 interface IProps {
   datasetResults: IDatasetModel[],
@@ -12,10 +12,6 @@ interface IProps {
   button?: any,
   categories: ICategoryModel[],
   displayCheckbox: boolean
-}
-
-interface IProps2 {
-  onDatasetsSelected: (foundDatasets: IDatasetModel[]) => void
 }
 
 export const SearchResults = (props: IProps) => {
@@ -54,30 +50,43 @@ export const SearchResults = (props: IProps) => {
     return `${foundSubcategory.name}`
   }
 
-  const [open, setOpen] = useState(false)
+  const getVariableList = (params: ValueGetterParams) => {
+    const data = params.getValue('data') as IData
 
-  const getNameLink = (params: ValueGetterParams) => {
+    return (
+      <List dense disablePadding style={{ maxHeight: '100%', overflow: 'auto', width: '100%' }}>
+        {data.variables.map(variable =>
+          <ListItem key={variable.name} dense disableGutters style={{ paddingTop: '0', paddingBottom: '0' }}>
+            <ListItemText primary={variable.name} style={{ paddingTop: '0', paddingBottom: '0', marginTop: '0', marginBottom: '0' }} />
+          </ListItem>
+        )}
+      </List>
+    )
+  }
+
+  const linkToDataset = (params: ValueGetterParams) => {
     const datasetId = params.getValue('id')
 
     return (<DatasetFormModal datasetId={datasetId.toString()} />)
   }
 
   const columns: ColDef[] = [
-    { field: 'dataset_name', headerName: 'Name', width: width },
-    { field: `title`, headerName: 'Title', valueGetter: getTitle, width: width * 1.2 },
-    { field: 'category', headerName: 'Category', width: width, valueGetter: getCategoryId },
-    { field: 'subcategory', headerName: 'SubCategory', width: width, valueGetter: getSubcategoryId },
-    { field: 'author', headerName: 'Author', width: width, valueGetter: getAuthor },
-    { field: 'year', headerName: 'Year', width: width, valueGetter: getYear },
-    { field: 'dataset_button', headerName: 'View', width: width * 1.2, renderCell: getNameLink },
+    { field: 'dataset_name', headerName: 'Name', flex: 1 },
+    { field: `title`, headerName: 'Title', valueGetter: getTitle, flex: 1 },
+    { field: 'category', headerName: 'Category', flex: 1, valueGetter: getCategoryId },
+    { field: 'subcategory', headerName: 'SubCategory', flex: 1, valueGetter: getSubcategoryId },
+    { field: 'author', headerName: 'Author', flex: 1, valueGetter: getAuthor },
+    { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
+    { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
+    { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDataset },
   ]
 
   return (
     <>
       <Grid container spacing={3}>
         <Grid item container>
-          <div style={{ height: 400, width: '100%' }}>
-            <DataGrid rows={props && props.datasetResults} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} checkboxSelection={displayCheckbox} onSelectionChange={props.handleSelectionChanged} />
+          <div style={{ height: 600, width: '100%' }}>
+            <DataGrid rows={props && props.datasetResults} rowHeight={120} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} checkboxSelection={displayCheckbox} onSelectionChange={props.handleSelectionChanged} />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>

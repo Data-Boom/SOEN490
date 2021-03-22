@@ -2,14 +2,14 @@ import 'react-data-grid/dist/react-data-grid.css'
 
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
-import { IContent, IData, IVariable, newVariable } from '../../../Models/Datasets/IDatasetModel'
+import { IContent, IData, IVariable, newVariable } from '../../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
 import { EditVaraibleModal } from './EditVariableModal'
 import { VariableHeader } from './VariableHeader'
-import { decorateDataErrors } from '../../../Common/Helpers/DatasetErrorDecorator'
-import { useDimensions } from '../../Utils/Hooks/useDimensions'
+import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
 import { useFormikContext } from 'formik'
+import { useVariablesSelector } from '../../../../Stores/Slices/VariablesSlice'
 import { useVariableNames } from '../../Utils/Hooks/useVariableNames'
 import ReactDataGrid from 'react-data-grid'
 import PropTypes from "prop-types";
@@ -42,8 +42,8 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const { dimensions } = useDimensions()
-  const { variableNames } = useVariableNames()
+  const variableNames = useVariablesSelector()
+
   const { errors } = useFormikContext()
   const [count, setCount] = useState(0);
 
@@ -117,7 +117,6 @@ export const DatasetDataTable = (props: IProps): any => {
               variable={variable}
               index={index}
               onHeaderClick={handleHeaderClick}
-              dimensions={dimensions}
             />
         }
       )
@@ -133,7 +132,7 @@ export const DatasetDataTable = (props: IProps): any => {
   const handleRowChange = (changedRows: number[][]): void => {
     const copyData = { ...data }
     // changedRows is the rows after user input, we need to update the data contents
-    copyData.contents.map((row, index) => row.point = Object.values(changedRows[index]))
+    copyData.contents.forEach((row, index) => row.point = Object.values(changedRows[index]))
     onDataChange(copyData)
   }
 
@@ -186,7 +185,6 @@ export const DatasetDataTable = (props: IProps): any => {
         </Grid>
       </Grid>
       {!!editedVariable.variable && <EditVaraibleModal
-        dimensions={dimensions}
         initialValues={editedVariable.variable}
         onCancel={() => setEditedVariable(noEditedVariable)}
         isOpen={!!editedVariable.variable}
@@ -194,7 +192,6 @@ export const DatasetDataTable = (props: IProps): any => {
         onDelete={handleVariableRemove}
         onVariableUpdate={handleVariableUpdate}
         isNewVariable={editedVariable.isNew}
-        variableNames={variableNames}
       />}
       <Box width='100%' mt={4}>
         <ReactDataGrid

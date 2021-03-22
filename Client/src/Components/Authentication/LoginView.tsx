@@ -2,34 +2,18 @@ import { Avatar, Box, Button, Container, CssBaseline, Grid, Link, Typography } f
 import { FastField, Form, Formik } from 'formik'
 import { ILoginUserModel, newLoginUserModel } from '../../Models/Authentication/ISignUpModel'
 import { Modal, Paper } from '@material-ui/core'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
+import { loginAndLoadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
 import CancelIcon from "@material-ui/icons/Cancel"
 import ForgotPasswordView from './ForgotPasswordView'
-import { IUserAccountModel } from '../../Models/Authentication/IUserAccountModel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { MuiTextFieldFormik } from '../Forms/FormikFields'
 import { Redirect } from 'react-router'
-import { UserContext } from '../../App'
-import { callLogIn } from '../../Remote/Endpoints/AuthenticationEndpoint'
-import { getUserDetails } from '../../Remote/Endpoints/UserEndpoint'
-import { homeRoute } from '../../Common/Consts/Routes'
 import { loginValidationSchema } from './AuthenticationValidationSchema'
 import { makeStyles } from '@material-ui/core/styles'
-import moment from 'moment'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import { routes } from '../../Common/Consts/Routes'
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,9 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function LoginView() {
+export const LoginView = () => {
+  const dispatch = useDispatch()
+  const user = useUserSelector()
 
-  const { user, setUserContext } = useContext(UserContext)
   const classes = useStyles()
 
   const [openModal, setOpen] = useState(false)
@@ -72,20 +57,13 @@ export default function LoginView() {
   }
 
   const handleLoginSubmit = async (loginUserInfo: ILoginUserModel): Promise<void> => {
-    //sets JWT in cookies
-    const loginResponse = await callLogIn(loginUserInfo)
-
-    const userAccount: IUserAccountModel = await getUserDetails({ email: loginUserInfo.email })
-    userAccount.sessionExpiration = moment.duration(loginResponse.ValidFor).asMilliseconds()
-
-    setUserContext(userAccount)
+    dispatch(loginAndLoadUserThunk(loginUserInfo))
   }
-
 
   return (
     <>
       {user && user.firstName ?
-        <Redirect to={homeRoute} /> :
+        <Redirect to={routes.homeRoute.route} /> :
         <Container component="main" maxWidth="xs">
           <Modal
             open={openModal}
@@ -159,7 +137,7 @@ export default function LoginView() {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link id="SignUpForm" href="#/sign-up" variant="body2">
+                    <Link id="SignUpForm" href={routes.signUpRoute.route} variant="body2">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

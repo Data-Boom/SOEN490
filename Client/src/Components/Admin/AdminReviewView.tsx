@@ -1,22 +1,22 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { approvedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 
 import { AdminReviewList } from './AdminReviewList'
-import { DatasetForm } from '../DatasetUpload/DatasetForm'
+import { DatasetForm } from '../DatasetUpload/DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FormikProps } from 'formik'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 export function AdminReviewView() {
+  useTitle("Admin Review")
   const formikReference = useRef<FormikProps<unknown>>()
   const [editable, setEditable] = useState(false)
   const [dataset, setDataset] = useState<IApprovedDatasetModel>()
   const [comment, setComment] = useState("")
   const [flaggedComment, setFlaggedComment] = useState("")
   const [update, setUpdate] = useState(0)
-
-  useEffect(() => { document.title = "Admin Review" }, [])
 
   const handleDeleteDataset = async () => {
     await callRejectDataset(dataset.id)

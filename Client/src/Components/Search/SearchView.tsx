@@ -9,12 +9,14 @@ import { SelectionChangeParams } from '@material-ui/data-grid'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listDatapoints } from '../../Remote/Endpoints/DatapointEndpoint'
+import { useTitle } from '../../Common/Hooks/useTitle'
 
 interface IProps {
   handleDatasetsSelected?: (datasets: IDatasetModel[]) => void
 }
 
 export default function SearchView(props: IProps) {
+  useTitle("Search Datasets")
   const { handleDatasetsSelected } = { ...props }
 
   const [foundDatasets, setFoundDatasets] = useState<IDatasetModel[]>([])
@@ -41,8 +43,6 @@ export default function SearchView(props: IProps) {
     }
     callListDatapoints()
   }, [])
-
-  useEffect(() => { document.title = "Search" }, [])
 
   const handleSearchClick = async (query: ISearchDatasetsFormModel) => {
     const datasets = await callGetDatasets(query) || []

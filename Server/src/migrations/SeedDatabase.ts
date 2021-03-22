@@ -545,7 +545,7 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     unitsToDelete2.id = 10;
     unitsToDelete2.conversionFormula = "{u}";
     unitsToDelete2.dimensionId = 4;
-    unitsToDelete2.name = "To be deleted";
+    unitsToDelete2.name = "To delete";
 
     let reprNone = new Representations();
     reprNone.id;
