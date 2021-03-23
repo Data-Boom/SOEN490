@@ -78,6 +78,7 @@ export function AdminReviewView() {
             models={datasets}
             rowProps={{ onChange: handleDatasetChange } as IAdminReviewRowProps}
             withPagination
+            modelType='Datasets'
           />
           <br></br>
           <Button id="toggleEditButton" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;

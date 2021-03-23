@@ -10,10 +10,11 @@ interface IProps<T, ICustomRowProps> {
   models?: T[]
   rowProps: ICustomRowProps
   withPagination: boolean
+  modelType: string
 }
 
 export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
-  const { RowComponent, models, rowProps, withPagination } = props
+  const { RowComponent, models, rowProps, withPagination, modelType } = props
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
 
@@ -29,7 +30,7 @@ export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
       {withPagination && models.length > 0 && < TablePagination
         component="div"
         rowsPerPageOptions={[5, 10, 25, 100]}
-        labelRowsPerPage='Datasets per page'
+        labelRowsPerPage={modelType + ' per page'}
         count={models.length}
         page={page}
         onChangePage={(_, newPage) => setPage(newPage)}
