@@ -37,47 +37,38 @@ export const validTestData = {
         "variables": [
             {
                 "name": "initial density",
-                "repr": "rho_0",
                 "unitId": 1
             },
             {
                 "name": "initial temperature",
-                "repr": "T_0",
                 "unitId": 4
             },
             {
                 "name": "initial pressure",
-                "repr": "P_0",
                 "unitId": 5
             },
             {
                 "name": "shock velocity",
-                "repr": "U_s",
                 "unitId": 6
             },
             {
                 "name": "particle velocity",
-                "repr": "U_p",
                 "unitId": 6
             },
             {
                 "name": "pressure",
-                "repr": "P",
                 "unitId": 5
             },
             {
                 "name": "specific volume",
-                "repr": "v",
                 "unitId": 3
             },
             {
                 "name": "density",
-                "repr": "rho",
                 "unitId": 1
             },
             {
                 "name": "compression ratio",
-                "repr": "v/v_0",
                 "unitId": 2
             }
         ],
@@ -283,47 +274,38 @@ export const inValidTestData = {
         "variables": [
             {
                 "name": "initial density",
-                "repr": "rho_0",
                 "unitId": 1
             },
             {
                 "name": "initial temperature",
-                "repr": "T_0",
                 "unitId": 4
             },
             {
                 "name": "initial pressure",
-                "repr": "P_0",
                 "unitId": 5
             },
             {
                 "name": "shock velocity",
-                "repr": "U_s",
                 "unitId": 6
             },
             {
                 "name": "particle velocity",
-                "repr": "U_p",
                 "unitId": 6
             },
             {
                 "name": "pressure",
-                "repr": "P",
                 "unitId": 5
             },
             {
                 "name": "specific volume",
-                "repr": "v",
                 "unitId": 3
             },
             {
                 "name": "density",
-                "repr": "rho",
                 "unitId": 1
             },
             {
                 "name": "compression ratio",
-                "repr": "v/v_0",
                 "unitId": 2
             }
         ],

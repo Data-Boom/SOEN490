@@ -6,13 +6,9 @@ import { Publicationtype } from './entities/Publicationtype';
 import { Composition } from './entities/Composition';
 import { Datasetdatatype } from './entities/Datasetdatatype';
 import { Dataset } from './entities/Dataset';
-import { Category } from './entities/Category';
-import { Subcategory } from './entities/Subcategory';
 import { Datapoints } from './entities/Datapoints';
-import { Units } from './entities/Units';
 import { Material } from './entities/Material';
 import { Datapointcomments } from './entities/Datapointcomments';
-import { Representations } from './entities/Representations';
 import { IMaterials } from './interfaces/MaterialsInterface';
 import { IAuthors } from './interfaces/AuthorsInterface';
 import { Unapproveddatasets } from "./entities/Unapproveddatasets";
@@ -362,39 +358,9 @@ export class DataUploadModel {
         return dataset.id;
     }
 
-    private selectRepresentationIdQuery = (reprReceived: string) =>
-        this.connection.createQueryBuilder(Representations, 'repr')
-            .select('repr.id', 'id')
-            .where('LOWER(repr.repr) = LOWER(:reprRef)', { reprRef: reprReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Representations object and return it's ID. It will check if a  
-     * Rduplicate epresentations exists via a query and if it exists will set 
-     * the Representations object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Representations table.
-     *
-     * @param representationUnit 
-     * Representation: string
-     */
-    async insertRepresentation(representationUnit: string): Promise<number> {
-        let repr = new Representations();
-        repr.id;
-        repr.repr = representationUnit;
-        let reprExists: any;
-        reprExists = await this.selectRepresentationIdQuery(representationUnit);
-        if (reprExists != undefined) {
-            repr.id = reprExists.id;
-        }
-        else {
-            await this.connection.manager.save(repr);
-        }
-        return repr.id;
-    }
-
     /**
      * Inserts a information for a single variable of a data point along with ties to its respective
-     * units, representation, and data set.
+     * units, and data set.
      * 
      * @param dataSetID 
      * ID of data set: number
@@ -404,17 +370,14 @@ export class DataUploadModel {
      * Array of values: number[]
      * @param unitsID 
      * ID of units: number
-     * @param reprID 
-     * ID of representation: number
      */
-    async insertDataPointsOfSet(dataSetID: number, dataVariableName: string, dataPointValues: number[], unitsID: number, reprID: number) {
+    async insertDataPointsOfSet(dataSetID: number, dataVariableName: string, dataPointValues: number[], unitsID: number) {
         let datapoint = new Datapoints();
         datapoint.id;
         datapoint.datasetId = dataSetID;
         datapoint.name = dataVariableName;
         datapoint.values = dataPointValues;
         datapoint.unitsId = unitsID;
-        datapoint.representationsId = reprID;
         await this.connection.manager.save(datapoint);
     }
 
