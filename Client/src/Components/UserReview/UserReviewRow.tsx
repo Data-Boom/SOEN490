@@ -6,15 +6,16 @@ import { approvedDataset, callRejectDataset, submitEditedDataset } from "../../R
 import { DatasetModal } from "./DatasetModal"
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { classStyles } from "../../appTheme"
+import { IRowProps } from "../Utils/List"
 
 interface IProps {
   dataset: IApprovedDatasetModel
 }
 
-export const UserReviewRow = (props: IProps) => {
+export const UserReviewRow = (props: IProps | IRowProps<IApprovedDatasetModel>) => {
 
   const [open, setOpen] = useState(false)
-  const { dataset } = { ...props }
+  const { row: dataset } = { ...props }
 
   const reload = () => {
     setTimeout(window.location.reload() as any, 200)
