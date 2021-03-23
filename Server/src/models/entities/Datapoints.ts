@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection, BaseEntity } from "typeorm";
 import { Dataset } from "./Dataset";
 import { Dimension } from "./Dimension";
+import { Representations } from "./Representations";
 import { Units } from "./Units";
 
 
@@ -42,6 +43,17 @@ export class Datapoints extends BaseEntity {
     @ManyToOne(type => Units)
     @JoinColumn()
     units?: Units
+
+    @Column({ default: 1 })
+    representationsId: number
+
+    /*
+    * This ManyToOne and JoinColumn snippet is declaring that the preceeding Column 
+    * is storing a Foreign Key reference to an entry in the Representations table
+    */
+    @ManyToOne(type => Representations)
+    @JoinColumn()
+    representations?: Representations
 
     @CreateDateColumn()
     created: Date

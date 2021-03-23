@@ -49,7 +49,9 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
             let unitsID: number = this.parsedFileData.data.variables[i].unitId
 
-            await this.uploadModel.insertDataPointsOfSet(dataSetID, dataVariableName, dataPointValues[0], unitsID)
+            let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
+
+            await this.uploadModel.insertDataPointsOfSet(dataSetID, dataVariableName, dataPointValues[0], unitsID, reprID)
             individualDataSetComments = dataPointValues[1];
         }
 

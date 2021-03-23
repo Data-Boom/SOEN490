@@ -44,6 +44,20 @@ export default abstract class AbstractUploadService {
         return contentsArrayInfo;
     }
 
+    protected async insertRepData(uploadModel: DataUploadModel, repr: string): Promise<number> {
+        let reprID: number
+        try {
+            if (repr == undefined)
+                reprID = 1;
+            else {
+                reprID = await uploadModel.insertRepresentation(repr);
+            }
+        } catch (err) {
+            console.log('rejected request for referenceTypeID');
+        }
+        return reprID
+    }
+
     protected async insertPublicationTypeData(uploadModel: DataUploadModel, referenceType: string): Promise<number> {
         try {
             let referenceTypeID = await uploadModel.insertPublicationType(referenceType);

@@ -8,6 +8,7 @@ import { Material } from "../entities/Material";
 import { Publications } from "../entities/Publications";
 import { Publicationtype } from "../entities/Publicationtype";
 import { Publisher } from "../entities/Publisher";
+import { Representations } from "../entities/Representations";
 import { DatasetCommonModel } from "./DatasetCommonModel";
 
 
@@ -22,6 +23,18 @@ export class DatasetDeleteModel {
         this.connection = getConnection();
         this.commonModel = new DatasetCommonModel();
     }
+
+    private selectDataPointFKViaDatasetIdQuery = (id: number) =>
+        this.connection.createQueryBuilder(Datapoints, 'datapoints')
+            .select('datapoints.unitsId', 'unitsId')
+            .addSelect('datapoints.representationsId', 'representationsId')
+            .where('datapoints.datasetId = :id', { id: id })
+            .getRawMany();
+
+    private selectOneUseOfRepresentationQuery = (id: number) =>
+        this.connection.createQueryBuilder(Datapoints, 'datapoints')
+            .where("datapoints.representationsId = :id", { id: id })
+            .getOne();
 
     private selectAllLinkedCompositionIdsQuery = (idArray: number[]) =>
         this.connection.createQueryBuilder(Material, 'material')
@@ -53,6 +66,13 @@ export class DatasetDeleteModel {
         this.connection.createQueryBuilder(Dataset, 'dataset')
             .where("dataset.datatypeId = :id", { id: id })
             .getOne();
+
+    private deletRepresentationsQuery = (idArray: number[]) =>
+        this.connection.createQueryBuilder()
+            .delete()
+            .from(Representations)
+            .whereInIds(idArray)
+            .execute();
 
     private deleteDatapointsQuery = (id: number) =>
         this.connection.createQueryBuilder()
@@ -117,8 +137,24 @@ export class DatasetDeleteModel {
             .where("id = :id", { id: id })
             .execute();
 
+    private async deleteRepresentationsOfDataPoints(rawDataPointFK: any) {
+        let isVariableInUse: any
+        let reprToDelete: number[] = []
+        for (let index = 0; index < rawDataPointFK.length; index++) {
+            isVariableInUse = await this.selectOneUseOfRepresentationQuery(rawDataPointFK[index].representationsId)
+            if (isVariableInUse == undefined) {
+                reprToDelete.push(rawDataPointFK[index].representationsId)
+            }
+        }
+        if (reprToDelete.length > 0) {
+            await this.deletRepresentationsQuery(reprToDelete)
+        }
+    }
+
     async deleteDataPointsOfDataset(datasetId: number) {
+        let rawDataPointFK = await this.selectDataPointFKViaDatasetIdQuery(datasetId)
         await this.deleteDatapointsQuery(datasetId)
+        await this.deleteRepresentationsOfDataPoints(rawDataPointFK)
     }
 
     async deleteMaterialsOfDataset(datasetId: number) {
