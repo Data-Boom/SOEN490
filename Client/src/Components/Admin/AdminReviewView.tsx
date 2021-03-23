@@ -7,7 +7,6 @@ import { approvedDataset, callRejectDataset, flagDataset, getUnapprovedDatasets 
 import { DatasetForm } from '../DatasetUpload/DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FormikProps } from 'formik'
-import { IDatasetRowProps } from '../Graph/GraphControls/DatasetRow'
 import { List } from '../Utils/List'
 import { useTitle } from '../../Common/Hooks/useTitle'
 

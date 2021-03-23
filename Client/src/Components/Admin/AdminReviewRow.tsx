@@ -1,6 +1,5 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 
-import { IAdmindReviewRowModel } from '../../Models/Datasets/IDatasetRowModel'
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import { IRowProps } from "../Utils/List"
