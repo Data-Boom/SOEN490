@@ -1,14 +1,21 @@
-import { Box, Button, createStyles, Grid, IconButton, makeStyles, Theme, Typography } from "@material-ui/core"
+import { Box, Button, Collapse, createStyles, Grid, IconButton, makeStyles, Theme, Typography } from "@material-ui/core"
 import React, { useState } from "react";
 import clsx from 'clsx'
 import { ICategoryModel } from "../../../Models/Profile/ICategoryModel";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { classStyles } from '../../../appTheme'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { ICategory } from '../../../../../Server/src/models/interfaces/CategoryInterface';
+import { Form, Formik } from "formik";
+import { CategoryValidationSchema } from "./CategoryValidationSchema";
+import { CategoryForm } from "./CategoryForm/CategoryForm";
 
 interface IProps {
   category: ICategoryModel
   index: number
+  handleSubmit: () => void
+  handleSaveCategory: (category: ICategoryModel) => void,
+  handleDeleteCategory: (category: ICategoryModel) => any
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const CategoryManagementRow = (props: IProps) => {
 
-  let { category, index } = { ...props }
+  let { category, index, handleSubmit, handleSaveCategory, handleDeleteCategory } = { ...props }
 
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
@@ -37,39 +44,66 @@ export const CategoryManagementRow = (props: IProps) => {
     setExpanded(!expanded)
   }
 
-  const handleDeleteCategory = () => {
-
+  const renderSaveButton = () => {
+    return (
+      <Grid container justify="flex-end" alignItems="flex-end" spacing={2}>
+        <Button id='save-category' variant='contained' color='primary' onClick={() => handleSaveCategory(category)} >
+          Save
+      </Button>
+      </Grid>
+    )
+  }
+  const renderHeader = () => {
+    return (
+      <Grid item container alignItems="center" direction="row">
+        <Grid item container xs={6} alignItems="center">
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+          <Typography align="left">{category.name}</Typography>
+        </Grid>
+        <Grid item xs={6} alignContent="flex-end">
+          {expanded ? renderSaveButton() :
+            <Grid container justify="flex-end" alignItems="flex-end">
+              <IconButton color="primary" aria-label="delete category" onClick={() => handleDeleteCategory(category)}>
+                <DeleteForeverIcon />
+              </IconButton>
+            </Grid>
+          }
+        </Grid>
+      </Grid>
+    )
   }
 
   return (
     <Box className={classStyles().fitBorder}>
       <Box px={2}>
-        <Grid item container alignItems="center" direction="row">
-          <Grid item container xs={6} alignItems="center">
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-            <Typography align="left">{category.name}</Typography>
-          </Grid>
-          <Grid item xs={6} alignContent="flex-end">
-            {expanded ? null :
-              <Grid container justify="flex-end" alignItems="flex-end">
-                <IconButton color="primary" aria-label="add unit" onClick={handleDeleteCategory}>
-                  <DeleteForeverIcon />
-                </IconButton>
-              </Grid>
-            }
-          </Grid>
+        <Grid container direction="column">
+          {renderHeader()}
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Grid item>
+              <Formik
+                enableReinitialize={true}
+                initialValues={category}
+                validationSchema={CategoryValidationSchema}
+                onSubmit={handleSubmit}
+              >
+                <Form>
+                  <CategoryForm />
+                </Form>
+              </Formik>
+            </Grid>
+          </Collapse>
         </Grid>
+
       </Box>
     </Box>
   )
-
 }

@@ -20,6 +20,18 @@ export const CategoryManagementTab = () => {
     console.log('ihit enw cateogry')
   }
 
+  const handleSubmit = () => {
+    console.log('submitting')
+  }
+
+  const handleSaveCategory = () => {
+    console.log('save a category')
+  }
+
+  const handleDeleteCategory = (category: ICategoryModel) => {
+    console.log('handledeletecategory')
+  }
+
   return (
     <>
       <Box className={classStyles().defaultBorder} style={{ width: "100%" }} >
@@ -28,6 +40,9 @@ export const CategoryManagementTab = () => {
           <CategoryManagementRow
             category={category}
             index={index}
+            handleSubmit={handleSubmit}
+            handleSaveCategory={handleSaveCategory}
+            handleDeleteCategory={handleDeleteCategory}
           />
         ))
         }

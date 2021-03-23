@@ -239,7 +239,7 @@ export function ProfileView() {
           <TabPanel value={tab} index={5}>
             <DimensionManagementTab />
           </TabPanel>
-          <TabPanel value={tab} index={5}>
+          <TabPanel value={tab} index={6}>
             <CategoryManagementTab />
           </TabPanel>
         </Container>

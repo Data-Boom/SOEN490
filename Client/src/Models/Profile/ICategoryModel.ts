@@ -1,10 +1,10 @@
-interface ICategoryModel {
+export interface ICategoryModel {
   name: string
   id: number
   subCategories: ISubCategoryModel[]
 }
 
-interface ISubCategoryModel {
+export interface ISubCategoryModel {
   name: string
   id: number
 }
