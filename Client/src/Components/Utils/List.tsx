@@ -8,7 +8,7 @@ export interface IRowProps<T> {
 interface IProps<T, ICustomRowProps> {
   RowComponent: React.ComponentType<IRowProps<T>>
   models?: T[]
-  rowProps: ICustomRowProps
+  rowProps?: ICustomRowProps
   withPagination: boolean
   modelType: string
 }
