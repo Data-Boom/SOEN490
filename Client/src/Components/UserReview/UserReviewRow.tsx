@@ -5,14 +5,10 @@ import { approvedDataset, callRejectDataset, submitEditedDataset } from "../../R
 
 import { DatasetModal } from "./DatasetModal"
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import { classStyles } from "../../appTheme"
 import { IRowProps } from "../Utils/List"
+import { classStyles } from "../../appTheme"
 
-interface IProps {
-  dataset: IApprovedDatasetModel
-}
-
-export const UserReviewRow = (props: IProps | IRowProps<IApprovedDatasetModel>) => {
+export const UserReviewRow = (props: IRowProps<IApprovedDatasetModel>) => {
 
   const [open, setOpen] = useState(false)
   const { row: dataset } = { ...props }

@@ -9,11 +9,7 @@ import { Link } from 'react-router-dom'
 import { callDeleteGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
 import { classStyles } from '../../appTheme'
 
-interface IGraphModel {
-
-}
-
-export const ProfileGraphRow = (props: IGraphModel | IRowProps<IGraphStateModel>) => {
+export const ProfileGraphRow = (props: IRowProps<IGraphStateModel>) => {
   const { row: graphDataset } = { ...props }
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
