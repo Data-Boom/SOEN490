@@ -288,12 +288,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset3.datatypeId = datasetdatatype.id;
     dataset3.publicationId = publication3.id;
     dataset3.subcategoryId = subcategory.id;
-    dataset3.comments;
+    dataset3.comments = null;
     dataset3.materials = [];
     dataset3.uploaderId = 2;
 
     unapproveddataset3.datasetId = 5;
-    unapproveddataset3.flaggedComment;
+    unapproveddataset3.flaggedComment = null;
     unapproveddataset3.isFlagged = 0;
 
     let dataset4 = new Dataset();
@@ -303,12 +303,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset4.datatypeId = datasetdatatype.id;
     dataset4.publicationId = publication3.id;
     dataset4.subcategoryId = subcategory.id;
-    dataset4.comments;
+    dataset4.comments = null;
     dataset4.materials = [];
     dataset4.uploaderId = 2;
 
     unapproveddataset4.datasetId = 6;
-    unapproveddataset4.flaggedComment;
+    unapproveddataset4.flaggedComment = null;
     unapproveddataset4.isFlagged = 0;
 
     let dataset5 = new Dataset();
@@ -318,12 +318,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset5.datatypeId = datasetdatatype.id;
     dataset5.publicationId = publicationToDelete2.id;
     dataset5.subcategoryId = subcategory.id;
-    dataset5.comments;
+    dataset5.comments = null;
     dataset5.materials = [];
     dataset5.uploaderId = 2;
 
     unapproveddataset5.datasetId = 7;
-    unapproveddataset5.flaggedComment;
+    unapproveddataset5.flaggedComment = null;
     unapproveddataset5.isFlagged = 0;
 
     let dataset6 = new Dataset();
@@ -333,12 +333,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset6.datatypeId = datasetdatatypeToDelete.id;
     dataset6.publicationId = publicationToDelete.id;
     dataset6.subcategoryId = subcategory.id;
-    dataset6.comments;
+    dataset6.comments = null;
     dataset6.materials = [materialToDelete];
     dataset6.uploaderId = 2;
 
     unapproveddataset6.datasetId = 70;
-    unapproveddataset6.flaggedComment;
+    unapproveddataset6.flaggedComment = null;
     unapproveddataset6.isFlagged = 0;
 
     let dataset7 = new Dataset();
@@ -348,12 +348,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset7.datatypeId = datasetdatatype.id;
     dataset7.publicationId = publication3.id;
     dataset7.subcategoryId = subcategory.id;
-    dataset7.comments;
+    dataset7.comments = null;
     dataset7.materials = [];
     dataset7.uploaderId = 2;
 
     unapproveddataset7.datasetId = 8;
-    unapproveddataset7.flaggedComment;
+    unapproveddataset7.flaggedComment = null;
     unapproveddataset7.isFlagged = 1;
 
     let dataset8 = new Dataset();
@@ -363,12 +363,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset8.datatypeId = datasetdatatype.id;
     dataset8.publicationId = publication3.id;
     dataset8.subcategoryId = subcategory.id;
-    dataset8.comments;
+    dataset8.comments = null;
     dataset8.materials = [];
     dataset8.uploaderId = 1;
 
     unapproveddataset8.datasetId = 9;
-    unapproveddataset8.flaggedComment;
+    unapproveddataset8.flaggedComment = null;
     unapproveddataset8.isFlagged = 1;
 
     let dataset9 = new Dataset();
@@ -378,12 +378,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset9.datatypeId = datasetdatatype.id;
     dataset9.publicationId = publicationToDelete3.id;
     dataset9.subcategoryId = subcategory.id;
-    dataset9.comments;
+    dataset9.comments = null;
     dataset9.materials = [];
     dataset9.uploaderId = 1;
 
     unapproveddataset9.datasetId = 10;
-    unapproveddataset9.flaggedComment;
+    unapproveddataset9.flaggedComment = null;
     unapproveddataset9.isFlagged = 0;
 
     let dataset10 = new Dataset();
@@ -393,12 +393,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset10.datatypeId = datasetdatatype.id;
     dataset10.publicationId = publication3.id;
     dataset10.subcategoryId = subcategory.id;
-    dataset10.comments;
+    dataset10.comments = null;
     dataset10.materials = [];
     dataset10.uploaderId = 1;
 
     unapproveddataset10.datasetId = 11;
-    unapproveddataset10.flaggedComment;
+    unapproveddataset10.flaggedComment = null;
     unapproveddataset10.isFlagged = 0;
 
     let dataset11 = new Dataset();
@@ -408,12 +408,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset11.datatypeId = datasetdatatype.id;
     dataset11.publicationId = publication3.id;
     dataset11.subcategoryId = subcategory.id;
-    dataset11.comments;
+    dataset11.comments = null;
     dataset11.materials = [];
     dataset11.uploaderId = 1;
 
     unapproveddataset11.datasetId = 12;
-    unapproveddataset11.flaggedComment;
+    unapproveddataset11.flaggedComment = null;
     unapproveddataset11.isFlagged = 1;
 
     let dataset12 = new Dataset();
@@ -423,12 +423,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset12.datatypeId = datasetdatatype.id;
     dataset12.publicationId = publication3.id;
     dataset12.subcategoryId = subcategory.id;
-    dataset12.comments;
+    dataset12.comments = null;
     dataset12.materials = [];
     dataset12.uploaderId = 2;
 
     unapproveddataset12.datasetId = 13;
-    unapproveddataset12.flaggedComment;
+    unapproveddataset12.flaggedComment = null;
     unapproveddataset12.isFlagged = 1;
 
     let dataset13 = new Dataset();
@@ -438,12 +438,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset13.datatypeId = datasetdatatype.id;
     dataset13.publicationId = publication3.id;
     dataset13.subcategoryId = subcategory.id;
-    dataset13.comments;
+    dataset13.comments = null;
     dataset13.materials = [];
     dataset13.uploaderId = 2;
 
     unapproveddataset13.datasetId = 14;
-    unapproveddataset13.flaggedComment;
+    unapproveddataset13.flaggedComment = null;
     unapproveddataset13.isFlagged = 0;
 
     let dataset14 = new Dataset();
@@ -453,12 +453,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset14.datatypeId = datasetdatatype.id;
     dataset14.publicationId = publication3.id;
     dataset14.subcategoryId = subcategory.id;
-    dataset14.comments;
+    dataset14.comments = null;
     dataset14.materials = [];
     dataset14.uploaderId = 2;
 
     unapproveddataset14.datasetId = 15;
-    unapproveddataset14.flaggedComment;
+    unapproveddataset14.flaggedComment = null;
     unapproveddataset14.isFlagged = 0;
 
     let dataset15 = new Dataset();
@@ -468,12 +468,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset15.datatypeId = datasetdatatype.id;
     dataset15.publicationId = publication3.id;
     dataset15.subcategoryId = subcategory.id;
-    dataset15.comments;
+    dataset15.comments = null;
     dataset15.materials = [];
     dataset15.uploaderId = 1;
 
     unapproveddataset15.datasetId = 16;
-    unapproveddataset15.flaggedComment;
+    unapproveddataset15.flaggedComment = null;
     unapproveddataset15.isFlagged = 0;
 
     let dataset16 = new Dataset();
@@ -483,12 +483,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset16.datatypeId = datasetdatatype.id;
     dataset16.publicationId = publication3.id;
     dataset16.subcategoryId = subcategory.id;
-    dataset16.comments;
+    dataset16.comments = null;
     dataset16.materials = [];
     dataset16.uploaderId = 1;
 
     unapproveddataset16.datasetId = 17;
-    unapproveddataset16.flaggedComment;
+    unapproveddataset16.flaggedComment = null;
     unapproveddataset16.isFlagged = 0;
 
     let dataset17 = new Dataset();
@@ -498,12 +498,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset17.datatypeId = datasetdatatype.id;
     dataset17.publicationId = publication3.id;
     dataset17.subcategoryId = subcategory.id;
-    dataset17.comments;
+    dataset17.comments = null;
     dataset17.materials = [];
     dataset17.uploaderId = 1;
 
     unapproveddataset17.datasetId = 18;
-    unapproveddataset17.flaggedComment;
+    unapproveddataset17.flaggedComment = null;
     unapproveddataset17.isFlagged = 0;
 
     let dataset18 = new Dataset();
@@ -513,12 +513,12 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset18.datatypeId = datasetdatatype.id;
     dataset18.publicationId = publication3.id;
     dataset18.subcategoryId = subcategory.id;
-    dataset18.comments;
+    dataset18.comments = null;
     dataset18.materials = [];
     dataset18.uploaderId = 1;
 
     unapproveddataset18.datasetId = 19;
-    unapproveddataset18.flaggedComment;
+    unapproveddataset18.flaggedComment = null;
     unapproveddataset18.isFlagged = 1;
 
     await Dataset.save([dataset, dataset2, dataset3, dataset4, dataset5, dataset6, dataset7, dataset8,
