@@ -14,7 +14,6 @@ import { Material } from "../models/entities/Material";
 import { Publications } from "../models/entities/Publications";
 import { Publicationtype } from "../models/entities/Publicationtype";
 import { Publisher } from "../models/entities/Publisher";
-import { Representations } from "../models/entities/Representations";
 import { Subcategory } from "../models/entities/Subcategory";
 import { Unapproveddatasets } from "../models/entities/Unapproveddatasets";
 import { Dimension } from "../models/entities/Dimension";
@@ -23,6 +22,9 @@ import { Units } from "../models/entities/Units";
 export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
+
+    //TODO do directly to DB before merge
+    await queryRunner.query('ALTER TABLE `datapoints` DROP COLUMN `representationsId`');
 
     // Accounts Data
     let authenticationService = new AuthenticationService();
@@ -547,16 +549,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     unitsToDelete2.dimensionId = 4;
     unitsToDelete2.name = "To delete";
 
-    let reprNone = new Representations();
-    reprNone.id;
-    reprNone.repr = "N/A";
-
-    let reprToDelete = new Representations();
-    reprToDelete.id;
-    reprToDelete.repr = "Deleted";
-    await connection.manager.save(reprToDelete);
-    await connection.manager.save(reprNone);
-
     await Units.save([unitsNone, unitsCCG, unitsGCC, unitsToDelete, unitsKMPS, unitsGigapascal, unitsKelvin, unitsToDelete2])
     densityDimension.baseUnitId = unitsGCC.id;
     temperatureDimension.baseUnitId = unitsKelvin.id;
@@ -577,7 +569,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint.name = "Initial Density";
     datapoint.values = [2.113, 2.123, 2.123, 2.143, 2.141, 2.146, 2.142, 2.134, 2.135, 2.136, 2.136];
     datapoint.unitsId = unitsGCC.id;
-    datapoint.representationsId = reprNone.id;
     await connection.manager.save(datapoint);
 
     let datapoint2 = new Datapoints();
@@ -586,7 +577,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint2.name = "Initial Temperature";
     datapoint2.values = [273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15];
     datapoint2.unitsId = unitsKelvin.id;
-    datapoint2.representationsId = reprNone.id;
     await connection.manager.save(datapoint2);
 
     let datapoint3 = new Datapoints();
@@ -595,7 +585,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint3.name = "Initial Pressure";
     datapoint3.values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     datapoint3.unitsId = unitsGigapascal.id;
-    datapoint3.representationsId = reprNone.id;
     await connection.manager.save(datapoint3);
 
     let datapoint4 = new Datapoints();
@@ -604,7 +593,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint4.name = "Shock Velocity";
     datapoint4.values = [5.235, 6.013, 6.320, 6.551, 6.704, 7.960, 8.762, 8.836, 9.208, 9.627, 9.556];
     datapoint4.unitsId = unitsKMPS.id;
-    datapoint4.representationsId = reprNone.id;
     await connection.manager.save(datapoint4);
 
     let datapoint5 = new Datapoints();
@@ -613,7 +601,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint5.name = "Particle Velocity";
     datapoint5.values = [1.026, 1.380, 1.972, 2.607, 2.779, 3.370, 3.748, 3.801, 3.948, 4.138, 4.290];
     datapoint5.unitsId = unitsKMPS.id;
-    datapoint5.representationsId = reprNone.id;
     await connection.manager.save(datapoint5);
 
     let datapoint6 = new Datapoints();
@@ -622,7 +609,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint6.name = "Pressure";
     datapoint6.values = [11.349, 17.617, 26.459, 36.599, 39.888, 57.567, 70.343, 71.672, 77.614, 85.091, 87.657];
     datapoint6.unitsId = unitsGigapascal.id;
-    datapoint6.representationsId = reprNone.id;
     await connection.manager.save(datapoint6);
 
     let datapoint7 = new Datapoints();
@@ -631,7 +617,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint7.name = "Specific Volume";
     datapoint7.values = [0.3805, 0.3629, 0.3241, 0.2809, 0.2735, 0.2687, 0.2672, 0.2670, 0.2676, 0.2669, 0.2582];
     datapoint7.unitsId = unitsCCG.id;
-    datapoint7.representationsId = reprNone.id;
     await connection.manager.save(datapoint7);
 
     let datapoint8 = new Datapoints();
@@ -640,7 +625,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint8.name = "Density";
     datapoint8.values = [2.628, 2.755, 3.086, 3.560, 3.657, 3.722, 3.743, 3.745, 3.737, 3.746, 3.873];
     datapoint8.unitsId = unitsGCC.id;
-    datapoint8.representationsId = reprNone.id;
     await connection.manager.save(datapoint8);
 
     let datapoint9 = new Datapoints();
@@ -649,7 +633,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint9.name = "Compression Ratio";
     datapoint9.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
     datapoint9.unitsId = unitsNone.id;
-    datapoint9.representationsId = reprNone.id;
     await connection.manager.save(datapoint9);
 
     datapoint9.id;
@@ -657,7 +640,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     datapoint9.name = "Compression Ratio";
     datapoint9.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
     datapoint9.unitsId = unitsToDelete.id;
-    datapoint9.representationsId = reprToDelete.id;
     await connection.manager.save(datapoint9);
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
@@ -728,6 +710,9 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
+
+    //TODO do directly to DB before merge
+    await queryRunner.query('ALTER TABLE `datapoints` ADD `representationsId` int(11)');
   }
 
 }
