@@ -78,6 +78,7 @@ export const DatasetControl = (props: IProps) => {
         models={toDatasetRows(completeDatasets, datasetStates)}
         rowProps={{ onRemoveDatasetClick: handleDatasetRemoved, onHideDatasetSwitch: onHideDatasetSwitch } as IDatasetRowProps}
         withPagination
+        modelType='Datasets'
       />
     </>
   )

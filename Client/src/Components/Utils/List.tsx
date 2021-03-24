@@ -8,16 +8,17 @@ export interface IRowProps<T> {
 interface IProps<T, ICustomRowProps> {
   RowComponent: React.ComponentType<IRowProps<T>>
   models?: T[]
-  rowProps: ICustomRowProps
+  rowProps?: ICustomRowProps
   withPagination: boolean
+  modelType: string
 }
 
 export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
-  const { RowComponent, models, rowProps, withPagination } = props
+  const { RowComponent, models, rowProps, withPagination, modelType } = props
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
 
-  const rowModels = withPagination
+  const rowModels = (withPagination && models)
     ? models.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     : models
 
@@ -29,7 +30,7 @@ export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
       {withPagination && models.length > 0 && < TablePagination
         component="div"
         rowsPerPageOptions={[5, 10, 25, 100]}
-        labelRowsPerPage='Datasets per page'
+        labelRowsPerPage={modelType + ' per page'}
         count={models.length}
         page={page}
         onChangePage={(_, newPage) => setPage(newPage)}
