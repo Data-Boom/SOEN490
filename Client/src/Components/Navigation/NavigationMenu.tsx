@@ -34,18 +34,15 @@ export default function NavigationMenu() {
 
   const drawer = (): any => {
     return (
-      <React.Fragment key='left'>
-        <div><Drawer variant="persistent" anchor="left" open={open} onClose={() => setOpen(false)} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
-          <div className={classes.drawerHeader}>
-            {<IconButton id='Close' onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>}
-          </div>
-          <Divider />
-          {ListRouter()}
-        </ Drawer></div>
-
-      </React.Fragment>
+      <Drawer variant="persistent" anchor="left" open={open} className={classes.drawer} classes={{ paper: classes.drawerPaper }}>
+        <div className={classes.drawerHeader}>
+          <IconButton id='Close' onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        {ListRouter()}
+      </ Drawer>
     )
   }
 
