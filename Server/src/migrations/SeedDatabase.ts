@@ -694,7 +694,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM datapoints');
     await queryRunner.query('DELETE FROM units');
     await queryRunner.query('DELETE FROM dimension');
-    await queryRunner.query('DELETE FROM representations');
     await queryRunner.query('DELETE FROM authors');
     await queryRunner.query('DELETE FROM dataset');
     await queryRunner.query('DELETE FROM publications');
