@@ -539,7 +539,6 @@ export class DataSetService {
     try {
       let response = await this.datasetApprovalModel.flagDataSet(datasetId, flaggedComment, additionalComment)
       if (response == undefined || response == null) {
-        throw new BadRequest("Could not flag this Dataset")
       }
       this.requestResponse.statusCode = 200
       this.requestResponse.message = response

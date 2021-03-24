@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection, BaseEntity } from "typeorm";
 import { Accounts } from "./Accounts";
 
 
@@ -6,7 +6,7 @@ import { Accounts } from "./Accounts";
  * The entity annotation indicates that a table is being created
  */
 @Entity()
-export class Graphstate {
+export class Graphstate extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

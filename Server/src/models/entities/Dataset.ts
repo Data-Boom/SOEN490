@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
+import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, BaseEntity } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
@@ -13,7 +13,7 @@ import { Accounts } from './Accounts';
  * and has multiple composition references for fuel, oxidizer, and diluent
  */
 @Entity()
-export class Dataset {
+export class Dataset extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

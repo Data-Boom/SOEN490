@@ -185,17 +185,6 @@ describe('Data Set Controller ', () => {
         expect(mockResponse.status).toBeCalledWith(200);
     });
 
-    test('Valid Flag Data Set Request', async () => {
-        mockRequest = {
-            query: {
-                datasetId: 9
-            }
-        }
-        await GetDataControllerController.createRequestToFlagDataset(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Dataset Flagged!");
-        expect(mockResponse.status).toBeCalledWith(200);
-    });
-
     test('Valid Reject Data Set Request', async () => {
         mockRequest = {
             body: {
@@ -278,7 +267,7 @@ describe('Data Set Controller ', () => {
     test('Valid Admin Approve Data Set Request', async () => {
         mockRequest = {
             query: {
-                datasetId: 11
+                datasetId: 16
             }
         }
         await GetDataControllerController.createAdminApprovedDatasetRequest(mockRequest as Request, mockResponse as Response)
@@ -328,6 +317,17 @@ describe('Data Set Controller ', () => {
         await GetDataControllerController.createRequestToRejectDataset(mockRequest as Request, mockResponse as Response)
         expect(mockResponse.json).toBeCalledWith("Invalid data set ID entered");
         expect(mockResponse.status).toBeCalledWith(400);
+    });
+
+    test('Valid Flag Data Set Request', async () => {
+        mockRequest = {
+            query: {
+                datasetId: 19
+            }
+        }
+        await GetDataControllerController.createRequestToFlagDataset(mockRequest as Request, mockResponse as Response)
+        expect(mockResponse.json).toBeCalledWith("Dataset Flagged!");
+        expect(mockResponse.status).toBeCalledWith(200);
     });
 
     test('Invalid Flag Data Set Request; no ID passed', async () => {
