@@ -20,9 +20,11 @@ import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
+import { DatasetDownloadButton } from './DatasetDownloadButton'
 
 interface IProps {
-  initialDataset?: IDatasetModel
+  initialDataset?: IDatasetModel,
+  downloadDataset?: IDatasetModel[]
 }
 
 interface IDatasetViewParams {
@@ -36,7 +38,7 @@ export const DatasetView = (props: IProps) => {
   useTitle("Dataset Upload")
   useDispatchOnLoad(loadDimensionsThunk)
   useDispatchOnLoad(loadVariablesThunk)
-  const { initialDataset } = { ...props }
+  const { initialDataset, downloadDataset } = { ...props }
   const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
 
@@ -91,7 +93,8 @@ export const DatasetView = (props: IProps) => {
                 <FavoriteDatasetButton datasetId={initialValues.id} />
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
+                {/* <Button variant="contained" color="primary" startIcon={<GetAppIcon />} onClick={() => alert("haha, im perfect!")}>Download</Button> */}
+                <DatasetDownloadButton datasets={initialValues} />
               </Grid>
               <Grid item>
                 <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
