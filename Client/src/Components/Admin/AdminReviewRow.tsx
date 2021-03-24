@@ -2,16 +2,16 @@ import { Box, Grid, Typography } from '@material-ui/core'
 
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { IRowProps } from "../Utils/List"
 import React from 'react'
 import { classStyles } from '../../appTheme'
 
-interface IAdminReviewModel {
-  dataset: IApprovedDatasetModel,
-  onChange(formDataset: IDatasetModel): void
+export interface IAdminReviewRowProps {
+  onChange: (formDataset: IDatasetModel) => void
 }
 
-export const AdminReviewRow = (props: IAdminReviewModel) => {
-  const { dataset, onChange } = { ...props }
+export const AdminReviewRow = (props: IAdminReviewRowProps | IRowProps<IApprovedDatasetModel>) => {
+  const { row: dataset, onChange } = { ...props }
 
   const setDataset = () => {
     onChange(dataset)

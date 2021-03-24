@@ -1,12 +1,13 @@
+import { AdminReviewRow, IAdminReviewRowProps } from './AdminReviewRow'
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
-import { IApprovedDatasetModel, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
-import React, { useRef, useState } from 'react'
-import { approvedDataset, callRejectDataset, flagDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { IApprovedDatasetModel, IExampleApprovedArray, IFlaggedDatasetQuery } from '../../Models/Datasets/IApprovedDatasetModel'
+import React, { useEffect, useRef, useState } from 'react'
+import { approvedDataset, callRejectDataset, flagDataset, getUnapprovedDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 
-import { AdminReviewList } from './AdminReviewList'
 import { DatasetForm } from '../DatasetUpload/DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FormikProps } from 'formik'
+import { List } from '../Utils/List'
 import { useTitle } from '../../Common/Hooks/useTitle'
 
 export function AdminReviewView() {
@@ -14,9 +15,18 @@ export function AdminReviewView() {
   const formikReference = useRef<FormikProps<unknown>>()
   const [editable, setEditable] = useState(false)
   const [dataset, setDataset] = useState<IApprovedDatasetModel>()
+  const [datasets, setDatasets] = useState<IApprovedDatasetModel[]>(IExampleApprovedArray)
   const [comment, setComment] = useState("")
   const [flaggedComment, setFlaggedComment] = useState("")
   const [update, setUpdate] = useState(0)
+
+  useEffect(() => {
+    const callListDatasetStates = async () => {
+      const datasetState = await getUnapprovedDatasets()
+      setDatasets(datasetState)
+    }
+    callListDatasetStates()
+  }, [update])
 
   const handleDeleteDataset = async () => {
     await callRejectDataset(dataset.id)
@@ -62,10 +72,12 @@ export function AdminReviewView() {
             Datasets to be reviewed
           </Typography>
           <br></br>
-          <AdminReviewList
-            datasets={[]}
-            onChange={handleDatasetChange}
-            update={update}
+          <List
+            RowComponent={AdminReviewRow}
+            models={datasets}
+            rowProps={{ onChange: handleDatasetChange } as IAdminReviewRowProps}
+            withPagination
+            modelType='Datasets'
           />
           <br></br>
           <Button id="toggleEditButton" onClick={handleEditDataset} color="primary" variant="contained">Edit</Button>&nbsp;&nbsp;&nbsp;

@@ -2,15 +2,16 @@ import { Button, Grid, Paper, Table, TableContainer } from '@material-ui/core'
 import React, { useState } from 'react'
 
 import { ConfirmationModal } from '../../Authentication/ConfirmationModal'
+import { IRowProps } from '../../Utils/List'
+import { IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
 import { classStyles } from '../../../appTheme'
 
-interface IProps {
-  adminEmail: string,
+export interface IAdminRowProps {
   handleRemoveAdmin: (accountEmail: string) => void
 }
 
-export const AdminReviewRow = (props: IProps) => {
-  const { adminEmail, handleRemoveAdmin } = { ...props }
+export const AdminRow = (props: IAdminRowProps | IRowProps<IUserAccountModel>) => {
+  const { row: adminAccount, handleRemoveAdmin } = { ...props }
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
   const onHandleRemoveAdmin = async (removeAdmin: string) => {
@@ -24,7 +25,7 @@ export const AdminReviewRow = (props: IProps) => {
         <Table aria-label="collapsabile table">
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              {adminEmail}
+              {adminAccount.email}
             </Grid>
             <Grid item xs={2}>
               <Button variant="outlined" color="secondary" onClick={() => setConfirmModalOpen(true)}>
@@ -37,7 +38,7 @@ export const AdminReviewRow = (props: IProps) => {
                 cancelButton="Cancel"
                 open={confirmModalOpen}
                 onClose={() => setConfirmModalOpen(false)}
-                onSubmit={() => onHandleRemoveAdmin(adminEmail)}
+                onSubmit={() => onHandleRemoveAdmin(adminAccount.email)}
               />
             </Grid>
           </Grid>
