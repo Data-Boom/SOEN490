@@ -23,9 +23,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     let connection = getConnection();
 
-    //TODO do directly to DB before merge
-    await queryRunner.query('ALTER TABLE `datapoints` DROP COLUMN `representationsId`');
-
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
@@ -710,9 +707,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM publicationtype');
     await queryRunner.query('DELETE FROM accounts');
     await queryRunner.query('ALTER TABLE accounts AUTO_INCREMENT = 1');
-
-    //TODO do directly to DB before merge
-    await queryRunner.query('ALTER TABLE `datapoints` ADD `representationsId` int(11)');
   }
 
 }
