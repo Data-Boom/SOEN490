@@ -10,7 +10,6 @@ import { VariableHeader } from './VariableHeader'
 import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
 import { useFormikContext } from 'formik'
 import { useVariablesSelector } from '../../../../Stores/Slices/VariablesSlice'
-import { useVariableNames } from '../../Utils/Hooks/useVariableNames'
 import ReactDataGrid from 'react-data-grid'
 import PropTypes from "prop-types";
 
