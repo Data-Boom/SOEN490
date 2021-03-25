@@ -54,7 +54,7 @@ export class DatasetApprovalModel {
     }
 
     async flagDataSet(datasetId: number, flaggedComment?: string, additionalComment?: string) {
-        if (flaggedComment == undefined || flaggedComment == "undefined") { flaggedComment = null }
+        if (flaggedComment == undefined || flaggedComment == "undefined" || flaggedComment == "") { flaggedComment = null }
         await this.updateDatasetComments(datasetId, additionalComment)
         await this.connection.createQueryBuilder()
             .update(Unapproveddatasets)
@@ -74,7 +74,7 @@ export class DatasetApprovalModel {
         if (datasetCommentsToAppend !== undefined && datasetCommentsToAppend !== "undefined" && datasetCommentsToAppend !== null) {
             let oldComment = await this.selectDatasetCommentQuery(datasetId)
             let newComment = datasetCommentsToAppend
-            if (oldComment.comments !== null) {
+            if (oldComment.comments !== null && oldComment.comments !== "") {
                 newComment = oldComment.comments.concat(" " + datasetCommentsToAppend)
             }
             await this.connection.createQueryBuilder()
