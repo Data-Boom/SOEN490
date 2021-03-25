@@ -27,9 +27,8 @@ describe('Data Parser Service', () => {
         let extension = 'json'
         let filePath = ''
         dataParserService = new DataParserService(extension, filePath)
-        let response: any
         try {
-            response = await dataParserService.parseData()
+            await dataParserService.parseData()
         } catch (error) {
             expect(error.message).toBe(res);
         }
@@ -40,9 +39,8 @@ describe('Data Parser Service', () => {
         let extension = 'json'
         let filePath = 'src/tests/testData/brokenJSON'
         dataParserService = new DataParserService(extension, filePath)
-        let response: any
         try {
-            response = await dataParserService.parseData()
+            await dataParserService.parseData()
         } catch (error) {
             expect(error.message).toBe(res);
         }
