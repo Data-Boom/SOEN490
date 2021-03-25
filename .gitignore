@@ -138,3 +138,5 @@ sketch
 Client/.vscode/settings.json
 *.snap
 
+# File upload files
+Server/upload/*

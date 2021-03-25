@@ -2,7 +2,8 @@ import { Box, Container, Typography } from "@material-ui/core"
 import React, { useEffect, useState } from 'react'
 
 import { IApprovedDatasetModel } from "../../Models/Datasets/IApprovedDatasetModel"
-import { UserReviewList } from "./UserReviewList"
+import { List } from "../Utils/List"
+import { UserReviewRow } from "./UserReviewRow"
 import { getUserFlaggedDatasets } from "../../Remote/Endpoints/UserEndpoint"
 import { useTitle } from "../../Common/Hooks/useTitle"
 
@@ -29,8 +30,11 @@ export const UserReviewView = (props: IProps) => {
         <Typography variant='h6' align="left">
           Datasets to be reviewed:
         </Typography>
-        <UserReviewList
-          userDatasets={datasets}
+        <List
+          RowComponent={UserReviewRow}
+          models={datasets}
+          withPagination
+          modelType='Datasets'
         />
       </Box>
     </Container>
