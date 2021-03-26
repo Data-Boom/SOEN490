@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany, Connection } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany, Connection, BaseEntity } from "typeorm";
 import { Dataset } from "./Dataset";
 
 
 @Entity()
-export class Accounts {
+export class Accounts extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

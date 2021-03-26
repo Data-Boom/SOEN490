@@ -16,20 +16,31 @@ describe('Data Parser Service', () => {
 
     test('Valid - Request to Extract a JSON file', async () => {
         let extension = 'json'
-        let filePath = 'upload/25a6488a2135bdeae7e26a8e9baac62f'
+        let filePath = 'src/tests/testData/25a6488a2135bdeae7e26a8e9baac62f'
         dataParserService = new DataParserService(extension, filePath)
         let response: any = await dataParserService.parseData()
         expect(response.statusCode).toBe(200);
     })
 
-    test('Invalid - Request to Extract a JSON file', async () => {
-        let res = "Cannot parse your file. Something is wrong with it"
+    test('Invalid - Request to Extract a non-existing file', async () => {
+        let res = "ENOENT: no such file or directory, unlink ''"
         let extension = 'json'
         let filePath = ''
         dataParserService = new DataParserService(extension, filePath)
-        let response: any
         try {
-            response = await dataParserService.parseData()
+            await dataParserService.parseData()
+        } catch (error) {
+            expect(error.message).toBe(res);
+        }
+    })
+
+    test('Invalid - Request to Extract a broken JSON file', async () => {
+        let res = "Cannot parse your file. Something is wrong with it"
+        let extension = 'json'
+        let filePath = 'src/tests/testData/brokenJSON'
+        dataParserService = new DataParserService(extension, filePath)
+        try {
+            await dataParserService.parseData()
         } catch (error) {
             expect(error.message).toBe(res);
         }
