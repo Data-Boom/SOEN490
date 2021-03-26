@@ -77,7 +77,7 @@ export default function NavigationMenu() {
           }
         </AppBar>
         {drawer()}
-        <Box className={clsx(classes.appBar, { [classes.appBarShift]: open, })} pt={16}>
+        <Box className={clsx(classes.content, { [classes.contentShift]: open, })} pt={16}>
           {getRoutedViews()}
         </Box>
       </BrowserRouter>
@@ -127,18 +127,17 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: 0,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: drawerWidth,
   },
 }))
