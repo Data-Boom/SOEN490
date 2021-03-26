@@ -1,8 +1,8 @@
-import { Column, Connection, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { BaseEntity, Column, Connection, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { Dataset } from './Dataset';
 
 @Entity()
-export class Unapproveddatasets {
+export class Unapproveddatasets extends BaseEntity {
 
   @PrimaryColumn()
   datasetId: number

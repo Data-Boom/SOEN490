@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
 
 
 /**
@@ -6,7 +6,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
  * This entity handles publisher names
  */
 @Entity()
-export class Publisher {
+export class Publisher extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
