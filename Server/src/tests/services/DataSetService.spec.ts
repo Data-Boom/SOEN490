@@ -234,13 +234,13 @@ describe('data set service test', () => {
     done()
   });
 
-
-  // test('Asks for all unapproved data sets, expects at least one data set', async done => {
-  //   let response = await retrieveDataObject.getUnapprovedAllDatasets()
-  //   expect(response.message[0]).not.toBeUndefined();
-  //   expect(response.statusCode).toEqual(200);
-  //   done()
-  // });
+  test('Asks for all unapproved data sets, expects at least one data set', async done => {
+    let response = await retrieveDataObject.getUnapprovedAllDatasets()
+    let arrayOfData = response.message as IApprovalDatasetModel[]
+    expect(arrayOfData[0]).not.toBeUndefined();
+    expect(response.statusCode).toEqual(200);
+    done()
+  });
 
   test('Asks for all flagged data sets expects a data set with ID of 1', async done => {
     let response = await retrieveDataObject.getAllFlaggedDatasets()
@@ -267,13 +267,6 @@ describe('data set service test', () => {
 
   test('Flag an unapproved data set, with no additional comments', async done => {
     let response = await retrieveDataObject.flagNewDataset(5)
-    expect(response.message).toEqual("Dataset Flagged!");
-    expect(response.statusCode).toEqual(200);
-    done()
-  });
-
-  test('Flag an unapproved data set, with additional comments', async done => {
-    let response = await retrieveDataObject.flagNewDataset(6, "Fix the title please", "Admin: Pretty good data set, 10/10")
     expect(response.message).toEqual("Dataset Flagged!");
     expect(response.statusCode).toEqual(200);
     done()
@@ -313,14 +306,14 @@ describe('data set service test', () => {
   });
 
   test('Admin approves a data set, with additional comments', async done => {
-    let response = await retrieveDataObject.adminApprovedDataset(5, "Admin: Pretty good data set, 10/10")
+    let response = await retrieveDataObject.adminApprovedDataset(17, "Admin: Pretty good data set, 10/10")
     expect(response.message).toEqual("Successfully approved new data set");
     expect(response.statusCode).toEqual(200);
     done()
   });
 
   test('Admin approves a data set, with no additional comments', async done => {
-    let response = await retrieveDataObject.adminApprovedDataset(6)
+    let response = await retrieveDataObject.adminApprovedDataset(18)
     expect(response.message).toEqual("Successfully approved new data set");
     expect(response.statusCode).toEqual(200);
     done()
