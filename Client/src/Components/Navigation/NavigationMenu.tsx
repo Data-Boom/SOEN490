@@ -20,7 +20,9 @@ const drawerWidth = linkWidth
 export default function NavigationMenu() {
   const user = useUserSelector()
   const [open, setOpen] = useState(false)
+
   const classes = useStyles()
+
 
   const handleDrawerOpen = () => {
     setOpen(true)
