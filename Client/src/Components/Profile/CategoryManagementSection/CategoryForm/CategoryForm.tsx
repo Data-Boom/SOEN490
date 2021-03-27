@@ -7,17 +7,10 @@ import React from 'react'
 import { classStyles } from '../../../../appTheme'
 import { disabledTheme } from '../../../Forms/ComponentUpdate'
 import { AddIcon } from '@material-ui/data-grid'
+import { SubcategoryList } from './SubcategoryList'
 
-interface IProps {
-    id?: number
-}
+export const CategoryForm = () => {
 
-export const CategoryForm = (props: IProps) => {
-
-
-    const addNewSubcategory = () => {
-        console.log('add new subcategory')
-    }
 
     return (
         <>
@@ -31,15 +24,10 @@ export const CategoryForm = (props: IProps) => {
                     </Grid>
                     <Grid item>
                         <ThemeProvider theme={disabledTheme}>
-                            {/* <FieldArray name='units' >
-                                {({ form, ...fieldArrayHelpers }) => <UnitList units={form.values.units} fieldArrayHelpers={fieldArrayHelpers} baseUnitId={form.values.baseUnitId} />}
-                            </FieldArray> */}
+                            <FieldArray name='subcategories' >
+                                {({ form, ...fieldArrayHelpers }) => <SubcategoryList subcategories={form.values.subcategories} fieldArrayHelpers={fieldArrayHelpers} categoryId={form.values.categoryId} />}
+                            </FieldArray>
                         </ThemeProvider>
-                    </Grid>
-                    <Grid item xs={6} alignContent="flex-start">
-                        <Button variant="contained" color="primary" aria-label="add category" onClick={addNewSubcategory}> Add New SubCategory
-                        <AddIcon />
-                        </Button>
                     </Grid>
                 </Grid>
             </Box>

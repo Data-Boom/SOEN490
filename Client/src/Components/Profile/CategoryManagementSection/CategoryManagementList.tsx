@@ -13,7 +13,6 @@ import { CategoryForm } from "./CategoryForm/CategoryForm";
 interface IProps {
   category: ICategoryModel
   index: number
-  handleSubmit: () => void
   handleSaveCategory: (category: ICategoryModel) => void,
   handleDeleteCategory: (category: ICategoryModel) => any
 }
@@ -33,9 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 
-export const CategoryManagementRow = (props: IProps) => {
+export const CategoryManagementList = (props: IProps) => {
 
-  let { category, index, handleSubmit, handleSaveCategory, handleDeleteCategory } = { ...props }
+  let { category, index, handleSaveCategory, handleDeleteCategory } = { ...props }
 
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
@@ -93,7 +92,7 @@ export const CategoryManagementRow = (props: IProps) => {
                 enableReinitialize={true}
                 initialValues={category}
                 validationSchema={CategoryValidationSchema}
-                onSubmit={handleSubmit}
+                onSubmit={handleSaveCategory}
               >
                 <Form>
                   <CategoryForm />
