@@ -70,12 +70,12 @@ export class FluentRequest {
 
   public async json(): Promise<any> {
     const response = await this.call()
-    if (response.status.toString().charAt(0) == '2') {
+    if (response?.status.toString().charAt(0) == '2') {
       return response.json()
     }
     else {
-      const errorMessage = await response.json()
-      SnackbarUtils.error(errorMessage.error || errorMessage)
+      const errorMessage = await response?.json()
+      SnackbarUtils.error(errorMessage?.error || errorMessage)
       return null
     }
   }
@@ -83,7 +83,7 @@ export class FluentRequest {
   private async fetchRemote(url: string, request: RequestInit): Promise<Response> {
     const response = await fetch(url, request)
 
-    if (response.status.toString().charAt(0) == '5') {
+    if (!response?.status || response.status.toString().charAt(0) == '5') {
       SnackbarUtils.error('Server Unavailable')
       return Promise.resolve(null)
     }
@@ -96,4 +96,4 @@ export class FluentRequest {
       return response
     }
   }
-} 
+}
