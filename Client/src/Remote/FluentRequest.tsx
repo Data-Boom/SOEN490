@@ -70,7 +70,7 @@ export class FluentRequest {
 
   public async json(): Promise<any> {
     const response = await this.call()
-    if (response?.status.toString().charAt(0) == '2') {
+    if (response.status.toString().charAt(0) == '2') {
       return response.json()
     }
     else {
@@ -85,7 +85,7 @@ export class FluentRequest {
 
     if (!response?.status || response.status.toString().charAt(0) == '5') {
       SnackbarUtils.error('Server Unavailable')
-      return Promise.resolve(null)
+      return response
     }
 
     if (response.status.toString().charAt(0) == '2') {

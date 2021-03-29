@@ -15,5 +15,5 @@ export interface ISubcategoryModel {
 
 export const listCategories = async (): Promise<ICategoryModel[]> => {
   const result = await get(categoryRoute).json()
-  return result
+  return result || []
 }

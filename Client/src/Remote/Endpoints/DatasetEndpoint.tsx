@@ -16,7 +16,7 @@ const submitEditedDatasetRoute = '/api/v1/dataUpload'
 
 export const callGetDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
   const result = await get(datasetRoute).withQuery(query).json()
-  return result
+  return result || []
 }
 
 export const callSaveDataset = async (dataset: IDatasetModel): Promise<number> => {
