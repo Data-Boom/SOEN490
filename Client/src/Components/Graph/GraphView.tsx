@@ -1,13 +1,13 @@
 import { Box, Grid } from "@material-ui/core"
 import { IGraphStateModel, newGraphState } from "../../Models/Graph/IGraphStateModel"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { loadDimensionsThunk, useDimensionsSelector } from "../../Stores/Slices/DimensionsSlice"
 
 import { Graph } from './Graph'
 import { GraphStateControl } from "./GraphControls/GraphStateControl"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { IGraphDatasetModel } from '../../Models/Graph/IGraphDatasetModel'
 import { getGraphDatasets } from "../../Common/Helpers/GraphHelpers"
-import { loadDimensionsThunk } from "../../Stores/Slices/DimensionsSlice"
 import { useDispatchOnLoad } from "../../Common/Hooks/useDispatchOnLoad"
 import { useParams } from "react-router"
 import { useTitle } from "../../Common/Hooks/useTitle"
@@ -19,18 +19,22 @@ interface IGraphViewParams {
 export const GraphView = () => {
   useTitle("Graph")
   useDispatchOnLoad(loadDimensionsThunk)
-
+  const dimensions = useDimensionsSelector()
   const { graphStateId } = useParams<IGraphViewParams>()
 
   const [graphDatasets, setGraphDatasets] = useState<IGraphDatasetModel[]>([])
   const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState, id: graphStateId })
-
+  const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
 
   const handleGraphStateChanged = (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => {
-    const graphDatasets = getGraphDatasets(completeDatasets, graphState)
+    console.log(dimensions, 'dimensions')
+    const graphDatasets = getGraphDatasets(completeDatasets, graphState, dimensions)
     setGraphState(graphState)
     setGraphDatasets(graphDatasets)
+    setCompleteDatasets(completeDatasets)
   }
+
+  useEffect(() => { handleGraphStateChanged(graphState, completeDatasets); console.log(dimensions, 'dimensions from effect') }, [dimensions])
 
   return (
     <>
@@ -42,6 +46,7 @@ export const GraphView = () => {
               axes={graphState.axes}
             />
           </Grid>
+          <button onClick={() => handleGraphStateChanged(graphState, completeDatasets)}></button>
           <Grid item sm={5}>
             <Box mr={5} mt={5}>
               <GraphStateControl

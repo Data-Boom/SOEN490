@@ -25,7 +25,11 @@ export const getDimensionNameById = (dimensions: IDimensionModel[], dimensionId:
 }
 
 export const getUnitNameById = (dimensions: IDimensionModel[], unitId: number) => {
-  const foundDimension = dimensions.find(dimension => dimension.units.find(unit => unit.id == unitId))
+  const foundDimension = getDimensionByUnitId(dimensions, unitId)
   const foundUnit = foundDimension && foundDimension.units.find(unit => unit.id == unitId)
   return foundUnit && foundUnit.name || 'unit not found'
+}
+
+export const getDimensionByUnitId = (dimensions: IDimensionModel[], unitId: number) => {
+  return dimensions.find(dimension => dimension.units.find(unit => unit.id == unitId))
 }
