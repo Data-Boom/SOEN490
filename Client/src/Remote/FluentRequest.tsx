@@ -75,7 +75,7 @@ export class FluentRequest {
     }
     else {
       const errorMessage = await response?.json()
-      // errorMessage && SnackbarUtils.error(errorMessage?.error || errorMessage)
+      SnackbarUtils.error(errorMessage?.error || errorMessage)
       return null
     }
   }
