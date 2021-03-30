@@ -1,36 +1,30 @@
-import { ArrayHelpers, FastField } from "formik"
-import { Button, Grid, IconButton, Tooltip, Typography } from "@material-ui/core"
+import { FastField } from "formik"
+import { Grid, IconButton } from "@material-ui/core"
 
-import AddIcon from '@material-ui/icons/Add'
 import { MuiTextFieldFormik } from "../../../Forms/FormikFields"
 import React from 'react'
-import { ISubCategoryModel, newSubcategory } from '../../../../Models/Profile/ICategoryModel';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 interface IProps {
-    subcategory: ISubCategoryModel,
-    key: number,
+    index: number,
     handleRemoveSubcategory: (index: number) => void,
-    removable: boolean
 }
 
 export const SubcategoryRow = (props: IProps) => {
-    const { subcategory, key, handleRemoveSubcategory, removable } = props
-
+    const { index, handleRemoveSubcategory } = props
 
     return (
         <>
-            <Grid container direction='column' spacing={2} alignItems="flex-start">
-                <Grid item>
-                    <p>
-                        hello
-                    </p>
-                    {subcategory.name}
-                </Grid>
-                <IconButton color="primary" aria-label="delete subcategory" onClick={() => handleRemoveSubcategory(key)}>
-                    <DeleteForeverIcon />
-                </IconButton>
+          <Grid container direction='row' spacing={2} alignContent="flex-start" alignItems="flex-start">
+            <Grid item>
+              <FastField name={`subcategories[${index}].name`} label='Subcategory Name' component={MuiTextFieldFormik} />
             </Grid>
+            <Grid item>
+              <IconButton color="primary" aria-label="delete subcategory" onClick={() => handleRemoveSubcategory(index)}>
+                <DeleteForeverIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
         </>
     )
 }

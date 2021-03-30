@@ -5,16 +5,16 @@ import { ICategoryModel } from "../../../Models/Profile/ICategoryModel";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { classStyles } from '../../../appTheme'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { ICategory } from '../../../../../Server/src/models/interfaces/CategoryInterface';
 import { Form, Formik } from "formik";
 import { CategoryValidationSchema } from "./CategoryValidationSchema";
 import { CategoryForm } from "./CategoryForm/CategoryForm";
+import { ConfirmationModal } from "../../Authentication/ConfirmationModal";
 
 interface IProps {
-  category: ICategoryModel
-  index: number
+  category: ICategoryModel,
+  handleCreateCategory: (category: ICategoryModel) => void,
   handleSaveCategory: (category: ICategoryModel) => void,
-  handleDeleteCategory: (category: ICategoryModel) => any
+  handleDeleteCategory: (category: number) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,24 +34,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const CategoryManagementList = (props: IProps) => {
 
-  let { category, index, handleSaveCategory, handleDeleteCategory } = { ...props }
+  let { category, handleCreateCategory, handleSaveCategory, handleDeleteCategory } = { ...props }
 
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }
 
-  const renderSaveButton = () => {
-    return (
-      <Grid container justify="flex-end" alignItems="flex-end" spacing={2}>
-        <Button id='save-category' variant='contained' color='primary' onClick={() => handleSaveCategory(category)} >
-          Save
-      </Button>
-      </Grid>
-    )
+  const handleSubmit = (formValues: ICategoryModel) => {
+    if(!category.id) {
+      handleCreateCategory(formValues)
+    }
+    else {
+      handleSaveCategory(formValues)
+    }
   }
+
   const renderHeader = () => {
     return (
       <Grid item container alignItems="center" direction="row">
@@ -69,11 +70,20 @@ export const CategoryManagementList = (props: IProps) => {
           <Typography align="left">{category.name}</Typography>
         </Grid>
         <Grid item xs={6} alignContent="flex-end">
-          {expanded ? renderSaveButton() :
+          {expanded ? null :
             <Grid container justify="flex-end" alignItems="flex-end">
-              <IconButton color="primary" aria-label="delete category" onClick={() => handleDeleteCategory(category)}>
+              <IconButton color="primary" aria-label="delete category" onClick={() => setConfirmModalOpen(true)}>
                 <DeleteForeverIcon />
               </IconButton>
+                <ConfirmationModal
+                title="Are you sure you want to remove this Category?"
+                description="By clicking the Delete then this category and these subcategories will be completely removed from the system."
+                acceptButton="Delete"
+                cancelButton="Cancel"
+                open={confirmModalOpen}
+                onClose={() => setConfirmModalOpen(false)}
+                onSubmit={() => handleDeleteCategory(category.id)}
+                />
             </Grid>
           }
         </Grid>
@@ -92,16 +102,17 @@ export const CategoryManagementList = (props: IProps) => {
                 enableReinitialize={true}
                 initialValues={category}
                 validationSchema={CategoryValidationSchema}
-                onSubmit={handleSaveCategory}
+                onSubmit={handleSubmit}
               >
                 <Form>
-                  <CategoryForm />
+                  <CategoryForm 
+                  id={category.id ? category.id : null}
+                  />
                 </Form>
               </Formik>
             </Grid>
           </Collapse>
         </Grid>
-
       </Box>
     </Box>
   )

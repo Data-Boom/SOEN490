@@ -1,10 +1,11 @@
 import React from "react"
 import { useEffect, useState } from "react"
-import { ICategoryModel, allCategory } from "../../../Models/Profile/ICategoryModel"
+import { ICategoryModel, newCategory } from "../../../Models/Profile/ICategoryModel"
 import { classStyles } from '../../../appTheme'
-import { Box, Button, Grid, IconButton, Typography } from "@material-ui/core"
+import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { AddIcon } from "@material-ui/data-grid"
 import { CategoryManagementList } from "./CategoryManagementList"
+import { listCategories, updateCategory, createCategory, deleteCategory } from "../../../Remote/Endpoints/CategoryEndpoint"
 
 
 export const CategoryManagementTab = () => {
@@ -12,32 +13,33 @@ export const CategoryManagementTab = () => {
   const [categories, setCategories] = useState<ICategoryModel[]>()
 
   useEffect(() => {
-    let allCategories = allCategory
-    setCategories(allCategories)
+    getCategories()
   }, [])
 
   const getCategories = async () => {
-    // const currentCategories = await fetchCategories()
-    // setCategories(currentCategories)
-    console.log('get All Cateogry')
+     const currentCategories: ICategoryModel[] = await listCategories()
+     setCategories(currentCategories)
   }
 
-  const addNewCategory = (category: ICategoryModel) => {
-    // await addCategory(category)
-    // getCategories()
-    console.log('Add new Cateogry')
+  const addNewCategory = ()  => {
+    const categoriesCopy = [...categories]
+    categoriesCopy.push(newCategory)
+    setCategories(categoriesCopy)
   }
 
-  const handleSaveCategory = (category: ICategoryModel) => {
-    // await saveCategory(category)
-    // getCategories()
-    console.log('Save Cateogry')
+  const handleCreateCategory = async (newCategory: ICategoryModel) => {
+     await createCategory(newCategory)
+     await getCategories()
   }
 
-  const handleDeleteCategory = (category: ICategoryModel) => {
-    // await deleteCategory(category)
-    // getCategories()
-    console.log('Delete Cateogry')
+  const handleSaveCategory = async (updatedCategory: ICategoryModel) => {
+    await updateCategory(updatedCategory)
+    await getCategories()
+  }
+
+  const handleDeleteCategory = async (categoryId: number) => {
+    await deleteCategory(categoryId)
+    await getCategories()
   }
 
   return (
@@ -47,7 +49,7 @@ export const CategoryManagementTab = () => {
         {categories && categories.map((category, index) => (
           <CategoryManagementList
             category={category}
-            index={index}
+            handleCreateCategory={handleCreateCategory}
             handleSaveCategory={handleSaveCategory}
             handleDeleteCategory={handleDeleteCategory}
           />
@@ -55,8 +57,8 @@ export const CategoryManagementTab = () => {
         }
       </Box>
       <Grid item>
-        <Button variant="contained" color="primary" aria-label="add category" onClick={() => addNewCategory}> Add New Category
-        <AddIcon />
+        <Button variant="contained" color="primary" aria-label="add category" onClick={() => addNewCategory()}> Add New Category
+          <AddIcon />
         </Button>
       </Grid>
     </>
