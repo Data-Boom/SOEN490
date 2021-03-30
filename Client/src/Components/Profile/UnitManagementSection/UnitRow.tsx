@@ -18,6 +18,7 @@ export const UnitRow = (props: IProps) => {
   const { index, onRemoveUnitClick, baseUnitName, removable } = props
   const conversionFormula = props.conversionFormula.replace(/[{}]/g, '')
   const { values } = useFormikContext()
+  const unitName = (values as any).units[index].name
 
   const removeButton = () => {
     return (
@@ -37,7 +38,7 @@ export const UnitRow = (props: IProps) => {
       </Grid>
       <Grid item>
         <Typography>
-          {baseUnitName && `1 ${baseUnitName} = ${convertToBase(1, conversionFormula)} ${(values as any).units[index].name}`}
+          {baseUnitName && unitName && `1 ${unitName} = ${convertToBase(1, conversionFormula)} ${baseUnitName}`}
         </Typography>
       </Grid>
       <Grid item>

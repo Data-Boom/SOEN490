@@ -15,7 +15,7 @@ export const callAddDimension = async (dimensionModel: IDimensionModel): Promise
 
 export const callChangeDimension = async (dimensionModel: IDimensionModel): Promise<any> => {
   const result = await put(dimensionRoute).withBody(dimensionModel).json()
-  if (result == 'Success') {
+  if (result) {
     SnackbarUtils.success('Dimension has been changed successfully')
   }
 }
