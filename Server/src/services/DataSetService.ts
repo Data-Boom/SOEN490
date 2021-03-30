@@ -466,6 +466,7 @@ export class DataSetService {
       this.requestResponse.message = response as any
       return this.requestResponse
     } catch (error) {
+      console.error(error);
       if (error instanceof NotFound) {
         throw new NotFound(error.message)
       }
@@ -602,11 +603,14 @@ export class DataSetService {
       newContents.push({ point: [] })
     }
 
+
+
     //push each number in a column to its corresponding new column index
     for (let columnIndex = 0; columnIndex < contents.length; columnIndex++) {
-      const column = contents[columnIndex].point
-      column.forEach((number, numberIndex) => {
-        newContents[numberIndex].point.push(number)
+
+      const column = contents[columnIndex]?.point
+      column?.forEach((number, numberIndex) => {
+        newContents[numberIndex]?.point.push(number)
       });
     }
     return newContents
