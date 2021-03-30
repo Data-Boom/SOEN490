@@ -466,7 +466,6 @@ export class DataSetService {
       this.requestResponse.message = response as any
       return this.requestResponse
     } catch (error) {
-      console.error(error);
       if (error instanceof NotFound) {
         throw new NotFound(error.message)
       }
