@@ -67,9 +67,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    expect(mockResponse.status).toBeCalledWith(200);
+    await getSavedGraphs(mockRequest, mockResponse, expectedResponse)
   });
 
   test('Valid User Saved Graphs Request; one data set on graph', async () => {
@@ -81,9 +79,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    expect(mockResponse.status).toBeCalledWith(200);
+    await getSavedGraphs(mockRequest, mockResponse, expectedResponse)
   });
 
   test('Valid User Saved Graphs Request; user has no graphs', async () => {
@@ -95,9 +91,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    expect(mockResponse.status).toBeCalledWith(200);
+    await getSavedGraphs(mockRequest, mockResponse, expectedResponse)
   });
 
   test('Valid Graph Insert Request', async () => {
@@ -254,4 +248,11 @@ describe('Graphs State Controller ', () => {
     expect(mockResponse.json).toBeCalledWith("Invalid graph ID entered");
     expect(mockResponse.status).toBeCalledWith(400);
   });
+
+  async function getSavedGraphs(mockRequest: any, mockResponse: any, expectedResponse: any) {
+    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(200);
+  }
 })
+
