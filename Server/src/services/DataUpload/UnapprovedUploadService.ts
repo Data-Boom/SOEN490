@@ -10,8 +10,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let requestResponse: IResponse = {} as any
 
-        let publicationType: string = ''
-        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, publicationType)
+        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, this.parsedFileData.reference.type)
 
         let publisherNameId: number = await this.insertPublisherData(this.uploadModel, this.parsedFileData.reference.publisher)
 

@@ -112,11 +112,9 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdHasMiddleName(author: IAuthors): Promise<any> {
-        let authorExists =
-            await this.selectAuthorIdQuery(author.firstname, author.lastname)
-                .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middlename })
-                .getRawOne();
-        return authorExists;
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
+            .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middleName })
+            .getRawOne();
     }
 
     /**
@@ -128,10 +126,8 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdNoMiddleName(author: IAuthors): Promise<any> {
-        let authorExists =
-            await this.selectAuthorIdQuery(author.firstname, author.lastname)
-                .getRawOne();
-        return authorExists;
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
+            .getRawOne();
     }
 
     /**
@@ -146,11 +142,11 @@ export class DataUploadModel {
     private async insertIndividualAuthor(authorReceived: IAuthors): Promise<any> {
         let author = new Authors();
         author.id;
-        author.firstName = authorReceived.firstname;
-        author.lastName = authorReceived.lastname;
-        author.middleName = authorReceived.middlename;
+        author.firstName = authorReceived.firstName;
+        author.lastName = authorReceived.lastName;
+        author.middleName = authorReceived.middleName;
         let authorExists: any;
-        if (authorReceived.middlename != null) {
+        if (authorReceived.middleName != null) {
             authorExists = await this.fetchAuthorIdHasMiddleName(authorReceived);
         }
         else {
