@@ -185,99 +185,110 @@ export class DataSetService {
     return selectedDatasetIds;
   }
 
+  private async selectPublicationFromRawData(currentDataset: number, rawData: any) {
+    let publication: IPublicationModel;
+    //Sort through publications, grab the one desired
+    for (let publicationIndex = 0; publicationIndex < rawData[0].length; publicationIndex++) {
+      if (rawData[0][publicationIndex].dataset_id == currentDataset) {
+        delete rawData[0][publicationIndex].dataset_id
+        publication = rawData[0][publicationIndex]
+        rawData[0].splice(publicationIndex, 1)
+        break;
+      }
+    }
+    return publication;
+  }
+
+  private async selectAuthorsFromRawData(currentDataset: number, rawData: any) {
+    //Sort through authors, then group them accordingly
+    let allAuthorData: IAuthorModel[] = []
+    let singleAuthorData: IAuthorModel
+    for (let authorIndex = 0; authorIndex < rawData[1].length; authorIndex++) {
+      if (rawData[1][authorIndex].dataset_id == currentDataset) {
+        delete rawData[1][authorIndex].dataset_id
+        singleAuthorData = rawData[1][authorIndex]
+        allAuthorData.push(singleAuthorData)
+        rawData[1].splice(authorIndex, 1)
+        authorIndex--
+      }
+    }
+    return allAuthorData;
+  }
+
+  private async selectMaterialsFromRawData(currentDataset: number, rawData: any) {
+    //Sort through materials, then group them accordingly
+    let allMaterialData: IMaterialModel[] = []
+    let singleMaterialData: IMaterialModel
+    for (let materialIndex = 0; materialIndex < rawData[3].length; materialIndex++) {
+      if (rawData[3][materialIndex].dataset_id == currentDataset) {
+        delete rawData[3][materialIndex].dataset_id
+        singleMaterialData = rawData[3][materialIndex]
+        allMaterialData.push(singleMaterialData)
+        rawData[3].splice(materialIndex, 1)
+        materialIndex--
+      }
+    }
+    return allMaterialData;
+  }
+
+  private async selectDataPointsFromRawData(currentDataset: number, rawData: any, externalIndex: number) {
+    //Sort through data points, then group them accordingly
+    let allDataPointData: IData
+    let singleVariableData: IVariable
+    let allVariableData: IVariable[] = []
+    let singleContentData: IContent
+    let allContentData: IContent[] = []
+    let dataPointComments: string[] = null
+    for (let dataPointIndex = 0; dataPointIndex < rawData[4].length; dataPointIndex++) {
+      if (rawData[4][dataPointIndex].dataset_id == currentDataset) {
+        singleVariableData = {
+          name: rawData[4][dataPointIndex].name,
+          unitId: rawData[4][dataPointIndex].unitId,
+          dimensionId: rawData[4][dataPointIndex].dimensionId
+        }
+        allVariableData.push(singleVariableData)
+        singleContentData = {
+          point: rawData[4][dataPointIndex].values
+        }
+        allContentData.push(singleContentData)
+        rawData[4].splice(dataPointIndex, 1)
+        dataPointIndex--
+      }
+    }
+
+    //Sort through data point comments, grab the ones desired
+    for (let commentIndex = 0; commentIndex < rawData[5].length; commentIndex++) {
+      if (rawData[5][commentIndex]?.dataset_id == currentDataset) {
+        dataPointComments = rawData[5][commentIndex]?.datapointcomments
+        rawData[5].splice(commentIndex, 1)
+        break;
+      }
+    }
+
+    allDataPointData = {
+      variables: allVariableData,
+      contents: allContentData,
+      dataPointComments: dataPointComments,
+      comments: rawData[2][externalIndex]?.comments
+    }
+    return allDataPointData;
+  }
+
   private async getDataFromDatasetIds(selectedDatasetIds: number[]) {
     try {
       let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
       let publication: IPublicationModel
-      let dataPointComments: string[]
-      let singleAuthorData: IAuthorModel
-      let allAuthorData: IAuthorModel[] = []
-      let singleMaterialData: IMaterialModel
       let allMaterialData: IMaterialModel[]
-      let singleDataPointData: IDataPointModel
       let allDataPointData: IData
-      let singleVariableData: IVariable
-      let allVariableData: IVariable[]
-      let singleContentData: IContent
-      let allContentData: IContent[]
       let singleDataSet: IClientDatasetModel
       let allDataSets: Array<IClientDatasetModel> = [];
       let currentDataset: number = 0
       for (let index = 0; index < selectedDatasetIds.length; index++) {
         currentDataset = rawData[2][index].id
-
-        //Sort through publications, grab the one desired
-        for (let publicationIndex = 0; publicationIndex < rawData[0].length; publicationIndex++) {
-          if (rawData[0][publicationIndex].dataset_id == currentDataset) {
-            delete rawData[0][publicationIndex].dataset_id
-            publication = rawData[0][publicationIndex]
-            rawData[0].splice(publicationIndex, 1)
-            break;
-          }
-        }
-
-        //Sort through authors, then group them accordingly
-        allAuthorData = []
-        for (let authorIndex = 0; authorIndex < rawData[1].length; authorIndex++) {
-          if (rawData[1][authorIndex].dataset_id == currentDataset) {
-            delete rawData[1][authorIndex].dataset_id
-            singleAuthorData = rawData[1][authorIndex]
-            allAuthorData.push(singleAuthorData)
-            rawData[1].splice(authorIndex, 1)
-            authorIndex--
-          }
-        }
-        publication.authors = allAuthorData
-
-        //Sort through materials, then group them accordingly
-        allMaterialData = []
-        for (let materialIndex = 0; materialIndex < rawData[3].length; materialIndex++) {
-          if (rawData[3][materialIndex].dataset_id == currentDataset) {
-            delete rawData[3][materialIndex].dataset_id
-            singleMaterialData = rawData[3][materialIndex]
-            allMaterialData.push(singleMaterialData)
-            rawData[3].splice(materialIndex, 1)
-            materialIndex--
-          }
-        }
-
-        //Sort through data points, then group them accordingly
-        allVariableData = []
-        allContentData = []
-        allDataPointData = null
-        for (let dataPointIndex = 0; dataPointIndex < rawData[4].length; dataPointIndex++) {
-          if (rawData[4][dataPointIndex].dataset_id == currentDataset) {
-            singleVariableData = {
-              name: rawData[4][dataPointIndex].name,
-              unitId: rawData[4][dataPointIndex].unitId,
-              dimensionId: rawData[4][dataPointIndex].dimensionId
-            }
-            allVariableData.push(singleVariableData)
-            singleContentData = {
-              point: rawData[4][dataPointIndex].values
-            }
-            allContentData.push(singleContentData)
-            rawData[4].splice(dataPointIndex, 1)
-            dataPointIndex--
-          }
-        }
-
-        //Sort through data point comments, grab the ones desired
-        dataPointComments = null
-        for (let commentIndex = 0; commentIndex < rawData[5].length; commentIndex++) {
-          if (rawData[5][commentIndex]?.dataset_id == currentDataset) {
-            dataPointComments = rawData[5][commentIndex]?.datapointcomments
-            rawData[5].splice(commentIndex, 1)
-            break;
-          }
-        }
-
-        allDataPointData = {
-          variables: allVariableData,
-          contents: allContentData,
-          dataPointComments: dataPointComments,
-          comments: rawData[2][index]?.comments
-        }
+        publication = await this.selectPublicationFromRawData(currentDataset, rawData)
+        publication.authors = await this.selectAuthorsFromRawData(currentDataset, rawData)
+        allMaterialData = await this.selectMaterialsFromRawData(currentDataset, rawData)
+        allDataPointData = await this.selectDataPointsFromRawData(currentDataset, rawData, index)
 
         singleDataSet = {
           reference: publication,
@@ -401,33 +412,39 @@ export class DataSetService {
     }
   }
 
-  private async getDataFromUnapprovedDatasetIds(incompletDatasets: IClientDatasetModel[], approvalData: any[]) {
-    let setOfData: Array<IApprovalDatasetModel> = [];
-    let compiledDataset: IApprovalDatasetModel
-    for (let i = 0; i < incompletDatasets.length; i++) {
-      compiledDataset = {
-        reference: incompletDatasets[i].reference,
-        id: incompletDatasets[i].id,
-        dataset_name: incompletDatasets[i].dataset_name,
-        datasetIsFlagged: approvalData[i].isFlagged,
-        datasetFlaggedComment: approvalData[i].flaggedComment,
-        data_type: incompletDatasets[i].data_type,
-        category: incompletDatasets[i].category,
-        subcategory: incompletDatasets[i].subcategory,
-        material: incompletDatasets[i].material,
-        data: incompletDatasets[i].data
-      }
-      setOfData.push(compiledDataset)
-    }
-    return setOfData;
-  }
-
   private async compileUnapprovedDatasetArray(rawDatasetIds: IDatasetIDModel[]) {
     let selectedDatasetIds = await this.createDatasetIdArray(rawDatasetIds);
-    let incompletDatasets = await this.getDataFromDatasetIds(selectedDatasetIds);
-    let approvalData = await this.datasetApprovalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds)
-    let setOfData = await this.getDataFromUnapprovedDatasetIds(incompletDatasets, approvalData);
-    return setOfData
+    let approvalData = await this.datasetApprovalModel.fetchUnapprovedDatasetsInfo(selectedDatasetIds);
+    let rawData = await this.dataQuery.getAllData(selectedDatasetIds)
+    let publication: IPublicationModel
+    let allMaterialData: IMaterialModel[]
+    let allDataPointData: IData
+    let singleDataSet: IApprovalDatasetModel
+    let allDataSets: Array<IApprovalDatasetModel> = [];
+    let currentDataset: number = 0
+    for (let index = 0; index < selectedDatasetIds.length; index++) {
+      currentDataset = rawData[2][index].id
+      publication = await this.selectPublicationFromRawData(currentDataset, rawData)
+      publication.authors = await this.selectAuthorsFromRawData(currentDataset, rawData)
+      allMaterialData = await this.selectMaterialsFromRawData(currentDataset, rawData)
+      allDataPointData = await this.selectDataPointsFromRawData(currentDataset, rawData, index)
+
+      singleDataSet = {
+        reference: publication,
+        id: currentDataset,
+        dataset_name: rawData[2][index].dataset_name,
+        datasetIsFlagged: approvalData[index].isFlagged,
+        datasetFlaggedComment: approvalData[index].flaggedComment,
+        data_type: rawData[2][index]?.data_type,
+        category: rawData[2][index]?.category,
+        subcategory: rawData[2][index]?.subcategory,
+        material: allMaterialData,
+        data: allDataPointData
+      }
+
+      allDataSets.push(singleDataSet);
+    }
+    return allDataSets;
   }
 
   /**

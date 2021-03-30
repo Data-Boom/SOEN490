@@ -11,7 +11,7 @@ const dataUploadRoute = '/api/v1/dataUpload'
 const datasetRoute = '/api/v1/dataset'
 const flagDatasetRoute = '/api/v1/flagDataSet'
 const approvedDatasetRoute = '/api/v1/approveDataset'
-const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
+const unapprovedDatasetsRoute = '/api/v1/unapprovedDatasets'
 const submitEditedDatasetRoute = '/api/v1/dataUpload'
 
 export const callGetDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
