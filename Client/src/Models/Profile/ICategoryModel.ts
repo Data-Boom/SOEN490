@@ -1,12 +1,12 @@
 export interface ICategoryModel {
+  id?: number
   name: string
-  id: number
-  subCategories: ISubCategoryModel[]
+  subcategories?: ISubCategoryModel[]
 }
 
 export interface ISubCategoryModel {
+  id?: number
   name: string
-  id: number
   categoryId?: number
 }
 
@@ -39,13 +39,13 @@ export const testSubcategory2: ISubCategoryModel[] = [
 export const testCategory: ICategoryModel = {
   name: 'category1324234234',
   id: 1,
-  subCategories: testSubcategory1
+  subcategories: testSubcategory1
 }
 
 export const testCategory2: ICategoryModel = {
   name: 'category257567',
   id: 2,
-  subCategories: testSubcategory2
+  subcategories: testSubcategory2
 }
 
 export const allCategory: ICategoryModel[] = [
@@ -53,15 +53,12 @@ export const allCategory: ICategoryModel[] = [
   testCategory2
 ]
 
+export const newSubcategory: ISubCategoryModel = { 
+  name: '',
+}
 
 export const newCategory: ICategoryModel = {
   name: '',
-  id: -1,
-  subCategories: []
+  subcategories: [newSubcategory]
 }
 
-export const newSubcategory: ISubCategoryModel = {
-  name: "",
-  id: -1,
-  categoryId: -1
-}
