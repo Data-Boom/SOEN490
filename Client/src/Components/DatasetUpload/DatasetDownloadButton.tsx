@@ -9,28 +9,28 @@ export const DatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
 
     //helper methods
-    const vArray = (): any => {
+    const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
             name += datasets.data.variables[i].name + ", " //need to add the variable units, how?
         }
         return name
     }
-    const mArray = (): any => {
+    const materialArray = (): any => {
         var name = " "
         for (var i in datasets.material) {
             name += datasets.material[i].composition + " " + datasets.material[i].details + ", "
         }
         return name
     }
-    const authArray = (): any => {
+    const authorArray = (): any => {
         var name = " "
         for (var i in datasets.reference.authors) {
             name += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName + " "
         }
         return name
     }
-    const dArray = (): any => {
+    const dataContentArray = (): any => {
         var name = " "
         for (var i in datasets.data.contents) {
             name += datasets.data.contents[i].point + " "
@@ -38,22 +38,22 @@ export const DatasetDownloadButton = (props: IProps) => {
         return name
     }
 
-    const hardCodedShit = {
-        "Dataset name": datasets.dataset_name,
-        "Material": mArray(),
-        "Publications/Source": {},
-        "Authors": authArray(),
-        "Title": datasets.reference.title,
-        //"Journal": datasets.reference.
-        "Year": datasets.reference.year,
-        "Export source": " databoom.concordia.ca",
-        "Export date": new Date().toLocaleString(),
-        "Variables": vArray(),
-        "data": dArray()
-    }
+    const downloadedDataDisplayed: string =
+        " Dataset name: " + datasets.dataset_name + "\n " +
+        "Material: " + materialArray() + "\n " +
+        "Publications/Source: \n " +
+        "Authors: " + authorArray() + "\n " +
+        "Title: " + datasets.reference.title + "\n " +
+        "Year: " + datasets.reference.year + "\n " +
+        "Export source: " + " databoom.concordia.ca \n " +
+        "Export date: " + new Date().toLocaleString() + "\n " +
+        "Variables: " + variableArray() + "\n " +
+        "Data: " + dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
+        "Comments: \n" + datasets.data.comments + " \n "
+
 
     const handleJsonDownload = () => {
-        download("dataset.txt", JSON.stringify(hardCodedShit, null, 4))
+        download("dataset.txt", downloadedDataDisplayed)//JSON.stringify(downloadedDataDisplayed, null, 4))
     }
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
     function download(filename: string, text: string) {
