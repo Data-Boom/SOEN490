@@ -1,5 +1,5 @@
 export interface IAuthors {
-    firstname: string,
-    middlename?: string,
-    lastname: string
+    firstName: string,
+    middleName?: string,
+    lastName: string
 }

@@ -28,8 +28,7 @@ export default class EditUploadService extends AbstractUploadService {
         }
 
         // Generate new publication and get its ID
-        let publicationType: string = ''
-        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, publicationType)
+        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, this.parsedFileData.reference.type)
         let publisherNameId: number = await this.insertPublisherData(this.uploadModel, this.parsedFileData.reference.publisher)
         let allAuthors: Authors[] = await this.insertAuthorsData(this.uploadModel, this.parsedFileData.reference.authors)
 
