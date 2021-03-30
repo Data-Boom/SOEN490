@@ -23,8 +23,7 @@ import { useTitle } from '../../Common/Hooks/useTitle'
 import { DatasetDownloadButton } from './DatasetDownloadButton'
 
 interface IProps {
-  initialDataset?: IDatasetModel,
-  downloadDataset?: IDatasetModel[]
+  initialDataset?: IDatasetModel
 }
 
 interface IDatasetViewParams {
@@ -38,7 +37,7 @@ export const DatasetView = (props: IProps) => {
   useTitle("Dataset Upload")
   useDispatchOnLoad(loadDimensionsThunk)
   useDispatchOnLoad(loadVariablesThunk)
-  const { initialDataset, downloadDataset } = { ...props }
+  const { initialDataset } = { ...props }
   const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
 
