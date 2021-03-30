@@ -16,12 +16,6 @@ interface IProps {
 export const CategoryForm = (props: IProps) => {
 
   const { id } = props
-  const [editable, setEditable] = useState<boolean>(true)
-
-
-  // const makeCategoryEditable = () => {
-  //   setEditable(true)
-  // }
 
   const renderSubmitButton = () => {
       return (
