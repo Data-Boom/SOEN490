@@ -1,4 +1,5 @@
 import SnackbarUtils from "../Components/Utils/SnackbarUtils"
+import { isEmpty } from "lodash"
 import { stringify } from "query-string"
 
 const requestBase: RequestInit = {
@@ -75,7 +76,7 @@ export class FluentRequest {
     }
     else {
       const errorMessage = await response?.json()
-      SnackbarUtils.error(errorMessage?.error || errorMessage)
+      errorMessage && !isEmpty(errorMessage) && SnackbarUtils.error(errorMessage.error || errorMessage)
       return null
     }
   }
