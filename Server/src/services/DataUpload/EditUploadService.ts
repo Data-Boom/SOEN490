@@ -49,13 +49,6 @@ export default class EditUploadService extends AbstractUploadService {
         let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, subcategoryID, this.parsedFileData.data.comments]
         await this.insertDataset(this.uploadModel, arrayOfDatasetInfo)
 
-        // Run check on variable vs contents length to see if they're equal for data points and insert
-        if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
-            console.log("variable and content lengths are equal....proceed")
-        } else {
-            throw new BadRequest('variable and content lengths dont match')
-        }
-
         let individualDataSetComments: string[] = [];
         for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
             let dataPointValues = this.getDataInformationFromContentsArray(this.parsedFileData.data.contents, i);
