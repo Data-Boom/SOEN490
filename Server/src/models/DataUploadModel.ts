@@ -112,7 +112,7 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdHasMiddleName(author: IAuthors): Promise<any> {
-        return await this.selectAuthorIdQuery(author.firstName, author.lastName)
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
             .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middleName })
             .getRawOne();
     }
@@ -126,7 +126,7 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdNoMiddleName(author: IAuthors): Promise<any> {
-        return await this.selectAuthorIdQuery(author.firstName, author.lastName)
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
             .getRawOne();
     }
 
