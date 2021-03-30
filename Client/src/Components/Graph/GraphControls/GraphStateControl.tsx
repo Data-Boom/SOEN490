@@ -83,7 +83,7 @@ export const GraphStateControl = (props: IProps) => {
           visible={loadingDatasets}
         /> :
         <>
-          {completeDatasets && completeDatasets[0] ?
+          {completeDatasets && completeDatasets[0] &&
             <Grid container direction="column">
               <Grid item>
                 <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
@@ -93,8 +93,7 @@ export const GraphStateControl = (props: IProps) => {
                   graphState={graphState}
                 />}
               </Grid>
-            </Grid> :
-            null
+            </Grid>
           }
           <DatasetControl
             datasetStates={graphState.datasets}

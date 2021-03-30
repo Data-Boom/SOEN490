@@ -34,8 +34,8 @@ export const GraphView = () => {
 
   return (
     <>
-      <Box ml={8}>
-        <Grid container spacing={3}>
+      <Box>
+        <Grid container>
           <Grid item container sm={7} >
             <Graph
               datasets={graphDatasets}
@@ -43,7 +43,7 @@ export const GraphView = () => {
             />
           </Grid>
           <Grid item sm={5}>
-            <Box ml={5} mr={5} mt={5}>
+            <Box mr={5} mt={5}>
               <GraphStateControl
                 graphState={graphState}
                 onGraphStateChange={handleGraphStateChanged}
