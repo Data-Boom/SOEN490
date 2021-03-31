@@ -5,7 +5,7 @@ import { ISignUpInformation } from '../../genericInterfaces/AuthenticationInterf
 
 describe('Authentication Model Methods', () => {
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         try {
             await createConnection();
         } catch (error) {
@@ -17,7 +17,7 @@ describe('Authentication Model Methods', () => {
         jest.setTimeout(60000)
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 

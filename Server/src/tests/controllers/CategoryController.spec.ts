@@ -8,7 +8,7 @@ describe('Category Controller', () => {
   let mockResponse;
   let controller: CategoryController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     try {
       await createConnection();
     } catch (error) {
@@ -26,7 +26,7 @@ describe('Category Controller', () => {
     }
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await getConnection().close();
   });
 

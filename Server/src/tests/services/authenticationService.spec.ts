@@ -8,7 +8,7 @@ describe('Authentication tests', () => {
     let next;
     let authenticationService: AuthenticationService;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
 
         try {
             await createConnection();
@@ -28,7 +28,7 @@ describe('Authentication tests', () => {
         next = {};
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 

@@ -8,7 +8,7 @@ describe('Dimensions Controller', () => {
   let mockRequest;
   let mockResponse;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     try {
       await createConnection();
     } catch (error) {
@@ -26,7 +26,7 @@ describe('Dimensions Controller', () => {
     }
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await getConnection().close();
   });
 

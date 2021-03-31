@@ -8,7 +8,7 @@ describe('Graphs State Controller ', () => {
   let mockResponse;
   let SavedGraphsController: GraphsController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     try {
       await createConnection();
     } catch (error) {
@@ -26,7 +26,7 @@ describe('Graphs State Controller ', () => {
     }
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await getConnection().close();
   });
 

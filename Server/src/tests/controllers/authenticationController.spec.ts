@@ -9,7 +9,7 @@ describe('Authentication Controller', () => {
     let next;
     let authenticationController: AuthenticationController;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         try {
             await createConnection();
         } catch (error) {
@@ -30,7 +30,7 @@ describe('Authentication Controller', () => {
         next = {};
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 

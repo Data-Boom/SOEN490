@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createConnection, getConnectionManager, getConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 import { inValidTestData, validTestData } from '../testData/testData';
 
 import { DataUploadController } from '../../controllers/dataUploadController';
@@ -9,15 +9,8 @@ describe('Data Upload Controller', () => {
     let mockResponse
     let dataUploadController: DataUploadController
 
-    beforeEach(async () => {
-        try {
-            await createConnection();
-        } catch (error) {
-            // If AlreadyHasActiveConnectionError occurs, return already existent connection
-            if (error.name === "AlreadyHasActiveConnectionError") {
-                return getConnectionManager().get();
-            }
-        }
+    beforeAll(async () => {
+        await createConnection();
         jest.setTimeout(60000)
         dataUploadController = new DataUploadController()
         mockRequest = {}
@@ -27,7 +20,7 @@ describe('Data Upload Controller', () => {
         }
 
     })
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 
@@ -36,7 +29,7 @@ describe('Data Upload Controller', () => {
         mockRequest = {
             body: validTestData
         }
-        await newUploadWithAssert(mockRequest as Request, mockResponse as Response, 201)
+        await newUpload(mockRequest as Request, mockResponse as Response, 201)
     })
 
     test('Invalid Json Upload', async () => {
@@ -45,7 +38,7 @@ describe('Data Upload Controller', () => {
         mockRequest = {
             body: inValidTestData
         }
-        await newUploadWithAssert(mockRequest as Request, mockResponse as Response, 400)
+        await newUpload(mockRequest as Request, mockResponse as Response, 400)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
     })
 
@@ -59,7 +52,7 @@ describe('Data Upload Controller', () => {
                 }
             }
         }
-        await newUploadWithAssert(mockRequest as Request, mockResponse as Response, 400)
+        await newUpload(mockRequest as Request, mockResponse as Response, 400)
         expect(mockResponse.json).toBeCalledWith(expectedResponse)
     })
 
@@ -72,7 +65,7 @@ describe('Data Upload Controller', () => {
                 datasetId: '9'
             }
         }
-        await editUploadWithAssert(mockRequest as Request, mockResponse as Response, 201, expectedResponse)
+        await editUpload(mockRequest as Request, mockResponse as Response, 201, expectedResponse)
     })
 
     test('Invalid User Data Set Edit; bad data set id', async () => {
@@ -84,7 +77,7 @@ describe('Data Upload Controller', () => {
                 datasetId: 'wefwfeewfewfwefwef'
             }
         }
-        await editUploadWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
+        await editUpload(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
     })
 
     test('Invalid User Data Set Edit; different uploader ID', async () => {
@@ -96,7 +89,7 @@ describe('Data Upload Controller', () => {
                 datasetId: '15'
             }
         }
-        await editUploadWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
+        await editUpload(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
     })
 
     test('Invalid Data Set Edit; empty body', async () => {
@@ -108,15 +101,15 @@ describe('Data Upload Controller', () => {
                 datasetId: '0'
             }
         }
-        await editUploadWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
+        await editUpload(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
     })
 
-    async function newUploadWithAssert(mockRequest: Request, mockResponse: Response, status: number) {
+    async function newUpload(mockRequest: Request, mockResponse: Response, status: number) {
         await dataUploadController.createNewDatasetRequest(mockRequest, mockResponse)
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function editUploadWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function editUpload(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await dataUploadController.createEditUploadRequest(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);

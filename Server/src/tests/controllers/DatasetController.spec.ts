@@ -8,7 +8,7 @@ describe('Data Set Controller ', () => {
     let mockResponse;
     let GetDataControllerController: DataSetController;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         try {
             await createConnection();
         } catch (error) {
@@ -26,7 +26,7 @@ describe('Data Set Controller ', () => {
         }
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 
