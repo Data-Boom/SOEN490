@@ -9,13 +9,15 @@ export const MuiTextFieldFormik = ({ field, form: { touched, errors }, ...props 
 
   const variant = props.variant || "outlined"
   return (
-    <TextField fullWidth variant={variant} {...field} {...props} error={error} helperText={helperText} />
+    <TextField InputLabelProps={{ shrink: field.value || field.isFocused }} fullWidth variant={variant} {...field} {...props} error={error} helperText={helperText} />
   )
 }
 
 export const MuiSelectFormik = ({ field, form: { touched, errors }, ...props }) => {
   const [error, helperText] = getErrorAndHelper(field, touched, errors)
 
+  console.log(field.name, 'field.name')
+  console.log(field.value, 'field.value')
   return (
     <>
       <FormControl variant="outlined" fullWidth>
