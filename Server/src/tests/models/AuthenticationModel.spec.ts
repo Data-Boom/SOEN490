@@ -11,8 +11,7 @@ describe('Authentication Model Methods', () => {
         } catch (error) {
             // If AlreadyHasActiveConnectionError occurs, return already existent connection
             if (error.name === "AlreadyHasActiveConnectionError") {
-                const existentConn = getConnectionManager().get();
-                return existentConn;
+                return getConnectionManager().get();
             }
         }
         jest.setTimeout(60000)

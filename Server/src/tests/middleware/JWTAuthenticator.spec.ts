@@ -26,15 +26,14 @@ describe('Authorization Middleware', () => {
             setHeader: jest.fn(() => anotherResponse)
         }
         newRequest = {} as Request;
-        try {
-            await createConnection();
-        } catch (error) {
-            // If AlreadyHasActiveConnectionError occurs, return already existent connection
-            if (error.name === "AlreadyHasActiveConnectionError") {
-                const existentConn = getConnectionManager().get();
-                return existentConn;
-            }
+      try {
+          await createConnection();
+      } catch (error) {
+        // If AlreadyHasActiveConnectionError occurs, return already existent connection
+        if (error.name === "AlreadyHasActiveConnectionError") {
+          return getConnectionManager().get();
         }
+      }
         jest.setTimeout(60000)
     });
 
