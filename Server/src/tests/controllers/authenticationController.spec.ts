@@ -79,7 +79,8 @@ describe('Authentication Controller', () => {
             }
         }
 
-        await loginRequest(mockRequest as Request, mockResponse as Response, 400, expectedResponse, next as NextFunction)
+        await loginRequest(mockRequest as Request, mockResponse as Response, 400, next as NextFunction)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
 
     test('Login with unregistered Email - Error 400', async () => {
@@ -91,7 +92,8 @@ describe('Authentication Controller', () => {
             }
         }
 
-        await loginRequest(mockRequest as Request, mockResponse as Response, 400, expectedResponse, next as NextFunction)
+        await loginRequest(mockRequest as Request, mockResponse as Response, 400, next as NextFunction)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
 
 
@@ -131,10 +133,8 @@ describe('Authentication Controller', () => {
             }
         }
         let regex: RegExp = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
-        //
-        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        await loginRequest(mockRequest as Request, mockResponse as Response, 200, next as NextFunction)
         expect(regex.test(mockResponse.json));
-        expect(mockResponse.status).toBeCalledWith(200);
     });
 
     //to fix
@@ -188,9 +188,8 @@ describe('Authentication Controller', () => {
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function loginRequest(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any, next: any) {
+    async function loginRequest(mockRequest: Request, mockResponse: Response, status: number, next: any) {
         await authenticationController.createLoginRequest(mockRequest, mockResponse, next)
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
