@@ -30,9 +30,7 @@ describe('Graphs State Controller ', () => {
         graphStateId: '1'
       }
     }
-    await SavedGraphsController.createRequestForSingleGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    expect(mockResponse.status).toBeCalledWith(200);
+    await getSingleGraph(mockRequest as Request, mockResponse as Response, 200, expectedResponse)
   });
 
   test('Invalid GraphID Request', async () => {
@@ -42,9 +40,7 @@ describe('Graphs State Controller ', () => {
       }
 
     }
-    await SavedGraphsController.createRequestForSingleGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith("Invalid graph ID entered");
-    expect(mockResponse.status).toBeCalledWith(400);
+    await getSingleGraph(mockRequest as Request, mockResponse as Response, 400, "Invalid graph ID entered")
   });
 
   test('Non-existant GraphID Request', async () => {
@@ -53,9 +49,7 @@ describe('Graphs State Controller ', () => {
         graphStateId: '-1'
       }
     }
-    await SavedGraphsController.createRequestForSingleGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith("Graph does not exist");
-    expect(mockResponse.status).toBeCalledWith(400);
+    await getSingleGraph(mockRequest as Request, mockResponse as Response, 400, "Graph does not exist")
   });
 
   test('Valid User Saved Graphs Request; multiple data sets on graph', async () => {
@@ -67,7 +61,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await getSavedGraphs(mockRequest, mockResponse, expectedResponse)
+    await getSavedGraphs(mockRequest as Request, mockResponse as Response, expectedResponse)
   });
 
   test('Valid User Saved Graphs Request; one data set on graph', async () => {
@@ -79,7 +73,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await getSavedGraphs(mockRequest, mockResponse, expectedResponse)
+    await getSavedGraphs(mockRequest as Request, mockResponse as Response, expectedResponse)
   });
 
   test('Valid User Saved Graphs Request; user has no graphs', async () => {
@@ -91,7 +85,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await getSavedGraphs(mockRequest, mockResponse, expectedResponse)
+    await getSavedGraphs(mockRequest as Request, mockResponse as Response, expectedResponse)
   });
 
   test('Valid Graph Insert Request', async () => {
@@ -164,9 +158,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForUpdatingGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    expect(mockResponse.status).toBeCalledWith(200);
+    await updateGraph(mockRequest as Request, mockResponse as Response, 200, expectedResponse)
   });
 
   test('Invalid Graph Update Request; user did not create this graph', async () => {
@@ -179,9 +171,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForUpdatingGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    expect(mockResponse.status).toBeCalledWith(400);
+    await updateGraph(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
   });
 
   //Do these deletion tests last
@@ -196,9 +186,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForDeletingGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith("Graph successfully deleted");
-    expect(mockResponse.status).toBeCalledWith(200);
+    await deleteGraph(mockRequest as Request, mockResponse as Response, 200, "Graph successfully deleted")
   });
 
   test('Delete Graph Request; created by different user', async () => {
@@ -212,9 +200,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForDeletingGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith("This is not your graph!");
-    expect(mockResponse.status).toBeCalledWith(400);
+    await deleteGraph(mockRequest as Request, mockResponse as Response, 400, "This is not your graph!")
   });
 
   test('Delete Non-existant Graph Request; graph state does not exist', async () => {
@@ -228,9 +214,7 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForDeletingGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith("Graph does not exist");
-    expect(mockResponse.status).toBeCalledWith(400);
+    await deleteGraph(mockRequest as Request, mockResponse as Response, 400, "Graph does not exist")
   });
 
   test('Invalid Delete Graph Request; graph state ID is NaN', async () => {
@@ -244,15 +228,30 @@ describe('Graphs State Controller ', () => {
         }
       }
     }
-    await SavedGraphsController.createRequestForDeletingGraph(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith("Invalid graph ID entered");
-    expect(mockResponse.status).toBeCalledWith(400);
+    await deleteGraph(mockRequest as Request, mockResponse as Response, 400, "Invalid graph ID entered")
   });
 
-  async function getSavedGraphs(mockRequest: any, mockResponse: any, expectedResponse: any) {
-    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest as Request, mockResponse as Response)
+  async function getSingleGraph(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    await SavedGraphsController.createRequestForSingleGraph(mockRequest, mockResponse)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(status);
+  }
+  async function getSavedGraphs(mockRequest: Request, mockResponse: Response, expectedResponse: any) {
+    await SavedGraphsController.createRequestForUserSavedGraphs(mockRequest, mockResponse)
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
     expect(mockResponse.status).toBeCalledWith(200);
+  }
+
+  async function updateGraph(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    await SavedGraphsController.createRequestForUpdatingGraph(mockRequest, mockResponse)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(status);
+  }
+
+  async function deleteGraph(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    await SavedGraphsController.createRequestForDeletingGraph(mockRequest, mockResponse)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(status);
   }
 })
 
