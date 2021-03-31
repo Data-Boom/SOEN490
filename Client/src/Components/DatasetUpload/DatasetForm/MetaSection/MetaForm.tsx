@@ -1,6 +1,5 @@
 import { Box, Grid, ThemeProvider, Typography } from '@material-ui/core'
 import { FastField, Field, FieldArray, useFormikContext } from 'formik'
-import { ICategoryModel, ISubcategoryModel } from '../../../../Remote/Endpoints/CategoryEndpoint'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../../../Forms/FormikFields'
 import React, { useState } from 'react'
 import { disabledTheme, shouldComponentUpdate } from '../../../Forms/ComponentUpdate'
@@ -9,6 +8,7 @@ import { IMaterial } from '../../../../Models/Datasets/IDatasetModel'
 import { MaterialSelectChipArray } from './MaterialSelectChipArray'
 import { classStyles } from '../../../../appTheme'
 import { get } from 'lodash'
+import { ICategoryModel, ISubCategoryModel } from '../../../../Models/Profile/ICategoryModel'
 
 interface IProps {
   materials: IMaterial[],
@@ -33,7 +33,7 @@ export const MetaForm = (props: IProps) => {
   const { setFieldValue } = useFormikContext()
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
-  const getSubCategories = (categoryId: number): ISubcategoryModel[] => {
+  const getSubCategories = (categoryId: number): ISubCategoryModel[] => {
     const foundCategory = categories.find(category => category.id == categoryId)
     if (!foundCategory) {
       return []

@@ -13,6 +13,8 @@ import { ProfileGraphRow } from './ProfileGraphRow'
 import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
+import { CategoryManagementTab } from './CategoryManagementSection/CategoryManagementTab';
+
 import { useDispatch } from 'react-redux'
 import { useTitle } from '../../Common/Hooks/useTitle'
 
@@ -171,6 +173,7 @@ export function ProfileView() {
             <Tab label="Permissions" {...a11yProps(3)} />
             <Tab label="View Uploads" {...a11yProps(4)} />
             <Tab label="Manage Units" {...a11yProps(5)} />
+            <Tab label="Manage Categories" {...a11yProps(6)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -239,6 +242,9 @@ export function ProfileView() {
           </TabPanel>
           <TabPanel value={tab} index={5}>
             <DimensionManagementTab />
+          </TabPanel>
+          <TabPanel value={tab} index={6}>
+            <CategoryManagementTab />
           </TabPanel>
         </Container>
       </div>

@@ -1,6 +1,5 @@
 import { Button, Grid, Typography } from '@material-ui/core'
 import { Field, FieldArray, Form, Formik } from 'formik'
-import { ICategoryModel, ISubcategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 import { ISearchDatasetsFormModel, defaultSearchDatasetsModel, searchDatasetsValidationSchema } from './ISearchDatasetsFormModel'
 import { MuiSelectFormik, MuiTextFieldFormik } from '../Forms/FormikFields'
 import React, { useEffect, useState } from 'react'
@@ -8,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { IDatapointModel } from '../../Remote/Endpoints/DatapointEndpoint'
 import { MaterialSelectChipArray } from '../DatasetUpload/DatasetForm/MetaSection/MaterialSelectChipArray'
 import { listMaterials } from '../../Remote/Endpoints/MaterialEndpoint'
+import { ICategoryModel, ISubCategoryModel } from '../../Models/Profile/ICategoryModel'
 
 interface IProps {
   handleSubmit(formValues: ISearchDatasetsFormModel): void,
@@ -47,7 +47,7 @@ export const SearchDatasetsForm = (props: IProps): any => {
     )
   }
 
-  const getSubCategories = (categoryId: number): ISubcategoryModel[] => {
+  const getSubCategories = (categoryId: number): ISubCategoryModel[] => {
     const foundCategory = categories.find(category => category.id == categoryId)
     if (!foundCategory) {
       return []
