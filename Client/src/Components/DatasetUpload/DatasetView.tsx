@@ -21,6 +21,7 @@ import { useParams } from "react-router"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
 import { DatasetDownloadButton } from './DatasetDownloadButton'
+import { DownloadFileTypeModal } from './DownloadFileTypeModal'
 
 interface IProps {
   initialDataset?: IDatasetModel
@@ -48,11 +49,13 @@ export const DatasetView = (props: IProps) => {
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
+  const [dlFileTypeOpen, setDLFileTypeOpen] = useState(false)
 
   useEffect(() => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
     setFileUploadModalOpen(false)
     setFileTypePromptOpen(false)
+    setDLFileTypeOpen(false)
   }, [location.state])
 
   useEffect(() => {
@@ -82,6 +85,12 @@ export const DatasetView = (props: IProps) => {
     setAcceptedFileType(csvType)
   }
 
+  const handleDLTxtSelected = () => {
+    return (
+      <DatasetDownloadButton datasets={initialValues} />
+    )
+  }
+
   const renderTopButtons = (): any => {
     return (
       <>
@@ -92,8 +101,8 @@ export const DatasetView = (props: IProps) => {
                 <FavoriteDatasetButton datasetId={initialValues.id} />
               </Grid>
               <Grid item>
-                {/* <Button variant="contained" color="primary" startIcon={<GetAppIcon />} onClick={() => alert("haha, im perfect!")}>Download</Button> */}
-                <DatasetDownloadButton datasets={initialValues} />
+                {/* <DatasetDownloadButton datasets={initialValues} /> */}
+                <Button id="download" onClick={() => setDLFileTypeOpen(true)} color="primary" variant="contained"> Download </Button>
               </Grid>
               <Grid item>
                 <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
@@ -131,6 +140,11 @@ export const DatasetView = (props: IProps) => {
         open={fileUploadOpen}
         acceptedFileType={acceptedFileType}
         onClose={() => setFileUploadModalOpen(false)}
+      />
+      <DownloadFileTypeModal
+        open={dlFileTypeOpen}
+        onClose={() => setDLFileTypeOpen(false)}
+        onSubmitTxt={handleDLTxtSelected}
       />
     </>
   )

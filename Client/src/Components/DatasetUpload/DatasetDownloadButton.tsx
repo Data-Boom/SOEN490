@@ -38,7 +38,7 @@ export const DatasetDownloadButton = (props: IProps) => {
         return name
     }
 
-    const downloadedDataDisplayed: string =
+    const downloadedTxtDataDisplayed: string =
         " Dataset name: " + datasets.dataset_name + "\n " +
         "Material: " + materialArray() + "\n " +
         "Publications/Source: \n " +
@@ -52,8 +52,8 @@ export const DatasetDownloadButton = (props: IProps) => {
         "Comments: \n" + datasets.data.comments + " \n "
 
 
-    const handleJsonDownload = () => {
-        download("dataset.txt", downloadedDataDisplayed)//JSON.stringify(downloadedDataDisplayed, null, 4))
+    const handleTxtDownload = () => {
+        download("dataset.txt", downloadedTxtDataDisplayed)//JSON.stringify(downloadedTxtDataDisplayed, null, 4))
     }
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
     function download(filename: string, text: string) {
@@ -69,7 +69,8 @@ export const DatasetDownloadButton = (props: IProps) => {
         document.body.removeChild(element)
     }
     return (
-        <Button id="download-txt" onClick={handleJsonDownload} color="primary" variant="contained"> Download </Button>
+        // <Button id="download-txt" onClick={handleTxtDownload} color="primary" variant="contained"> Download </Button>
+        handleTxtDownload()
     )
 
 }
