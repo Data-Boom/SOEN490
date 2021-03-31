@@ -37,9 +37,8 @@ describe('Dimensions Controller', () => {
     mockRequest = {
       body: validDimensionData
     }
-    await dimensionsController.createDimension(mockRequest as Request, mockResponse as Response)
+    await createDimension(mockRequest as Request, mockResponse as Response, 201)
     expect(mockResponse.json).not.toBeUndefined;
-    expect(mockResponse.status).toBeCalledWith(201);
   });
 
   test('Invalid Create Dimension Request due to missing parameters - Error 400', async () => {
@@ -47,8 +46,7 @@ describe('Dimensions Controller', () => {
     mockRequest = {
       body: invalidDimensionData
     }
-    await dimensionsController.createDimension(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.status).toBeCalledWith(400);
+    await createDimension(mockRequest as Request, mockResponse as Response, 400)
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
   });
 
@@ -58,8 +56,7 @@ describe('Dimensions Controller', () => {
       body: duplicateDimensionData
     }
 
-    await dimensionsController.createDimension(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.status).toBeCalledWith(400);
+    await createDimension(mockRequest as Request, mockResponse as Response, 400)
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
   });
 
@@ -81,8 +78,7 @@ describe('Dimensions Controller', () => {
       body: invalidDimensionData
     }
 
-    await dimensionsController.createDimension(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.status).toBeCalledWith(400);
+    await createDimension(mockRequest as Request, mockResponse as Response, 400)
     expect(mockResponse.json).toBeCalledWith(expectedResponse);
   });
 
@@ -93,9 +89,7 @@ describe('Dimensions Controller', () => {
     mockRequest = {
       params: validDeleteDimensionData
     }
-    await dimensionsController.deleteDimension(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.json).toBeCalledWith(expectedResponse);
-    expect(mockResponse.status).toBeCalledWith(200);
+    await deleteDimension(mockRequest as Request, mockResponse as Response, 200, expectedResponse)
   });
 
   test('Invalid Case to Delete Dimension - Unit in use', async () => {
@@ -103,9 +97,17 @@ describe('Dimensions Controller', () => {
     mockRequest = {
       params: invalidDeleteDimensionDataUnitInUse
     }
-    await dimensionsController.deleteDimension(mockRequest as Request, mockResponse as Response)
-    expect(mockResponse.status).toBeCalledWith(400);
-    expect(mockResponse.json).toBeCalledWith(expectedResponse)
+    await deleteDimension(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
   });
 
+  async function createDimension(mockRequest: Request, mockResponse: Response, status: number) {
+    await dimensionsController.createDimension(mockRequest, mockResponse)
+    expect(mockResponse.status).toBeCalledWith(status);
+  }
+
+  async function deleteDimension(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    await dimensionsController.deleteDimension(mockRequest, mockResponse)
+    expect(mockResponse.json).toBeCalledWith(expectedResponse);
+    expect(mockResponse.status).toBeCalledWith(status);
+  }
 })
