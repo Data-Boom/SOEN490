@@ -73,15 +73,15 @@ export const SearchDatasetsForm = (props: IProps): any => {
             <Typography variant='h4' align="left">Search</Typography>
             <Grid container spacing={4}>
               <Grid item>
-                <Field name="firstName" label='First Name' component={MuiTextFieldFormik} />
+                <Field name="firstName" label="Author's First Name" component={MuiTextFieldFormik} />
               </Grid>
 
               <Grid item>
-                <Field name="lastName" label='Last Name' component={MuiTextFieldFormik} />
+                <Field name="lastName" label="Author's Last Name" component={MuiTextFieldFormik} />
               </Grid>
 
               <Grid item>
-                <Field name="year" label='Year' component={MuiTextFieldFormik} />
+                <Field name="year" label='Publication Year' component={MuiTextFieldFormik} />
               </Grid>
 
               <Grid item>

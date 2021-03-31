@@ -23,5 +23,6 @@ export const deleteCategory = async (categoryId: number): Promise<void> => {
 }
 
 export const updateCategory = async (category: ICategoryModel): Promise<void> => {
-  await put(categoryRoute).withBody(category).json()
+  let result = await put(categoryRoute).withBody(category).json()
+  return result || []
 }

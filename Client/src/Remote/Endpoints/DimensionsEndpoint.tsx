@@ -15,7 +15,7 @@ export const callAddDimension = async (dimensionModel: IDimensionModel): Promise
 
 export const callChangeDimension = async (dimensionModel: IDimensionModel): Promise<any> => {
   const result = await put(dimensionRoute).withBody(dimensionModel).json()
-  if (result == 'Success') {
+  if (result) {
     SnackbarUtils.success('Dimension has been changed successfully')
   }
 }
@@ -29,9 +29,5 @@ export const callDeleteDimension = async (dimensionId: number): Promise<any> => 
 
 export const callGetAllDimensions = async (): Promise<IDimensionModel[]> => {
   const result: IDimensionModel[] = await get(dimensionRoute).json()
-  return result
-  // if (result == 'Success') {
-  // Snackbar has been added
-  // SnackbarUtils.success(`New dimension has been added successfully`)
-  // }
+  return result || []
 }
