@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-
 import { DataSetService } from '../services/DataSetService';
 import { IDataRequestModel } from "../models/interfaces/DataRequestModelInterface";
 
@@ -143,7 +142,6 @@ export class DataSetController {
       let requestResponse = await this.dataSetService.getUnapprovedAllDatasets()
       return response.status(requestResponse.statusCode).json(requestResponse.message);
     } catch (error) {
-      console.error(error);
       response.status(error.status).json(error.message);
     }
   }

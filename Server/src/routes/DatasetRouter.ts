@@ -27,12 +27,11 @@ router.delete('/api/v1/favoriteDatasets/:datasetId', JWTAuthenticator.verifyJWT,
   dataSetController.createRequestToDeleteUserFavoriteDataSet(request, response);
 });
 
-//TODO: Rename route name to /api/v1/unapprovedDatasets to bring it in line with current standard
-router.get('/api/v1/dataset/fetchUnapprovedDatasets$', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
+router.get('/api/v1/unapprovedDatasets', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyAdmin], (request: Request, response: Response) => {
   dataSetController.createRequestForUnapprovedDatsets(request, response);
 });
 
-router.get('/api/v1/dataset*', (request: Request, response: Response) => {
+router.get('/api/v1/dataset', (request: Request, response: Response) => {
   dataSetController.createRequestForData(request, response);
 });
 
