@@ -4,16 +4,16 @@ export const theme = createMuiTheme({
   spacing: 4,
   palette: {
     primary: {
-      light: '#757ce8',
+      light: '#ccd5e4',
       main: '#7F95BB',
-      dark: '#002884',
+      dark: '#526c9a',
       contrastText: '#fff',
     },
     secondary: {
       light: '#ff7961',
       main: '#f44336',
       dark: '#ba000d',
-      contrastText: '#000',
+      contrastText: '#fff',
     },
   }
 })
@@ -21,7 +21,7 @@ export const theme = createMuiTheme({
 export const classStyles = () => {
   return makeStyles({
     defaultBorder: {
-      borderColor: theme.palette.primary.light,
+      borderColor: theme.palette.primary.main,
       borderRadius: 3,
       borderWidth: '1px',
       border: 'solid',
@@ -29,7 +29,7 @@ export const classStyles = () => {
       margin: '15px 0'
     },
     fitBorder: {
-      borderColor: theme.palette.primary.light,
+      borderColor: theme.palette.primary.main,
       borderRadius: 3,
       borderWidth: '1px',
       border: 'solid',

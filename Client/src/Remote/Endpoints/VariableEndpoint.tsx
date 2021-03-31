@@ -11,5 +11,5 @@ export const getVariableNames = async (): Promise<IVariableNameModel[]> => {
   } else {
     SnackbarUtils.error(`Could not get all variables`)
   }
-  return result
+  return result || []
 }

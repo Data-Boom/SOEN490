@@ -3,7 +3,6 @@ import { IUserAccountModel } from "../../Models/Authentication/IUserAccountModel
 export type PermissionLevel = number | 'anyone'
 
 export const userCanView = (user: IUserAccountModel, permissionLevel: PermissionLevel) => {
-  console.log(user.account_permissions, user.account_permissions >= permissionLevel, permissionLevel)
   return permissionLevel == 'anyone' || user && user.account_permissions >= permissionLevel
 }
 

@@ -231,6 +231,25 @@ export class DataSetService {
     return allMaterialData;
   }
 
+  private transposePoints(contents: IContent[]): IContent[] {
+    const rowsCount = contents?.[0]?.point?.length
+    const newContents: IContent[] = []
+
+    //fill the contents with arrays for each column
+    for (let i = 0; i < rowsCount; i++) {
+      newContents.push({ point: [] })
+    }
+
+    //push each number in a column to its corresponding new column index
+    for (let columnIndex = 0; columnIndex < contents.length; columnIndex++) {
+      const column = contents[columnIndex]?.point
+      column?.forEach((number, numberIndex) => {
+        newContents[numberIndex]?.point.push(number)
+      });
+    }
+    return newContents
+  }
+
   private async selectDataPointsFromRawData(currentDataset: number, rawData: any, externalIndex: number) {
     //Sort through data points, then group them accordingly
     let allDataPointData: IData
@@ -267,7 +286,7 @@ export class DataSetService {
 
     allDataPointData = {
       variables: allVariableData,
-      contents: allContentData,
+      contents: this.transposePoints(allContentData),
       dataPointComments: dataPointComments,
       comments: rawData[2][externalIndex]?.comments
     }
