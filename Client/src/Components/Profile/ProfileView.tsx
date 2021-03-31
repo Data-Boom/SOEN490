@@ -7,8 +7,9 @@ import { DimensionManagementTab } from './UnitManagementSection/DimensionManagem
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
+import { List } from '../Utils/List'
 import PermissionsTab from './PermissionsSection/PermissionsTab'
-import { ProfileGraphStateList } from './ProfileGraphList'
+import { ProfileGraphRow } from './ProfileGraphRow'
 import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
@@ -195,8 +196,11 @@ export function ProfileView() {
                   </TableRow>
                 </TableHead>
                 <TableBody >
-                  <ProfileGraphStateList
-                    graphDataset={savedGraphState}
+                  <List
+                    RowComponent={ProfileGraphRow}
+                    models={savedGraphState}
+                    withPagination
+                    modelType='Graphs'
                   />
                 </TableBody>
               </Table>

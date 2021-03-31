@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, Connection } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, CreateDateColumn, UpdateDateColumn, Connection, BaseEntity } from "typeorm";
 import { Dataset } from './Dataset';
 
 
@@ -8,7 +8,7 @@ import { Dataset } from './Dataset';
  * This entity handles authors 
  */
 @Entity()
-export class Authors {
+export class Authors extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

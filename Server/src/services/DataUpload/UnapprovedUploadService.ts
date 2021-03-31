@@ -10,8 +10,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let requestResponse: IResponse = {} as any
 
-        let publicationType: string = ''
-        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, publicationType)
+        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, this.parsedFileData.reference.type)
 
         let publisherNameId: number = await this.insertPublisherData(this.uploadModel, this.parsedFileData.reference.publisher)
 
@@ -49,9 +48,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
             let unitsID: number = this.parsedFileData.data.variables[i].unitId
 
-            let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
-
-            await this.uploadModel.insertDataPointsOfSet(dataSetID, dataVariableName, dataPointValues[0], unitsID, reprID)
+            await this.uploadModel.insertDataPointsOfSet(dataSetID, dataVariableName, dataPointValues[0], unitsID)
             individualDataSetComments = dataPointValues[1];
         }
 
