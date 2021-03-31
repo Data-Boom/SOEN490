@@ -10,8 +10,8 @@ export const buildXYPoints = (dataset: IDatasetModel, xAxis: IAxisStateModel, yA
   if (!dimensions || dimensions.length == 0) {
     return []
   }
-  const { variable: xVariable, index: xIndex } = getVariableIndex(dataset.data.variables, xAxis.variableName)
-  const { variable: yVariable, index: yIndex } = getVariableIndex(dataset.data.variables, yAxis.variableName)
+  const { variable: xVariable, index: xIndex } = getVariable(dataset.data.variables, xAxis.variableName)
+  const { variable: yVariable, index: yIndex } = getVariable(dataset.data.variables, yAxis.variableName)
   //if either is -1 means at least one variable is not on the dataset and cannot be graphed
   if (xIndex === -1 || yIndex === -1) {
     return []
@@ -56,6 +56,6 @@ export const toDatasetRows = (datasets: IDatasetModel[], graphDatasets: IGraphDa
   return datasetRows
 }
 
-export const getVariableIndex = (variables: IVariable[], varName: string): { variable: IVariable, index: number } => {
+export const getVariable = (variables: IVariable[], varName: string): { variable: IVariable, index: number } => {
   return { variable: variables.find(variable => variable.name === varName), index: variables.findIndex(variable => variable.name === varName) }
 }

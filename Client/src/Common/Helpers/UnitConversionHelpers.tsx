@@ -38,10 +38,10 @@ export const getConversionLambda = (dimension: IDimensionModel, unitIdOld: numbe
     const fromOldToBaseEvaluator = parser.parse(fromOldToBaseConversionFormula)
     const fromNewToBaseEvaluator = parser.parse(fromNewToBaseConversionFormula)
 
-    return (number: number) => {
-      const numberInBaseUnit = parseFloat(fromOldToBaseEvaluator.evaluate({ u: number }))
-      const numberInNewInversed = parseFloat(fromNewToBaseEvaluator.evaluate({ u: 1 / numberInBaseUnit }))
-      return 1 / numberInNewInversed
+    return (numberInOldUnit: number) => {
+      const numberInBaseUnit = parseFloat(fromOldToBaseEvaluator.evaluate({ u: numberInOldUnit }))
+      const numberInNewUnit = 1 / parseFloat(fromNewToBaseEvaluator.evaluate({ u: 1 / numberInBaseUnit }))
+      return numberInNewUnit
     }
   }
   catch (error) {
