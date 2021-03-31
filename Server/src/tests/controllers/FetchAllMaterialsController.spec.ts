@@ -7,7 +7,7 @@ describe('Fetch All Materials Controller', () => {
   let mockResponse;
   let controller: FetchAllMaterialsController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     try {
       await createConnection();
     } catch (error) {
@@ -25,7 +25,7 @@ describe('Fetch All Materials Controller', () => {
     }
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await getConnection().close();
   });
 
