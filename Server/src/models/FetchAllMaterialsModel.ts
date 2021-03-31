@@ -3,13 +3,13 @@ import { Composition } from "./entities/Composition";
 import { Material } from "./entities/Material";
 import { IMaterial } from "./interfaces/MaterialInterface";
 
-export class FetchAllCategoriesMaterialsModel {
+export class FetchAllMaterialsModel {
     private connection: Connection;
     constructor() {
         this.connection = getConnection();
     }
 
-    async getBasicMaterialDataQuery(): Promise<IMaterial[]> {
+    async fetchMaterialDataQuery(): Promise<IMaterial[]> {
         let materialData: IMaterial[] =
             await this.connection.createQueryBuilder(Material, 'Material')
                 .select('composition.composition', 'composition')
