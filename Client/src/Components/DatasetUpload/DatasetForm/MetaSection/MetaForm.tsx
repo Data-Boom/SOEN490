@@ -35,10 +35,8 @@ export const MetaForm = (props: IProps) => {
   const getSubCategories = (categoryId: number): ISubcategoryModel[] => {
     const foundCategory = categories.find(category => category.id == categoryId)
     if (!foundCategory) {
-      console.log(categories, categoryId, 'returned empty')
       return []
     }
-    console.log(categories, categoryId, 'returned stuff')
     return foundCategory.subcategories
   }
 
