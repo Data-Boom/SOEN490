@@ -23,6 +23,7 @@ export const buildXYPoints = (dataset: IDatasetModel, xAxis: IAxisStateModel, yA
   const points: IGraphPoint[] = []
   for (let i = 0; i < dataset.data.contents.length; i++) {
     const x: number = xConvertFunction(dataset.data.contents[i].point[xIndex])
+    console.log('was', dataset.data.contents[i].point[yIndex], 'after: ', yConvertFunction(dataset.data.contents[i].point[yIndex]))
     const y: number = yConvertFunction(dataset.data.contents[i].point[yIndex])
     const point: IGraphPoint = { x: x, y: y }
     points.push(point)

@@ -25,10 +25,10 @@ export const getConversionLambda = (dimension: IDimensionModel, unitIdOld: numbe
     let fromNewToBaseConversionFormula = dimension.units.find(unit => unit.id == unitIdNew)?.conversionFormula
 
     if (baseUnitId == unitIdOld) {
-      fromOldToBaseConversionFormula = '1*u'
+      fromOldToBaseConversionFormula = 'u'
     }
     if (baseUnitId == unitIdNew) {
-      fromNewToBaseConversionFormula = '1*u'
+      fromNewToBaseConversionFormula = 'u'
     }
 
     if (!fromOldToBaseConversionFormula || !fromNewToBaseConversionFormula) {
@@ -40,7 +40,7 @@ export const getConversionLambda = (dimension: IDimensionModel, unitIdOld: numbe
 
     return (number: number) => {
       const numberInBaseUnit = parseFloat(fromOldToBaseEvaluator.evaluate({ u: number }))
-      const numberInNewInversed = parseFloat(fromNewToBaseEvaluator.evaluate({ u: numberInBaseUnit }))
+      const numberInNewInversed = parseFloat(fromNewToBaseEvaluator.evaluate({ u: 1 / numberInBaseUnit }))
       return 1 / numberInNewInversed
     }
   }
