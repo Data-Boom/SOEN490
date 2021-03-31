@@ -9,7 +9,7 @@ export const MuiTextFieldFormik = ({ field, form: { touched, errors }, ...props 
 
   const variant = props.variant || "outlined"
   return (
-    <TextField fullWidth variant={variant} {...field} {...props} error={error} helperText={helperText} />
+    <TextField InputLabelProps={{ shrink: field.value || field.isFocused }} fullWidth variant={variant} {...field} {...props} error={error} helperText={helperText} />
   )
 }
 
@@ -22,6 +22,7 @@ export const MuiSelectFormik = ({ field, form: { touched, errors }, ...props }) 
         <InputLabel shrink={field.value || field.isFocused}>{props.label}</InputLabel>
         <Select
           native
+          notched={field.value || field.isFocused}
           variant="outlined"
           fullWidth
           {...field}

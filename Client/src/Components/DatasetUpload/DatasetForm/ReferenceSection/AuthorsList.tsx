@@ -49,11 +49,11 @@ export const AuthorsList = (props: IProps) => {
           {renderAuthorRows()}
         </Grid>
       </Grid>
-      <Grid container>
+      {editable && <Grid container>
         <IconButton color="primary" aria-label="add author" onClick={handleAddAuthor} disabled={!editable}>
           <AddIcon />
         </IconButton>
-      </Grid>
+      </Grid>}
     </>
   )
 }
