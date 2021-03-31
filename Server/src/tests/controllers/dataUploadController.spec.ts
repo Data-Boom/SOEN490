@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { inValidTestData, validTestData } from '../testData/testData';
 
 import { DataUploadController } from '../../controllers/dataUploadController';
@@ -10,7 +10,15 @@ describe('Data Upload Controller', () => {
     let dataUploadController: DataUploadController
 
     beforeEach(async () => {
-        await createConnection();
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                const existentConn = getConnectionManager().get();
+                return existentConn;
+            }
+        }
         jest.setTimeout(60000)
         dataUploadController = new DataUploadController()
         mockRequest = {}

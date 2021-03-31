@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { validDimensionData, invalidDeleteDimensionDataUnitInUse, invalidDimensionData, availableDBDimensions, duplicateDimensionData, validDeleteDimensionData, validUpdateDimensionData } from '../testData/dimensionTestData';
 import { DimensionsController } from '../../controllers/DimensionsController';
 
@@ -9,7 +9,15 @@ describe('Dimensions Controller', () => {
   let mockResponse;
 
   beforeEach(async () => {
-    await createConnection();
+    try {
+      await createConnection();
+    } catch (error) {
+      // If AlreadyHasActiveConnectionError occurs, return already existent connection
+      if (error.name === "AlreadyHasActiveConnectionError") {
+        const existentConn = getConnectionManager().get();
+        return existentConn;
+      }
+    }
     jest.setTimeout(60000)
     dimensionsController = new DimensionsController();
     mockRequest = {};

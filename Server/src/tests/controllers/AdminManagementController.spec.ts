@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { AdminManagementController } from '../../controllers/AdminManagementController';
 
 describe('Fetch All Categories Materials Controller ', () => {
@@ -8,7 +8,15 @@ describe('Fetch All Categories Materials Controller ', () => {
     let controller: AdminManagementController;
 
     beforeEach(async () => {
-        await createConnection();
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                const existentConn = getConnectionManager().get();
+                return existentConn;
+            }
+        }
         jest.setTimeout(60000)
         controller = new AdminManagementController();
         mockRequest = {};

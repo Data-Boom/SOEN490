@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 
 import { DataSetService } from "../../services/DataSetService";
 import { IApprovalDatasetModel, IUserDatasets } from "../../models/interfaces/DatasetModelInterface";
@@ -9,7 +9,15 @@ describe('data set service test', () => {
   jest.setTimeout(60000)
 
   beforeAll(async () => {
-    await createConnection();
+    try {
+      await createConnection();
+    } catch (error) {
+      // If AlreadyHasActiveConnectionError occurs, return already existent connection
+      if (error.name === "AlreadyHasActiveConnectionError") {
+        const existentConn = getConnectionManager().get();
+        return existentConn;
+      }
+    }
     retrieveDataObject = new DataSetService();
   });
 

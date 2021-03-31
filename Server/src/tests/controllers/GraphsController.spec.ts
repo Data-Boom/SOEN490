@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { GraphsController } from '../../controllers/GraphsController';
 import { validGraphStateData1, validGraphStateData2 } from '../testData/testData';
 
@@ -9,7 +9,15 @@ describe('Graphs State Controller ', () => {
   let SavedGraphsController: GraphsController;
 
   beforeEach(async () => {
-    await createConnection();
+    try {
+      await createConnection();
+    } catch (error) {
+      // If AlreadyHasActiveConnectionError occurs, return already existent connection
+      if (error.name === "AlreadyHasActiveConnectionError") {
+        const existentConn = getConnectionManager().get();
+        return existentConn;
+      }
+    }
     jest.setTimeout(60000)
     SavedGraphsController = new GraphsController();
     mockRequest = {};

@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { DataParserService } from '../../services/Parser/DataParserService'
 
 describe('Data Parser Service', () => {
@@ -7,7 +7,15 @@ describe('Data Parser Service', () => {
     jest.setTimeout(60000)
 
     beforeAll(async () => {
-        await createConnection();
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                const existentConn = getConnectionManager().get();
+                return existentConn;
+            }
+        }
     });
 
     afterAll(async () => {
