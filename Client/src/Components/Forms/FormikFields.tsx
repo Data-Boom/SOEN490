@@ -16,8 +16,6 @@ export const MuiTextFieldFormik = ({ field, form: { touched, errors }, ...props 
 export const MuiSelectFormik = ({ field, form: { touched, errors }, ...props }) => {
   const [error, helperText] = getErrorAndHelper(field, touched, errors)
 
-  console.log(field.name, 'field.name')
-  console.log(field.value, 'field.value')
   return (
     <>
       <FormControl variant="outlined" fullWidth>
