@@ -5,6 +5,7 @@ import { classStyles } from '../../../appTheme'
 import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { AddIcon } from "@material-ui/data-grid"
 import { CategoryManagementList } from "./CategoryManagementList"
+import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { listCategories, updateCategory, createCategory, deleteCategory } from "../../../Remote/Endpoints/CategoryEndpoint"
 
 
@@ -30,16 +31,19 @@ export const CategoryManagementTab = () => {
   const handleCreateCategory = async (newCategory: ICategoryModel) => {
      await createCategory(newCategory)
      await getCategories()
+     SnackbarUtils.success('New category created!')
   }
 
   const handleSaveCategory = async (updatedCategory: ICategoryModel) => {
     await updateCategory(updatedCategory)
     await getCategories()
+    SnackbarUtils.success('Changes Saved!')
   }
 
   const handleDeleteCategory = async (categoryId: number) => {
     await deleteCategory(categoryId)
     await getCategories()
+    SnackbarUtils.success('Category Deleted')
   }
 
   return (
