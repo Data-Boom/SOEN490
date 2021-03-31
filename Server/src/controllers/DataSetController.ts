@@ -139,7 +139,7 @@ export class DataSetController {
   async createRequestForUnapprovedDatsets(request: Request, response: Response) {
     try {
       this.dataSetService = new DataSetService();
-      let requestResponse = await this.dataSetService.getUnapprovedAllDatasets()
+      let requestResponse = await this.dataSetService.getAllUnapprovedDatasets()
       return response.status(requestResponse.statusCode).json(requestResponse.message);
     } catch (error) {
       response.status(error.status).json(error.message);

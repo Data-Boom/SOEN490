@@ -467,11 +467,11 @@ export class DataSetService {
   }
 
   /**
-   * This method is used to get an array of all `unapproved` data set IDs. 
+   * This method is used to get an array of all `unapproved` data sets. 
    * It will call a query to get a raw data packet which contains all of the unapproved data set IDs, 
    * and then it will feed this raw data packet to @getDatasetsFromRawData to get an array of data sets.
    */
-  async getUnapprovedAllDatasets() {
+  async getAllUnapprovedDatasets() {
     try {
       let rawDatasetIds = await this.datasetApprovalModel.getUnapprovedDatasets();
       let response: IApprovalDatasetModel[] = [];

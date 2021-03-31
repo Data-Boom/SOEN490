@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 
 import { DataSetService } from "../../services/DataSetService";
 import { IApprovalDatasetModel, IUserDatasets } from "../../models/interfaces/DatasetModelInterface";
@@ -9,7 +9,14 @@ describe('data set service test', () => {
   jest.setTimeout(60000)
 
   beforeAll(async () => {
-    await createConnection();
+    try {
+      await createConnection();
+    } catch (error) {
+      // If AlreadyHasActiveConnectionError occurs, return already existent connection
+      if (error.name === "AlreadyHasActiveConnectionError") {
+        return getConnectionManager().get();
+      }
+    }
     retrieveDataObject = new DataSetService();
   });
 
@@ -21,12 +28,6 @@ describe('data set service test', () => {
     let testData: IDataRequestModel;
     testData = {} as any;
     testData.datasetId = [1];
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].id).toEqual(1);
     done()
@@ -35,13 +36,7 @@ describe('data set service test', () => {
   test('Feeds year of 1980 and expects to see at least one data set with year of 1980 returned', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
     testData.year = 1980;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].reference.year).toEqual(1980);
     done()
@@ -50,13 +45,7 @@ describe('data set service test', () => {
   test('Feeds material with composition O2 and a long detail string and expects to see those two materials', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
     testData.material = ["O2", "carbon, graphite, pressed graphite"];
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].material[1])
       .toEqual(expect.objectContaining({ composition: "O2", details: "Oxygen" }));
@@ -68,13 +57,8 @@ describe('data set service test', () => {
   test('Feeds author info of "Stanley" and "Marsh" in correct order and expects to see the author named Stanley P. Marsh', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
     testData.firstName = "Stanley";
     testData.lastName = "Marsh";
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
@@ -84,13 +68,8 @@ describe('data set service test', () => {
   test('Feeds author info of "Stanley" and "Marsh" in reverse order and expects to see the author named Stanley P. Marsh', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
     testData.firstName = "Marsh";
     testData.lastName = "Stanley";
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
@@ -100,13 +79,7 @@ describe('data set service test', () => {
   test('Feeds last name of Marsh and expects to see the author named Stanley P. Marsh', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
     testData.lastName = "Marsh";
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].reference.authors[0])
       .toEqual(expect.objectContaining({ firstName: "Stanley", lastName: "Marsh", middleName: "P." }));
@@ -116,13 +89,7 @@ describe('data set service test', () => {
   test('Feeds category ID of 2 and expects to see a data set with category name of cell size returned', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
     testData.categoryId = 2;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].category).toEqual(2);
     done()
@@ -131,11 +98,6 @@ describe('data set service test', () => {
   test('Feeds category ID of 2 and subcategory of 2 and expects to see a data set with subcategory name of width returned', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
     testData.categoryId = 2;
     testData.subcategoryId = 2;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
@@ -146,13 +108,8 @@ describe('data set service test', () => {
   test('Feeds material with composition C and a year of 1980 and expects to find a data set with these values', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
     testData.material = ["C"];
     testData.year = 1980;
-    testData.firstName = undefined;
-    testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData[0].reference.year).toEqual(1980);
     expect(arrayOfData[0].material[0])
@@ -163,15 +120,18 @@ describe('data set service test', () => {
   test('Feeds first name of Stanley and expects to see an empty array returned', async done => {
     let testData: IDataRequestModel;
     testData = {} as any;
-    testData.datasetId = undefined;
-    testData.material = undefined;
-    testData.year = undefined;
     testData.firstName = "Stanley";
-    testData.lastName = undefined;
-    testData.categoryId = undefined;
-    testData.subcategoryId = undefined;
     let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
     expect(arrayOfData).toEqual(expect.arrayContaining([]));
+    done()
+  });
+
+  test('Feeds variable name of Initial Temperature and expects to find a data set of ID 1 returned', async done => {
+    let testData: IDataRequestModel;
+    testData = {} as any;
+    testData.datapoint = "Initial Temperature";
+    let arrayOfData = await retrieveDataObject.getArrayOfDatasets(testData)
+    expect(arrayOfData[0].id).toEqual(1);
     done()
   });
 
@@ -235,17 +195,17 @@ describe('data set service test', () => {
   });
 
   test('Asks for all unapproved data sets, expects at least one data set', async done => {
-    let response = await retrieveDataObject.getUnapprovedAllDatasets()
+    let response = await retrieveDataObject.getAllUnapprovedDatasets()
     let arrayOfData = response.message as IApprovalDatasetModel[]
     expect(arrayOfData[0]).not.toBeUndefined();
     expect(response.statusCode).toEqual(200);
     done()
   });
 
-  test('Asks for all flagged data sets expects a data set with ID of 1', async done => {
+  test('Asks for all flagged data sets expects at least one data set', async done => {
     let response = await retrieveDataObject.getAllFlaggedDatasets()
     let arrayOfData = response.message as IApprovalDatasetModel[]
-    expect(arrayOfData[0].id).toEqual(1);
+    expect(arrayOfData[0]).not.toBeUndefined();
     expect(response.statusCode).toEqual(200);
     done()
   });
