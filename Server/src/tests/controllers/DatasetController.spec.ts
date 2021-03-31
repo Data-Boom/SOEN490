@@ -41,7 +41,7 @@ describe('Data Set Controller ', () => {
                 }
             }
         }
-        await datasetSearch(mockRequest as Request, mockResponse as Response, 200, oneFavoriteDataset)
+        await datasetSearchWithAssert(mockRequest as Request, mockResponse as Response, 200, oneFavoriteDataset)
         done()
     });
 
@@ -55,7 +55,7 @@ describe('Data Set Controller ', () => {
                 }
             }
         }
-        await datasetSearch(mockRequest as Request, mockResponse as Response, 400, "Invalid search params entered")
+        await datasetSearchWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid search params entered")
         done()
     });
 
@@ -70,7 +70,7 @@ describe('Data Set Controller ', () => {
                 datasetId: '1'
             }
         }
-        await addFavoriteDataset(mockRequest as Request, mockResponse as Response, 200, "Favorite data set successfully saved")
+        await addFavoriteDatasetWithAssert(mockRequest as Request, mockResponse as Response, 200, "Favorite data set successfully saved")
     });
 
     test('Add Favorite Data Set Request, Data Set Already Saved', async () => {
@@ -84,7 +84,7 @@ describe('Data Set Controller ', () => {
                 datasetId: '2'
             }
         }
-        await addFavoriteDataset(mockRequest as Request, mockResponse as Response, 200, "Favorite data set is already saved")
+        await addFavoriteDatasetWithAssert(mockRequest as Request, mockResponse as Response, 200, "Favorite data set is already saved")
     });
 
     test('Invalid Add Favorite Data Set Request', async () => {
@@ -98,7 +98,7 @@ describe('Data Set Controller ', () => {
                 datasetId: "wrtrterterte"
             }
         }
-        await addFavoriteDataset(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
+        await addFavoriteDatasetWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
     });
 
     test('Valid Get User Uploaded Data Sets Request', async () => {
@@ -139,7 +139,7 @@ describe('Data Set Controller ', () => {
                 }
             }
         }
-        await deleteUserFavorite(mockRequest as Request, mockResponse as Response, 200, "User favorite data set successfully removed")
+        await deleteUserFavoriteWithAssert(mockRequest as Request, mockResponse as Response, 200, "User favorite data set successfully removed")
     });
 
     test('Remove Non-existant Favorite Data Set Request', async () => {
@@ -153,7 +153,7 @@ describe('Data Set Controller ', () => {
                 }
             }
         }
-        await deleteUserFavorite(mockRequest as Request, mockResponse as Response, 200, "User favorite data set successfully removed")
+        await deleteUserFavoriteWithAssert(mockRequest as Request, mockResponse as Response, 200, "User favorite data set successfully removed")
     });
 
     test('Invalid Remove Favorite Data Set Request; false data set ID', async () => {
@@ -167,7 +167,7 @@ describe('Data Set Controller ', () => {
                 }
             }
         }
-        await deleteUserFavorite(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
+        await deleteUserFavoriteWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
     });
 
     test('Valid Get Unapproved Data Sets Request; expect at least one entry in return', async () => {
@@ -188,7 +188,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 10
             }
         }
-        await rejectDataset(mockRequest as Request, mockResponse as Response, 200, "Successfully removed data set")
+        await rejectDatasetWithAssert(mockRequest as Request, mockResponse as Response, 200, "Successfully removed data set")
     });
 
     test('Valid Get Account 1 Unapproved Data Sets Request; expect at least one entry in return', async () => {
@@ -216,7 +216,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 12
             }
         }
-        await userApproveDataset(mockRequest as Request, mockResponse as Response, 400, "User ID does not match uploader ID!")
+        await userApproveDatasetWithAssert(mockRequest as Request, mockResponse as Response, 400, "User ID does not match uploader ID!")
     });
 
     test('Invalid User Approve Data Set Request; data set not yet flagged', async () => {
@@ -230,7 +230,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 11
             }
         }
-        await userApproveDataset(mockRequest as Request, mockResponse as Response, 400, "You cannot approve or reject a data set until it passes initial screening!")
+        await userApproveDatasetWithAssert(mockRequest as Request, mockResponse as Response, 400, "You cannot approve or reject a data set until it passes initial screening!")
     });
 
     test('Valid User Approve Data Set Request', async () => {
@@ -244,7 +244,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 12
             }
         }
-        await userApproveDataset(mockRequest as Request, mockResponse as Response, 200, "Successfully approved new data set")
+        await userApproveDatasetWithAssert(mockRequest as Request, mockResponse as Response, 200, "Successfully approved new data set")
     });
 
     test('Valid Admin Approve Data Set Request', async () => {
@@ -253,7 +253,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 16
             }
         }
-        await adminApproveDataset(mockRequest as Request, mockResponse as Response, 200, "Successfully approved new data set")
+        await adminApproveDatasetWithAssert(mockRequest as Request, mockResponse as Response, 200, "Successfully approved new data set")
     });
 
     test('Invalid Admin Approve Data Set Request; no query passed', async () => {
@@ -261,7 +261,7 @@ describe('Data Set Controller ', () => {
             query: {
             }
         }
-        await adminApproveDataset(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
+        await adminApproveDatasetWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
     });
 
     test('Invalid User Approve Data Set Request; bad ID passed', async () => {
@@ -276,7 +276,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 'regregreg'
             }
         }
-        await userApproveDataset(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
+        await userApproveDatasetWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
     });
 
     test('Invalid Reject Data Set Request; no ID passed', async () => {
@@ -291,7 +291,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 'regregreg'
             }
         }
-        await rejectDataset(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
+        await rejectDatasetWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
     });
 
     test('Valid Flag Data Set Request', async () => {
@@ -300,7 +300,7 @@ describe('Data Set Controller ', () => {
                 datasetId: 19
             }
         }
-        await flagDataset(mockRequest as Request, mockResponse as Response, 200, "Dataset Flagged!")
+        await flagDatasetWithAssert(mockRequest as Request, mockResponse as Response, 200, "Dataset Flagged!")
     });
 
     test('Invalid Flag Data Set Request; no ID passed', async () => {
@@ -308,7 +308,7 @@ describe('Data Set Controller ', () => {
             query: {
             }
         }
-        await flagDataset(mockRequest as Request, mockResponse as Response, 400, "No datasetID provided to flag dataset")
+        await flagDatasetWithAssert(mockRequest as Request, mockResponse as Response, 400, "No datasetID provided to flag dataset")
     });
 
     test('Invalid Remove User Favorite Data Set Request; no ID passed', async () => {
@@ -322,46 +322,46 @@ describe('Data Set Controller ', () => {
                 datasetId: 'regregreg'
             }
         }
-        await deleteUserFavorite(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
+        await deleteUserFavoriteWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid data set ID entered")
     });
 
-    async function datasetSearch(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function datasetSearchWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await GetDataControllerController.createRequestForData(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function addFavoriteDataset(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function addFavoriteDatasetWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await GetDataControllerController.createRequestToAddUserFavoriteDataSet(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function adminApproveDataset(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function adminApproveDatasetWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await GetDataControllerController.createAdminApprovedDatasetRequest(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function userApproveDataset(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function userApproveDatasetWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await GetDataControllerController.createUserApprovedDatasetRequest(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function rejectDataset(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function rejectDatasetWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await GetDataControllerController.createRequestToRejectDataset(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function flagDataset(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function flagDatasetWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await GetDataControllerController.createRequestToFlagDataset(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function deleteUserFavorite(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+    async function deleteUserFavoriteWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
         await GetDataControllerController.createRequestToDeleteUserFavoriteDataSet(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
