@@ -61,6 +61,13 @@ export const DatasetControl = (props: IProps) => {
     onDatasetStatesChange(graphDatasetsCopy)
   }
 
+  const handleColorChange = (datasetId: number, color: string) => {
+    const graphDatasetsCopy = [...datasetStates]
+    const indexToChange = datasetStates.findIndex(dataset => dataset.id == datasetId)
+    graphDatasetsCopy[indexToChange].color = color
+    onDatasetStatesChange(graphDatasetsCopy)
+  }
+
   return (
     <>
       <Grid container spacing={3}>
@@ -83,7 +90,7 @@ export const DatasetControl = (props: IProps) => {
       <List
         RowComponent={DatasetRow}
         models={toDatasetRows(completeDatasets, datasetStates)}
-        rowProps={{ onRemoveDatasetClick: handleDatasetRemoved, onHideDatasetSwitch: onHideDatasetSwitch, onChangeDatasetShape: handleChangeBullet } as IDatasetRowProps}
+        rowProps={{ onRemoveDatasetClick: handleDatasetRemoved, onHideDatasetSwitch: onHideDatasetSwitch, onChangeDatasetShape: handleChangeBullet, onChangeDatasetColor: handleColorChange } as IDatasetRowProps}
         withPagination
         modelType='Datasets'
       />

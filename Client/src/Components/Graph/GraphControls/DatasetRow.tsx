@@ -13,6 +13,7 @@ export interface IDatasetRowProps {
   onRemoveDatasetClick: (datasetId: number) => void,
   onHideDatasetSwitch: (datasetId: number) => void,
   onChangeDatasetShape: (datasetId: number, bulletType: string) => void,
+  onChangeDatasetColor: (datasetId: number, color: string) => void
 }
 
 export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>) => {
@@ -33,7 +34,8 @@ export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>
   }
 
   const onDatasetColorChange = (color: string) => {
-
+    setColor(color)
+    onChangeDatasetShape(datasetRow.id, color)
   }
 
   return (

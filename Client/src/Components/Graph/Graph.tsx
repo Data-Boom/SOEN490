@@ -76,37 +76,41 @@ export const Graph = (props: IProps) => {
     console.log(dataset.shape)
     if (dataset.shape == "square") {
       const bullet = datasetSeries.bullets.push(new am4core.Rectangle())
-      bullet.width = 10;
-      bullet.height = 10;
+      bullet.width = 10
+      bullet.height = 10
       bullet.tooltipText = `${dataset.name}
         ${axes[0].variableName}: {x} ${xUnitName}
         ${axes[1].variableName}: {y} ${yUnitName}`
+      bullet.fill = am4core.color(dataset.color)
     }
     else if (dataset.shape == "triangle") {
       const bullet = datasetSeries.bullets.push(new am4core.Triangle())
       bullet.horizontalCenter = "middle"
       bullet.verticalCenter = "middle"
       bullet.direction = "top"
-      bullet.width = 10;
-      bullet.height = 10;
+      bullet.width = 10
+      bullet.height = 10
       bullet.tooltipText = `${dataset.name}
         ${axes[0].variableName}: {x} ${xUnitName}
         ${axes[1].variableName}: {y} ${yUnitName}`
+      bullet.fill = am4core.color(dataset.color)
     }
     else if (dataset.shape == "star") {
       const bullet = datasetSeries.bullets.push(new am4plugins_bullets.Star());
-      bullet.radius = 5;
-      bullet.pointCount = 6;
+      bullet.radius = 5
+      bullet.pointCount = 6
       bullet.tooltipText = `${dataset.name}
         ${axes[0].variableName}: {x} ${xUnitName}
         ${axes[1].variableName}: {y} ${yUnitName}`
+      bullet.fill = am4core.color(dataset.color)
     }
     else {
       const bullet = datasetSeries.bullets.push(new am4core.Circle())
       bullet.radius = 5
       bullet.tooltipText = `${dataset.name}
-      ${axes[0].variableName}: { x } ${xUnitName}
-      ${axes[1].variableName}: { y } ${yUnitName} `
+        ${axes[0].variableName}: { x } ${xUnitName}
+        ${axes[1].variableName}: { y } ${yUnitName}`
+      bullet.fill = am4core.color(dataset.color)
     }
   }
 
