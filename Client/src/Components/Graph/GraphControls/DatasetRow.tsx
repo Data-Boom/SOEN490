@@ -33,9 +33,9 @@ export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>
     onChangeDatasetShape(datasetRow.id, type)
   }
 
-  const onDatasetColorChange = (color: string) => {
-    setColor(color)
-    onChangeDatasetColor(datasetRow.id, color)
+  const onDatasetColorChange = (newColor: string) => {
+    setColor(newColor)
+    onChangeDatasetColor(datasetRow.id, newColor)
   }
 
   return (
@@ -83,8 +83,8 @@ export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>
                 autoWidth={true}
                 onChange={onDatasetShapeChange}
               >
-                {shapes.map(shape => (
-                  <MenuItem key={shape} value={shape}>{shape}</MenuItem>
+                {shapes.map(individualShape => (
+                  <MenuItem key={individualShape} value={individualShape}>{individualShape}</MenuItem>
                 ))}
               </Select>
             </FormControl>
