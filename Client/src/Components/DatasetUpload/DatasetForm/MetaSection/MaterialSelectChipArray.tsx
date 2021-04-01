@@ -2,12 +2,14 @@
 
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import { Button, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from '@material-ui/core'
+import { Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 
 import { ArrayHelpers } from 'formik'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContentText from '@material-ui/core/DialogContentText/DialogContentText'
 import { IMaterial } from '../../../../Models/Datasets/IDatasetModel'
+import { materialValidationSchema } from '../../DatasetValidationSchema'
 
 interface IProps {
   value: IMaterial[],
@@ -27,6 +29,15 @@ export const MaterialSelectChipArray = (props: IProps) => {
   const [open, toggleOpen] = useState(false)
   const [dialogValue, setDialogValue] = useState<IMaterial>()
 
+  const initialValues = {
+    composition: '',
+    details: '',
+  }
+  const [materialComposition, setMaterialcomposition] = useState<string | null>(initialValues?.composition)
+  const [materialDetails, setMaterialDetails] = useState<string | null>(initialValues?.details)
+
+
+
   const handleDelete = (materialToDelete: IMaterial) => {
     if (editable) {
       const indexToRemove = value.findIndex(material => materialToString(material) == materialToString(materialToDelete))
@@ -39,59 +50,81 @@ export const MaterialSelectChipArray = (props: IProps) => {
       if (!materialToString(newMaterial)) {
         return
       }
-      if (!options.includes(newMaterials[0])) {
-        setTimeout(() => {
-          toggleOpen(true)
-        })
-      }
       if (value.findIndex((material) => materialToString(material) == materialToString(newMaterial)) == -1) {
         fieldArrayHelpers.push(newMaterial)
       }
     })
   }
 
+  const handleMaterialChanged = () => {
+    const newMaterial: IMaterial = {
+      composition: materialComposition,
+      details: materialDetails,
+      id: 0
+    }
+  }
+
   const handleSubmitMaterial = () => {
+    if (materialComposition) {
+      handleMaterialChanged()
+    }
+
     toggleOpen(false)
   }
 
   const handleCloseMaterialForm = () => {
     toggleOpen(false)
   }
-  const handleAddNewMaterial = (newMaterials: IMaterial) => {
+  const handleAddNewMaterialComposition = (formProps, value: any) => {
+    const composition = value.target.value
+    setMaterialcomposition(composition)
+  }
+  const handleAddNewMaterialDetails = (formProps, value: any) => {
+    const details = value.target.value
+    setMaterialDetails(details)
+  }
 
+  const renderInputs = (formProps) => {
+    return (
+      <Grid>
+        <DialogTitle> Add a new material</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please provide the composition and the details of the metal you want to add
+        </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            //value={dialogValue.composition}
+            label="Composition"
+            type="text"
+            onChange={(value) => handleAddNewMaterialComposition(formProps, value)}
+          />
+          <TextField
+            margin="dense"
+            //value={dialogValue.details}
+            onChange={(value) => handleAddNewMaterialDetails(formProps, value)}
+            label="details"
+            type="text"
+          />
+        </DialogContent>
+      </Grid>
+    )
+  }
 
-    // return (
-    //   <Dialog open={open} onClose={handleCloseMaterialForm}>
-    //     <form onSubmit={handleSubmitMaterial}>
-    //       <DialogTitle> Add a new material</DialogTitle>
-    //       <DialogContent>
-    //         <TextField
-    //           autoFocus
-    //           margin="dense"
-    //           value={newMaterials.composition}
-    //           label="Composition"
-    //           type="text"
-    //         // onChange={(event)=> setDialogValue({ ...dialogValue, event.target.value})}
-    //         />
-    //         <TextField
-    //           autoFocus
-    //           margin="dense"
-    //           value={newMaterials.details}
-    //           label="details"
-    //           type="text"
-    //         />
-    //       </DialogContent>
-    //       <DialogActions>
-    //         <Button onClick={handleCloseMaterialForm} color="primary">
-    //           Cancel
-    //         </Button>
-    //         <Button type="submit" color="primary">
-    //           Add
-    //         </Button>
-    //       </DialogActions>
-    //     </form>
-    //   </Dialog>
-    // )
+  const renderButtons = () => {
+    return (
+      <Grid>
+        <DialogActions>
+          <Button onClick={handleCloseMaterialForm} color="primary">
+            Cancel
+            </Button>
+          <Button onClick={handleSubmitMaterial} color="primary">
+            Add Material
+            </Button>
+        </DialogActions>
+      </Grid>
+    )
   }
 
   return (
@@ -119,37 +152,20 @@ export const MaterialSelectChipArray = (props: IProps) => {
             renderInput={(params) => <TextField {...params} label="Material" variant="outlined" />}
           />
           <Dialog open={open} onClose={handleCloseMaterialForm}>
-            <form onSubmit={handleSubmitMaterial}>
-              <DialogTitle> Add a new material</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Please provide the composition and the details of the metal you want to add
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  //value={dialogValue.composition}
-                  label="Composition"
-                  type="text"
-                //onChange={(event)=> handleAddNewMaterial({ ...dialogValue, event.target.event})}
-                />
-                <TextField
-                  margin="dense"
-                  //value={dialogValue.details}
-                  //onChange={(event)=> handleAddNewMaterial({ ...dialogValue, event.target.event})}
-                  label="details"
-                  type="text"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleCloseMaterialForm} color="primary">
-                  Cancel
-            </Button>
-                <Button onClick={handleSubmitMaterial} color="primary">
-                  Add Material
-            </Button>
-              </DialogActions>
-            </form>
+            <Formik initialValues={initialValues} validationSchema={materialValidationSchema} onSubmit={handleSubmitMaterial}>
+              {formProps =>
+                <Form>
+                  <Grid container spacing={4}>
+                    <Grid item>
+                      {renderInputs(formProps)}
+                    </Grid>
+                    <Grid item>
+                      {renderButtons()}
+                    </Grid>
+                  </Grid>
+                </Form>
+              }
+            </Formik>
           </Dialog>
         </Grid>
       </Grid>
