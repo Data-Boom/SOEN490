@@ -20,6 +20,7 @@ import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
+import SnackbarUtils from '../Utils/SnackbarUtils'
 
 interface IProps {
   initialDataset?: IDatasetModel
@@ -69,6 +70,7 @@ export const DatasetView = (props: IProps) => {
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
     await callSaveDataset(formDataset)
+    SnackbarUtils.success("Dataset successfully uploaded")
   }
 
   const handleJSONFileTypeSelected = () => {
