@@ -73,11 +73,12 @@ export const Graph = (props: IProps) => {
     const xUnitName = getUnitName(axes[0].units)
     const yUnitName = getUnitName(axes[1].units)
     datasetSeries.bullets.pop()
-    console.log(dataset.shape)
     if (dataset.shape == "square") {
       const bullet = datasetSeries.bullets.push(new am4core.Rectangle())
       bullet.width = 10
       bullet.height = 10
+      bullet.horizontalCenter = "middle"
+      bullet.verticalCenter = "middle"
       bullet.tooltipText = `${dataset.name}
         ${axes[0].variableName}: {x} ${xUnitName}
         ${axes[1].variableName}: {y} ${yUnitName}`

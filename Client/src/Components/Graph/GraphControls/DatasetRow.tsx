@@ -17,9 +17,9 @@ export interface IDatasetRowProps {
 }
 
 export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>) => {
-  const { row: datasetRow, onRemoveDatasetClick, onHideDatasetSwitch, onChangeDatasetShape } = { ...props }
+  const { row: datasetRow, onRemoveDatasetClick, onHideDatasetSwitch, onChangeDatasetShape, onChangeDatasetColor } = { ...props }
   const [isHidden, setIsHidden] = useState(datasetRow.isInitiallyHidden)
-  const [color, setColor] = useState(datasetRow.color)
+  const [color, setColor] = useState(datasetRow.color || '#000')
   const [shape, setShape] = useState(datasetRow.shape)
 
   const handleHiddenSwitch = () => {
@@ -35,7 +35,7 @@ export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>
 
   const onDatasetColorChange = (color: string) => {
     setColor(color)
-    onChangeDatasetShape(datasetRow.id, color)
+    onChangeDatasetColor(datasetRow.id, color)
   }
 
   return (
@@ -46,14 +46,6 @@ export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>
             <Typography variant="body2" noWrap>
               {datasetRow.name}
             </Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <ColorPicker
-              name='color'
-              defaultValue='#000'
-              value={color}
-              onChange={color => onDatasetColorChange(color)}
-            />
           </Grid>
           <Grid item xs={1}>
             <Tooltip title="Show/Hide datasets on graph">
@@ -68,6 +60,17 @@ export const DatasetRow = (props: IDatasetRowProps | IRowProps<IDatasetRowModel>
                 <DeleteIcon color='primary' />
               </IconButton>
             </Tooltip>
+          </Grid>
+          <Grid item xs={3}>
+            <ColorPicker
+              name='color'
+              InputProps={{ value: color }}
+              label={"Choose Color"}
+              value={color}
+              fullWidth
+              showPicker={false}
+              onChange={newColor => onDatasetColorChange(newColor)}
+            />
           </Grid>
           <Grid item sm={4}>
             <FormControl fullWidth>
