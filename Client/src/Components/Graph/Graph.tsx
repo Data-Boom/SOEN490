@@ -1,5 +1,6 @@
 import * as am4charts from "@amcharts/amcharts4/charts"
 import * as am4core from "@amcharts/amcharts4/core"
+import * as am4plugins_bullets from "@amcharts/amcharts4/plugins/bullets"
 
 import React, { useEffect, useRef } from 'react'
 
@@ -64,7 +65,49 @@ export const Graph = (props: IProps) => {
       }
 
       toggleHideShow(datasetSeries, dataset)
+      changeDatasetBullets(datasetSeries, dataset)
     })
+  }
+
+  const changeDatasetBullets = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
+    const xUnitName = getUnitName(axes[0].units)
+    const yUnitName = getUnitName(axes[1].units)
+    datasetSeries.bullets.pop()
+    console.log(dataset.shape)
+    if (dataset.shape == "square") {
+      const bullet = datasetSeries.bullets.push(new am4core.Rectangle())
+      bullet.width = 10;
+      bullet.height = 10;
+      bullet.tooltipText = `${dataset.name}
+        ${axes[0].variableName}: {x} ${xUnitName}
+        ${axes[1].variableName}: {y} ${yUnitName}`
+    }
+    else if (dataset.shape == "triangle") {
+      const bullet = datasetSeries.bullets.push(new am4core.Triangle())
+      bullet.horizontalCenter = "middle"
+      bullet.verticalCenter = "middle"
+      bullet.direction = "top"
+      bullet.width = 10;
+      bullet.height = 10;
+      bullet.tooltipText = `${dataset.name}
+        ${axes[0].variableName}: {x} ${xUnitName}
+        ${axes[1].variableName}: {y} ${yUnitName}`
+    }
+    else if (dataset.shape == "star") {
+      const bullet = datasetSeries.bullets.push(new am4plugins_bullets.Star());
+      bullet.radius = 5;
+      bullet.pointCount = 6;
+      bullet.tooltipText = `${dataset.name}
+        ${axes[0].variableName}: {x} ${xUnitName}
+        ${axes[1].variableName}: {y} ${yUnitName}`
+    }
+    else {
+      const bullet = datasetSeries.bullets.push(new am4core.Circle())
+      bullet.radius = 5
+      bullet.tooltipText = `${dataset.name}
+      ${axes[0].variableName}: { x } ${xUnitName}
+      ${axes[1].variableName}: { y } ${yUnitName} `
+    }
   }
 
   const toggleHideShow = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
@@ -109,14 +152,7 @@ export const Graph = (props: IProps) => {
 
   const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.XYSeries => {
     const datasetSeries = chart.series.push(new am4charts.XYSeries())
-    const bullet = datasetSeries.bullets.push(new am4core.Circle())
-    const xUnitName = getUnitName(axes[0].units)
-    const yUnitName = getUnitName(axes[1].units)
-    bullet.radius = 5
-    bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {x} ${xUnitName}
-        ${axes[1].variableName}: {y} ${yUnitName}`
-
+    changeDatasetBullets(datasetSeries, dataset)
     datasetSeries.dataFields.valueX = `x`
     datasetSeries.dataFields.valueY = `y`
     datasetSeries.name = getSeriesName(dataset)
@@ -139,12 +175,12 @@ export const Graph = (props: IProps) => {
   const updateAxis = (xAxis: any, yAxis: any) => {
     const xUnitName = getUnitName(axes[0].units)
     const yUnitName = getUnitName(axes[1].units)
-    xAxis.title.text = `${axes[0].variableName}, ${xUnitName}`
+    xAxis.title.text = `${axes[0].variableName}, ${xUnitName} `
     xAxis.logarithmic = axes[0].logarithmic || false
     xAxis.renderer.minGridDistance = 40
     xAxis.keepSelection = true
 
-    yAxis.title.text = `${axes[1].variableName}, ${yUnitName}`
+    yAxis.title.text = `${axes[1].variableName}, ${yUnitName} `
     yAxis.logarithmic = axes[1].logarithmic || false
     yAxis.keepSelection = true
   }

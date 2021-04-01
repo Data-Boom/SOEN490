@@ -10,6 +10,8 @@ export const newDatasetRow: IDatasetRowModel = {
   id: null,
   name: null,
   isInitiallyHidden: false,
-  color: null,
+  color: "circle",
   shape: null
 }
+
+export const shapes: string[] = ["circle", "square", "triangle", "star"]
