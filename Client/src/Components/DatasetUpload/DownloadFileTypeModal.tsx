@@ -23,17 +23,19 @@ export const DownloadFileTypeModal = (props: IProps) => {
                             <Grid item >
                                 <Typography>Choose your prefered file format to commence download </Typography>
                             </Grid>
-                            <Grid item>
-                                <Button id="submitConfirmation" onClick={onSubmitTxt} variant='contained' color="primary" type="submit">Download TXT</Button>
-                            </Grid>
-                            <Grid item>
-                                <Button id="submitConfirmation" onClick={() => alert("download JSON")} variant='contained' color="primary" type="submit">Download JSON</Button>
-                            </Grid>
-                            <Grid item>
-                                <Button id="submitConfirmation" onClick={() => alert("download CSV")} variant='contained' color="primary" type="submit">Download CSV</Button>
-                            </Grid>
-                            <Grid item>
-                                <Button id="submitConfirmation" onClick={() => alert("download XLS")} variant='contained' color="primary" type="submit">Download XLS</Button>
+                            <Grid item container spacing={4} >
+                                <Grid item>
+                                    <Button id="submitConfirmation" onClick={onSubmitTxt} variant='contained' color="primary" type="submit"> TXT</Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button id="submitConfirmation" onClick={() => alert("download JSON")} variant='contained' color="primary" type="submit"> JSON</Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button id="submitConfirmation" onClick={() => alert("download CSV")} variant='contained' color="primary" type="submit"> CSV</Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button id="submitConfirmation" onClick={() => alert("download XLS")} variant='contained' color="primary" type="submit"> XLS</Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Box>
