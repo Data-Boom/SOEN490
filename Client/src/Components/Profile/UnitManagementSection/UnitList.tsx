@@ -48,6 +48,7 @@ export const UnitList = (props: IProps) => {
             index={index}
             conversionFormula={unit.conversionFormula}
             onRemoveUnitClick={handleRemoveUnit}
+            baseUnitName={units?.find(unit => unit.id == baseUnitId)?.name}
             removable={shouldRenderRemove()}
           />
         )

@@ -1,10 +1,11 @@
 import { Box, Container } from '@material-ui/core'
-import { ICategoryModel, listCategories } from '../../../Remote/Endpoints/CategoryEndpoint'
+import { listCategories } from '../../../Remote/Endpoints/CategoryEndpoint'
 import React, { useEffect, useState } from 'react'
 import { callGetDatasets, callGetUserFavouriteDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 
 import { IDatasetModel } from "../../../Models/Datasets/IDatasetModel"
 import { SearchResults } from '../../Search/SearchResults'
+import { ICategoryModel } from '../../../Models/Profile/ICategoryModel'
 
 export const SavedDatasetsTab = () => {
 

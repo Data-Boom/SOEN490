@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 
 import { AuthenticationController } from '../../controllers/authenticationController';
 
@@ -9,8 +9,15 @@ describe('Authentication Controller', () => {
     let next;
     let authenticationController: AuthenticationController;
 
-    beforeEach(async () => {
-        await createConnection();
+    beforeAll(async () => {
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                return getConnectionManager().get();
+            }
+        }
         jest.setTimeout(60000)
         authenticationController = new AuthenticationController();
         mockRequest = {};
@@ -23,7 +30,7 @@ describe('Authentication Controller', () => {
         next = {};
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 
@@ -40,9 +47,7 @@ describe('Authentication Controller', () => {
                 lastName: 'FireFist'
             }
         }
-        await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
-        expect(mockResponse.status).toBeCalledWith(200);
+        await signUpRequestWithAssert(mockRequest as Request, mockResponse as Response, 200, expectedResponse, next as NextFunction)
     });
 
     test('Invalid SignUp Request due to missing parameters - Error 400', async () => {
@@ -53,9 +58,7 @@ describe('Authentication Controller', () => {
             }
         }
 
-        await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(400);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        await signUpRequestWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse, next as NextFunction)
     });
 
     test('Invalid Sign Up with Duplicate Email in System - Error 400', async () => {
@@ -72,9 +75,7 @@ describe('Authentication Controller', () => {
             }
         }
 
-        await authenticationController.createSignUpRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(400);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        await signUpRequestWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse, next as NextFunction)
     });
 
     test('Invalid Logic Request due to missing parameters - Error 400', async () => {
@@ -85,8 +86,7 @@ describe('Authentication Controller', () => {
             }
         }
 
-        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(400);
+        await loginRequestWithAssert(mockRequest as Request, mockResponse as Response, 400, next as NextFunction)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
 
@@ -99,8 +99,7 @@ describe('Authentication Controller', () => {
             }
         }
 
-        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(400);
+        await loginRequestWithAssert(mockRequest as Request, mockResponse as Response, 400, next as NextFunction)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
     });
 
@@ -119,9 +118,7 @@ describe('Authentication Controller', () => {
                 email: 'j@kj.com',
             }
         }
-        await authenticationController.createFetchUserDetailsRequest(mockRequest as Request, mockResponse as Response);
-        expect(mockResponse.status).toBeCalledWith(200);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        await fetchUserDetailWithAssert(mockRequest as Request, mockResponse as Response, 200, expectedResponse)
     });
 
     test('Invalid Request to get UserDetails - Bad Email Error 400', async () => {
@@ -132,9 +129,7 @@ describe('Authentication Controller', () => {
             }
         }
 
-        await authenticationController.createFetchUserDetailsRequest(mockRequest as Request, mockResponse as Response);
-        expect(mockResponse.status).toBeCalledWith(400);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        await fetchUserDetailWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse)
     });
 
     test('Valid Login Request', async () => {
@@ -145,10 +140,8 @@ describe('Authentication Controller', () => {
             }
         }
         let regex: RegExp = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
-        //
-        await authenticationController.createLoginRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
+        await loginRequestWithAssert(mockRequest as Request, mockResponse as Response, 200, next as NextFunction)
         expect(regex.test(mockResponse.json));
-        expect(mockResponse.status).toBeCalledWith(200);
     });
 
     //to fix
@@ -162,9 +155,7 @@ describe('Authentication Controller', () => {
                 organizationName: 'soen490'
             }
         }
-        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(200);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        await updateUserDetailWithAssert(mockRequest as Request, mockResponse as Response, 200, expectedResponse, next as NextFunction)
     });
 
     test('invalid user detail update request', async () => {
@@ -177,9 +168,7 @@ describe('Authentication Controller', () => {
                 organizationName: 'soen490'
             }
         }
-        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(400);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        await updateUserDetailWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse, next as NextFunction)
     });
 
     test('invalid user detail update request, missing password and organization name', async () => {
@@ -191,8 +180,29 @@ describe('Authentication Controller', () => {
 
             }
         }
-        await authenticationController.updateUserDetailRequest(mockRequest as Request, mockResponse as Response, next as NextFunction)
-        expect(mockResponse.status).toBeCalledWith(400);
-        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        await updateUserDetailWithAssert(mockRequest as Request, mockResponse as Response, 400, expectedResponse, next as NextFunction)
     })
+
+    async function signUpRequestWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any, next: any) {
+        await authenticationController.createSignUpRequest(mockRequest, mockResponse, next)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.status).toBeCalledWith(status);
+    }
+
+    async function fetchUserDetailWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+        await authenticationController.createFetchUserDetailsRequest(mockRequest, mockResponse)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.status).toBeCalledWith(status);
+    }
+
+    async function loginRequestWithAssert(mockRequest: Request, mockResponse: Response, status: number, next: any) {
+        await authenticationController.createLoginRequest(mockRequest, mockResponse, next)
+        expect(mockResponse.status).toBeCalledWith(status);
+    }
+
+    async function updateUserDetailWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any, next: any) {
+        await authenticationController.updateUserDetailRequest(mockRequest, mockResponse, next)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.status).toBeCalledWith(status);
+    }
 })

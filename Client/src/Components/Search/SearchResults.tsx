@@ -3,8 +3,8 @@ import { Grid, List, ListItem, ListItemText } from '@material-ui/core'
 import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
-import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
 import React from 'react'
+import { ICategoryModel } from '../../Models/Profile/ICategoryModel'
 
 interface IProps {
   datasetResults: IDatasetModel[],

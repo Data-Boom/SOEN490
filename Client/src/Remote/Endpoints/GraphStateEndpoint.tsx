@@ -8,7 +8,7 @@ const graphStateRoute = '/api/v1/graphState'
 
 export const listGraphStates = async (): Promise<IGraphStateModel[]> => {
   const result: IGraphStateModel[] = await get(graphStateRoute).json()
-  return result
+  return result || []
 }
 
 export const callGetGraphState = async (id: number): Promise<IGraphStateModel> => {

@@ -1,17 +1,23 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { AuthenticationModel } from '../../models/AuthenticationModel';
 import { ISignUpInformation } from '../../genericInterfaces/AuthenticationInterfaces';
 
 
 describe('Authentication Model Methods', () => {
 
-    beforeEach(async () => {
-        await createConnection();
+    beforeAll(async () => {
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                return getConnectionManager().get();
+            }
+        }
         jest.setTimeout(60000)
-        //need to increase from default to allow for DB connection
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 
