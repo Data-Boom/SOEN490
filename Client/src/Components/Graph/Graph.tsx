@@ -70,49 +70,40 @@ export const Graph = (props: IProps) => {
   }
 
   const changeDatasetBullets = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
+    console.log(dataset.color)
     const xUnitName = getUnitName(axes[0].units)
     const yUnitName = getUnitName(axes[1].units)
+    let bullet: am4core.Rectangle | am4core.Triangle | am4plugins_bullets.Star | am4core.Circle
     datasetSeries.bullets.pop()
     if (dataset.shape == "square") {
-      const bullet = datasetSeries.bullets.push(new am4core.Rectangle())
+      bullet = datasetSeries.bullets.push(new am4core.Rectangle())
       bullet.width = 10
       bullet.height = 10
       bullet.horizontalCenter = "middle"
       bullet.verticalCenter = "middle"
-      bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {x} ${xUnitName}
-        ${axes[1].variableName}: {y} ${yUnitName}`
-      bullet.fill = am4core.color(dataset.color)
     }
     else if (dataset.shape == "triangle") {
-      const bullet = datasetSeries.bullets.push(new am4core.Triangle())
+      bullet = datasetSeries.bullets.push(new am4core.Triangle())
       bullet.horizontalCenter = "middle"
       bullet.verticalCenter = "middle"
       bullet.direction = "top"
       bullet.width = 10
       bullet.height = 10
-      bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {x} ${xUnitName}
-        ${axes[1].variableName}: {y} ${yUnitName}`
-      bullet.fill = am4core.color(dataset.color)
     }
     else if (dataset.shape == "star") {
-      const bullet = datasetSeries.bullets.push(new am4plugins_bullets.Star());
+      bullet = datasetSeries.bullets.push(new am4plugins_bullets.Star());
       bullet.radius = 5
       bullet.pointCount = 6
-      bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {x} ${xUnitName}
-        ${axes[1].variableName}: {y} ${yUnitName}`
-      bullet.fill = am4core.color(dataset.color)
     }
     else {
-      const bullet = datasetSeries.bullets.push(new am4core.Circle())
+      bullet = datasetSeries.bullets.push(new am4core.Circle())
       bullet.radius = 5
-      bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: { x } ${xUnitName}
-        ${axes[1].variableName}: { y } ${yUnitName}`
-      bullet.fill = am4core.color(dataset.color)
     }
+    bullet.fill = am4core.color(dataset.color || "#000000")
+    bullet.stroke = am4core.color(dataset.color || "#000000")
+    bullet.tooltipText = `${dataset.name}
+        ${axes[0].variableName}: {x} ${xUnitName}
+        ${axes[1].variableName}: {y} ${yUnitName}`
   }
 
   const toggleHideShow = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
