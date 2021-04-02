@@ -21,7 +21,6 @@ export const callGetDatasets = async (query: ISearchDatasetsFormModel): Promise<
 
 export const callSaveDataset = async (dataset: IDatasetModel): Promise<number> => {
   const result = await post(dataUploadRoute).withBody(dataset).json()
-  //console.log("result: " + result)
   return result
 }
 

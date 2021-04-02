@@ -48,7 +48,6 @@ export const DatasetForm = (props: IProps): any => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
     resetForm({ values: '' })
-
   }
 
   const meta: IDatasetMeta = initialDataset
