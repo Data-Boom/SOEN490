@@ -29,8 +29,6 @@ export const DatasetForm = (props: IProps): any => {
   const [categories, setCategories] = useState<ICategoryModel[]>([])
   const [materials, setMaterials] = useState([])
 
-  const [form, setForm] = useState("");
-
   useEffect(() => {
     const callListCategories = async () => {
       const categories = await listCategories()
@@ -46,20 +44,12 @@ export const DatasetForm = (props: IProps): any => {
     callListMaterials()
   }, [])
 
-  /*const handleSubmit = (values: DatasetUploadFormValues, { resetForm }) => {
+  const handleSubmit = (values: DatasetUploadFormValues, { resetForm }) => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
-    resetForm({ values: null })
-
-  }*/
-  const handleSubmit = (values: DatasetUploadFormValues, onSubmitProps) => {
-    const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
-    onSubmit(dataset)
-    onSubmitProps.setSubmitting(false)
-    onSubmitProps.resetForm()
+    resetForm({ values: '' })
 
   }
-
 
   const meta: IDatasetMeta = initialDataset
   const reference: IReference = initialDataset.reference
