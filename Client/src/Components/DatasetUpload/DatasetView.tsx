@@ -71,9 +71,11 @@ export const DatasetView = (props: IProps) => {
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    await callSaveDataset(formDataset)
-    SnackbarUtils.success("Dataset successfully uploaded")
-    history.push('/dataset/:datasetId')
+    const result = await callSaveDataset(formDataset)
+    if (result > 0) {
+      SnackbarUtils.success("Dataset successfully uploaded")
+    }
+    history.push('/dataset/:' + formDataset.id)
 
   }
 
