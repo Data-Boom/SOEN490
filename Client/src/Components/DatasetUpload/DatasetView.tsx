@@ -17,7 +17,7 @@ import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
 import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
-import { useParams } from "react-router"
+import { useHistory, useParams } from "react-router"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
 import SnackbarUtils from '../Utils/SnackbarUtils'
@@ -49,6 +49,8 @@ export const DatasetView = (props: IProps) => {
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
+  const history = useHistory();
+
   useEffect(() => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
     setFileUploadModalOpen(false)
@@ -71,6 +73,8 @@ export const DatasetView = (props: IProps) => {
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
     await callSaveDataset(formDataset)
     SnackbarUtils.success("Dataset successfully uploaded")
+    //e.preventDefault();
+    history.push('/dataset/:datasetId')
   }
 
   const handleJSONFileTypeSelected = () => {
