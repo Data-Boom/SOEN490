@@ -70,7 +70,6 @@ export const Graph = (props: IProps) => {
   }
 
   const changeDatasetBullets = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
-    console.log(dataset.color)
     const xUnitName = getUnitName(axes[0].units)
     const yUnitName = getUnitName(axes[1].units)
     let bullet: am4core.Rectangle | am4core.Triangle | am4plugins_bullets.Star | am4core.Circle
