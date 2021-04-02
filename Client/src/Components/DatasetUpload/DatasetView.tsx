@@ -20,7 +20,6 @@ import { useLocation } from "react-router-dom"
 import { useParams } from "react-router"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
-import { DatasetDownloadButton } from './DatasetDownloadButton'
 import { DownloadFileTypeModal } from './DownloadFileTypeModal'
 
 interface IProps {
@@ -85,11 +84,12 @@ export const DatasetView = (props: IProps) => {
     setAcceptedFileType(csvType)
   }
 
-  const handleDLTxtSelected = () => {
-    return (
-      <DatasetDownloadButton datasets={initialValues} />
-    )
-  }
+  // const handleDLTxtSelected = () => {
+  //   return (
+  //     // <DatasetDownloadButton datasets={initialValues} />
+  //    // DatasetDownloadButton(initialValues)
+  //   )
+  // }
 
   const renderTopButtons = (): any => {
     return (
@@ -143,8 +143,8 @@ export const DatasetView = (props: IProps) => {
       />
       <DownloadFileTypeModal
         open={dlFileTypeOpen}
+        dataset={initialValues}
         onClose={() => setDLFileTypeOpen(false)}
-        onSubmitTxt={handleDLTxtSelected}
       />
     </>
   )

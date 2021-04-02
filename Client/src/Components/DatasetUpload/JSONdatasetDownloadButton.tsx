@@ -5,7 +5,7 @@ import React from 'react'
 interface IProps {
     datasets: IDatasetModel
 }
-export const DatasetDownloadButton = (props: IProps) => {
+export const JSONdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
 
     //helper methods
@@ -51,35 +51,11 @@ export const DatasetDownloadButton = (props: IProps) => {
         "Data ": dataContentArray() + " " + datasets.data.dataPointComments,
         "Comments": datasets.data.comments
     }
-    const downloadedTxtDataDisplayed: string =
-        " Dataset name: " + datasets.dataset_name + "\n " +
-        "Material: " + materialArray() + "\n " +
-        "Publications/Source: \n " +
-        "Authors: " + authorArray() + "\n " +
-        "Title: " + datasets.reference.title + "\n " +
-        "Year: " + datasets.reference.year + "\n " +
-        "Export source: " + " databoom.concordia.ca \n " +
-        "Export date: " + new Date().toLocaleString() + "\n " +
-        "Variables: " + variableArray() + "\n " +
-        "Data: " + dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
-        "Comments: \n" + datasets.data.comments + " \n "
 
-
-    const handleTxtDownload = () => {
-        download("dataset.txt", downloadedTxtDataDisplayed)
-    }
     const handleJSONDownload = () => {
-        download("dataset.txt", JSON.stringify(downloadedJSONDataDisplayed, null, 4))
+        download("dataset.JSON", JSON.stringify(downloadedJSONDataDisplayed, null, 4))
     }
-    /**
-     * const handleCSVDownload= ()=>{
-     *      insert csv parsing function
-     * }
-     * 
-     * const handleXLSDownload = ()=>{
-     *      insert xls parsing function
-     * }
-     */
+
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
     function download(filename: string, text: string) {
         const element = document.createElement('a')
@@ -93,24 +69,10 @@ export const DatasetDownloadButton = (props: IProps) => {
 
         document.body.removeChild(element)
     }
-    /** ----TO DO once all the file download types are working----
-     * 
-     * if (fileType: "Txt"){
-     *      return handleTxtDownload()
-     * }
-     * else if (fileType: "JSON"){
-     *      return handleJSONDownload()
-     * }
-     * else if (fileType: "CSV"){
-     *      return handleCSVDownload()
-     * }
-     * else if (fileType: "XLS"){
-     *      return handleXLSDownload()
-     * }
-     */
+
     return (
-        // <Button id="download-txt" onClick={handleTxtDownload} color="primary" variant="contained"> Download </Button>
-        handleTxtDownload()
+        <Button id="download-txt" onClick={handleJSONDownload} color="primary" variant="contained"> JSON </Button>
+        //handleTxtDownload()
     )
 
 }
