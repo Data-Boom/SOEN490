@@ -1,5 +1,6 @@
 import { AppBar, Box, Container, Snackbar, Tab, Tabs, Typography } from "@material-ui/core"
 import React, { useEffect, useState } from 'react'
+import { TabPanel, a11yProps } from '../Profile/ProfileView'
 
 import { Alert } from '@material-ui/lab'
 import { CategoryManagementTab } from '../Profile/CategoryManagementSection/CategoryManagementTab';
@@ -13,34 +14,6 @@ interface TabPanelProps {
     index: any;
     value: any;
 }
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    )
-}
-
-function a11yProps(index: any) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    }
-}
-
 
 export const AdminPageView = () => {
     const [tab, setTab] = React.useState(0)
