@@ -74,8 +74,9 @@ export const DatasetView = (props: IProps) => {
     const result = await callSaveDataset(formDataset)
     if (result > 0) {
       SnackbarUtils.success("Dataset successfully uploaded")
+      history.push('/dataset/' + result)
+      //history.go(0)
     }
-    history.push('/dataset/:' + formDataset.id)
   }
 
   const handleJSONFileTypeSelected = () => {
