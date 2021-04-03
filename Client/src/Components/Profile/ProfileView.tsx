@@ -171,7 +171,7 @@ export function ProfileView() {
             <Tab label="View Saved Graphs" {...a11yProps(1)} />
             <Tab label="View Saved Datasets" {...a11yProps(2)} />
             <Tab label="Permissions" {...a11yProps(3)} />
-            <Tab label="View Uploads" {...a11yProps(4)} />
+            <Tab label="View Uploaded Datasets" {...a11yProps(4)} />
             <Tab label="Manage Units" {...a11yProps(5)} />
             <Tab label="Manage Categories" {...a11yProps(6)} />
           </Tabs>
