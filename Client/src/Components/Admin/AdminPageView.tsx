@@ -1,4 +1,4 @@
-import { AppBar, Box, Container, Snackbar, Tab, Tabs, Typography } from "@material-ui/core"
+import { AppBar, Container, Snackbar, Tab, Tabs } from "@material-ui/core"
 import React, { useEffect, useState } from 'react'
 import { TabPanel, a11yProps } from '../Profile/ProfileView'
 
