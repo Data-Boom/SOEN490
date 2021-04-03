@@ -75,7 +75,6 @@ export const DatasetView = (props: IProps) => {
     if (result > 0) {
       SnackbarUtils.success("Dataset successfully uploaded")
       history.push('/dataset/' + result)
-      //history.go(0)
     }
   }
 
