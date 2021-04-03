@@ -1,11 +1,10 @@
-import { AppBar, Box, Container, Tab, Tabs, Typography } from "@material-ui/core"
+import { AppBar, Box, Container, Snackbar, Tab, Tabs, Typography } from "@material-ui/core"
 import React, { useEffect, useState } from 'react'
 
 import { Alert } from '@material-ui/lab'
 import { CategoryManagementTab } from '../Profile/CategoryManagementSection/CategoryManagementTab';
 import { DimensionManagementTab } from '../Profile/UnitManagementSection/DimensionManagementTab'
 import PermissionsTab from '../Profile/PermissionsSection/PermissionsTab'
-import { Snackbar } from '@material-ui/core'
 import { useUserSelector } from "../../Stores/Slices/UserSlice"
 
 // Tab code taken from: https://material-ui.com/components/tabs/

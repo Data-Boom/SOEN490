@@ -15,7 +15,6 @@ import HomeIcon from '@material-ui/icons/Home'
 import HomeView from "../Home/HomeView"
 import { IApprovedDatasetModel } from "../../Models/Datasets/IApprovedDatasetModel"
 import InfoIcon from '@material-ui/icons/Info'
-import { ListItem } from "material-ui"
 import { ListItemLink } from "./ListItemLink"
 import { LoginView } from "../Authentication/LoginView"
 import MessageIcon from '@material-ui/icons/Message'
@@ -46,7 +45,7 @@ export const ListRouter = () => {
   const classes = useStyles()
   const [adminReview, setAdminReview] = useState(0)
   const [userReview, setUserReview] = useState(0)
-  const [adminPage, setAdminPage] = useState(0)
+  const [adminPage] = useState(0)
 
   useEffect(() => {
     const fetchUserDatasets = async () => {
