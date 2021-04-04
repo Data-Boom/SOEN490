@@ -1,10 +1,11 @@
 import { Box, Button, Grid, Modal, Paper, Typography } from "@material-ui/core"
-import { TXTdatasetDownloadButton } from './TXTdatasetDownloadButton'
-import { JSONdatasetDownloadButton } from './JSONdatasetDownloadButton'
 import React from 'react'
 import { classStyles } from "../../appTheme"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { CSVdatasetDownloadButton } from "./CSVdatasetDownloadButton"
+import { XLSdatasetDownloadButton } from "./XLSdatasetDownloadButton"
+import { TXTdatasetDownloadButton } from './TXTdatasetDownloadButton'
+import { JSONdatasetDownloadButton } from './JSONdatasetDownloadButton'
 
 interface IProps {
     dataset: IDatasetModel
@@ -38,7 +39,7 @@ export const DownloadFileTypeModal = (props: IProps) => {
                                     <CSVdatasetDownloadButton datasets={dataset} />
                                 </Grid>
                                 <Grid item>
-                                    <Button id="submitConfirmation" onClick={() => alert("download XLS")} variant='contained' color="primary" type="submit"> XLS</Button>
+                                    <XLSdatasetDownloadButton datasets={dataset} />
                                 </Grid>
                             </Grid>
                         </Grid>
