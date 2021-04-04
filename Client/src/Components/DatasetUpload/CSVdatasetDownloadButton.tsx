@@ -5,7 +5,7 @@ import React from 'react'
 interface IProps {
     datasets: IDatasetModel
 }
-export const JSONdatasetDownloadButton = (props: IProps) => {
+export const CSVdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
 
     //helper methods
@@ -38,22 +38,22 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
         return name
     }
 
-    const downloadedJSONDataDisplayed = {
-        "Dataset name ": datasets.dataset_name,
-        "Material ": materialArray(),
-        "Publications/Source": {},
-        "Authors ": authorArray(),
-        "Title ": datasets.reference.title,
-        "Year ": datasets.reference.year,
-        "Export source ": " databoom.concordia.ca ",
-        "Export date ": new Date().toLocaleString(),
-        "Variables ": variableArray(),
-        "Data ": dataContentArray() + " " + datasets.data.dataPointComments,
-        "Comments": datasets.data.comments
-    }
+    const downloadedCSVDataDisplayed: string =
+        " Dataset name: " + datasets.dataset_name + "\n " +
+        "Material: " + materialArray() + "\n " +
+        "Publications/Source: \n " +
+        "Authors: " + authorArray() + "\n " +
+        "Title: " + datasets.reference.title + "\n " +
+        "Year: " + datasets.reference.year + "\n " +
+        "Export source: " + " databoom.concordia.ca \n " +
+        "Export date: " + new Date().toLocaleString() + "\n " +
+        "Variables: " + variableArray() + "\n " +
+        "Data: " + dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
+        "Comments: \n" + datasets.data.comments + " \n "
 
-    const handleJSONDownload = () => {
-        download("dataset.JSON", JSON.stringify(downloadedJSONDataDisplayed, null, 4))
+
+    const handleCSVDownload = () => {
+        download("dataset.csv", downloadedCSVDataDisplayed)
     }
 
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
@@ -71,7 +71,7 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
     }
 
     return (
-        <Button id="download-json" onClick={handleJSONDownload} color="primary" variant="contained"> JSON </Button>
+        <Button id="download-csv" onClick={handleCSVDownload} color="primary" variant="contained"> CSV </Button>
         //handleTxtDownload()
     )
 

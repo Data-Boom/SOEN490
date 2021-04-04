@@ -4,6 +4,7 @@ import { JSONdatasetDownloadButton } from './JSONdatasetDownloadButton'
 import React from 'react'
 import { classStyles } from "../../appTheme"
 import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
+import { CSVdatasetDownloadButton } from "./CSVdatasetDownloadButton"
 
 interface IProps {
     dataset: IDatasetModel
@@ -34,7 +35,7 @@ export const DownloadFileTypeModal = (props: IProps) => {
                                     <JSONdatasetDownloadButton datasets={dataset} />
                                 </Grid>
                                 <Grid item>
-                                    <Button id="submitConfirmation" onClick={() => alert("download CSV")} variant='contained' color="primary" type="submit"> CSV</Button>
+                                    <CSVdatasetDownloadButton datasets={dataset} />
                                 </Grid>
                                 <Grid item>
                                     <Button id="submitConfirmation" onClick={() => alert("download XLS")} variant='contained' color="primary" type="submit"> XLS</Button>
