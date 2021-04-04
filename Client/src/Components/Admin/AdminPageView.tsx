@@ -43,28 +43,13 @@ export const AdminPageView = () => {
                 </AppBar>
                 <Container>
                     <TabPanel value={tab} index={0}>
-                        {superAdmin ? <CategoryManagementTab /> :
-                            <Snackbar open={alertOpen} autoHideDuration={3000} onClose={() => setAlertOpen(false)}>
-                                <Alert onClose={() => setAlertOpen(false)} severity="error">
-                                    You do not have access to this page
-                                </Alert>
-                            </Snackbar>}
+                        <CategoryManagementTab />
                     </TabPanel>
                     <TabPanel value={tab} index={1}>
-                        {superAdmin ? <DimensionManagementTab /> :
-                            <Snackbar open={alertOpen} autoHideDuration={3000} onClose={() => setAlertOpen(false)}>
-                                <Alert onClose={() => setAlertOpen(false)} severity="error">
-                                    You do not have access to this page
-                         </Alert>
-                            </Snackbar>}
+                        <DimensionManagementTab />
                     </TabPanel>
                     <TabPanel value={tab} index={2}>
-                        {superAdmin ? <PermissionsTab /> :
-                            <Snackbar open={alertOpen} autoHideDuration={3000} onClose={() => setAlertOpen(false)}>
-                                <Alert onClose={() => setAlertOpen(false)} severity="error">
-                                    You do not have access to this page
-                                </Alert>
-                            </Snackbar>}
+                        <PermissionsTab />
                     </TabPanel>
                 </Container>
             </div>

@@ -46,5 +46,5 @@ export const routes: Routes = {
   forgotPasswordRoute: { route: '/api/v1/forgotPassword', permission: 'anyone' },
   cellSizeAnalysisRoute: { route: '/cellSizeAnalysis', permission: 'anyone' },
   resetPasswordRoute: { route: '/api/v1/resetPassword/:resetToken?', permission: 'anyone' },
-  adminPageRoute: { route: '/adminPage', permission: 1 }
+  adminPageRoute: { route: '/adminPage', permission: 2 }
 }
