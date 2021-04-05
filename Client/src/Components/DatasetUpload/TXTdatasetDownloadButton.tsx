@@ -15,17 +15,18 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
     const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
-            name += datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + " "
+            name += " " + datasets.data.variables[i].name + "  [" + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + "], "
         }
         return name
     }
     const materialArray = (): any => {
         var name = " "
         for (var i in datasets.material) {
-            name += datasets.material[i].composition + " " + datasets.material[i].details + ", "
+            name += datasets.material[i].composition + " ' " + datasets.material[i].details + " ', "
         }
         return name
     }
+
     const authorArray = (): any => {
         var name = " "
         for (var i in datasets.reference.authors) {
@@ -36,23 +37,35 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
     const dataContentArray = (): any => {
         var name = " "
         for (var i in datasets.data.contents) {
-            name += datasets.data.contents[i].point + " \n"
+            name += datasets.data.contents[i].point + ",  "
         }
         return name
     }
 
     const downloadedTxtDataDisplayed: string =
-        " Dataset name: " + datasets.dataset_name + "\n " +
-        "Material: " + materialArray() + "\n " +
-        "Publications/Source: \n " +
-        "Authors: " + authorArray() + "\n " +
-        "Title: " + datasets.reference.title + "\n " +
-        "Year: " + datasets.reference.year + "\n " +
-        "Export source: " + " databoom.concordia.ca \n " +
-        "Export date: " + new Date().toLocaleString() + "\n " +
+        "#Dataset name: " + datasets.dataset_name + "\n " +
+        "#Material: " + materialArray() + "\n " +
+        "#Data type: " + datasets.data_type + "\n " +
+        "#Category: " + datasets.category + "\n " +
+        "#Subcategory: " + datasets.subcategory + "\n " +
+        "#\n" +
+        "#Publications/Source:\n " +
+        "#Authors: " + authorArray() + "\n " +
+        "#Title: " + datasets.reference.title + "\n " +
+        "#Type: " + datasets.reference.type + "\n " +
+        "#Publisher: " + datasets.reference.publisher + "\n " +
+        "#Volume: " + datasets.reference.volume + "\n " +
+        "#Pages: " + datasets.reference.pages + "\n " +
+        "#DOI: " + datasets.reference.doi + "\n " +
+        "#Issue: " + datasets.reference.issue + "\n " +
+        "#Year: " + datasets.reference.year + "\n " +
+        "# \n" +
+        "#Export source: " + " databoom.concordia.ca \n " +
+        "#Export date: " + new Date().toLocaleString() + "\n " +
+        "# \n" +
         variableArray() + "\n " +
-        dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
-        "Comments: \n" + datasets.data.comments + " \n "
+        dataContentArray() + " " + datasets.data.dataPointComments + "\n "
+    //"Comments: \n" + datasets.data.comments + " \n "
 
 
     const handleTxtDownload = () => {
