@@ -1,18 +1,21 @@
 import { Button } from '@material-ui/core'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React from 'react'
+import { useDimensionsSelector } from '../../Stores/Slices/DimensionsSlice'
+import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
 
 interface IProps {
     datasets: IDatasetModel
 }
 export const TXTdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
+    const dimensions = useDimensionsSelector()
 
     //helper methods
     const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
-            name += datasets.data.variables[i].name + ", " //need to add the variable units, how?
+            name += datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + " "
         }
         return name
     }
@@ -33,7 +36,7 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
     const dataContentArray = (): any => {
         var name = " "
         for (var i in datasets.data.contents) {
-            name += datasets.data.contents[i].point + " "
+            name += datasets.data.contents[i].point + " \n"
         }
         return name
     }
@@ -47,13 +50,13 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
         "Year: " + datasets.reference.year + "\n " +
         "Export source: " + " databoom.concordia.ca \n " +
         "Export date: " + new Date().toLocaleString() + "\n " +
-        "Variables: " + variableArray() + "\n " +
-        "Data: " + dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
+        variableArray() + "\n " +
+        dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
         "Comments: \n" + datasets.data.comments + " \n "
 
 
     const handleTxtDownload = () => {
-        download("dataset.txt", downloadedTxtDataDisplayed)
+        download("txtdataset.txt", downloadedTxtDataDisplayed)
     }
 
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server

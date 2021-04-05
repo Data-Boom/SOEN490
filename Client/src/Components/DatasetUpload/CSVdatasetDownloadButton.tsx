@@ -10,11 +10,12 @@ interface IProps {
 export const CSVdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
     const dimensions = useDimensionsSelector()
+
     //helper methods
     const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
-            name += "," + datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId) //need to add the variable units, how?
+            name += "," + datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId)
         }
         return name
     }
