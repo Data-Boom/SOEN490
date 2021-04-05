@@ -1,18 +1,20 @@
 import { Button } from '@material-ui/core'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React from 'react'
+import { useDimensionsSelector } from '../../../src/Stores/Slices/DimensionsSlice'
+import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
 
 interface IProps {
     datasets: IDatasetModel
 }
 export const CSVdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
-
+    const dimensions = useDimensionsSelector()
     //helper methods
     const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
-            name += "," + datasets.data.variables[i].name + ", " //need to add the variable units, how?
+            name += "," + datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId) //need to add the variable units, how?
         }
         return name
     }
