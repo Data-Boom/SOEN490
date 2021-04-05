@@ -53,7 +53,7 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
 
 
     const handleXLSDownload = () => {
-        download("dataset.xls", downloadedXLSDataDisplayed)
+        download("xlsdataset.xls", downloadedXLSDataDisplayed)
     }
 
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server

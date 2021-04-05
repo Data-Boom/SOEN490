@@ -12,7 +12,7 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
     const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
-            name += datasets.data.variables[i].name + ", " //need to add the variable units, how?
+            name += "," + datasets.data.variables[i].name + ", " //need to add the variable units, how?
         }
         return name
     }
@@ -33,27 +33,27 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
     const dataContentArray = (): any => {
         var name = " "
         for (var i in datasets.data.contents) {
-            name += datasets.data.contents[i].point + " "
+            name += "," + datasets.data.contents[i].point + ", \n"
         }
         return name
     }
 
     const downloadedCSVDataDisplayed: string =
-        " Dataset name: " + datasets.dataset_name + "\n " +
-        "Material: " + materialArray() + "\n " +
+        "Dataset name ," + datasets.dataset_name + "\n " +
+        "Material ," + materialArray() + "\n " +
         "Publications/Source: \n " +
-        "Authors: " + authorArray() + "\n " +
-        "Title: " + datasets.reference.title + "\n " +
-        "Year: " + datasets.reference.year + "\n " +
-        "Export source: " + " databoom.concordia.ca \n " +
-        "Export date: " + new Date().toLocaleString() + "\n " +
-        "Variables: " + variableArray() + "\n " +
-        "Data: " + dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
-        "Comments: \n" + datasets.data.comments + " \n "
+        "Authors ," + authorArray() + "\n " +
+        "Title , " + datasets.reference.title + "\n " +
+        "Year ," + datasets.reference.year + "\n " +
+        "Export source ," + " databoom.concordia.ca \n " +
+        "Export date ," + new Date().toLocaleString() + "\n " +
+        variableArray() + "\n " +
+        dataContentArray() + ", " + datasets.data.dataPointComments + "\n " +
+        "Comments , \n" + datasets.data.comments + " \n "
 
 
     const handleCSVDownload = () => {
-        download("dataset.csv", downloadedCSVDataDisplayed)
+        download("csvdataset.csv", downloadedCSVDataDisplayed)
     }
 
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server

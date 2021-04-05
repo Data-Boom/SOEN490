@@ -11,7 +11,6 @@ interface IProps {
     dataset: IDatasetModel
     open: boolean,
     onClose: () => void,
-    // onSubmitTxt: () => void
 }
 export const DownloadFileTypeModal = (props: IProps) => {
     const { open, dataset, onClose } = { ...props }

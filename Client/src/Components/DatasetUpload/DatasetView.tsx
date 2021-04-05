@@ -84,13 +84,6 @@ export const DatasetView = (props: IProps) => {
     setAcceptedFileType(csvType)
   }
 
-  // const handleDLTxtSelected = () => {
-  //   return (
-  //     // <DatasetDownloadButton datasets={initialValues} />
-  //    // DatasetDownloadButton(initialValues)
-  //   )
-  // }
-
   const renderTopButtons = (): any => {
     return (
       <>
@@ -101,7 +94,6 @@ export const DatasetView = (props: IProps) => {
                 <FavoriteDatasetButton datasetId={initialValues.id} />
               </Grid>
               <Grid item>
-                {/* <DatasetDownloadButton datasets={initialValues} /> */}
                 <Button id="download" onClick={() => setDLFileTypeOpen(true)} color="primary" variant="contained"> Download </Button>
               </Grid>
               <Grid item>
