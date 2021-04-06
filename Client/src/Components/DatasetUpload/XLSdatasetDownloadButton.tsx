@@ -15,10 +15,11 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
 
     //helper methods
     const variableArray = (): any => {
-        var name = " "
+        var name = []
         for (var i in datasets.data.variables) {
-            name += datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + ", "
+            name.push(datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId))
         }
+        name.push("comments")
         return name
     }
     const materialArray = (): any => {
@@ -36,10 +37,11 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         return name
     }
     const dataContentArray = (): any => {
-        var name = " "
+        var name = []
         for (var i in datasets.data.contents) {
-            name += datasets.data.contents[i].point + ", "
+            name.push(datasets.data.contents[i].point)
         }
+        name.push(datasets.data.dataPointComments)
         return name
     }
 
@@ -61,8 +63,8 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         ["Year ", datasets.reference.year],
         ["Export source ", "databoom.concordia.ca"],
         ["Export date ", new Date().toLocaleString()],
-        [" ", variableArray(), "comments"],
-        [" ", dataContentArray(), datasets.data.dataPointComments]
+        variableArray(),
+        dataContentArray()
     ]
     const handleXLSDownload = () => {
         const fileName = "xlsdataset.xls"
