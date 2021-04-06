@@ -23,16 +23,18 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         return name
     }
     const materialArray = (): any => {
-        var name = " "
+        var name = []
+        name.push("Material")
         for (var i in datasets.material) {
-            name += datasets.material[i].composition + " " + datasets.material[i].details + ", "
+            name.push(datasets.material[i].composition + " " + datasets.material[i].details)
         }
         return name
     }
     const authorArray = (): any => {
-        var name = " "
+        var name = []
+        name.push("Author")
         for (var i in datasets.reference.authors) {
-            name += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName + " "
+            name.push(datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName)
         }
         return name
     }
@@ -47,12 +49,12 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
 
     const downloadedXLSDataDisplayed = [
         ["Dataset name", datasets.dataset_name],
-        ["Material", materialArray()],
+        materialArray(),
         ["Data type", datasets.data_type],
-        ["Category", datasets.category],
-        ["Subcategory ", datasets.subcategory],
+        ["Category", datasets.category], //needs to add method to convert given categoryID to categoryName
+        ["Subcategory ", datasets.subcategory],//needs to add method to convert given subcategoryID to subcategoryName
         ["Publication/sources"],
-        ["Authors", authorArray()],
+        authorArray(),
         ["Title ", datasets.reference.title],
         ["Type", datasets.reference.type],
         ["Publisher", datasets.reference.publisher],
@@ -61,8 +63,10 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         ["DOI ", datasets.reference.doi],
         ["Issue ", datasets.reference.issue],
         ["Year ", datasets.reference.year],
+        [" "],
         ["Export source ", "databoom.concordia.ca"],
         ["Export date ", new Date().toLocaleString()],
+        [" "],
         variableArray(),
         dataContentArray()
     ]
