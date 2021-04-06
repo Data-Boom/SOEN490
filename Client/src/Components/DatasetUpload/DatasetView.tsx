@@ -2,6 +2,7 @@ import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { useHistory, useParams } from "react-router"
 
 import { DatasetForm } from './DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
@@ -11,16 +12,16 @@ import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import PublishIcon from "@material-ui/icons/Publish"
+import SnackbarUtils from '../Utils/SnackbarUtils'
 import TimelineIcon from "@material-ui/icons/Timeline"
 import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
 import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
 import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
-import { useHistory, useParams } from "react-router"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
-import SnackbarUtils from '../Utils/SnackbarUtils'
+import { useUserSelector } from '../../Stores/Slices/UserSlice'
 
 interface IProps {
   initialDataset?: IDatasetModel
@@ -29,6 +30,7 @@ interface IProps {
 interface IDatasetViewParams {
   datasetID: string
 }
+
 
 const jsonType = 'application/json'
 const csvType = '.csv, .txt'
@@ -41,6 +43,7 @@ export const DatasetView = (props: IProps) => {
   const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
 
+
   const formikReference = useRef<FormikProps<unknown>>()
   const [initialValues, setInitialValues] = useState({ ...newDatasetModel, ...initialDataset, ...(location.state as IDatasetModel) })
   const [editable, setEditable] = useState(true)
@@ -49,12 +52,16 @@ export const DatasetView = (props: IProps) => {
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
+
+  const user = useUserSelector()
+
   const history = useHistory();
 
   useEffect(() => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
     setFileUploadModalOpen(false)
     setFileTypePromptOpen(false)
+
   }, [location.state])
 
   useEffect(() => {
@@ -88,6 +95,11 @@ export const DatasetView = (props: IProps) => {
     setAcceptedFileType(csvType)
   }
 
+  const handleEditable = () => {
+    setEditable(!editable)
+  }
+
+
   const renderTopButtons = (): any => {
     return (
       <>
@@ -103,6 +115,13 @@ export const DatasetView = (props: IProps) => {
               <Grid item>
                 <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
               </Grid>
+              {user.account_permissions == 2 ?
+                <Grid item>
+                  <Button variant="contained" color="primary" onClick={() => handleEditable()}>Edit</Button>
+                </Grid>
+                :
+                null
+              }
             </>
             : <Grid item>
               <Button variant="contained" color="primary" onClick={() => setFileTypePromptOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
