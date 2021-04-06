@@ -1,8 +1,12 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { IGraphDatasetState, newGraphDataset } from '../../Models/Graph/IGraphDatasetModel'
+import { IGraphStateModel, newGraphState } from '../../Models/Graph/IGraphStateModel'
 import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { useHistory, useParams } from "react-router"
 
+import { DatasetControl } from '../Graph/GraphControls/DatasetControl'
 import { DatasetForm } from './DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
 import { FavoriteDatasetButton } from './FavoriteDatasetButton'
@@ -10,25 +14,34 @@ import { FileTypePromptModal } from './FileTypePromptModal'
 import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
+import { GraphStateControl } from '../Graph/GraphControls/GraphStateControl'
+import { GraphView } from '../Graph/GraphView'
 import PublishIcon from "@material-ui/icons/Publish"
+import { SaveGraphStateForm } from '../Graph/GraphControls/SaveGraphStateForm'
+import SnackbarUtils from '../Utils/SnackbarUtils'
 import TimelineIcon from "@material-ui/icons/Timeline"
+import { callCreateGraphState } from '../../Remote/Endpoints/GraphStateEndpoint'
+import { callGetAllDimensions } from '../../Remote/Endpoints/DimensionsEndpoint'
+import { getGraphDatasets } from '../../Common/Helpers/GraphHelpers'
 import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
 import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
 import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
-import { useHistory, useParams } from "react-router"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
-import SnackbarUtils from '../Utils/SnackbarUtils'
 
 interface IProps {
-  initialDataset?: IDatasetModel
+  initialDataset?: IDatasetModel,
+  datasetStates: IGraphDatasetState[],
+  onDatasetStatesChange: (datasetStates: IGraphDatasetState[]) => void,
+  onCompleteDatasetsChange: (completeDatasets: IDatasetModel[]) => void
 }
 
 interface IDatasetViewParams {
   datasetID: string
 }
+
 
 const jsonType = 'application/json'
 const csvType = '.csv, .txt'
@@ -37,9 +50,11 @@ export const DatasetView = (props: IProps) => {
   useTitle("Dataset Upload")
   useDispatchOnLoad(loadDimensionsThunk)
   useDispatchOnLoad(loadVariablesThunk)
-  const { initialDataset } = { ...props }
+  const { initialDataset, datasetStates, onDatasetStatesChange, onCompleteDatasetsChange } = { ...props }
   const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
+
+  const { graphStateId } = useParams<IGraphViewParams>()
 
   const formikReference = useRef<FormikProps<unknown>>()
   const [initialValues, setInitialValues] = useState({ ...newDatasetModel, ...initialDataset, ...(location.state as IDatasetModel) })
@@ -48,6 +63,9 @@ export const DatasetView = (props: IProps) => {
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
+
+
+  //const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState, id: graphStateId })
 
   const history = useHistory();
 
@@ -88,6 +106,36 @@ export const DatasetView = (props: IProps) => {
     setAcceptedFileType(csvType)
   }
 
+  const handleGraphDataset = async () => {
+    if (datasetID) {
+      const completeDatasets: IDatasetModel[] = [initialDataset]
+      console.log(initialDataset)
+      // const dimensions = await callGetAllDimensions()
+      // const graphDatasets = getGraphDatasets(completeDatasets, graphState, dimensions)
+      // console.log(graphDatasets)
+      //const graphStateCopy = { ...graphState }
+
+      //graphStateCopy.id = datasetID
+      // const createId: string = await callCreateGraphState(graphStateCopy)
+      // history.push('/graph/' + createId)
+      // return (
+      //   // //   <DatasetControl
+      //   // //     datasetStates={datasetStates}
+      //   // //     completeDatasets={completeDatasets}
+      //   // //     onDatasetStatesChange={onDatasetStatesChange}
+      //   // //     onCompleteDatasetsChange={onCompleteDatasetsChange}
+      //   // //   />
+      //   // // )
+      //   //   // <SaveGraphStateForm
+
+      //   //   // />
+      //   <GraphView
+
+      //   />
+      // )
+    }
+  }
+
   const renderTopButtons = (): any => {
     return (
       <>
@@ -101,7 +149,7 @@ export const DatasetView = (props: IProps) => {
                 <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
+                <Button variant="contained" color="primary" onClick={() => handleGraphDataset()} startIcon={<TimelineIcon />}>Graph</Button>
               </Grid>
             </>
             : <Grid item>
