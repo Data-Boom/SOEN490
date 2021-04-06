@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
-import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { callGetDatasets, callSaveDataset, submitEditedDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 import { useHistory, useParams } from "react-router"
 
 import { DatasetForm } from './DatasetForm/DatasetForm'
@@ -11,6 +11,7 @@ import { FileTypePromptModal } from './FileTypePromptModal'
 import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
+import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import PublishIcon from "@material-ui/icons/Publish"
 import SnackbarUtils from '../Utils/SnackbarUtils'
 import TimelineIcon from "@material-ui/icons/Timeline"
@@ -78,10 +79,17 @@ export const DatasetView = (props: IProps) => {
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    const result = await callSaveDataset(formDataset)
-    if (result > 0) {
+    if (user.account_permissions == 2) {
+      const newApprovalDatset: IApprovedDatasetModel = { ...formDataset, datasetFlaggedComment: null, datasetIsFlagged: null }
+      await submitEditedDataset(newApprovalDatset)
       SnackbarUtils.success("Dataset successfully uploaded")
-      history.push('/dataset/' + result)
+      history.push('/dataset/' + newApprovalDatset.id)
+    } else {
+      const result = await callSaveDataset(formDataset)
+      if (result > 0) {
+        SnackbarUtils.success("Dataset successfully uploaded")
+        history.push('/dataset/' + result)
+      }
     }
   }
 
