@@ -107,6 +107,16 @@ export const DatasetView = (props: IProps) => {
     setEditable(!editable)
   }
 
+  const checkForSuperUser = () => {
+    if (user.account_permissions == 2)
+      return (
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={() => handleEditable()}>Edit</Button>
+        </Grid>
+      )
+    else
+      return null
+  }
 
   const renderTopButtons = (): any => {
     return (
@@ -123,13 +133,7 @@ export const DatasetView = (props: IProps) => {
               <Grid item>
                 <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
               </Grid>
-              {user.account_permissions == 2 ?
-                <Grid item>
-                  <Button variant="contained" color="primary" onClick={() => handleEditable()}>Edit</Button>
-                </Grid>
-                :
-                null
-              }
+              {checkForSuperUser()}
             </>
             : <Grid item>
               <Button variant="contained" color="primary" onClick={() => setFileTypePromptOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
