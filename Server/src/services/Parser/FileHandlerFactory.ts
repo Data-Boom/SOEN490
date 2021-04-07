@@ -17,14 +17,16 @@ export abstract class AbstractFileExtractor {
   abstract parseFile()
 
   async deleteFile(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      fileSystem.unlink(this.filePath, (error) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve()
-        }
+    if (process.env.NODE_ENV !== 'test') {
+      return new Promise((resolve, reject) => {
+        fileSystem.unlink(this.filePath, (error) => {
+          if (error) {
+            reject(error)
+          } else {
+            resolve()
+          }
+        })
       })
-    })
+    }
   }
 }
