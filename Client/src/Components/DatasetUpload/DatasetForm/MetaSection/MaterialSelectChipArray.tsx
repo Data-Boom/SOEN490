@@ -49,6 +49,8 @@ export const MaterialSelectChipArray = (props: IProps) => {
     newMaterials.forEach(newMaterial => {
       if (!materialToString(newMaterial)) {
         return
+      } else {
+        toggleOpen(true)
       }
       if (value.findIndex((material) => materialToString(material) == materialToString(newMaterial)) == -1) {
         fieldArrayHelpers.push(newMaterial)
@@ -62,11 +64,13 @@ export const MaterialSelectChipArray = (props: IProps) => {
       details: materialDetails,
       id: 0
     }
+    return newMaterial
   }
 
   const handleSubmitMaterial = () => {
     if (materialComposition) {
-      handleMaterialChanged()
+      const newMaterialAdded: IMaterial[] = [handleMaterialChanged()]
+      handleAdd(toggleOpen(false), newMaterialAdded)
     }
 
     toggleOpen(false)
