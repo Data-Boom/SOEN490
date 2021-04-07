@@ -12,47 +12,80 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
     const dimensions = useDimensionsSelector()
 
     //helper methods
-    const variableArray = (): any => {
-        var name = " "
+    const variableNameArray = (): any => {
+        var name = []
         for (var i in datasets.data.variables) {
-            name += datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + " , "
-        }
-        return name
-    }
-    const materialArray = (): any => {
-        var name = " "
-        for (var i in datasets.material) {
-            name += datasets.material[i].composition + " " + datasets.material[i].details + ", "
-        }
-        return name
-    }
-    const authorArray = (): any => {
-        var name = " "
-        for (var i in datasets.reference.authors) {
-            name += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName + " "
-        }
-        return name
-    }
-    const dataContentArray = (): any => {
-        var name = " "
-        for (var i in datasets.data.contents) {
-            name += datasets.data.contents[i].point + " "
+            name.push(
+                {
+                    "name": datasets.data.variables[i].name,
+                    "units": getUnitNameById(dimensions, datasets.data.variables[i].unitId)
+                })
         }
         return name
     }
 
-    const downloadedJSONDataDisplayed = {
+    const materialArray = (): any => {
+        var name = []
+        for (var i in datasets.material) {
+            name.push(
+                {
+                    "composition ": datasets.material[i].composition,
+                    "details": datasets.material[i].details
+                }
+            )
+        } return name
+    }
+    const authorArray = (): any => {
+        var name = []
+        for (var i = 0; i < datasets.reference.authors.length; i++) {
+            name.push(
+                {
+                    "firstname ": datasets.reference.authors[i].firstName,
+                    "middlename": datasets.reference.authors[i].middleName,
+                    "lastname ": datasets.reference.authors[i].lastName
+                }
+            )
+        }
+        return name
+    }
+    const dataContentArray = (): any => {
+        var name = []
+        for (var i in datasets.data.contents) {
+            name.push(
+                {
+                    "point": datasets.data.contents[i].point,
+                    "comment": datasets.data.dataPointComments[i]
+                }
+            )
+        }
+        return name
+    }
+
+    const downloadedJSONDataDisplayed =
+    {
         "Dataset name ": datasets.dataset_name,
-        "Material ": materialArray(),
-        "Publications/Source": {},
-        "Authors ": authorArray(),
-        "Title ": datasets.reference.title,
-        "Year ": datasets.reference.year,
-        "Export source ": " databoom.concordia.ca ",
+        "Material": materialArray(),
+        "Data type": datasets.data_type,
+        "Category": datasets.category,
+        "Subcategory ": datasets.subcategory,
+        "reference": {
+            "Authors ": [authorArray()],
+            "Title ": datasets.reference.title,
+            "Type": datasets.reference.type,
+            "Publisher": datasets.reference.publisher,
+            "Volume, ": datasets.reference.volume,
+            "Pages, ": datasets.reference.pages,
+            "DOI ": datasets.reference.doi,
+            "Issue ": datasets.reference.issue,
+            "Year ": datasets.reference.year
+        },
+        "Export source ": "databoom.concordia.ca",
         "Export date ": new Date().toLocaleString(),
-        "Variables ": variableArray(),
-        "Data ": dataContentArray() + " " + datasets.data.dataPointComments,
-        "Comments": datasets.data.comments
+        "Data": {
+            "variables": variableNameArray(),
+            "contents": dataContentArray(),
+            "comments": datasets.data.comments
+        }
     }
 
     const handleJSONDownload = () => {
@@ -75,7 +108,7 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
 
     return (
         <Button id="download-json" onClick={handleJSONDownload} color="primary" variant="contained"> JSON </Button>
-        //handleTxtDownload()
+
     )
 
 }
