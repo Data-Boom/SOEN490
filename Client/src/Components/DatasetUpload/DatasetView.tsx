@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import { IGraphDatasetState, newGraphDataset } from '../../Models/Graph/IGraphDatasetModel'
+import { IGraphDatasetState, newGraphDataset, newGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
 import { IGraphStateModel, newGraphState } from '../../Models/Graph/IGraphStateModel'
 import React, { useRef } from 'react'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
@@ -16,6 +16,7 @@ import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import { GraphStateControl } from '../Graph/GraphControls/GraphStateControl'
 import { GraphView } from '../Graph/GraphView'
+import { IDimensionModel } from '../../Models/Dimensions/IDimensionModel'
 import PublishIcon from "@material-ui/icons/Publish"
 import { SaveGraphStateForm } from '../Graph/GraphControls/SaveGraphStateForm'
 import SnackbarUtils from '../Utils/SnackbarUtils'
@@ -33,9 +34,10 @@ import { useTitle } from '../../Common/Hooks/useTitle'
 
 interface IProps {
   initialDataset?: IDatasetModel,
-  datasetStates: IGraphDatasetState[],
-  onDatasetStatesChange: (datasetStates: IGraphDatasetState[]) => void,
-  onCompleteDatasetsChange: (completeDatasets: IDatasetModel[]) => void
+  onCompleteDatasetsChange: (completeDatasets: IDatasetModel[]) => void,
+  graphState: IGraphStateModel,
+  onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[], dimensions: IDimensionModel[]) => void,
+
 }
 
 interface IDatasetViewParams {
@@ -50,11 +52,11 @@ export const DatasetView = (props: IProps) => {
   useTitle("Dataset Upload")
   useDispatchOnLoad(loadDimensionsThunk)
   useDispatchOnLoad(loadVariablesThunk)
-  const { initialDataset, datasetStates, onDatasetStatesChange, onCompleteDatasetsChange } = { ...props }
+  const { initialDataset, onCompleteDatasetsChange, graphState, onGraphStateChange } = { ...props }
   const { datasetID } = useParams<IDatasetViewParams>()
   const location = useLocation()
 
-  const { graphStateId } = useParams<IGraphViewParams>()
+  //const { graphStateId } = useParams<IGraphViewParams>()
 
   const formikReference = useRef<FormikProps<unknown>>()
   const [initialValues, setInitialValues] = useState({ ...newDatasetModel, ...initialDataset, ...(location.state as IDatasetModel) })
@@ -63,6 +65,8 @@ export const DatasetView = (props: IProps) => {
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
+
+  const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
 
 
   //const [graphState, setGraphState] = useState<IGraphStateModel>({ ...newGraphState, id: graphStateId })
@@ -106,10 +110,39 @@ export const DatasetView = (props: IProps) => {
     setAcceptedFileType(csvType)
   }
 
+  const onCompleteDatasetsChange2 = (dataset: IDatasetModel[]) => {
+    //const tempDatasetArray: IDatasetModel[] = [dataset]
+    return dataset
+  }
+
+  const getUpdatedGraphState = (datasets: IDatasetModel[]): IGraphStateModel => {
+    const graphDatasetStates = []
+    //todo ensure all new datasets are in the state
+    datasets.forEach(dataset => {
+      const graphDatasetIndex = graphState.datasets.findIndex(datasetState => datasetState.id == dataset.id)
+      if (graphDatasetIndex == -1) {
+        graphDatasetStates.push({ ...newGraphDatasetState, id: dataset.id })
+      }
+      else {
+        graphDatasetStates.push({ ...graphState.datasets[graphDatasetIndex], id: dataset.id })
+      }
+    })
+    return { ...graphState, datasets: graphDatasetStates }
+  }
+
   const handleGraphDataset = async () => {
     if (datasetID) {
-      const completeDatasets: IDatasetModel[] = [initialDataset]
-      console.log(initialDataset)
+      const completeDatasets: IDatasetModel[] = [initialValues]
+      console.log(initialValues)
+      console.log(completeDatasets)
+
+      const graphStateCopy = { ...graphState }
+      graphStateCopy.name = initialValues.dataset_name
+      graphStateCopy.id = datasetID
+      const createdId: string = await callCreateGraphState(graphStateCopy)
+      //const newGraphState = getUpdatedGraphState(completeDatasets)
+      //console.log(newGraphState)
+      history.push('/graph/' + createdId)
       // const dimensions = await callGetAllDimensions()
       // const graphDatasets = getGraphDatasets(completeDatasets, graphState, dimensions)
       // console.log(graphDatasets)
@@ -119,13 +152,13 @@ export const DatasetView = (props: IProps) => {
       // const createId: string = await callCreateGraphState(graphStateCopy)
       // history.push('/graph/' + createId)
       // return (
-      //   // //   <DatasetControl
-      //   // //     datasetStates={datasetStates}
-      //   // //     completeDatasets={completeDatasets}
-      //   // //     onDatasetStatesChange={onDatasetStatesChange}
-      //   // //     onCompleteDatasetsChange={onCompleteDatasetsChange}
-      //   // //   />
-      //   // // )
+      //   <DatasetControl
+      //     datasetStates={null}
+      //     completeDatasets={null}
+      //     onDatasetStatesChange={null}
+      //     onCompleteDatasetsChange={onCompleteDatasetsChange}
+      //   />
+      // )
       //   //   // <SaveGraphStateForm
 
       //   //   // />
