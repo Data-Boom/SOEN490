@@ -3,6 +3,7 @@ import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetMo
 import { IGraphDatasetState, newGraphDataset, newGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
 import { IGraphStateModel, newGraphState } from '../../Models/Graph/IGraphStateModel'
 import React, { useRef } from 'react'
+import { callCreateGraphState, callGetGraphState } from '../../Remote/Endpoints/GraphStateEndpoint'
 import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 import { useHistory, useParams } from "react-router"
 
@@ -21,7 +22,6 @@ import PublishIcon from "@material-ui/icons/Publish"
 import { SaveGraphStateForm } from '../Graph/GraphControls/SaveGraphStateForm'
 import SnackbarUtils from '../Utils/SnackbarUtils'
 import TimelineIcon from "@material-ui/icons/Timeline"
-import { callCreateGraphState } from '../../Remote/Endpoints/GraphStateEndpoint'
 import { callGetAllDimensions } from '../../Remote/Endpoints/DimensionsEndpoint'
 import { getGraphDatasets } from '../../Common/Helpers/GraphHelpers'
 import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
@@ -57,6 +57,7 @@ export const DatasetView = (props: IProps) => {
   const location = useLocation()
 
   //const { graphStateId } = useParams<IGraphViewParams>()
+  const [isNewGraphState, setIsNewGraphState] = useState(false)
 
   const formikReference = useRef<FormikProps<unknown>>()
   const [initialValues, setInitialValues] = useState({ ...newDatasetModel, ...initialDataset, ...(location.state as IDatasetModel) })
@@ -133,39 +134,20 @@ export const DatasetView = (props: IProps) => {
   const handleGraphDataset = async () => {
     if (datasetID) {
       const completeDatasets: IDatasetModel[] = [initialValues]
-      console.log(initialValues)
-      console.log(completeDatasets)
+      const dimensions = await callGetAllDimensions()
 
       const graphStateCopy = { ...graphState }
       graphStateCopy.name = initialValues.dataset_name
       graphStateCopy.id = datasetID
-      const createdId: string = await callCreateGraphState(graphStateCopy)
-      //const newGraphState = getUpdatedGraphState(completeDatasets)
-      //console.log(newGraphState)
-      history.push('/graph/' + createdId)
-      // const dimensions = await callGetAllDimensions()
-      // const graphDatasets = getGraphDatasets(completeDatasets, graphState, dimensions)
-      // console.log(graphDatasets)
-      //const graphStateCopy = { ...graphState }
 
-      //graphStateCopy.id = datasetID
-      // const createId: string = await callCreateGraphState(graphStateCopy)
-      // history.push('/graph/' + createId)
-      // return (
-      //   <DatasetControl
-      //     datasetStates={null}
-      //     completeDatasets={null}
-      //     onDatasetStatesChange={null}
-      //     onCompleteDatasetsChange={onCompleteDatasetsChange}
-      //   />
-      // )
-      //   //   // <SaveGraphStateForm
 
-      //   //   // />
-      //   <GraphView
-
-      //   />
-      // )
+      if (callGetGraphState(Number(datasetID))) {
+        history.push('/graph/' + datasetID)
+      }
+      else {
+        const createdId: string = await callCreateGraphState(graphStateCopy)
+        history.push('/graph/' + createdId)
+      }
     }
   }
 
