@@ -17,6 +17,7 @@ import { CategoryManagementTab } from './CategoryManagementSection/CategoryManag
 
 import { useDispatch } from 'react-redux'
 import { useTitle } from '../../Common/Hooks/useTitle'
+import { UploadedDatasetsTab } from './UserUploadedDatasetsSection/UploadedDatasetsTab'
 
 // Tab code taken from: https://material-ui.com/components/tabs/
 interface TabPanelProps {
@@ -224,21 +225,11 @@ export function ProfileView() {
             </Grid>
           </TabPanel>
           <TabPanel value={tab} index={4}>
-            <TableContainer component={Paper} style={{ width: "50%" }}>
-              <Table aria-label="collapsible table" >
-                <TableHead>Uploads
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>Name</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rowsOfUploads.map((rowsOfUpload) => (
-                    <RowsOfUploads key={rowsOfUpload.title} rowsOfUploads={rowsOfUpload} />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                {<UploadedDatasetsTab />}
+              </Grid>
+            </Grid>
           </TabPanel>
           <TabPanel value={tab} index={5}>
             <DimensionManagementTab />
