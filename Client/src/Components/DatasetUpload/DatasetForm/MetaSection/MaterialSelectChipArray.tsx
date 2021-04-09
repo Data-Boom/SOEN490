@@ -32,7 +32,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
 
   const filter = createFilterOptions<IMaterialOption>()
   const [open, toggleOpen] = useState(false)
-  const [dialogValue, setDialogValue] = useState<IMaterial>()
+  const [dialogValue, setDialogValue] = useState<IMaterial | null>()
 
   const initialValues = {
     composition: '',
@@ -43,20 +43,20 @@ export const MaterialSelectChipArray = (props: IProps) => {
     newMaterials.forEach(newMaterial => {
       if (!materialToString(newMaterial)) {
         return
-      } else {
-        toggleOpen(true)
       }
-      if (value.findIndex((material) => materialToString(material) == materialToString(newMaterial)) == -1) {
+      else if (newMaterials[newMaterials.length - 1].id == null) {
+        setTimeout(() => {
+          toggleOpen(true)
+        })
+      }
+      else if (value.findIndex((material) => materialToString(material) == materialToString(newMaterial)) == -1) {
         fieldArrayHelpers.push(newMaterial)
       }
     })
-    console.log(newMaterials, 'added material just now with the dialog')
   }
 
   const handleSubmitMaterial = (newMaterial: IMaterial) => {
-    const newMaterialAdded: IMaterial[] = [newMaterial]
     fieldArrayHelpers.push(newMaterial)
-    console.log(newMaterial, 'pushed new material')
     toggleOpen(false)
   }
 
@@ -70,7 +70,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
         <DialogTitle> Add a new material</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please provide the composition and the details of the metal you want to add
+            Please provide the composition and the details of the material you want to add
           </DialogContentText>
           <Field name="composition" label='Composition' component={MuiTextFieldFormik} />
           <Field name="details" label='Details' component={MuiTextFieldFormik} />
@@ -94,6 +94,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
     )
   }
 
+
   return (
     <>
       <Typography variant='h6' align="left">Materials</Typography>
@@ -101,25 +102,25 @@ export const MaterialSelectChipArray = (props: IProps) => {
         <Grid item sm={6}>
           <Autocomplete
             disabled={!editable}
+            //todo figure out how to keep the value but be able to delete
             value={value}
             onChange={handleAdd}
             options={options}
             multiple
-            getOptionLabel={(option) => {
-              if (option) {
+            getOptionLabel={(option: IMaterialOption) => {
+              if (option.id != null) {
                 return materialToString(option)
               }
-              return (option as any)?.title
+              return option.title
             }}
             filterOptions={(options, params) => {
               const filtered = filter(options, params)
-
               if (params.inputValue !== '') {
                 filtered.push({
                   composition: params.inputValue,
                   details: '',
                   title: `Add "${params.inputValue}"`,
-                  id: 1
+                  id: null
                 })
               }
               return filtered
