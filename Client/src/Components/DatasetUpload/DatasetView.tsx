@@ -1,8 +1,9 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
+import { IGraphDatasetState, newGraphDataset } from '../../Models/Graph/IGraphDatasetModel'
 import React, { useRef } from 'react'
 import { callCreateGraphState, callDeleteGraphState } from '../../Remote/Endpoints/GraphStateEndpoint'
-import { callGetDatasets, callSaveDataset } from '../../Remote/Endpoints/DatasetEndpoint'
+import { callGetDatasets, callSaveDataset, submitEditedDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 import { useHistory, useParams } from "react-router"
 
 import { DatasetForm } from './DatasetForm/DatasetForm'
@@ -12,7 +13,6 @@ import { FileTypePromptModal } from './FileTypePromptModal'
 import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
-import { IGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import PublishIcon from "@material-ui/icons/Publish"
 import SnackbarUtils from '../Utils/SnackbarUtils'
@@ -20,6 +20,7 @@ import TimelineIcon from "@material-ui/icons/Timeline"
 import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
 import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
 import { newGraphState } from '../../Models/Graph/IGraphStateModel'
+import { routes } from '../../Common/Consts/Routes'
 import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
@@ -129,11 +130,24 @@ export const DatasetView = (props: IProps) => {
         color: "black",
         shape: "circle"
       }
-      console.log(initialValues)
+
       const graphStateCopy = { ...newGraphState }
       graphStateCopy.name = initialValues.dataset_name
       graphStateCopy.id = datasetID
       graphStateCopy.datasets = [datasetState]
+
+      //**todo try the history.push with an object**
+
+      // const testGraphDataset = { ...newGraphDataset }
+      // testGraphDataset.id = Number(datasetID)
+      // testGraphDataset.name = initialValues.dataset_name
+      // testGraphDataset.color = "red"
+      // console.log(graphStateCopy)
+      // console.log(initialValues)
+      // history.push({
+      //   pathname: routes.newGraphRoute.route,
+      //   state: testGraphDataset
+      // })
       const createdId: string = await callCreateGraphState(graphStateCopy)
       history.push('/graph/' + createdId)
       graphStateCopy.id = createdId
