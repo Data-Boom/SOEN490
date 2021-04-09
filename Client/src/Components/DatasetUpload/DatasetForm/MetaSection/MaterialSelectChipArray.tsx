@@ -9,6 +9,7 @@ import { ArrayHelpers } from 'formik'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContentText from '@material-ui/core/DialogContentText/DialogContentText'
 import { IMaterial } from '../../../../Models/Datasets/IDatasetModel'
+import { MuiTextFieldFormik } from '../../../Forms/FormikFields'
 import { materialValidationSchema } from '../../DatasetValidationSchema'
 
 interface IProps {
@@ -22,27 +23,20 @@ const materialToString = (material: IMaterial) => {
   return material && material.composition + ', ' + material.details
 }
 
+interface IMaterialOption extends IMaterial {
+  title?: string
+}
+
 export const MaterialSelectChipArray = (props: IProps) => {
   const { value, options, fieldArrayHelpers, editable } = props
 
-  const filter = createFilterOptions<IMaterial>()
+  const filter = createFilterOptions<IMaterialOption>()
   const [open, toggleOpen] = useState(false)
   const [dialogValue, setDialogValue] = useState<IMaterial>()
 
   const initialValues = {
     composition: '',
     details: '',
-  }
-  const [materialComposition, setMaterialcomposition] = useState<string | null>(initialValues?.composition)
-  const [materialDetails, setMaterialDetails] = useState<string | null>(initialValues?.details)
-
-
-
-  const handleDelete = (materialToDelete: IMaterial) => {
-    if (editable) {
-      const indexToRemove = value.findIndex(material => materialToString(material) == materialToString(materialToDelete))
-      fieldArrayHelpers.remove(indexToRemove)
-    }
   }
 
   const handleAdd = (event, newMaterials: IMaterial[]) => {
@@ -56,61 +50,30 @@ export const MaterialSelectChipArray = (props: IProps) => {
         fieldArrayHelpers.push(newMaterial)
       }
     })
+    console.log(newMaterials, 'added material just now with the dialog')
   }
 
-  const handleMaterialChanged = () => {
-    const newMaterial: IMaterial = {
-      composition: materialComposition,
-      details: materialDetails,
-      id: 0
-    }
-    return newMaterial
-  }
-
-  const handleSubmitMaterial = () => {
-    if (materialComposition) {
-      const newMaterialAdded: IMaterial[] = [handleMaterialChanged()]
-      handleAdd(toggleOpen(false), newMaterialAdded)
-    }
-
+  const handleSubmitMaterial = (newMaterial: IMaterial) => {
+    const newMaterialAdded: IMaterial[] = [newMaterial]
+    fieldArrayHelpers.push(newMaterial)
+    console.log(newMaterial, 'pushed new material')
     toggleOpen(false)
   }
 
   const handleCloseMaterialForm = () => {
     toggleOpen(false)
   }
-  const handleAddNewMaterialComposition = (formProps, value: any) => {
-    const composition = value.target.value
-    setMaterialcomposition(composition)
-  }
-  const handleAddNewMaterialDetails = (formProps, value: any) => {
-    const details = value.target.value
-    setMaterialDetails(details)
-  }
 
-  const renderInputs = (formProps) => {
+  const renderInputs = () => {
     return (
       <Grid>
         <DialogTitle> Add a new material</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please provide the composition and the details of the metal you want to add
-        </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            //value={dialogValue.composition}
-            label="Composition"
-            type="text"
-            onChange={(value) => handleAddNewMaterialComposition(formProps, value)}
-          />
-          <TextField
-            margin="dense"
-            //value={dialogValue.details}
-            onChange={(value) => handleAddNewMaterialDetails(formProps, value)}
-            label="details"
-            type="text"
-          />
+          </DialogContentText>
+          <Field name="composition" label='Composition' component={MuiTextFieldFormik} />
+          <Field name="details" label='Details' component={MuiTextFieldFormik} />
         </DialogContent>
       </Grid>
     )
@@ -122,10 +85,10 @@ export const MaterialSelectChipArray = (props: IProps) => {
         <DialogActions>
           <Button onClick={handleCloseMaterialForm} color="primary">
             Cancel
-            </Button>
-          <Button onClick={handleSubmitMaterial} color="primary">
+          </Button>
+          <Button color="primary" type="submit">
             Add Material
-            </Button>
+          </Button>
         </DialogActions>
       </Grid>
     )
@@ -138,37 +101,44 @@ export const MaterialSelectChipArray = (props: IProps) => {
         <Grid item sm={6}>
           <Autocomplete
             disabled={!editable}
+            value={value}
             onChange={handleAdd}
             options={options}
             multiple
-            getOptionLabel={option => materialToString(option)}
+            getOptionLabel={(option) => {
+              if (option) {
+                return materialToString(option)
+              }
+              return (option as any)?.title
+            }}
             filterOptions={(options, params) => {
               const filtered = filter(options, params)
+
               if (params.inputValue !== '') {
                 filtered.push({
                   composition: params.inputValue,
-                  details: params.inputValue,
+                  details: '',
+                  title: `Add "${params.inputValue}"`,
                   id: 1
                 })
               }
               return filtered
             }}
+            freeSolo
             renderInput={(params) => <TextField {...params} label="Material" variant="outlined" />}
           />
           <Dialog open={open} onClose={handleCloseMaterialForm}>
             <Formik initialValues={initialValues} validationSchema={materialValidationSchema} onSubmit={handleSubmitMaterial}>
-              {formProps =>
-                <Form>
-                  <Grid container spacing={4}>
-                    <Grid item>
-                      {renderInputs(formProps)}
-                    </Grid>
-                    <Grid item>
-                      {renderButtons()}
-                    </Grid>
+              <Form>
+                <Grid container spacing={4}>
+                  <Grid item>
+                    {renderInputs()}
                   </Grid>
-                </Form>
-              }
+                  <Grid item>
+                    {renderButtons()}
+                  </Grid>
+                </Grid>
+              </Form>
             </Formik>
           </Dialog>
         </Grid>
