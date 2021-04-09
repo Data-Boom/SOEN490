@@ -13,6 +13,7 @@ import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import { IGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
+import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
 import PublishIcon from "@material-ui/icons/Publish"
 import SnackbarUtils from '../Utils/SnackbarUtils'
 import TimelineIcon from "@material-ui/icons/Timeline"
@@ -24,6 +25,7 @@ import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
+import { useUserSelector } from '../../Stores/Slices/UserSlice'
 
 interface IProps {
   initialDataset?: IDatasetModel
@@ -54,12 +56,16 @@ export const DatasetView = (props: IProps) => {
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
 
+
+  const user = useUserSelector()
+
   const history = useHistory();
 
   useEffect(() => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
     setFileUploadModalOpen(false)
     setFileTypePromptOpen(false)
+
   }, [location.state])
 
   useEffect(() => {
@@ -76,10 +82,17 @@ export const DatasetView = (props: IProps) => {
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    const result = await callSaveDataset(formDataset)
-    if (result > 0) {
+    if (user.account_permissions == 2) {
+      const newApprovalDatset: IApprovedDatasetModel = { ...formDataset, datasetFlaggedComment: null, datasetIsFlagged: null }
+      await submitEditedDataset(newApprovalDatset)
       SnackbarUtils.success("Dataset successfully uploaded")
-      history.push('/dataset/' + result)
+      history.push('/dataset/' + newApprovalDatset.id)
+    } else {
+      const result = await callSaveDataset(formDataset)
+      if (result > 0) {
+        SnackbarUtils.success("Dataset successfully uploaded")
+        history.push('/dataset/' + result)
+      }
     }
   }
 
@@ -91,6 +104,21 @@ export const DatasetView = (props: IProps) => {
   const handleCSVTXTFileTypeSelected = () => {
     setFileUploadModalOpen(true)
     setAcceptedFileType(csvType)
+  }
+
+  const handleEditable = () => {
+    setEditable(!editable)
+  }
+
+  const checkForSuperUser = () => {
+    if (user.account_permissions == 2)
+      return (
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={() => handleEditable()}>Edit</Button>
+        </Grid>
+      )
+    else
+      return null
   }
 
   const handleGraphDataset = async () => {
@@ -128,6 +156,7 @@ export const DatasetView = (props: IProps) => {
               <Grid item>
                 <Button variant="contained" color="primary" onClick={() => handleGraphDataset()} startIcon={<TimelineIcon />}>Graph</Button>
               </Grid>
+              {checkForSuperUser()}
             </>
             : <Grid item>
               <Button variant="contained" color="primary" onClick={() => setFileTypePromptOpen(true)} startIcon={<PublishIcon />}>Upload Dataset</Button>
