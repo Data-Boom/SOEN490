@@ -47,11 +47,10 @@ export class DataUploadModel {
             publicationType.id = publicationTypeExists.id;
         }
         else {
-            await this.connection.manager.save(publicationType);
+            await Publicationtype.save(publicationType);
         }
         return publicationType.id;
     }
-
 
     async updateDataset(arrayOfDatasetInfo: any[]) {
         await this.connection
@@ -93,7 +92,7 @@ export class DataUploadModel {
             publisher.id = publisherExists.id;
         }
         else {
-            await this.connection.manager.save(publisher);
+            await Publisher.save(publisher);
         }
         return publisher.id;
     }
@@ -113,11 +112,9 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdHasMiddleName(author: IAuthors): Promise<any> {
-        let authorExists =
-            await this.selectAuthorIdQuery(author.firstname, author.lastname)
-                .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middlename })
-                .getRawOne();
-        return authorExists;
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
+            .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middleName })
+            .getRawOne();
     }
 
     /**
@@ -129,10 +126,8 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdNoMiddleName(author: IAuthors): Promise<any> {
-        let authorExists =
-            await this.selectAuthorIdQuery(author.firstname, author.lastname)
-                .getRawOne();
-        return authorExists;
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
+            .getRawOne();
     }
 
     /**
@@ -147,11 +142,11 @@ export class DataUploadModel {
     private async insertIndividualAuthor(authorReceived: IAuthors): Promise<any> {
         let author = new Authors();
         author.id;
-        author.firstName = authorReceived.firstname;
-        author.lastName = authorReceived.lastname;
-        author.middleName = authorReceived.middlename;
+        author.firstName = authorReceived.firstName;
+        author.lastName = authorReceived.lastName;
+        author.middleName = authorReceived.middleName;
         let authorExists: any;
-        if (authorReceived.middlename != null) {
+        if (authorReceived.middleName != null) {
             authorExists = await this.fetchAuthorIdHasMiddleName(authorReceived);
         }
         else {
@@ -161,7 +156,7 @@ export class DataUploadModel {
             author.id = authorExists.id;
         }
         else {
-            await this.connection.manager.save(author);
+            await Authors.save(author);
         }
         return author;
     }
@@ -225,7 +220,7 @@ export class DataUploadModel {
         publication.volume = referenceVolume;
         publication.issue = referenceIssue;
         publication.authors = referenceAuthors;
-        await this.connection.manager.save(publication);
+        await Publications.save(publication);
         return publication.id;
     }
 
@@ -254,7 +249,7 @@ export class DataUploadModel {
             composition.id = compositionExists.id;
         }
         else {
-            await this.connection.manager.save(composition);
+            await Composition.save(composition);
         }
         return composition.id;
     }
@@ -288,7 +283,7 @@ export class DataUploadModel {
             material.id = materialExists.id;
         }
         else {
-            await this.connection.manager.save(material);
+            await Material.save(material);
         }
         return material;
     }
@@ -339,7 +334,7 @@ export class DataUploadModel {
             datasetdatatype.id = datasetdatatypeExists.id;
         }
         else {
-            await this.connection.manager.save(datasetdatatype);
+            await Datasetdatatype.save(datasetdatatype);
         }
         return datasetdatatype.id;
     }
@@ -354,7 +349,7 @@ export class DataUploadModel {
         dataset.materials = arrayOfDatasetInfo[4];
         dataset.comments = arrayOfDatasetInfo[5];
         dataset.uploaderId = arrayOfDatasetInfo[6];
-        await this.connection.manager.save(dataset);
+        await Dataset.save(dataset);
         return dataset.id;
     }
 
@@ -378,7 +373,7 @@ export class DataUploadModel {
         datapoint.name = dataVariableName;
         datapoint.values = dataPointValues;
         datapoint.unitsId = unitsID;
-        await this.connection.manager.save(datapoint);
+        await Datapoints.save(datapoint);
     }
 
     /**
@@ -395,7 +390,7 @@ export class DataUploadModel {
         datapointcomments.id;
         datapointcomments.datasetId = dataSetID;
         datapointcomments.comments = comments;
-        await this.connection.manager.save(datapointcomments);
+        await Datapointcomments.save(datapointcomments);
     }
 
     async createEntryInUnapprovedDataSets(datasetId: number) {
@@ -403,6 +398,6 @@ export class DataUploadModel {
         unapprovedDataset.datasetId = datasetId
         unapprovedDataset.flaggedComment
         unapprovedDataset.isFlagged = 0
-        await this.connection.manager.save(unapprovedDataset)
+        await Unapproveddatasets.save(unapprovedDataset)
     }
 }

@@ -21,8 +21,6 @@ import { Units } from "../models/entities/Units";
 
 export class SeedDatabase1611943920000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    let connection = getConnection();
-
     // Accounts Data
     let authenticationService = new AuthenticationService();
 
@@ -35,7 +33,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user1.orcID = 123456789876543;
     user1.organizationName = 'Mugiwara';
     user1.admin = 1;
-    await connection.manager.save(user1);
 
     let user2 = new Accounts();
     user2.id = 2;
@@ -46,7 +43,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user2.orcID = 123456789876543;
     user2.organizationName = 'Mobil';
     user2.admin;
-    await connection.manager.save(user2);
 
     let user3 = new Accounts();
     user3.id = 3;
@@ -57,7 +53,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user3.orcID = 123456789876543;
     user3.organizationName = 'Ozark';
     user3.admin = 1;
-    await connection.manager.save(user3);
 
     let user4 = new Accounts();
     user4.id = 4;
@@ -68,55 +63,54 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     user4.orcID = 123456789876543;
     user4.organizationName = 'Ozark';
     user4.admin = 0;
-    await connection.manager.save(user4);
+
+    await Accounts.save([user4, user3, user2, user1]);
 
     let book = new Publicationtype();
     book.id;
     book.name = "Book";
-    await connection.manager.save(book);
 
     let toDelete = new Publicationtype();
     toDelete.id;
     toDelete.name = "Report";
-    await connection.manager.save(toDelete);
+
+    await Publicationtype.save([toDelete, book]);
 
     let publisherName = new Publisher();
     publisherName.id;
     publisherName.name = "University of California Press";
-    await connection.manager.save(publisherName);
 
     let publisherNameToDelete = new Publisher();
     publisherNameToDelete.id;
     publisherNameToDelete.name = "Deleted Press";
-    await connection.manager.save(publisherNameToDelete);
+
+    await Publisher.save([publisherNameToDelete, publisherName]);
 
     let author1 = new Authors();
     author1.id;
     author1.firstName = "Stanley";
     author1.lastName = "Marsh";
     author1.middleName = "P.";
-    await connection.manager.save(author1);
 
     let author2 = new Authors();
     author2.id;
     author2.firstName = "John";
     author2.lastName = "Mclain";
     author2.middleName = "L.";
-    await connection.manager.save(author2);
 
     let author3 = new Authors();
     author3.id;
     author3.firstName = "Alex";
     author3.lastName = "Grail";
     author3.middleName = "P.";
-    await connection.manager.save(author3);
 
     let author4 = new Authors();
     author4.id;
     author4.firstName = "Jack";
     author4.lastName = "Mclain";
     author4.middleName;
-    await connection.manager.save(author4);
+
+    await Authors.save([author1, author2, author3, author4]);
 
     let publication = new Publications();
     publication.id = 1;
@@ -127,7 +121,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication.year = 1980;
     publication.volume = 5;
     publication.authors = [author1, author2];
-    await connection.manager.save(publication);
 
     let publication2 = new Publications();
     publication2.id;
@@ -138,7 +131,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication2.year = 1900;
     publication2.volume;
     publication2.authors = [];
-    await connection.manager.save(publication2);
 
     let publication3 = new Publications();
     publication3.id;
@@ -149,7 +141,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publication3.year = 1980;
     publication3.volume = 5;
     publication3.authors = [];
-    await connection.manager.save(publication3);
 
     let publicationToDelete = new Publications();
     publicationToDelete.id;
@@ -160,7 +151,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publicationToDelete.year = 1980;
     publicationToDelete.volume = 5;
     publicationToDelete.authors = [author3, author4];
-    await connection.manager.save(publicationToDelete);
 
     let publicationToDelete2 = new Publications();
     publicationToDelete2.id;
@@ -171,7 +161,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publicationToDelete2.year = 1980;
     publicationToDelete2.volume = 5;
     publicationToDelete2.authors = [author3, author4];
-    await connection.manager.save(publicationToDelete2);
 
     let publicationToDelete3 = new Publications();
     publicationToDelete3.id;
@@ -182,93 +171,89 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     publicationToDelete3.year = 1980;
     publicationToDelete3.volume = 5;
     publicationToDelete3.authors = [author3, author4];
-    await connection.manager.save(publicationToDelete3);
+
+    await Publications.save([publicationToDelete3, publicationToDelete2, publicationToDelete,
+      publication3, publication2, publication]);
 
     let compositionC = new Composition();
     compositionC.id;
     compositionC.composition = "C";
-    await connection.manager.save(compositionC);
 
     let compositionO2 = new Composition();
     compositionO2.id;
     compositionO2.composition = "O2";
-    await connection.manager.save(compositionO2);
 
     let compositionToDelete = new Composition();
     compositionToDelete.id = 5;
     compositionToDelete.composition = "To Delete";
-    await connection.manager.save(compositionToDelete);
+
+    await Composition.save([compositionC, compositionO2, compositionToDelete]);
 
     let materialC = new Material();
     materialC.id;
     materialC.compositionId = compositionC.id;
     materialC.details = "carbon, graphite, pressed graphite";
-    await connection.manager.save(materialC);
 
     let materialO2 = new Material();
     materialO2.id;
     materialO2.compositionId = compositionO2.id;
     materialO2.details = "Oxygen";
-    await connection.manager.save(materialO2);
 
     let materialToDelete = new Material();
     materialToDelete.id = 5;
     materialToDelete.compositionId = 5;
     materialToDelete.details = "Going into the void";
-    await connection.manager.save(materialToDelete);
+
+    await Material.save([materialC, materialO2, materialToDelete]);
 
     let category1 = new Category();
     category1.id = 1;
     category1.name = "None Entered";
-    await connection.manager.save(category1);
 
     let category = new Category();
     category.id = 2;
     category.name = "cell size";
-    await connection.manager.save(category);
 
     let categoryToEdit = new Category();
     categoryToEdit.id = 3;
     categoryToEdit.name = "category";
-    await connection.manager.save(categoryToEdit);
 
     let categoryToDelete = new Category();
     categoryToDelete.id = 4;
     categoryToDelete.name = "delete this category";
-    await connection.manager.save(categoryToDelete);
+
+    await Category.save([categoryToDelete, categoryToEdit, category, category1]);
 
     let subcategory1 = new Subcategory();
     subcategory1.id = 1;
     subcategory1.name = "None Entered";
     subcategory1.categoryId = 1;
-    await connection.manager.save(subcategory1);
 
     let subcategory = new Subcategory();
     subcategory.id = 2;
     subcategory.name = "width";
     subcategory.categoryId = 2;
-    await connection.manager.save(subcategory);
 
     let subcategoryToEdit = new Subcategory();
     subcategoryToEdit.id = 3;
     subcategoryToEdit.name = "subcategory";
     subcategoryToEdit.categoryId = 3;
-    await connection.manager.save(subcategoryToEdit);
+
+    await Subcategory.save([subcategoryToEdit, subcategory, subcategory1]);
 
     let datasetdatatypeNone = new Datasetdatatype();
     datasetdatatypeNone.id;
     datasetdatatypeNone.name = "Not Specified";
-    await connection.manager.save(datasetdatatypeNone);
 
     let datasetdatatype = new Datasetdatatype();
     datasetdatatype.id;
     datasetdatatype.name = "Hugoniot";
-    await connection.manager.save(datasetdatatype);
 
     let datasetdatatypeToDelete = new Datasetdatatype();
     datasetdatatypeToDelete.id;
     datasetdatatypeToDelete.name = "Deletion";
-    await connection.manager.save(datasetdatatypeToDelete);
+
+    await Datasetdatatype.save([datasetdatatypeNone, datasetdatatype, datasetdatatypeToDelete]);
 
     let dataset = new Dataset();
     dataset.id = 1;
@@ -279,13 +264,11 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset.comments = "References 5,6,14\nAverage density = 2.134 g/cc";
     dataset.materials = [materialC, materialO2];
     dataset.uploaderId = 1;
-    await connection.manager.save(dataset);
 
     let unapproveddataset = new Unapproveddatasets();
     unapproveddataset.datasetId = 1;
     unapproveddataset.flaggedComment = "Is there a spelling error in the first author's name?";
     unapproveddataset.isFlagged = 1;
-    await connection.manager.save(unapproveddataset);
 
     let dataset2 = new Dataset();
     dataset2.id = 2;
@@ -297,187 +280,255 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     dataset2.materials = [];
     dataset2.uploaderId = 3;
     dataset2.isApproved = 1;
-    await connection.manager.save(dataset2);
 
-    dataset.id = 5;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId;
-    await connection.manager.save(dataset);
+    let dataset3 = new Dataset();
+    let unapproveddataset3 = new Unapproveddatasets();
+    dataset3.id = 5;
+    dataset3.name = "An unapproved dataset";
+    dataset3.datatypeId = datasetdatatype.id;
+    dataset3.publicationId = publication3.id;
+    dataset3.subcategoryId = subcategory.id;
+    dataset3.comments = null;
+    dataset3.materials = [];
+    dataset3.uploaderId = 2;
 
-    unapproveddataset.datasetId = 5;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset3.datasetId = 5;
+    unapproveddataset3.flaggedComment = null;
+    unapproveddataset3.isFlagged = 0;
 
-    dataset.id = 6;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId;
-    await connection.manager.save(dataset);
+    let dataset4 = new Dataset();
+    let unapproveddataset4 = new Unapproveddatasets();
+    dataset4.id = 6;
+    dataset4.name = "An unapproved dataset";
+    dataset4.datatypeId = datasetdatatype.id;
+    dataset4.publicationId = publication3.id;
+    dataset4.subcategoryId = subcategory.id;
+    dataset4.comments = null;
+    dataset4.materials = [];
+    dataset4.uploaderId = 2;
 
-    unapproveddataset.datasetId = 6;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset4.datasetId = 6;
+    unapproveddataset4.flaggedComment = null;
+    unapproveddataset4.isFlagged = 0;
 
-    dataset.id = 7;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publicationToDelete2.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId;
-    await connection.manager.save(dataset);
+    let dataset5 = new Dataset();
+    let unapproveddataset5 = new Unapproveddatasets();
+    dataset5.id = 7;
+    dataset5.name = "An unapproved dataset";
+    dataset5.datatypeId = datasetdatatype.id;
+    dataset5.publicationId = publicationToDelete2.id;
+    dataset5.subcategoryId = subcategory.id;
+    dataset5.comments = null;
+    dataset5.materials = [];
+    dataset5.uploaderId = 2;
 
-    unapproveddataset.datasetId = 7;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset5.datasetId = 7;
+    unapproveddataset5.flaggedComment = null;
+    unapproveddataset5.isFlagged = 0;
 
-    dataset.id = 70;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatypeToDelete.id;
-    dataset.publicationId = publicationToDelete.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [materialToDelete];
-    dataset.uploaderId;
-    await connection.manager.save(dataset);
+    let dataset6 = new Dataset();
+    let unapproveddataset6 = new Unapproveddatasets();
+    dataset6.id = 70;
+    dataset6.name = "An unapproved dataset";
+    dataset6.datatypeId = datasetdatatypeToDelete.id;
+    dataset6.publicationId = publicationToDelete.id;
+    dataset6.subcategoryId = subcategory.id;
+    dataset6.comments = null;
+    dataset6.materials = [materialToDelete];
+    dataset6.uploaderId = 2;
 
-    unapproveddataset.datasetId = 70;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset6.datasetId = 70;
+    unapproveddataset6.flaggedComment = null;
+    unapproveddataset6.isFlagged = 0;
 
-    dataset.id = 8;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 2;
-    await connection.manager.save(dataset);
+    let dataset7 = new Dataset();
+    let unapproveddataset7 = new Unapproveddatasets();
+    dataset7.id = 8;
+    dataset7.name = "An unapproved dataset";
+    dataset7.datatypeId = datasetdatatype.id;
+    dataset7.publicationId = publication3.id;
+    dataset7.subcategoryId = subcategory.id;
+    dataset7.comments = null;
+    dataset7.materials = [];
+    dataset7.uploaderId = 2;
 
-    unapproveddataset.datasetId = 8;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 1;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset7.datasetId = 8;
+    unapproveddataset7.flaggedComment = null;
+    unapproveddataset7.isFlagged = 1;
 
-    dataset.id = 9;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 1;
-    await connection.manager.save(dataset);
+    let dataset8 = new Dataset();
+    let unapproveddataset8 = new Unapproveddatasets();
+    dataset8.id = 9;
+    dataset8.name = "An unapproved dataset";
+    dataset8.datatypeId = datasetdatatype.id;
+    dataset8.publicationId = publication3.id;
+    dataset8.subcategoryId = subcategory.id;
+    dataset8.comments = null;
+    dataset8.materials = [];
+    dataset8.uploaderId = 1;
 
-    unapproveddataset.datasetId = 9;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 1;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset8.datasetId = 9;
+    unapproveddataset8.flaggedComment = null;
+    unapproveddataset8.isFlagged = 1;
 
-    dataset.id = 10;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publicationToDelete3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 1;
-    await connection.manager.save(dataset);
+    let dataset9 = new Dataset();
+    let unapproveddataset9 = new Unapproveddatasets();
+    dataset9.id = 10;
+    dataset9.name = "An unapproved dataset";
+    dataset9.datatypeId = datasetdatatype.id;
+    dataset9.publicationId = publicationToDelete3.id;
+    dataset9.subcategoryId = subcategory.id;
+    dataset9.comments = null;
+    dataset9.materials = [];
+    dataset9.uploaderId = 1;
 
-    unapproveddataset.datasetId = 10;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset9.datasetId = 10;
+    unapproveddataset9.flaggedComment = null;
+    unapproveddataset9.isFlagged = 0;
 
-    dataset.id = 11;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 1;
-    await connection.manager.save(dataset);
+    let dataset10 = new Dataset();
+    let unapproveddataset10 = new Unapproveddatasets();
+    dataset10.id = 11;
+    dataset10.name = "An unapproved dataset";
+    dataset10.datatypeId = datasetdatatype.id;
+    dataset10.publicationId = publication3.id;
+    dataset10.subcategoryId = subcategory.id;
+    dataset10.comments = null;
+    dataset10.materials = [];
+    dataset10.uploaderId = 1;
 
-    unapproveddataset.datasetId = 11;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset10.datasetId = 11;
+    unapproveddataset10.flaggedComment = null;
+    unapproveddataset10.isFlagged = 0;
 
-    dataset.id = 12;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 1;
-    await connection.manager.save(dataset);
+    let dataset11 = new Dataset();
+    let unapproveddataset11 = new Unapproveddatasets();
+    dataset11.id = 12;
+    dataset11.name = "An unapproved dataset";
+    dataset11.datatypeId = datasetdatatype.id;
+    dataset11.publicationId = publication3.id;
+    dataset11.subcategoryId = subcategory.id;
+    dataset11.comments = null;
+    dataset11.materials = [];
+    dataset11.uploaderId = 1;
 
-    unapproveddataset.datasetId = 12;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 1;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset11.datasetId = 12;
+    unapproveddataset11.flaggedComment = null;
+    unapproveddataset11.isFlagged = 1;
 
-    dataset.id = 13;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 2;
-    await connection.manager.save(dataset);
+    let dataset12 = new Dataset();
+    let unapproveddataset12 = new Unapproveddatasets();
+    dataset12.id = 13;
+    dataset12.name = "An unapproved dataset";
+    dataset12.datatypeId = datasetdatatype.id;
+    dataset12.publicationId = publication3.id;
+    dataset12.subcategoryId = subcategory.id;
+    dataset12.comments = null;
+    dataset12.materials = [];
+    dataset12.uploaderId = 2;
 
-    unapproveddataset.datasetId = 13;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 1;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset12.datasetId = 13;
+    unapproveddataset12.flaggedComment = null;
+    unapproveddataset12.isFlagged = 1;
 
-    dataset.id = 14;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 2;
-    await connection.manager.save(dataset);
+    let dataset13 = new Dataset();
+    let unapproveddataset13 = new Unapproveddatasets();
+    dataset13.id = 14;
+    dataset13.name = "An unapproved dataset";
+    dataset13.datatypeId = datasetdatatype.id;
+    dataset13.publicationId = publication3.id;
+    dataset13.subcategoryId = subcategory.id;
+    dataset13.comments = null;
+    dataset13.materials = [];
+    dataset13.uploaderId = 2;
 
-    unapproveddataset.datasetId = 14;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset13.datasetId = 14;
+    unapproveddataset13.flaggedComment = null;
+    unapproveddataset13.isFlagged = 0;
 
-    dataset.id = 15;
-    dataset.name = "An unapproved dataset";
-    dataset.datatypeId = datasetdatatype.id;
-    dataset.publicationId = publication3.id;
-    dataset.subcategoryId = subcategory.id;
-    dataset.comments;
-    dataset.materials = [];
-    dataset.uploaderId = 2;
-    await connection.manager.save(dataset);
+    let dataset14 = new Dataset();
+    let unapproveddataset14 = new Unapproveddatasets();
+    dataset14.id = 15;
+    dataset14.name = "An unapproved dataset";
+    dataset14.datatypeId = datasetdatatype.id;
+    dataset14.publicationId = publication3.id;
+    dataset14.subcategoryId = subcategory.id;
+    dataset14.comments = null;
+    dataset14.materials = [];
+    dataset14.uploaderId = 2;
 
-    unapproveddataset.datasetId = 15;
-    unapproveddataset.flaggedComment;
-    unapproveddataset.isFlagged = 0;
-    await connection.manager.save(unapproveddataset);
+    unapproveddataset14.datasetId = 15;
+    unapproveddataset14.flaggedComment = null;
+    unapproveddataset14.isFlagged = 0;
+
+    let dataset15 = new Dataset();
+    let unapproveddataset15 = new Unapproveddatasets();
+    dataset15.id = 16;
+    dataset15.name = "An unapproved dataset";
+    dataset15.datatypeId = datasetdatatype.id;
+    dataset15.publicationId = publication3.id;
+    dataset15.subcategoryId = subcategory.id;
+    dataset15.comments = null;
+    dataset15.materials = [];
+    dataset15.uploaderId = 1;
+
+    unapproveddataset15.datasetId = 16;
+    unapproveddataset15.flaggedComment = null;
+    unapproveddataset15.isFlagged = 0;
+
+    let dataset16 = new Dataset();
+    let unapproveddataset16 = new Unapproveddatasets();
+    dataset16.id = 17;
+    dataset16.name = "An unapproved dataset";
+    dataset16.datatypeId = datasetdatatype.id;
+    dataset16.publicationId = publication3.id;
+    dataset16.subcategoryId = subcategory.id;
+    dataset16.comments = null;
+    dataset16.materials = [];
+    dataset16.uploaderId = 1;
+
+    unapproveddataset16.datasetId = 17;
+    unapproveddataset16.flaggedComment = null;
+    unapproveddataset16.isFlagged = 0;
+
+    let dataset17 = new Dataset();
+    let unapproveddataset17 = new Unapproveddatasets();
+    dataset17.id = 18;
+    dataset17.name = "An unapproved dataset";
+    dataset17.datatypeId = datasetdatatype.id;
+    dataset17.publicationId = publication3.id;
+    dataset17.subcategoryId = subcategory.id;
+    dataset17.comments = null;
+    dataset17.materials = [];
+    dataset17.uploaderId = 1;
+
+    unapproveddataset17.datasetId = 18;
+    unapproveddataset17.flaggedComment = null;
+    unapproveddataset17.isFlagged = 0;
+
+    let dataset18 = new Dataset();
+    let unapproveddataset18 = new Unapproveddatasets();
+    dataset18.id = 19;
+    dataset18.name = "An unapproved dataset";
+    dataset18.datatypeId = datasetdatatype.id;
+    dataset18.publicationId = publication3.id;
+    dataset18.subcategoryId = subcategory.id;
+    dataset18.comments = null;
+    dataset18.materials = [];
+    dataset18.uploaderId = 1;
+
+    unapproveddataset18.datasetId = 19;
+    unapproveddataset18.flaggedComment = null;
+    unapproveddataset18.isFlagged = 1;
+
+    await Dataset.save([dataset, dataset2, dataset3, dataset4, dataset5, dataset6, dataset7, dataset8,
+      dataset9, dataset10, dataset11, dataset12, dataset13, dataset14, dataset15, dataset16, dataset17,
+      dataset18]);
+
+    await Unapproveddatasets.save([unapproveddataset, unapproveddataset3, unapproveddataset4, unapproveddataset5,
+      unapproveddataset6, unapproveddataset7, unapproveddataset8, unapproveddataset9, unapproveddataset10,
+      unapproveddataset11, unapproveddataset12, unapproveddataset13, unapproveddataset14, unapproveddataset15,
+      unapproveddataset16, unapproveddataset17, unapproveddataset18]);
 
     // Units below this line
 
@@ -556,88 +607,82 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
 
     let datapointComments = new Datapointcomments();
     datapointComments.id;
-    datapointComments.datasetId = dataset.id;
+    datapointComments.datasetId = 1;
     datapointComments.comments = ["im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478", "im5478"];
-    await connection.manager.save(datapointComments);
+    await Datapointcomments.save(datapointComments);
 
     let datapoint = new Datapoints();
     datapoint.id;
-    datapoint.datasetId = dataset.id;
+    datapoint.datasetId = 1;
     datapoint.name = "Initial Density";
     datapoint.values = [2.113, 2.123, 2.123, 2.143, 2.141, 2.146, 2.142, 2.134, 2.135, 2.136, 2.136];
     datapoint.unitsId = unitsGCC.id;
-    await connection.manager.save(datapoint);
 
     let datapoint2 = new Datapoints();
     datapoint2.id;
-    datapoint2.datasetId = dataset.id;
+    datapoint2.datasetId = 1;
     datapoint2.name = "Initial Temperature";
     datapoint2.values = [273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15, 273.15];
     datapoint2.unitsId = unitsKelvin.id;
-    await connection.manager.save(datapoint2);
 
     let datapoint3 = new Datapoints();
     datapoint3.id;
-    datapoint3.datasetId = dataset.id;
+    datapoint3.datasetId = 1;
     datapoint3.name = "Initial Pressure";
     datapoint3.values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     datapoint3.unitsId = unitsGigapascal.id;
-    await connection.manager.save(datapoint3);
 
     let datapoint4 = new Datapoints();
     datapoint4.id;
-    datapoint4.datasetId = dataset.id;
+    datapoint4.datasetId = 1;
     datapoint4.name = "Shock Velocity";
     datapoint4.values = [5.235, 6.013, 6.320, 6.551, 6.704, 7.960, 8.762, 8.836, 9.208, 9.627, 9.556];
     datapoint4.unitsId = unitsKMPS.id;
-    await connection.manager.save(datapoint4);
 
     let datapoint5 = new Datapoints();
     datapoint5.id;
-    datapoint5.datasetId = dataset.id;
+    datapoint5.datasetId = 1;
     datapoint5.name = "Particle Velocity";
     datapoint5.values = [1.026, 1.380, 1.972, 2.607, 2.779, 3.370, 3.748, 3.801, 3.948, 4.138, 4.290];
     datapoint5.unitsId = unitsKMPS.id;
-    await connection.manager.save(datapoint5);
 
     let datapoint6 = new Datapoints();
     datapoint6.id;
-    datapoint6.datasetId = dataset.id;
+    datapoint6.datasetId = 1;
     datapoint6.name = "Pressure";
     datapoint6.values = [11.349, 17.617, 26.459, 36.599, 39.888, 57.567, 70.343, 71.672, 77.614, 85.091, 87.657];
     datapoint6.unitsId = unitsGigapascal.id;
-    await connection.manager.save(datapoint6);
 
     let datapoint7 = new Datapoints();
     datapoint7.id;
-    datapoint7.datasetId = dataset.id;
+    datapoint7.datasetId = 1;
     datapoint7.name = "Specific Volume";
     datapoint7.values = [0.3805, 0.3629, 0.3241, 0.2809, 0.2735, 0.2687, 0.2672, 0.2670, 0.2676, 0.2669, 0.2582];
     datapoint7.unitsId = unitsCCG.id;
-    await connection.manager.save(datapoint7);
 
     let datapoint8 = new Datapoints();
     datapoint8.id;
-    datapoint8.datasetId = dataset.id;
+    datapoint8.datasetId = 1;
     datapoint8.name = "Density";
     datapoint8.values = [2.628, 2.755, 3.086, 3.560, 3.657, 3.722, 3.743, 3.745, 3.737, 3.746, 3.873];
     datapoint8.unitsId = unitsGCC.id;
-    await connection.manager.save(datapoint8);
 
     let datapoint9 = new Datapoints();
     datapoint9.id;
-    datapoint9.datasetId = dataset.id;
+    datapoint9.datasetId = 1;
     datapoint9.name = "Compression Ratio";
     datapoint9.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
     datapoint9.unitsId = unitsNone.id;
-    await connection.manager.save(datapoint9);
 
-    datapoint9.id;
-    datapoint9.datasetId = 70;
-    datapoint9.name = "Compression Ratio";
-    datapoint9.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
-    datapoint9.unitsId = unitsToDelete.id;
-    await connection.manager.save(datapoint9);
+    let datapoint10 = new Datapoints();
+    datapoint10.id;
+    datapoint10.datasetId = 70;
+    datapoint10.name = "Compression Ratio";
+    datapoint10.values = [0.804, 0.770, 0.688, 0.602, 0.585, 0.577, 0.572, 0.570, 0.571, 0.570, 0.552];
+    datapoint10.unitsId = unitsToDelete.id;
+
+    await Datapoints.save([datapoint10, datapoint, datapoint2, datapoint3, datapoint4, datapoint5,
+      datapoint6, datapoint7, datapoint8, datapoint9]);
 
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (1, 2)');
     await queryRunner.query('INSERT INTO accounts_datasets_dataset (accountsId, datasetId) VALUES (3, 2)');
@@ -655,7 +700,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     newGraph.axisZoomStart = [100, 100];
     newGraph.axisZoomEnd = [100, 100];
     newGraph.axisUnits = ["C", "mm"];
-    await connection.manager.save(newGraph);
 
     let newGraph2 = new Graphstate();
     newGraph2.id = 2;
@@ -670,7 +714,8 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     newGraph2.axisZoomStart = [100];
     newGraph2.axisZoomEnd = [100];
     newGraph2.axisUnits = ["C"];
-    await connection.manager.save(newGraph2);
+
+    await Graphstate.save([newGraph, newGraph2]);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
@@ -694,7 +739,6 @@ export class SeedDatabase1611943920000 implements MigrationInterface {
     await queryRunner.query('DELETE FROM datapoints');
     await queryRunner.query('DELETE FROM units');
     await queryRunner.query('DELETE FROM dimension');
-    await queryRunner.query('DELETE FROM representations');
     await queryRunner.query('DELETE FROM authors');
     await queryRunner.query('DELETE FROM dataset');
     await queryRunner.query('DELETE FROM publications');

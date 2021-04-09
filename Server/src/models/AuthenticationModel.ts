@@ -15,9 +15,6 @@ export class AuthenticationModel {
    * @param signUpInfo - User Information from Frontend Request
    */
   static async insertSignUpInformation(signUpInfo: ISignUpInformation) {
-
-    let connection = getConnection();
-
     let signUpInformation = new Accounts();
     signUpInformation.id;
     signUpInformation.email = signUpInfo.email;
@@ -27,7 +24,7 @@ export class AuthenticationModel {
     signUpInformation.orcID = signUpInfo.orcID;
     signUpInformation.organizationName = signUpInfo.organizationName;
     signUpInformation.admin = signUpInfo.isAdmin;
-    await connection.manager.save(signUpInformation);
+    await Accounts.save(signUpInformation);
   }
 
   /**

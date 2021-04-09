@@ -176,7 +176,7 @@ export class GraphsModel {
         newGraph.axisZoomStart = graph.axisZoomStart;
         newGraph.axisZoomEnd = graph.axisZoomEnd;
         newGraph.axisUnits = graph.axisUnits;
-        await this.connection.manager.save(newGraph);
+        await Graphstate.save(newGraph);
         return newGraph.id;
     }
 

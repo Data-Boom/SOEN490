@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { AuthenticationService } from '../../services/authenticationService'
 
 
@@ -8,9 +8,16 @@ describe('Authentication tests', () => {
     let next;
     let authenticationService: AuthenticationService;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
 
-        await createConnection();
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                return getConnectionManager().get();
+            }
+        }
         jest.setTimeout(60000)
         authenticationService = new AuthenticationService();
         mockRequest = {};
@@ -21,7 +28,7 @@ describe('Authentication tests', () => {
         next = {};
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 

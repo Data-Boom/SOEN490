@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, Connection, BaseEntity } from "typeorm";
 import { Dataset } from "./Dataset";
 
 
@@ -6,7 +6,7 @@ import { Dataset } from "./Dataset";
  * The entity annotation indicates that a table is being created
  */
 @Entity()
-export class Datapointcomments {
+export class Datapointcomments extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
