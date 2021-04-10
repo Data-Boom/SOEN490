@@ -2,8 +2,8 @@
 
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import { Button, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from '@material-ui/core'
-import { Field, Form, Formik } from 'formik'
-import React, { useState } from 'react'
+import { Field, Form, Formik, validateYupSchema } from 'formik'
+import React, { useEffect, useState } from 'react'
 
 import { ArrayHelpers } from 'formik'
 import Dialog from '@material-ui/core/Dialog'
@@ -32,19 +32,35 @@ export const MaterialSelectChipArray = (props: IProps) => {
 
   const filter = createFilterOptions<IMaterialOption>()
   const [open, toggleOpen] = useState(false)
-  const [dialogValue, setDialogValue] = useState<IMaterial | null>()
+  //const [dialogValue, setDialogValue] = useState<IMaterial | null>()
+  // const [updateValue, setUpdateValue] = useState({ ...value })
 
   const initialValues = {
     composition: '',
     details: '',
   }
+  // useEffect(() => {
+  //   setUpdateValue(updateValue)
+  // }, [value])
 
   const handleAdd = (event, newMaterials: IMaterial[]) => {
+    // setUpdateValue(newMaterials)
+    if (newMaterials.length == 0) {
+      for (var i = 0; i <= value.length; i++) {
+        console.log(i)
+        fieldArrayHelpers.pop()
+      }
+    }
+    value.forEach(newMaterial => {
+      if (newMaterials.findIndex((material) => materialToString(material) == materialToString(newMaterial)) == -1) {
+        fieldArrayHelpers.remove(value.indexOf(newMaterial))
+      }
+    })
     newMaterials.forEach(newMaterial => {
       if (!materialToString(newMaterial)) {
         return
       }
-      else if (newMaterials[newMaterials.length - 1].id == null) {
+      else if (newMaterials[newMaterials.length - 1].details == '') {//for custom materials, open toggle
         setTimeout(() => {
           toggleOpen(true)
         })
@@ -53,6 +69,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
         fieldArrayHelpers.push(newMaterial)
       }
     })
+    console.log(value)
   }
 
   const handleSubmitMaterial = (newMaterial: IMaterial) => {
