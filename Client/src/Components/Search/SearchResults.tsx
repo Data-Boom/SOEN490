@@ -12,6 +12,7 @@ interface IProps {
   button?: any,
   categories: ICategoryModel[],
   displayCheckbox: boolean
+  column?: ColDef[]
 }
 
 export const SearchResults = (props: IProps) => {
@@ -69,6 +70,12 @@ export const SearchResults = (props: IProps) => {
 
     return (<DatasetFormModal datasetId={datasetId.toString()} />)
   }
+
+  const getStatus = () => {
+
+    return null
+  }
+
 
   const columns: ColDef[] = [
     { field: 'dataset_name', headerName: 'Name', flex: 1 },

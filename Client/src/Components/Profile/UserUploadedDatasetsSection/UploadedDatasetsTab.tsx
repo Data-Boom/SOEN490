@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid';
-import { Grid } from '@material-ui/core';
+import { Box, Container, Grid } from '@material-ui/core';
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel';
 import { ICategoryModel } from '../../../Models/Profile/ICategoryModel';
 import { callGetDatasets, getUploadedDatasets } from '../../../Remote/Endpoints/DatasetEndpoint';
 import { listCategories } from '../../../Remote/Endpoints/CategoryEndpoint';
+import { SearchResults } from '../../Search/SearchResults';
 
 interface IProps {
-    datasetResults: IDatasetModel[],
+    datasetResults?: IDatasetModel[],
     handleSelectionChanged?: (selection: SelectionChangeParams) => void,
     button?: any,
     categories: ICategoryModel[],
-    displayCheckbox: boolean
+    displayCheckbox?: boolean
 }
 
 export const UploadedDatasetsTab = () => {
@@ -24,19 +25,24 @@ export const UploadedDatasetsTab = () => {
     const getDatasetInfo = async (ids: number[]) => {
         const datasetArray = await callGetDatasets({ datasetId: ids })
         setDatasets(datasetArray)
-        console.log("getDatasetInfo: ", datasetArray)
-    }
-
-    const checkdataset = () => {
-
     }
 
     useEffect(() => {
 
         const getDatasetIds = async () => {
-            const ids = await getUploadedDatasets()
-            setDatasetIds(ids)
-            console.log("ids: ", ids)
+            const uploaded_datasets = await getUploadedDatasets()
+            const id_array = uploaded_datasets.map(x => x.datasetId)
+            setDatasetIds(id_array)
+
+            //const status_array = uploaded_datasets.map(x => x.approved)
+            //console.log("status: ", status_array)
+        }
+
+        const getDatasetStatus = async () => {
+            const uploaded_datasets = await getUploadedDatasets()
+            const status_array = uploaded_datasets.map(x => x.approved)
+            console.log("status: ", status_array)
+            return status_array
         }
 
         const callListCategories = async () => {
@@ -51,32 +57,30 @@ export const UploadedDatasetsTab = () => {
     useEffect(() => {
         if (datasetIds.length > 0) {
             getDatasetInfo(datasetIds)
-            //console.log("getDatasetInfo: ", getDatasetInfo(datasetIds))
         }
+
     }, [datasetIds])
 
 
-    /*const getStatus = () => {
+    const getStatus = () => {
 
         return null
     }
-    const columns: ColDef[] = [
-        { field: 'dataset_name', headerName: 'Name', flex: 1 },
+
+    const column: ColDef[] = [
         { field: `status`, headerName: 'Status', valueGetter: getStatus, flex: 1 },
-    ]*/
-
-
-
+    ]
 
     return (
-
-        <Grid container spacing={3}>
-            <Grid item container>
-                <div style={{ height: 600, width: '100%' }}>
-                    {/*<DataGrid rows={rows} rowHeight={120} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} />*/}
-                </div>
-            </Grid>
-        </Grid>
+        <Container>
+            <Box pt={4}>
+                <SearchResults
+                    datasetResults={datasets}
+                    categories={categories}
+                    displayCheckbox={false}
+                />
+            </Box>
+        </Container>
     )
 
 }

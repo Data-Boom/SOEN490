@@ -23,6 +23,7 @@ export const SavedDatasetsTab = () => {
     const getDatasetIds = async () => {
       const ids = await callGetUserFavouriteDatasets()
       setDatasetIds(ids)
+      //console.log("dataset id: ", ids)
     }
 
     const callListCategories = async () => {
