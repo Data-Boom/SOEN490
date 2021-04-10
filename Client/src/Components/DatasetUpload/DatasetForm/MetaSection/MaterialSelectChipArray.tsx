@@ -120,8 +120,8 @@ export const MaterialSelectChipArray = (props: IProps) => {
                 return materialToString(option)
               }
             }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params)
+            filterOptions={(fOptions, params) => {
+              const filtered = filter(fOptions, params)
               if (params.inputValue !== '') {
                 filtered.push({
                   composition: params.inputValue,
