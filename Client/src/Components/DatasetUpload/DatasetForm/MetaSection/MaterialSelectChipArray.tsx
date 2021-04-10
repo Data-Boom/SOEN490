@@ -39,10 +39,9 @@ export const MaterialSelectChipArray = (props: IProps) => {
   }
 
   const handleAdd = (event, newMaterials: IMaterial[]) => {
-    // setUpdateValue(newMaterials)
+
     if (newMaterials.length == 0) {
       for (var i = 0; i <= value.length; i++) {
-        console.log(i)
         fieldArrayHelpers.pop()
       }
     }
@@ -55,7 +54,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
       if (!materialToString(newMaterial)) {
         return
       }
-      else if (newMaterials[newMaterials.length - 1].details == '') {//for custom materials, open toggle
+      else if (newMaterials[newMaterials.length - 1].details == '') {
         setTimeout(() => {
           toggleOpen(true)
         })
@@ -105,7 +104,6 @@ export const MaterialSelectChipArray = (props: IProps) => {
     )
   }
 
-
   return (
     <>
       <Typography variant='h6' align="left">Materials</Typography>
@@ -113,16 +111,14 @@ export const MaterialSelectChipArray = (props: IProps) => {
         <Grid item sm={6}>
           <Autocomplete
             disabled={!editable}
-            //todo figure out how to keep the value but be able to delete
             value={value}
             onChange={handleAdd}
             options={options}
             multiple
             getOptionLabel={(option: IMaterialOption) => {
-              if (option.id != null) {
+              if (option.title != '') {
                 return materialToString(option)
               }
-              return option.title
             }}
             filterOptions={(options, params) => {
               const filtered = filter(options, params)
