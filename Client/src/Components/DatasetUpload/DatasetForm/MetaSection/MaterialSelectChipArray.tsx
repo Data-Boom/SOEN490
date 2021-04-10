@@ -2,8 +2,8 @@
 
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import { Button, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from '@material-ui/core'
-import { Field, Form, Formik, validateYupSchema } from 'formik'
-import React, { useEffect, useState } from 'react'
+import { Field, Form, Formik } from 'formik'
+import React, { useState } from 'react'
 
 import { ArrayHelpers } from 'formik'
 import Dialog from '@material-ui/core/Dialog'
@@ -32,16 +32,11 @@ export const MaterialSelectChipArray = (props: IProps) => {
 
   const filter = createFilterOptions<IMaterialOption>()
   const [open, toggleOpen] = useState(false)
-  //const [dialogValue, setDialogValue] = useState<IMaterial | null>()
-  // const [updateValue, setUpdateValue] = useState({ ...value })
 
   const initialValues = {
     composition: '',
     details: '',
   }
-  // useEffect(() => {
-  //   setUpdateValue(updateValue)
-  // }, [value])
 
   const handleAdd = (event, newMaterials: IMaterial[]) => {
     // setUpdateValue(newMaterials)
@@ -69,7 +64,6 @@ export const MaterialSelectChipArray = (props: IProps) => {
         fieldArrayHelpers.push(newMaterial)
       }
     })
-    console.log(value)
   }
 
   const handleSubmitMaterial = (newMaterial: IMaterial) => {
