@@ -1,8 +1,9 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { VariableController } from '../../controllers/VariableController';
 
 describe('Fetch All Variables Controller', () => {
+  let mockRequest;
   let mockResponse;
   let controller: VariableController;
 
@@ -17,6 +18,8 @@ describe('Fetch All Variables Controller', () => {
     }
     jest.setTimeout(60000)
     controller = new VariableController();
+
+    mockRequest = {};
     mockResponse = {
       status: jest.fn(() => mockResponse),
       json: jest.fn(),
@@ -28,7 +31,7 @@ describe('Fetch All Variables Controller', () => {
   });
 
   test('Valid Get All Variables Request; expect at least one entry in return', async () => {
-    await controller.retrieveVariables(mockResponse as Response)
+    await controller.retrieveVariables(mockRequest as Request, mockResponse as Response)
     expect(mockResponse.json[0]).not.toBeUndefined;
     expect(mockResponse.status).toBeCalledWith(200);
   });

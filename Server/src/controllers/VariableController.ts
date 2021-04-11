@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { VariableService } from '../services/VariableService';
 
 /**
@@ -11,7 +11,7 @@ export class VariableController {
     this.variableService = new VariableService();
   }
 
-  async retrieveVariables(response: Response): Promise<Response> {
+  async retrieveVariables(request: Request, response: Response): Promise<Response> {
     try {
       let requestResponse = await this.variableService.processGetAllVariables();
       return response.status(requestResponse.statusCode).json(requestResponse.message)
