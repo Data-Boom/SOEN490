@@ -4,7 +4,6 @@ import { IData, IDatasetModel, IDatasetStatus, IReference } from '../../../Model
 import React, { useEffect, useState } from 'react'
 import { callGetDatasets, getUploadedDatasets } from '../../../Remote/Endpoints/DatasetEndpoint';
 
-import { DatasetFormModal } from '../../DatasetUpload/DatasetViewModal';
 import { ICategoryModel } from '../../../Models/Profile/ICategoryModel';
 import { SearchResults } from '../../Search/SearchResults';
 import { listCategories } from '../../../Remote/Endpoints/CategoryEndpoint';
