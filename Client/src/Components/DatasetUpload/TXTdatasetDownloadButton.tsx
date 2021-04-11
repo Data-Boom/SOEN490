@@ -1,8 +1,9 @@
 import { Button } from '@material-ui/core'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDimensionsSelector } from '../../Stores/Slices/DimensionsSlice'
 import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 
 interface IProps {
     datasets: IDatasetModel
@@ -10,8 +11,16 @@ interface IProps {
 export const TXTdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
     const dimensions = useDimensionsSelector()
+    const [categories, setCategories] = useState([])
 
-    //helper methods
+    useEffect(() => {
+        const callListCategories = async () => {
+            const getCategories = await listCategories()
+            setCategories(getCategories || [])
+        }
+        callListCategories()
+    }, [])
+
     const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
@@ -41,13 +50,38 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
         }
         return name
     }
+    let cgName: string
+    let scgName: string
+    let cat
+    const categoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cgName = category.name
+            }
+        })
+        return cgName
+    }
+
+    const subcategoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cat = category
+                cat.subcategories.map(subcategory => {
+                    if (subcategory.id == datasets.subcategory) {
+                        scgName = subcategory.name
+                    }
+                })
+            }
+        })
+        return scgName
+    }
 
     const downloadedTxtDataDisplayed: string =
         "#Dataset name: " + datasets.dataset_name + "\n " +
         "#Material: " + materialArray() + "\n " +
         "#Data type: " + datasets.data_type + "\n " +
-        "#Category: " + datasets.category + "\n " +
-        "#Subcategory: " + datasets.subcategory + "\n " +
+        "#Category: " + categoryName() + "\n " +
+        "#Subcategory: " + subcategoryName() + "\n " +
         "#\n" +
         "#Publications/Source:\n " +
         "#Authors: " + authorArray() + "\n " +
@@ -68,8 +102,11 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
     //"Comments: \n" + datasets.data.comments + " \n "
 
 
-    const handleTxtDownload = () => {
-        download("txtdataset.txt", downloadedTxtDataDisplayed)
+    const handleTxtDownload = async () => {
+        return new Promise(function (resolve, reject) {
+            resolve(download("txtdataset.txt", downloadedTxtDataDisplayed))
+        })
+
     }
 
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
@@ -88,7 +125,6 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
 
     return (
         <Button id="download-txt" onClick={handleTxtDownload} color="primary" variant="contained"> TXT </Button>
-        //handleTxtDownload()
     )
 
 }

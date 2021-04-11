@@ -1,8 +1,10 @@
 import { Button } from '@material-ui/core'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDimensionsSelector } from '../../Stores/Slices/DimensionsSlice'
 import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+
 
 interface IProps {
     datasets: IDatasetModel
@@ -10,8 +12,16 @@ interface IProps {
 export const JSONdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
     const dimensions = useDimensionsSelector()
+    const [categories, setCategories] = useState([])
 
-    //helper methods
+    useEffect(() => {
+        const callListCategories = async () => {
+            const getCategories = await listCategories()
+            setCategories(getCategories || [])
+        }
+        callListCategories()
+    }, [])
+
     const variableNameArray = (): any => {
         var name = []
         for (var i in datasets.data.variables) {
@@ -60,14 +70,39 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
         }
         return name
     }
+    let cgName: string
+    let scgName: string
+    let cat
+    const categoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cgName = category.name
+            }
+        })
+        return cgName
+    }
+
+    const subcategoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cat = category
+                cat.subcategories.map(subcategory => {
+                    if (subcategory.id == datasets.subcategory) {
+                        scgName = subcategory.name
+                    }
+                })
+            }
+        })
+        return scgName
+    }
 
     const downloadedJSONDataDisplayed =
     {
         "Dataset name ": datasets.dataset_name,
         "Material": materialArray(),
         "Data type": datasets.data_type,
-        "Category": datasets.category,
-        "Subcategory ": datasets.subcategory,
+        "Category": categoryName(),
+        "Subcategory ": subcategoryName(),
         "reference": {
             "Authors ": [authorArray()],
             "Title ": datasets.reference.title,
@@ -108,7 +143,6 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
 
     return (
         <Button id="download-json" onClick={handleJSONDownload} color="primary" variant="contained"> JSON </Button>
-
     )
 
 }

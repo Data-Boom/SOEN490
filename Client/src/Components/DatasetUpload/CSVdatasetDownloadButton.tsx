@@ -1,8 +1,9 @@
 import { Button } from '@material-ui/core'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import React from 'react'
 import { useDimensionsSelector } from '../../../src/Stores/Slices/DimensionsSlice'
 import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+import React, { useEffect, useState } from 'react'
 
 interface IProps {
     datasets: IDatasetModel
@@ -10,8 +11,16 @@ interface IProps {
 export const CSVdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
     const dimensions = useDimensionsSelector()
+    const [categories, setCategories] = useState([])
 
-    //helper methods
+    useEffect(() => {
+        const callListCategories = async () => {
+            const getCategories = await listCategories()
+            setCategories(getCategories || [])
+        }
+        callListCategories()
+    }, [])
+
     const variableArray = (): any => {
         var name = " "
         for (var i in datasets.data.variables) {
@@ -40,13 +49,38 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
         }
         return name
     }
+    let cgName: string
+    let scgName: string
+    let cat
+    const categoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cgName = category.name
+            }
+        })
+        return cgName
+    }
+
+    const subcategoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cat = category
+                cat.subcategories.map(subcategory => {
+                    if (subcategory.id == datasets.subcategory) {
+                        scgName = subcategory.name
+                    }
+                })
+            }
+        })
+        return scgName
+    }
 
     const downloadedCSVDataDisplayed: string =
         "#Dataset name ," + datasets.dataset_name + "\n " +
         "#Material ," + materialArray() + "\n " +
         "#Data type, " + datasets.data_type + "\n " +
-        "#Category, " + datasets.category + "\n " +
-        "#Subcategory, " + datasets.subcategory + "\n " +
+        "#Category, " + categoryName() + "\n " +
+        "#Subcategory, " + subcategoryName() + "\n " +
         "#\n" +
         "#Publications/Source \n " +
         "#Authors ," + authorArray() + "\n " +
@@ -87,7 +121,6 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
 
     return (
         <Button id="download-csv" onClick={handleCSVDownload} color="primary" variant="contained"> CSV </Button>
-        //handleTxtDownload()
     )
 
 }

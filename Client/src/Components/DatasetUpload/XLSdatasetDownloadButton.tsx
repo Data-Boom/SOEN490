@@ -4,6 +4,8 @@ import React from 'react'
 import { useDimensionsSelector } from '../../Stores/Slices/DimensionsSlice'
 import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
 import * as XLSX from 'xlsx';
+import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+import { useEffect, useState } from 'react'
 
 interface IProps {
     datasets: IDatasetModel
@@ -12,8 +14,16 @@ interface IProps {
 export const XLSdatasetDownloadButton = (props: IProps) => {
     const { datasets } = { ...props }
     const dimensions = useDimensionsSelector()
+    const [categories, setCategories] = useState([])
 
-    //helper methods
+    useEffect(() => {
+        const callListCategories = async () => {
+            const getCategories = await listCategories()
+            setCategories(getCategories || [])
+        }
+        callListCategories()
+    }, [])
+
     const variableArray = (): any => {
         var name = []
         for (var i in datasets.data.variables) {
@@ -46,13 +56,38 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         name.push(datasets.data.dataPointComments)
         return name
     }
+    let cgName: string
+    let scgName: string
+    let cat
+    const categoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cgName = category.name
+            }
+        })
+        return cgName
+    }
+
+    const subcategoryName = () => {
+        categories.map(category => {
+            if (category.id == datasets.category) {
+                cat = category
+                cat.subcategories.map(subcategory => {
+                    if (subcategory.id == datasets.subcategory) {
+                        scgName = subcategory.name
+                    }
+                })
+            }
+        })
+        return scgName
+    }
 
     const downloadedXLSDataDisplayed = [
         ["Dataset name", datasets.dataset_name],
         materialArray(),
         ["Data type", datasets.data_type],
-        ["Category", datasets.category], //needs to add method to convert given categoryID to categoryName
-        ["Subcategory ", datasets.subcategory],//needs to add method to convert given subcategoryID to subcategoryName
+        ["Category", categoryName()],
+        ["Subcategory ", subcategoryName()],
         ["Publication/sources"],
         authorArray(),
         ["Title ", datasets.reference.title],
