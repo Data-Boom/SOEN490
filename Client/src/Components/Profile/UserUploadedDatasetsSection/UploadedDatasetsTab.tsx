@@ -38,7 +38,7 @@ export const UploadedDatasetsTab = () => {
 
             const status_array = uploaded_datasets.map(x => x.approved)
             setDatasetStatus(uploaded_datasets)
-            console.log("datasetStatus: ", status_array)
+            //console.log("datasetStatus: ", status_array)
         }
 
         const callListCategories = async () => {
