@@ -116,10 +116,7 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
     }
 
     const handleTxtDownload = async () => {
-        return new Promise(function (resolve, reject) {
-            resolve(download("txtdataset.txt", compileDataOutput()))
-        })
-
+        download("txtdataset.txt", compileDataOutput())
     }
 
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server

@@ -1,11 +1,10 @@
 import { Button } from '@material-ui/core'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
-import React from 'react'
 import { useDimensionsSelector } from '../../Stores/Slices/DimensionsSlice'
 import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
 import * as XLSX from 'xlsx';
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface IProps {
     datasets: IDatasetModel
@@ -109,9 +108,9 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         allData.push([" "])
         allData.push(variableArray())
 
-        for (var i = 0; i < datasets.data.contents.length; i++) {
+        for (var i in datasets.data.contents) {
             dataPoint = []
-            for (var j = 0; j < datasets.data.contents[i].point.length; j++) {
+            for (var j in datasets.data.contents[i].point) {
                 dataPoint.push(datasets.data.contents[i].point[j])
             }
             if (datasets.data.dataPointComments)

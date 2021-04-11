@@ -47,7 +47,7 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
     }
     const authorArray = (): any => {
         var name = []
-        for (var i = 0; i < datasets.reference.authors.length; i++) {
+        for (var i in datasets.reference.authors) {
             if (datasets.reference.authors[i].middleName) {
                 name.push(
                     {
