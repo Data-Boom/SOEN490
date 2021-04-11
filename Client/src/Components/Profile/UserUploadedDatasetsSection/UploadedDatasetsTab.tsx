@@ -9,14 +9,6 @@ import { ICategoryModel } from '../../../Models/Profile/ICategoryModel';
 import { SearchResults } from '../../Search/SearchResults';
 import { listCategories } from '../../../Remote/Endpoints/CategoryEndpoint';
 
-interface IProps {
-    datasetResults?: IDatasetModel[],
-    handleSelectionChanged?: (selection: SelectionChangeParams) => void,
-    button?: any,
-    categories: ICategoryModel[],
-    displayCheckbox?: boolean
-}
-
 export const UploadedDatasetsTab = () => {
 
     const [categories, setCategories] = useState<ICategoryModel[]>([])
@@ -38,7 +30,6 @@ export const UploadedDatasetsTab = () => {
 
             const status_array = uploaded_datasets.map(x => x.approved)
             setDatasetStatus(uploaded_datasets)
-            //console.log("datasetStatus: ", status_array)
         }
 
         const callListCategories = async () => {
