@@ -12,9 +12,6 @@ export class FileParserController {
   private fileName: string
   private fileExtension: string
 
-  constructor() {
-  }
-
   createRequest(request: MulterRequest, response: Response) {
     if (!request.file) {
       response.status(400).json("No file was given.");

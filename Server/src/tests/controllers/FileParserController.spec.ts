@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { FileParserController } from '../../controllers/FileParserController';
 import { MulterRequest } from '../../genericInterfaces/FileParserInterfaces';
@@ -37,7 +37,7 @@ describe('Category Controller', () => {
         mockRequest = {
             file: { "path": filePath, "originalname": fileName }
         }
-        await uploadFileWithStatusCheck(controller, mockRequest as MulterRequest, mockResponse as Response, 200)
+        await uploadFileWithStatusCheck(mockRequest as MulterRequest, mockResponse as Response, 200)
     });
 
     test('Valid - Request to Extract to Extract a JSON file', async () => {
@@ -46,7 +46,7 @@ describe('Category Controller', () => {
         mockRequest = {
             file: { "path": filePath, "originalname": fileName }
         }
-        await uploadFileWithStatusCheck(controller, mockRequest as MulterRequest, mockResponse as Response, 200)
+        await uploadFileWithStatusCheck(mockRequest as MulterRequest, mockResponse as Response, 200)
     });
 
     test('Invalid - Request to Extract a non-existing file', async () => {
@@ -56,21 +56,21 @@ describe('Category Controller', () => {
         mockRequest = {
             file: { "path": filePath, "originalname": fileName }
         }
-        await uploadFileWithAssert(controller, mockRequest as MulterRequest, mockResponse as Response, 400, expectedResponse)
+        await uploadFileWithAssert(mockRequest as MulterRequest, mockResponse as Response, 400, expectedResponse)
     });
 
     test('Invalid - Empty Body', async () => {
         let expectedResponse = "No file was given."
-        await uploadFileWithAssert(controller, mockRequest as MulterRequest, mockResponse as Response, 400, expectedResponse)
+        await uploadFileWithAssert(mockRequest as MulterRequest, mockResponse as Response, 400, expectedResponse)
     });
 
-    async function uploadFileWithAssert(controller: FileParserController, mockRequest: MulterRequest, mockResponse: Response, status: number, expectedResponse: any) {
+    async function uploadFileWithAssert(mockRequest: MulterRequest, mockResponse: Response, status: number, expectedResponse: any) {
         await controller.createRequest(mockRequest, mockResponse)
         expect(mockResponse.json).toBeCalledWith(expectedResponse);
         expect(mockResponse.status).toBeCalledWith(status);
     }
 
-    async function uploadFileWithStatusCheck(controller: FileParserController, mockRequest: MulterRequest, mockResponse: Response, status: number) {
+    async function uploadFileWithStatusCheck(mockRequest: MulterRequest, mockResponse: Response, status: number) {
         await controller.createRequest(mockRequest, mockResponse)
         expect(mockResponse.status).toBeCalledWith(status);
     }
