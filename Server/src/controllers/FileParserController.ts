@@ -1,4 +1,5 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { MulterRequest } from '../genericInterfaces/FileParserInterfaces';
 import { DataParserService } from '../services/Parser/DataParserService'
 
 /**
@@ -11,17 +12,17 @@ export class FileParserController {
   private fileName: string
   private fileExtension: string
 
-  constructor(filePath: string, fileName: string) {
-    this.filePathOfUpload = filePath;
-    this.fileName = fileName
-    this.fileExtension = this.fileName.split('.').pop();
+  constructor() {
   }
 
-  createRequest(request: Request, response: Response) {
-    if (!request.body) {
-      response.status(400).json("Request Body is empty.");
+  createRequest(request: MulterRequest, response: Response) {
+    if (!request.file) {
+      response.status(400).json("No file was given.");
     }
     else {
+      this.filePathOfUpload = request.file.path
+      this.fileName = request.file.originalname
+      this.fileExtension = this.fileName.split('.').pop();
       let requestResponse: any = this.callDataParserService(this.filePathOfUpload, this.fileExtension, response);
       return requestResponse
     }
