@@ -45,16 +45,6 @@ export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
     else {
       return (
         <>
-          {withPagination && models.length > 0 && < TablePagination
-            component="div"
-            rowsPerPageOptions={[5, 10, 25, 100]}
-            labelRowsPerPage={modelType + ' per page'}
-            count={models.length}
-            page={page}
-            onChangePage={(_, newPage) => setPage(newPage)}
-            rowsPerPage={rowsPerPage}
-            onChangeRowsPerPage={(event) => setRowsPerPage(Number(event.target.value))}
-          />}
         </>
       )
     }
