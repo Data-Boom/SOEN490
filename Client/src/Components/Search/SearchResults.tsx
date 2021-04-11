@@ -1,23 +1,24 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { Grid, List, ListItem, ListItemText } from '@material-ui/core'
-import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
+import { IData, IDatasetModel, IDatasetStatus, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
-import React from 'react'
 import { ICategoryModel } from '../../Models/Profile/ICategoryModel'
+import React from 'react'
 
 interface IProps {
   datasetResults: IDatasetModel[],
   handleSelectionChanged?: (selection: SelectionChangeParams) => void,
   button?: any,
   categories: ICategoryModel[],
-  displayCheckbox: boolean
-  columns?: ColDef[]
+  displayCheckbox: boolean,
+  datasetStatus?: IDatasetStatus[]
+
 }
 
 export const SearchResults = (props: IProps) => {
-  const { categories, displayCheckbox } = { ...props }
-  /*const width = 160
+  const { categories, displayCheckbox, datasetStatus } = { ...props }
+  const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
     const reference = params.getValue('reference') as IReference
@@ -69,14 +70,44 @@ export const SearchResults = (props: IProps) => {
     const datasetId = params.getValue('id')
 
     return (<DatasetFormModal datasetId={datasetId.toString()} />)
-  }*/
+  }
+
+  const getDatasetStatus = (params: ValueGetterParams) => {
+    console.log(datasetStatus)
+    const datasetId = params.getValue('id')
+    const datasetCurrentStatus = datasetStatus.find(dataset => dataset.datasetId == datasetId)
+
+    return `${datasetCurrentStatus}`
+  }
+
+  const columns: ColDef[] = (datasetStatus) ? [
+    { field: 'dataset_name', headerName: 'Name', flex: 1 },
+    { field: `title`, headerName: 'Title', valueGetter: getTitle, flex: 1 },
+    { field: 'category', headerName: 'Category', flex: 1, valueGetter: getCategoryId },
+    { field: 'subcategory', headerName: 'SubCategory', flex: 1, valueGetter: getSubcategoryId },
+    { field: 'author', headerName: 'Author', flex: 1, valueGetter: getAuthor },
+    { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
+    { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
+    { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDataset },
+    { field: 'approval', headerName: 'Status', flex: 1, valueGetter: getDatasetStatus },
+  ] :
+    [
+      { field: 'dataset_name', headerName: 'Name', flex: 1 },
+      { field: `title`, headerName: 'Title', valueGetter: getTitle, flex: 1 },
+      { field: 'category', headerName: 'Category', flex: 1, valueGetter: getCategoryId },
+      { field: 'subcategory', headerName: 'SubCategory', flex: 1, valueGetter: getSubcategoryId },
+      { field: 'author', headerName: 'Author', flex: 1, valueGetter: getAuthor },
+      { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
+      { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
+      { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDataset },
+    ]
 
   return (
     <>
       <Grid container spacing={3}>
         <Grid item container>
           <div style={{ height: 600, width: '100%' }}>
-            <DataGrid rows={props && props.datasetResults} rowHeight={120} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={props.columns} pageSize={5} checkboxSelection={displayCheckbox} onSelectionChange={props.handleSelectionChanged} />
+            <DataGrid rows={props && props.datasetResults} rowHeight={120} rowsPerPageOptions={[5, 10, 20, 30, 50]} columns={columns} pageSize={5} checkboxSelection={displayCheckbox} onSelectionChange={props.handleSelectionChanged} />
           </div>
         </Grid>
         {props && props.button ? <Grid item container justify='flex-end'>
