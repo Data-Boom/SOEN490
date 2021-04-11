@@ -25,6 +25,7 @@ import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
+import { DownloadFileTypeModal } from './DownloadFileTypeModal'
 import { useUserSelector } from '../../Stores/Slices/UserSlice'
 
 interface IProps {
@@ -55,6 +56,7 @@ export const DatasetView = (props: IProps) => {
   const [fileTypePromptOpen, setFileTypePromptOpen] = useState(false)
   const [fileUploadOpen, setFileUploadModalOpen] = useState(false)
   const [acceptedFileType, setAcceptedFileType] = useState(jsonType)
+  const [dlFileTypeOpen, setDLFileTypeOpen] = useState(false)
 
 
   const user = useUserSelector()
@@ -65,7 +67,7 @@ export const DatasetView = (props: IProps) => {
     setInitialValues({ ...newDatasetModel, ...(location.state as IDatasetModel) })
     setFileUploadModalOpen(false)
     setFileTypePromptOpen(false)
-
+    setDLFileTypeOpen(false)
   }, [location.state])
 
   useEffect(() => {
@@ -151,7 +153,7 @@ export const DatasetView = (props: IProps) => {
                 <FavoriteDatasetButton datasetId={initialValues.id} />
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" startIcon={<GetAppIcon />}>Download</Button>
+                <Button id="download" onClick={() => setDLFileTypeOpen(true)} color="primary" variant="contained"> Download </Button>
               </Grid>
               <Grid item>
                 <Button variant="contained" color="primary" onClick={() => handleGraphDataset()} startIcon={<TimelineIcon />}>Graph</Button>
@@ -190,6 +192,11 @@ export const DatasetView = (props: IProps) => {
         open={fileUploadOpen}
         acceptedFileType={acceptedFileType}
         onClose={() => setFileUploadModalOpen(false)}
+      />
+      <DownloadFileTypeModal
+        open={dlFileTypeOpen}
+        dataset={initialValues}
+        onClose={() => setDLFileTypeOpen(false)}
       />
     </>
   )
