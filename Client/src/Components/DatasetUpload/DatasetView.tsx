@@ -1,6 +1,7 @@
 import { Box, Button, Container, Grid } from '@material-ui/core'
 import { IDatasetModel, newDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useRef } from 'react'
+import { callCreateGraphState, callDeleteGraphState } from '../../Remote/Endpoints/GraphStateEndpoint'
 import { callGetDatasets, callSaveDataset, submitEditedDataset } from '../../Remote/Endpoints/DatasetEndpoint'
 import { useHistory, useParams } from "react-router"
 
@@ -12,11 +13,13 @@ import { FileUploadModal } from './FileUploadModal'
 import { FormikProps } from 'formik'
 import GetAppIcon from "@material-ui/icons/GetApp"
 import { IApprovedDatasetModel } from '../../Models/Datasets/IApprovedDatasetModel'
+import { IGraphDatasetState } from '../../Models/Graph/IGraphDatasetModel'
 import PublishIcon from "@material-ui/icons/Publish"
 import SnackbarUtils from '../Utils/SnackbarUtils'
 import TimelineIcon from "@material-ui/icons/Timeline"
 import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
 import { loadVariablesThunk } from '../../Stores/Slices/VariablesSlice'
+import { newGraphState } from '../../Models/Graph/IGraphStateModel'
 import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
@@ -120,6 +123,26 @@ export const DatasetView = (props: IProps) => {
       return null
   }
 
+  const handleGraphDataset = async () => {
+    if (datasetID) {
+      const datasetState: IGraphDatasetState = {
+        isHidden: false,
+        id: Number(datasetID),
+        color: "black",
+        shape: "circle"
+      }
+
+      const graphStateCopy = { ...newGraphState }
+      graphStateCopy.name = initialValues.dataset_name
+      graphStateCopy.id = datasetID
+      graphStateCopy.datasets = [datasetState]
+      const createdId: string = await callCreateGraphState(graphStateCopy)
+      history.push('/graph/' + createdId)
+      graphStateCopy.id = createdId
+      await callDeleteGraphState(graphStateCopy)
+    }
+  }
+
   const renderTopButtons = (): any => {
     return (
       <>
@@ -133,7 +156,7 @@ export const DatasetView = (props: IProps) => {
                 <Button id="download" onClick={() => setDLFileTypeOpen(true)} color="primary" variant="contained"> Download </Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" startIcon={<TimelineIcon />}>Graph</Button>
+                <Button variant="contained" color="primary" onClick={() => handleGraphDataset()} startIcon={<TimelineIcon />}>Graph</Button>
               </Grid>
               {checkForSuperUser()}
             </>
