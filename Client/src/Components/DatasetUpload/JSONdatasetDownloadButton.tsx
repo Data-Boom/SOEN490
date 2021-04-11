@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDimensionsSelector } from '../../Stores/Slices/DimensionsSlice'
 import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
-
+import { download, categoryName, subcategoryName } from './DownloadHelper'
 
 interface IProps {
     datasets: IDatasetModel
@@ -89,38 +89,38 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
         }
         return name
     }
-    let cgName: string
-    let scgName: string
-    let cat
-    const categoryName = () => {
-        categories.map(category => {
-            if (category.id == datasets.category) {
-                cgName = category.name
-            }
-        })
-        return cgName
-    }
+    // let cgName: string
+    // let scgName: string
+    // let cat
+    // const categoryName = () => {
+    //     categories.map(category => {
+    //         if (category.id == datasets.category) {
+    //             cgName = category.name
+    //         }
+    //     })
+    //     return cgName
+    // }
 
-    const subcategoryName = () => {
-        categories.map(category => {
-            if (category.id == datasets.category) {
-                cat = category
-                cat.subcategories.map(subcategory => {
-                    if (subcategory.id == datasets.subcategory) {
-                        scgName = subcategory.name
-                    }
-                })
-            }
-        })
-        return scgName
-    }
+    // const subcategoryName = () => {
+    //     categories.map(category => {
+    //         if (category.id == datasets.category) {
+    //             cat = category
+    //             cat.subcategories.map(subcategory => {
+    //                 if (subcategory.id == datasets.subcategory) {
+    //                     scgName = subcategory.name
+    //                 }
+    //             })
+    //         }
+    //     })
+    //     return scgName
+    // }
     const downloadedJSONDataDisplayed =
     {
         "Dataset name ": datasets.dataset_name,
         "Material": materialArray(),
         "Data type": datasets.data_type,
-        "Category": categoryName(),
-        "Subcategory ": subcategoryName(),
+        "Category": categoryName(categories, datasets),
+        "Subcategory ": subcategoryName(categories, datasets),
         "reference": {
             "Authors ": [authorArray()],
             "Title ": datasets.reference.title,
@@ -144,21 +144,6 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
     const handleJSONDownload = () => {
         download("jsondataset.JSON", JSON.stringify(downloadedJSONDataDisplayed, null, 4))
     }
-
-    //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
-    function download(filename: string, text: string) {
-        const element = document.createElement('a')
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
-        element.setAttribute('download', filename)
-
-        element.style.display = 'none'
-        document.body.appendChild(element)
-
-        element.click()
-
-        document.body.removeChild(element)
-    }
-
     return (
         <Button id="download-json" onClick={handleJSONDownload} color="primary" variant="contained"> JSON </Button>
     )

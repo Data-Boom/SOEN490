@@ -2,8 +2,8 @@ import { Button } from '@material-ui/core'
 import { IDatasetModel } from '../../Models/Datasets/IDatasetModel'
 import React, { useState, useEffect } from 'react'
 import { useDimensionsSelector } from '../../Stores/Slices/DimensionsSlice'
-import { getUnitNameById } from '../../Common/Helpers/DimensionHelpers'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
+import { variableArray, authorArray, materialArray, dataContentArray, categoryName, subcategoryName, download } from './DownloadHelper'
 
 interface IProps {
     datasets: IDatasetModel
@@ -21,81 +21,16 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
         callListCategories()
     }, [])
 
-    const variableArray = (): any => {
-        var variables = ""
-        for (var i in datasets.data.variables) {
-            variables += datasets.data.variables[i].name + "  [" + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + "], "
-        }
-        variables += "comment"
-        return variables
-    }
-    const materialArray = (): any => {
-        var materials = ""
-        for (var i in datasets.material) {
-            materials += datasets.material[i].composition + " \'" + datasets.material[i].details + "\', "
-        }
-        materials = materials.slice(0, -2)
-        return materials
-    }
-
-    const authorArray = (): any => {
-        var authors = ""
-        for (var i in datasets.reference.authors) {
-            if (datasets.reference.authors[i].middleName)
-                authors += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].middleName + " " + datasets.reference.authors[i].lastName + ", "
-            else
-                authors += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName + ", "
-        }
-        authors = authors.slice(0, -2)
-        return authors
-    }
-    const dataContentArray = (): any => {
-        var dataPoint = ""
-        for (var i in datasets.data.contents) {
-            dataPoint += datasets.data.contents[i].point + ", "
-            if (datasets.data.dataPointComments)
-                dataPoint += datasets.data.dataPointComments[i] + "\n"
-            else
-                dataPoint = dataPoint.slice(0, -2) + "\n"
-        }
-        return dataPoint
-    }
-    let cgName: string
-    let scgName: string
-    let cat
-    const categoryName = () => {
-        categories.map(category => {
-            if (category.id == datasets.category) {
-                cgName = category.name
-            }
-        })
-        return cgName
-    }
-
-    const subcategoryName = () => {
-        categories.map(category => {
-            if (category.id == datasets.category) {
-                cat = category
-                cat.subcategories.map(subcategory => {
-                    if (subcategory.id == datasets.subcategory) {
-                        scgName = subcategory.name
-                    }
-                })
-            }
-        })
-        return scgName
-    }
-
-    const compileDataOutput = (): any => {
+    const downloadedTXTDataDisplayed = (): any => {
         var output =
             "#Dataset name: " + datasets.dataset_name + "\n" +
-            "#Material: " + materialArray() + "\n" +
+            "#Material: " + materialArray(datasets) + "\n" +
             "#Data type: " + datasets.data_type + "\n" +
-            "#Category: " + categoryName() + "\n" +
-            "#Subcategory: " + subcategoryName() + "\n" +
+            "#Category: " + categoryName(categories, datasets) + "\n" +
+            "#Subcategory: " + subcategoryName(categories, datasets) + "\n" +
             "#\n" +
             "#Publications/Source:\n" +
-            "#Authors: " + authorArray() + "\n" +
+            "#Authors: " + authorArray(datasets) + "\n" +
             "#Title: " + datasets.reference.title + "\n" +
             "#Type: " + datasets.reference.type + "\n" +
             "#Publisher: " + datasets.reference.publisher + "\n"
@@ -109,30 +44,14 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
             "#Export source: " + " databoom.concordia.ca \n" +
             "#Export date: " + new Date().toLocaleString() + "\n" +
             "#\n" +
-            variableArray() + "\n" +
-            dataContentArray() + "\n" +
+            variableArray(dimensions, datasets) + "\n" +
+            dataContentArray(datasets) + "\n" +
             "#Comments: \n" + datasets.data.comments
         return output
     }
-
     const handleTxtDownload = async () => {
-        download("txtdataset.txt", compileDataOutput())
+        download("txtdataset.txt", downloadedTXTDataDisplayed())
     }
-
-    //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
-    function download(filename: string, text: string) {
-        const element = document.createElement('a')
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
-        element.setAttribute('download', filename)
-
-        element.style.display = 'none'
-        document.body.appendChild(element)
-
-        element.click()
-
-        document.body.removeChild(element)
-    }
-
     return (
         <Button id="download-txt" onClick={handleTxtDownload} color="primary" variant="contained"> TXT </Button>
     )
