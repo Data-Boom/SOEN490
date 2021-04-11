@@ -7,6 +7,7 @@ import { useHistory, useParams } from "react-router"
 
 import { DatasetForm } from './DatasetForm/DatasetForm'
 import { DefaultFormFooter } from '../Forms/DefaultFormFooter'
+import { DownloadFileTypeModal } from './DownloadFileTypeModal'
 import { FavoriteDatasetButton } from './FavoriteDatasetButton'
 import { FileTypePromptModal } from './FileTypePromptModal'
 import { FileUploadModal } from './FileUploadModal'
@@ -25,7 +26,6 @@ import { useEffect } from 'react'
 import { useLocation } from "react-router-dom"
 import { useState } from 'react'
 import { useTitle } from '../../Common/Hooks/useTitle'
-import { DownloadFileTypeModal } from './DownloadFileTypeModal'
 import { useUserSelector } from '../../Stores/Slices/UserSlice'
 
 interface IProps {
@@ -84,7 +84,7 @@ export const DatasetView = (props: IProps) => {
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    if (user.account_permissions == 2) {
+    if (user.account_permissions == 2 && datasetID) {
       const newApprovalDatset: IApprovedDatasetModel = { ...formDataset, datasetFlaggedComment: null, datasetIsFlagged: null }
       await submitEditedDataset(newApprovalDatset)
       SnackbarUtils.success("Dataset successfully uploaded")
