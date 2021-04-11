@@ -11,12 +11,12 @@ const dataUploadRoute = '/api/v1/dataUpload'
 const datasetRoute = '/api/v1/dataset'
 const flagDatasetRoute = '/api/v1/flagDataSet'
 const approvedDatasetRoute = '/api/v1/approveDataset'
-const unapprovedDatasetsRoute = '/api/v1/dataset/fetchUnapprovedDatasets'
+const unapprovedDatasetsRoute = '/api/v1/unapprovedDatasets'
 const submitEditedDatasetRoute = '/api/v1/dataUpload'
 
 export const callGetDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
   const result = await get(datasetRoute).withQuery(query).json()
-  return result
+  return result || []
 }
 
 export const callSaveDataset = async (dataset: IDatasetModel): Promise<number> => {
@@ -26,7 +26,7 @@ export const callSaveDataset = async (dataset: IDatasetModel): Promise<number> =
 
 export const getUnapprovedDatasets = async (): Promise<IApprovedDatasetModel[]> => {
   const datasets: IApprovedDatasetModel[] = await get(unapprovedDatasetsRoute).json()
-  return datasets
+  return datasets || []
 }
 
 export const flagDataset = async (query: IFlaggedDatasetQuery) => {
@@ -52,7 +52,7 @@ export const approvedDataset = async (query: IFlaggedDatasetQuery) => {
 
 export const callGetUserFavouriteDatasets = async (): Promise<number[]> => {
   const datasetIds: number[] = await get(userSavedDatasetsRoute).json()
-  return datasetIds
+  return datasetIds || []
 }
 
 export const userSaveFavouriteDataset = async (datasetId: number) => {

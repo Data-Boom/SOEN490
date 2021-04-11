@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import { connectDB } from '../database';
 import cors from 'cors';
 import express from 'express';
-import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
+import { FetchAllMaterialsRouter } from '../routes/FetchAllMaterialsRouter';
 import { dataUploadRouter } from '../routes/dataUploadRouter'
 import { getConnectionManager } from 'typeorm';
 import { GraphsRouter } from '../routes/GraphsRouter';
@@ -68,7 +68,7 @@ export class LoadStartupProcess {
      */
     this.app.use('/', authenticationRouter)
     this.app.use('/', DataSetRouter)
-    this.app.use('/', fetchAllCategoriesMaterialsRouter)
+    this.app.use('/', FetchAllMaterialsRouter)
     this.app.use('/', dataUploadRouter)
     this.app.use('/', GraphsRouter)
     this.app.use('/', AdminManagementRouter)

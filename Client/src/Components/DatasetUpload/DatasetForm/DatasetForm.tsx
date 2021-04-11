@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik'
-import { ICategoryModel, listCategories } from '../../../Remote/Endpoints/CategoryEndpoint'
+import { listCategories } from '../../../Remote/Endpoints/CategoryEndpoint'
 import { IData, IDatasetMeta, IDatasetModel, IReference } from '../../../Models/Datasets/IDatasetModel'
 import React, { useEffect, useState } from 'react'
 
@@ -9,6 +9,7 @@ import { MetaForm } from './MetaSection/MetaForm'
 import { ReferenceForm } from './ReferenceSection/ReferenceForm'
 import { datasetValidationSchema } from '../DatasetValidationSchema'
 import { listMaterials } from '../../../Remote/Endpoints/MaterialEndpoint'
+import { ICategoryModel } from '../../../Models/Profile/ICategoryModel'
 
 interface IProps extends IFormProps {
   initialDataset: IDatasetModel,
@@ -43,7 +44,7 @@ export const DatasetForm = (props: IProps): any => {
     callListMaterials()
   }, [])
 
-  const handleSubmit = (values: DatasetUploadFormValues) => {
+  const handleSubmit = (values: DatasetUploadFormValues, { resetForm }) => {
     const dataset: IDatasetModel = { ...values.meta, reference: values.reference, data: values.data }
     onSubmit(dataset)
   }

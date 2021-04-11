@@ -40,7 +40,6 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const [editedVariable, setEditedVariable] = useState<IEditedVariableModel>(noEditedVariable)
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
-  const variableNames = useVariablesSelector()
 
   const { errors } = useFormikContext()
   const [count, setCount] = useState(0);
@@ -141,7 +140,7 @@ export const DatasetDataTable = (props: IProps): any => {
   const renderTopButtons = (): any => {
     return (
       <>
-        <Grid container spacing={2}>
+        {editable && <Grid container spacing={2}>
           {!!data.variables.length &&
             <>
               <Grid item>
@@ -155,7 +154,7 @@ export const DatasetDataTable = (props: IProps): any => {
           <Grid item>
             <Button variant="contained" color="primary" onClick={() => setEditedVariable({ index: -1, isNew: true, variable: newVariable })} disabled={!editable}>New variable</Button>
           </Grid>
-        </Grid>
+        </Grid>}
       </>
     )
   }

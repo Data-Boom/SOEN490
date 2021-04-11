@@ -32,7 +32,7 @@ export class Accounts extends BaseEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @Column({ default: 0 })
+    @Column({ default: 0, type: "tinyint" })
     admin: number
 
     @Column({ nullable: true })

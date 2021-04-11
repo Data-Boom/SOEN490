@@ -9,6 +9,8 @@ import { SelectionChangeParams } from '@material-ui/data-grid'
 import { callGetDatasets } from '../../Remote/Endpoints/DatasetEndpoint'
 import { listCategories } from '../../Remote/Endpoints/CategoryEndpoint'
 import { listDatapoints } from '../../Remote/Endpoints/DatapointEndpoint'
+import { loadDimensionsThunk } from '../../Stores/Slices/DimensionsSlice'
+import { useDispatchOnLoad } from '../../Common/Hooks/useDispatchOnLoad'
 import { useTitle } from '../../Common/Hooks/useTitle'
 
 interface IProps {
@@ -27,6 +29,7 @@ export default function SearchView(props: IProps) {
   const [categories, setCategories] = useState([])
 
   const [datapoint, setDatapoints] = useState([])
+  useDispatchOnLoad(loadDimensionsThunk)
 
   useEffect(() => {
     const callListCategories = async () => {

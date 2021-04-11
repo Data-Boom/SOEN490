@@ -7,6 +7,7 @@ export const UnitValidationSchema = Yup.object().shape({
       {
         name: Yup.string().trim().required('Unit Name is a required field'),
         conversionFormula: Yup.string().trim().required('Conversion Formula is a required field')
+          .matches(new RegExp(/u/), "Conversion Formula must contain a 'u' symbol (u stands for base unit)"),
       }
     )
   ),

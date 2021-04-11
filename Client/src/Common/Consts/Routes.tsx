@@ -3,7 +3,6 @@ import { IUserAccountModel } from "../../Models/Authentication/IUserAccountModel
 export type PermissionLevel = number | 'anyone'
 
 export const userCanView = (user: IUserAccountModel, permissionLevel: PermissionLevel) => {
-  console.log(user.account_permissions, user.account_permissions >= permissionLevel, permissionLevel)
   return permissionLevel == 'anyone' || user && user.account_permissions >= permissionLevel
 }
 
@@ -27,7 +26,8 @@ interface Routes {
   signUpRoute: ProtectedRouteModel,
   forgotPasswordRoute: ProtectedRouteModel,
   cellSizeAnalysisRoute: ProtectedRouteModel,
-  resetPasswordRoute: ProtectedRouteModel
+  resetPasswordRoute: ProtectedRouteModel,
+  adminPageRoute: ProtectedRouteModel,
 }
 
 export const routes: Routes = {
@@ -45,5 +45,6 @@ export const routes: Routes = {
   signUpRoute: { route: '/sign-up', permission: 'anyone' },
   forgotPasswordRoute: { route: '/api/v1/forgotPassword', permission: 'anyone' },
   cellSizeAnalysisRoute: { route: '/cellSizeAnalysis', permission: 'anyone' },
-  resetPasswordRoute: { route: '/api/v1/resetPassword/:resetToken?', permission: 'anyone' }
+  resetPasswordRoute: { route: '/api/v1/resetPassword/:resetToken?', permission: 'anyone' },
+  adminPageRoute: { route: '/adminPage', permission: 2 }
 }

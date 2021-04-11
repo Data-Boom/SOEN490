@@ -27,18 +27,22 @@ export const AxesControl = (props: IProps) => {
 
   return (
     <>
-      <Grid container justify="center">
-        <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">
-          Settings
-          {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-        </Button>
+      <Grid container justify="center" direction="column">
+        <Grid item>
+          <Button id='settingsToggle' variant="contained" onClick={handleSettingsClick} color="primary">
+            Settings
+            {showSettings ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </Button>
+        </Grid>
+        {showSettings &&
+          <Grid item>
+            <Box className={classes.defaultBorder}>
+              <AxisStateControl axisName='x' axisState={axes[0]} onAxisChange={axis => onAxesChange([{ ...axis }, { ...axes[1] }])} datasets={datasets} />
+              <AxisStateControl axisName='y' axisState={axes[1]} onAxisChange={axis => onAxesChange([{ ...axes[0] }, { ...axis }])} datasets={datasets} />
+            </Box>
+          </Grid>
+        }
       </Grid>
-      {showSettings &&
-        <Box className={classes.defaultBorder}>
-          <AxisStateControl axisName='x' axisState={axes[0]} onAxisChange={axis => onAxesChange([{ ...axis }, { ...axes[1] }])} datasets={datasets} />
-          <AxisStateControl axisName='y' axisState={axes[1]} onAxisChange={axis => onAxesChange([{ ...axes[0] }, { ...axis }])} datasets={datasets} />
-        </Box>
-      }
     </>
   )
 }

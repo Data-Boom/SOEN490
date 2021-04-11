@@ -17,7 +17,7 @@ export const AuthorRow = (props: IProps) => {
   const { index, onRemoveAuthorClick, removable, editable } = props
 
   const removeButton = () => {
-    return (
+    return editable && (
       <IconButton color="primary" aria-label="remove author" onClick={() => onRemoveAuthorClick(index)} disabled={!editable}>
         <ClearIcon />
       </IconButton>

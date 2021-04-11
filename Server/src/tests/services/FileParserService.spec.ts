@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { DataParserService } from '../../services/Parser/DataParserService'
 
 describe('Data Parser Service', () => {
@@ -7,7 +7,14 @@ describe('Data Parser Service', () => {
     jest.setTimeout(60000)
 
     beforeAll(async () => {
-        await createConnection();
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                return getConnectionManager().get();
+            }
+        }
     });
 
     afterAll(async () => {
@@ -23,7 +30,7 @@ describe('Data Parser Service', () => {
     })
 
     test('Invalid - Request to Extract a non-existing file', async () => {
-        let res = "ENOENT: no such file or directory, unlink ''"
+        let res = "Cannot parse your file. Something is wrong with it"
         let extension = 'json'
         let filePath = ''
         dataParserService = new DataParserService(extension, filePath)

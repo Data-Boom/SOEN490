@@ -28,8 +28,7 @@ export default class EditUploadService extends AbstractUploadService {
         }
 
         // Generate new publication and get its ID
-        let publicationType: string = ''
-        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, publicationType)
+        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, this.parsedFileData.reference.type)
         let publisherNameId: number = await this.insertPublisherData(this.uploadModel, this.parsedFileData.reference.publisher)
         let allAuthors: Authors[] = await this.insertAuthorsData(this.uploadModel, this.parsedFileData.reference.authors)
 
@@ -48,13 +47,6 @@ export default class EditUploadService extends AbstractUploadService {
         // Update data set
         let arrayOfDatasetInfo = [this.datasetId, this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, subcategoryID, this.parsedFileData.data.comments]
         await this.insertDataset(this.uploadModel, arrayOfDatasetInfo)
-
-        // Run check on variable vs contents length to see if they're equal for data points and insert
-        if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
-            console.log("variable and content lengths are equal....proceed")
-        } else {
-            throw new BadRequest('variable and content lengths dont match')
-        }
 
         let individualDataSetComments: string[] = [];
         for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
