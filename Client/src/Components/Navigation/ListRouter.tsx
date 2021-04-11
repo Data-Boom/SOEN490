@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { AboutView } from "../Home/AboutView"
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import { AdminPageView } from '../Admin/AdminPageView'
 import { AdminReviewView } from "../Admin/AdminReviewView"
 import { CellSizeAnalysisView } from "../CellSizeAnalysis/CellSizeAnalysisView"
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
@@ -23,6 +24,7 @@ import ResetPasswordView from "../Authentication/ResetPasswordView"
 import SearchIcon from '@material-ui/icons/Search'
 import SearchView from "../Search/SearchView"
 import SignUpView from "../Authentication/SignUpView"
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import { UserReviewView } from '../UserReview/UserReviewView'
 import { getUnapprovedDatasets } from "../../Remote/Endpoints/DatasetEndpoint"
@@ -43,6 +45,7 @@ export const ListRouter = () => {
   const classes = useStyles()
   const [adminReview, setAdminReview] = useState(0)
   const [userReview, setUserReview] = useState(0)
+  const [adminPage] = useState(0)
 
   useEffect(() => {
     const fetchUserDatasets = async () => {
@@ -78,6 +81,7 @@ export const ListRouter = () => {
           <ListItemLink id="about-menu" protectedRoute={routes.aboutRoute} primary="About Databoom" icon={<InfoIcon />} />
           <ListItemLink id="admin-review" protectedRoute={routes.adminReviewRoute} primary="Admin Review" icon={<Badge badgeContent={adminReview} color="secondary"><MessageIcon /></Badge>} />
           <ListItemLink id="user-review" protectedRoute={routes.userReviewRoute} primary="Flagged Datasets" icon={<Badge badgeContent={userReview} color="secondary"><MessageIcon /></Badge>} />
+          <ListItemLink id="admin-page" protectedRoute={routes.adminPageRoute} primary="Admin Page" icon={<Badge badgeContent={adminPage} color="secondary"><SupervisorAccountIcon /></Badge>} />
         </List>
       </Paper>
     </div>
@@ -101,6 +105,7 @@ export const getRoutedViews = () => {
       <ProtectedRoute protectedRoute={routes.forgotPasswordRoute} component={ForgotPasswordView} />
       <ProtectedRoute protectedRoute={routes.resetPasswordRoute} component={ResetPasswordView} />
       <ProtectedRoute protectedRoute={routes.userReviewRoute} component={UserReviewView} />
+      <ProtectedRoute protectedRoute={routes.adminPageRoute} component={AdminPageView} />
     </>
   )
 }

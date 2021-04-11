@@ -30,7 +30,7 @@ describe('Data Parser Service', () => {
     })
 
     test('Invalid - Request to Extract a non-existing file', async () => {
-        let res = "ENOENT: no such file or directory, unlink ''"
+        let res = "Cannot parse your file. Something is wrong with it"
         let extension = 'json'
         let filePath = ''
         dataParserService = new DataParserService(extension, filePath)
