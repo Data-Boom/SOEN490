@@ -1,6 +1,5 @@
-import { Box, Container, Grid, List, ListItem, ListItemText } from '@material-ui/core';
-import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid';
-import { IData, IDatasetModel, IDatasetStatus, IReference } from '../../../Models/Datasets/IDatasetModel';
+import { Box, Container } from '@material-ui/core';
+import { IDatasetModel, IDatasetStatus } from '../../../Models/Datasets/IDatasetModel';
 import React, { useEffect, useState } from 'react'
 import { callGetDatasets, getUploadedDatasets } from '../../../Remote/Endpoints/DatasetEndpoint';
 

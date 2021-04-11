@@ -1,11 +1,9 @@
-import { Box, Container, List, ListItem, ListItemText } from '@material-ui/core'
-import { ColDef, ValueGetterParams } from '@material-ui/data-grid'
-import { IData, IDatasetModel, IReference } from "../../../Models/Datasets/IDatasetModel"
+import { Box, Container } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { callGetDatasets, callGetUserFavouriteDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 
-import { DatasetFormModal } from '../../DatasetUpload/DatasetViewModal'
 import { ICategoryModel } from '../../../Models/Profile/ICategoryModel'
+import { IDatasetModel } from "../../../Models/Datasets/IDatasetModel"
 import { SearchResults } from '../../Search/SearchResults'
 import { listCategories } from '../../../Remote/Endpoints/CategoryEndpoint'
 

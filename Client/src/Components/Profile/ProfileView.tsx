@@ -1,11 +1,8 @@
-import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Container, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 import { loadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import { Link } from 'react-router-dom'
 import { List } from '../Utils/List'
 import { ProfileGraphRow } from './ProfileGraphRow'
 import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
