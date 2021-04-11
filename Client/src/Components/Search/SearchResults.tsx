@@ -86,11 +86,16 @@ export const SearchResults = (props: IProps) => {
   }
 
   const getDatasetStatus = (params: ValueGetterParams) => {
-    console.log(datasetStatus)
+
     const datasetId = params.getValue('id')
     const datasetCurrentStatus = datasetStatus.find(dataset => dataset.datasetId == datasetId)
 
-    return `${datasetCurrentStatus.approved}`
+    if (`${datasetCurrentStatus.approved}` == "false") {
+      return `Unapproved`
+    }
+    else if (`${datasetCurrentStatus.approved}` == "true") {
+      return `Approved`
+    }
   }
 
   const columns: ColDef[] = (datasetStatus) ? [
