@@ -77,7 +77,7 @@ export const SearchResults = (props: IProps) => {
     const datasetId = params.getValue('id')
     const datasetCurrentStatus = datasetStatus.find(dataset => dataset.datasetId == datasetId)
 
-    return `${datasetCurrentStatus}`
+    return `${datasetCurrentStatus.approved}`
   }
 
   const columns: ColDef[] = (datasetStatus) ? [
