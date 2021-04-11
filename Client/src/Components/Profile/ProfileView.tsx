@@ -1,14 +1,12 @@
-import { AppBar, Box, Collapse, Container, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Container, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 import { loadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import { Link } from 'react-router-dom'
 import { List } from '../Utils/List'
 import { ProfileGraphRow } from './ProfileGraphRow'
 import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
+import { UploadedDatasetsTab } from './UserUploadedDatasetsSection/UploadedDatasetsTab'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
 import { useDispatch } from 'react-redux'
@@ -58,80 +56,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-})
-
-function createData(id: number[], type: string, name: string, oxidizer: string, author: string, graphdatasets: string[], comments: string) {
-  return { id, type, name, oxidizer, author, graphdatasets, comments }
-}
-
-const rowsOfUploads = []
-
-function parseIdArray(id) {
-  let stringTest = ""
-  if (id.length > 1) {
-    stringTest = String(id).split(",").join("&datasetId[]=")
-    return stringTest
-  } else { return id }
-}
-
-
-function RowsOfUploads(props: { rowsOfUploads: ReturnType<typeof createData> }) {
-  const { rowsOfUploads } = props
-  const [open, setOpen] = React.useState(false)
-  const classes = useRowStyles()
-  return (
-    < React.Fragment >
-      <TableRow className={classes.root}>
-        <TableCell>
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          <Link to={"graph?datasetId[]=" + String(parseIdArray(rowsOfUploads.id))}>{rowsOfUploads.name}</Link>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="h6" gutterBottom component="div">
-                Details
-              </Typography>
-              <div>
-                <Table size="small" aria-label="purchases">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Oxidizer</TableCell>
-                      <TableCell>Author</TableCell>
-                      <TableCell>Comments</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        {rowsOfUploads.oxidizer}
-                      </TableCell>
-                      <TableCell>{rowsOfUploads.author}</TableCell>
-                      <TableCell>{rowsOfUploads.comments}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment >
-  )
-}
-
 export function ProfileView() {
   useTitle("Profile")
 
@@ -166,7 +90,7 @@ export function ProfileView() {
             <Tab label="View Profile" {...a11yProps(0)} />
             <Tab label="View Saved Graphs" {...a11yProps(1)} />
             <Tab label="View Saved Datasets" {...a11yProps(2)} />
-            <Tab label="View Uploads" {...a11yProps(3)} />
+            <Tab label="View Uploaded Datasets" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -208,21 +132,11 @@ export function ProfileView() {
             </Grid>
           </TabPanel>
           <TabPanel value={tab} index={3}>
-            <TableContainer component={Paper} style={{ width: "50%" }}>
-              <Table aria-label="collapsible table" >
-                <TableHead>Uploads
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>Name</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rowsOfUploads.map((rowsOfUpload) => (
-                    <RowsOfUploads key={rowsOfUpload.title} rowsOfUploads={rowsOfUpload} />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                {<UploadedDatasetsTab />}
+              </Grid>
+            </Grid>
           </TabPanel>
         </Container>
       </div>

@@ -22,21 +22,48 @@ export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
     ? models.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     : models
 
+  const returnWithCheck = () => {
+    if (models.length > 0) {
+      return (
+        <>
+          <Grid container direction='column' spacing={1}>
+            {rowModels.map((row, index) => <RowComponent key={index} row={row} {...rowProps} />)}
+          </Grid>
+          {withPagination && models.length > 0 && < TablePagination
+            component="div"
+            rowsPerPageOptions={[5, 10, 25, 100]}
+            labelRowsPerPage={modelType + ' per page'}
+            count={models.length}
+            page={page}
+            onChangePage={(_, newPage) => setPage(newPage)}
+            rowsPerPage={rowsPerPage}
+            onChangeRowsPerPage={(event) => setRowsPerPage(Number(event.target.value))}
+          />}
+        </>
+      )
+    }
+    else {
+      return (
+        <>
+          <Grid container direction='column' spacing={1}>
+            {rowModels}
+          </Grid>
+          {withPagination && models.length > 0 && < TablePagination
+            component="div"
+            rowsPerPageOptions={[5, 10, 25, 100]}
+            labelRowsPerPage={modelType + ' per page'}
+            count={models.length}
+            page={page}
+            onChangePage={(_, newPage) => setPage(newPage)}
+            rowsPerPage={rowsPerPage}
+            onChangeRowsPerPage={(event) => setRowsPerPage(Number(event.target.value))}
+          />}
+        </>
+      )
+    }
+  }
+
   return (
-    <>
-      <Grid container direction='column' spacing={1}>
-        {rowModels.map((row, index) => <RowComponent key={index} row={row} {...rowProps} />)}
-      </Grid>
-      {withPagination && models.length > 0 && < TablePagination
-        component="div"
-        rowsPerPageOptions={[5, 10, 25, 100]}
-        labelRowsPerPage={modelType + ' per page'}
-        count={models.length}
-        page={page}
-        onChangePage={(_, newPage) => setPage(newPage)}
-        rowsPerPage={rowsPerPage}
-        onChangeRowsPerPage={(event) => setRowsPerPage(Number(event.target.value))}
-      />}
-    </>
+    returnWithCheck()
   )
 }

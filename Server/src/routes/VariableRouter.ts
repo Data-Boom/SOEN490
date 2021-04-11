@@ -1,4 +1,4 @@
-import { Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { VariableController } from '../controllers/VariableController';
 
 
@@ -8,8 +8,8 @@ let variableController = new VariableController();
 /**
  * This route is used for auto suggestion of variables.
  */
-router.get('/api/v1/variables', (response: Response) => {
-  variableController.retrieveVariables(response);
+router.get('/api/v1/variables', (request: Request, response: Response) => {
+  variableController.retrieveVariables(request, response);
 });
 
 export { router as variableRouter }

@@ -1,6 +1,6 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
 import { Grid, List, ListItem, ListItemText, Typography } from '@material-ui/core'
-import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
+import { IData, IDatasetModel, IDatasetStatus, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
 import { ICategoryModel } from '../../Models/Profile/ICategoryModel'
@@ -12,11 +12,13 @@ interface IProps {
   handleSelectionChanged?: (selection: SelectionChangeParams) => void,
   button?: any,
   categories: ICategoryModel[],
-  displayCheckbox: boolean
+  displayCheckbox: boolean,
+  datasetStatus?: IDatasetStatus[]
+
 }
 
 export const SearchResults = (props: IProps) => {
-  const { categories, displayCheckbox } = { ...props }
+  const { categories, displayCheckbox, datasetStatus } = { ...props }
   const width = 160
 
   const getTitle = (params: ValueGetterParams) => {
@@ -83,7 +85,20 @@ export const SearchResults = (props: IProps) => {
     return (<DatasetFormModal datasetId={datasetId.toString()} />)
   }
 
-  const columns: ColDef[] = [
+  const getDatasetStatus = (params: ValueGetterParams) => {
+
+    const datasetId = params.getValue('id')
+    const datasetCurrentStatus = datasetStatus.find(dataset => dataset.datasetId == datasetId)
+
+    if (`${datasetCurrentStatus.approved}` == "false") {
+      return `Unapproved`
+    }
+    else if (`${datasetCurrentStatus.approved}` == "true") {
+      return `Approved`
+    }
+  }
+
+  const columns: ColDef[] = (datasetStatus) ? [
     { field: 'dataset_name', headerName: 'Name', renderCell: getNameLink, flex: 1 },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, flex: 1 },
     { field: 'category', headerName: 'Category', flex: 1, valueGetter: getCategoryId },
@@ -92,7 +107,18 @@ export const SearchResults = (props: IProps) => {
     { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
     { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
     { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDatasetModal },
-  ]
+    { field: 'approval', headerName: 'Status', flex: 1, valueGetter: getDatasetStatus },
+  ] :
+    [
+      { field: 'dataset_name', headerName: 'Name', renderCell: getNameLink, flex: 1 },
+      { field: `title`, headerName: 'Title', valueGetter: getTitle, flex: 1 },
+      { field: 'category', headerName: 'Category', flex: 1, valueGetter: getCategoryId },
+      { field: 'subcategory', headerName: 'SubCategory', flex: 1, valueGetter: getSubcategoryId },
+      { field: 'author', headerName: 'Author', flex: 1, valueGetter: getAuthor },
+      { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
+      { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
+      { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDatasetModal },
+    ]
 
   return (
     <>
