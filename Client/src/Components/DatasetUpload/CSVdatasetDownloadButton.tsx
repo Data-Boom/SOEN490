@@ -23,7 +23,8 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
     }, [])
 
     const downloadedCSVDataDisplayed = (): any => {
-        var output =
+        var csvOutput
+            =
             "#Dataset name, " + datasets.dataset_name + "\n" +
             "#Material, " + materialArray(datasets) + "\n" +
             "#Data type, " + datasets.data_type + "\n" +
@@ -35,11 +36,19 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
             "#Title, " + datasets.reference.title + "\n" +
             "#Type, " + datasets.reference.type + "\n" +
             "#Publisher, " + datasets.reference.publisher + "\n"
-        if (datasets.reference.volume) { output += "#Volume, " + datasets.reference.volume + "\n" }
-        if (datasets.reference.pages) { output += "#Pages, " + datasets.reference.pages + "\n" }
-        if (datasets.reference.doi) { output += "#DOI, " + datasets.reference.doi + "\n" }
-        if (datasets.reference.issue) { output += "#Issue, " + datasets.reference.issue + "\n" }
-        output +=
+        if (datasets.reference.volume) {
+            csvOutput += "#Volume, " + datasets.reference.volume + "\n"
+        }
+        if (datasets.reference.pages) {
+            csvOutput += "#Pages, " + datasets.reference.pages + "\n"
+        }
+        if (datasets.reference.doi) {
+            csvOutput += "#DOI, " + datasets.reference.doi + "\n"
+        }
+        if (datasets.reference.issue) {
+            csvOutput += "#Issue, " + datasets.reference.issue + "\n"
+        }
+        csvOutput +=
             "#Year, " + datasets.reference.year + "\n" +
             "#\n" +
             "#Export source, " + " databoom.concordia.ca \n" +
@@ -48,7 +57,8 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
             variableArray(dimensions, datasets) + "\n" +
             dataContentArray(datasets) + "\n" +
             "#Comments: \n" + datasets.data.comments
-        return output
+        return csvOutput
+
     }
     const handleCSVDownload = () => {
         download("csvdataset.csv", downloadedCSVDataDisplayed())

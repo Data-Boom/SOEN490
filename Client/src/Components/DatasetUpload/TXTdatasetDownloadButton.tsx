@@ -22,7 +22,8 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
     }, [])
 
     const downloadedTXTDataDisplayed = (): any => {
-        var output =
+        var txtOutput
+            =
             "#Dataset name: " + datasets.dataset_name + "\n" +
             "#Material: " + materialArray(datasets) + "\n" +
             "#Data type: " + datasets.data_type + "\n" +
@@ -34,11 +35,19 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
             "#Title: " + datasets.reference.title + "\n" +
             "#Type: " + datasets.reference.type + "\n" +
             "#Publisher: " + datasets.reference.publisher + "\n"
-        if (datasets.reference.volume) { output += "#Volume: " + datasets.reference.volume + "\n" }
-        if (datasets.reference.pages) { output += "#Pages: " + datasets.reference.pages + "\n" }
-        if (datasets.reference.doi) { output += "#DOI: " + datasets.reference.doi + "\n" }
-        if (datasets.reference.issue) { output += "#Issue: " + datasets.reference.issue + "\n" }
-        output +=
+        if (datasets.reference.volume) {
+            txtOutput += "#Volume: " + datasets.reference.volume + "\n"
+        }
+        if (datasets.reference.pages) {
+            txtOutput += "#Pages: " + datasets.reference.pages + "\n"
+        }
+        if (datasets.reference.doi) {
+            txtOutput += "#DOI: " + datasets.reference.doi + "\n"
+        }
+        if (datasets.reference.issue) {
+            txtOutput += "#Issue: " + datasets.reference.issue + "\n"
+        }
+        txtOutput +=
             "#Year: " + datasets.reference.year + "\n" +
             "#\n" +
             "#Export source: " + " databoom.concordia.ca \n" +
@@ -47,7 +56,8 @@ export const TXTdatasetDownloadButton = (props: IProps) => {
             variableArray(dimensions, datasets) + "\n" +
             dataContentArray(datasets) + "\n" +
             "#Comments: \n" + datasets.data.comments
-        return output
+        return txtOutput
+
     }
     const handleTxtDownload = async () => {
         download("txtdataset.txt", downloadedTXTDataDisplayed())
