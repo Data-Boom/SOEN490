@@ -77,3 +77,8 @@ export const submitEditedDataset = async (updatedDataset: IApprovedDatasetModel)
   else
     SnackbarUtils.error(`Dataset ${updatedDataset.id} could not be updated!`)
 }
+
+export const getUploadedDatasets = async (): Promise<any[]> => {
+  const datasetIds: any[] = await get(userUploadedDatasetsRoute).json()
+  return datasetIds || []
+}

@@ -22,6 +22,11 @@ export interface IReference {
   pages?: string,
 }
 
+export interface IDatasetStatus {
+  datasetId: number,
+  approved: boolean
+}
+
 export interface IMaterial {
   composition: string,
   details: string,
