@@ -5,22 +5,21 @@ import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
 import { IContent, IData, IVariable, newVariable } from '../../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
+//const ReactDataGrid = require('react-data-grid');
 import { EditVaraibleModal } from './EditVariableModal'
 import { VariableHeader } from './VariableHeader'
 import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
 import { useFormikContext } from 'formik'
 import { useVariablesSelector } from '../../../../Stores/Slices/VariablesSlice'
-import ReactDataGrid from 'react-data-grid'
+import { ReactDataGrid } from 'react-data-grid'
 import PropTypes from "prop-types";
 
 /*const {
-  Draggable: {
-    Container: DraggableContainer,
-    RowActionsCell,
-    DropTargetRowContainer
-  },
-  Data: { Selectors }
-} = require("react-data-grid-addons");*/
+  Draggable: { Container, RowActionsCell, DropTargetRowContainer },
+  Data: { Selectors },
+  DraggableHeader: { DraggableContainer }
+};*/
+
 
 interface IProps {
   data: IData,
@@ -192,17 +191,19 @@ export const DatasetDataTable = (props: IProps): any => {
         onVariableUpdate={handleVariableUpdate}
         isNewVariable={editedVariable.isNew}
       />}
-      <Box width='100%' mt={4}>
-        <ReactDataGrid
-          rowKeyGetter={rowKeyGetter}
-          headerRowHeight={72}
-          columns={getColumns()}
-          rows={getRows()}
-          onRowsChange={handleRowChange}
-          selectedRows={selectedRows}
-          onSelectedRowsChange={editable && setSelectedRows}
-        />
-      </Box>
+      {<Box width='100%' mt={4}>
+        <DraggableContainer>
+          <ReactDataGrid
+            rowKeyGetter={rowKeyGetter}
+            headerRowHeight={72}
+            columns={getColumns()}
+            rows={getRows()}
+            onRowsChange={handleRowChange}
+            selectedRows={selectedRows}
+            onSelectedRowsChange={editable && setSelectedRows}
+          />
+        </DraggableContainer>
+      </Box>}
     </>
   )
 }
