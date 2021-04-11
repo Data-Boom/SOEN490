@@ -30,6 +30,13 @@ export const variableValidationSchema = Yup.object().shape(
   }
 )
 
+export const materialValidationSchema = Yup.object().shape(
+  {
+    composition: Yup.mixed().required(requiredMessage('composition')),
+    details: Yup.mixed().required(requiredMessage('details'))
+  }
+)
+
 const dataValidationSchema = Yup.object().shape({
   variables: Yup.array().of(variableValidationSchema),
   contents: Yup.array().of(
