@@ -1,13 +1,14 @@
 import { IForgotPasswordModel, ILoginUserModel, IResetPasswordModel, ISignUpUserModel } from "../../Models/Authentication/ISignUpModel"
 
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
-import { post } from "../FluentRequest"
+import { post, baseUrl } from "../FluentRequest"
 
-const forgotPasswordRoute = '/api/v1/forgotPassword'
-const resetPasswordRoute = '/api/v1/resetPassword/:resetToken?'
-const signupRoute = '/api/v1/signup'
-const loginRoute = '/api/v1/login'
-const logoutRoute = '/api/v1/logout'
+
+const forgotPasswordRoute = 'http://localhost:4001/api/v1/forgotPassword'
+const resetPasswordRoute = 'http://localhost:4001/api/v1/resetPassword/:resetToken?'
+const signupRoute = 'http://localhost:4001/api/v1/signup'
+const loginRoute = 'http://localhost:4001/api/v1/login'
+const logoutRoute = 'http://localhost:4001/api/v1/logout'
 
 export const callSignUp = async (signUpInfo: ISignUpUserModel): Promise<any> => {
   const result = await post(signupRoute).withBody(signUpInfo).json()

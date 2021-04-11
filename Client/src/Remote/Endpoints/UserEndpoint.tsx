@@ -3,10 +3,10 @@ import { get, post } from "../FluentRequest"
 
 import { IApprovedDatasetModel } from "../../Models/Datasets/IApprovedDatasetModel"
 
-const updateUserInfoRoute = '/api/v1/updateUserInfo'
-const userDetailsRoute = '/api/v1/userDetails'
+const updateUserInfoRoute = 'http://localhost:4001/api/v1/updateUserInfo'
+const userDetailsRoute = 'http://localhost:4001/api/v1/userDetails'
 
-const userFlaggedDatasetsRoute = '/api/v1/userFlaggedDatasets'
+const userFlaggedDatasetsRoute = 'http://localhost:4001/api/v1/userFlaggedDatasets'
 
 interface IUserDetailsQuery {
   email: string

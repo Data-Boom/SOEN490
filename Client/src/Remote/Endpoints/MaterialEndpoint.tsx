@@ -6,7 +6,7 @@ interface IMaterialModel {
   id: number
 }
 
-const materialRoute = '/material'
+const materialRoute = 'http://localhost:4001/material'
 
 export const listMaterials = async (): Promise<IMaterialModel[]> => {
   const materials = await get(materialRoute).json()

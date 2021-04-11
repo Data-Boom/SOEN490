@@ -2,7 +2,7 @@ import { IVariableNameModel } from "../../Models/Variables/IVariableNameModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 import { get } from "../FluentRequest"
 
-const variableRoute = '/api/v1/variables'
+const variableRoute = 'http://localhost:4001/api/v1/variables'
 
 export const getVariableNames = async (): Promise<IVariableNameModel[]> => {
   const result = await get(variableRoute).json()

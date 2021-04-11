@@ -55,7 +55,6 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:4000",
   "browserslist": {
     "production": [
       ">0.2%",

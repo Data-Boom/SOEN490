@@ -1,8 +1,8 @@
 import { ICategoryModel, ISubCategoryModel } from "../../Models/Profile/ICategoryModel"
 import { get, _delete, put, post  } from "../FluentRequest"
 
-const categoryRoute = '/api/v1/category'
-const subCategoryRoute = '/subcategory'
+const categoryRoute = 'http://localhost:4001/api/v1/category'
+const subCategoryRoute = 'http://localhost:4001/subcategory'
 
 export const listCategories = async (): Promise<ICategoryModel[]> => {
   const result = await get(categoryRoute).json()

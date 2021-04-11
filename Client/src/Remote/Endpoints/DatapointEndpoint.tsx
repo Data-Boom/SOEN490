@@ -1,6 +1,6 @@
 import { get } from "../FluentRequest"
 
-const datapointRoute = '/api/v1/variables'
+const datapointRoute = 'http://localhost:4001/api/v1/variables'
 
 export interface IDatapointModel {
   name: string

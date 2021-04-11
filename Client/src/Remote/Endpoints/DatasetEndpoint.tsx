@@ -5,14 +5,14 @@ import { IDatasetModel } from "../../Models/Datasets/IDatasetModel"
 import { ISearchDatasetsFormModel } from "../../Components/Search/ISearchDatasetsFormModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 
-const userUploadedDatasetsRoute = '/api/v1/uploadedDatasets'
-const userSavedDatasetsRoute = '/api/v1/favoriteDatasets'
-const dataUploadRoute = '/api/v1/dataUpload'
-const datasetRoute = '/api/v1/dataset'
-const flagDatasetRoute = '/api/v1/flagDataSet'
-const approvedDatasetRoute = '/api/v1/approveDataset'
-const unapprovedDatasetsRoute = '/api/v1/unapprovedDatasets'
-const submitEditedDatasetRoute = '/api/v1/dataUpload'
+const userUploadedDatasetsRoute = 'http://localhost:4001/api/v1/uploadedDatasets'
+const userSavedDatasetsRoute = 'http://localhost:4001/api/v1/favoriteDatasets'
+const dataUploadRoute = 'http://localhost:4001/api/v1/dataUpload'
+const datasetRoute = 'http://localhost:4001/api/v1/dataset'
+const flagDatasetRoute = 'http://localhost:4001/api/v1/flagDataSet'
+const approvedDatasetRoute = 'http://localhost:4001/api/v1/approveDataset'
+const unapprovedDatasetsRoute = 'http://localhost:4001/api/v1/unapprovedDatasets'
+const submitEditedDatasetRoute = 'http://localhost:4001api/v1/dataUpload'
 
 export const callGetDatasets = async (query: ISearchDatasetsFormModel): Promise<IDatasetModel[]> => {
   const result = await get(datasetRoute).withQuery(query).json()

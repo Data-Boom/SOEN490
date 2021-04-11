@@ -4,7 +4,7 @@ import { IGraphStateModel } from "../../Models/Graph/IGraphStateModel"
 import SnackbarUtils from "../../Components/Utils/SnackbarUtils"
 
 //todo validate list graph states works
-const graphStateRoute = '/api/v1/graphState'
+const graphStateRoute = 'http://localhost:4001/api/v1/graphState'
 
 export const listGraphStates = async (): Promise<IGraphStateModel[]> => {
   const result: IGraphStateModel[] = await get(graphStateRoute).json()
