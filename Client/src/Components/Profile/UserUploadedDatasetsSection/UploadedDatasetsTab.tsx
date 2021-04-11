@@ -36,15 +36,15 @@ export const UploadedDatasetsTab = () => {
             setDatasetIds(id_array)
 
             const status_array = uploaded_datasets.map(x => x.approved)
-            setDatasetStatus(status_array)
+            setDatasetStatus(uploaded_datasets)
             console.log("datasetStatus: ", status_array)
         }
 
         const getDatasetStatus = async () => {
             const uploaded_datasets = await getUploadedDatasets()
             const status_array = uploaded_datasets.map(x => x.approved)
-            setDatasetStatus(status_array)
-            console.log("status: ", status_array)
+            //setDatasetStatus(status_array)
+            //console.log("status: ", status_array)
             return status_array
         }
 
@@ -81,7 +81,8 @@ export const UploadedDatasetsTab = () => {
     const getDatasetStatus = async () => {
         const uploaded_datasets = await getUploadedDatasets()
         const status_array = uploaded_datasets.map(x => x.approved)
-        setDatasetStatus(status_array)
+        //setDatasetStatus(status_array)
+        return status_array
 
     }
 
@@ -89,10 +90,23 @@ export const UploadedDatasetsTab = () => {
     const getStatus = (params: ValueGetterParams) => {
 
         //const status = params.row.status
-        const dataset_id = params.row.status
-        const foundDataset = datasetStatus.find(dataset => dataset.datasetId == dataset_id)
+        //const dataset_id = params.row.status
+        //console.log("datasets ", datasets)
+        //console.log("datasetStatus ", datasetStatus)
 
-        return `${foundDataset}`
+        for (var i = 0; i < datasetStatus.length; i++) {
+
+            console.log(datasetStatus[i].approved)
+            return `${datasetStatus[i].approved}`
+        }
+
+
+
+
+
+
+        //return `True`
+        //return `${foundDataset}`
 
     }
 
