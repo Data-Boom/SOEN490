@@ -89,31 +89,6 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
         }
         return name
     }
-    // let cgName: string
-    // let scgName: string
-    // let cat
-    // const categoryName = () => {
-    //     categories.map(category => {
-    //         if (category.id == datasets.category) {
-    //             cgName = category.name
-    //         }
-    //     })
-    //     return cgName
-    // }
-
-    // const subcategoryName = () => {
-    //     categories.map(category => {
-    //         if (category.id == datasets.category) {
-    //             cat = category
-    //             cat.subcategories.map(subcategory => {
-    //                 if (subcategory.id == datasets.subcategory) {
-    //                     scgName = subcategory.name
-    //                 }
-    //             })
-    //         }
-    //     })
-    //     return scgName
-    // }
     const downloadedJSONDataDisplayed =
     {
         "Dataset name ": datasets.dataset_name,
