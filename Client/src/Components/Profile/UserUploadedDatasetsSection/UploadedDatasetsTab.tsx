@@ -37,7 +37,7 @@ export const UploadedDatasetsTab = () => {
             setDatasetIds(id_array)
 
             const status_array = uploaded_datasets.map(x => x.approved)
-            setDatasetStatus(status_array)
+            setDatasetStatus(uploaded_datasets)
             console.log("datasetStatus: ", status_array)
         }
 
