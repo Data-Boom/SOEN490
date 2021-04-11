@@ -101,7 +101,7 @@ export const SearchResults = (props: IProps) => {
     { field: 'author', headerName: 'Author', flex: 1, valueGetter: getAuthor },
     { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
     { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
-    { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDataset },
+    { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDatasetModal },
     { field: 'approval', headerName: 'Status', flex: 1, valueGetter: getDatasetStatus },
   ] :
     [
@@ -112,7 +112,7 @@ export const SearchResults = (props: IProps) => {
       { field: 'author', headerName: 'Author', flex: 1, valueGetter: getAuthor },
       { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
       { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
-      { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDataset },
+      { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDatasetModal },
     ]
 
   return (
