@@ -1,4 +1,5 @@
 import SnackbarUtils from "../Components/Utils/SnackbarUtils"
+import { isEmpty } from "lodash"
 import { stringify } from "query-string"
 
 const requestBase: RequestInit = {
@@ -74,8 +75,8 @@ export class FluentRequest {
       return response.json()
     }
     else {
-      const errorMessage = await response.json()
-      SnackbarUtils.error(errorMessage.error || errorMessage)
+      const errorMessage = await response?.json()
+      errorMessage && !isEmpty(errorMessage) && SnackbarUtils.error(errorMessage.error || errorMessage)
       return null
     }
   }
@@ -83,9 +84,9 @@ export class FluentRequest {
   private async fetchRemote(url: string, request: RequestInit): Promise<Response> {
     const response = await fetch(url, request)
 
-    if (response.status.toString().charAt(0) == '5') {
+    if (!response?.status || response.status.toString().charAt(0) == '5') {
       SnackbarUtils.error('Server Unavailable')
-      return Promise.resolve(null)
+      return response
     }
 
     if (response.status.toString().charAt(0) == '2') {
@@ -96,4 +97,4 @@ export class FluentRequest {
       return response
     }
   }
-} 
+}

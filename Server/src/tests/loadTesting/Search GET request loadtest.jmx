@@ -12,13 +12,13 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Cell size search, 1 user" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Cell size search, 100 user" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">stopthread</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
         <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -43,7 +43,7 @@
           <stringProp name="HTTPSampler.port">4000</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">dataset?categoryId=2</stringProp>
+          <stringProp name="HTTPSampler.path">api/v1/dataset?categoryId=2</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -204,13 +204,13 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Critical tube search, 1 user" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Critical tube search, 100 users" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">stopthread</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
         <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -226,7 +226,7 @@
           <stringProp name="HTTPSampler.port">4000</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">dataset?categoryId=3</stringProp>
+          <stringProp name="HTTPSampler.path">api/v1/dataset?categoryId=3</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -409,7 +409,7 @@
           <stringProp name="HTTPSampler.port">4000</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">http://localhost:4000/dataset?material[]=JP4&amp;year=1991</stringProp>
+          <stringProp name="HTTPSampler.path">api/v1/dataset?material[]=JP4&amp;year=1991</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -554,7 +554,7 @@
           <stringProp name="HTTPSampler.port">4000</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">dataset?datasetId[]=1&amp;datasetId[]=2&amp;datasetId[]=3&amp;datasetId[]=4&amp;datasetId[]=5</stringProp>
+          <stringProp name="HTTPSampler.path">api/v1/dataset?datasetId[]=1&amp;datasetId[]=2&amp;datasetId[]=3&amp;datasetId[]=4&amp;datasetId[]=5</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -678,7 +678,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="15 distinct datasets, 100 users" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="15 distinct datasets, 100 users" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">stopthread</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -700,7 +700,7 @@
           <stringProp name="HTTPSampler.port">4000</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">dataset?datasetId[]=1&amp;datasetId[]=2&amp;datasetId[]=3&amp;datasetId[]=4&amp;datasetId[]=5&amp;datasetId[]=6&amp;datasetId[]=7&amp;datasetId[]=8&amp;datasetId[]=9&amp;datasetId[]=10&amp;datasetId[]=11&amp;datasetId[]=12&amp;datasetId[]=13&amp;datasetId[]=14&amp;datasetId[]=15&amp;</stringProp>
+          <stringProp name="HTTPSampler.path">api/v1/dataset?datasetId[]=1&amp;datasetId[]=2&amp;datasetId[]=3&amp;datasetId[]=4&amp;datasetId[]=5&amp;datasetId[]=6&amp;datasetId[]=7&amp;datasetId[]=8&amp;datasetId[]=9&amp;datasetId[]=10&amp;datasetId[]=11&amp;datasetId[]=12&amp;datasetId[]=13&amp;datasetId[]=14&amp;datasetId[]=15&amp;</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

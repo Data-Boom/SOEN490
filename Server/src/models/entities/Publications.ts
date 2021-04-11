@@ -1,7 +1,7 @@
 import { Authors } from './Authors';
 import { Publicationtype } from './Publicationtype';
 import { Publisher } from './Publisher';
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, Connection } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, Connection, BaseEntity } from "typeorm";
 import { Dataset } from './Dataset';
 
 
@@ -11,7 +11,7 @@ import { Dataset } from './Dataset';
  * the publisher, publication type, and authors
  */
 @Entity()
-export class Publications {
+export class Publications extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

@@ -24,5 +24,5 @@ export const getUserDetails = async (userDetailsQuery: IUserDetailsQuery): Promi
 
 export const getUserFlaggedDatasets = async (): Promise<IApprovedDatasetModel[]> => {
   const localDatasets = await get(userFlaggedDatasetsRoute).json()
-  return localDatasets
+  return localDatasets || []
 }

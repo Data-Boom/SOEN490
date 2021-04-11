@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { fetchAllCategoriesMaterialsController } from '../controllers/fetchAllCategoriesMaterialsController';
+import { FetchAllMaterialsController } from '../controllers/FetchAllMaterialsController';
 
 /**
  * This file contains the route for a call to query or obtain one or more data sets. 
@@ -10,8 +10,8 @@ import { fetchAllCategoriesMaterialsController } from '../controllers/fetchAllCa
 let router = Router();
 
 router.get('/material$', (request: Request, response: Response) => {
-    let fetchAllCategoriesMaterialsControllerObject = new fetchAllCategoriesMaterialsController();
-    fetchAllCategoriesMaterialsControllerObject.createRequestForAllMaterials(request, response);
+    let FetchAllMaterialsControllerObject = new FetchAllMaterialsController();
+    FetchAllMaterialsControllerObject.createRequestForAllMaterials(request, response);
 });
 
-export { router as fetchAllCategoriesMaterialsRouter };
+export { router as FetchAllMaterialsRouter };

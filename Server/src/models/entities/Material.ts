@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, Connection } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany, Connection, BaseEntity } from "typeorm";
 import { Composition } from "./Composition";
 import { Dataset } from "./Dataset";
 
@@ -8,7 +8,7 @@ import { Dataset } from "./Dataset";
  * This entity handles materials and has a foreign key for it's chemical compositon
  */
 @Entity()
-export class Material {
+export class Material extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

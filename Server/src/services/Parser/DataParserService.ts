@@ -50,6 +50,8 @@ export class DataParserService {
             else {
                 throw new Error(error.message)
             }
+        } finally {
+            await fileHandler.deleteFile()
         }
     }
 }

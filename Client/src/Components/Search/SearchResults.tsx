@@ -1,9 +1,10 @@
 import { ColDef, DataGrid, SelectionChangeParams, ValueGetterParams } from '@material-ui/data-grid'
-import { Grid, List, ListItem, ListItemText } from '@material-ui/core'
+import { Grid, List, ListItem, ListItemText, Typography } from '@material-ui/core'
 import { IData, IDatasetModel, IReference } from "../../Models/Datasets/IDatasetModel"
 
 import { DatasetFormModal } from '../DatasetUpload/DatasetViewModal'
-import { ICategoryModel } from '../../Remote/Endpoints/CategoryEndpoint'
+import { ICategoryModel } from '../../Models/Profile/ICategoryModel'
+import { Link } from 'react-router-dom'
 import React from 'react'
 
 interface IProps {
@@ -36,6 +37,18 @@ export const SearchResults = (props: IProps) => {
     return `${reference.year}`
   }
 
+  const getNameLink = (params: ValueGetterParams) => {
+    const datasetID = params.getValue('id')
+    const datasetName = params.getValue('dataset_name')
+    return (
+      <Link to={'/dataset/' + datasetID} >
+        <Typography>
+          {datasetName}
+        </Typography>
+      </Link>
+    )
+  }
+
   const getCategoryId = (params: ValueGetterParams) => {
     const categoryId = params.row.category
     const foundCategory = categories.find(category => category.id == categoryId)
@@ -64,21 +77,21 @@ export const SearchResults = (props: IProps) => {
     )
   }
 
-  const linkToDataset = (params: ValueGetterParams) => {
+  const linkToDatasetModal = (params: ValueGetterParams) => {
     const datasetId = params.getValue('id')
 
     return (<DatasetFormModal datasetId={datasetId.toString()} />)
   }
 
   const columns: ColDef[] = [
-    { field: 'dataset_name', headerName: 'Name', flex: 1 },
+    { field: 'dataset_name', headerName: 'Name', renderCell: getNameLink, flex: 1 },
     { field: `title`, headerName: 'Title', valueGetter: getTitle, flex: 1 },
     { field: 'category', headerName: 'Category', flex: 1, valueGetter: getCategoryId },
     { field: 'subcategory', headerName: 'SubCategory', flex: 1, valueGetter: getSubcategoryId },
     { field: 'author', headerName: 'Author', flex: 1, valueGetter: getAuthor },
     { field: 'year', headerName: 'Year', flex: 1, valueGetter: getYear },
     { field: 'variables', headerName: 'List Of Variables', flex: 2, renderCell: getVariableList },
-    { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDataset },
+    { field: 'dataset_button', headerName: 'View', flex: 1, renderCell: linkToDatasetModal },
   ]
 
   return (

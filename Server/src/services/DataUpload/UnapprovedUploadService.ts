@@ -10,8 +10,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let requestResponse: IResponse = {} as any
 
-        let publicationType: string = ''
-        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, publicationType)
+        let publicationTypeID: number = await this.insertPublicationTypeData(this.uploadModel, this.parsedFileData.reference.type)
 
         let publisherNameId: number = await this.insertPublisherData(this.uploadModel, this.parsedFileData.reference.publisher)
 
@@ -33,13 +32,6 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
         let dataSetID: number = await this.insertDataset(this.uploadModel, [this.parsedFileData.dataset_name, dataSetDataTypeID, publicationID, subcategoryID, allMaterials, this.parsedFileData.data.comments, this.userId])
 
-        //run check on variable vs contents length to see if they're equal
-        if (this.parsedFileData.data.variables.length == this.parsedFileData.data.contents[0].point.length) {
-            console.log("variable and content lengths are equal....proceed")
-        } else {
-            throw new BadRequest('variable and content lengths dont match')
-        }
-
         let individualDataSetComments: string[] = [];
         for (let i = 0; i < this.parsedFileData.data.variables.length; i++) {
 
@@ -49,9 +41,7 @@ export class UnapprovedUploadService extends AbstractUploadService {
 
             let unitsID: number = this.parsedFileData.data.variables[i].unitId
 
-            let reprID: number = await this.insertRepData(this.uploadModel, this.parsedFileData.data.variables[i].repr)
-
-            await this.uploadModel.insertDataPointsOfSet(dataSetID, dataVariableName, dataPointValues[0], unitsID, reprID)
+            await this.uploadModel.insertDataPointsOfSet(dataSetID, dataVariableName, dataPointValues[0], unitsID)
             individualDataSetComments = dataPointValues[1];
         }
 

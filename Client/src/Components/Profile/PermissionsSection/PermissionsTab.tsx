@@ -1,12 +1,14 @@
 import * as Yup from 'yup'
 
+import { AdminRow, IAdminRowProps } from './AdminRows'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { FastField, Form, Formik } from 'formik'
-import { fetchAllAdmins, updatePermissions } from '../../../Remote/Endpoints/PermissionsEndpoint'
-import { AdminList } from './AdminList'
-
-import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import React, { useEffect } from 'react'
+import { fetchAllAdmins, updatePermissions } from '../../../Remote/Endpoints/PermissionsEndpoint'
+
+import { IUserAccountModel } from '../../../Models/Authentication/IUserAccountModel'
+import { List } from '../../Utils/List'
+import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import { classStyles } from '../../../appTheme'
 import { useState } from 'react'
 
@@ -17,7 +19,7 @@ export default function PermissionsTab() {
       .email().required("Email Address")
   })
 
-  const [adminListState, setAdminListState] = useState([])
+  const [adminListState, setAdminListState] = useState<IUserAccountModel[]>([])
 
   const handleAddAdmin = async (newAdmin: any) => {
     await updatePermissions({
@@ -67,9 +69,12 @@ export default function PermissionsTab() {
           </Box>
         </Form>
       </Formik>
-      <AdminList
-        adminList={adminListState}
-        handleRemoveAdmin={handleRemoveAdmin}
+      <List
+        RowComponent={AdminRow}
+        models={adminListState}
+        rowProps={{ handleRemoveAdmin: handleRemoveAdmin } as IAdminRowProps}
+        withPagination
+        modelType='Accounts'
       />
     </Grid >
   )

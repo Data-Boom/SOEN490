@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { Theme, makeStyles } from '@material-ui/core/styles'
 import { loadUserThunk, useUserSelector } from '../../Stores/Slices/UserSlice'
 
-import { DimensionManagementTab } from './UnitManagementSection/DimensionManagementTab'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link } from 'react-router-dom'
-import PermissionsTab from './PermissionsSection/PermissionsTab'
-import { ProfileGraphStateList } from './ProfileGraphList'
+import { List } from '../Utils/List'
+import { ProfileGraphRow } from './ProfileGraphRow'
 import { SavedDatasetsTab } from './UserSavedDatasetsSection/SavedDatasetsTab'
 import UserDetailsTab from './UserDetailSection/UserDetailsTab'
 import { listGraphStates } from '../../Remote/Endpoints/GraphStateEndpoint'
@@ -22,7 +21,7 @@ interface TabPanelProps {
   value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
+export function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
 
   return (
@@ -42,7 +41,7 @@ function TabPanel(props: TabPanelProps) {
   )
 }
 
-function a11yProps(index: any) {
+export function a11yProps(index: any) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
@@ -167,9 +166,7 @@ export function ProfileView() {
             <Tab label="View Profile" {...a11yProps(0)} />
             <Tab label="View Saved Graphs" {...a11yProps(1)} />
             <Tab label="View Saved Datasets" {...a11yProps(2)} />
-            <Tab label="Permissions" {...a11yProps(3)} />
-            <Tab label="View Uploads" {...a11yProps(4)} />
-            <Tab label="Manage Units" {...a11yProps(5)} />
+            <Tab label="View Uploads" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <Container>
@@ -192,8 +189,11 @@ export function ProfileView() {
                   </TableRow>
                 </TableHead>
                 <TableBody >
-                  <ProfileGraphStateList
-                    graphDataset={savedGraphState}
+                  <List
+                    RowComponent={ProfileGraphRow}
+                    models={savedGraphState}
+                    withPagination
+                    modelType='Graphs'
                   />
                 </TableBody>
               </Table>
@@ -207,16 +207,7 @@ export function ProfileView() {
               </Grid>
             </Grid>
           </TabPanel>
-          {/* todo delete */}
           <TabPanel value={tab} index={3}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <PermissionsTab
-                />
-              </Grid>
-            </Grid>
-          </TabPanel>
-          <TabPanel value={tab} index={4}>
             <TableContainer component={Paper} style={{ width: "50%" }}>
               <Table aria-label="collapsible table" >
                 <TableHead>Uploads
@@ -232,9 +223,6 @@ export function ProfileView() {
                 </TableBody>
               </Table>
             </TableContainer>
-          </TabPanel>
-          <TabPanel value={tab} index={5}>
-            <DimensionManagementTab />
           </TabPanel>
         </Container>
       </div>

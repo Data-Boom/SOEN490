@@ -38,7 +38,6 @@ export interface IDataPointModel {
     values: number[]
     unitId: number
     dimensionId: number
-    representation: string
 }
 
 export interface IVariable {

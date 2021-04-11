@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { fetchAllCategoriesMaterialsService } from '../services/fetchAllCategoriesMaterialsService';
+import { FetchAllMaterialsService } from '../services/FetchAllMaterialsService';
 
-export class fetchAllCategoriesMaterialsController {
-    private fetchAllCategoriesMaterialsService: fetchAllCategoriesMaterialsService;
+export class FetchAllMaterialsController {
+    private FetchAllMaterialsService: FetchAllMaterialsService;
     constructor() {
-        this.fetchAllCategoriesMaterialsService = new fetchAllCategoriesMaterialsService();
+        this.FetchAllMaterialsService = new FetchAllMaterialsService();
     }
 
     /**
@@ -18,7 +18,7 @@ export class fetchAllCategoriesMaterialsController {
      */
     async createRequestForAllMaterials(request: Request, response: Response) {
         try {
-            let arrayOfData = await this.fetchAllCategoriesMaterialsService.getBasicMaterialDataService()
+            let arrayOfData = await this.FetchAllMaterialsService.fetchAllMaterialDataService()
             return response.status(200).json(arrayOfData);
         } catch (error) {
             response.status(error.status).json(error.message);

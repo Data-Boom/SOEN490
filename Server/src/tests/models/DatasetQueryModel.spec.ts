@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { DataQueryModel } from '../../models/DatasetModels/DatasetQueryModel';
 
 describe('data query model test', () => {
@@ -6,7 +6,14 @@ describe('data query model test', () => {
     jest.setTimeout(60000)
 
     beforeAll(async () => {
-        await createConnection();
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                return getConnectionManager().get();
+            }
+        }
         dataQueryModel = new DataQueryModel();
     });
 
