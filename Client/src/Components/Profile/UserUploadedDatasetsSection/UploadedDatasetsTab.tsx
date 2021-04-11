@@ -78,6 +78,14 @@ export const UploadedDatasetsTab = () => {
     }
 
 
+    const getDatasetStatus = async () => {
+        const uploaded_datasets = await getUploadedDatasets()
+        const status_array = uploaded_datasets.map(x => x.approved)
+        setDatasetStatus(status_array)
+
+    }
+
+
     const getStatus = (params: ValueGetterParams) => {
 
         //const status = params.row.status
