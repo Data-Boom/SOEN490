@@ -22,32 +22,42 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
     }, [])
 
     const variableArray = (): any => {
-        var name = " "
+        var variables = ""
         for (var i in datasets.data.variables) {
-            name += "," + datasets.data.variables[i].name + " " + "[" + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + "]"
+            variables += datasets.data.variables[i].name + "  [" + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + "], "
         }
-        return name
+        variables += "comment"
+        return variables
     }
     const materialArray = (): any => {
-        var name = " "
+        var materials = ""
         for (var i in datasets.material) {
-            name += datasets.material[i].composition + " " + datasets.material[i].details + ", "
+            materials += datasets.material[i].composition + " \'" + datasets.material[i].details + "\', "
         }
-        return name
+        materials = materials.slice(0, -2)
+        return materials
     }
     const authorArray = (): any => {
-        var name = " "
+        var authors = ""
         for (var i in datasets.reference.authors) {
-            name += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName + " "
+            if (datasets.reference.authors[i].middleName)
+                authors += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].middleName + " " + datasets.reference.authors[i].lastName + ", "
+            else
+                authors += datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName + ", "
         }
-        return name
+        authors = authors.slice(0, -2)
+        return authors
     }
     const dataContentArray = (): any => {
-        var name = " "
+        var dataPoint = ""
         for (var i in datasets.data.contents) {
-            name += "," + datasets.data.contents[i].point
+            dataPoint += datasets.data.contents[i].point + ", "
+            if (datasets.data.dataPointComments)
+                dataPoint += datasets.data.dataPointComments[i] + "\n"
+            else
+                dataPoint = dataPoint.slice(0, -2) + "\n"
         }
-        return name
+        return dataPoint
     }
     let cgName: string
     let scgName: string
@@ -74,35 +84,37 @@ export const CSVdatasetDownloadButton = (props: IProps) => {
         })
         return scgName
     }
-
-    const downloadedCSVDataDisplayed: string =
-        "#Dataset name ," + datasets.dataset_name + "\n " +
-        "#Material ," + materialArray() + "\n " +
-        "#Data type, " + datasets.data_type + "\n " +
-        "#Category, " + categoryName() + "\n " +
-        "#Subcategory, " + subcategoryName() + "\n " +
-        "#\n" +
-        "#Publications/Source \n " +
-        "#Authors ," + authorArray() + "\n " +
-        "#Title , " + datasets.reference.title + "\n " +
-        "#Type, " + datasets.reference.type + "\n " +
-        "#Publisher, " + datasets.reference.publisher + "\n " +
-        "#Volume, " + datasets.reference.volume + "\n " +
-        "#Pages, " + datasets.reference.pages + "\n " +
-        "#DOI, " + datasets.reference.doi + "\n " +
-        "#Issue, " + datasets.reference.issue + "\n " +
-        "#Year ," + datasets.reference.year + "\n " +
-        "#\n" +
-        "#Export source ," + " databoom.concordia.ca \n " +
-        "#Export date ," + new Date().toLocaleString() + "\n " +
-        "#\n" +
-        variableArray() + ", comments \n " +
-        dataContentArray() + ", " + datasets.data.dataPointComments + "\n "
-    // "#Comments , \n" + datasets.data.comments + " \n "
-
+    const downloadedCSVDataDisplayed = (): any => {
+        var output =
+            "#Dataset name, " + datasets.dataset_name + "\n" +
+            "#Material, " + materialArray() + "\n" +
+            "#Data type, " + datasets.data_type + "\n" +
+            "#Category, " + categoryName() + "\n" +
+            "#Subcategory, " + subcategoryName() + "\n" +
+            "#\n" +
+            "#Publications/Source\n" +
+            "#Authors, " + authorArray() + "\n" +
+            "#Title, " + datasets.reference.title + "\n" +
+            "#Type, " + datasets.reference.type + "\n" +
+            "#Publisher, " + datasets.reference.publisher + "\n"
+            if (datasets.reference.volume) { output += "#Volume, " + datasets.reference.volume + "\n" }
+            if (datasets.reference.pages) { output += "#Pages, " + datasets.reference.pages + "\n" }
+            if (datasets.reference.doi) { output += "#DOI, " + datasets.reference.doi + "\n" }
+            if (datasets.reference.issue) { output += "#Issue, " + datasets.reference.issue + "\n" }
+            output +=
+                "#Year, " + datasets.reference.year + "\n" +
+                "#\n" +
+                "#Export source, " + " databoom.concordia.ca \n" +
+                "#Export date, " + new Date().toLocaleString() + "\n" +
+                "#\n" +
+                variableArray() + "\n" +
+                dataContentArray() + "\n" +
+                "#Comments: \n" + datasets.data.comments
+        return output
+    }
 
     const handleCSVDownload = () => {
-        download("csvdataset.csv", downloadedCSVDataDisplayed)
+        download("csvdataset.csv", downloadedCSVDataDisplayed())
     }
 
     //stolen from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server

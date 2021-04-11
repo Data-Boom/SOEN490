@@ -31,9 +31,9 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
                     "units": getUnitNameById(dimensions, datasets.data.variables[i].unitId)
                 })
         }
+        name.push("comments")
         return name
     }
-
     const materialArray = (): any => {
         var name = []
         for (var i in datasets.material) {
@@ -48,25 +48,44 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
     const authorArray = (): any => {
         var name = []
         for (var i = 0; i < datasets.reference.authors.length; i++) {
-            name.push(
-                {
-                    "firstname ": datasets.reference.authors[i].firstName,
-                    "middlename": datasets.reference.authors[i].middleName,
-                    "lastname ": datasets.reference.authors[i].lastName
-                }
-            )
+            if (datasets.reference.authors[i].middleName) {
+                name.push(
+                    {
+                        "firstname ": datasets.reference.authors[i].firstName,
+                        "middlename": datasets.reference.authors[i].middleName,
+                        "lastname ": datasets.reference.authors[i].lastName
+                    }
+                )
+            }
+            else {
+                name.push(
+                    {
+                        "firstname ": datasets.reference.authors[i].firstName,
+                        "lastname ": datasets.reference.authors[i].lastName
+                    }
+                )
+            }
+
         }
         return name
     }
     const dataContentArray = (): any => {
         var name = []
         for (var i in datasets.data.contents) {
-            name.push(
-                {
-                    "point": datasets.data.contents[i].point,
-                    "comment": datasets.data.dataPointComments[i]
-                }
-            )
+            if (datasets.data.dataPointComments)
+                name.push(
+                    {
+                        "point": datasets.data.contents[i].point,
+                        "comment": datasets.data.dataPointComments[i]
+                    }
+                )
+            else
+                name.push(
+                    {
+                        "point": datasets.data.contents[i].point
+                    }
+                )
+
         }
         return name
     }
@@ -95,7 +114,6 @@ export const JSONdatasetDownloadButton = (props: IProps) => {
         })
         return scgName
     }
-
     const downloadedJSONDataDisplayed =
     {
         "Dataset name ": datasets.dataset_name,

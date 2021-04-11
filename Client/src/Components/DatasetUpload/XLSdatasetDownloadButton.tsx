@@ -24,19 +24,12 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         callListCategories()
     }, [])
 
-    const variableArray = (): any => {
-        var name = []
-        for (var i in datasets.data.variables) {
-            name.push(datasets.data.variables[i].name + " " + getUnitNameById(dimensions, datasets.data.variables[i].unitId))
-        }
-        name.push("comments")
-        return name
-    }
+
     const materialArray = (): any => {
         var name = []
         name.push("Material")
         for (var i in datasets.material) {
-            name.push(datasets.material[i].composition + " " + datasets.material[i].details)
+            name.push(datasets.material[i].composition + " \'" + datasets.material[i].details + "\'")
         }
         return name
     }
@@ -44,70 +37,94 @@ export const XLSdatasetDownloadButton = (props: IProps) => {
         var name = []
         name.push("Author")
         for (var i in datasets.reference.authors) {
-            name.push(datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName)
+            if (datasets.reference.authors[i].middleName) {
+                name.push(datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].middleName + " " + datasets.reference.authors[i].lastName)
+            }
+            else {
+                name.push(datasets.reference.authors[i].firstName + " " + datasets.reference.authors[i].lastName)
+
+            }
         }
         return name
     }
-    const dataContentArray = (): any => {
+    const variableArray = (): any => {
         var name = []
-        for (var i in datasets.data.contents) {
-            name.push(datasets.data.contents[i].point)
+        for (var i in datasets.data.variables) {
+            name.push(datasets.data.variables[i].name + "  [" + getUnitNameById(dimensions, datasets.data.variables[i].unitId) + "] ")
         }
-        name.push(datasets.data.dataPointComments)
+        name.push("comments")
         return name
     }
-    let cgName: string
-    let scgName: string
-    let cat
     const categoryName = () => {
+        let cgName = []
+        cgName.push("Categories")
         categories.map(category => {
             if (category.id == datasets.category) {
-                cgName = category.name
+                cgName.push(category.name)
             }
         })
         return cgName
     }
-
     const subcategoryName = () => {
+        let scgName = []
+        let cat
+        scgName.push("Subcategories")
         categories.map(category => {
             if (category.id == datasets.category) {
                 cat = category
                 cat.subcategories.map(subcategory => {
                     if (subcategory.id == datasets.subcategory) {
-                        scgName = subcategory.name
+                        scgName.push(subcategory.name)
                     }
                 })
             }
         })
         return scgName
     }
+    const compileDataArray = (): any => {
+        var dataPoint = []
+        var allData = []
+        allData.push(["Dataset name", datasets.dataset_name])
+        allData.push(materialArray())
+        allData.push(["Data type", datasets.data_type])
+        allData.push(categoryName())
+        allData.push(subcategoryName())
+        allData.push(["Publication/sources"])
+        allData.push(authorArray())
+        allData.push(["Title", datasets.reference.title])
+        allData.push(["Type", datasets.reference.type])
+        allData.push(["Publisher", datasets.reference.publisher])
+        if (datasets.reference.volume)
+            allData.push(["Volume", datasets.reference.volume])
+        if (datasets.reference.pages)
+            allData.push(["Pages", datasets.reference.pages])
+        if (datasets.reference.doi)
+            allData.push(["DOI", datasets.reference.doi])
+        if (datasets.reference.issue)
+            allData.push(["Issue", datasets.reference.issue])
+        allData.push(["Year", datasets.reference.year])
+        allData.push([" "])
+        allData.push(["Export source ", "databoom.concordia.ca"])
+        allData.push(["Export date ", new Date().toLocaleString()])
+        allData.push([" "])
+        allData.push(variableArray())
 
-    const downloadedXLSDataDisplayed = [
-        ["Dataset name", datasets.dataset_name],
-        materialArray(),
-        ["Data type", datasets.data_type],
-        ["Category", categoryName()],
-        ["Subcategory ", subcategoryName()],
-        ["Publication/sources"],
-        authorArray(),
-        ["Title ", datasets.reference.title],
-        ["Type", datasets.reference.type],
-        ["Publisher", datasets.reference.publisher],
-        ["Volume", datasets.reference.volume],
-        ["Pages ", datasets.reference.pages],
-        ["DOI ", datasets.reference.doi],
-        ["Issue ", datasets.reference.issue],
-        ["Year ", datasets.reference.year],
-        [" "],
-        ["Export source ", "databoom.concordia.ca"],
-        ["Export date ", new Date().toLocaleString()],
-        [" "],
-        variableArray(),
-        dataContentArray()
-    ]
+        for (var i = 0; i < datasets.data.contents.length; i++) {
+            dataPoint = []
+            for (var j = 0; j < datasets.data.contents[i].point.length; j++) {
+                dataPoint.push(datasets.data.contents[i].point[j])
+            }
+            if (datasets.data.dataPointComments)
+                dataPoint.push(datasets.data.dataPointComments[i])
+
+            allData.push(dataPoint)
+        }
+        console.log(allData)
+        return allData
+    }
     const handleXLSDownload = () => {
         const fileName = "xlsdataset.xls"
-        const worksheet = XLSX.utils.aoa_to_sheet(downloadedXLSDataDisplayed)
+        const worksheet = XLSX.utils.aoa_to_sheet(compileDataArray())
         const workbook = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(workbook, worksheet, "downloadedXLSDataDisplayed")
 
