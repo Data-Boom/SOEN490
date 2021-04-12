@@ -135,7 +135,7 @@ export const DatasetDataTable = (props: IProps): any => {
             </>
           }
           <Grid item>
-            <Button variant="contained" id="newVariableButton" color="primary" onClick={() => setEditedVariable({ index: -1, isNew: true, variable: newVariable })} disabled={!editable}>New variable</Button>
+            <Button variant="contained" color="primary" onClick={() => setEditedVariable({ index: -1, isNew: true, variable: newVariable })} disabled={!editable}>New variable</Button>
           </Grid>
         </Grid>}
       </>

@@ -1,12 +1,13 @@
-import { Box, Button, Grid, Typography } from "@material-ui/core"
+import React from "react"
+import { useEffect, useState } from "react"
 import { ICategoryModel, newCategory } from "../../../Models/Profile/ICategoryModel"
-import React, { useEffect, useState } from "react"
-import { createCategory, deleteCategory, listCategories, updateCategory } from "../../../Remote/Endpoints/CategoryEndpoint"
-
+import { classStyles } from '../../../appTheme'
+import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { AddIcon } from "@material-ui/data-grid"
 import { CategoryManagementList } from "./CategoryManagementList"
 import SnackbarUtils from '../../Utils/SnackbarUtils'
-import { classStyles } from '../../../appTheme'
+import { listCategories, updateCategory, createCategory, deleteCategory } from "../../../Remote/Endpoints/CategoryEndpoint"
+
 
 export const CategoryManagementTab = () => {
 
@@ -17,20 +18,20 @@ export const CategoryManagementTab = () => {
   }, [])
 
   const getCategories = async () => {
-    const currentCategories: ICategoryModel[] = await listCategories()
-    setCategories(currentCategories)
+     const currentCategories: ICategoryModel[] = await listCategories()
+     setCategories(currentCategories)
   }
 
-  const addNewCategory = () => {
+  const addNewCategory = ()  => {
     const categoriesCopy = [...categories]
     categoriesCopy.push(newCategory)
     setCategories(categoriesCopy)
   }
 
   const handleCreateCategory = async (newCategory: ICategoryModel) => {
-    await createCategory(newCategory)
-    await getCategories()
-    SnackbarUtils.success('New category created!')
+     await createCategory(newCategory)
+     await getCategories()
+     SnackbarUtils.success('New category created!')
   }
 
   const handleSaveCategory = async (updatedCategory: ICategoryModel) => {
@@ -60,7 +61,7 @@ export const CategoryManagementTab = () => {
         }
       </Box>
       <Grid item>
-        <Button variant="contained" id="addNewCategory" color="primary" aria-label="add category" onClick={() => addNewCategory()}> Add New Category
+        <Button variant="contained" color="primary" aria-label="add category" onClick={() => addNewCategory()}> Add New Category
           <AddIcon />
         </Button>
       </Grid>

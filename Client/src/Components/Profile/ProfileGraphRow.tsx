@@ -31,7 +31,7 @@ export const ProfileGraphRow = (props: IRowProps<IGraphStateModel>) => {
         </Box>
       </Grid>
       <Grid>
-        <IconButton aria-label="delete" color="secondary" id="deleteGraphState">
+        <IconButton aria-label="delete" color="secondary" >
           <CancelIcon onClick={() => setConfirmModalOpen(true)} />
         </IconButton>
         <ConfirmationModal

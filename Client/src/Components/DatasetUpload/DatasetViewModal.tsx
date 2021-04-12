@@ -48,7 +48,7 @@ export const DatasetFormModal = (props: IProps) => {
           <Box m={5}>
             <Grid container justify="flex-end">
               <Grid item>
-                <CancelIcon id="cancel" color="primary" onClick={() => setOpen(false)} />
+                <CancelIcon color="primary" onClick={() => setOpen(false)} />
               </Grid>
             </Grid>
             <DatasetForm
