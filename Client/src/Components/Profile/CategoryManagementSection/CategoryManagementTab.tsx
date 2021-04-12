@@ -1,11 +1,10 @@
 import { Box, Button, Grid, Typography } from "@material-ui/core"
 import { ICategoryModel, newCategory } from "../../../Models/Profile/ICategoryModel"
+import React, { useEffect, useState } from "react"
 import { createCategory, deleteCategory, listCategories, updateCategory } from "../../../Remote/Endpoints/CategoryEndpoint"
-import { useEffect, useState } from "react"
 
 import { AddIcon } from "@material-ui/data-grid"
 import { CategoryManagementList } from "./CategoryManagementList"
-import React from "react"
 import SnackbarUtils from '../../Utils/SnackbarUtils'
 import { classStyles } from '../../../appTheme'
 
