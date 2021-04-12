@@ -84,7 +84,7 @@ export const DatasetView = (props: IProps) => {
   }, [])
 
   const handleSubmitForm = async (formDataset: IDatasetModel) => {
-    if (user.account_permissions == 2) {
+    if (user.account_permissions == 2 && datasetID) {
       const newApprovalDatset: IApprovedDatasetModel = { ...formDataset, datasetFlaggedComment: null, datasetIsFlagged: null }
       await submitEditedDataset(newApprovalDatset)
       SnackbarUtils.success("Dataset successfully uploaded")
