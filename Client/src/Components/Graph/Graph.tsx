@@ -1,5 +1,6 @@
 import * as am4charts from "@amcharts/amcharts4/charts"
 import * as am4core from "@amcharts/amcharts4/core"
+import * as am4plugins_bullets from "@amcharts/amcharts4/plugins/bullets"
 
 import React, { useEffect, useRef } from 'react'
 
@@ -7,6 +8,7 @@ import { Box } from "@material-ui/core"
 import { IAxisStateModel } from "../../Models/Graph/IGraphStateModel"
 import { IGraphDatasetModel } from "../../Models/Graph/IGraphDatasetModel"
 import am4themes_material from "@amcharts/amcharts4/themes/animated"
+import { useDimensionsSelector } from "../../Stores/Slices/DimensionsSlice"
 
 interface IProps {
   datasets: IGraphDatasetModel[],
@@ -19,20 +21,29 @@ const getSeriesName = (dataset: IGraphDatasetModel) => {
   return `${dataset.id}`
 }
 
-export default function Graph(props: IProps) {
+export const Graph = (props: IProps) => {
   const { datasets, axes } = { ...props }
+  const dimensions = useDimensionsSelector()
   const chartRef = useRef<am4charts.XYChart>()
 
   useEffect(() => initiateGraph(), [])
-  useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units])
+  useEffect(() => chartRef.current && handleUnitsUpdated(), [axes[0].units, axes[1].units, axes[0].variableName, axes[1].variableName])
+  useEffect(() => chartRef.current && handleAxesScaleUpdated(), [axes[0].logarithmic, axes[1].logarithmic])
   useEffect(() => chartRef.current && handleDatasetsUpdated(), [datasets])
 
   const handleUnitsUpdated = () => {
-    //cleanup series used for old variables
+    //cleanup series used for old variables, no series will trigger points rebuild on axes update
     chartRef.current.series.clear()
     const xAxis = chartRef.current.xAxes.getIndex(0)
     const yAxis = chartRef.current.yAxes.getIndex(0)
     updateAxis(xAxis, yAxis)
+  }
+
+  const handleAxesScaleUpdated = () => {
+    const xAxis = chartRef.current.xAxes.getIndex(0) as any
+    const yAxis = chartRef.current.yAxes.getIndex(0) as any
+    xAxis.logarithmic = axes[0].logarithmic || false
+    yAxis.logarithmic = axes[1].logarithmic || false
   }
 
   const handleDatasetsUpdated = () => {
@@ -54,7 +65,44 @@ export default function Graph(props: IProps) {
       }
 
       toggleHideShow(datasetSeries, dataset)
+      changeDatasetBullets(datasetSeries, dataset)
     })
+  }
+
+  const changeDatasetBullets = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
+    const xUnitName = getUnitName(axes[0].units)
+    const yUnitName = getUnitName(axes[1].units)
+    let bullet: am4core.Rectangle | am4core.Triangle | am4plugins_bullets.Star | am4core.Circle
+    datasetSeries.bullets.pop()
+    if (dataset.shape == "square") {
+      bullet = datasetSeries.bullets.push(new am4core.Rectangle())
+      bullet.width = 10
+      bullet.height = 10
+      bullet.horizontalCenter = "middle"
+      bullet.verticalCenter = "middle"
+    }
+    else if (dataset.shape == "triangle") {
+      bullet = datasetSeries.bullets.push(new am4core.Triangle())
+      bullet.horizontalCenter = "middle"
+      bullet.verticalCenter = "middle"
+      bullet.direction = "top"
+      bullet.width = 10
+      bullet.height = 10
+    }
+    else if (dataset.shape == "star") {
+      bullet = datasetSeries.bullets.push(new am4plugins_bullets.Star());
+      bullet.radius = 5
+      bullet.pointCount = 6
+    }
+    else {
+      bullet = datasetSeries.bullets.push(new am4core.Circle())
+      bullet.radius = 5
+    }
+    bullet.fill = am4core.color(dataset.color || "#000000")
+    bullet.stroke = am4core.color(dataset.color || "#000000")
+    bullet.tooltipText = `${dataset.name}
+        ${axes[0].variableName}: {x} ${xUnitName}
+        ${axes[1].variableName}: {y} ${yUnitName}`
   }
 
   const toggleHideShow = (datasetSeries: am4charts.Series, dataset: IGraphDatasetModel) => {
@@ -76,21 +124,30 @@ export default function Graph(props: IProps) {
   }
 
   const pullRemovedDatasets = (chart: am4charts.XYChart) => {
-    chart.series.values.forEach(series => {
+    const seriesCopy = [...chart.series.values]
+    seriesCopy.forEach(series => {
       if (!datasets.find(dataset => getSeriesName(dataset) == series.name)) {
         chart.series.removeValue(series)
       }
     })
   }
 
+  const getUnitName = (unitId: number): string => {
+    let name = ''
+    dimensions.forEach(dimension => {
+      dimension.units.forEach(unit => {
+        if (unit.id == unitId) {
+          name = unit.name
+          return name
+        }
+      })
+    })
+    return name
+  }
+
   const setUpSeries = (chart: am4charts.XYChart, dataset: IGraphDatasetModel): am4charts.XYSeries => {
     const datasetSeries = chart.series.push(new am4charts.XYSeries())
-    const bullet = datasetSeries.bullets.push(new am4core.Circle())
-    bullet.radius = 5
-    bullet.tooltipText = `${dataset.name}
-        ${axes[0].variableName}: {x} ${axes[0].units}
-        ${axes[1].variableName}: {y} ${axes[1].units}`
-
+    changeDatasetBullets(datasetSeries, dataset)
     datasetSeries.dataFields.valueX = `x`
     datasetSeries.dataFields.valueY = `y`
     datasetSeries.name = getSeriesName(dataset)
@@ -111,12 +168,14 @@ export default function Graph(props: IProps) {
   }
 
   const updateAxis = (xAxis: any, yAxis: any) => {
-    xAxis.title.text = `${axes[0].variableName}, ${axes[0].units}`
+    const xUnitName = getUnitName(axes[0].units)
+    const yUnitName = getUnitName(axes[1].units)
+    xAxis.title.text = `${axes[0].variableName}, ${xUnitName} `
     xAxis.logarithmic = axes[0].logarithmic || false
     xAxis.renderer.minGridDistance = 40
     xAxis.keepSelection = true
 
-    yAxis.title.text = `${axes[1].variableName}, ${axes[1].units}`
+    yAxis.title.text = `${axes[1].variableName}, ${yUnitName} `
     yAxis.logarithmic = axes[1].logarithmic || false
     yAxis.keepSelection = true
   }

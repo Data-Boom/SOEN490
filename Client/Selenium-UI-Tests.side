@@ -2070,7 +2070,7 @@
     }]
   }, {
     "id": "5510603b-374f-44b1-828e-436221d42c3b",
-    "name": "Data Cell Analysis Page",
+    "name": "Cell Size Analysis Page",
     "commands": [{
       "id": "b0612b2f-d039-467b-ac23-c044f2a561d4",
       "comment": "",
@@ -2100,13 +2100,13 @@
       "command": "click",
       "target": "id=Close",
       "targets": [
-        ["linkText=Data Cell Analysis", "linkText"],
+        ["linkText=Cell Size Analysis", "linkText"],
         ["css=.MuiButtonBase-root:nth-child(5) > a", "css:finder"],
-        ["xpath=//a[contains(text(),'Data Cell Analysis')]", "xpath:link"],
+        ["xpath=//a[contains(text(),'Cell Size Analysis')]", "xpath:link"],
         ["xpath=//div[@id='root']/div/div/div/ul/div[5]/a", "xpath:idRelative"],
         ["xpath=//a[contains(@href, '#/dataCellAnalysis')]", "xpath:href"],
         ["xpath=//div[5]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Data Cell Analysis')]", "xpath:innerText"]
+        ["xpath=//a[contains(.,'Cell Size Analysis')]", "xpath:innerText"]
       ],
       "value": ""
     }]

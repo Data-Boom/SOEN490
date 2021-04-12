@@ -6,7 +6,7 @@ import { IUnitModel } from "../../../../../Server/src/models/interfaces/IDimensi
 import { MuiTextFieldFormik } from "../../Forms/FormikFields"
 import React from 'react'
 import { UnitRow } from "./UnitRow"
-import { newUnit } from "../../../Models/Profile/IDimensionModel"
+import { newUnit } from "../../../Models/Dimensions/IDimensionModel"
 
 interface IProps {
   units: IUnitModel[],
@@ -48,6 +48,7 @@ export const UnitList = (props: IProps) => {
             index={index}
             conversionFormula={unit.conversionFormula}
             onRemoveUnitClick={handleRemoveUnit}
+            baseUnitName={units?.find(unit => unit.id == baseUnitId)?.name}
             removable={shouldRenderRemove()}
           />
         )

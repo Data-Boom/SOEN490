@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { AdminManagementController } from '../../controllers/AdminManagementController';
 
 describe('Fetch All Categories Materials Controller ', () => {
@@ -7,8 +7,15 @@ describe('Fetch All Categories Materials Controller ', () => {
     let mockResponse;
     let controller: AdminManagementController;
 
-    beforeEach(async () => {
-        await createConnection();
+    beforeAll(async () => {
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                return getConnectionManager().get();
+            }
+        }
         jest.setTimeout(60000)
         controller = new AdminManagementController();
         mockRequest = {};
@@ -18,7 +25,7 @@ describe('Fetch All Categories Materials Controller ', () => {
         }
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await getConnection().close();
     });
 
@@ -35,9 +42,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'remove'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("User does not have admin permissions!");
-        expect(mockResponse.status).toBeCalledWith(400);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 400, "User does not have admin permissions!")
     });
 
     test('Valid Set User as Admin Request', async () => {
@@ -47,9 +52,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'add'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("User successfully given admin permissions");
-        expect(mockResponse.status).toBeCalledWith(200);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 200, "User successfully given admin permissions")
     });
 
     test('Valid Remove Admin Permissions Request', async () => {
@@ -59,9 +62,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'remove'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Admin permissions successfully revoked");
-        expect(mockResponse.status).toBeCalledWith(200);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 200, "Admin permissions successfully revoked")
     });
 
     test('Invalid Set User as Admin Request; user already admin', async () => {
@@ -71,9 +72,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'add'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("User is already an administrator!");
-        expect(mockResponse.status).toBeCalledWith(400);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 400, "User is already an administrator!")
     });
 
     test('Invalid Admin Permissions Change; Invalid Operation', async () => {
@@ -83,9 +82,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'dewfewfwef'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Invalid permission update operation entered");
-        expect(mockResponse.status).toBeCalledWith(400);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 400, "Invalid permission update operation entered")
     });
 
     test('Invalid Admin Permissions Change; No Operation', async () => {
@@ -94,9 +91,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 email: 'admin@potential.com'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing attributes");
-        expect(mockResponse.status).toBeCalledWith(400);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 400, "Request is invalid. Missing attributes")
     });
 
     test('Invalid Admin Permissions Change; No Email', async () => {
@@ -105,9 +100,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'add'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("Request is invalid. Missing attributes");
-        expect(mockResponse.status).toBeCalledWith(400);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 400, "Request is invalid. Missing attributes")
     });
 
     test('Invalid Set User as Admin Request; Non-existant Email/User', async () => {
@@ -117,9 +110,7 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'add'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("No such user exists");
-        expect(mockResponse.status).toBeCalledWith(404);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 404, "No such user exists")
     });
 
     test('Invalid Remove Admin Permissions Request; Non-existant Email/User', async () => {
@@ -129,9 +120,12 @@ describe('Fetch All Categories Materials Controller ', () => {
                 operation: 'remove'
             }
         }
-        await controller.createPermissionUpdateRequest(mockRequest as Request, mockResponse as Response)
-        expect(mockResponse.json).toBeCalledWith("No such user exists");
-        expect(mockResponse.status).toBeCalledWith(404);
+        await updatePermissionWithAssert(mockRequest as Request, mockResponse as Response, 404, "No such user exists")
     });
 
+    async function updatePermissionWithAssert(mockRequest: Request, mockResponse: Response, status: number, expectedResponse: any) {
+        await controller.createPermissionUpdateRequest(mockRequest, mockResponse)
+        expect(mockResponse.json).toBeCalledWith(expectedResponse);
+        expect(mockResponse.status).toBeCalledWith(status);
+    }
 })

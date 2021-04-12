@@ -1,4 +1,4 @@
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getConnectionManager, getConnection } from 'typeorm';
 import { DataQueryModel } from '../../models/DatasetModels/DatasetQueryModel';
 
 describe('data query model test', () => {
@@ -6,7 +6,14 @@ describe('data query model test', () => {
     jest.setTimeout(60000)
 
     beforeAll(async () => {
-        await createConnection();
+        try {
+            await createConnection();
+        } catch (error) {
+            // If AlreadyHasActiveConnectionError occurs, return already existent connection
+            if (error.name === "AlreadyHasActiveConnectionError") {
+                return getConnectionManager().get();
+            }
+        }
         dataQueryModel = new DataQueryModel();
     });
 
@@ -50,8 +57,8 @@ describe('data query model test', () => {
         done()
     });
 
-    test('Input a category ID and subcategory ID of 2, expect to find at least one dataset id', async done => {
-        let id = await dataQueryModel.getDatasetIDFromSubcategory(2, 2);
+    test('Input a subcategory ID of 2, expect to find at least one dataset id', async done => {
+        let id = await dataQueryModel.getDatasetIDFromSubcategory(2);
         expect(id[0].dataset_id).not.toBeUndefined()
         done()
     });
@@ -74,15 +81,16 @@ describe('data query model test', () => {
         done()
     });
 
-    test('Feeds the email of account ID of 1 and expects to see a data set ID of 1 returned', async done => {
+    test('Feeds account ID of 1 and expects to see a data set ID of 1 returned', async done => {
         let arrayOfData = await dataQueryModel.getUploadedDatasetIDOfUser(1)
         expect(arrayOfData[0].dataset_id).toEqual(1);
+        expect(arrayOfData[0].isApproved).toEqual(0);
         done()
     });
 
     test('Feeds an account ID of 1 and expects to see a data set IDs of 2 returned', async done => {
         let arrayOfData = await dataQueryModel.getFavoriteDatasetIDOfUser(1)
-        expect(arrayOfData[0].dataset_id).toEqual(2);
+        expect(arrayOfData).toEqual([{ "dataset_id": 2 }])
         done()
     });
 
@@ -98,4 +106,10 @@ describe('data query model test', () => {
             .toThrow("Something went wrong adding a favorite data set. Try later");
     });
 
+    //test for datapoint
+    test('Input datapoint containing Density, expect to find at least one dataset id', async done => {
+        let id = await dataQueryModel.getDatasetIDFromDatapoint("Density");
+        expect(id[0].dataset_id).not.toBeUndefined()
+        done()
+    });
 })

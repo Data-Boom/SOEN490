@@ -6,14 +6,16 @@ import bodyParser from 'body-parser'
 import { connectDB } from '../database';
 import cors from 'cors';
 import express from 'express';
-import { fetchAllCategoriesMaterialsRouter } from '../routes/fetchAllCategoriesMaterialsRouter';
-import { dataExtractionRouter } from '../routes/dataExtractionRouter'
+import { FetchAllMaterialsRouter } from '../routes/FetchAllMaterialsRouter';
 import { dataUploadRouter } from '../routes/dataUploadRouter'
 import { getConnectionManager } from 'typeorm';
 import { GraphsRouter } from '../routes/GraphsRouter';
 import { DataSetRouter } from '../routes/DatasetRouter';
 import { AdminManagementRouter } from '../routes/AdminManagementRouter';
 import { dimensionsRouter } from '../routes/DimensionsRouter';
+import { CategoryRouter } from '../routes/CategoryRouter';
+import { variableRouter } from '../routes/VariableRouter';
+import { fileParserRoute } from '../routes/fileParserRouter';
 
 const cookieParser = require('cookie-parser');
 
@@ -64,14 +66,16 @@ export class LoadStartupProcess {
     /**
      * Routes are added/loaded to the application here. All routes can be added following the style of fileUploadRouter
      */
-    this.app.use('/', dataExtractionRouter)
     this.app.use('/', authenticationRouter)
     this.app.use('/', DataSetRouter)
-    this.app.use('/', fetchAllCategoriesMaterialsRouter)
+    this.app.use('/', FetchAllMaterialsRouter)
     this.app.use('/', dataUploadRouter)
     this.app.use('/', GraphsRouter)
     this.app.use('/', AdminManagementRouter)
     this.app.use('/', dimensionsRouter)
+    this.app.use('/', CategoryRouter)
+    this.app.use('/', variableRouter)
+    this.app.use('/', fileParserRoute)
 
     this.config = {
       "type": process.env.DB_TYPE,

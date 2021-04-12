@@ -7,7 +7,7 @@ import { MuiTextFieldFormik } from '../../Forms/FormikFields'
 import PasswordChangeForm from './PasswordSection/PasswordChangeForm'
 import { Redirect } from 'react-router-dom'
 import { classStyles } from '../../../appTheme'
-import { loginRoute } from '../../../Common/Consts/Routes'
+import { routes } from '../../../Common/Consts/Routes'
 import { updateUserDetails } from '../../../Remote/Endpoints/UserEndpoint'
 
 interface IProps {
@@ -99,7 +99,7 @@ export default function UserDetailsTab(props: IProps) {
             onSubmit={handlePasswordChange}
           />
         </>
-        ) : (<Redirect to={loginRoute} />)
+        ) : (<Redirect to={routes.loginRoute.route} />)
       }
     </>
   )

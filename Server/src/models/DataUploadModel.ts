@@ -6,13 +6,9 @@ import { Publicationtype } from './entities/Publicationtype';
 import { Composition } from './entities/Composition';
 import { Datasetdatatype } from './entities/Datasetdatatype';
 import { Dataset } from './entities/Dataset';
-import { Category } from './entities/Category';
-import { Subcategory } from './entities/Subcategory';
 import { Datapoints } from './entities/Datapoints';
-import { Units } from './entities/Units';
 import { Material } from './entities/Material';
 import { Datapointcomments } from './entities/Datapointcomments';
-import { Representations } from './entities/Representations';
 import { IMaterials } from './interfaces/MaterialsInterface';
 import { IAuthors } from './interfaces/AuthorsInterface';
 import { Unapproveddatasets } from "./entities/Unapproveddatasets";
@@ -51,11 +47,10 @@ export class DataUploadModel {
             publicationType.id = publicationTypeExists.id;
         }
         else {
-            await this.connection.manager.save(publicationType);
+            await Publicationtype.save(publicationType);
         }
         return publicationType.id;
     }
-
 
     async updateDataset(arrayOfDatasetInfo: any[]) {
         await this.connection
@@ -65,8 +60,7 @@ export class DataUploadModel {
                 name: arrayOfDatasetInfo[1],
                 datatypeId: arrayOfDatasetInfo[2],
                 publicationId: arrayOfDatasetInfo[3],
-                categoryId: arrayOfDatasetInfo[4][0],
-                subcategoryId: arrayOfDatasetInfo[4][1],
+                subcategoryId: arrayOfDatasetInfo[4],
                 comments: arrayOfDatasetInfo[5]
             })
             .where("id = :id", { id: arrayOfDatasetInfo[0] })
@@ -98,7 +92,7 @@ export class DataUploadModel {
             publisher.id = publisherExists.id;
         }
         else {
-            await this.connection.manager.save(publisher);
+            await Publisher.save(publisher);
         }
         return publisher.id;
     }
@@ -118,11 +112,9 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdHasMiddleName(author: IAuthors): Promise<any> {
-        let authorExists =
-            await this.selectAuthorIdQuery(author.firstname, author.lastname)
-                .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middlename })
-                .getRawOne();
-        return authorExists;
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
+            .andWhere('LOWER(author.middleName) = LOWER(:middleName)', { middleName: author.middleName })
+            .getRawOne();
     }
 
     /**
@@ -134,10 +126,8 @@ export class DataUploadModel {
      * An author's full name: IAuthors
      */
     private async fetchAuthorIdNoMiddleName(author: IAuthors): Promise<any> {
-        let authorExists =
-            await this.selectAuthorIdQuery(author.firstname, author.lastname)
-                .getRawOne();
-        return authorExists;
+        return this.selectAuthorIdQuery(author.firstName, author.lastName)
+            .getRawOne();
     }
 
     /**
@@ -152,11 +142,11 @@ export class DataUploadModel {
     private async insertIndividualAuthor(authorReceived: IAuthors): Promise<any> {
         let author = new Authors();
         author.id;
-        author.firstName = authorReceived.firstname;
-        author.lastName = authorReceived.lastname;
-        author.middleName = authorReceived.middlename;
+        author.firstName = authorReceived.firstName;
+        author.lastName = authorReceived.lastName;
+        author.middleName = authorReceived.middleName;
         let authorExists: any;
-        if (authorReceived.middlename != null) {
+        if (authorReceived.middleName != null) {
             authorExists = await this.fetchAuthorIdHasMiddleName(authorReceived);
         }
         else {
@@ -166,7 +156,7 @@ export class DataUploadModel {
             author.id = authorExists.id;
         }
         else {
-            await this.connection.manager.save(author);
+            await Authors.save(author);
         }
         return author;
     }
@@ -230,7 +220,7 @@ export class DataUploadModel {
         publication.volume = referenceVolume;
         publication.issue = referenceIssue;
         publication.authors = referenceAuthors;
-        await this.connection.manager.save(publication);
+        await Publications.save(publication);
         return publication.id;
     }
 
@@ -259,7 +249,7 @@ export class DataUploadModel {
             composition.id = compositionExists.id;
         }
         else {
-            await this.connection.manager.save(composition);
+            await Composition.save(composition);
         }
         return composition.id;
     }
@@ -293,7 +283,7 @@ export class DataUploadModel {
             material.id = materialExists.id;
         }
         else {
-            await this.connection.manager.save(material);
+            await Material.save(material);
         }
         return material;
     }
@@ -317,86 +307,6 @@ export class DataUploadModel {
             allMaterials.push(someMaterial);
         }
         return allMaterials;
-    }
-
-    private selectCategoryIdQuery = (categoryReceived: string) =>
-        this.connection.createQueryBuilder(Category, 'category')
-            .select('category.id', 'id')
-            .where('LOWER(category.name) = LOWER(:categoryRef)', { categoryRef: categoryReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Category object and return it's ID. It will check if a  
-     * duplicate Category exists via a query and if it exists will set the
-     * Category object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Category table.
-     *
-     * @param category 
-     * Category: string
-     */
-    private async insertIndividualCategory(category: string): Promise<number> {
-        let someCategory = new Category();
-        someCategory.id;
-        someCategory.name = category;
-        let categoryExists: any;
-        categoryExists = await this.selectCategoryIdQuery(category);
-        if (categoryExists != undefined) {
-            someCategory.id = categoryExists.id;
-        }
-        else {
-            await this.connection.manager.save(someCategory);
-        }
-        return someCategory.id
-    }
-
-    private selectSubcategoryIdQuery = (subcategoryReceived: string) =>
-        this.connection.createQueryBuilder(Subcategory, 'subcategory')
-            .select('subcategory.id', 'id')
-            .where('LOWER(subcategory.name) = LOWER(:subcategoryRef)', { subcategoryRef: subcategoryReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Subcategory object and return it's ID. It will check if a  
-     * duplicate Subcategory exists via a query and if it exists will set the
-     * Subcategory object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Subcategory table.
-     *
-     * @param subcategory 
-     * Subcategory: string
-     */
-    private async insertIndividualSubcategory(subcategory: string): Promise<number> {
-        if (subcategory == undefined) { return 1 }
-        else {
-            let someSubcategory = new Subcategory();
-            someSubcategory.id;
-            someSubcategory.name = subcategory;
-            let subcategoryExists: any;
-            subcategoryExists = await this.selectSubcategoryIdQuery(subcategory);
-            if (subcategoryExists != undefined) {
-                someSubcategory.id = subcategoryExists.id;
-            }
-            else {
-                await this.connection.manager.save(someSubcategory);
-            }
-            return someSubcategory.id
-        }
-    }
-
-    /**
-     * This method will accept a category and subcategory call @insertIndividualCategory and
-     * @insertIndividualSubcategory respectfully to insert both entries and will then insert
-     * their respective IDs into an array named allCategoryIDs and return that.
-     * 
-     * @param category 
-     * Category: string
-     * @param subcategory 
-     * Subcategory: string
-     */
-    async insertCategories(category: string, subcategory: string): Promise<number[]> {
-        let categoryId = await this.insertIndividualCategory(category);
-        let subcategoryId = await this.insertIndividualSubcategory(subcategory);
-        let allCategoryIDs = [categoryId, subcategoryId];
-        return allCategoryIDs;
     }
 
     private selectDataSetDataTypeIdQuery = (datasetdatatypeReceived: string) =>
@@ -424,89 +334,28 @@ export class DataUploadModel {
             datasetdatatype.id = datasetdatatypeExists.id;
         }
         else {
-            await this.connection.manager.save(datasetdatatype);
+            await Datasetdatatype.save(datasetdatatype);
         }
         return datasetdatatype.id;
     }
 
-    async insertFullDataSet(dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any[], dataSetComments: string, userId: number): Promise<number> {
+    async insertFullDataSet(arrayOfDatasetInfo: any[]): Promise<number> {
         let dataset = new Dataset();
         dataset.id;
-        dataset.name = dataSetName;
-        dataset.datatypeId = dataSetDataTypeID;
-        dataset.publicationId = publicationID;
-        dataset.categoryId = categoryIDs[0];
-        dataset.subcategoryId = categoryIDs[1];
-        dataset.materials = allMaterials;
-        dataset.comments = dataSetComments;
-        dataset.uploaderId = userId;
-        await this.connection.manager.save(dataset);
+        dataset.name = arrayOfDatasetInfo[0];
+        dataset.datatypeId = arrayOfDatasetInfo[1];
+        dataset.publicationId = arrayOfDatasetInfo[2];
+        dataset.subcategoryId = arrayOfDatasetInfo[3];
+        dataset.materials = arrayOfDatasetInfo[4];
+        dataset.comments = arrayOfDatasetInfo[5];
+        dataset.uploaderId = arrayOfDatasetInfo[6];
+        await Dataset.save(dataset);
         return dataset.id;
-    }
-
-    private selectUnitsIdQuery = (unitsReceived: string) =>
-        this.connection.createQueryBuilder(Units, 'units')
-            .select('units.id', 'id')
-            .where('LOWER(units.name) = LOWER(:unitsRef)', { unitsRef: unitsReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Units object and return it's ID. It will check if a  
-     * duplicate Units exists via a query and if it exists will set the
-     * Units object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Units table.
-     *
-     * @param unitReceived 
-     * Units: string
-     */
-    async insertUnits(unitReceived: string): Promise<number> {
-        let units = new Units();
-        units.id;
-        units.name = unitReceived;
-        let unitsExists: any;
-        unitsExists = await this.selectUnitsIdQuery(unitReceived);
-        if (unitsExists != undefined) {
-            units.id = unitsExists.id;
-        }
-        else {
-            await this.connection.manager.save(units);
-        }
-        return units.id;
-    }
-
-    private selectRepresentationIdQuery = (reprReceived: string) =>
-        this.connection.createQueryBuilder(Representations, 'repr')
-            .select('repr.id', 'id')
-            .where('LOWER(repr.repr) = LOWER(:reprRef)', { reprRef: reprReceived })
-            .getRawOne();
-
-    /**
-     * This method will create a Representations object and return it's ID. It will check if a  
-     * Rduplicate epresentations exists via a query and if it exists will set 
-     * the Representations object to have the same ID as the existing entry. If there is no
-     * existing entry, than the method will add a new entry to the Representations table.
-     *
-     * @param representationUnit 
-     * Representation: string
-     */
-    async insertRepresentation(representationUnit: string): Promise<number> {
-        let repr = new Representations();
-        repr.id;
-        repr.repr = representationUnit;
-        let reprExists: any;
-        reprExists = await this.selectRepresentationIdQuery(representationUnit);
-        if (reprExists != undefined) {
-            repr.id = reprExists.id;
-        }
-        else {
-            await this.connection.manager.save(repr);
-        }
-        return repr.id;
     }
 
     /**
      * Inserts a information for a single variable of a data point along with ties to its respective
-     * units, representation, and data set.
+     * units, and data set.
      * 
      * @param dataSetID 
      * ID of data set: number
@@ -516,18 +365,15 @@ export class DataUploadModel {
      * Array of values: number[]
      * @param unitsID 
      * ID of units: number
-     * @param reprID 
-     * ID of representation: number
      */
-    async insertDataPointsOfSet(dataSetID: number, dataVariableName: string, dataPointValues: number[], unitsID: number, reprID: number) {
+    async insertDataPointsOfSet(dataSetID: number, dataVariableName: string, dataPointValues: number[], unitsID: number) {
         let datapoint = new Datapoints();
         datapoint.id;
         datapoint.datasetId = dataSetID;
         datapoint.name = dataVariableName;
         datapoint.values = dataPointValues;
         datapoint.unitsId = unitsID;
-        datapoint.representationsId = reprID;
-        await this.connection.manager.save(datapoint);
+        await Datapoints.save(datapoint);
     }
 
     /**
@@ -544,7 +390,7 @@ export class DataUploadModel {
         datapointcomments.id;
         datapointcomments.datasetId = dataSetID;
         datapointcomments.comments = comments;
-        await this.connection.manager.save(datapointcomments);
+        await Datapointcomments.save(datapointcomments);
     }
 
     async createEntryInUnapprovedDataSets(datasetId: number) {
@@ -552,6 +398,6 @@ export class DataUploadModel {
         unapprovedDataset.datasetId = datasetId
         unapprovedDataset.flaggedComment
         unapprovedDataset.isFlagged = 0
-        await this.connection.manager.save(unapprovedDataset)
+        await Unapproveddatasets.save(unapprovedDataset)
     }
 }

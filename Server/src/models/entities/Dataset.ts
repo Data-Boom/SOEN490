@@ -1,5 +1,5 @@
 import { Publications } from './Publications';
-import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, EntityManager } from "typeorm";
+import { Connection, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, BaseEntity } from "typeorm";
 import { Category } from './Category';
 import { Subcategory } from './Subcategory';
 import { Material } from './Material';
@@ -13,7 +13,7 @@ import { Accounts } from './Accounts';
  * and has multiple composition references for fuel, oxidizer, and diluent
  */
 @Entity()
-export class Dataset {
+export class Dataset extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -44,13 +44,6 @@ export class Dataset {
     @ManyToOne(type => Publications)
     @JoinColumn()
     publication?: Publications
-
-    @Column({ default: 1 })
-    categoryId: number
-
-    @ManyToOne(type => Category)
-    @JoinColumn()
-    category?: Category
 
     @Column({ default: 1 })
     subcategoryId: number
@@ -116,12 +109,12 @@ export const selectDatasetsQuery = (connection: Connection) =>
         .select('dataset.name', 'dataset_name')
         .addSelect('dataset.id', 'id')
         .addSelect('datasetdatatype.name', 'data_type')
-        .addSelect('category.name', 'category')
-        .addSelect('subcategory.name', 'subcategory')
+        .addSelect('category.id', 'category')
+        .addSelect('subcategory.id', 'subcategory')
         .addSelect('dataset.comments', 'comments')
         .innerJoin(Datasetdatatype, 'datasetdatatype', 'dataset.datatypeId = datasetdatatype.id')
-        .innerJoin(Category, 'category', 'dataset.categoryId = category.id')
         .innerJoin(Subcategory, 'subcategory', 'dataset.subcategoryId = subcategory.id')
+        .innerJoin(Category, 'category', 'subcategory.categoryId = category.id')
 
 export const selectDatasetIdsBasedOnApprovalStatusQuery = (connection: Connection, isApproved: number) =>
     connection.createQueryBuilder(Dataset, 'dataset')

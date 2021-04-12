@@ -2,29 +2,36 @@ import { IAxisStateModel, IGraphStateModel } from '../../../Models/Graph/IGraphS
 import { IGraphDatasetState, newGraphDatasetState } from '../../../Models/Graph/IGraphDatasetModel'
 import React, { useEffect, useState } from 'react'
 
-import { AxesControl } from './AxesControl'
+import { AxesControl } from './Axes/AxesControl'
 import { CustomLoader } from '../../Utils/CustomLoader'
 import { DatasetControl } from './DatasetControl'
 import { Grid } from '@material-ui/core'
 import { IDatasetModel } from '../../../Models/Datasets/IDatasetModel'
+import { IDimensionModel } from '../../../Models/Dimensions/IDimensionModel'
 import { SaveGraphStateForm } from './SaveGraphStateForm'
 import SnackbarUtils from '../../Utils/SnackbarUtils'
+import { callGetAllDimensions } from '../../../Remote/Endpoints/DimensionsEndpoint'
 import { callGetDatasets } from '../../../Remote/Endpoints/DatasetEndpoint'
 import { callGetGraphState } from '../../../Remote/Endpoints/GraphStateEndpoint'
+import { useDimensionsSelector } from '../../../Stores/Slices/DimensionsSlice'
+import { useUserSelector } from '../../../Stores/Slices/UserSlice'
 
 interface IProps {
   graphState: IGraphStateModel,
-  onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[]) => void,
+  onGraphStateChange: (graphState: IGraphStateModel, completeDatasets: IDatasetModel[], dimensions: IDimensionModel[]) => void,
 }
 
 export const GraphStateControl = (props: IProps) => {
+  const user = useUserSelector()
   const { graphState, onGraphStateChange } = { ...props }
+  const dimensions = useDimensionsSelector()
+
   const [completeDatasets, setCompleteDatasets] = useState<IDatasetModel[]>([])
-  const [loadingDatasets, setIsLoadinDatasets] = useState(false)
+  const [loadingDatasets, setIsLoadingDatasets] = useState(false)
 
   useEffect(() => {
     const getGraphState = async (id: number) => {
-      setIsLoadinDatasets(true)
+      setIsLoadingDatasets(true)
       const remoteGraphState = await callGetGraphState(id)
 
       if (!remoteGraphState) {
@@ -32,11 +39,12 @@ export const GraphStateControl = (props: IProps) => {
       }
       else {
         const datasets = await callGetDatasets({ datasetId: remoteGraphState.datasets.map(dataset => dataset.id) })
+        const dimensions = await callGetAllDimensions()
         setCompleteDatasets(datasets)
-        onGraphStateChange(remoteGraphState, datasets)
+        onGraphStateChange(remoteGraphState, datasets, dimensions)
       }
 
-      setIsLoadinDatasets(false)
+      setIsLoadingDatasets(false)
     }
 
     if (graphState.id) {
@@ -47,15 +55,15 @@ export const GraphStateControl = (props: IProps) => {
   const handleCompleteDatasetsChange = (datasets: IDatasetModel[]) => {
     setCompleteDatasets(datasets)
     const newGraphState = getUpdatedGraphState(datasets)
-    onGraphStateChange(newGraphState, datasets)
+    onGraphStateChange(newGraphState, datasets, dimensions)
   }
 
   const handleDatasetStatesChange = (datasetStates: IGraphDatasetState[]) => {
-    onGraphStateChange({ ...graphState, datasets: datasetStates }, completeDatasets)
+    onGraphStateChange({ ...graphState, datasets: datasetStates }, completeDatasets, dimensions)
   }
 
   const handleAxesChanged = (axes: IAxisStateModel[]) => {
-    onGraphStateChange({ ...graphState, axes: axes }, completeDatasets)
+    onGraphStateChange({ ...graphState, axes: axes }, completeDatasets, dimensions)
   }
 
   const getUpdatedGraphState = (datasets: IDatasetModel[]): IGraphStateModel => {
@@ -80,18 +88,17 @@ export const GraphStateControl = (props: IProps) => {
           visible={loadingDatasets}
         /> :
         <>
-          {completeDatasets && completeDatasets[0] ?
+          {completeDatasets && completeDatasets[0] &&
             <Grid container direction="column">
               <Grid item>
                 <AxesControl datasets={completeDatasets} axes={graphState.axes} onAxesChange={handleAxesChanged} />
               </Grid>
               <Grid item>
-                <SaveGraphStateForm
+                {user?.email && <SaveGraphStateForm
                   graphState={graphState}
-                />
+                />}
               </Grid>
-            </Grid> :
-            null
+            </Grid>
           }
           <DatasetControl
             datasetStates={graphState.datasets}

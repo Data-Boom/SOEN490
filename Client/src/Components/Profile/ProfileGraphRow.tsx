@@ -4,16 +4,13 @@ import React, { useState } from 'react'
 import CancelIcon from '@material-ui/icons/Cancel'
 import { ConfirmationModal } from '../Authentication/ConfirmationModal'
 import { IGraphStateModel } from '../../Models/Graph/IGraphStateModel'
+import { IRowProps } from "../Utils/List"
 import { Link } from 'react-router-dom'
 import { callDeleteGraphState } from "../../Remote/Endpoints/GraphStateEndpoint"
 import { classStyles } from '../../appTheme'
 
-interface IGraphModel {
-  graphDataset: IGraphStateModel,
-}
-
-export const ProfileGraphRow = (props: IGraphModel) => {
-  const { graphDataset } = { ...props }
+export const ProfileGraphRow = (props: IRowProps<IGraphStateModel>) => {
+  const { row: graphDataset } = { ...props }
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
   const onHandleRemoveGraphState = async () => {
@@ -34,7 +31,7 @@ export const ProfileGraphRow = (props: IGraphModel) => {
         </Box>
       </Grid>
       <Grid>
-        <IconButton aria-label="delete" color="secondary" >
+        <IconButton aria-label="delete" color="secondary" id="deleteGraphState">
           <CancelIcon onClick={() => setConfirmModalOpen(true)} />
         </IconButton>
         <ConfirmationModal

@@ -31,54 +31,44 @@ export const validTestData = {
             "details": "Chaos"
         }
     ],
-    "category": "cell size",
-    "subcategory": "width",
+    "subcategory": 1,
     "data_type": "HUGoniot",
     "data": {
         "variables": [
             {
                 "name": "initial density",
-                "repr": "rho_0",
                 "unitId": 1
             },
             {
                 "name": "initial temperature",
-                "repr": "T_0",
                 "unitId": 4
             },
             {
                 "name": "initial pressure",
-                "repr": "P_0",
                 "unitId": 5
             },
             {
                 "name": "shock velocity",
-                "repr": "U_s",
                 "unitId": 6
             },
             {
                 "name": "particle velocity",
-                "repr": "U_p",
                 "unitId": 6
             },
             {
                 "name": "pressure",
-                "repr": "P",
                 "unitId": 5
             },
             {
                 "name": "specific volume",
-                "repr": "v",
                 "unitId": 3
             },
             {
                 "name": "density",
-                "repr": "rho",
                 "unitId": 1
             },
             {
                 "name": "compression ratio",
-                "repr": "v/v_0",
                 "unitId": 2
             }
         ],
@@ -278,54 +268,44 @@ export const inValidTestData = {
             "details": "Chaos"
         }
     ],
-    "category": "cell size",
-    "subcategory": "width",
+    "subcategory": 1,
     "data_type": "HUGoniot",
     "data": {
         "variables": [
             {
                 "name": "initial density",
-                "repr": "rho_0",
                 "unitId": 1
             },
             {
                 "name": "initial temperature",
-                "repr": "T_0",
                 "unitId": 4
             },
             {
                 "name": "initial pressure",
-                "repr": "P_0",
                 "unitId": 5
             },
             {
                 "name": "shock velocity",
-                "repr": "U_s",
                 "unitId": 6
             },
             {
                 "name": "particle velocity",
-                "repr": "U_p",
                 "unitId": 6
             },
             {
                 "name": "pressure",
-                "repr": "P",
                 "unitId": 5
             },
             {
                 "name": "specific volume",
-                "repr": "v",
                 "unitId": 3
             },
             {
                 "name": "density",
-                "repr": "rho",
                 "unitId": 1
             },
             {
                 "name": "compression ratio",
-                "repr": "v/v_0",
                 "unitId": 2
             }
         ],
@@ -565,8 +545,8 @@ export const oneFavoriteDataset = [
         id: 2,
         dataset_name: "Someone's Favorite",
         data_type: 'Not Specified',
-        category: 'None Entered',
-        subcategory: 'None Entered',
+        category: 1,
+        subcategory: 1,
         material: [],
         data: {
             comments: "",
@@ -574,5 +554,12 @@ export const oneFavoriteDataset = [
             dataPointComments: null,
             variables: []
         },
+    }
+]
+
+export const oneUploadedDatasetID = [
+    {
+        "datasetId": 2,
+        "approved": true
     }
 ]

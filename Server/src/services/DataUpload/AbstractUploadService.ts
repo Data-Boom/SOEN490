@@ -23,7 +23,7 @@ export default abstract class AbstractUploadService {
 
     abstract uploadData()
 
-    protected abstract insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, categoryIDs: number[], allMaterials: any, dataSetComments: string, userId: number)
+    protected abstract insertDataset(uploadModel: DataUploadModel, dataSetName: string, dataSetDataTypeID: number, publicationID: number, subcategoryID: number, allMaterials: any, dataSetComments: string, userId: number)
 
     async validateExtractedData() {
         try {
@@ -34,31 +34,14 @@ export default abstract class AbstractUploadService {
     }
 
     protected getDataInformationFromContentsArray(dataContentArray: any, index: number) {
-
         let dataPointsForVariable = [];
         let dataSetComments = [];
-
-        for (let i = 0; i < dataContentArray.length; i++) {
-            dataPointsForVariable.push(dataContentArray[i].point[index]);
-            dataSetComments.push(dataContentArray[i].comments);
-
-            let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
-            return contentsArrayInfo;
+        for (let value of dataContentArray) {
+            dataPointsForVariable.push(value.point[index]);
+            dataSetComments.push(value.comments);
         }
-    }
-
-    protected async insertRepData(uploadModel: DataUploadModel, repr: string): Promise<number> {
-        let reprID: number
-        try {
-            if (repr == undefined)
-                reprID = 1;
-            else {
-                reprID = await uploadModel.insertRepresentation(repr);
-            }
-        } catch (err) {
-            console.log('rejected request for referenceTypeID');
-        }
-        return reprID
+        let contentsArrayInfo = [dataPointsForVariable, dataSetComments];
+        return contentsArrayInfo;
     }
 
     protected async insertPublicationTypeData(uploadModel: DataUploadModel, referenceType: string): Promise<number> {
