@@ -23,7 +23,7 @@ export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
     : models
 
   const returnWithCheck = () => {
-    if (models.length > 0) {
+    if (models && models.length > 0) {
       return (
         <>
           <Grid container direction='column' spacing={1}>
@@ -45,19 +45,6 @@ export function List<T, ICustomRowProps>(props: IProps<T, ICustomRowProps>) {
     else {
       return (
         <>
-          <Grid container direction='column' spacing={1}>
-            {rowModels}
-          </Grid>
-          {withPagination && models.length > 0 && < TablePagination
-            component="div"
-            rowsPerPageOptions={[5, 10, 25, 100]}
-            labelRowsPerPage={modelType + ' per page'}
-            count={models.length}
-            page={page}
-            onChangePage={(_, newPage) => setPage(newPage)}
-            rowsPerPage={rowsPerPage}
-            onChangeRowsPerPage={(event) => setRowsPerPage(Number(event.target.value))}
-          />}
         </>
       )
     }
