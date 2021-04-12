@@ -4,6 +4,7 @@ import { Box, Button, Grid, Typography } from '@material-ui/core'
 import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
 import { IContent, IData, IVariable, newVariable } from '../../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { EditVaraibleModal } from './EditVariableModal'
 import { VariableHeader } from './VariableHeader'
@@ -127,6 +128,25 @@ export const DatasetDataTable = (props: IProps): any => {
     return data.contents.findIndex(suchRow => suchRow.point == row)
   }
 
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  const [row, setRow] = useState(getRows())
+  function onDragEnd(result) {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+
+    setRow(rows)
+  }
+
+
   const renderTopButtons = (): any => {
     return (
       <>
@@ -188,15 +208,23 @@ export const DatasetDataTable = (props: IProps): any => {
       />}
 
       <Box width='100%' mt={4}>
-        <DataGrid
-          rowKeyGetter={rowKeyGetter}
-          headerRowHeight={72}
-          columns={getColumns()}
-          rows={getRows()}
-          onRowsChange={handleRowChange}
-          selectedRows={selectedRows}
-          onSelectedRowsChange={editable && setSelectedRows}
-        />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="rows">
+            {(provided) => (
+
+              <DataGrid
+                {...provided.droppableProps}
+                rowKeyGetter={rowKeyGetter}
+                headerRowHeight={72}
+                columns={getColumns()}
+                rows={getRows()}
+                onRowsChange={handleRowChange}
+                selectedRows={selectedRows}
+                onSelectedRowsChange={editable && setSelectedRows}
+              />
+            )}
+          </Droppable>
+        </DragDropContext>
       </Box>
 
 
