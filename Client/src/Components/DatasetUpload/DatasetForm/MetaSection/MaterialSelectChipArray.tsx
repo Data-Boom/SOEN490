@@ -93,10 +93,10 @@ export const MaterialSelectChipArray = (props: IProps) => {
     return (
       <Grid>
         <DialogActions>
-          <Button onClick={handleCloseMaterialForm} color="primary">
+          <Button onClick={handleCloseMaterialForm} color="primary" id="cancelMaterialForm">
             Cancel
           </Button>
-          <Button color="primary" type="submit">
+          <Button color="primary" type="submit" id="submitMaterialForm">
             Add Material
           </Button>
         </DialogActions>
@@ -133,7 +133,7 @@ export const MaterialSelectChipArray = (props: IProps) => {
               return filtered
             }}
             freeSolo
-            renderInput={(params) => <TextField {...params} label="Material" variant="outlined" />}
+            renderInput={(params) => <TextField {...params} label="Material" variant="outlined" id="materialTextField" />}
           />
           <Dialog open={open} onClose={handleCloseMaterialForm}>
             <Formik initialValues={initialValues} validationSchema={materialValidationSchema} onSubmit={handleSubmitMaterial}>

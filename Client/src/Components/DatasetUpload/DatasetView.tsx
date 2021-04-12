@@ -116,7 +116,7 @@ export const DatasetView = (props: IProps) => {
     if (user.account_permissions == 2)
       return (
         <Grid item>
-          <Button variant="contained" color="primary" onClick={() => handleEditable()}>Edit</Button>
+          <Button variant="contained" id="editDatasetPage" color="primary" onClick={() => handleEditable()}>Edit</Button>
         </Grid>
       )
     else

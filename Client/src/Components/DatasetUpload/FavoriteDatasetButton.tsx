@@ -40,10 +40,10 @@ export const FavoriteDatasetButton = (props: IProps) => {
     <IconButton size="small" onClick={handlefavoriteDataset} > {
       isFavorite ?
         <Tooltip title="Remove dataset from favorites">
-          <StarIcon color="primary" />
+          <StarIcon id="savedDataset" color="primary" />
         </Tooltip> :
         <Tooltip title="Add dataset to favorites">
-          <StarBorderIcon color="primary" />
+          <StarBorderIcon id="unsavedDataset" color="primary" />
         </Tooltip>
     }</IconButton>
   )
