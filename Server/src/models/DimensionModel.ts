@@ -5,8 +5,8 @@ import { IDimensionModel } from './interfaces/IDimension';
 import { Units } from './entities/Units';
 
 /**
- * This model contains all methods required for obtaining data from the Dimensions
- * table inside the database
+ * This model contains all methods required for obtaining or modifying data from the Dimensions
+ * and Units tables inside the database
  */
 export class DimensionModel {
 
