@@ -5,22 +5,11 @@ import DataGrid, { SelectColumn, TextEditor } from 'react-data-grid'
 import { IContent, IData, IVariable, newVariable } from '../../../../Models/Datasets/IDatasetModel'
 import React, { useState } from 'react'
 
-//const ReactDataGrid = require('react-data-grid');
 import { EditVaraibleModal } from './EditVariableModal'
 import { VariableHeader } from './VariableHeader'
 import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
 import { useFormikContext } from 'formik'
 import { useVariablesSelector } from '../../../../Stores/Slices/VariablesSlice'
-//import { ReactDataGrid } from 'react-data-grid'
-var ReactDataGrid = require("react-data-grid")
-const {
-  Draggable: {
-    Container: DraggableContainer,
-    RowActionsCell,
-    DropTargetRowContainer
-  },
-  Data: { Selectors }
-} = require("react-data-grid-addons");
 
 interface IProps {
   data: IData,
@@ -199,7 +188,7 @@ export const DatasetDataTable = (props: IProps): any => {
       />}
 
       <Box width='100%' mt={4}>
-        <ReactDataGrid
+        <DataGrid
           rowKeyGetter={rowKeyGetter}
           headerRowHeight={72}
           columns={getColumns()}
