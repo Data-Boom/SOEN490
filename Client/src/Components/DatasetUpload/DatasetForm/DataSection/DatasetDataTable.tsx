@@ -31,6 +31,11 @@ export const DatasetDataTable = (props: IProps): any => {
   const [selectedRows, setSelectedRows] = useState(new Set<React.Key>())
 
   const { errors } = useFormikContext()
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1)
+  }
 
   const handleHeaderClick = (indexOfClickedHeader: number): void => {
     editable && setEditedVariable({ variable: { ...data.variables[indexOfClickedHeader] }, index: indexOfClickedHeader, isNew: false })
@@ -80,7 +85,8 @@ export const DatasetDataTable = (props: IProps): any => {
 
   const handleAddRow = (): void => {
     const copyData = { ...props.data }
-    copyData.contents.push({ point: new Array(props.data.variables.length).fill(0) })
+    increment()
+    copyData.contents.push({ point: new Array(props.data.variables.length).fill(count) })
     props.onDataChange(copyData)
   }
 
@@ -130,7 +136,7 @@ export const DatasetDataTable = (props: IProps): any => {
                 <Button variant="outlined" color="secondary" onClick={handleRemoveSelectedRows} disabled={!editable}>Remove selected rows</Button>
               </Grid>
               <Grid item>
-                <Button variant="outlined" color="primary" onClick={handleAddRow} disabled={!editable}>Add row</Button>
+                <Button variant="outlined" color="primary" onClick={handleAddRow} disabled={!editable}>Add Datapoint Entry</Button>
               </Grid>
             </>
           }
@@ -173,6 +179,7 @@ export const DatasetDataTable = (props: IProps): any => {
         onVariableUpdate={handleVariableUpdate}
         isNewVariable={editedVariable.isNew}
       />}
+
       <Box width='100%' mt={4}>
         <DataGrid
           rowKeyGetter={rowKeyGetter}
@@ -183,6 +190,7 @@ export const DatasetDataTable = (props: IProps): any => {
           selectedRows={selectedRows}
           onSelectedRowsChange={editable && setSelectedRows}
         />
+            )
       </Box>
     </>
   )
