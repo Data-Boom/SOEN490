@@ -161,12 +161,6 @@ export const DatasetDataTable = (props: IProps): any => {
     return decorateDataErrors(dataErrors) || null
   }
 
-  const [rows, updateRows] = useState(getRows())
-
-  function handleOnDragEnd(result) {
-    console.log(result)
-  }
-
   return (
     <>
       <Grid container justify="space-between">
