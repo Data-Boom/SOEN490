@@ -9,8 +9,6 @@ let dimensionsController = new DimensionsController();
 
 /**
  * This route is used when dealing with dimensions and units.
- * **IMPORTANT**
- * These routes are temporarily unprotected, but later need to be uncommented
  */
 router.post('/api/v1/dimensions', [JWTAuthenticator.verifyJWT, JWTAuthenticator.verifyRoot], (request: Request, response: Response) => {
   dimensionsController.createDimension(request, response);
