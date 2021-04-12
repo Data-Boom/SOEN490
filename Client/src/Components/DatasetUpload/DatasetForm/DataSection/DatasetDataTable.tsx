@@ -11,15 +11,16 @@ import { VariableHeader } from './VariableHeader'
 import { decorateDataErrors } from '../../../../Common/Helpers/DatasetErrorDecorator'
 import { useFormikContext } from 'formik'
 import { useVariablesSelector } from '../../../../Stores/Slices/VariablesSlice'
-import { ReactDataGrid } from 'react-data-grid'
-import PropTypes from "prop-types";
-
-/*const {
-  Draggable: { Container, RowActionsCell, DropTargetRowContainer },
-  Data: { Selectors },
-  DraggableHeader: { DraggableContainer }
-};*/
-
+//import { ReactDataGrid } from 'react-data-grid'
+var ReactDataGrid = require("react-data-grid")
+const {
+  Draggable: {
+    Container: DraggableContainer,
+    RowActionsCell,
+    DropTargetRowContainer
+  },
+  Data: { Selectors }
+} = require("react-data-grid-addons");
 
 interface IProps {
   data: IData,
@@ -164,6 +165,12 @@ export const DatasetDataTable = (props: IProps): any => {
     return decorateDataErrors(dataErrors) || null
   }
 
+  const [rows, updateRows] = useState(getRows())
+
+  function handleOnDragEnd(result) {
+    console.log(result)
+  }
+
   return (
     <>
       <Grid container justify="space-between">
@@ -190,19 +197,20 @@ export const DatasetDataTable = (props: IProps): any => {
         onVariableUpdate={handleVariableUpdate}
         isNewVariable={editedVariable.isNew}
       />}
-      {<Box width='100%' mt={4}>
-        <DraggableContainer>
-          <ReactDataGrid
-            rowKeyGetter={rowKeyGetter}
-            headerRowHeight={72}
-            columns={getColumns()}
-            rows={getRows()}
-            onRowsChange={handleRowChange}
-            selectedRows={selectedRows}
-            onSelectedRowsChange={editable && setSelectedRows}
-          />
-        </DraggableContainer>
-      </Box>}
+
+      <Box width='100%' mt={4}>
+        <ReactDataGrid
+          rowKeyGetter={rowKeyGetter}
+          headerRowHeight={72}
+          columns={getColumns()}
+          rows={getRows()}
+          onRowsChange={handleRowChange}
+          selectedRows={selectedRows}
+          onSelectedRowsChange={editable && setSelectedRows}
+        />
+      </Box>
+
+
     </>
   )
 }
