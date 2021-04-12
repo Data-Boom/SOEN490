@@ -1,7 +1,7 @@
 import { Box, Typography } from '@material-ui/core'
 
 import React from 'react'
-import cellSizeAnalyzerExecutable from '../../Assets/python-3.9.2-amd64.exe'
+import cellSizeAnalyzerExecutableWindows from '../../Assets/CellSizeAnalyzer-Windows.exe'
 import cellSizeDemoGif from '../../Assets/cell-size-analysis-demo.gif'
 import { useTitle } from '../../Common/Hooks/useTitle'
 
@@ -14,11 +14,11 @@ export const CellSizeAnalysisView = () => {
         <h1> Cell Size Analysis Tool </h1>
         <h2>Installers</h2>
         <Typography>Windows executable </Typography>
-        <a href={cellSizeAnalyzerExecutable} download="Cell Size Analyzer.exe"> CellSizeAnalyzer.exe </a>
+        <a href={cellSizeAnalyzerExecutableWindows} download="Cell Size Analyzer.exe"> CellSizeAnalyzer.exe </a>
         <Typography>Mac executable </Typography>
-        <a href={cellSizeAnalyzerExecutable} download="Cell Size Analyzer.exe"> CellSizeAnalyzer.app </a>
+        <a href={cellSizeAnalyzerExecutableWindows} download="Cell Size Analyzer.exe"> To Be Added Soon </a>
         <Typography>Linux executable </Typography>
-        <a href={cellSizeAnalyzerExecutable} download="Cell Size Analyzer.exe"> CellSizeAnalyzer.out </a>
+        <a href={cellSizeAnalyzerExecutableWindows} download="Cell Size Analyzer.exe"> To Be Added Soon </a>
         <h2> Instructions </h2>
         <Typography>Enter the full path of the image and the length of the image. Adjust the sigma, low and high threhsold sliders to get the preferred image.</Typography>
         <Typography>Once the preferred image is obtained, start an analyis on the Canny image by pressing the Start Measurements button on the desired image</Typography>
